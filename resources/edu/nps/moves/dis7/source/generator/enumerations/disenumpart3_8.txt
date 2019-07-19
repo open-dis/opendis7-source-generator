@@ -1,0 +1,41 @@
+
+    public void marshal(DataOutputStream dos) throws IOException
+    {
+        dos.writeByte(getValue());
+    }
+    
+    public void marshal(ByteBuffer buff) throws Exception
+    {
+        buff.put((byte)getValue());
+    }
+
+    public static %s unmarshalEnum (DataInputStream dis) throws Exception
+    {
+       /* try {
+            value = dis.readUnsignedByte();
+        }
+        catch(IOException ex) {
+            showError(ex);
+        } */
+        
+        return getEnumForValue((int)dis.readByte());
+    } 
+
+    public static %s unmarshalEnum(ByteBuffer buff) throws Exception
+    {
+        /*
+        try {
+            value = (int)buff.get();
+        }
+        catch(Exception ex) {
+            showError(ex);
+        }
+        */
+        return getEnumForValue((int)buff.get());
+    }
+
+    public int getMarshalledSize()
+    {
+        return 1; // 8 bits
+    }
+}

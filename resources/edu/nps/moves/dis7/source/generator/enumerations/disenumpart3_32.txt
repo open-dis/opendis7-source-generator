@@ -1,0 +1,26 @@
+
+    public void marshal(DataOutputStream dos) throws IOException
+    {
+        dos.writeInt(getValue());
+    }
+
+    public void marshal(ByteBuffer buff)
+    {
+        buff.putInt(getValue());
+    }
+
+    public static %s unmarshalEnum (DataInputStream dis) throws Exception
+    {
+        return getEnumForValue(dis.readInt());
+    } 
+
+    public static %s unmarshalEnum (ByteBuffer buff)
+    {
+        return getEnumForValue(buff.getInt());
+    }
+
+    public int getMarshalledSize()
+    {
+        return 4; // 32 bits
+    }
+}

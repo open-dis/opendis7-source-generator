@@ -1,0 +1,287 @@
+<classes>
+    <class name="SyntheticEnvironmentFamilyPdu" inheritsFrom="PduBase" comment="Section 5.3.11: Abstract superclass for synthetic environment PDUs">
+
+        <initialValue name="protocolFamily" value="DISProtocolFamily.SYNTHETIC_ENVIRONMENT"/>
+     
+    </class>
+
+    <class name="EnvironmentalProcessPdu" inheritsFrom="SyntheticEnvironmentFamilyPdu"
+           comment="Section 5.3.11.1: Information about environmental effects and processes. This requires manual cleanup.">
+           
+        <initialValue name="pduType" value="DISPDUType.ENVIRONMENTAL_PROCESS"/>
+    
+        <attribute name="environementalProcessID" comment="Environmental process ID">
+            <classRef name="ObjectIdentifier"/>
+        </attribute>
+       
+        <attribute name="environmentType" comment="Environment type">
+            <classRef name="EntityType"/>
+        </attribute>
+       
+        <attribute name="modelType" comment="model type">
+            <sisoenum type="EnvironmentalProcessModelType" comment="uid 248"/>
+        </attribute>
+       
+        <attribute name="environmentStatus" comment="Environment status">
+            <sisobitfield type="EnvironmentalProcessEnvironmentStatus" comment="uid 249"/>
+        </attribute>
+       
+        <attribute name="numberOfEnvironmentRecords" hidden="true" comment="number of environment records ">
+            <primitive type="uint16"/>
+        </attribute>
+       
+        <attribute name="sequenceNumber" comment="PDU sequence number for the environmental process if pdu sequencing required">
+            <primitive type="uint16"/>
+        </attribute>
+       
+        <attribute name="environmentRecords" comment="environmemt records">
+            <objectlist countFieldName="numberOfEnvironmentRecords">
+                <classRef name="Environment"/>
+            </objectlist> 
+        </attribute>
+    
+    </class>
+        
+    <class name="GriddedDataPdu" inheritsFrom="SyntheticEnvironmentFamilyPdu"
+               comment="Section 5.3.11.2: Information about global, spatially varying environmental effects. This requires manual cleanup; the grid axis
+           records are variable sized. UNFINISHED">
+           
+        <initialValue name="pduType" value="DISPDUType.GRIDDED_DATA"/>
+    
+        <attribute name="environmentalSimulationApplicationID" comment="environmental simulation application ID">
+            <classRef name="SimulationIdentifier"/>
+        </attribute>
+       
+        <attribute name="fieldNumber" comment="unique identifier for each piece of environmental data">
+            <primitive type="uint16"/>
+        </attribute>
+       
+        <attribute name="pduNumber" comment="sequence number for the total set of PDUS used to transmit the data">
+            <primitive type="uint16"/>
+        </attribute>
+       
+        <attribute name="pduTotal" comment="Total number of PDUS used to transmit the data">
+            <primitive type="uint16"/>
+        </attribute>
+       
+        <attribute name="coordinateSystem" comment="coordinate system of the grid">
+            <sisoenum type="GriddedDataCoordinateSystem" comment="uid 244"/>
+        </attribute>
+       
+        <attribute name="numberOfGridAxes" hidden="true" comment="number of grid axes for the environmental data">
+            <primitive type="uint8"/>
+        </attribute>
+       
+        <attribute name="constantGrid" comment="are domain grid axes identidal to those of the priveious domain update?">
+            <sisoenum type="GriddedDataConstantGrid" comment="uid 245"/>
+        </attribute>
+       
+        <attribute name="environmentType" comment="type of environment">
+            <classRef name="EntityType"/>
+        </attribute>
+       
+        <attribute name="orientation" comment="orientation of the data grid">
+            <classRef name="EulerAngles"/>
+        </attribute>
+       
+        <attribute name="sampleTime" comment="valid time of the enviormental data sample, 64 bit unsigned int">
+            <classref name="ClockTime"/>
+        </attribute>
+       
+        <attribute name="totalValues" comment="total number of all data values for all pdus for an environmental sample">
+            <primitive type="uint32"/>
+        </attribute>
+       
+        <attribute name="vectorDimension" comment="total number of data values at each grid point.">
+            <primitive type="uint8"/>
+        </attribute>
+       
+        <attribute name="padding1" comment="padding">
+            <primitive type="uint8"/>
+        </attribute>
+       
+        <attribute name="padding2" comment="padding">
+            <primitive type="uint16"/>
+        </attribute>
+       
+        <attribute name="gridAxisDescriptors" comment="">
+            <objectlist countFieldName="numberOfGridAxes">
+                <classRef name="GridAxisDescriptor" initialClass="GridAxisDescriptorFixed"/> <!-- initialClass not used ? -->
+            </objectlist> 
+        </attribute>
+        
+         <attribute name="gridDataRecords" comment="">
+            <objectlist countFieldName="numberOfGridAxes">
+                <classRef name="GridData" initialClass="GridDataType0"/><!-- initialClass not used ? -->
+            </objectlist> 
+        </attribute>
+   
+    </class>
+
+    <class name="PointObjectStatePdu" inheritsFrom="SyntheticEnvironmentFamilyPdu"
+           comment=": Inormation abut the addition or modification of a synthecic enviroment object that is anchored to the terrain with a single point. Section 7.10.4">
+    
+        <initialValue name="pduType" value="DISPDUType.POINT_OBJECT_STATE"/>
+       
+        <attribute name="objectID" comment="Object in synthetic environment">
+            <classRef name="EntityID"/>
+        </attribute>
+   
+        <attribute name="referencedObjectID" comment="Object with which this point object is associated">
+            <classRef name="ObjectIdentifier"/>
+        </attribute>
+   
+        <attribute name="updateNumber" comment="unique update number of each state transition of an object">
+            <primitive type="uint32"/>
+        </attribute>
+   
+        <attribute name="forceID" comment="force ID">
+            <sisoenum type="ForceID" comment="uid 6"/>
+        </attribute>
+   
+        <attribute name="modifications" comment="modifications">
+            <sisobitfield type="ObjectStateModificationPointObject" comment="uid 240"/>
+        </attribute>
+   
+        <attribute name="objectType" comment="Object type">
+            <classRef name="ObjectType"/>
+        </attribute>
+   
+        <attribute name="objectLocation" comment="Object location">
+            <classRef name="Vector3Double"/>
+        </attribute>
+   
+        <attribute name="objectOrientation" comment="Object orientation">
+            <classRef name="EulerAngles"/>
+        </attribute>
+   
+        <attribute name="specificObjectAppearance" comment="Specific object apperance">
+            <primitive type="uint32"/>
+        </attribute>
+           
+        <attribute name="generObjectAppearance" comment="General object apperance">
+            <sisobitfield type="ObjectStateAppearanceGeneral" comment="uid 229"/>
+        </attribute>
+   
+        <attribute name="padding1">
+            <primitive type="uint16"/>
+        </attribute>
+        
+        <attribute name="requesterID" comment="requesterID">
+            <classRef name="SimulationAddress"/>
+        </attribute>
+   
+        <attribute name="receivingID" comment="receiver ID">
+            <classRef name="SimulationAddress"/>
+        </attribute>
+   
+        <attribute name="pad2" comment="padding">
+            <primitive type="uint32"/>
+        </attribute>
+   
+    </class>
+
+    <class name="LinearObjectStatePdu" inheritsFrom="SyntheticEnvironmentFamilyPdu"
+           comment=": Information abut the addition or modification of a synthetic enviroment object that 
+    is anchored to the terrain with a single point and has size or orientation. Section 7.10.5 ">
+      
+        <initialValue name="pduType" value="DISPDUType.LINEAR_OBJECT_STATE"/>
+       
+        <attribute name="objectID" comment="Object in synthetic environment">
+            <classRef name="ObjectIdentifier"/>
+        </attribute>
+   
+        <attribute name="referencedObjectID" comment="Object with which this point object is associated">
+            <classRef name="ObjectIdentifier"/>
+        </attribute>
+   
+        <attribute name="updateNumber" comment="unique update number of each state transition of an object">
+            <primitive type="uint16"/>
+        </attribute>
+   
+        <attribute name="forceID" comment="force ID">
+            <sisoenum type="ForceID" comment="uid 6"/>
+        </attribute>
+   
+        <attribute name="numberOfLinearSegments" hidden="true" comment="number of linear segment parameters">
+            <primitive type="uint8"/>
+        </attribute>
+   
+        <attribute name="requesterID" comment="requesterID">
+            <classRef name="SimulationAddress"/>
+        </attribute>
+   
+        <attribute name="receivingID" comment="receiver ID">
+            <classRef name="SimulationAddress"/>
+        </attribute>
+  
+        <attribute name="objectType" comment="Object type">
+            <classRef name="ObjectType"/>
+        </attribute>
+
+        <attribute name="linearSegmentParameters" comment="Linear segment parameters">
+            <objectlist countFieldName="numberOfLinearSegments">
+                <classRef name="LinearSegmentParameter"/>
+            </objectlist> 
+        </attribute>
+  
+    </class>
+ 
+    <class name="ArealObjectStatePdu" inheritsFrom="SyntheticEnvironmentFamilyPdu"
+           comment="Information about the addition/modification of an oobject that is geometrically anchored to the terrain with a set of three or more points that come to a closure. Section 7.10.6">
+      
+        <initialValue name="pduType" value="DISPDUType.AREAL_OBJECT_STATE"/>
+   
+        <attribute name="objectID" comment="Object in synthetic environment">
+            <classRef name="ObjectIdentifier"/>
+        </attribute>
+   
+        <attribute name="referencedObjectID" comment="Object with which this point object is associated">
+            <classRef name="ObjectIdentifier"/>
+        </attribute>
+   
+        <attribute name="updateNumber" comment="unique update number of each state transition of an object">
+            <primitive type="uint16"/>
+        </attribute>
+   
+        <attribute name="forceID" comment="force ID">
+            <sisoenum type="ForceID" comment="uid 6"/>
+        </attribute>
+   
+        <attribute name="modifications" comment="modifications enumeration">
+            <sisobitfield type="ObjectStateModificationArealObject" comment="uid 242"/>
+        </attribute>
+
+        <attribute name="objectType" comment="Object type">
+            <classRef name="ObjectType"/>
+        </attribute>
+   
+        <attribute name="specificObjectAppearance" comment="Object appearance">
+            <primitive type="uint32"/>
+        </attribute>
+   
+        <attribute name="generalObjectAppearance" comment="Object appearance">
+            <primitive type="uint16"/>
+        </attribute>
+   
+        <attribute name="numberOfPoints" hidden="true" comment="Number of points">
+            <primitive type="uint16"/>
+        </attribute>
+   
+        <attribute name="requesterID" comment="requesterID">
+            <classRef name="SimulationAddress"/>
+        </attribute>
+   
+        <attribute name="receivingID" comment="receiver ID">
+            <classRef name="SimulationAddress"/>
+        </attribute>
+   
+        <attribute name="objectLocation" comment="location of object">
+            <objectlist countFieldName="numberOfPoints">
+                <classRef name="Vector3Double"/>
+            </objectlist> 
+        </attribute>
+    
+    </class>
+
+</classes>

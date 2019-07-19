@@ -1,0 +1,321 @@
+<classes>
+    <class name="RadioCommunicationsFamilyPdu" inheritsFrom="PduBase"
+           comment=" Abstract superclass for radio communications PDUs. Section 7.7">
+  
+        <initialValue name="protocolFamily" value="DISProtocolFamily.RADIO_COMMUNICATIONS"/>
+  
+    </class>
+
+    <class name="RadioCommsHeader" inheritsFrom="root">
+        <attribute name="radioReferenceID" comment="ID of the entitythat is the source of the communication">
+            <classRef name="EntityID"/>
+        </attribute> 
+  
+        <attribute name="radioNumber" comment="particular radio within an entity">
+            <primitive type= "uint16"/>
+        </attribute>
+         
+    </class>
+    
+    <class name="TransmitterPdu" inheritsFrom="RadioCommunicationsFamilyPdu"
+           comment="Detailed information about a radio transmitter. This PDU requires manually written code to complete, since the modulation parameters are of variable length. Section 7.7.2 UNFINISHED">
+  
+        <initialValue name="pduType" value="DISPDUType.TRANSMITTER"/>
+  
+        <attribute name="header">
+            <classRef name="RadioCommsHeader"/>
+        </attribute> 
+  
+        <attribute name="radioNumber" comment="particular radio within an entity">
+            <primitive type="uint16"/>
+        </attribute>
+            
+        <attribute name="radioEntityType" comment="Type of radio">
+            <classRef name="RadioType"/>
+        </attribute>
+  
+        <attribute name="transmitState" comment="transmit state">
+            <sisoenum type="TransmitterTransmitState" comment="uid 164"/>
+        </attribute>
+  
+        <attribute name="inputSource" comment="input source">
+            <sisoenum type="TransmitterInputSource" comment="uid 165"/>
+        </attribute>
+  
+        <attribute name="variableTransmitterParameterCount" comment="count field">
+            <primitive type= "uint16" default="0"/>
+        </attribute>
+  
+        <attribute name="antennaLocation" comment="Location of antenna">
+            <classRef name="Vector3Double"/>
+        </attribute> 
+  
+        <attribute name="relativeAntennaLocation" comment="relative location of antenna">
+            <classRef name="Vector3Float"/>
+        </attribute> 
+  
+        <attribute name="antennaPatternType" comment="antenna pattern type">
+            <sisoenum type="TransmitterAntennaPatternType" comment="uid 167"/>
+        </attribute>
+  
+        <attribute name="antennaPatternCount" hidden="true" comment="atenna pattern length">
+            <primitive type= "uint16"/>
+        </attribute>
+  
+        <attribute name="frequency" comment="frequency">
+            <primitive type= "uint64"/>
+        </attribute>
+  
+        <attribute name="transmitFrequencyBandwidth" comment="transmit frequency Bandwidth">
+            <primitive type= "float32"/>
+        </attribute>
+  
+        <attribute name="power" comment="transmission power">
+            <primitive type= "float32"/>
+        </attribute>
+  
+        <attribute name="modulationType" comment="modulation">
+            <classRef name="ModulationType"/>
+        </attribute> 
+  
+        <attribute name="cryptoSystem" comment="crypto system enumeration">
+            <sisoenum type="TransmitterCryptoSystem" comment="uid 166"/>
+        </attribute>
+  
+        <attribute name="cryptoKeyId" comment="crypto system key identifer">
+            <primitive type="uint16"/>
+        </attribute>
+  
+        <attribute name="modulationParameterCount" hidden="true" comment="how many modulation parameters we have">
+            <primitive type="uint8"/>
+        </attribute>
+  
+        <attribute name="padding1">
+            <primitive type="uint8" defaultValue="0"/>
+        </attribute>
+  
+        <attribute name="padding2">
+            <primitive type="uint16" defaultValue="0"/>
+        </attribute>
+  
+        <attribute name="modulationParametersList" comment="variable length list of modulation parameters">
+            <objectlist countFieldName="modulationParameterCount">
+                <classRef name="ModulationParameters"/>
+            </objectlist> 
+        </attribute>
+  
+        <attribute name="antennaPatternList" comment="variable length list of antenna pattern records">
+            <objectlist countFieldName="antennaPatternCount">
+                <classRef name="VariableTransmitterParameters"/>
+            </objectlist> 
+        </attribute>       
+    </class>
+
+    <class name="SignalPdu" inheritsFrom="RadioCommunicationsFamilyPdu"
+           comment=" Detailed information about a radio transmitter. This PDU requires manually written code to complete. The encodingScheme field can be used in multiple
+       ways, which requires hand-written code to finish. Section 7.7.3. UNFINISHED">
+    
+        <initialValue name="pduType" value="DISPDUType.SIGNAL"/>
+    
+        <attribute name="header">
+            <classRef name="RadioCommsHeader"/>
+        </attribute> 
+         
+        <attribute name="encodingScheme" comment="encoding scheme used, and enumeration">
+            <primitive type="uint16"/>
+        </attribute>
+  
+        <attribute name="tdlType" comment="tdl type">
+            <sisoenum type="SignalTDLType" comment="uid 178"/>
+        </attribute>
+  
+        <attribute name="sampleRate" comment="sample rate">
+            <primitive type="uint32"/>
+        </attribute>
+  
+        <attribute name="dataLength" comment="length of data in bits">
+            <primitive type="uint16"/>
+        </attribute>
+  
+        <attribute name="samples" comment="number of samples">
+            <primitive type="uint16"/>
+        </attribute>
+  
+        <attribute name="data" comment="list of eight bit values">
+            <primitivelist length="0">
+                <primitive type="uint8"/>
+            </primitivelist>
+        </attribute>
+       
+        <!--<atttribute name="padTo32">
+            <primitivelist length="2">      with 0 data
+                <primitive type="uint8"/>
+            </primitivelist> 
+        </atttribute>-->
+        
+        <attribute name="padTo32">
+            <padtoboundary length="32"/>
+        </attribute>
+        
+    </class>
+
+    <class name="ReceiverPdu" inheritsFrom="RadioCommunicationsFamilyPdu"
+           comment=" Communication of a receiver state. Section 7.7.4">
+    
+        <initialValue name="pduType" value="DISPDUType.RECEIVER"/>
+        
+        <attribute name="header">
+            <classRef name="RadioCommsHeader"/>
+        </attribute> 
+ 
+        <attribute name="receiverState" comment="encoding scheme used, and enumeration">
+            <sisoenum type="ReceiverReceiverState" comment="uid 179"/>
+        </attribute>
+  
+        <attribute name="padding1">
+            <primitive type="uint16" initialValue="0"/>
+        </attribute>
+  
+        <attribute name="receivedPower" comment="received power">
+            <primitive type="float32"/>
+        </attribute>
+  
+        <attribute name="transmitterEntityId" comment="ID of transmitter">
+            <classRef name="EntityID"/>
+        </attribute>
+  
+        <attribute name="transmitterRadioId" comment="ID of transmitting radio">
+            <primitive type="uint16"/>
+        </attribute>
+    
+    </class>
+
+    <class name="IntercomReferenceID" inheritsFrom="root">
+        
+        <attribute name="siteNumber">
+            <primitive type="uint16"/>
+        </attribute>
+        
+        <attribute name="applicationNumber">
+            <primitive type="uint16"/>
+        </attribute>
+        
+        <attribute name="referenceNumber">
+            <primitive type="uint16"/>
+        </attribute>
+        
+    </class>
+    
+    <class name="IntercomSignalPdu" inheritsFrom="RadioCommunicationsFamilyPdu" comment=" Actual transmission of intercome voice data. Section 7.7.5.">
+   
+        <initialValue name="pduType" value="DISPDUType.INTERCOM_SIGNAL"/>
+  
+        <attribute name="intercomReferenceID">
+            <classRef name= "IntercomReferenceID"/>
+        </attribute>
+  
+        <attribute name="intercomNumber" comment="ID of communications device">
+            <primitive type= "uint16"/>
+        </attribute>
+  
+        <attribute name="encodingScheme" comment="encoding scheme">
+            <primitive type= "uint16"/>
+        </attribute>
+  
+        <attribute name="tdlType" comment="tactical data link type">
+            <sisoenum type="SignalTDLType" comment="uid 178"/>
+        </attribute>
+  
+        <attribute name="sampleRate" comment="sample rate">
+            <primitive type= "uint32"/>
+        </attribute>
+  
+        <attribute name="dataLength" hidden="true" comment="data length">
+            <primitive type= "uint16"/>
+        </attribute>
+  
+        <attribute name="samples" comment="samples">
+            <primitive type= "uint16"/>
+        </attribute>
+ 
+        <attribute name="data" comment="data bytes">
+            <primitivelist length="0" countFieldName="dataLength">
+                <primitive type="uint8"/>
+            </primitivelist> 
+        </attribute>
+        
+       <!--<attribute name="paddingTo32bits">
+            <primitivelist length="2">     with 0 data
+                <primitive type="uint8"/>
+            </primitivelist>   
+        </attribute> -->
+        
+        <attribute name="padTo32">
+            <padtoboundary length="32"/>
+        </attribute>
+       
+     </class>
+
+    <class name="IntercomControlPdu" inheritsFrom="RadioCommunicationsFamilyPdu"
+           comment=" Detailed inofrmation about the state of an intercom device and the actions it is requestion 
+       of another intercom device, or the response to a requested action. Required manual intervention to fix the intercom parameters,
+       which can be of variable length.">
+   
+        <initialValue name="pduType" value="DISPDUType.INTERCOM_CONTROL"/>
+   
+        <attribute name="controlType" comment="control type">
+            <sisoenum type="IntercomControlControlType" comment="uid 180"/>
+        </attribute>
+  
+        <attribute name="communicationsChannelType" comment="control type">
+            <primitive type="uint8"/>
+        </attribute>
+  
+        <attribute name="sourceEntityID" comment="Source entity ID, this can also be ObjectIdentifier or UnattachedIdentifier">
+            <classRef name="EntityID"/>
+        </attribute>
+  
+        <attribute name="sourceIntercomNumber" comment="The specific intercom device being simulated within an entity.">
+            <primitive type="uint16"/>
+        </attribute>
+  
+        <attribute name="sourceLineID" comment="Line number to which the intercom control refers">
+            <primitive type="uint8"/>
+        </attribute>
+  
+        <attribute name="transmitPriority" comment="priority of this message relative to transmissons from other intercom devices">
+            <primitive type="uint8"/>
+        </attribute>
+  
+        <attribute name="transmitLineState" comment="current transmit state of the line">
+            <sisoenum type="IntercomControlTransmitLineState" comment="uid 183"/>
+        </attribute>
+  
+        <attribute name="command" comment="detailed type requested.">
+            <sisoenum type="IntercomControlCommand" comment="uid 182"/>
+        </attribute>
+
+        <attribute name="masterIntercomReferenceID" comment="eid of the entity that has created this intercom channel, same comments as sourceEntityId">
+            <classRef name="EntityID"/>
+        </attribute>
+  
+        <attribute name="masterIntercomNumber" comment="specific intercom device that has created this intercom channel">
+            <primitive type="uint16"/>
+        </attribute>
+  
+        <attribute name="masterChannelID">
+            <primitive type="uint16"/>
+        </attribute>
+        
+        <attribute name="intercomParametersLength" hidden="true" comment="number of intercom parameters">
+            <primitive type="uint32"/>
+        </attribute>
+  
+        <attribute name="intercomParameters">
+            <objectlist countFieldName="intercomParametersLength">
+                <classRef name="IntercomCommunicationsParameters"/>
+            </objectlist> 
+        </attribute>
+    </class>
+
+</classes>

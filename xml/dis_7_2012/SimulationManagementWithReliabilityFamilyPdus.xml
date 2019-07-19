@@ -1,0 +1,519 @@
+<classes>
+   <class name="SimulationManagementWithReliabilityFamilyPdu" inheritsFrom="PduBase">
+
+        <initialValue name="protocolFamily" value="DISProtocolFamily.SIMULATION_MANAGEMENT_WITH_RELIABILITY"/>
+
+        <attribute name="originatingID" comment="IDs the simulation or entity, either a simulation or an entity. Either 6.2.80 or 6.2.28">
+            <classRef name="SimulationIdentifier"/>
+        </attribute>
+
+        <attribute name="receivingID" comment="simulation, all simulations, a special ID, or an entity. See 5.6.5 and 5.12.4">
+            <classRef name="SimulationIdentifier"/>
+        </attribute>
+
+    </class>
+
+    <class name="CreateEntityReliablePdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu" comment="Section 5.3.12.1: creation of an entity , reliable.">
+      
+        <initialValue name="pduType" value="DISPDUType.CREATE_ENTITY_R"/>
+
+        <attribute name="requiredReliabilityService" comment="level of reliability service used for this transaction">
+            <sisoenum type="RequiredReliabilityService" comment="uid 74"/>
+        </attribute>
+   
+        <attribute name="pad1">
+            <primitive type="uint8"/>
+        </attribute>
+   
+        <attribute name="pad2">
+            <primitive type="uint16"/>
+        </attribute>
+   
+        <attribute name="requestID" comment="Request ID">
+            <primitive type="uint32"/>
+        </attribute>
+
+    </class>
+
+    <class name="RemoveEntityReliablePdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu" comment="Section 5.3.12.2: Removal of an entity , reliable.">
+      
+        <initialValue name="pduType" value="DISPDUType.REMOVE_ENTITY_R"/>
+
+        <attribute name="requiredReliabilityService" comment="level of reliability service used for this transaction">
+            <sisoenum type="RequiredReliabilityService" comment="uid 74"/>
+        </attribute>
+   
+        <attribute name="pad1">
+            <primitive type="uint8"/>
+        </attribute>
+   
+        <attribute name="pad2">
+            <primitive type="uint16"/>
+        </attribute>
+   
+        <attribute name="requestID" comment="Request ID">
+            <primitive type="uint32"/>
+        </attribute>
+
+    </class>
+
+    <class name="StartResumeReliablePdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu" comment="Section 5.3.12.3: Start resume simulation, relaible.">
+      
+        <initialValue name="pduType" value="DISPDUType.START_RESUME_R"/>
+
+        <attribute name="realWorldTime" comment="time in real world for this operation to happen">
+            <classRef name= "ClockTime"/>
+        </attribute>
+   
+        <attribute name="simulationTime" comment="time in simulation for the simulation to resume">
+            <classRef name= "ClockTime"/>
+        </attribute>
+   
+        <attribute name="requiredReliabilityService" comment="level of reliability service used for this transaction">
+            <sisoenum type="RequiredReliabilityService" comment="uid 74"/>
+        </attribute>
+   
+        <attribute name="pad1">
+            <primitive type="uint8"/>
+        </attribute>
+   
+        <attribute name="pad2">
+            <primitive type="uint16"/>
+        </attribute>
+   
+        <attribute name="requestID" comment="Request ID">
+            <primitive type="uint32"/>
+        </attribute>
+  
+    </class> 
+ 
+    <class name="StopFreezeReliablePdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu" comment="Section 5.3.12.4: Stop freeze simulation, relaible.">
+      
+        <initialValue name="pduType" value="DISPDUType.STOP_FREEZE_R"/>
+   
+        <attribute name="realWorldTime" comment="time in real world for this operation to happen">
+            <classRef name= "ClockTime"/>
+        </attribute>
+   
+        <attribute name="reason" comment="Reason for stopping/freezing simulation">
+            <sisoenum type="StopFreezeReason" comment="uid 67"/>
+        </attribute>
+   
+        <attribute name="frozenBehavior" comment="internal behvior of the simulation while frozen">
+            <sisobitfield type="StopFreezeFrozenBehavior" comment="uid 68"/>
+        </attribute>
+   
+        <attribute name="requiredReliablityService" comment="reliablity level">
+            <sisoenum type="RequiredReliabilityService" comment="uid 74"/>
+        </attribute>
+   
+        <attribute name="pad1" comment="padding">
+            <primitive type="uint8"/>
+        </attribute>
+
+        <attribute name="requestID" comment="Request ID">
+            <primitive type="uint32"/>
+        </attribute>
+   
+    </class>
+   
+    <class name="AcknowledgeReliablePdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
+           comment="Section 5.3.12.5: Ack receipt of a start-resume, stop-freeze, create-entity or remove enitty (reliable) pdus.">
+      
+        <initialValue name="pduType" value="DISPDUType.ACKNOWLEDGE_R"/>
+   
+        <attribute name="acknowledgeFlag" comment="ack flags">
+            <sisoenum type="AcknowledgeAcknowledgeFlag" comment="uid 69"/>
+        </attribute>
+   
+        <attribute name="responseFlag" comment="response flags">
+            <sisoenum type="AcknowledgeResponseFlag" comment="uid 70"/>
+        </attribute>
+   
+        <attribute name="requestID" comment="Request ID">
+            <primitive type="uint32"/>
+        </attribute>
+   
+    </class>
+ 
+    <class name="ActionRequestReliablePdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
+           comment="Section 5.3.12.6: request from a simulation manager to a managed entity to perform a specified action.">
+      
+        <initialValue name="pduType" value="DISPDUType.ACTION_REQUEST_R"/>
+   
+        <attribute name="requiredReliabilityService" comment="level of reliability service used for this transaction">
+            <sisoenum type="RequiredReliabilityService" comment="uid 74"/>
+        </attribute>
+   
+        <attribute name="pad1" comment="padding">
+            <primitive type="uint8"/>
+        </attribute>
+   
+        <attribute name="pad2" comment="padding">
+            <primitive type="uint16"/>
+        </attribute>
+   
+        <attribute name="requestID" comment="request ID">
+            <primitive type="uint32"/>
+        </attribute>
+   
+        <attribute name="actionID" comment="request ID">
+            <sisoenum type="ActionRequestActionID" comment="uid 71"/>
+        </attribute>
+   
+        <attribute name="numberOfFixedDatumRecords" hidden="true" comment="Fixed datum record count">
+            <primitive type="uint32"/>
+        </attribute>
+   
+        <attribute name="numberOfVariableDatumRecords" hidden="true" comment="variable datum record count">
+            <primitive type="uint32"/>
+        </attribute>
+   
+   
+        <attribute name="fixedDatumRecords" comment="Fixed datum records">
+            <objectlist countFieldName="numberOfFixedDatumRecords">
+                <classRef name="FixedDatum"/>
+            </objectlist> 
+        </attribute>
+    
+        <attribute name="variableDatumRecords" comment="Variable datum records">
+            <objectlist countFieldName="numberOfVariableDatumRecords">
+                <classRef name="VariableDatum"/>
+            </objectlist> 
+        </attribute>
+    
+    </class>
+    
+    <class name="ActionResponseReliablePdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu" comment="Section 5.3.12.7: Response from an entity to an action request PDU.">
+      
+        <initialValue name="pduType" value="DISPDUType.ACTION_RESPONSE_R"/>
+   
+        <attribute name="requestID" comment="request ID">
+            <primitive type="uint32"/>
+        </attribute>
+   
+        <attribute name="responseStatus" comment="status of response">
+            <sisoenum type="ActionResponseRequestStatus" comment="uid 72"/>
+        </attribute>
+   
+        <attribute name="numberOfFixedDatumRecords" hidden="true" comment="Fixed datum record count">
+            <primitive type="uint32"/>
+        </attribute>
+   
+        <attribute name="numberOfVariableDatumRecords" hidden="true" comment="variable datum record count">
+            <primitive type="uint32"/>
+        </attribute>
+   
+        <attribute name="fixedDatumRecords" comment="Fixed datum records">
+            <objectlist countFieldName="numberOfFixedDatumRecords">
+                <classRef name="FixedDatum"/>
+            </objectlist> 
+        </attribute>
+    
+        <attribute name="variableDatumRecords" comment="Variable datum records">
+            <objectlist countFieldName="numberOfVariableDatumRecords">
+                <classRef name="VariableDatum"/>
+            </objectlist> 
+        </attribute>
+
+    </class>
+
+    <class name="DataQueryReliablePdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu" comment="Section 5.3.12.8: request for data from an entity.">
+      
+        <initialValue name="pduType" value="DISPDUType.DATA_QUERY_R"/>
+   
+        <attribute name="requiredReliabilityService" comment="level of reliability service used for this transaction">
+            <sisoenum type="RequiredReliabilityService" comment="uid 74"/>
+        </attribute>
+   
+        <attribute name="pad1" comment="padding">
+            <primitive type="uint8"/>
+        </attribute>
+   
+        <attribute name="pad2" comment="padding">
+            <primitive type="uint16"/>
+        </attribute>
+   
+        <attribute name="requestID" comment="request ID">
+            <primitive type="uint32"/>
+        </attribute>
+   
+        <attribute name="timeInterval" comment="time interval between issuing data query PDUs">
+            <primitive type="uint32"/>
+        </attribute>
+   
+        <attribute name="numberOfFixedDatumRecords" hidden="true" comment="Fixed datum record count">
+            <primitive type="uint32"/>
+        </attribute>
+   
+        <attribute name="numberOfVariableDatumRecords" hidden="true" comment="variable datum record count">
+            <primitive type="uint32"/>
+        </attribute>
+   
+        <attribute name="fixedDatumRecords" comment="Fixed datum records">
+            <objectlist countFieldName="numberOfFixedDatumRecords">
+                <classRef name="FixedDatum"/>
+            </objectlist> 
+        </attribute>
+    
+        <attribute name="variableDatumRecords" comment="Variable datum records">
+            <objectlist countFieldName="numberOfVariableDatumRecords">
+                <classRef name="VariableDatum"/>
+            </objectlist> 
+        </attribute>
+
+    </class>
+
+    <class name="SetDataReliablePdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
+           comment="Section 5.3.12.9: initializing or chaning internal state information, reliable.">
+      
+        <initialValue name="pduType" value="DISPDUType.SET_DATA_R"/>
+   
+        <attribute name="requiredReliabilityService" comment="level of reliability service used for this transaction">
+            <sisoenum type="RequiredReliabilityService" comment="uid 74"/>
+        </attribute>
+   
+        <attribute name="pad1" comment="padding">
+            <primitive type="uint8"/>
+        </attribute>
+   
+        <attribute name="pad2" comment="padding">
+            <primitive type="uint16"/>
+        </attribute>
+   
+        <attribute name="requestID" comment="request ID">
+            <primitive type="uint32"/>
+        </attribute>
+   
+        <attribute name="numberOfFixedDatumRecords" hidden="true" comment="Fixed datum record count">
+            <primitive type="uint32"/>
+        </attribute>
+   
+        <attribute name="numberOfVariableDatumRecords" hidden="true" comment="variable datum record count">
+            <primitive type="uint32"/>
+        </attribute>
+   
+        <attribute name="fixedDatumRecords" comment="Fixed datum records">
+            <objectlist countFieldName="numberOfFixedDatumRecords">
+                <classRef name="FixedDatum"/>
+            </objectlist> 
+        </attribute>
+    
+        <attribute name="variableDatumRecords" comment="Variable datum records">
+            <objectlist countFieldName="numberOfVariableDatumRecords">
+                <classRef name="VariableDatum"/>
+            </objectlist> 
+        </attribute>
+    </class>
+
+    <class name="DataReliablePdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
+           comment="Section 5.3.12.10: issued in response to a data query R or set dataR pdu.">
+      
+        <initialValue name="pduType" value="DISPDUType.DATA_R"/>
+   
+        <attribute name="requestID" comment="Request ID">
+            <primitive type="uint32"/>
+        </attribute>
+   
+        <attribute name="requiredReliabilityService" comment="level of reliability service used for this transaction">
+            <sisoenum type="RequiredReliabilityService" comment="uid 74"/>
+        </attribute>
+
+        <attribute name="pad1" comment="padding">
+            <primitive type="uint8"/>
+        </attribute>
+   
+        <attribute name="pad2" comment="padding">
+            <primitive type="uint16"/>
+        </attribute>
+   
+        <attribute name="numberOfFixedDatumRecords" hidden="true" comment="Fixed datum record count">
+            <primitive type="uint32"/>
+        </attribute>
+   
+        <attribute name="numberOfVariableDatumRecords" hidden="true" comment="variable datum record count">
+            <primitive type="uint32"/>
+        </attribute>
+   
+        <attribute name="fixedDatumRecords" comment="Fixed datum records">
+            <objectlist countFieldName="numberOfFixedDatumRecords">
+                <classRef name="FixedDatum"/>
+            </objectlist> 
+        </attribute>
+    
+        <attribute name="variableDatumRecords" comment="Variable datum records">
+            <objectlist countFieldName="numberOfVariableDatumRecords">
+                <classRef name="VariableDatum"/>
+            </objectlist> 
+        </attribute>
+  
+    </class>
+
+    <class name="EventReportReliablePdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
+           comment="Section 5.3.12.11: reports the occurance of a significatnt event to the simulation manager.">
+      
+        <initialValue name="pduType" value="DISPDUType.EVENT_REPORT_R"/>
+   
+        <attribute name="eventType" comment="Event type">
+            <sisoenum type="EventReportEventType" comment="uid 73"/>
+        </attribute>
+   
+        <attribute name="pad1" comment="padding">
+            <primitive type="uint32"/>
+        </attribute>
+   
+        <attribute name="numberOfFixedDatumRecords" hidden="true" comment="Fixed datum record count">
+            <primitive type="uint32"/>
+        </attribute>
+   
+        <attribute name="numberOfVariableDatumRecords" hidden="true" comment="variable datum record count">
+            <primitive type="uint32"/>
+        </attribute>
+   
+        <attribute name="fixedDatumRecords" comment="Fixed datum records">
+            <objectlist countFieldName="numberOfFixedDatumRecords">
+                <classRef name="FixedDatum"/>
+            </objectlist> 
+        </attribute>
+    
+        <attribute name="variableDatumRecords" comment="Variable datum records">
+            <objectlist countFieldName="numberOfVariableDatumRecords">
+                <classRef name="VariableDatum"/>
+            </objectlist> 
+        </attribute>
+    
+    </class>
+    
+    <class name="CommentReliablePdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
+           comment="Section 5.3.12.12: Arbitrary messages. Only reliable this time.">
+      
+        <initialValue name="pduType" value="DISPDUType.COMMENT_R"/>
+   
+        <attribute name="numberOfFixedDatumRecords" hidden="true" comment="Fixed datum record count">
+            <primitive type="uint32"/>
+        </attribute>
+   
+        <attribute name="numberOfVariableDatumRecords" hidden="true" comment="variable datum record count">
+            <primitive type="uint32"/>
+        </attribute>
+   
+        <attribute name="fixedDatumRecords" comment="Fixed datum records">
+            <objectlist countFieldName="numberOfFixedDatumRecords">
+                <classRef name="FixedDatum"/>
+            </objectlist> 
+        </attribute>
+    
+        <attribute name="variableDatumRecords" comment="Variable datum records">
+            <objectlist countFieldName="numberOfVariableDatumRecords">
+                <classRef name="VariableDatum"/>
+            </objectlist> 
+        </attribute>
+    </class>
+
+    <class name="RecordQueryReliablePdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
+           comment="Section 5.3.12.13: A request for one or more records of data from an entity.">
+      
+        <initialValue name="pduType" value="DISPDUType.RECORD_QUERY_R"/>
+  
+        <attribute name="requestID" comment="request ID">
+            <primitive type="uint32"/>
+        </attribute>
+   
+        <attribute name="requiredReliabilityService" comment="level of reliability service used for this transaction">
+            <sisoenum type="RequiredReliabilityService" comment="uid 74"/>
+        </attribute>
+   
+        <attribute name="pad1" comment="padding">
+            <primitive type="uint8"/>
+        </attribute>
+   
+        <attribute name="eventType" comment="event type">
+            <sisoenum type="RecordQueryREventType" comment="uid 334"/>
+        </attribute>
+   
+        <attribute name="time" comment="time">
+            <primitive type="uint32"/>
+        </attribute>
+   
+        <attribute name="numberOfRecords" hidden="true" comment="numberOfRecords">
+            <primitive type="uint32"/>
+        </attribute>
+   
+        <attribute name="recordIDs" comment="record IDs">
+            <objectlist countFieldName="numberOfRecords">
+                <classRef name="RecordQuerySpecification"/>
+            </objectlist> 
+        </attribute>
+
+    </class>
+
+    <class name="SetRecordReliablePdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
+            comment="Section 5.3.12.14: Initializing or changing internal parameter info.">
+          
+        <initialValue name="pduType" value="DISPDUType.SET_RECORD_R"/>
+       
+        <attribute name="requestID" comment="request ID">
+            <primitive type="uint32"/>
+        </attribute>
+       
+        <attribute name="requiredReliabilityService" comment="level of reliability service used for this transaction">
+            <sisoenum type="RequiredReliabilityService" comment="uid 74"/>
+        </attribute>
+       
+        <attribute name="pad1">
+            <primitive type="uint8"/>
+        </attribute>
+       
+        <attribute name="pad2">
+            <primitive type="uint16"/>
+        </attribute>
+       
+        <attribute name="pad3">
+            <primitive type="uint32"/>
+        </attribute>
+        
+        <attribute name="numberOfRecordSets" hidden="true" comment="Number of record sets in list">
+            <primitive type="uint32"/>
+        </attribute>
+    
+        <attribute name="recordSets" comment="record sets">
+            <objectlist countFieldName="numberOfRecordSets">
+                <classRef name="RecordSpecification"/>
+            </objectlist> 
+        </attribute>
+        
+    </class>
+    
+    <class name="RecordReliablePdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
+           comment="Section 7.11.16: Response to RecordQueryReliablePdu. ">
+        
+        <initialValue name="pduType" value="DISPDUType.RECORD_R"/>
+
+        <attribute name="requestID" comment="request ID">
+            <primitive type="uint32"/>
+        </attribute>
+       
+        <attribute name="requiredReliabilityService" comment="level of reliability service used for this transaction">
+            <sisoenum type="RequiredReliabilityService" comment="uid 74"/>
+        </attribute>
+       
+        <attribute name="pad1">
+            <primitive type="uint8"/>
+        </attribute>
+       
+        <attribute name="eventType">
+            <sisoenum type="RecordREventType" comment="uid 333"/>
+        </attribute>
+       
+        <attribute name="numberOfRecordSets" hidden="true" comment="Number of record sets in list">
+            <primitive type="uint32"/>
+        </attribute>
+    
+        <attribute name="recordSets" comment="record sets">
+            <objectlist countFieldName="numberOfRecordSets">
+                <classRef name="RecordSpecification"/>
+            </objectlist> 
+        </attribute>
+        
+    </class>
+</classes>

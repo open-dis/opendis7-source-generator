@@ -1,0 +1,11 @@
+package %s;
+
+import %s.%s;
+
+abstract public class Base extends %s
+{
+    public Base()
+    {
+    	set%s(%s.%s);
+    }
+}

@@ -1,0 +1,178 @@
+<classes>
+    <!--Logistics protocol Family: Section 7.4.2 Service Request PDU, 7.4.3 Resupply Offer PDU -->
+
+    <class name="LogisticsFamilyPdu" inheritsFrom="PduBase" comment=" Abstract superclass for logistics PDUs. Section 7.4" >
+     
+        <initialValue name="protocolFamily" value="DISProtocolFamily.LOGISTICS"/>
+  
+    </class>
+
+    <class name="ServiceRequestPdu" inheritsFrom="LogisticsFamilyPdu"
+           comment="Service Request PDU shall be used to communicate information associated with
+                           one entity requesting a service from another). Section 7.4.2">
+        
+        <initialValue name="pduType" value="DISPDUType.SERVICE_REQUEST"/>
+
+        <attribute name="requestingEntityID" comment="Entity that is requesting service (see 6.2.28), Section 7.4.2">
+            <classref name="EntityID"/>
+        </attribute>
+
+        <attribute name="servicingEntityID" comment="Entity that is providing the service (see 6.2.28), Section 7.4.2">
+            <classref name="EntityID"/>
+        </attribute>
+
+        <attribute name="serviceTypeRequested" comment="Type of service requested, Section 7.4.2">
+            <sisoenum type="ServiceRequestServiceTypeRequested" comment="uid 63"/>
+        </attribute>
+
+        <attribute name="numberOfSupplyTypes" hidden="true" comment="How many requested, Section 7.4.2">
+            <primitive type="uint8"/>
+        </attribute>
+
+        <attribute name="padding1">
+            <primitive type="uint16" defaultValue="0"/>
+        </attribute>
+
+        <attribute name="supplies">
+            <objectlist countFieldName="numberOfSupplyTypes" comment="Field shall specify the type of supply and the amount of that supply for the number
+                                 specified in the numberOfSupplyTypes (see 6.2.85), Section 7.4.2">
+                <classRef name="SupplyQuantity"/>
+            </objectlist>
+        </attribute>
+
+    </class>
+
+    <class name="ResupplyOfferPdu" inheritsFrom="LogisticsFamilyPdu" comment="Information used to communicate the offer of supplies by a supplying entity to a receiving entity. Section 7.4.3">
+
+        <initialValue name="pduType" value="DISPDUType.RESUPPLY_OFFER"/>
+
+        <attribute name="receivingEntityID"
+                   comment="Field identifies the Entity and respective Entity Record ID that is receiving service (see 6.2.28), Section 7.4.3">
+            <classref name="EntityID"/>
+        </attribute>
+
+        <attribute name="supplyingEntityID"
+                   comment="Identifies the Entity and respective Entity ID Record that is supplying  (see 6.2.28), Section 7.4.3">
+            <classref name="EntityID"/>
+        </attribute>
+
+        <attribute name="numberOfSupplyTypes" hidden="true"
+                   comment="How many supplies types are being offered, Section 7.4.3">
+            <primitive type="uint8"/>
+        </attribute>
+
+        <attribute name="padding1"
+                   comment="padding">
+            <primitive type="uint8" defaultValue="0"/>
+        </attribute>
+
+        <attribute name="padding2" comment="padding">
+            <primitive type="uint16" defaultValue="0"/>
+        </attribute>
+
+        <attribute name="supplies"
+                   comment="A Reord that Specifies the type of supply and the amount of that supply for each of the supply types in numberOfSupplyTypes (see 6.2.85), Section 7.4.3">
+            <objectlist countFieldName="numberOfSupplyTypes">
+                <classRef name="SupplyQuantity"/>
+            </objectlist>
+        </attribute>
+
+    </class>
+
+    <class name="ResupplyReceivedPdu" inheritsFrom="LogisticsFamilyPdu" comment="Section 7.4.4. Receipt of supplies is communicated by issuing Resupply Received PDU.">
+
+        <initialValue name="pduType" value="DISPDUType.RESUPPLY_RECEIVED"/>
+
+        <attribute name="receivingEntityID" comment="Entity that is receiving service.  Shall be represented by Entity Identifier record (see 6.2.28)">
+            <classref name="EntityID"/>
+        </attribute>
+
+        <attribute name="supplyingEntityID" comment="Entity that is supplying.  Shall be represented by Entity Identifier record (see 6.2.28)">
+            <classref name="EntityID"/>
+        </attribute>
+
+        <attribute name="numberOfSupplyTypes" hidden="true" comment="How many supplies are taken by receiving entity">
+            <primitive type="uint8"/>
+        </attribute>
+
+         <attribute name="padding1"
+                   comment="padding">
+            <primitive type="uint8" defaultValue="0"/>
+        </attribute>
+
+        <attribute name="padding2" comment="padding">
+            <primitive type="uint16" defaultValue="0"/>
+        </attribute>
+
+        <attribute name="supplies" comment="A Reord that Specifies the type of supply and the amount of that supply for each of the supply types in numberOfSupplyTypes (see 6.2.85), Section 7.4.3">
+            <objectlist countFieldName="numberOfSupplyTypes">
+                <classRef name="SupplyQuantity"/>
+            </objectlist>
+        </attribute>
+
+    </class>
+
+    <class name="ResupplyCancelPdu" inheritsFrom="LogisticsFamilyPdu" comment="Information used to communicate the offer of supplies by a supplying entity to a receiving entity. Section 7.4.3">
+
+        <initialValue name="pduType" value="DISPDUType.RESUPPLY_CANCEL"/>
+
+        <attribute name="receivingEntityID"
+                   comment="Requesting entity, Section 7.4.5">
+            <classref name="EntityID"/>
+        </attribute>
+
+        <attribute name="supplyingEntityID"
+                   comment="Supplying entity, Section 7.4.5">
+            <classref name="EntityID"/>
+        </attribute>
+        
+    </class>
+    
+    <class name="RepairCompletePdu" inheritsFrom="LogisticsFamilyPdu" comment="Section 7.4.6. Service Request PDU is received and repair is complete.">
+
+        <initialValue name="pduType" value="DISPDUType.REPAIR_COMPLETE"/>
+
+        <attribute name="receivingEntityID" comment="Entity that is receiving service.  See 6.2.28">
+            <classref name="EntityID"/>
+        </attribute>
+
+        <attribute name="repairingEntityID" comment="Entity that is supplying.  See 6.2.28">
+            <classref name="EntityID"/>
+        </attribute>
+
+        <attribute name="repair" comment="Enumeration for type of repair.  See 6.2.74">
+            <sisoenum type="RepairCompleteRepair" comment="uid 64"/>
+        </attribute>
+
+        <attribute name="padding4" comment="padding, number prevents conflict with superclass ivar name">
+            <primitive type="uint16" defaultValue="0"/>
+        </attribute>
+
+    </class>
+
+    <class name="RepairResponsePdu" inheritsFrom="LogisticsFamilyPdu" comment="Section 7.4.7. Sent after repair complete PDU.">
+
+        <initialValue name="pduType" value="DISPDUType.REPAIR_RESPONSE"/>
+
+        <attribute name="receivingEntityID" comment="Entity that requested repairs.  See 6.2.28">
+            <classref name="EntityID"/>
+        </attribute>
+
+        <attribute name="repairingEntityID" comment="Entity that is repairing.  See 6.2.28">
+            <classref name="EntityID"/>
+        </attribute>
+
+        <attribute name="repairResult" comment="Result of repair operation">
+            <sisoenum type="RepairResponseRepairResult" comment="uid 64"/>
+        </attribute>
+
+        <attribute name="padding1" comment="padding">
+            <primitive type="uint8" defaultValue="0"/>
+        </attribute>
+
+        <attribute name="padding2" comment="padding">
+            <primitive type="uint16" defaultValue="0"/>
+        </attribute>
+
+    </class>
+</classes>

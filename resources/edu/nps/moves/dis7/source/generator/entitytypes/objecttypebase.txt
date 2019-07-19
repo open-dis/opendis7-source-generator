@@ -1,0 +1,9 @@
+package %s;
+
+public class %s extends edu.nps.moves.dis.ObjectType
+{
+    /* uid %s */
+    public %s()
+    {
+    }
+}

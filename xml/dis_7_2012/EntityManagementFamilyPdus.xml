@@ -1,0 +1,219 @@
+<classes>
+    <class name="EntityManagementFamilyPdu" inheritsFrom="PduBase" comment=" Managment of grouping of PDUs, and more. Section 7.8">
+   
+        <initialValue name="protocolFamily" value="DISProtocolFamily.ENTITY_MANAGEMENT"/>
+    
+    </class>
+
+    <class name="AggregateStatePdu" inheritsFrom="EntityManagementFamilyPdu"
+           comment="Section 5.3.9.1 informationa bout aggregating entities anc communicating information about the aggregated entities. requires manual intervention to fix the padding between entityID lists and silent aggregate sysem lists this padding  is dependent on how many entityIDs there are, and needs to be on a 32 bit word boundary. UNFINISHED">
+    
+        <initialValue name="pduType" value="DISPDUType.AGGREGATE_STATE"/>
+     
+        <attribute name="aggregateID" comment="ID of aggregated entities">
+            <classRef name= "AggregateIdentifier"/>
+        </attribute>
+      
+        <attribute name="forceID" comment="force ID">
+            <sisoenum type="ForceID" comment="uid 6"/>
+        </attribute>
+      
+        <attribute name="aggregateState" comment="state of aggregate">
+            <sisoenum type="AggregateStateAggregateState" comment="uid 204"/>
+        </attribute>
+      
+        <attribute name="aggregateType" comment="entity type of the aggregated entities">
+            <classRef name= "AggregateType"/>
+        </attribute>
+      
+        <attribute name="formation" comment="formation of aggregated entities">
+            <sisoenum type="AggregateStateFormation" comment="uid 205"/>
+        </attribute>
+      
+        <attribute name="aggregateMarking" comment="marking for aggregate; first char is charset type, rest is char data">
+            <classRef name= "AggregateMarking"/>
+        </attribute>
+      
+        <attribute name="dimensions" comment="dimensions of bounding box for the aggregated entities, origin at the center of mass">
+            <classRef name= "Vector3Float"/>
+        </attribute>
+      
+        <attribute name="orientation" comment="orientation of the bounding box">
+            <classRef name= "Vector3Float"/>
+        </attribute>
+      
+        <attribute name="centerOfMass" comment="center of mass of the aggregation">
+            <classRef name= "Vector3Double"/>
+        </attribute>
+      
+        <attribute name="velocity" comment="velocity of aggregation">
+            <classRef name= "Vector3Float"/>
+        </attribute>
+      
+        <attribute name="numberOfDisAggregates" hidden="true" comment="number of aggregates">
+            <primitive type= "uint16"/>
+        </attribute>
+      
+        <attribute name="numberOfDisEntities" hidden="true" comment="number of entities">
+            <primitive type= "uint16"/>
+        </attribute>
+      
+        <attribute name="numberOfSilentAggregateTypes" hidden="true" comment="number of silent aggregate types">
+            <primitive type= "uint16"/>
+        </attribute>
+      
+        <attribute name="numberOfSilentEntityTypes" hidden="true" comment="number of silent entity types">
+            <primitive type= "uint16"/>
+        </attribute>
+      
+        <attribute name="aggregateIDList" comment="aggregates  list">
+            <objectlist countFieldName="numberOfDisAggregates">
+                <classRef name="AggregateIdentifier"/>
+            </objectlist> 
+        </attribute>
+      
+        <attribute name="entityIDList" comment="entity ID list">
+            <objectlist countFieldName="numberOfDisEntities">
+                <classRef name="EntityID"/>
+            </objectlist> 
+        </attribute>
+        
+        <!--<attribute name="padTo32" comment="^^^padding to put the start of the next list on a 32 bit boundary. Each of the IDs above=48, if there's an odd number, make this 2 bytes else 0">
+            <primitivelist length="2"> for 0 data
+                <primitive type="uint8"/>
+            </primitivelist>
+        </attribute> -->
+        
+        <attribute name="padTo32">
+            <padtoboundary length="32"/>
+        </attribute>
+        
+        <attribute name="silentAggregateSystemList" comment="silent entity types">
+            <objectlist countFieldName="numberOfSilentAggregateTypes">
+                <classRef name="EntityType"/>
+            </objectlist> 
+        </attribute>
+        
+        <attribute name="silentEntitySystemList" comment="silent entity types">
+            <objectlist countFieldName="numberOfSilentEntityTypes">
+                <classRef name="EntityType"/>
+            </objectlist> 
+        </attribute>
+        
+        <attribute name="numberOfVariableDatumRecords" hidden="true" comment="number of variable datum records">
+            <primitive type= "uint32"/>
+        </attribute>
+      
+        <attribute name="variableDatumList" comment="variableDatums">
+            <objectlist countFieldName="numberOfVariableDatumRecords">
+                <classRef name="VariableDatum"/>
+            </objectlist> 
+        </attribute>
+      
+    </class>
+ 
+    <class name="IsGroupOfPdu" inheritsFrom="EntityManagementFamilyPdu"
+           comment="Information about a particular group of entities grouped together for the purposes of netowrk bandwidth reduction or aggregation. Needs manual cleanup. The GED size requires a database lookup. Section 7.8.3 UNFINISHED">
+    
+        <initialValue name="pduType" value="DISPDUType.ISGROUPOF"/>
+     
+        <attribute name="groupEntityID" comment="ID of aggregated entities">
+            <classRef name= "EntityID"/>
+        </attribute>
+      
+        <attribute name="groupedEntityCategory" comment="type of entities constituting the group">
+            <sisoenum type="IsGroupOfGroupedEntityCategory" comment="uid 213"/>
+        </attribute>
+      
+        <attribute name="numberOfGroupedEntities" hidden="true" comment="Number of individual entities constituting the group">
+            <primitive type= "uint8"/>
+        </attribute>
+      
+        <attribute name="pad" comment="padding">
+            <primitive type= "uint32"/>
+        </attribute>
+      
+        <attribute name="latitude" comment="latitude">
+            <primitive type= "float64"/>
+        </attribute>
+      
+        <attribute name="longitude" comment="longitude">
+            <primitive type= "float64"/>
+        </attribute>
+      
+        <attribute name="groupedEntityDescriptions" comment="GED records about each individual entity in the group. Bad specing--the Group Entity Descriptions are not described.">
+            <objectlist countFieldName="numberOfGroupedEntities">
+                <classRef name="VariableDatum"/>
+            </objectlist> 
+        </attribute>
+    
+    </class>
+
+    <class name="TransferOwnershipPdu" inheritsFrom="EntityManagementFamilyPdu"
+           comment=" Information initiating the dyanic allocation and control of simulation entities between two simulation applications.">
+    
+        <initialValue name="pduType" value="DISPDUType.TRANSFER_OWNERSHIP"/>
+     
+        <attribute name="originatingEntityID" comment="ID of entity originating request">
+            <classRef name= "EntityID"/>
+        </attribute>
+      
+        <attribute name="receivingEntityID" comment="ID of entity receiving request">
+            <classRef name= "EntityID"/>
+        </attribute>
+      
+        <attribute name="requestID" comment="ID of request">
+            <primitive type= "uint32"/>
+        </attribute>
+      
+        <attribute name="requiredReliabilityService" comment="required level of reliability service.">
+            <sisoenum type="RequiredReliabilityService" comment="uid 74"/>
+        </attribute>
+      
+        <attribute name="transferType" comment="type of transfer desired">
+            <sisoenum type="TransferControlTransferType" comment="uid 224"/>
+        </attribute>
+      
+        <attribute name="transferEntityID" comment="The entity for which control is being requested to transfer">
+            <classRef name= "EntityID"/>
+        </attribute>
+      
+        <attribute name="recordSets">
+            <classRef name="RecordSpecification"/>
+        </attribute>
+    
+    </class>
+
+
+    <class name="IsPartOfPdu" inheritsFrom="EntityManagementFamilyPdu"
+           comment=" The joining of two or more simulation entities is communicated by this PDU. Section 7.8.5">
+
+        <initialValue name="pduType" value="DISPDUType.ISPARTOF"/>
+ 
+        <attribute name="orginatingEntityID" comment="ID of entity originating PDU">
+            <classRef name= "EntityID"/>
+        </attribute>
+  
+        <attribute name="receivingEntityID" comment="ID of entity receiving PDU">
+            <classRef name= "EntityID"/>
+        </attribute>
+  
+        <attribute name="relationship" comment="relationship of joined parts">
+            <classRef name= "Relationship"/>
+        </attribute>
+  
+        <attribute name="partLocation" comment="location of part; centroid of part in host's coordinate system. x=range, y=bearing, z=0">
+            <classRef name= "Vector3Float"/>
+        </attribute>
+   
+        <attribute name="namedLocationID" comment="named location">
+            <classRef name= "NamedLocationIdentification"/>
+        </attribute>
+   
+        <attribute name="partEntityType" comment="entity type">
+            <classRef name= "EntityType"/>
+        </attribute>
+   
+    </class>
+    
+</classes>

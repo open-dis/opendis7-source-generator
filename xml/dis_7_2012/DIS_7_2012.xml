@@ -1,0 +1,3435 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+
+<!-- XML description file for the DIS-2012 (Final DIS version 7) protocol. Some classes require manual clean up and intevention. -->
+
+<!-- This file is used by the XML protocol-generator, a fairly simple program that processes this XML file and generates
+   a programming language source file, for example Java or C++. Almost all the work of writing a
+   protocol is boilerplate. Getters and setters for fields, marshalling and unmarshalling, and
+   so on. Once we have a description of the protocol that can be processed by automated tools the
+   actual work of writing the protocol is straightforward, and we can let the tool do almost all
+   the work. There are a few possible issues, such as unit confusion, but for the most part this
+   gets us 98 percent of the way there, and we can fix any issues in the generated source code
+   with patches. 
+
+   The syntax is fairly straightforward. We define objects with their fields (type, name) and 
+   can specify inheritance. Classes and fields can have comments. There are lists of objects,
+   of either fixed or variable length. The variable length lists include a reference to a field
+   that tells us how long the list is.
+-->
+
+<classes xmlns:xi="http://www.w3.org/2001/XInclude">
+    <!-- The Java-specific imports. Java also is capable of saving DIS to XML format via
+        the JAXB package, and saving to a SQL database via Hibernate. This makes the code
+        a little more complex, and it almost certianly won't work on mobile devices. The
+        annotations here are used only by XMLPG, the source code generation tool.
+    -->
+<!--, edu.nps.moves.disenum.*, edu.nps.moves.disutil.*"-->
+    <java imports="java.util.*, java.io.*, edu.nps.moves.dis.enumerations.*"
+          package="edu.nps.moves.dis"
+          directory="main/java/edu/nps/moves/dis"/>
+
+    <!-- csharp langauge specific packages. These are added information for xmlpg -->
+
+    <csharp using="System, System.Collections.Generic, System.Text, System.Diagnostics, System.Xml.Serialization, DISnet.DataStreamUtilities"
+            namespace="DIS1998net"
+            directory="CSharp/DIS"/>
+
+    <!-- C++ specific information, used by xmlpg -->     
+    <cpp namespace="DIS"
+         directory="cpp/DIS"/>
+    
+    <xi:include href="EntityInformationFamilyPdus.xml"/>
+    <xi:include href="WarfareFamilyPdus.xml"/>
+    <xi:include href="LogisticsFamilyPdus.xml"/>
+    <xi:include href="SimulationManagementFamilyPdus.xml"/>
+    <xi:include href="DistributedEmissionsFamilyPdus.xml"/>
+    <xi:include href="RadioCommunicationsFamilyPdus.xml"/>
+    <xi:include href="EntityManagementFamilyPdus.xml"/>
+    <xi:include href="MinefieldFamilyPdus.xml"/>
+    <xi:include href="SyntheticEnvironmentFamilyPdus.xml"/>
+    <xi:include href="SimulationManagementWithReliabilityFamilyPdus.xml"/>
+    <xi:include href="InformationOperationsFamilyPdus.xml"/>
+    <xi:include href="LiveEntityFamilyPdus.xml"/>
+
+    <class name="Domain" inheritsFrom="root" specialCase="domainHolder" comment="A special class to contain and act as a super class for Domain enums">
+        <attribute name="domain1">
+            <sisoenum type="PlatformDomain" comment="uid 8"/>
+        </attribute>
+        <attribute name="domain2">
+            <sisoenum type="MunitionDomain" comment="uid 14" />
+        </attribute>
+        <attribute name="domain3">
+            <sisoenum type="SupplyDomain" comment="uid 600" /> 
+        </attribute>           
+    </class>
+
+    <class name="AcousticEmitter" inheritsFrom="root" comment=" information about a specific UA emitter. Section 6.2.2.">
+    
+        <attribute name="acousticSystemName" comment="the system for a particular UA emitter, and an enumeration">
+            <sisoenum type="UAAcousticSystemName" comment="uid 144"/>
+        </attribute>
+    
+        <attribute name="acousticFunction" comment="The function of the acoustic system">
+            <sisoenum type="UAAcousticEmitterSystemFunction" comment="uid 145"/>
+        </attribute>
+    
+        <attribute name="acousticIDNumber" comment="The UA emitter identification number relative to a specific system">
+            <primitive type="uint8"/>
+        </attribute>
+    
+    </class>
+
+    <class name="AggregateIdentifier" inheritsFrom="root" 
+           comment="The unique designation of each aggregate in an exercise is specified by an aggregate identifier record. The aggregate ID is not an entity and shall not be treated as such. Section 6.2.3.">
+    
+        <attribute name="simulationAddress" comment="Simulation address, ie site and application, the first two fields of the entity ID">
+            <classRef name="SimulationAddress"/>
+        </attribute>
+  
+        <attribute name="aggregateID" comment="the aggregate ID">
+            <primitive type="uint16"/>
+        </attribute>
+ 
+    </class>
+
+    <class name="AggregateMarking" inheritsFrom="root"
+           comment="Specifies the character set used in the first byte, followed by up to 31 characters of text data. Section 6.2.4. ">
+
+        <attribute name="characterSet" comment="The character set">
+            <sisoenum type="EntityMarkingCharacterSet" comment="uid 45"/>
+        </attribute>
+
+        <attribute name="characters" comment="The characters">
+            <primitivelist length="31" couldBeString="true">
+                <primitive type="uint8"/>
+            </primitivelist>
+        </attribute>
+
+    </class>
+
+    <class name="AggregateType" inheritsFrom="root" comment="Identifies the type and organization of an aggregate. Section 6.2.5">
+    
+        <attribute name="aggregateKind" comment="Grouping criterion used to group the aggregate. Enumeration from EBV document">
+            <sisoenum type="AggregateStateAggregateKind" comment="uid 206"/>
+        </attribute>
+    
+        <attribute name="domain" comment="Domain of entity (air, surface, subsurface, space, etc) Zero means domain does not apply.">
+            <sisoenum type="PlatformDomain" comment="uid 8"/>
+        </attribute>
+    
+        <attribute name="country" comment="country to which the design of the entity is attributed" >
+            <sisoenum type="Country" comment="uid 29"/>
+        </attribute>
+    
+    <!-- todo spec confusing...uid 207 -->
+        <attribute name="category" comment="category of entity">
+            <primitive type="uint8"/>
+        </attribute>
+    
+        <attribute name="subcategory" comment="subcategory of entity">
+            <sisoenum type="AggregateStateSubcategory" comment="uid 208"/>
+        </attribute>
+    
+        <attribute name="specificInfo" comment="specific info based on subcategory field. specific is a reserved word in sql.">
+            <sisoenum type="AggregateStateSpecific" comment="uid 209"/>
+        </attribute>
+    
+        <attribute name="extra">
+            <primitive type="uint8"/>
+        </attribute>
+    
+    </class>
+
+    <!-- Section 6.2.6 specifies that angles will be represented as 32 bit floating points expressed in radians -->
+
+    <class name="AngularVelocityVector" inheritsFrom="root" 
+           comment="Angular velocity measured in radians per second out each of the entity's own coordinate axes. Order of measurement is angular velocity around the x, y, and z axis of the entity. The positive direction is determined by the right hand rule. Section 6.2.7">
+
+        <attribute name="x" comment="velocity about the x axis">
+            <primitive type="float32" defaultValue="0"/>
+        </attribute>
+  
+        <attribute name="y" comment="velocity about the y axis">
+            <primitive type="float32" defaultValue="0"/>
+        </attribute>
+  
+        <attribute name="z" comment="velocity about the zaxis">
+            <primitive type="float32" defaultValue="0"/>
+        </attribute>
+  
+    </class>
+  
+    <class name="AntennaLocation" inheritsFrom="root" 
+           comment="Location of the radiating portion of the antenna, specified in world coordinates and entity coordinates. Section 6.2.8">
+
+        <attribute name="antennaLocation" comment="Location of the radiating portion of the antenna in world coordinates">
+            <classref name="Vector3Double"/>
+        </attribute>
+  
+        <attribute name="relativeAntennaLocation" comment="Location of the radiating portion of the antenna in entity coordinates">
+            <classref name="Vector3Float"/>
+        </attribute>
+  
+    </class>
+    
+    <class name="APA" comment="additional passive activity">
+        
+        <attribute name="parameterIndex">
+            <primitive type="uint16" comment="14 bits of index, 2 bits of status"/>
+        </attribute>
+        
+        <attribute name="value">
+            <primitive type="uint16"/>
+        </attribute>
+        
+    </class>
+
+ <!-- uid 31-43: LandPlatformAppearance, AirPlatformAppearance, SurfacePlatformAppearance, SubsurfaceFlatformAppearance,
+                SpacePlatformAppearance, MunitionAppearance, LifeFormsAppearance, EnvironmentalAppearance,
+                CulturalFeatureAppearance, SupplyAppearance, RadioAppearance, ExpendableAppearance, SensorEmitterAppearance -->
+    <class name="Appearance" comment="used in AppearancePdu">
+        
+        <attribute name="visual">
+            <primitive type="uint32"/>
+        </attribute>
+        
+        <attribute name="ir">
+            <primitive type="uint32"/>
+        </attribute>       
+         
+        <attribute name="em">
+            <primitive type="uint32"/>
+        </attribute>  
+              
+        <attribute name="audio">
+            <primitive type="uint32"/>
+        </attribute>   
+        
+    </class>
+        
+    <class name="BeamAntennaPattern" inheritsFrom="root"
+           comment="Used when the antenna pattern type field has a value of 1. Specifies the direction, pattern, and polarization of radiation from an antenna. Section 6.2.9.2">
+   
+        <attribute name="beamDirection" comment="The rotation that transforms the reference coordinate sytem into the beam coordinate system. Either world coordinates or entity coordinates may be used as the reference coordinate system, as specified by the reference system field of the antenna pattern record.">
+            <classref name="EulerAngles"/>
+        </attribute>
+    
+        <attribute name="azimuthBeamwidth" commment="Full width of the beam to the -3dB power density points in the x-y plane of the beam coordinnate system.  Elevation beamwidth is represented by a 32 bit floating point number in units of radians.">
+            <primitive type="float32" defaultValue="0"/>
+        </attribute>
+    
+        <attribute name="elevationBeamwidth" commment="This field shall specify the full width of the beam to the –3 dB power density points in the x-z plane of the beam coordinate system. Elevation beamwidth shall be represented by a 32-bit floating point number in units of radians.">
+            <primitive type="float32" defaultValue="0"/>
+        </attribute>
+    
+        <attribute name="referenceSystem" commment="The reference coordinate system wrt which beam direction  is specified. This field should not change over the duration of an exercise. World coordindate systemis prefered for exercises. The entity coordinate system should be used only when highly directional antennas must be precisely modeled.">
+            <sisoenum type="TransmitterAntennaPatternReferenceSystem" comment="uid 168"/>
+        </attribute>
+    
+        <attribute name="padding1" commment="Padding">
+            <primitive type="uint8" defaultValue="0"/>
+        </attribute>
+    
+        <attribute name="padding2" commment="Padding">
+            <primitive type="uint16" defaultValue="0"/>
+        </attribute>
+    
+        <attribute name="ez" comment="This field shall specify the magnitude of the Z-component (in beam coordinates) of the Electrical field at some arbitrary single point in the main beam and in the far field of the antenna. ">
+            <primitive type="float32" defaultValue="0.0"/>
+        </attribute>
+    
+        <attribute name="ex" comment="This field shall specify the magnitude of the X-component (in beam coordinates) of the Electri- cal field at some arbitrary single point in the main beam and in the far field of the antenna.">
+            <primitive type="float32" defaultValue="0.0"/>
+        </attribute>
+    
+        <attribute name="phase" comment="This field shall specify the phase angle between EZ and EX in radians. If fully omni-direc- tional antenna is modeled using beam pattern type one, the omni-directional antenna shall be repre- sented by beam direction Euler angles psi, theta, and phi of zero, an azimuth beamwidth of 2PI, and an elevation beamwidth of PI">
+            <primitive type="float32" defaultValue="0.0"/>
+        </attribute>
+    
+        <attribute name="padding3" comment="padding">
+            <primitive type="uint32" defaultValue="0"/>
+        </attribute>
+    
+    </class>   
+
+    <class name="Association" inheritsFrom="root" 
+           comment="An entity's associations with other entities and/or locations. For each association, this record shall specify the type of the association, the associated entity's EntityID and/or the associated location's world coordinates. This record may be used (optionally) in a transfer transaction to send internal state data from the divesting simulation to the acquiring simulation (see 5.9.4). This record may also be used for other purposes. Section 6.2.9">
+    
+        <attribute name="associationType"
+                   commment="This field shall indicate the type of association. It shall be represented by an 8-bit enumeration. Values for this field are found in Section 14 of SISO-REF-010">
+            <sisoenum type="EntityAssociationAssociationType" comment="330"/>
+        </attribute>
+    
+        <attribute name="padding" commment="Padding">
+            <primitive type="uint8"/>
+        </attribute>
+    
+        <attribute name="associatedEntityID" comment="identity of associated entity. If none, NO_SPECIFIC_ENTITY">
+            <classRef name="EntityIdentifier"/>
+        </attribute>
+
+        <attribute name="associatedLocation" comment="location, in world coordinates">
+            <classRef name="Vector3Double"/>
+        </attribute>
+
+    </class>
+
+    <class name="Attribute" inheritsFrom="root"
+           comment="Used to convey information for one or more attributes. Attributes conform to the standard variable record format of 6.2.82. Section 6.2.10.">
+
+        <attribute name="recordType" commment="The record type for this attribute. Enumeration">
+            <primitive type="uint32"/>
+        </attribute>
+
+        <attribute name="recordLength" commment="Total length of the record in octets, including padding. The record shall end on a 64-bit boundary after any padding. = 6 + K + P">
+            <primitive type="uint16"/>
+        </attribute>
+
+        <attribute name="recordSpecificFields" commment="The attribute data format conforming to that specified by the record type. K bytes long">
+            <primitivelist length="0">
+                <primitive type="uint8"/>
+            </primitivelist>
+        </attribute>
+
+        <!--<attribute name="paddingTo64Bits" commment="Padding necessary to put the end of the record on a 64 bit boundary">
+            <primitivelist length="2">
+                <primitive type="uint8"/>
+            </primitivelist>
+        </attribute> -->
+        
+       <attribute name="padding">
+            <padtoboundary length="64"/>
+        </attribute>
+
+    </class>
+ 
+    <class name="BeamData" inheritsFrom="root" comment="Describes the scan volue of an emitter beam. Section 6.2.11.">
+
+        <attribute name="beamAzimuthCenter" comment="Specifies the beam azimuth an elevation centers and corresponding half-angles to describe the scan volume">
+            <primitive type="float32"/>
+        </attribute>
+    
+        <attribute name="beamAzimuthSweep" comment="Specifies the beam azimuth sweep to determine scan volume">
+            <primitive type="float32"/>
+        </attribute>
+    
+        <attribute name="beamElevationCenter" comment="Specifies the beam elevation center to determine scan volume">
+            <primitive type="float32"/>
+        </attribute>
+    
+        <attribute name="beamElevationSweep" comment="Specifies the beam elevation sweep to determine scan volume">
+            <primitive type="float32"/>
+        </attribute>
+    
+        <attribute name="beamSweepSync" comment="allows receiver to synchronize its regenerated scan pattern to that of the emmitter. Specifies the percentage of time a scan is through its pattern from its origion.">
+            <primitive type="float32"/>
+        </attribute>
+    
+    </class>
+
+    <class name="ChangeOptions" comment="This is a bitfield . See section 6.2.13 aka B.2.41">
+        <attribute name="value">
+            <primitive type="uint8"/>
+        </attribute>
+    </class>
+
+    <class name="BeamStatus" inheritsFrom="root" comment="Information related to the status of a beam. This is contained in the beam status field of the electromagnitec emission PDU. The first bit determines whether the beam is active (0) or deactivated (1). Section 6.2.12.">
+
+        <attribute name="beamState" comment="First bit zero means beam is active, first bit = 1 means deactivated. The rest is padding.">
+            <sisoenum type="BeamStatusBeamState" comment="318"/>
+        </attribute>
+    
+    </class>
+
+    <class name="ClockTime" inheritsFrom="root" 
+           comment="Time measurements that exceed one hour are represented by this record. The first field is the hours since the unix epoch (Jan 1 1970, used by most Unix systems and java) and the second field the timestamp units since the top of the hour. Section 6.2.14">
+ 
+        <attribute name="hour" comment="Hours in UTC">
+            <primitive type="uint32"/>
+        </attribute>
+ 
+        <attribute name="timePastHour" comment="Time past the hour">
+            <primitive type="uint32"/>
+        </attribute>
+ 
+    </class>
+
+    <!-- Damage description records -->
+ 
+    <class name="DirectedEnergyDamage"
+           inheritsFrom="root"
+           comment="Damage sustained by an entity due to directed energy. Location of the damage based on a relative x,y,z location from the center of the entity. Section 6.2.15.2">
+
+        <attribute name="recordType" comment="DE Record Type.">
+            <primitive type="uint32" defaultValue="4500" comment="record type is always 4500"/>
+        </attribute>
+
+        <attribute name="recordLength" comment="DE Record Length (bytes)">
+            <primitive type="uint16" defaultValue="40"/>
+        </attribute>
+
+        <attribute name="padding" comment="padding">
+            <primitive type="uint16" defaultValue="0"/>
+        </attribute>
+ 
+        <attribute name="damageLocation" comment="location of damage, relative to center of entity">
+            <classref name="Vector3Float"/> 
+        </attribute>
+
+        <attribute name="damageDiameter" comment="Size of damaged area, in meters">
+            <primitive type="float32"/>
+        </attribute>
+
+        <attribute name="temperature" comment="average temp of the damaged area, in degrees celsius. If firing entitty does not model this, use a value of -273.15">
+            <primitive type="float32" defaultValue="-273.15"/>
+        </attribute>
+
+        <attribute name="componentIdentification" comment="enumeration">
+            <sisoenum type="EntityDamageStatusComponentIdentification" comment="uid 314"/>
+        </attribute>
+
+        <attribute name="componentDamageStatus" comment="enumeration">
+            <sisoenum type="DEDamageDescriptionComponentDamageStatus" comment="uid 315"/>
+        </attribute>
+
+        <attribute name="componentVisualDamageStatus" comment="enumeration">
+            <sisobitfield type="DEDamageDescriptionComponentVisualDamageStatus" comment="uid 317"/>
+        </attribute>
+
+        <attribute name="componentVisualSmokeColor" comment="enumeration">
+            <sisoenum type="DEDamageDescriptionComponentVisualSmokeColor" comment="uid 316"/>
+        </attribute>
+
+        <attribute name="fireEventID" comment="For any component damage resulting this field shall be set to the fire event ID from that PDU.">
+            <classref name="EventIdentifier"/> 
+        </attribute>
+
+        <attribute name="padding2" comment="padding">
+            <primitive type="uint16" defaultValue="0"/>
+        </attribute>
+
+    </class>
+ 
+    <class name="DataFilterRecord" comment="identify which of the optional data fields are contained in the Minefield Data PDU or requested in the Minefield Query PDU. This is a 32-bit record. For each field, true denotes that the data is requested or present and false denotes that the data is neither requested nor present. Section 6.2.16">
+     
+        <attribute name="bitFlags" comment="Bitflags field">
+            <primitive type="uint32" comment="Bit flags for fields"/>
+        </attribute>
+        <attribute name="GROUND_BURIAL_DEPTH_OFFSET_BIT">
+            <staticivar type="uint32" value="0"/>
+        </attribute>
+        <attribute name="WATER_BURIAL_DEPTH_OFFSET_BIT">
+            <staticivar type="uint32" value="1"/>
+        </attribute>
+        <attribute name="SNOW_BURIAL_DEPTH_OFFSET_BIT">
+            <staticivar type="uint32" value="2"/>
+        </attribute>
+        <attribute name="MINE_ORIENTATION_BIT">
+            <staticivar type="uint32" value="3"/>
+        </attribute>
+        <attribute name="THERMAL_CONSTRAST_BIT">
+            <staticivar type="uint32" value="4"/>
+        </attribute>
+        <attribute name="REFLECTANCE_BIT">
+            <staticivar type="uint32" value="5"/>
+        </attribute>
+        <attribute name="MINE_EMPLACEMENT_TIME_BIT">
+            <staticivar type="uint32" value="6"/>
+        </attribute>
+        <attribute name="TRIP_DETONATION_WIRE_BIT">
+            <staticivar type="uint32" value="7"/>
+        </attribute>
+        <attribute name="FUSING_BIT">
+            <staticivar type="uint32" value="8"/>
+        </attribute>
+        <attribute name="SCALAR_DETECTION_COEFFICIENT_BIT">
+            <staticivar type="uint32" value="9"/>
+        </attribute> 
+        <attribute name="PAINT_SCHEME_BIT">
+            <staticivar type="uint32" value="10"/>
+        </attribute>     
+    </class>
+    
+    <class name="UnsignedDISInteger" comment="container class not in specification" inheritsFrom="root">
+    
+        <attribute name="val" comment="unsigned integer">
+            <primitive type="uint32"/>    
+        </attribute>
+    
+    </class>
+
+    <class name="DataQueryDatumSpecification" 
+           inheritsFrom="root" 
+           comment="List of fixed and variable datum records. Section 6.2.17 ">
+       
+        <attribute name="numberOfFixedDatums" hidden="true" comment="Number of fixed datums">
+            <primitive type="uint32"/>
+        </attribute>
+  
+        <attribute name="numberOfVariableDatums" hidden="true" comment="Number of variable datums">
+            <primitive type="uint32"/>
+        </attribute>
+
+        <attribute name="fixedDatumIDList" comment="variable length list fixed datum IDs">
+            <objectlist countFieldName="numberOfFixedDatums">
+                <classRef name="UnsignedDISInteger"/>
+            </objectlist> 
+        </attribute>
+  
+        <attribute name="variableDatumIDList" comment="variable length list variable datum IDs">
+            <objectlist countFieldName="numberOfVariableDatums">
+                <classRef name="UnsignedDISInteger"/>
+            </objectlist> 
+        </attribute>
+
+    </class>
+
+    <class name="DatumSpecification" 
+           inheritsFrom="root" 
+           comment="List of fixed and variable datum records. Section 6.2.18 ">
+       
+        <attribute name="numberOfFixedDatums" hidden="true" comment="Number of fixed datums">
+            <primitive type="uint32"/>
+        </attribute>
+  
+        <attribute name="numberOfVariableDatums" hidden="true" comment="Number of variable datums">
+            <primitive type="uint32"/>
+        </attribute>
+
+        <attribute name="fixedDatumIDList" comment="variable length list fixed datums">
+            <objectlist countFieldName="numberOfFixedDatums">
+                <classRef name="FixedDatum"/>
+            </objectlist> 
+        </attribute>
+  
+        <attribute name="variableDatumIDList" comment="variable length list variable datums">
+            <objectlist countFieldName="numberOfVariableDatums">
+                <classRef name="VariableDatum"/>
+            </objectlist> 
+        </attribute>
+
+    </class>
+
+    <!-- Section 6.2.19.2 -->
+    <class name="MunitionDescriptor" inheritsFrom="root" 
+           comment="Represents the firing or detonation of a munition. Section 6.2.19.2">
+    
+        <attribute name="munitionType" comment="What munition was used in the burst">
+            <classRef name="EntityType"/> 
+        </attribute>
+    
+        <attribute name="warhead" comment="type of warhead enumeration">
+            <sisoenum type="MunitionDescriptorWarhead" comment="uid 60"/>
+        </attribute>
+    
+        <attribute name="fuse" comment="type of fuse used enumeration">
+            <sisoenum type="MunitionDescriptorFuse" comment="uid 61"/>
+        </attribute>
+    
+        <attribute name="quantity" comment="how many of the munition were fired">
+            <primitive type="uint16"/>
+        </attribute>
+    
+        <attribute name="rate" comment="rate at which the munition was fired">
+            <primitive type="uint16"/>
+        </attribute>
+    
+    </class>
+    
+    <!-- Section 6.2.19.3 --> 
+    <class name="ExplosionDescriptor" 
+           inheritsFrom="root" 
+           comment="Explosion of a non-munition. Section 6.2.19.3">
+
+        <attribute name="explodingObject" comment="Type of the object that exploded. See 6.2.30">
+            <classref name="EntityType"/> 
+        </attribute>
+    
+        <attribute name="explosiveMaterial" comment="Material that exploded. Can be grain dust, tnt, gasoline, etc. Enumeration">
+            <sisoenum type="ExplosiveMaterialCategories" comment="uid 310"/>
+        </attribute>
+    
+        <attribute name="padding" comment="padding">
+            <primitive type="uint16" defaultValue="0"/>
+        </attribute>
+    
+        <attribute name="explosiveForce" comment="Force of explosion, in equivalent KG of TNT">
+            <primitive type="float32"/>
+        </attribute>
+
+    </class>
+
+    <!-- Section 6.2.19.3 -->
+    <class name="ExpendableDescriptor" 
+           inheritsFrom="root" 
+           comment="Burst of chaff or expendible device. Section 6.2.19.4">
+
+        <attribute name="expendableType" comment="Type of the object that exploded">
+            <classref name="EntityType"/> 
+        </attribute>
+    
+        <attribute name="padding" comment="Padding">
+            <primitive type="int64" defaultValue="0"/>
+        </attribute>
+
+    </class>
+
+    <!-- 6.2.20 2 -->
+    <class name="DirectedEnergyAreaAimpoint"
+           inheritsFrom="root"
+           comment="DE Precision Aimpoint Record. Section 6.2.20.2">
+
+        <attribute name="recordType" comment="Type of Record enumeration">
+            <primitive type="uint32" defaultValue="4001"/>
+        </attribute>
+
+        <attribute name="recordLength" comment="Length of Record">
+            <primitive type="uint16"/>
+        </attribute>
+
+        <attribute name="padding" comment="Padding">
+            <primitive type="uint16" defaultValue="0"/>
+        </attribute>
+   
+        <attribute name="beamAntennaPatternRecordCount" hidden="true" comment="Number of beam antenna pattern records">
+            <primitive type="uint16" defaultValue="0"/>
+        </attribute>
+   
+        <attribute name="directedEnergyTargetEnergyDepositionRecordCount" hidden="true" comment="Number of DE target energy depositon records">
+            <primitive type="uint16" defaultValue="0"/>
+        </attribute>
+   
+        <attribute name="beamAntennaParameterList" comment="list of beam antenna records. See 6.2.9.2">
+            <objectlist countFieldName="beamAntennaPatternRecordCount">
+                <classRef name="BeamAntennaPattern"/>
+            </objectlist> 
+        </attribute>
+   
+        <attribute name="directedEnergyTargetEnergyDepositionRecordList" comment="list of DE target deposition records. See 6.2.21.4">
+            <objectlist countFieldName="directedEnergyTargetEnergyDepositionRecordCount">
+                <classRef name="DirectedEnergyTargetEnergyDeposition"/>
+            </objectlist> 
+        </attribute>
+   
+        <attribute name="padding2">
+            <padtoboundary length="64"/>
+        </attribute>
+
+    </class>
+
+    <!-- Section 6.2.20.3 -->
+    <class name="DirectedEnergyPrecisionAimpoint"
+           inheritsFrom="root"
+           comment="DE Precision Aimpoint Record. Section 6.2.20.3">
+
+        <attribute name="recordType" comment="Type of Record">
+            <primitive type="uint32" defaultValue="4000"/>
+        </attribute>
+
+        <attribute name="recordLength" comment="Length of Record">
+            <primitive type="uint16" defaultValue="88"/>
+        </attribute>
+
+        <attribute name="padding" comment="Padding">
+            <primitive type="uint16" defaultValue="0"/>
+        </attribute>
+
+        <attribute name="targetSpotLocation" comment="Position of Target Spot in World Coordinates.">
+            <classref name="Vector3Double"/>
+        </attribute>
+
+        <attribute name="targetSpotEntityLocation" comment="Position (meters) of Target Spot relative to Entity Position.">
+            <classref name="Vector3Float"/>
+        </attribute>
+
+        <attribute name="targetSpotVelocity" comment="Velocity (meters/sec) of Target Spot.">
+            <classref name="Vector3Float"/>
+        </attribute>
+
+        <attribute name="targetSpotAcceleration" comment="Acceleration (meters/sec/sec) of Target Spot.">
+            <classref name="Vector3Float"/>
+        </attribute>
+
+        <attribute name="targetEntityID" comment="Unique ID of the target entity.">
+            <classref name="EntityID"/>
+        </attribute>
+
+        <attribute name="targetComponentID" comment="Target Component ID ENUM, same as in DamageDescriptionRecord.">
+            <primitive type="uint8" defaultValue="0"/>
+        </attribute>
+
+        <attribute name="beamSpotType" comment="Spot Shape ENUM.">
+            <sisoenum type="DEPrecisionAimpointBeamSpotType" comment="uid 311"/>
+        </attribute>
+
+        <attribute name="beamSpotCrossSectionSemiMajorAxis" comment="Beam Spot Cross Section Semi-Major Axis.">
+            <primitive type="float32" defaultValue="0"/>
+        </attribute>
+
+        <attribute name="beamSpotCrossSectionSemiMinorAxis" comment="Beam Spot Cross Section Semi-Major Axis.">
+            <primitive type="float32" defaultValue="0"/>
+        </attribute>
+
+        <attribute name="beamSpotCrossSectionOrientationAngle" comment="Beam Spot Cross Section Orientation Angle.">
+            <primitive type="float32" defaultValue="0"/>
+        </attribute>
+   
+        <attribute name="peakIrradiance" comment="Peak irradiance">
+            <primitive type="float32" defaultValue="0"/>
+        </attribute>
+   
+        <attribute name="padding2" comment="padding">
+            <primitive type="uint32" defaultValue="0"/>
+        </attribute>
+    </class>
+ 
+    <!-- Section 6.2.20.4 -->   
+    <class name="DirectedEnergyTargetEnergyDeposition" 
+           inheritsFrom="root" 
+           comment="DE energy depostion properties for a target entity. Section 6.2.20.4">
+ 
+        <attribute name="targetEntityID" comment="Unique ID of the target entity.">
+            <classref name="EntityID"/>
+        </attribute>
+  
+        <attribute name="padding" comment="padding">
+            <primitive type="uint16" defaultValue="0"/>
+        </attribute>
+   
+        <attribute name="peakIrradiance" comment="Peak irradiance">
+            <primitive type="float32"/>
+        </attribute>
+ 
+    </class>
+ 
+    <!-- Electronic warfare records -->
+ 
+    <!-- Section 6.2.21.1 -->
+    <class name="BlankingSector" inheritsFrom="root" 
+           comment="The Blanking Sector attribute record may be used to convey persistent areas within a scan volume where emitter power for a specific active emitter beam is reduced to an insignificant value. Section 6.2.21.2">
+       
+        <attribute name="recordType" commment="record type">
+            <primitive type="uint32" defaultValue="3500"/>
+        </attribute>
+    
+        <attribute name="recordLength" commment="the length of the Blanking Sector attribute record in octets.">
+            <primitive type="uint16" defaultValue="40"/>
+        </attribute>
+    
+        <attribute name="padding" commment="Padding">
+            <primitive type="uint16" defaultValue="0"/>
+        </attribute>
+    
+        <attribute name="emitterNumber" commment="indicates the emitter system for which the blanking sector values are applicable">
+            <primitive type="uint8"/>
+        </attribute>
+    
+        <attribute name="beamNumber" commment="indicates the beam for which the blanking sector values are applicable.">
+            <primitive type="uint8"/>
+        </attribute>
+    
+        <attribute name="stateIndicator" commment="indicate if blanking sector data have changed since issuance of the last Blanking Sector attribute record for this beam, if the Blanking Sector attribute record beam has ceased">
+            <sisoenum type="EEAttributeStateIndicator" comment="uid 300"/>
+        </attribute>
+    
+        <attribute name="padding2" commment="Padding">
+            <primitive type="uint8" defaultValue="0"/>
+        </attribute>
+    
+        <attribute name="leftAzimuth" commment="This field is provided to indicate the left-most azimuth (clockwise in radians) for which emitted power is reduced. This angle is measured in the X-Y plane of the radar's entity coor- dinate system (see 1.4.3). The range of permissible values is 0 to 2PI, with zero pointing in the X- direction. ">
+            <primitive type="float32"/>
+        </attribute>
+    
+        <attribute name="rightAzimuth" commment="Indicate the right-most azimuth (clockwise in radians) for which emitted power is reduced. This angle is measured in the X-Y plane of the radar's entity coordinate system (see 1.4.3). The range of permissible values is 0 to 2PI , with zero pointing in the X- direction.">
+            <primitive type="float32"/>
+        </attribute>
+    
+        <attribute name="lowerElevation" commment="This field is provided to indicate the lowest elevation (in radians) for which emit- ted power is reduced. This angle is measured positive upward with respect to the X-Y plane of the radar's entity coordinate system (see 1.4.3). The range of permissible values is -PI/2 to PI/2">
+            <primitive type="float32"/>
+        </attribute>
+    
+        <attribute name="upperElevation" commment="This field is provided to indicate the highest elevation (in radians) for which emitted power is reduced. This angle is measured positive upward with respect to the X-Y plane of the radar's entitycoordinatesystem(see1.4.3). The range of permissible values is -PI/2 to PI/2">
+            <primitive type="float32"/>
+        </attribute>
+    
+        <attribute name="residualPower" commment="This field shall specify the residual effective radiated power in the blanking sector in dBm. ">
+            <primitive type="float32"/>
+        </attribute>
+    
+        <attribute name="padding3" commment="Padding, 32 bits">
+            <primitive type="uint64" defaultValue="0"/>
+        </attribute>
+        
+    </class>
+
+    <!-- Section 6.2.21.2 -->
+    <class name="AngleDeception" 
+           inheritsFrom="root" 
+           comment="The Angle Deception attribute record may be used to communicate discrete values that are associated with angle deception jamming that cannot be referenced to an emitter mode. The values provided in the record records (provided in the associated Electromagnetic Emission PDU). (The victim radar beams are those that are targeted by the jammer.) Section 6.2.21.2.2">
+  
+        <attribute name="recordType" commment="record type">
+            <primitive type="uint32" defaultValue="3501"/>
+        </attribute>
+    
+        <attribute name="recordLength" commment="the length of the record in octets.">
+            <primitive type="uint16" defaultValue="48"/>
+        </attribute>
+    
+        <attribute name="padding" commment="padding">
+            <primitive type="uint16" defaultValue="0"/>
+        </attribute>
+    
+        <attribute name="emitterNumber" commment="indicates the emitter system for which the angle deception values are applicable. ">
+            <primitive type="uint8"/>
+        </attribute>
+    
+        <attribute name="beamNumber" commment="indicates the jamming beam for which the angle deception values are applicable.">
+            <primitive type="uint8"/>
+        </attribute>
+    
+        <attribute name="stateIndicator" commment="This field shall be used to indicate if angle deception data have changed since issuance of the last Angle Deception attribute record for this beam, if the Angle Deception attribute record is part of a heartbeat update to meet periodic update requirements or if the angle deception data for the beam has ceased.">
+            <sisoenum type="EEAttributeStateIndicator" comment="uid 300"/>
+        </attribute>
+    
+        <attribute name="padding2" commment="padding">
+            <primitive type="uint8" defaultValue="0"/>
+        </attribute>
+    
+        <attribute name="azimuthOffset" commment="This field indicates the relative azimuth angle at which the deceptive radar returns are centered. This angle is measured in the X-Y plane of the victim radar's entity coordinate system (see 1.4.3). This angle is measured in radians from the victim radar entity's azimuth for the true jam- mer position to the center of the range of azimuths in which deceptive radar returns are perceived as shown in Figure 43. Positive and negative values indicate that the perceived positions of the jammer are right and left of the true position of the jammer, respectively. The range of permissible values is -PI to PI">
+            <primitive type="float32"/>
+        </attribute>
+    
+        <attribute name="azimuthWidth" commment="indicates the range of azimuths (in radians) through which the deceptive radar returns are perceived, centered on the azimuth offset as shown in Figure 43. The range of permissible values is 0 to 2PI radians">
+            <primitive type="float32"/>
+        </attribute>
+    
+        <attribute name="azimuthPullRate" commment="This field indicates the rate (in radians per second) at which the Azimuth Offset value is changing. Positive and negative values indicate that the Azimuth Offset is moving to the right or left, respectively.">
+            <primitive type="float32"/>
+        </attribute>
+    
+        <attribute name="azimuthPullAcceleration" commment="This field indicates the rate (in radians per second squared) at which the Azimuth Pull Rate value is changing. Azimuth Pull Acceleration is defined as positive to the right and negative to the left.">
+            <primitive type="float32"/>
+        </attribute>
+    
+        <attribute name="elevationOffset" commment="This field indicates the relative elevation angle at which the deceptive radar returns begin. This angle is measured as an angle with respect to the X-Y plane of the victim radar's entity coordinate system (see 1.4.3). This angle is measured in radians from the victim radar entity's eleva- tion for the true jammer position to the center of the range of elevations in which deceptive radar returns are perceived as shown in Figure 44. Positive and negative values indicate that the perceived positions of the jammer are above and below the true position of the jammer, respectively. The range of permissible values is -PI/2 to PI/2">
+            <primitive type="float32"/>
+        </attribute>
+    
+        <attribute name="elevationWidth" commment="This field indicates the range of elevations (in radians) through which the decep- tive radar returns are perceived, centered on the elevation offset as shown in Figure 44. The range of permissible values is 0 to PI radians">
+            <primitive type="float32"/>
+        </attribute>
+    
+        <attribute name="elevationPullRate" commment="This field indicates the rate (in radians per second) at which the Elevation Off- set value is changing. Positive and negative values indicate that the Elevation Offset is moving up or down, respectively. ">
+            <primitive type="float32"/>
+        </attribute>
+    
+        <attribute name="elevationPullAcceleration" commment="This field indicates the rate (in radians per second squared) at which the Elevation Pull Rate value is changing. Elevation Pull Acceleration is defined as positive to upward and negative downward. ">
+            <primitive type="float32"/>
+        </attribute>
+    
+        <attribute name="padding3" commment="">
+            <primitive type="uint32" defaultValue="0"/>
+        </attribute>
+
+    </class>
+
+    <!-- Section 6.2.21.3 -->
+    <class name="FalseTargetsAttribute" inheritsFrom="root" 
+           comment="The False Targets attribute record shall be used to communicate discrete values that are associated with false targets jamming that cannot be referenced to an emitter mode. The values provided in the False Targets attri- bute record shall be considered valid only for the victim radar beams listed in the jamming beam's Track/Jam Data records (provided in the associated Electromagnetic Emission PDU). Section 6.2.21.3">
+       
+        <attribute name="recordType" commment="record type">
+            <primitive type="uint32" defaultValue="3502"/>
+        </attribute>
+    
+        <attribute name="recordLength" commment="the length of the record in octets.">
+            <primitive type="uint16" defaultValue="40"/>
+        </attribute>
+    
+        <attribute name="padding" commment="padding">
+            <primitive type="uint16" defaultValue="0"/>
+        </attribute>
+    
+        <attribute name="emitterNumber" commment="This field indicates the emitter system generating the false targets.">
+            <primitive type="uint8"/>
+        </attribute>
+    
+        <attribute name="beamNumber" commment="This field indicates the jamming beam generating the false targets. ">
+            <primitive type="uint8"/>
+        </attribute>
+    
+        <attribute name="stateIndicator" commment="This field shall be used to indicate if false target data have changed since issuance of the last False Targets attribute record for this beam, if the False Targets attribute record is part of a heartbeat update to meet periodic update requirements or if false target data for the beam has ceased.">
+            <sisoenum type="EEAttributeStateIndicator" comment="uid 300"/>
+        </attribute>
+    
+        <attribute name="padding2" commment="padding">
+            <primitive type="uint8" defaultValue="0"/>
+        </attribute>
+    
+        <attribute name="padding3">
+            <primitive type="uint16" defaultValue="0"/>
+        </attribute>
+        
+        <attribute name="falseTargetCount" commment="This field indicates the jamming beam generating the false targets. ">
+            <primitive type="uint16"/>
+        </attribute>
+    
+        <attribute name="walkSpeed" commment="This field shall specify the speed (in meters per second) at which false targets move toward the victim radar. Negative values shall indicate a velocity away from the victim radar. ">
+            <primitive type="float32"/>
+        </attribute>
+    
+        <attribute name="walkAcceleration" commment="This field shall specify the rate (in meters per second squared) at which false tar- gets accelerate toward the victim radar. Negative values shall indicate an acceleration direction away from the victim radar. ">
+            <primitive type="float32"/>
+        </attribute>
+    
+        <attribute name="maximumWalkDistance" commment="This field shall specify the distance (in meters) that a false target is to walk before it pauses in range. ">
+            <primitive type="float32"/>
+        </attribute>
+    
+        <attribute name="keepTime" commment="This field shall specify the time (in seconds) that a false target is to be held at the Maxi- mum Walk Distance before it resets to its initial position. ">
+            <primitive type="float32"/>
+        </attribute>
+    
+        <attribute name="echoSpacing" commment="This field shall specify the distance between false targets in meters. Positive values for this field shall indicate that second and subsequent false targets are initially placed at increasing ranges from the victim radar. ">
+            <primitive type="float32"/>
+        </attribute>
+        
+        <attribute name="firstTargetOffset" commment="Sets the position of the first false target relative to the jamming entity in meters.">
+            <primitive type="float32"/>
+        </attribute>
+   
+    </class>
+
+    <!-- Section 6.2.22 -->
+    <class name="EEFundamentalParameterData" inheritsFrom="root" 
+           comment="Contains electromagnetic emmission regeneration parameters that are variable throught a scenario. Section 6.2.22.">
+
+        <attribute name="frequency" comment="center frequency of the emission in hertz.">
+            <primitive type="float32"/>
+        </attribute>
+    
+        <attribute name="frequencyRange" comment="Bandwidth of the frequencies corresponding to the fequency field.">
+            <primitive type="float32"/>
+        </attribute>
+    
+        <attribute name="effectiveRadiatedPower" comment="Effective radiated power for the emission in DdBm. For a radar noise jammer, indicates the peak of the transmitted power.">
+            <primitive type="float32"/>
+        </attribute>
+    
+        <attribute name="pulseRepetitionFrequency" comment="Average repetition frequency of the emission in hertz.">
+            <primitive type="float32"/>
+        </attribute>
+    
+        <attribute name="pulseWidth" comment="Average pulse width  of the emission in microseconds.">
+            <primitive type="float32"/>
+        </attribute>
+    
+    </class>
+    
+    <!-- Section 6.2.23 -->
+    <class name="EmitterSystem" inheritsFrom="root" 
+           comment="This field shall specify information about a particular emitter system. Section 6.2.23.">
+                  
+        <attribute name="emitterName" comment="Name of the emitter, 16 bit enumeration">
+            <sisoenum type="EmitterName" comment="uid 75"/>
+        </attribute>
+  
+        <attribute name="emitterFunction" comment="function of the emitter, 8 bit enumeration">
+            <sisoenum type="EmitterSystemFunction" comment="uid 76"/>
+        </attribute>
+  
+        <attribute name="emitterIDNumber" comment="emitter ID, 8 bit enumeration">
+            <primitive type= "uint8"/>
+        </attribute>
+         
+    </class>
+
+    <!-- Section 6.2.24 -->
+    <class name="EngineFuel" 
+           inheritsFrom="root" 
+           comment="Information about an entity's engine fuel. Section 6.2.24.">
+                  
+        <attribute name="fuelQuantity" comment="Fuel quantity, units specified by next field">
+            <primitive type= "uint32"/>
+        </attribute>
+  
+        <attribute name="fuelMeasurementUnits" comment="Units in which the fuel is measured">
+            <sisoenum type="FuelMeasurementUnits" comment="uid 328"/>
+        </attribute>
+  
+        <attribute name="fuelType" comment="Type of fuel">
+            <sisoenum type="SupplyFuelType" comment="uid 413"/>
+        </attribute>
+  
+        <attribute name="fuelLocation" comment="Location of fuel as related to entity. See section 14 of EBV document">
+            <sisoenum type="FuelLocation" comment="uid 329"/>
+        </attribute>
+  
+        <attribute name="padding" comment="padding">
+            <primitive type= "uint8" defaultValue="0"/>
+        </attribute>
+         
+    </class>
+
+    <class name="EngineFuelReload" 
+           inheritsFrom="root" 
+           comment="For each type or location of engine fuell, this record specifies the type, location, fuel measurement units, and reload quantity and maximum quantity. Section 6.2.25.">
+                  
+        <attribute name="standardQuantity" comment="standard quantity of fuel loaded">
+            <primitive type= "uint32"/>
+        </attribute>
+  
+        <attribute name="maximumQuantity" comment="maximum quantity of fuel loaded">
+            <primitive type= "uint32"/>
+        </attribute>
+  
+        <attribute name="standardQuantityReloadTime" comment="seconds normally required to to reload standard qty">
+            <primitive type= "uint32"/>
+        </attribute>
+  
+        <attribute name="maximumQuantityReloadTime" comment="seconds normally required to to reload maximum qty">
+            <primitive type= "uint32"/>
+        </attribute>
+  
+        <attribute name="fuelMeasurmentUnits" comment="Units of measure">
+            <sisoenum type="FuelMeasurementUnits" comment="uid 328"/>
+        </attribute>
+
+        <attribute name="fuelType">
+            <sisoenum type="SupplyFuelType" comment="uid 413"/>
+        </attribute>
+        
+        <attribute name="fuelLocation" comment="fuel  location as related to the entity">
+            <sisoenum type="FuelLocation" comment="uid 329"/>
+        </attribute>
+  
+        <attribute name="padding" comment="padding">
+            <primitive type="uint8" defaultValue="0"/>
+        </attribute>
+  
+    </class>
+
+    <class name="EntityIdentifier"
+           inheritsFrom="root" 
+           comment="Entity Identifier. Unique ID for entities in the world. Consists of an simulation address and a entity number. Section 6.2.28.">
+    
+        <attribute name="simulationAddress" comment="Site and application IDs">
+            <classref name="SimulationAddress"/>
+        </attribute>
+                
+        <attribute name="entityNumber" comment="Entity number">
+            <primitive type= "uint16"/>
+        </attribute>
+
+    </class>
+
+    <class name="EntityID" inheritsFrom="root" comment="more laconically named EntityIdentifier">
+
+        <attribute name="siteID" comment="Site ID">
+            <primitive type= "uint16"/>
+        </attribute>
+  
+        <attribute name="applicationID" comment="application number ID">
+            <primitive type= "uint16"/>
+        </attribute>
+  
+        <attribute name="entityID" comment="Entity number ID">
+            <primitive type= "uint16"/>
+        </attribute>
+  
+    </class>
+
+    <class name="EntityMarking" inheritsFrom="root" 
+           comment="Specifies the character set used inthe first byte, followed by 11 characters of text data. Section 6.29">
+            
+        <attribute name="characterSet" comment="The character set">
+            <sisoenum type="EntityMarkingCharacterSet" comment="uid 45"/>
+        </attribute>
+ 
+        <attribute name="characters" comment="The characters">
+            <primitivelist length="11" couldBeString="true" fixedlength="true">
+                <primitive type="uint8"/>
+            </primitivelist>
+        </attribute>
+            
+    </class>
+
+    <class name="EntityType" inheritsFrom="root" comment="Identifies the type of Entity">
+    
+        <attribute name="entityKind" comment="Kind of entity">
+            <sisoenum type="EntityKind" comment="uid 7"/>
+        </attribute>
+    
+        <attribute name="domain" comment="Domain of entity (air, surface, subsurface, space, etc)">
+            <classref name="Domain" defaultValue="Domain.inst(PlatformDomain.OTHER)" comment="can be PlatformDomain or MunitionDomain enum"/>
+        </attribute>
+    
+        <attribute name="country" comment="country to which the design of the entity is attributed" >
+            <sisoenum type="Country" comment="uid 29"/>
+        </attribute>
+    
+        <attribute name="category" comment="category of entity">
+            <primitive type="uint8"/>
+        </attribute>
+    
+        <attribute name="subCategory" comment="subcategory based on category">
+            <primitive type="uint8"/>
+        </attribute>
+    
+        <attribute name="specific" comment="specific info based on subcategory">
+            <primitive type="uint8"/>
+        </attribute>
+    
+        <attribute name="extra">
+            <primitive type="uint8"/>
+        </attribute>
+    
+    </class>
+    
+    <class name="EntityTypeRaw" inheritsFrom="root" comment="Identifies the type of Entity">
+    
+        <attribute name="entityKind" comment="Kind of entity">
+            <sisoenum type="EntityKind" comment="uid 7"/>
+        </attribute>
+    
+        <attribute name="domain" comment="Domain of entity (air, surface, subsurface, space, etc)">
+            <primitive type="uint8"/>
+        </attribute>
+    
+        <attribute name="country" comment="country to which the design of the entity is attributed" >
+            <primitive type="uint16"/>
+        </attribute>
+    
+        <attribute name="category" comment="category of entity">
+            <primitive type="uint8"/>
+        </attribute>
+    
+        <attribute name="subCategory" comment="subcategory of entity">
+            <primitive type="uint8"/>
+        </attribute>
+    
+        <attribute name="specific" comment="specific info based on subcategory field. Renamed from specific because that is a reserved word in SQL.">
+            <primitive type="uint8"/>
+        </attribute>
+    
+        <attribute name="extra">
+            <primitive type="uint8"/>
+        </attribute>
+    
+    </class>
+
+    <class name="Environment" inheritsFrom="root"
+           comment=" Information about a geometry, a state associated with a geometry, a bounding volume, or an associated entity ID.  6.2.31, not fully defined. 'The current definitions can be found in DIS PCR 240'">
+    
+        <attribute name="environmentType" comment="Record type">
+            <sisoenum type="EnvironmentalProcessRecordType" comment="uid 250"/>
+        </attribute>
+    
+        <attribute name="length" comment="length, in bits">
+            <primitive type="uint16"/>
+        </attribute>
+    
+        <attribute name="index" comment="Identify the sequentially numbered record index">
+            <primitive type="uint8"/>
+        </attribute>
+    
+        <attribute name="padding1" comment="padding">
+            <primitive type="uint8"/>
+        </attribute>
+    
+        <attribute name="geometry" comment="Geometry or state record">
+            <primitivelist length="0">
+                <primitive type="uint8"/>
+            </primitivelist>
+        </attribute>
+    
+        <!--<attribute name="padding2" comment="padding to bring the total size up to a 64 bit boundry">
+            <primitivelist length="0">
+                <primitive type="uint8"/>
+            </primitivelist>
+        </attribute> -->
+        
+        <attribute name="padding2">
+            <padtoboundary length="64"/>
+        </attribute>
+
+    </class>
+    
+    <!-- not present in SISO_REF_10.xml
+
+    <class name="EnvironmentType" 
+           inheritsFrom="root" 
+           comment="Description of environmental data in environmental process and gridded data PDUs. Section 6.2.32">
+    
+        <attribute name="entityKind" comment="Kind of entity">
+            <primitive type="unsigned byte"/>
+        </attribute>
+    
+        <attribute name="domain" comment="Domain of entity (air, surface, subsurface, space, etc)">
+            <primitive type="unsigned byte"/>
+        </attribute>
+    
+        <attribute name="entityClass" comment="class of environmental entity" >
+            <primitive type="unsigned short"/>
+        </attribute>
+    
+        <attribute name="category" comment="category of entity">
+            <primitive type="unsigned byte"/>
+        </attribute>
+    
+        <attribute name="subcategory" comment="subcategory of entity">
+            <primitive type="unsigned byte"/>
+        </attribute>
+    
+        <attribute name="specific" comment="specific info based on subcategory field">
+            <primitive type="unsigned byte"/>
+        </attribute>
+    
+        <attribute name="extra">
+            <primitive type="unsigned byte"/>
+        </attribute>
+    
+    </class>
+-->
+
+    <class name="EulerAngles" 
+           inheritsFrom="root" 
+           comment="Three floating point values representing an orientation, psi, theta, and phi, aka the euler angles, in radians. Section 6.2.33">
+
+        <attribute name="psi">
+            <primitive type="float32"/>
+        </attribute>
+  
+        <attribute name="theta">
+            <primitive type="float32"/>
+        </attribute>
+  
+        <attribute name="phi">
+            <primitive type="float32"/>
+        </attribute>
+  
+    </class>
+
+    <class name="EventIdentifier" 
+           inheritsFrom="root" 
+           comment="Identifies an event in the world. Use this format for every PDU EXCEPT the LiveEntityPdu. Section 6.2.34.">
+
+        <attribute name="simulationAddress" comment="Site and application IDs">
+            <classref name="SimulationAddress"/>
+        </attribute>
+  
+        <attribute name="eventNumber">
+            <primitive type="uint16"/>
+        </attribute>
+    
+    </class>
+
+    <class name="EventIdentifierLiveEntity" 
+           inheritsFrom="root" 
+           comment="Identifies an event in the world. Use this format for ONLY the LiveEntityPdu. Section 6.2.34.">
+
+        <attribute name="siteNumber">
+            <primitive type="uint8"/>
+        </attribute>
+    
+        <attribute name="applicationNumber">
+            <primitive type="uint8"/>
+        </attribute>
+      
+        <attribute name="eventNumber">
+            <primitive type="uint16"/>
+        </attribute>
+    
+    </class>
+
+
+    <class name="Expendable" inheritsFrom="root" comment="An entity's expendable (chaff, flares, etc) information. Section 6.2.36">
+
+        <attribute name="expendable" comment="Type of expendable">
+            <classRef name="EntityType"/>
+        </attribute>
+  
+        <attribute name="station">
+            <primitive type="uint32" comment="See section 4.7 of EBV document for station description"/>
+        </attribute>
+    
+        <attribute name="quantity">
+            <primitive type="uint16" comment="quantity remaining of this expendable"/>
+        </attribute>
+  
+        <attribute name="expendableStatus">
+            <sisoenum type="MunitionExpendableStatus" comment="uid 327"/>
+        </attribute>
+  
+        <attribute name="padding">
+            <primitive type="uint8" defaultValue="0" comment="padding"/>
+        </attribute>
+
+    </class>
+
+    <class name="ExpendableReload" 
+           inheritsFrom="root" 
+           comment="An entity's expendable (chaff, flares, etc) information. Section 6.2.37">
+
+        <attribute name="expendable" comment="Type of expendable">
+            <classRef name="EntityType"/>
+        </attribute>
+  
+        <attribute name="station">
+            <primitive type="uint32" comment="See section 4.7 of EBV document for station description"/>
+        </attribute>
+    
+        <attribute name="standardQuantity">
+            <primitive type="uint16" comment="Standard quantity typically loaded at this station"/>
+        </attribute>
+  
+        <attribute name="maximumQuantity">
+            <primitive type="uint16" comment="maximum quantity that can be loaded at this station"/>
+        </attribute>
+  
+        <attribute name="standardQuantityReloadTime">
+            <primitive type="uint32" comment="Seconds normally required to reload at this station"/>
+        </attribute>
+  
+        <attribute name="maximumQuantityReloadTime">
+            <primitive type="uint32" comment="Seconds normally required to reload at this station"/>
+        </attribute>
+
+    </class>
+
+    <class name="FixedDatum" inheritsFrom="root" comment="Fixed Datum Record. Section 6.2.38">
+   
+        <attribute name="fixedDatumID" comment="ID of the fixed datum, an enumeration">
+            <sisoenum type="VariableRecordTypes" comment="uid 66"/>
+        </attribute>
+  
+        <attribute name="fixedDatumValue" comment="Value for the fixed datum">
+            <primitive type="uint32"/>
+        </attribute>
+     
+    </class>
+
+    <class name="FundamentalOperationalData" inheritsFrom="root" comment="Basic operational data for IFF. Section 6.2.39">
+
+        <attribute name="systemStatus" comment="system status, IEEE DIS 7 defined">
+            <primitive type="uint8"/>
+        </attribute>
+    
+        <attribute name="dataField1" comment="data field 1">
+            <primitive type="uint8"/>
+        </attribute>
+     
+        <attribute name="informationLayers" comment="eight boolean fields">
+            <primitive type="uint8"/>
+        </attribute>
+     
+        <attribute name="dataField2" comment="enumeration">
+            <primitive type="uint8"/>
+        </attribute>
+     
+        <attribute name="parameter1" comment="parameter, enumeration">
+            <primitive type="uint16"/>
+        </attribute>
+     
+        <attribute name="parameter2" comment="parameter, enumeration">
+            <primitive type="uint16"/>
+        </attribute>
+     
+        <attribute name="parameter3" comment="parameter, enumeration">
+            <primitive type="uint16"/>
+        </attribute>
+     
+        <attribute name="parameter4" comment="parameter, enumeration">
+            <primitive type="uint16"/>
+        </attribute>
+     
+        <attribute name="parameter5" comment="parameter, enumeration">
+            <primitive type="uint16"/>
+        </attribute>
+     
+        <attribute name="parameter6" comment="parameter, enumeration">
+            <primitive type="uint16"/>
+        </attribute>
+     
+    </class>
+    
+    <class name="GridAxisDescriptor" inheritsFrom="root">
+        
+        <attribute name="domainInitialXi" comment="coordinate of the grid origin or initial value">
+            <primitive type="float64"/>
+        </attribute>
+    
+        <attribute name="domainFinalXi" comment="coordinate of the endpoint or final value">
+            <primitive type="float64"/>
+        </attribute>
+    
+        <attribute name="domainPointsXi" comment="The number of grid points along the Xi domain axis for the enviornmental state data">
+            <primitive type="uint16"/>
+        </attribute>
+    
+        <attribute name="interleafFactor" comment="interleaf factor along the domain axis.">
+            <primitive type="uint8"/>
+        </attribute>
+    
+        <attribute name="axisType" comment="type of grid axis">
+            <sisoenum type="GridAxisDescriptorAxisType" comment="uid 377"/>
+        </attribute>
+        
+    </class>
+    
+    <class name="GridAxisDescriptorFixed" inheritsFrom="GridAxisDescriptor" comment="Grid axis record for fixed data. Section 6.2.41">
+        <attribute name="numberOfPointsOnXiAxis" comment="Number of grid locations along Xi axis">
+            <primitive type="uint16"/>
+        </attribute>
+    
+        <attribute name="initialIndex" comment="initial grid point for the current pdu">
+            <primitive type="uint16"/>
+        </attribute>
+    
+    </class>
+
+    <class name="GridAxisDescriptorVariable" inheritsFrom="GridAxisDescriptor" 
+           comment="Grid axis descriptor fo variable spacing axis data.">
+        
+        <attribute name="numberOfPointsOnXiAxis" comment="Number of grid locations along Xi axis">
+            <primitive type="uint16"/>
+        </attribute>
+    
+        <attribute name="initialIndex" comment="initial grid point for the current pdu">
+            <primitive type="uint16"/>
+        </attribute>
+
+        <attribute name="coordinateScaleXi" comment="value that linearly scales the coordinates of the grid locations for the xi axis">
+            <primitive type="float64"/>
+        </attribute>
+    
+        <attribute name="coordinateOffsetXi" comment="The constant offset value that shall be applied to the grid locations for the xi axis">
+            <primitive type="float64" defaultValue="0.0"/>
+        </attribute>
+    
+        <attribute name="xiValues" comment="list of coordinates">
+            <primitivelist length="0">
+                <primitive type="uint16"/>
+            </primitivelist>
+        </attribute>
+    
+        <!--<attribute name="paddingTo64" >
+            <primitivelist>
+                <primitive type="uint8" length="0"/>
+            </primitivelist>
+        </attribute> -->
+        
+        <attribute name="padding">
+            <padtoboundary length="64"/>
+        </attribute>
+
+    </class>
+    
+     <class name="GridData" inheritsFrom="root" comment="6.2.41, table 68">
+        
+        <attribute name="sampleType">
+            <sisoenum type="GriddedDataSampleType" comment="uid 246"/>
+        </attribute>
+        
+        <attribute name="dataRepresentation">
+            <sisoenum type="GriddedDataDataRepresentation" comment="uid 247"/>
+        </attribute>  
+        
+     </class>
+   
+    <class name="GridDataType0" inheritsFrom="GridData" comment="6.2.41, table 68">
+
+        <attribute name="numberOfBytes" hidden="true" >
+            <primitive type="uint16"/>
+        </attribute>
+        
+        <attribute name="dataValues">
+            <primitivelist countFieldName="numberOfBytes">
+                <primitive type="uint8" length="0"/>
+            </primitivelist>
+        </attribute>
+        
+        <!--<attribute name="paddingTo16">
+            <primitivelist>
+                <primitive type="uint8" length="0"/>
+            </primitivelist>
+        </attribute> -->
+        
+        <attribute name="padding">
+            <padtoboundary length="16"/>
+        </attribute>
+
+    </class>
+    
+    <class name="GridDataType1" inheritsFrom="GridData" comment="6.2.41, table 69">
+        
+        <attribute name="fieldScale">
+            <primitive type="float32"/>
+        </attribute>
+        
+        <attribute name="fieldOffset">
+            <primitive type="float32"/>
+        </attribute>
+        
+        <attribute name="numberOfValues" hidden="true" >
+            <primitive type="uint16"/>
+        </attribute>
+        
+        <attribute name="dataValues">
+            <primitivelist countFieldName="numberOfValues">
+                <primitive type="uint16" length="0"/>
+            </primitivelist>
+        </attribute>
+        
+        <!--<attribute name="paddingTo32">
+            <primitivelist>
+                <primitive type="uint16" length="0"/>
+            </primitivelist> 
+        </attribute> -->
+        
+        <attribute name="padding">
+            <padtoboundary length="32"/>
+        </attribute>
+
+    </class>
+    
+    <class name="GridDataType2" inheritsFrom="GridData" comment="6.2.41, table 70">
+
+        <attribute name="numberOfValues" hidden="true" >
+            <primitive type="uint16"/>
+        </attribute>
+        
+        <attribute name="padding">
+            <primitive type="uint16"/>
+        </attribute>
+        
+        <attribute name="dataValues">
+            <primitivelist countFieldName="numberOfValues">
+                <primitive type="float32" length="0"/>
+            </primitivelist>
+        </attribute>
+
+    </class>
+  
+    <class name="GroupID" inheritsFrom="root" 
+           comment="Unique designation of a group of entities contained in the isGroupOfPdu. Represents a group of entities rather than a single entity. Section 6.2.43">
+    
+        <attribute name="simulationAddress" comment="Simulation address (site and application number)">
+            <classRef name="SimulationAddress"/>
+        </attribute>
+  
+        <attribute name="groupNumber" comment="group number">
+            <primitive type="uint16"/>
+        </attribute>
+
+    </class>
+    
+    <class name="IORecord" inheritsFrom="root" comment="6.2.48"> 
+    </class>
+    
+    <class name="IOCommsNodeRecord" inheritsFrom="IORecord" comment="6.2.48.2">
+        
+        <attribute name="recordType" initialValue="5501">
+            <sisoenum type="VariableRecordTypes" defaultValue="VariableRecordTypes.IO_COMMUNICATIONS_NODE" comment="uid 66"/>
+        </attribute>
+        
+        <attribute name="recordLength" initialValue="16">
+            <primitive type="uint16"/>
+        </attribute>
+        
+        <attribute name="commsNodeType">
+            <sisoenum type="IOCommsNodeRecordCommsNodeType" comment="uid 294"/>
+        </attribute>
+        
+        <attribute name="padding">
+            <primitive type="uint8"/>
+        </attribute>
+        
+        <attribute name="commsNodeId">
+            <classRef name="CommunicationsNodeID"/>
+        </attribute>
+        
+    </class>
+    
+    <class name="IOEffectRecord" inheritsFrom="IORecord" comment="6.2.48.3">
+        
+        <attribute name="recordType" initialValue="5500">
+            <sisoenum type="VariableRecordTypes" defaultValue="VariableRecordTypes.IO_EFFECT" comment="uid 66"/>
+        </attribute>
+        
+        <attribute name="recordLength" initialValue="16">
+            <primitive type="uint16"/>
+        </attribute>
+        
+        <attribute name="ioStatus">
+            <sisoenum type="IOEffectsRecordIOStatus" comment="uid 290" />     
+        </attribute>
+        
+        <attribute name="ioLinkType">
+            <sisoenum type="IOEffectsRecordIOLinkType" comment="uid 291" />           
+        </attribute>
+        
+        <attribute name="ioEffect">
+            <sisoenum type="IOEffectsRecordIOEffect" comment="uid 292" />           
+        </attribute>
+        
+        <attribute name="ioEffectDutyCycle">
+            <primitive type="uint8"/>      
+        </attribute>
+        
+        <attribute name="ioEffectDuration">
+            <primitive type="uint16"/>      
+        </attribute>
+        
+        <attribute name="ioProcess">
+            <sisoenum type="IOEffectsRecordIOProcess" comment="uid 293" />       
+        </attribute>
+        
+        <attribute name="padding">
+            <primitive type="uint16"/>      
+        </attribute>
+        
+    </class>
+
+    <class name="CommunicationsNodeID" 
+           inheritsFrom="root" 
+           comment="Identity of a communications node. Section 6.2.48.4">
+
+        <attribute name="entityID">
+            <classRef name="EntityID"/>
+        </attribute>
+     
+        <attribute name="elementID">
+            <primitive type="uint16"/>
+        </attribute>
+
+    </class>
+
+    <class name="IFFData" inheritsFrom="root" comment="repeating element in IFF Data specification record">
+     
+        <attribute name="recordType" comment="enumeration for type of record">
+            <sisoenum type="VariableRecordTypes" comment="uid 66"/>
+        </attribute>
+  
+        <attribute name="recordLength" comment="length of record, including padding">
+            <primitive type="uint16"/>
+        </attribute>
+  
+        <attribute name="recordSpecificFields">
+            <primitivelist length="0">
+                <primitive type="uint8"/>
+            </primitivelist>        
+        </attribute>
+        <!--
+        <attribute name="paddingTo32">
+            <primitivelist length="0">
+                <primitive type="uint8"/>
+            </primitivelist>
+        </attribute>
+        -->
+        <attribute name="padding">
+            <padtoboundary length="32"/>
+        </attribute>
+    </class>
+
+
+    <class name="IffDataSpecification" inheritsFrom="root" 
+           comment="Requires hand coding to be useful. Section 6.2.43">
+    
+        <attribute name="numberOfIffDataRecords" hidden="true" comment="Number of iff records">
+            <primitive type="uint16"/>
+        </attribute>
+  
+        <attribute name="iffDataRecords" comment="IFF data records">
+            <objectlist countFieldName="numberOfIffDataRecords">
+                <classRef name="IFFData"/>
+            </objectlist>
+        </attribute>
+
+    </class>
+
+    <class name="IFFFundamentalParameterData" inheritsFrom="root" comment="Fundamental IFF atc data. Section 6.2.45">
+  
+        <attribute name="erp" comment="ERP">
+            <primitive type="float32"/>
+        </attribute>
+    
+        <attribute name="frequency" comment="frequency">
+            <primitive type="float32"/>
+        </attribute>
+    
+        <attribute name="pgrf" comment="pgrf">
+            <primitive type="float32"/>
+        </attribute>
+    
+        <attribute name="pulseWidth" comment="Pulse width">
+            <primitive type="float32"/>
+        </attribute>
+    
+        <attribute name="burstLength" comment="Burst length">
+            <primitive type="uint32"/>
+        </attribute>
+     
+        <attribute name="applicableModes" comment="Applicable modes enumeration">
+            <sisoenum type="IFFApplicableModes" comment="uid 339"/>
+        </attribute>
+    
+        <attribute name="systemSpecificData" comment="System-specific data">
+            <primitivelist length="3">
+                <primitive type="uint8"/>
+            </primitivelist>
+        </attribute>
+
+    </class>
+
+    <class name="IntercomCommunicationsParameters" inheritsFrom="root" comment="Intercom communcations parameters. Section 6.2.46">
+
+        <attribute name="recordType" comment="Type of intercom parameters record">
+            <sisoenum type="IntercomControlRecordType" comment="uid 185"/>
+        </attribute>
+     
+        <attribute name="recordLength" comment="length of record">
+            <primitive type="uint16"/>
+        </attribute>
+     
+        <attribute name="recordSpecificField" comment="This is a placeholder.">
+            <primitivelist length="0">
+                <primitive type="uint8"/>
+            </primitivelist>
+        </attribute>
+        
+        <!--<attribute name="paddingTo32">
+            <primitivelist length="0">
+                <primitive type="uint8"/>
+            </primitivelist>           
+        </attribute> -->
+        
+        <attribute name="padding">
+            <padtoboundary length="32"/>
+        </attribute>
+
+    </class>
+
+    <class name="IntercomIdentifier" inheritsFrom="root" comment="Unique designation of an attached or unattached intercom in an event or exercirse. Section 6.2.48">
+
+        <attribute name="siteNumber">
+            <primitive type="uint16"/>
+        </attribute>
+     
+        <attribute name="applicationNumber">
+            <primitive type="uint16"/>
+        </attribute>
+     
+        <attribute name="referenceNumber">
+            <primitive type="uint16"/>
+        </attribute>
+     
+        <attribute name="intercomNumber">
+            <primitive type="uint16"/>
+        </attribute>
+     
+    </class>
+
+    <class name="JammingTechnique" inheritsFrom="root" comment="Jamming technique. Section 6.2.49, uid 284">
+
+        <attribute name="kind">
+            <classRef name="JammerKind" defaultValue="edu.nps.moves.dis.jammers.JammerKind.DECEPTIONANDNOISE"/>
+        </attribute>
+     
+        <attribute name="category">
+            <classRef name="JammerCategory" defaultValue="edu.nps.moves.dis.jammers.DeceptionandNoise.Category.GATESTEALERANDNOISE"/>
+        </attribute>
+     
+        <attribute name="subcategory">
+            <classRef name="JammerSubCategory" defaultValue="edu.nps.moves.dis.jammers.DeceptionandNoise.GateStealerandNoise.SubCategory.NOISEANDVGPO"/>
+        </attribute>
+     
+        <attribute name="specific">
+            <classRef name="JammerSpecific" defaultValue="edu.nps.moves.dis.jammers.DeceptionandNoise.GateStealerandNoise.NoiseandVGPO.Specific.LOWLEVELNOISEANDVGPO"/>
+        </attribute>
+
+    </class>
+    
+    <class name="JammingTechniqueRaw" inheritsFrom="root" comment="Jamming technique. Section 6.2.49, uid 284">
+
+        <attribute name="kind">
+            <primitive type="uint8"/>
+        </attribute>
+     
+        <attribute name="category">
+            <primitive type="uint8"/>
+        </attribute>
+     
+        <attribute name="subcategory">
+            <primitive type="uint8"/>
+        </attribute>
+     
+        <attribute name="specific">
+            <primitive type="uint8"/>
+        </attribute>
+
+    </class>
+
+    <class name="LaunchedMunitionRecord" inheritsFrom="root" comment="Identity of a communications node. Section 6.2.50">
+
+        <attribute name="fireEventID">
+            <classRef name="EventIdentifier"/>
+        </attribute>
+     
+        <attribute name="padding">
+            <primitive type="uint16"/>
+        </attribute>
+     
+        <attribute name="firingEntityID">
+            <classRef name="EntityID"/>
+        </attribute>
+     
+        <attribute name="padding2">
+            <primitive type="uint16"/>
+        </attribute>
+     
+        <attribute name="targetEntityID">
+            <classRef name="EntityID"/>
+        </attribute>
+     
+        <attribute name="padding3">
+            <primitive type="uint16"/>
+        </attribute>
+     
+        <attribute name="targetLocation">
+            <classRef name="Vector3Double"/>
+        </attribute>
+
+    </class>
+
+    <class name="LayerHeader" 
+           inheritsFrom="root" 
+           comment="The identification of the additional information layer number, layer-specific information, and the length of the layer. Section 6.2.51">
+
+        <attribute name="layerNumber">
+            <primitive type="uint8"/>
+        </attribute>
+
+        <attribute name="layerSpecificInformation" comment="field shall specify layer-specific information that varies by System Type (see 6.2.86) and Layer Number.">
+            <primitive type="uint8"/>
+        </attribute>
+
+        <attribute name="length" comment="This field shall specify the length in octets of the layer, including the Layer Header record">
+            <primitive type="uint16"/>
+        </attribute>
+
+    </class>
+
+    <class name="LinearSegmentParameter" 
+           inheritsFrom="root" 
+           comment="The specification of an individual segment of a linear segment synthetic environment object in a Linear Object State PDU Section 6.2.52">
+
+        <attribute name="segmentNumber" comment="the individual segment of the linear segment">
+            <primitive type="uint8"/>
+        </attribute>
+     
+        <attribute name="segmentModification" comment=" whether a modification has been made to the point object's location or orientation">
+            <sisobitfield type="ObjectStateModificationLinearObject" comment="UID 241"/>
+        </attribute>
+
+        <attribute name="generalSegmentAppearance" comment="general dynamic appearance attributes of the segment. This record shall be defined as a 16-bit record of enumerations. The values defined for this record are included in Section 12 of SISO-REF-010.">
+            <sisobitfield type="ObjectStateAppearanceGeneral" comment="UID 229"/>
+        </attribute>
+
+        <attribute name="specificSegmentAppearance" comment="This field shall specify specific dynamic appearance attributes of the segment. This record shall be defined as a 32-bit record of enumerations.">
+            <primitive type="uint32"/>
+        </attribute>
+
+        <attribute name="segmentLocation" comment="This field shall specify the location of the linear segment in the simulated world and shall be represented by a World Coordinates record ">
+            <classRef name="Vector3Double"/>
+        </attribute>
+
+        <attribute name="segmentOrientation" comment="orientation of the linear segment about the segment location and shall be represented by a Euler Angles record ">
+            <classRef name="EulerAngles"/>
+        </attribute>
+
+        <attribute name="segmentLength" comment="length of the linear segment, in meters, extending in the positive X direction">
+            <primitive type="float32"/>
+        </attribute>
+
+        <attribute name="segmentWidth" comment="The total width of the linear segment, in meters, shall be specified by a 16-bit unsigned integer. One-half of the width shall extend in the positive Y direction, and one-half of the width shall extend in the negative Y direction.">
+            <primitive type="float32"/>
+        </attribute>
+
+        <attribute name="segmentHeight" comment="The height of the linear segment, in meters, above ground shall be specified by a 16-bit unsigned integer.">
+            <primitive type="float32"/>
+        </attribute>
+
+        <attribute name="segmentDepth" comment="The depth of the linear segment, in meters, below ground level ">
+            <primitive type="float32"/>
+        </attribute>
+     
+        <attribute name="padding" comment="padding">
+            <primitive type="uint32"/>
+        </attribute>
+
+    </class>
+
+    <class name="LiveEntityIdentifier" inheritsFrom="root"
+           comment="The unique designation of each entity in an event or exercise that is contained in a Live Entity PDU. Section 6.2.54 ">
+
+        <attribute name="liveSimulationAddress" comment="Live Simulation Address record (see 6.2.54) ">
+            <classRef name="LiveSimulationAddress"/>
+        </attribute>
+
+        <attribute name="entityNumber" comment="Live entity number ">
+            <primitive type="uint16"/>
+        </attribute>
+    
+    </class>
+
+    <class name="LiveSimulationAddress" inheritsFrom="root"
+           comment="A simulation's designation associated with all Live Entity IDs contained in Live Entity PDUs. Section 6.2.55 ">
+
+        <attribute name="liveSiteNumber" comment="facility, installation, organizational unit or geographic location may have multiple sites associated with it. The Site Number is the first component of the Live Simulation Address, which defines a live simulation.">
+            <primitive type="uint8"/>
+        </attribute>
+
+        <attribute name="liveApplicationNumber" comment="An application associated with a live site is termed a live application. Each live application participating in an event ">
+            <primitive type="uint8"/>
+        </attribute>
+
+    </class>
+
+    <class name="MineEntityIdentifier" inheritsFrom="root"
+           comment="The unique designation of a mine contained in the Minefield Data PDU. No espdus are issued for mine entities.  Section 6.2.55 ">
+
+        <attribute name="simulationAddress" comment="">
+            <classRef name="SimulationAddress"/>
+        </attribute>
+
+        <attribute name="mineEntityNumber" comment="">
+            <primitive type="uint16"/>
+        </attribute>
+
+    </class>
+
+
+    <class name="MinefieldIdentifier" inheritsFrom="root" comment="The unique designation of a minefield Section 6.2.56 ">
+
+        <attribute name="simulationAddress" comment="">
+            <classRef name="SimulationAddress"/>
+        </attribute>
+
+        <attribute name="minefieldNumber" comment="">
+            <primitive type="uint16"/>
+        </attribute>
+
+    </class>
+
+    <class name="MinefieldSensorType" inheritsFrom="root" comment="Information about a minefield sensor. Section 6.2.57">
+
+        <attribute name="sensorType" comment="sensor type. bit fields 0-3 are the type category, 4-15 are teh subcategory">
+            <primitive type="uint16"/>
+        </attribute>
+    
+    </class>
+
+    <class name="ModulationParameters" inheritsFrom="root" comment="Modulation parameters associated with a specific radio system.  6.2.58 ">
+        
+        <attribute name="recordSpecificFields">
+            <primitivelist length="0" >
+                <primitive type="uint8"/>
+            </primitivelist>
+        </attribute>
+        
+        <!--<atribute name="paddingTo64">
+            <primitivelist length="8" >
+                <primitive type="uint8"/>
+            </primitivelist>
+        </atribute> -->
+        
+        <attribute name="padding">
+            <padtoboundary length="64"/>
+        </attribute>
+
+        
+    </class>
+
+    <class name="ModulationType" inheritsFrom="root" comment="Information about the type of modulation used for radio transmission. 6.2.59 ">
+
+        <attribute name="spreadSpectrum" 
+                   comment="This field shall indicate the spread spectrum technique or combination of spread spectrum techniques in use. Bit field. 0=freq hopping, 1=psuedo noise, time hopping=2, reamining bits unused">
+            <primitive type="uint16"/>
+        </attribute>
+
+        <attribute name="majorModulation" comment="the major classification of the modulation type. ">
+            <sisoenum type="TransmitterMajorModulation" comment="UID 155"/>
+        </attribute>
+
+        <attribute name="detail" comment="provide certain detailed information depending upon the major modulation type, uid 156-162">
+            <primitive type="uint16"/>
+        </attribute>
+
+        <attribute name="radioSystem" comment="the radio system associated with this Transmitter PDU and shall be used as the basis to interpret other fields whose values depend on a specific radio system.">
+            <sisoenum type="TransmitterModulationTypeSystem" comment="uid =163"/>
+        </attribute>
+ 
+    </class>
+
+    <class name="Munition" inheritsFrom="root"
+           comment="An entity's munition (e.g., bomb, missile) information shall be represented by one or more Munition records. For each type or location of munition, this record shall specify the type, location, quantity and status of munitions that an entity contains. Section 6.2.60 ">
+
+        <attribute name="munitionType" comment=" This field shall identify the entity type of the munition. See section 6.2.30.">
+            <classRef name="EntityType"/>
+        </attribute>
+
+        <attribute name="station" comment="the station or launcher to which the munition is assigned. See Annex I">
+            <primitive type="uint32"/>
+        </attribute>
+
+        <attribute name="quantity" comment="the quantity remaining of this munition.">
+            <primitive type="uint16"/>
+        </attribute>
+
+        <attribute name="munitionStatus" comment=" the status of the munition. It shall be represented by an 8-bit enumeration. ">
+            <sisoenum type="MunitionExpendableStatus" comment="uid 327"/>
+        </attribute>
+
+        <attribute name="padding" comment="padding ">
+            <primitive type="uint8" defaultValue="0"/>
+        </attribute>
+
+    </class>
+
+    <class name="MunitionReload" inheritsFrom="root"
+           comment="indicate weapons (munitions) previously communicated via the Munition record. Section 6.2.61 ">
+
+        <attribute name="munitionType" comment=" This field shall identify the entity type of the munition. See section 6.2.30.">
+            <classRef name="EntityType"/>
+        </attribute>
+
+        <attribute name="station" comment="the station or launcher to which the munition is assigned. See Annex I">
+            <primitive type="uint32"/>
+        </attribute>
+
+        <attribute name="standardQuantity" comment="the standard quantity of this munition type normally loaded at this station/launcher if a station/launcher is specified.">
+            <primitive type="uint16"/>
+        </attribute>
+
+        <attribute name="maximumQuantity" comment="the maximum quantity of this munition type that this station/launcher is capable of holding when a station/launcher is specified ">
+            <primitive type="uint16"/>
+        </attribute>
+
+        <attribute name="standardQuantityReloadTime" comment="numer of seconds of sim time required to reload the std qty">
+            <primitive type="uint32"/>
+        </attribute>
+
+        <attribute name="maximumQuantityReloadTime" comment="the number of seconds of sim time required to reload the max possible quantity">
+            <primitive type="uint32"/>
+        </attribute>
+ 
+    </class>
+
+    <class name="NamedLocationIdentification" inheritsFrom="root"
+           comment="Information about the discrete positional relationship of the part entity with respect to the its host entity Section 6.2.62 ">
+ 
+        <attribute name="stationName" comment="the station name within the host at which the part entity is located. If the part entity is On Station, this field shall specify the representation of the part's location data fields. This field shall be specified by a 16-bit enumeration ">
+            <sisoenum type="IsPartOfStationName" comment="uid 212"/>
+        </attribute>
+ 
+        <attribute name="stationNumber" comment="the number of the particular wing station, cargo hold etc., at which the part is attached. ">
+            <primitive type="uint16"/>
+        </attribute>
+
+    </class>
+
+    <class name="ObjectIdentifier" inheritsFrom="root"
+           comment="The unique designation of an environmental object. Section 6.2.63">
+
+        <attribute name="simulationAddress" comment=" Simulation Address">
+            <classRef name="SimulationAddress"/>
+        </attribute>
+
+        <attribute name="objectNumber" comment="object number">
+            <primitive type="uint16"/>
+        </attribute>
+
+    </class>
+
+
+    <class name="ObjectType" inheritsFrom="root"
+           comment="The unique designation of an environmental object. Section 6.2.64">
+
+        <attribute name="domain" comment="Domain of entity (air, surface, subsurface, space, etc)">
+            <sisoenum type="PlatformDomain" comment="uid 8"/>
+        </attribute>
+
+        <attribute name="objectKind" comment="country to which the design of the entity is attributed" >
+            <sisoenum type="ObjectKind" comment="uid 225"/>
+        </attribute>
+
+        <attribute name="category" comment="category of entity">
+            <primitive type="uint8"/>
+        </attribute>
+    
+        <attribute name="subcategory" comment="subcategory of entity">
+            <primitive type="uint8"/>
+        </attribute>
+
+    </class>
+
+<!-- add "Record" to the end to avoid name collision with OwnershipStatus, uid=332 -->
+    <class name="OwnershipStatusRecord" inheritsFrom="root"
+           comment="used to convey entity and conflict status information associated with transferring ownership of an entity. Section 6.2.65">
+
+        <attribute name="entityId" comment="EntityID">
+            <classRef name="EntityID"/>
+        </attribute>
+
+        <attribute name="ownershipStatus" comment="The ownership and/or ownership conflict status of the entity represented by the Entity ID field.">
+            <sisoenum type="OwnershipStatus" comment="uid 332"/>
+        </attribute>
+
+        <attribute name="padding" comment="padding">
+            <primitive type="uint8" defaultValue="0"/>
+        </attribute>
+    </class>
+
+    <!-- not used, incorporated into Pdu class
+    <class name="PduHeader" inheritsFrom="root"
+           comment="Not used. The PDU Header Record is directly incoroporated into the PDU class. Here for completness only. Section 6.2.66">
+
+        <attribute name="protocolVersion" comment="The version of the protocol. 5=DIS-1995, 6=DIS-1998, 7=DIS-2009.">
+            <primitive type= "uint8" defaultValue="7"/>
+        </attribute>
+  
+        <attribute name="exerciseID" comment="Exercise ID">
+            <primitive type= "uint8" defaultValue="0"/>
+        </attribute>
+  
+        <attribute name="pduType" comment="Type of pdu, unique for each PDU class">
+            <sisoenum type="DISPDUType" comment="uid 4"/>
+        </attribute>
+  
+        <attribute name="protocolFamily" comment="value that refers to the protocol family, eg SimulationManagement, etc">
+            <sisoenum type="DISProtocolFamily" comment="uid 5"/>
+        </attribute>
+ 
+        <attribute name="timestamp" comment="Timestamp value">
+            <primitive type="uint32"/>
+        </attribute>
+
+        <attribute name="pduLength" comment="Length, in bytes, of the PDU. Changed name from length to avoid use of Hibernate QL reserved word.">
+            <primitive type="uint16"/>
+        </attribute>
+
+        <attribute name="pduStatus" comment="PDU Status Record. Described in 6.2.67. This field is not present in earlier DIS versions ">
+            <primitive type="uint8"/>
+        </attribute>
+ 
+        <attribute name="padding" comment="zero filled array of padding">
+            <primitive type="uint8" defaultValue="0"/>
+        </attribute>
+ 
+    </class>
+    -->
+
+    <class name="PropulsionSystemData" inheritsFrom="root"
+           comment="contains information describing the propulsion systems of the entity. This information shall be provided for each active propulsion system defined. Section 6.2.68">
+
+        <attribute name="powerSetting" comment="powerSetting">
+            <primitive type="float32"/>
+        </attribute>
+
+        <attribute name="engineRpm" comment="engine RPMs">
+            <primitive type="float32"/>
+        </attribute>
+
+    </class>
+
+    <class name="ProtocolMode" inheritsFrom="root"
+           comment="Bit field used to identify minefield data. bits 14-15 are a 2-bit enum, other bits unused. Section 6.2.69">
+
+        <attribute name="protocolMode" comment="Bitfields, 14-15 contain an enum, uid 336">
+            <primitive type="uint16"/>
+        </attribute>
+  
+    </class>
+
+    <class name="RadioIdentifier" inheritsFrom="root"
+           comment="The unique designation of an attached or unattached radio in an event or exercise Section 6.2.70">
+
+        <attribute name="siteNumber" comment=" site">
+            <primitive type="uint16"/>
+        </attribute>
+
+        <attribute name="applicationNumber" comment="application number">
+            <primitive type="uint16"/>
+        </attribute>
+
+        <attribute name="referenceNumber" comment=" reference number">
+            <primitive type="uint16"/>
+        </attribute>
+  
+        <attribute name="radioNumber" comment=" Radio number">
+            <primitive type="uint16"/>
+        </attribute>
+  
+    </class>
+
+    <class name="RadioType" inheritsFrom="root" 
+           comment="Identifies the type of radio. Section 6.2.71">
+
+        <attribute name="entityKind" comment="Kind of entity">
+            <sisoenum type="EntityKind" defaultValue="EntityKind.RADIO" comment="uid 7"/>
+        </attribute>
+
+        <attribute name="domain" comment="Domain of entity (air, surface, subsurface, space, etc)">
+            <primitive type="uint8"/>
+        </attribute>
+
+        <attribute name="country" comment="country to which the design of the entity is attributed" >
+            <sisoenum type="Country" comment="uid 29"/>
+        </attribute>
+
+        <attribute name="category" comment="category of entity">
+            <sisoenum type="RadioCategory" comment="uid 22"/>
+        </attribute>
+
+        <attribute name="subcategory" comment="specific info based on subcategory field">
+            <sisoenum type="RadioSubcategory" comment="uid 23"/>
+        </attribute>
+
+        <attribute name="specific">
+            <primitive type="uint8"/>
+        </attribute>
+
+        <attribute name="extra">
+            <primitive type="uint8"/>
+        </attribute>
+
+    </class>
+
+    <class name="RecordQuerySpecification" inheritsFrom="root"
+           comment="The identification of the records being queried 6.2.72">
+
+        <attribute name="numberOfRecords" hidden="true" >
+            <primitive type="uint32"/>
+        </attribute>
+
+        <attribute name="recordIDs" comment="variable length list of 32 bit record types">
+            <objectlist countFieldName="numberOfRecords">
+                <sisoenum type="VariableRecordTypes" comment="uid = 66"/>
+                <!--<classRef name="VariableRecordTypes"/>-->
+            </objectlist> 
+        </attribute>
+
+    </class>
+
+    <class name="RecordSpecificationElement" inheritsFrom="root"
+           comment="Synthetic record, made up from section 6.2.72. This is used to acheive a repeating variable list element.">
+
+        <attribute name="recordID" comment="the data structure used to convey the parameter values of the record for each record. 32 bit enumeration.">
+            <sisoenum type="VariableRecordTypes" comment="uid = 66"/>
+        </attribute>
+
+        <attribute name="recordSetSerialNumber" comment="the serial number of the first record in the block of records">
+            <primitive type= "uint32"/>
+        </attribute>
+        
+        <attribute name="padding">
+            <primitive type="uint32"/>
+        </attribute>
+
+        <attribute name="recordLength" comment=" the length, in bits, of the record. Note, bits, not bytes.">
+            <primitive type= "uint16"/>
+        </attribute>
+
+        <attribute name="recordCount" comment=" the number of records included in the record set ">
+            <primitive type= "uint16"/>
+        </attribute>
+
+        <attribute name="recordValues" comment="the concatenated records of the format specified by the Record ID field. The length of this field is the Record Length multiplied by the Record Count, in units of bits.">
+            <primitivelist length="0">
+                <primitive type="uint8"/>
+            </primitivelist>
+        </attribute>
+
+        <!--<attribute name="padTo64" comment="Padding of 0 to 63 unused bits as required for 32-bit alignment of the Record Set field.">
+            <primitivelist length="0">
+                <primitive type="uint8"/>
+            </primitivelist>
+        </attribute> -->
+        
+        <attribute name="padTo64">
+            <padtoboundary length="64"/>
+        </attribute>
+    </class>
+
+    <class name="RecordSpecification" inheritsFrom="root" 
+           comment="This record shall specify the number of record sets contained in the Record Specification record and the record details. Section 6.2.73.">
+
+        <attribute name="numberOfRecordSets" hidden="true" comment="The number of record sets">
+            <primitive type="uint32"/>
+        </attribute>
+
+        <attribute name="recordSets" comment="variable length list record specifications.">
+            <objectlist countFieldName="numberOfRecordSets">
+                <classRef name="RecordSpecificationElement"/>
+            </objectlist>
+        </attribute>
+
+    </class>
+
+    <class name="Relationship" inheritsFrom="root" 
+           comment="The relationship of the part entity to its host entity. Section 6.2.74.">
+
+        <attribute name="nature" comment="the nature or purpose for joining of the part entity to the host entity and shall be represented by a 16-bit enumeration">
+            <sisoenum type="IsPartOfNature" comment="uid 210"/>
+        </attribute>
+
+        <attribute name="position" comment="the position of the part entity with respect to the host entity and shall be represented by a 16-bit enumeration">
+            <sisoenum type="IsPartOfPosition" comment="uid 211"/>
+        </attribute>
+
+    </class>
+
+    <class name="RequestID" inheritsFrom="root" 
+           comment="A monotonically increasing number inserted into all simulation managment PDUs. This should be a hand-coded thingie, maybe a singleton. Section 6.2.75">
+    
+        <attribute name="requestID" comment="monotonically increasing number">
+            <primitive type="uint32"/>
+        </attribute>
+    </class>
+
+    <class name="SecondaryOperationalData" 
+           inheritsFrom="root" 
+           comment="Additional operational data for an IFF emitting system and the number of IFF Fundamental Parameter Data records Section 6.2.76.">
+
+        <attribute name="operationalData1" comment="additional operational characteristics of the IFF emitting system. Each 8-bit field will vary depending on the system type.">
+            <primitive type="uint8"/>
+        </attribute>
+
+        <attribute name="operationalData2" comment="additional operational characteristics of the IFF emitting system. Each 8-bit field will vary depending on the system type.">
+            <primitive type="uint8"/>
+        </attribute>
+
+        <attribute name="numberOfIFFFundamentalParameterRecords" comment="the number of IFF Fundamental Parameter Data records that follow">
+            <primitive type="uint16"/>
+        </attribute>
+
+    </class>
+
+    <class name="Sensor" inheritsFrom="root" 
+           comment="An entity's sensor information.  Section 6.2.77.">
+
+        <attribute name="sensorTypeSource" comment=" the source of the Sensor Type field ">
+            <sisoenum type="SensorTypeSource" comment="uid 414"/>
+        </attribute>
+
+        <attribute name="sensorOnOffStatus" comment="the on/off status of the sensor">
+            <sisoenum type="SensorOnOffStatus" comment="uid 331"/>
+        </attribute>
+
+        <attribute name="sensorType"
+                   comment="for Source 'other':SensorRecordOtherActiveSensors/325,'em':EmitterName/75,'passive':SensorRecordSensorTypePassiveSensors/326,'mine':6.2.57,'ua':UAAcousticSystemName/144,'lasers':DesignatorSystemName/80">
+            <primitive type="uint16"/>
+        </attribute>
+
+        <attribute name="station" comment=" the station to which the sensor is assigned. A zero value shall indi- cate that this Sensor record is not associated with any particular station and represents the total quan- tity of this sensor for this entity. If this field is non-zero, it shall either reference an attached part or an articulated part">
+            <primitive type="uint32"/>
+        </attribute>
+
+        <attribute name="quantity" comment="quantity of the sensor ">
+            <primitive type="uint16"/>
+        </attribute>
+
+        <attribute name="padding" comment="padding">
+            <primitive type="uint16" defaultValue="0"/>
+        </attribute>
+
+    </class>
+    
+    <class name="ShaftRPM">
+        <attribute name="currentRPM">
+            <primitive type="uint16"/>
+        </attribute>
+        
+        <attribute name="orderedRPM">
+            <primitive type="uint16"/>
+        </attribute>
+        
+        <attribute name="RPMrateOfChange">
+            <primitive type="int32" comment="signed"/>
+        </attribute>
+    </class>
+    
+    <class name="SilentEntitySystem" inheritsFrom="root" 
+           comment="information abou an enitity not producing espdus. Section 6.2.79">
+
+        <attribute name="numberOfEntities" comment="number of the type specified by the entity type field">
+            <primitive type="uint16"/>
+        </attribute>
+    
+        <attribute name="numberOfAppearanceRecords" hidden="true" comment="number of entity appearance records that follow">
+            <primitive type="uint16"/>
+        </attribute>
+    
+        <attribute name="entityType" comment="Entity type">
+            <classRef name="EntityType"/>
+        </attribute>
+    
+        <attribute name="appearanceRecordList" comment="Variable length list of appearance records">
+            <primitivelist length="0" countFieldName="numberOfAppearanceRecords">
+                <primitive type="uint32" comment="UID 31-43 bitsets"/>
+            </primitivelist> 
+        </attribute>
+    
+    </class>
+
+    <class name="SimulationAddress" inheritsFrom="root" 
+           comment="A Simulation Address record shall consist of the Site Identification number and the Application Identification number. Section 6.2.79 ">
+
+        <attribute name="site" comment="A site is defined as a facility, installation, organizational unit or a geographic location that has one or more simulation applications capable of participating in a distributed event. ">
+            <primitive type="uint16"/>
+        </attribute>
+
+        <attribute name="application" comment="An application is defined as a software program that is used to generate and process distributed simulation data including live, virtual and constructive data.">
+            <primitive type="uint16"/>
+        </attribute>
+
+    </class>
+
+
+    <class name="SimulationIdentifier" inheritsFrom="root" 
+           comment="The unique designation of a simulation when using the 48-bit identifier format shall be specified by the Sim- ulation Identifier record. The reason that the 48-bit format is required in addition to the 32-bit simulation address format that actually identifies a specific simulation is because some 48-bit identifier fields in PDUs may contain either an Object Identifier, such as an Entity ID, or a Simulation Identifier. Section 6.2.80">
+
+        <attribute name="simulationAddress" comment="Simulation address ">
+            <classRef name="SimulationAddress"/>
+        </attribute>
+
+        <attribute name="referenceNumber" comment="This field shall be set to zero as there is no reference number associated with a Simulation Identifier.">
+            <primitive type="uint16" defaultValue="0"/>
+        </attribute>
+
+    </class>
+
+     <class name="StandardVariableSpecification" inheritsFrom="root"
+           comment="Does not work, and causes failure in anything it is embedded in. Section 6.2.83">
+           
+        <attribute name="numberOfStandardVariableRecords" comment="Number of static variable records">
+            <primitive type="uint16"/>
+        </attribute>
+   
+        <attribute name="standardVariables" comment="variable length list of standard variables, The class type and length here are WRONG and will cause the incorrect serialization of any class in whihc it is embedded.">
+            <objectlist countFieldName="numberOfStandardVariableRecords">
+                <classRef name="StandardVariableRecord"/>
+            </objectlist> 
+        </attribute>
+   
+    </class>
+ 
+    <class name="StandardVariableRecord" inheritsFrom="root" comment="Section 6.2.83">
+        
+        <attribute name="recordType">
+            <sisoenum type="VariableRecordTypes" comment="uid 66"/>
+        </attribute>
+        
+        <attribute name="recordLength" hidden="true" >
+            <primitive type="uint16"/>
+        </attribute>
+        
+        <attribute name="recordSpecificFields">
+            <primitivelist length="0" countFieldName="recordLength">
+                <primitive type="uint8"/> 
+            </primitivelist>        
+        </attribute>
+        
+        <!-- <attribute name="paddingTo64bits">
+            <primitivelist length="2">
+                <primitive type="uint8"/>
+            </primitivelist>
+        </attribute>-->
+        
+        <attribute name="padding">
+            <padtoboundary length="64"/>
+        </attribute>
+
+    </class>
+
+    <class name="StorageFuel" inheritsFrom="root" comment="Information about an entity's engine fuel. Section 6.2.84.">
+
+        <attribute name="fuelQuantity" comment="Fuel quantity, units specified by next field">
+            <primitive type= "uint32"/>
+        </attribute>
+
+        <attribute name="fuelMeasurementUnits" comment="Units in which the fuel is measured">
+            <sisoenum type="FuelMeasurementUnits" comment="uid 328"/>
+        </attribute>
+
+        <attribute name="fuelType" comment="Type of fuel">
+            <sisoenum type="SupplyFuelType" comment="uid 413"/>
+        </attribute>
+
+        <attribute name="fuelLocation" comment="Location of fuel as related to entity. See section 14 of EBV document">
+            <sisoenum type="FuelLocation" comment="uid 329"/>
+        </attribute>
+
+        <attribute name="padding" comment="padding">
+            <primitive type="uint8" defaultValue="0"/>
+        </attribute>
+
+    </class>
+
+    <class name="StorageFuelReload" inheritsFrom="root"
+           comment="For each type or location of Storage Fuel, this record shall specify the type, location, fuel measure- ment units, reload quantity and maximum quantity for storage fuel either for the whole entity or a specific storage fuel location (tank). Section 6.2.85.">
+
+        <attribute name="standardQuantity" comment=" the standard quantity of this fuel type normally loaded at this station/launcher if a station/launcher is specified. If the Station/Launcher field is set to zero, then this is the total quantity of this fuel type that would be present in a standard reload of all appli- cable stations/launchers associated with this entity.">
+            <primitive type="uint32"/>
+        </attribute>
+
+        <attribute name="maximumQuantity" comment="the maximum quantity of this fuel type that this sta- tion/launcher is capable of holding when a station/launcher is specified. This would be the value used when a maximum reload was desired to be set for this station/launcher. If the Station/launcher field is set to zero, then this is the maximum quantity of this fuel type that would be present on this entity at all stations/launchers that can accept this fuel type.">
+            <primitive type="uint32"/>
+        </attribute>
+
+        <attribute name="standardQuantityReloadTime" comment="the seconds normally required to reload the standard quantity of this fuel type at this specific station/launcher. When the Station/Launcher field is set to zero, this shall be the time it takes to perform a standard quantity reload of this fuel type at all applicable stations/launchers for this entity.">
+            <primitive type="uint32"/>
+        </attribute>
+
+        <attribute name="maximumQuantityReloadTime" comment="the seconds normally required to reload the maximum possible quantity of this fuel type at this station/launcher. When the Station/Launcher field is set to zero, this shall be the time it takes to perform a maximum quantity load/reload of this fuel type at all applicable stations/launchers for this entity.">
+            <primitive type="uint32"/>
+        </attribute>
+
+        <attribute name="fuelMeasurementUnits" comment="the fuel measurement units. Enumeration">
+            <sisoenum type="FuelMeasurementUnits" comment="uid 328"/>
+        </attribute>
+
+        <attribute name="fuelType" comment="Fuel type">
+            <sisoenum type="SupplyFuelType" comment="uid 413"/>
+        </attribute>
+
+        <attribute name="fuelLocation" comment="Location of fuel as related to entity. See section 14 of EBV document">
+            <sisoenum type="FuelLocation" comment="uid 329"/>
+        </attribute>
+
+        <attribute name="padding" comment="padding">
+            <primitive type="uint8" defaultValue="0"/>
+        </attribute>
+
+    </class>
+
+
+    <class name="SupplyQuantity" inheritsFrom="root" comment=" A supply, and the amount of that supply. Section 6.2.86">
+
+        <attribute name="supplyType" comment="Type of supply">
+            <classRef name="EntityType"/>
+        </attribute>
+
+        <attribute name="quantity" comment="the number of units of a supply type. ">
+            <primitive type="float32"/>
+        </attribute>
+
+    </class>
+
+    <class name="SystemIdentifier" inheritsFrom="root" comment="The ID of the IFF emitting system. Section 6.2.87">
+
+        <attribute name="systemType" comment="general type of emitting system, an enumeration">
+            <sisoenum type="IFFSystemType" comment="uid 82"/>
+        </attribute>
+
+        <attribute name="systemName" comment="named type of system, an enumeration">
+            <sisoenum type="IFFSystemName" comment="uid 83"/>
+        </attribute>
+
+        <attribute name="systemMode" comment="mode of operation for the system, an enumeration">
+            <sisoenum type="IFFSystemMode" comment="uid 84"/>
+        </attribute>
+
+        <attribute name="changeOptions" comment="status of this PDU, see section 6.2.15">
+            <classRef name="ChangeOptions"/>
+        </attribute>
+
+    </class>
+
+    <!-- Section 6.2.87 Absolute timestamps are used when clocks on hosts are synced, perhaps via NTP.
+    Absolute timestamps have the LSB set to 1. Contents are the system clock time when the data was valid.
+    
+    Relative timestamps are used when hosts are not synchronized. Each hosts keeps track from an arbitrary
+    starting point, relative to the simulation issuing the PDU. The LSB is set to zero.
+    
+    Scale is one hour divided by 2^31-1, about 1.676 microseconds
+    -->
+
+    <class name="TotalRecordSets" inheritsFrom="root" comment="Total number of record sets contained in a logical set of one or more PDUs. Used to transfer ownership, etc Section 6.2.88">
+
+        <attribute name="totalRecordSets" comment="Total number of record sets">
+            <primitive type="uint16"/>
+        </attribute>
+
+        <attribute name="padding" comment="padding">
+            <primitive type="uint16" defaultValue="0"/>
+        </attribute>
+
+    </class>
+
+    <class name="TrackJamData" inheritsFrom="root" comment=" Track-Jam data Section 6.2.89">
+
+        <attribute name="entityID" comment="the entity tracked or illumated, or an emitter beam targeted with jamming">
+            <classRef name="EntityID"/>
+        </attribute>
+
+        <attribute name="emitterNumber" comment="Emitter system associated with the entity">
+            <primitive type="uint8"/>
+        </attribute>
+
+        <attribute name="beamNumber" comment="Beam associated with the entity">
+            <primitive type="uint8"/>
+        </attribute>
+
+    </class>
+
+    <class name="UAFundamentalParameter" 
+           inheritsFrom="root" 
+           comment="Regeneration parameters for active emission systems that are variable throughout a scenario. Section 6.2.91">
+
+        <attribute name="activeEmissionParameterIndex" comment="Which database record shall be used">
+            <sisoenum type="UAActiveEmissionParameterIndex" comment="uid 146"/>
+        </attribute>
+
+        <attribute name="scanPattern" comment="The type of scan pattern, If not used, zero">
+            <sisoenum type="UAScanPattern" comment="uid 147"/>
+        </attribute>
+
+        <attribute name="beamCenterAzimuthHorizontal" comment="center azimuth bearing of th emain beam. In radians.">
+            <primitive type="float32"/>
+        </attribute>
+
+        <attribute name="azimuthalBeamwidthHorizontal" comment="Horizontal beamwidth of th emain beam Meastued at the 3dB down point of peak radiated power. In radians.">
+            <primitive type="float32"/>
+        </attribute>
+  
+        <attribute name="beamCenterDepressionElevation" comment="center of the d/e angle of th emain beam relative to the stablised de angle of the target. In radians.">
+            <primitive type="float32"/>
+        </attribute>
+  
+        <attribute name="depressionElevationBeamWidth" comment="vertical beamwidth of the main beam. Meastured at the 3dB down point of peak radiated power. In radians.">
+            <primitive type="float32"/>
+        </attribute>
+
+    </class>
+
+    <class name="UnattachedIdentifier" inheritsFrom="root" comment="The unique designation of one or more unattached radios in an event or exercise Section 6.2.91">
+
+        <attribute name="simulationAddress" comment="See 6.2.79">
+            <classref name="SimulationAddress"/>
+        </attribute>
+  
+        <attribute name="referenceNumber" comment="Reference number">
+            <primitive type="uint16"/>
+        </attribute>
+
+    </class>
+
+    <class name="VariableDatum" 
+           inheritsFrom="root" 
+           comment="the variable datum type, the datum length, and the value for that variable datum type. Section 6.2.93">
+
+        <attribute name="variableDatumID" comment="Type of variable datum to be transmitted. 32 bit enumeration defined in EBV">
+            <sisoenum type="VariableRecordTypes" comment="uid 66"/>
+        </attribute>
+
+        <attribute name="variableDatumLength" comment="Length, IN BITS, of the variable datum.">
+            <primitive type="uint32"/>
+        </attribute>
+
+        <attribute name="variableDatumValue" comment="This can be any number of bits long, depending on the datum.">
+            <primitivelist length="0">
+                <primitive type="uint8"/>
+            </primitivelist>
+        </attribute>
+
+        <!--<attribute name="paddingTo64bits">
+            <primitivelist length="0">
+                <primitive type="uint8"/>
+            </primitivelist>
+        </attribute> -->
+        
+       <attribute name="padding">
+            <padtoboundary length="64"/>
+        </attribute>
+
+    </class>
+<!-- don't recognize this 
+    <class name="VariableParameter" inheritsFrom="root" comment="specification of additional information associated with an entity or detonation, not otherwise accounted for in a PDU 6.2.94.1">
+
+        <attribute name="recordType" comment="the identification of the Variable Parameter record. Enumeration from EBV">
+            <primitive type="unsigned byte"/>
+        </attribute>
+
+        <attribute name="variableParameterFields1" comment="Variable parameter data fields. Two doubles minus one byte">
+            <primitive type="double"/>
+        </attribute>
+
+        <attribute name="variableParameterFields2" comment="Variable parameter data fields. ">
+            <primitive type="unsigned int"/>
+        </attribute>
+
+        <attribute name="variableParameterFields3" comment="Variable parameter data fields. ">
+            <primitive type="unsigned short"/>
+        </attribute>
+
+        <attribute name="variableParameterFields4" comment="Variable parameter data fields. ">
+            <primitive type="unsigned byte"/>
+        </attribute>
+  
+    </class>
+-->
+    <class name="VariableParameter" inheritsFrom="root" comment="used in DetonationPdu, ArticulatedPartsPdu among others">
+        
+        <attribute name="recordType" comment="the identification of the Variable Parameter record. Enumeration from EBV">
+            <sisoenum type="VariableParameterRecordType" comment="uid 56"/>
+        </attribute>
+        
+        <attribute name="recordSpecificFields" comment="120 bits">
+            <primitivelist length="15" fixedlength="true">
+                <primitive type="uint8"/>
+            </primitivelist>
+        </attribute>
+        
+    </class>
+    
+    <class name="ArticulatedPartVP" inheritsFrom="root" 
+           comment=" articulated parts for movable parts and a combination of moveable/attached parts of an entity. Section 6.2.94.2">
+
+        <attribute name="recordType" comment="the identification of the Variable Parameter record. Enumeration from EBV">
+            <sisoenum type="VariableParameterRecordType" defaultValue="VariableParameterRecordType.ARTICULATED_PART" comment="uid 56"/>
+        </attribute>
+
+        <attribute name="changeIndicator" comment="indicate the change of any parameter for any articulated part. Starts at zero, incremented for each change ">
+            <primitive type="uint8" defaultValue="0"/>
+        </attribute>
+
+        <attribute name="partAttachedTo" comment="the identification of the articulated part to which this articulation parameter is attached. This field shall be specified by a 16-bit unsigned integer. This field shall contain the value zero if the articulated part is attached directly to the entity.">
+            <primitive type="uint16" defaultValue="0"/>
+        </attribute>
+
+        <attribute name="parameterType" comment="the type of parameter represented, 32 bit enumeration">
+            <primitive type="uint32" comment="uid 58-59"/>
+        </attribute>
+  
+        <attribute name="parameterValue" comment="The definition of the 64 bits shall be determined based on the type of parameter specified in the Parameter Type field ">
+            <primitive type="float32" />
+        </attribute>
+        
+        <attribute name="padding">
+            <primitive type="uint32"/>
+        </attribute>
+
+    </class>
+
+    <class name="AttachedPartVP" inheritsFrom="root" comment="Removable parts that may be attached to an entity.  Section 6.2.93.3">
+
+        <attribute name="recordType" comment="the identification of the Variable Parameter record. Enumeration from EBV">
+            <sisoenum type="VariableParameterRecordType" defaultValue="VariableParameterRecordType.ATTACHED_PART" comment="uid 56"/>
+        </attribute>
+
+        <attribute name="detachedIndicator" comment="0 = attached, 1 = detached. See I.2.3.1 for state transition diagram">
+            <sisoenum type="AttachedPartDetachedIndicator" comment="uid 415"/>
+        </attribute>
+
+        <attribute name="partAttachedTo" comment="the identification of the articulated part to which this articulation parameter is attached. This field shall be specified by a 16-bit unsigned integer. This field shall contain the value zero if the articulated part is attached directly to the entity.">
+            <primitive type="uint16" defaultValue="0"/>
+        </attribute>
+
+        <attribute name="parameterType" comment="The location or station to which the part is attached">
+            <sisoenum type="AttachedParts" comment="uid 57"/>
+        </attribute>
+
+        <attribute name="attachedPartType" comment="The definition of the 64 bits shall be determined based on the type of parameter specified in the Parameter Type field ">
+            <classref name="EntityType"/>
+        </attribute>
+
+    </class>
+
+    <class name="EntityAssociationVP" inheritsFrom="root" comment="Association or disassociation of two entities.  Section 6.2.94.4.3">
+
+        <attribute name="recordType" comment="the identification of the Variable Parameter record. Enumeration from EBV">
+            <sisoenum type="VariableParameterRecordType" defaultValue="VariableParameterRecordType.ENTITY_ASSOCIATION" comment="uid 56"/>
+        </attribute>
+
+        <attribute name="changeIndicator" comment="Indicates if this VP has changed since last issuance">
+            <sisoenum type="EntityVPRecordChangeIndicator" comment="uid 320"/>
+        </attribute>
+
+        <attribute name="associationStatus" comment="Indicates association status between two entities">
+            <sisoenum type="EntityAssociationAssociationType" comment="uid 319"/>
+        </attribute>
+
+        <attribute name="associationType" comment="Type of association; 8 bit enum">
+            <sisoenum type="EntityAssociationPhysicalAssociationType" comment="uid 323"/>
+        </attribute>
+
+        <attribute name="entityID" comment="Object ID of entity associated with this entity">
+            <classRef name="EntityID"/>
+        </attribute>
+
+        <attribute name="ownStationLocation" comment="Station location on one's own entity">
+            <sisoenum type="IsPartOfStationName" comment="uid 212"/>
+        </attribute>
+
+        <attribute name="physicalConnectionType" comment="Type of physical connection">
+            <sisoenum type="EntityAssociationPhysicalConnectionType" comment="uid 324"/>
+        </attribute>
+
+        <attribute name="groupMemberType" comment="Type of member the entity is within the group">
+            <sisoenum type="EntityAssociationGroupMemberType" comment="uid 321"/>
+        </attribute>
+
+        <attribute name="groupNumber" comment="Group if any to which the entity belongs">
+            <primitive type="uint16"/>
+        </attribute>
+
+    </class>
+
+    <class name="EntityTypeVP" inheritsFrom="root" comment="Association or disassociation of two entities.  Section 6.2.94.5">
+
+        <attribute name="recordType" comment="the identification of the Variable Parameter record.">
+            <sisoenum type="VariableParameterRecordType" defaultValue="VariableParameterRecordType.ENTITY_TYPE" comment="uid 56"/>
+        </attribute>
+
+        <attribute name="changeIndicator" comment="Indicates if this VP has changed since last issuance">
+            <sisoenum type="EntityVPRecordChangeIndicator" comment="uid 320"/>
+        </attribute>
+
+        <attribute name="entityType" comment="">
+            <classRef name="EntityType"/>
+        </attribute>
+
+        <attribute name="padding" comment="padding">
+            <primitive type="uint16" defaultValue="0"/>
+        </attribute>
+
+        <attribute name="padding1" comment="padding">
+            <primitive type="uint32" defaultValue="0"/>
+        </attribute>
+
+    </class>
+
+    <class name="SeparationVP" inheritsFrom="root" 
+           comment="Physical separation of an entity from another entity.  Section 6.2.94.6">
+
+        <attribute name="recordType" comment="the identification of the Variable Parameter record. Enumeration from EBV">
+            <sisoenum type="VariableParameterRecordType" defaultValue="VariableParameterRecordType.SEPARATION" comment="uid 56"/>
+        </attribute>
+
+        <attribute name="reasonForSeparation" comment="Reason for separation. EBV">
+            <sisoenum type="SeparationVPReasonforSeparation" comment="uid 282"/>
+        </attribute>
+
+        <attribute name="preEntityIndicator" comment="Whether the entity existed prior to separation EBV">
+            <sisoenum type="SeparationVPPreEntityIndicator" comment="uid 283"/>
+        </attribute>
+
+        <attribute name="padding1" comment="padding">
+            <primitive type="uint8" defaultValue="0"/>
+        </attribute>
+
+        <attribute name="parentEntityID" comment="ID of parent">
+            <classRef name="EntityID"/>
+        </attribute>
+
+        <attribute name="padding2" comment="padding">
+            <primitive type="uint16" defaultValue="0"/>
+        </attribute>
+
+        <attribute name="stationLocation" comment="Station separated from">
+            <classref name="NamedLocationIdentification"/>
+        </attribute>
+
+    </class>
+
+    <class name="VariableTransmitterParameters" inheritsFrom="root" comment="Relates to radios. Section 6.2.95">
+
+        <attribute name="recordType" comment="Type of VTP">
+            <sisoenum type="VariableRecordTypes" comment="uid 66"/>
+        </attribute>
+
+        <attribute name="recordLength" comment="Length, in bytes">
+            <primitive type="uint16"/>
+        </attribute>
+        
+        <attribute name="recordSpecificFields">
+            <primitivelist length="0">
+                <primitive type="uint8"/>
+            </primitivelist>
+        </attribute>
+        
+        <!--<attribute name="paddingTo64">
+            <primitivelist length="2">
+                <primitive type="uint8"/>
+            </primitivelist>
+        </attribute> -->
+        
+         <attribute name="padding">
+            <padtoboundary length="64"/>
+        </attribute>
+
+    </class>
+
+    <class name="Vector3Float" inheritsFrom="root" comment="Three floating point values, x, y, and z. Section 6.2.95">
+    
+        <attribute name="x" comment="X value">
+            <primitive type="float32"/>
+        </attribute>
+
+        <attribute name="y" comment="y Value">
+            <primitive type="float32"/>
+        </attribute>
+
+        <attribute name="z" comment="Z value">
+            <primitive type="float32"/>
+        </attribute>
+  
+    </class>
+
+    <class name="Vector2Float" inheritsFrom="root" comment="Two floating point values, x, y">
+    
+        <attribute name="x" comment="X value">
+            <primitive type="float32"/>
+        </attribute>
+
+        <attribute name="y" comment="y Value">
+            <primitive type="float32"/>
+        </attribute>
+  
+    </class>
+
+    <class name="VectoringNozzleSystem" inheritsFrom="root" comment="Operational data for describing the vectoring nozzle systems Section 6.2.96">
+
+        <attribute name="horizontalDeflectionAngle" comment="In degrees">
+            <primitive type="float32"/>
+        </attribute>
+
+        <attribute name="verticalDeflectionAngle" comment="In degrees">
+            <primitive type="float32"/>
+        </attribute>
+
+    </class>
+
+    <class name="Vector3Double" inheritsFrom="root" comment="Three double precision floating point values, x, y, and z. Used for world coordinates Section 6.2.97.">
+        <attribute name="x" comment="X value">
+            <primitive type="float64"/>
+        </attribute>
+
+        <attribute name="y" comment="y Value">
+            <primitive type="float64"/>
+        </attribute>
+
+        <attribute name="z" comment="Z value">
+            <primitive type="float64"/>
+        </attribute>
+    </class>
+
+    <!-- Dead reackoning parameters are not listed in the standard, but nonetheless appear in the ESPDU -->
+    <class name="DeadReckoningParameters" inheritsFrom="root"
+           comment="Not specified in the standard. This is used by the ESPDU">
+ 
+        <attribute name="deadReckoningAlgorithm" comment="Algorithm to use in computing dead reckoning. See EBV doc.">
+            <sisoenum type="DeadReckoningAlgorithm" comment="uid 44"/>
+        </attribute>
+
+        <attribute name="parameters" comment="Dead reckoning parameters. Contents depends on algorithm.">
+            <primitivelist length="15" fixedlength="true">
+                <primitive type="uint8"/>
+            </primitivelist>
+        </attribute>
+
+        <attribute name="entityLinearAcceleration" comment="Linear acceleration of the entity">
+            <classref name="Vector3Float"/>
+        </attribute>
+
+        <attribute name="entityAngularVelocity" comment="Angular velocity of the entity">
+            <classref name="Vector3Float"/>
+        </attribute>
+  
+    </class>
+
+    <!-- End records -->
+
+    <!-- PDUs start here. Everything before this were records that are contained inside of PDUs -->
+  
+    <!--<class name="Pdu" inheritsFrom="root" implements="Marshaller" comment="Base class of PduBase and LiveEntityPdu">-->
+    <class name="Pdu" inheritsFrom="root" comment="Base class of PduBase and LiveEntityPdu">
+       
+        <attribute name="protocolVersion" comment="The version of the protocol. 5=DIS-1995, 6=DIS-1998, 7=DIS-2012"> 
+            <sisoenum type="DISProtocolVersion" comment="uid 3" defaultValue="DISProtocolVersion.IEEE_12781_2012"/>  <!-- DIS 7 -->
+        </attribute>
+  
+        <attribute name="exerciseID" comment="Exercise ID">
+            <primitive type= "uint8" defaultValue="0"/>
+        </attribute>
+  
+        <attribute name="pduType" comment="Type of pdu, unique for each PDU class">
+            <sisoenum type="DISPDUType" comment="uid 4"/> 
+        </attribute>
+  
+        <attribute name="protocolFamily" comment="value that refers to the protocol family, eg SimulationManagement, et">
+            <sisoenum type="DISProtocolFamily" comment="uid 5"/>
+        </attribute>
+  
+        <attribute name="timestamp" comment="Timestamp value">
+            <primitive type="uint32"/>
+        </attribute>
+  
+        <attribute name="length" comment="Length, in bytes, of the PDU">
+            <primitive type="uint16"/>
+        </attribute>    
+        
+    </class>/>
+
+    <class name="PduBase" inheritsFrom="Pdu"
+           comment="The superclass for all PDUs except LiveEntitys. This incorporates the PduHeader record, section 7.2.2">
+
+        <attribute name="pduStatus" comment="PDU Status Record. Described in 6.2.67. This field is not present in earlier DIS versions ">
+           <classref name="PduStatus"/>
+        </attribute>
+
+        <attribute name="padding" comment="zero-filled array of padding">
+            <primitive type="uint8" defaultValue="0"/>
+        </attribute>
+
+    </class>
+
+     <class name="LiveEntityRelativeWorldCoordinates" inheritsFrom="root" comment="16 bit fixed binaries">
+        
+        <attribute name="referencePoint">
+            <primitive type="uint16"/>
+        </attribute>
+        
+        <attribute name="deltaX">
+            <primitive type="uint16"/>
+        </attribute>
+        
+        <attribute name="deltaY">
+            <primitive type="uint16"/>
+        </attribute>
+        
+        <attribute name="deltaZ">
+            <primitive type="uint16"/>
+        </attribute>
+        
+    </class>
+    
+    <class name="LiveEntityLinearVelocity" inheritsFrom="root" comment="16 bit fixed binaries">
+
+        <attribute name="xComponent">
+            <primitive type="uint16"/>
+        </attribute>
+        
+        <attribute name="yComponent">
+            <primitive type="uint16"/>
+        </attribute>
+        
+        <attribute name="zComponent">
+            <primitive type="uint16"/>
+        </attribute>
+        
+    </class>
+   
+    <class name="LiveEntityOrientation" inheritsFrom="root" comment="8 bit fixed binaries">
+
+        <attribute name="psi">
+            <primitive type="uint8"/>
+        </attribute>
+        
+        <attribute name="theta">
+            <primitive type="uint8"/>
+        </attribute>
+        
+        <attribute name="phi">
+            <primitive type="uint8"/>
+        </attribute>
+        
+    </class>
+    
+    <class name="LiveEntityOrientation16" inheritsFrom="root" comment="16 bit fixed binaries">
+
+        <attribute name="psi">
+            <primitive type="uint16"/>
+        </attribute>
+        
+        <attribute name="theta">
+            <primitive type="uint16"/>
+        </attribute>
+        
+        <attribute name="phi">
+            <primitive type="uint16"/>
+        </attribute>
+        
+    </class>
+    
+    <class name="LiveEntityPositionError" inheritsFrom="root" comment="16 bit fixed binaries">
+
+        <attribute name="horizontalError">
+            <primitive type="uint16"/>
+        </attribute>
+        
+        <attribute name="verticalError">
+            <primitive type="uint16"/>
+        </attribute>
+    </class>
+    
+    <class name="LiveEntityOrientationError" inheritsFrom="root" comment="16 bit fixed binaries">
+
+        <attribute name="azimuthError">
+            <primitive type="uint16"/>
+        </attribute>
+        
+        <attribute name="elevationError">
+            <primitive type="uint16"/>
+        </attribute>
+        
+        <attribute name="rotationError">
+            <primitive type="uint16"/>
+        </attribute>
+        
+    </class>
+    <class name="LEVector3FixedByte" inheritsFrom="root" comment="3 x 8-bit fixed binary">
+    
+        <attribute name="x" comment="X value">
+            <primitive type="uint8"/>
+        </attribute>
+
+        <attribute name="y" comment="y Value">
+            <primitive type="uint8"/>
+        </attribute>
+
+        <attribute name="z" comment="Z value">
+            <primitive type="uint8"/>
+        </attribute>
+  
+    </class>
+    <class name="LiveDeadReckoningParameters" inheritsFrom="root" comment="16 bit fixed binaries">
+
+        <attribute name="deadReckoningAlgorithm">
+            <sisoenum type="DeadReckoningAlgorithm" comment="uid 44"/>
+        </attribute>
+        <attribute name="entityLinearAcceleration">
+            <classRef name="LEVector3FixedByte"/>
+        </attribute>
+        <attribute name="entityAngularVelocity">
+            <classRef name="LEVector3FixedByte"/>
+        </attribute>
+        
+    </class>
+
+  <!-- Generic holder of PDUs. This is mostly for XML compatability -->
+    <class name="PduContainer" 
+           inheritsFrom="root"
+           comment="Used for XML compatability. A container that holds PDUs"
+           xmlRootElement="true">
+      
+        <attribute name="numberOfPdus" hidden="true" comment="Number of PDUs in the container list">
+            <primitive type= "uint32"/>
+        </attribute>
+        
+        <attribute name="pdus" comment="record sets">
+            <objectlist countFieldName="numberOfPdus">
+                <classRef name="Pdu"/>
+            </objectlist> 
+        </attribute>
+        
+    </class>
+
+    <!-- This is some experimental XML that combines the field description with 
+    enumerations and bitfields. I'm not convinced by the approach; the enumerations
+    are in the EBV document, which is more changeable and faster
+    moving than the IEEE spec. The bitfields _are_ in the IEEE spec, though. I 
+    suspect the way to do this is to define a separate set of XML documents to
+    describe the bitfields and enumerations. DMcG -->
+
+    <!--
+    
+    <class name="DeBeamAntennaPatternRecord"
+           inheritsFrom="root"
+           comment="DE Beam Antenna Pattern Record.">
+    
+      <attribute name="Yaw" comment="Entity Orientation.">
+        <primitive type="float" defaultValue="0"/>
+      </attribute>
+    
+      <attribute name="Pitch" comment="Entity Orientation.">
+        <primitive type="float" defaultValue="0"/>
+      </attribute>
+    
+      <attribute name="Roll" comment="Entity Orientation.">
+        <primitive type="float" defaultValue="0"/>
+      </attribute>
+    
+      <attribute name="AzimuthBeamwidth" comment="Azimuth Beamwidth.">
+        <primitive type="float" defaultValue="0"/>
+      </attribute>
+    
+      <attribute name="ElevationBeamwidth" comment="Elevation Beamwidth.">
+        <primitive type="float" defaultValue="0"/>
+      </attribute>
+    
+      <attribute name="ReferenceSystem" comment="Reference System ENUM.">
+        <primitive type="unsigned byte" defaultValue="0"/>
+      </attribute>
+    
+      <attribute name="Pad1" comment="Padding.">
+        <primitive type="unsigned byte" defaultValue="0"/>
+      </attribute>
+    
+      <attribute name="Pad2" comment="Padding.">
+        <primitive type="unsigned short" defaultValue="0"/>
+      </attribute>
+    
+      <attribute name="Ez" comment="Ez parameter.">
+        <primitive type="float" defaultValue="0"/>
+      </attribute>
+    
+      <attribute name="Ex" comment="Ex parameter.">
+        <primitive type="float" defaultValue="0"/>
+      </attribute>
+    
+      <attribute name="Phase" comment="Phase parameter.">
+        <primitive type="float" defaultValue="0"/>
+      </attribute>
+    
+      <attribute name="Pad3" comment="Padding.">
+        <primitive type="unsigned int" defaultValue="0"/>
+      </attribute>
+    
+    </class>
+    
+    
+    <class name="DeTargetEnergyDepositionRecord"
+           inheritsFrom="root"
+           comment="DE Target Energy Deposition Record.">
+    
+      <attribute name="TargetEntityID" comment="Unique ID for Target Entity.">
+        <classref name="EntityType"/>
+      </attribute>
+    
+      <attribute name="Padding">
+        <primitive type="unsigned short" defaultValue="0"/>
+      </attribute>
+    
+      <attribute name="PeakIrradiance" comment="Peak Irradiance for this target.">
+        <primitive type="float" defaultValue="0"/>
+      </attribute>
+    
+    </class>
+    
+    
+    <class name="DeAreaAimpointRecord"
+           inheritsFrom="DeRecord"
+           comment="DE Area Aimpoint Record.">
+    
+      <attribute name="Padding" comment="Padding">
+        <primitive type="unsigned short" defaultValue="0"/>
+      </attribute>
+    
+      <attribute name="BeamAntennaPatternRecordCount" comment="Number of Beam Antenna Pattern Records.">
+        <primitive type="unsigned short" defaultValue="0"/>
+      </attribute>
+    
+      <attribute name="DeTargetEnergyDepositionRecordCount" comment="Number of DE Target Energy Deposition Records.">
+        <primitive type="unsigned short" defaultValue="0"/>
+      </attribute>
+    
+      <attribute name="BeamAntennaPatternRecords"
+                 comment="DE Beam Antenna Pattern Records.">
+        <objectlist countFieldName="BeamAntennaPatternRecordCount">
+          <classRef name="DeBeamAntennaPatternRecord"/>
+        </objectlist>
+      </attribute>
+    
+      <attribute name="DeTargetEnergyDepositionRecords"
+                 comment="DE Beam Antenna Pattern Records.">
+        <objectlist countFieldName="DeTargetEnergyDepositionRecordCount">
+          <classRef name="DeTargetEnergyDepositionRecord"/>
+        </objectlist>
+      </attribute>
+    
+    </class>
+    
+    
+    <class name="DeFirePdu"
+           inheritsFrom="Pdu"
+           DynamicDispatch="true"
+           comment="This message is sent by the network or weapon module whenever a directed engery weapon is fired.">
+    
+      <attribute name="FiringEntityID" comment="Unique ID of the firing entity.">
+        <classref name="EntityID"/>
+      </attribute>
+    
+      <attribute name="EventID" comment="Unique event ID for this event.">
+        <classref name="EventIdentifier"/>
+      </attribute>
+    
+      <attribute name="MunitionType" comment="Unique ID of the munition from the munition.cfg file.">
+        <classref name="EntityType"/>
+      </attribute>
+    
+      <attribute name="ShotStartTime" comment="Time the shot started.">
+        <classref name="ClockTime"/>
+      </attribute>
+    
+      <attribute name="CumulativeShotTime" comment="Total amount of fire time accumulated.">
+        <primitive type="float" defaultValue="0"/>
+      </attribute>
+    
+      <attribute name="ApEmLocation" comment="Aperture/Emitter Position (meters) of firing entity relative to entity centroid.">
+        <classref name="Vector3Float"/>
+      </attribute>
+    
+      <attribute name="ApertureDiameter" comment="Diameter of Aperture (meters).">
+        <primitive type="float" defaultValue="0"/>
+      </attribute>
+    
+      <attribute name="Wavelength" comment="Wavelength of beam (meters).">
+        <primitive type="float" defaultValue="0"/>
+      </attribute>
+    
+      <attribute name="PeakIrradiance" comment="Peak Irradiance.">
+        <primitive type="float" defaultValue="0"/>
+      </attribute>
+    
+      <attribute name="PulseRepFreq" comment="Pulse Repetition Frequency.">
+        <primitive type="float" defaultValue="0"/>
+      </attribute>
+    
+      <attribute name="PulseWidth" comment="Pulse Width.">
+        <primitive type="float" defaultValue="0"/>
+      </attribute>
+    
+      <attribute name="Flags" comment="Flags for this message.">
+        <primitive type="unsigned short" defaultValue="0"/>
+        <enum name="FLAG_T">
+          <item name="FLAG_WEAPON_ON"    value="0x1"/>
+          <item name="FLAG_STATE_CHANGE" value="0x2" comment="Bit 1 = ON means STATE CHANGE, OFF means UPDATE (HEART BEAT)."/>
+          <item name="FLAG_SHOOTER_DICTATES_DAMAGE" value="0x4" comment="NOTE: this is not in the standard yet. Bit 1 = ON means Shooter dictates damage to Entities, OFF means Entities determine damage."/>
+        </enum>
+      </attribute>
+    
+      <attribute name="PulseShape" comment="ENUM.">
+        <primitive type="unsigned byte" defaultValue="0"/>
+        <enum name="PULSE_SHAPE_T">
+          <item name="PULSE_SHAPE_OTHER"/>
+          <item name="PULSE_SHAPE_SQUARE_WAVE"     comment="PulseWidth and PRF populated with appropriate values."/>
+          <item name="PULSE_SHAPE_CONTINUOUS_WAVE" comment="PulseWidth and PRF fields shall be set to 0.0."/>
+          <item name="PULSE_SHAPE_GAUSSIAN"        comment="PulseWidth reflects Full width/Half max width of pulse, PRF field set as required."/>
+        </enum>
+      </attribute>
+    
+      <attribute name="DeRecordCount" comment="Number of DE Records.">
+        <primitive type="unsigned short" defaultValue="0"/>
+      </attribute>
+    
+      <attribute name="DeRecords" comment="DE Records variable list.">
+        <objectlist countFieldName="DeRecordCount">
+          <classRef name="DeRecord" recordType="RecordType"/>
+        </objectlist>
+      </attribute>
+    
+    </class>
+    -->
+
+    <!--
+    <class name="DamageDescriptionRecord"
+           inheritsFrom="root"
+           comment="This record contains additional damage descriptions from an entity that was damaged.">
+    
+      <attribute name="RecordType" comment="Damage Description Record Type.">
+        <primitive type="unsigned int" defaultValue="0"/>
+      </attribute>
+    
+      <attribute name="RecordLength" comment="Damage Description Record Length.">
+        <primitive type="unsigned short" defaultValue="0"/>
+      </attribute>
+    
+      <attribute name="Padding" comment="Padding.">
+        <primitive type="unsigned short" defaultValue="0"/>
+      </attribute>
+    
+      <attribute name="Location" comment="Position (meters) relative to body centroid.">
+        <classref name="Vector3Float"/>
+      </attribute>
+    
+      <attribute name="DamageDiameter" comment="Diameter of damage (meters).">
+        <primitive type="float" defaultValue="0"/>
+      </attribute>
+    
+      <attribute name="Temperature" comment="Tempeture of area (deg C).">
+        <primitive type="float" defaultValue="0"/>
+      </attribute>
+    
+      <attribute name="CompID" comment="Component ID ENUM.">
+        <primitive type="unsigned byte" defaultValue="0"/>
+        <enum name="COMPID_T">
+          <item name="COMPID_CENTER"                   value="0"/>
+          <item name="COMPID_ENTITY_STRUCTURE"         value="1"/>
+          <item name="COMPID_CONTROL_SYSTEM"           value="2"/>
+          <item name="COMPID_CONTROL_SURFACE"          value="3"/>
+          <item name="COMPID_ENGINE_PROPULSION_SYSTEM" value="4"/>
+          <item name="COMPID_CREW_MEMBER"              value="5"/>
+          <item name="COMPID_FUSE"                     value="6"/>
+          <item name="COMPID_ACQUISITION_SENSOR"       value="7"/>
+          <item name="COMPID_TRACKING_SENSOR"          value="8"/>
+          <item name="COMPID_FUEL_TANK"                value="9"/>
+        </enum>
+      </attribute>
+    
+      <attribute name="CompDmgStatus" comment="Component Damage Status ENUM.">
+        <primitive type="unsigned byte" defaultValue="0"/>
+        <enum name="COMPDMG_T">
+          <item name="COMPDMG_NO_DAMAGE"     value="0"/>
+          <item name="COMPDMG_MINOR_DAMAGE"  value="1"/>
+          <item name="COMPDMG_MEDIUM_DAMAGE" value="2"/>
+          <item name="COMPDMG_MAJOR_DAMAGE"  value="3"/>
+          <item name="COMPDMG_DESTROYED"     value="4"/>
+        </enum>
+      </attribute>
+    
+      <attribute name="CompVisualDmgStatus" comment="Component Visual Damage Status ENUM.">
+        <primitive type="unsigned byte" defaultValue="0"/>
+        <enum name="VISDMG_T">
+          <item name="VISDMG_FIRE_PRESENT"   value="0x01"/>
+          <item name="VISDMG_FIRE_MASK"      value="0x01"/>
+    
+          <item name="VISDMG_NO_SMOKE"       value="0x00"/>
+          <item name="VISDMG_LIGHT_SMOKE"    value="0x02"/>
+          <item name="VISDMG_MODERATE_SMOKE" value="0x04"/>
+          <item name="VISDMG_HEAVY_SMOKE"    value="0x06"/>
+          <item name="VISDMG_SMOKE_MASK"     value="0x06"/>
+    
+          <item name="VISDMG_NO_CHARRING"    value="0x00"/>
+          <item name="VISDMG_LIGHT_CHARRING" value="0x08"/>
+          <item name="VISDMG_HEAVY_CHARRING" value="0x10"/>
+          <item name="VISDMG_HOLES"          value="0x18"/>
+          <item name="VISDMG_CHARRING_MASK"  value="0x18"/>
+        </enum>
+      </attribute>
+    
+      <attribute name="CompVisualSmokeColor" comment="Comp Visual Somke Color ENUM.">
+        <primitive type="unsigned byte" defaultValue="0"/>
+        <enum name="SMOKE_COLOR_T">
+          <item name="SMOKE_COLOR_NO_SMOKE"/>
+          <item name="SMOKE_COLOR_WHITE"/>
+          <item name="SMOKE_COLOR_GREY"/>
+          <item name="SMOKE_COLOR_BLACK"/>
+        </enum>
+      </attribute>
+    
+      <attribute name="FireEventID" comment="Unique event ID for this event.">
+        <classref name="EventIdentifier"/>
+      </attribute>
+    
+      <attribute name="Padding2" comment="Padding.">
+        <primitive type="unsigned short" defaultValue="0"/>
+      </attribute>
+    
+    </class>
+    -->
+
+</classes>
+
+

@@ -1,0 +1,329 @@
+<classes>
+    <class name="MinefieldFamilyPdu" inheritsFrom="PduBase" comment=" Abstract superclass for PDUs relating to minefields. Section 7.9">
+
+        <initialValue name="protocolFamily" value="DISProtocolFamily.MINEFIELD"/>
+     
+    </class>
+   
+    <class name="MinefieldStatePdu" inheritsFrom="MinefieldFamilyPdu"
+           comment="information about the complete minefield. The minefield presence, perimiter, etc. Section 7.9.2">
+
+        <initialValue name="pduType" value="DISPDUType.MINEFIELD_STATE"/>
+     
+        <attribute name="minefieldID" comment="Minefield ID">
+            <classRef name= "MinefieldIdentifier"/>
+        </attribute>
+   
+        <attribute name="minefieldSequence" comment="Minefield sequence">
+            <primitive type= "uint16"/>
+        </attribute>
+   
+        <attribute name="forceID" comment="force ID">
+            <sisoenum type="ForceID" comment="uid 6"/>
+        </attribute>
+   
+        <attribute name="numberOfPerimeterPoints" hidden="true" comment="Number of permieter points">
+            <primitive type= "uint8"/>
+        </attribute>
+
+        <attribute name="minefieldType" comment="type of minefield">
+            <classRef name= "EntityType"/>
+        </attribute>
+   
+        <attribute name="numberOfMineTypes" hidden="true" comment="how many mine types">
+            <primitive type= "uint16"/>
+        </attribute>
+   
+        <attribute name="minefieldLocation" comment="location of center of minefield in world coords">
+            <classRef name= "Vector3Double"/>
+        </attribute>
+   
+        <attribute name="minefieldOrientation" comment="orientation of minefield">
+            <classRef name= "EulerAngles"/>
+        </attribute>
+   
+        <attribute name="appearance" comment="appearance bitflags">
+            <sisobitfield type="MinefieldStateAppearanceBitMap" comment="uid 190"/>
+        </attribute>
+   
+        <attribute name="protocolMode" comment="protocolMode. First two bits are the protocol mode, 14 bits reserved.">
+            <classref name="ProtocolMode"/>
+        </attribute>
+   
+        <attribute name="perimeterPoints" comment="perimeter points for the minefield">
+            <objectlist countFieldName="numberOfPerimeterPoints">
+                <classRef name="Vector2Float"/>
+            </objectlist> 
+        </attribute>
+    
+        <attribute name="mineType" comment="Type of mines">
+            <objectlist countFieldName="numberOfMineTypes">
+                <classRef name="EntityType"/>
+            </objectlist> 
+        </attribute>
+   
+    </class>
+  
+    <class name="MinefieldQueryPdu" inheritsFrom="MinefieldFamilyPdu"
+             comment="Query a minefield for information about individual mines.">
+    
+        <initialValue name="pduType" value="DISPDUType.MINEFIELD_QUERY"/>
+         
+        <attribute name="minefieldID" comment="Minefield ID">
+            <classRef name= "MinefieldIdentifier"/>
+        </attribute>
+       
+        <attribute name="requestingEntityID" comment="EID of entity making the request">
+            <classRef name= "EntityID"/>
+        </attribute>
+       
+        <attribute name="requestID" comment="request ID">
+            <primitive type= "uint8"/>
+        </attribute>
+       
+        <attribute name="numberOfPerimeterPoints" hidden="true" comment="Number of perimeter points for the minefield">
+            <primitive type= "uint8"/>
+        </attribute>
+       
+        <attribute name="padding">
+            <primitive type= "uint8"/>
+        </attribute>
+       
+        <attribute name="numberOfSensorTypes" hidden="true" comment="Number of sensor types">
+            <primitive type= "uint8"/>
+        </attribute>
+       
+        <attribute name="dataFilter" comment="data filter, 32 boolean fields">
+            <classref name="DataFilterRecord"/>
+        </attribute>
+       
+        <attribute name="requestedMineType" comment="Entity type of mine being requested">
+            <classRef name= "EntityType"/>
+        </attribute>
+    
+        <attribute name="requestedPerimeterPoints" comment="perimeter points of request">
+            <objectlist countFieldName="numberOfPerimeterPoints">
+                <classRef name="Vector2Float"/>
+            </objectlist> 
+        </attribute>
+        
+        <attribute name="sensorTypes" comment="Sensor types, each 16 bits long">
+            <objectlist countFieldName="numberOfSensorTypes">
+                <classRef name="MinefieldSensorType"/>
+            </objectlist> 
+        </attribute>
+    </class>
+
+    <class name="MinefieldDataPdu" inheritsFrom="MinefieldFamilyPdu"
+           comment="Information about individual mines within a minefield. This is very, very wrong. Section 7.9.4 UNFINISHED">
+
+        <initialValue name="pduType" value="DISPDUType.MINEFIELD_DATA"/>
+     
+        <attribute name="minefieldID" comment="Minefield ID">
+            <classRef name= "MinefieldIdentifier"/>
+        </attribute>
+   
+        <attribute name="requestingEntityID" comment="ID of entity making request">
+            <classRef name= "SimulationIdentifier"/>
+        </attribute>
+   
+        <attribute name="minefieldSequenceNumbeer" comment="Minefield sequence number">
+            <primitive type= "uint16"/>
+        </attribute>
+   
+        <attribute name="requestID" comment="request ID">
+            <primitive type= "uint8"/>
+        </attribute>
+   
+        <attribute name="pduSequenceNumber" comment="pdu sequence number">
+            <primitive type= "uint8"/>
+        </attribute>
+   
+        <attribute name="numberOfPdus" comment="number of pdus in response">
+            <primitive type="uint8"/>
+        </attribute>
+   
+        <attribute name="numberOfMinesInThisPdu" hidden="true" comment="how many mines are in this PDU">
+            <primitive type="uint8"/>
+        </attribute>
+   
+        <attribute name="numberOfSensorTypes" hidden="true" comment="how many sensor type are in this PDU">
+            <primitive type="uint8"/>
+        </attribute>
+   
+        <attribute name="padding" comment="padding">
+            <primitive type="uint8" defaultValue="0"/>
+        </attribute>
+   
+        <attribute name="dataFilter" comment="32 boolean field">
+            <classref name="DataFilterRecord"/>
+        </attribute>
+   
+        <attribute name="mineType" comment="Mine type">
+            <classRef name="EntityType"/>
+        </attribute>
+   
+        <attribute name="sensorTypes" comment="Sensor types, each 16 bits long">
+            <objectlist countFieldName="numberOfSensorTypes">
+                <classRef name="MinefieldSensorType"/>
+            </objectlist> 
+        </attribute>
+   
+        <!--<attribute name="padTo32" comment="Padding to get things 32-bit aligned. Dyanmically sized padding needed">
+            <primitivelist length="0">
+                <primitive type="uint8"/>
+            </primitivelist>
+        </attribute> -->
+        
+        <attribute name="padTo32">
+            <padtoboundary length="32"/>
+        </attribute>
+        
+        <attribute name="mineLocation" comment="Mine locations">
+            <objectlist countFieldName="numberOfMinesInThisPdu">
+                <classRef name="Vector3Float"/>
+            </objectlist> 
+        </attribute>
+        
+        <attribute name="groundBurialDepthOffset">
+            <primitivelist countFieldName="numberOfMinesInThisPdu">
+                <primitive type="float32"/>
+            </primitivelist>
+        </attribute>
+        
+        <attribute name="waterBurialDepthOffset">
+            <primitivelist countFieldName="numberOfMinesInThisPdu">
+                <primitive type="float32"/>
+            </primitivelist>
+        </attribute>
+        
+        <attribute name="snowBurialDepthOffset">
+            <primitivelist countFieldName="numberOfMinesInThisPdu">
+                <primitive type="float32"/>
+            </primitivelist>
+        </attribute> 
+               
+        <attribute name="mineOrientation">
+            <objectlist countFieldName="numberOfMinesInThisPdu">
+                <classref name="EulerAngles"/>
+            </objectlist>
+        </attribute>
+        
+        <attribute name="thermalContrast">
+            <primitivelist countFieldName="numberOfMinesInThisPdu">
+                <primitive type="float32"/>
+            </primitivelist>
+        </attribute>  
+              
+        <attribute name="reflectance">
+            <primitivelist countFieldName="numberOfMinesInThisPdu">
+                <primitive type="float32"/>
+            </primitivelist>
+        </attribute>   
+             
+        <attribute name="mineEmplacementTime">
+            <objectlist countFieldName="numberOfMinesInThisPdu">
+                <classref name="MineEmplacementTime"/>
+            </objectlist>
+        </attribute> 
+        
+        <attribute name="mineEntityNumber">
+            <primitivelist countFieldName="numberOfMinesInThisPdu">
+                <primitive type="uint16"/>
+            </primitivelist>
+        </attribute>
+               
+        <attribute name="fusing">
+            <objectlist countFieldName="numberOfMinesInThisPdu">
+                <sisobitfield type="MinefieldDataFusing" comment="uid 192"/>
+            </objectlist>
+        </attribute>
+        
+        <attribute name="scalarDetectionCoefficient">
+            <primitivelist countFieldName="numberOfMinesInThisPdu">
+                <primitive type="uint8"/>
+            </primitivelist>
+        </attribute> 
+              
+        <attribute name="paintScheme">
+            <objectlist countFieldName="numberOfMinesInThisPdu">
+                <sisobitfield type="MinefieldDataPaintScheme" comment="uid 202"/>
+            </objectlist>
+        </attribute>
+        
+        <!--<attribute name="padTo32_2">
+            <primitivelist length="0">
+                <primitive type="uint8"/>
+            </primitivelist>
+        </attribute>-->
+        
+        <attribute name="padTo32_2">
+            <padtoboundary length="32"/>
+        </attribute>
+        
+        <attribute name="numberOfTripDetonationWires">
+            <primitivelist countFieldName="numberOfMinesInThisPdu">
+                <primitive type="uint8"/>
+            </primitivelist> 
+        </attribute>
+        
+        <!--<attribute name="padTo32_3">
+            <primitivelist length="0">
+                <primitive type="uint8"/>
+            </primitivelist>
+        </attribute> -->
+        
+         <attribute name="padTo32_3">
+            <padtoboundary length="32"/>
+        </attribute>
+        
+       <attribute name="numberOfVertices">
+            <primitivelist countFieldName="numberOfMinesInThisPdu">
+                <primitive type="uint8"/>
+            </primitivelist> 
+        </attribute>
+
+    </class>
+    
+    <class name="MineEmplacementTime" inheritsFrom="root">
+        
+        <attribute name="hour">
+            <primitive type="uint32"/>
+        </attribute>
+        
+        <attribute name="timePastTheHour">
+            <primitive type="uint32"/>
+        </attribute>
+        
+    </class>
+
+    <class name="MinefieldResponseNackPdu" inheritsFrom="MinefieldFamilyPdu"
+           comment="proivde the means to request a retransmit of a minefield data pdu. Section 7.9.5">
+
+        <initialValue name="pduType" value="DISPDUType.MINEFIELD_RESPONSE_NACK"/>
+     
+        <attribute name="minefieldID" comment="Minefield ID">
+            <classRef name= "MinefieldIdentifier"/>
+        </attribute>
+   
+        <attribute name="requestingEntityID" comment="entity ID making the request">
+            <classRef name= "SimulationIdentifier"/>
+        </attribute>
+   
+        <attribute name="requestID" comment="request ID">
+            <primitive type= "uint8"/>
+        </attribute>
+   
+        <attribute name="numberOfMissingPdus" hidden="true" comment="how many pdus were missing">
+            <primitive type= "uint8"/>
+        </attribute>
+   
+        <attribute name="missingPduSequenceNumbers" comment="PDU sequence numbers that were missing">
+            <primitivelist countFieldName="numberOfMissingPdus">
+                <primitive type="uint8"/>
+            </primitivelist> 
+        </attribute>
+    
+    </class>
+    
+</classes>

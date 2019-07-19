@@ -1,0 +1,393 @@
+<classes>
+   <class name="DistributedEmissionsFamilyPdu" inheritsFrom="PduBase" comment="Section 5.3.7. Electronic Emissions. Abstract superclass for distributed emissions PDU">
+
+       <initialValue name="protocolFamily" value="DISProtocolFamily.DISTRIBUTED_EMISSION_REGENERATION"/>
+
+    </class>
+
+    <class name="ElectronicEmissionsPdu" inheritsFrom="DistributedEmissionsFamilyPdu"
+           comment="Section 5.3.7.1. The EE PDU shall be used to communicate active electromagnetic emissions, including radar and radar-related electronic warfare (e.g., jamming). Exceptions include IFF interrogations and replies, navigation aids, voice, beacon and data radio communications, directed energy weapons, and laser ranging and designation systems, which are handled by other PDUs.">
+    
+        <initialValue name="pduType" value="DISPDUType.ELECTROMAGNETIC_EMISSION"/>
+
+        <initialValue name="paddingForEmissionsPdu" value="0"/>
+  
+        <attribute name="emittingEntityID" comment="ID of the entity emitting">
+            <classRef name="EntityID"/>
+        </attribute>
+
+        <attribute name="eventID" comment="ID of event">
+            <classRef name="EventIdentifier"/>
+        </attribute>
+  
+        <attribute name="stateUpdateIndicator" comment="This field shall be used to indicate if the data in the PDU represents a state update or just data that has changed since issuance of the last Electromagnetic Emission PDU [relative to the identified entity and emission system(s)].">
+            <sisoenum type="ElectromagneticEmissionStateUpdateIndicator" comment="uid 77"/>
+        </attribute>
+  
+        <attribute name="numberOfSystems" hidden="true" comment="This field shall specify the number of emission systems being described in the current PDU.">
+            <primitive type= "uint8"/>
+        </attribute>
+ 
+        <attribute name="paddingForEmissionsPdu" comment="padding">
+            <primitive type="uint16"/>
+        </attribute>
+        
+        <attribute name="systems" comment="Electronic emmissions systems">
+            <objectlist countFieldName="numberOfSystems">
+                <classRef name="ElectronicEmitter"/> 
+            </objectlist>
+        </attribute>
+  
+    </class>
+    
+    <class name="ElectronicEmitter" inheritsFrom="root">
+        
+         <attribute name="systemDataLength" comment=" this field shall specify the length of this emitter system's data in 32-bit words.">
+            <primitive type="uint8"/>
+        </attribute>
+  
+        <attribute name="numberOfBeams" hidden="true" comment="the number of beams being described in the current PDU for the emitter system being described. ">
+            <primitive type="uint8"/>
+        </attribute>
+  
+        <attribute name="emitterSystem" comment=" information about a particular emitter system and shall be represented by an Emitter System record (see 6.2.23).">
+            <classRef name="EmitterSystem"/>
+        </attribute>
+  
+        <attribute name="location" comment="the location of the antenna beam source with respect to the emitting entity's coordinate system. This location shall be the origin of the emitter coordinate system that shall have the same orientation as the entity coordinate system. This field shall be represented by an Entity Coordinate Vector record see 6.2.95 ">
+            <classRef name="Vector3Float"/>
+        </attribute>
+ 
+        <attribute name="beams" comment="Electronic emmission beams">
+            <objectlist countFieldName="numberOfBeams">
+                <classRef name="EmitterBeam"/> 
+            </objectlist>
+        </attribute>
+        
+    </class>
+    
+    <class name="EmitterBeam" inheritsFrom="root">
+        
+        <attribute name="beamDataLength">
+            <primitive type="uint8"/>
+        </attribute>
+        
+        <attribute name="beamNumber">
+            <primitive type="uint8"/>
+        </attribute>
+        
+        <attribute name="beamParameterIndex">
+            <primitive type="uint16"/>
+        </attribute>
+        
+        <attribute name="fundamentalParameterData">
+            <classRef name="EEFundamentalParameterData"/>
+        </attribute>
+        
+        <attribute name="beamData">
+            <classRef name="BeamData"/>
+        </attribute>
+        
+        <attribute name="beamFunction">
+            <sisoenum type="ElectromagneticEmissionBeamFunction" comment="uid 78"/>
+        </attribute>
+        
+        <attribute name="numberOfTargets" hidden="true">
+            <primitive type="uint8"/>
+        </attribute>
+        
+        <attribute name="highDensityTrackJam">
+            <sisoenum type="HighDensityTrackJam" comment="uid 79"/>
+        </attribute>
+        
+        <attribute name="beamStatus">
+            <classRef name="BeamStatus"/>
+        </attribute>
+        
+        <attribute name="jammingTechnique">
+            <classRef name="JammingTechnique"/>
+        </attribute>
+        
+        <attribute name="trackJamData">
+            <objectlist countFieldName="numberOfTargets">
+                <classRef name="TrackJamData"/> 
+            </objectlist>
+        </attribute>
+    </class>
+    
+    <class name="DesignatorPdu" inheritsFrom="DistributedEmissionsFamilyPdu"
+           comment="Section 5.3.7.2. Handles designating operations.">
+  
+        <initialValue name="pduType" value="DISPDUType.DESIGNATOR"/>
+  
+        <attribute name="designatingEntityID" comment="ID of the entity designating">
+            <classRef name="EntityID"/>
+        </attribute> 
+  
+        <attribute name="codeName" comment="This field shall specify a unique emitter database number assigned to  differentiate between otherwise similar or identical emitter beams within an emitter system.">
+            <sisoenum type="DesignatorSystemName" comment="uid 80"/>
+        </attribute>
+  
+        <attribute name="designatedEntityID" comment="ID of the entity being designated">
+            <classRef name="EntityID"/>
+        </attribute> 
+  
+        <attribute name="designatorCode" comment="This field shall identify the designator code being used by the designating entity ">
+            <sisoenum type="DesignatorDesignatorCode" comment="uid 81"/>
+        </attribute>
+  
+        <attribute name="designatorPower" comment="This field shall identify the designator output power in watts">
+            <primitive type= "float32"/>
+        </attribute>
+  
+        <attribute name="designatorWavelength" comment="This field shall identify the designator wavelength in units of microns">
+            <primitive type= "float32"/>
+        </attribute>
+    
+        <attribute name="designatorSpotWrtDesignated" comment="designtor spot wrt the designated entity">
+            <classRef name="Vector3Float"/>
+        </attribute> 
+  
+        <attribute name="designatorSpotLocation" comment="designtor spot wrt the designated entity">
+            <classRef name="Vector3Double"/>
+        </attribute> 
+  
+        <attribute name="deadReckoningAlgorithm" comment="Dead reckoning algorithm">
+            <sisoenum type="DeadReckoningAlgorithm" comment="uid 44"/>
+        </attribute>
+  
+        <attribute name="padding1" comment="padding">
+            <primitive type= "uint8" default="0"/>
+        </attribute>
+  
+        <attribute name="padding2" comment="padding">
+            <primitive type= "uint16" default="0"/>
+        </attribute>
+  
+        <attribute name="entityLinearAcceleration" comment="linear accelleration of entity">
+            <classRef name="Vector3Float"/>
+        </attribute>
+  
+    </class>
+    
+<class name="UnderwaterAcousticPdu" inheritsFrom="DistributedEmissionsFamilyPdu" comment=" Information about underwater acoustic emmissions. This requires manual cleanup.  The beam data records should ALL be a the finish, rather than attached to each emitter system. Section 7.6.4. UNFINISHED">
+    
+        <initialValue name="pduType" value="DISPDUType.UNDERWATER_ACOUSTIC"/>
+    
+        <attribute name="emittingEntityID" comment="ID of the entity that is the source of the emission">
+            <classRef name="EntityID"/>
+        </attribute> 
+
+        <attribute name="eventID" comment="ID of event">
+            <classRef name="EventIdentifier"/>
+        </attribute>
+  
+        <attribute name="stateChangeIndicator" comment="This field shall be used to indicate whether the data in the UA PDU represent a state update or data that have changed since issuance of the last UA PDU">
+            <sisoenum type= "UAStateChangeUpdateIndicator" comment="uid 143"/>
+        </attribute>
+  
+        <attribute name="pad" comment="padding">
+            <primitive type= "uint8" default="0"/>
+        </attribute>
+  
+        <attribute name="passiveParameterIndex" comment="This field indicates which database record (or file) shall be used in the definition of passive signature (unintentional) emissions of the entity. The indicated database record (or  file) shall define all noise generated as a function of propulsion plant configurations and associated  auxiliaries.">
+            <sisoenum type= "UAPassiveParameterIndex" comment="uid 148"/>
+        </attribute>
+
+        <attribute name="propulsionPlantConfiguration" comment="This field shall specify the entity propulsion plant configuration. This field is used to determine the passive signature characteristics of an entity.">
+            <!-- SISO says 16bit, IEEE says 8<sisoenum type = "UA-Propulsion Plant Configuration"/> -->
+            <primitive type="uint8"/> <!-- go with IEEE -->
+        </attribute>
+  
+        <attribute name="numberOfShafts" hidden="true" comment=" This field shall represent the number of shafts on a platform">
+            <primitive type= "uint8"/>
+        </attribute>
+  
+        <attribute name="numberOfAPAs" hidden="true" comment="This field shall indicate the number of APAs described in the current UA PDU">
+            <primitive type= "uint8"/>
+        </attribute>
+  
+        <attribute name="numberOfUAEmitterSystems" hidden="true" comment="This field shall specify the number of UA emitter systems being described in the current UA PDU">
+            <primitive type= "uint8"/>
+        </attribute>
+  
+        <attribute name="shaftRPMs" comment="shaft RPM values.">
+            <objectlist countFieldName="numberOfShafts">
+                <classref name="ShaftRPM"/>
+            </objectlist>
+        </attribute>
+  
+        <attribute name="apaData" comment="additional passive activities">
+            <objectlist countFieldName="numberOfAPAs">
+                <classRef name="APA"/>
+            </objectlist>
+        </attribute>
+  
+        <attribute name="emitterSystems">
+            <objectlist countFieldName="numberOfUAEmitterSystems">
+                <classRef name="UAEmitter"/>
+            </objectlist>
+        </attribute>
+    
+    </class>
+   <class name="UAEmitter" inheritsFrom="root">
+        
+         <attribute name="systemDataLength" comment=" this field shall specify the length of this emitter system's data in 32-bit words.">
+            <primitive type="uint8"/>
+        </attribute>
+  
+        <attribute name="numberOfBeams" hidden="true" comment="the number of beams being described in the current PDU for the emitter system being described.">
+            <primitive type="uint8"/>
+        </attribute>
+  
+        <attribute name="padding">
+            <primitive type="uint16"/>
+        </attribute>
+        
+        <attribute name="acousticEmitter">
+            <classRef name="AcousticEmitter"/>
+        </attribute>
+
+        <attribute name="location" comment="the location of the antenna beam source with respect to the emitting entity's coordinate system. This location shall be the origin of the emitter coordinate system that shall have the same orientation as the entity coordinate system. This field shall be represented by an Entity Coordinate Vector record see 6.2.95 ">
+            <classRef name="Vector3Float"/>
+        </attribute>
+ 
+        <attribute name="beams" comment="Electronic emission beams">
+            <objectlist countFieldName="numberOfBeams">
+                <classRef name="UABeam"/> 
+            </objectlist>
+        </attribute>
+        
+    </class>
+    
+    <class name="UABeam" inheritsFrom="root">
+        
+        <attribute name="beamDataLength">
+            <primitive type="uint8"/>
+        </attribute>
+        
+        <attribute name="beamNumber">
+            <primitive type="uint8"/>
+        </attribute>
+        
+        <attribute name="padding">
+            <primitive type="uint16"/>
+        </attribute>
+        
+        <attribute name="fundamentalParameterData">
+            <classRef name="UAFundamentalParameter"/>
+        </attribute>
+ 
+    </class> 
+    
+    <class name="IffPdu" inheritsFrom="DistributedEmissionsFamilyPdu" Comment ="only includes layer1, since the data format is incomplete, section 7.6.5.1">
+        
+        <initialValue name="pduType" value="DISPDUType.IFF"/>
+    
+        <attribute name="emittingEntityId" comment="ID of the entity that is the source of the emissions">
+            <classRef name="EntityID"/>
+        </attribute> 
+      
+        <attribute name="eventID" comment="Number generated by the issuing simulation to associate realted events.">
+            <classRef name="EventIdentifier"/>
+        </attribute>
+      
+        <attribute name="location" comment="Location wrt entity. There is some ambugiuity in the standard here, but this is the order it is listed in the table.">
+            <classRef name="Vector3Float"/>
+        </attribute>
+      
+        <attribute name="systemID" comment="System ID information">
+            <classRef name="SystemIdentifier"/>
+        </attribute>
+      
+        <attribute name="systemDesignator">
+            <primitive type="uint8"/>
+        </attribute>
+        
+        <attribute name="systemSpecificData" >
+            <primitive type= "uint8"/>
+        </attribute>
+      
+        <attribute name="fundamentalParameters" comment="fundamental parameters">
+            <classRef name="FundamentalOperationalData"/>
+        </attribute>
+   
+    </class>
+    
+    <!-- basic IFF spec needs work, is incomplete, since it is impossible to unmarshall an IFFPdu and know what further layers are present, we can only go this far -->
+    <class name="IffLayer2Pdu" inheritsFrom="IffPdu"
+           comment="Section 5.3.7.4.2 When present, layer 2 should follow layer 1 and have the following fields. This requires manual cleanup.
+           the beamData attribute semantics are used in multiple ways. UNFINSISHED">
+          
+        <attribute name="layerHeader" comment="layer header">
+            <classRef name="LayerHeader"/>
+        </attribute> 
+      
+        <attribute name="beamData" comment="beam data">
+            <classRef name="BeamData"/>
+        </attribute> 
+      
+        <attribute name="secondaryOpParameter1">
+            <primitive type="uint8"/>
+        </attribute>
+        
+         <attribute name="secondaryOpParameter2">
+            <primitive type="uint8"/>
+        </attribute>
+        
+        <attribute name="numberOfParameters" hidden="true">
+            <primitive type="uint16"/>
+        </attribute>
+        
+       <attribute name="fundamentalIffParameters" comment="variable length list of fundamental parameters.">
+            <objectlist countFieldName="numberOfParameters">
+                <classRef name="IFFFundamentalParameterData"/>
+            </objectlist> 
+        </attribute>
+    
+    </class>
+    
+    <class name="SeesPdu" inheritsFrom="DistributedEmissionsFamilyPdu"
+           comment=" SEES PDU, supplemental emissions entity state information. Section 7.6.6">
+ 
+        <initialValue name="pduType" value="DISPDUType.SUPPLEMENTAL_EMISSION_ENTITY_STATE"/>
+   
+        <attribute name="orginatingEntityID" comment="Originating entity ID">
+            <classRef name="EntityID"/>
+        </attribute>    
+  
+        <attribute name="infraredSignatureRepresentationIndex" comment="IR Signature representation index">
+            <primitive type="uint16"/>
+        </attribute>    
+  
+        <attribute name="acousticSignatureRepresentationIndex" comment="acoustic Signature representation index">
+            <primitive type="uint16"/>
+        </attribute> 
+  
+        <attribute name="radarCrossSectionSignatureRepresentationIndex" comment="radar cross section representation index">
+            <primitive type="uint16"/>
+        </attribute>   
+  
+        <attribute name="numberOfPropulsionSystems" hidden="true" comment="how many propulsion systems">
+            <primitive type="uint16"/>
+        </attribute>   
+  
+        <attribute name="numberOfVectoringNozzleSystems" hidden="true" comment="how many vectoring nozzle systems">
+            <primitive type="uint16"/>
+        </attribute>   
+  
+        <attribute name="propulsionSystemData" comment="variable length list of propulsion system data">
+            <objectlist countFieldName="numberOfPropulsionSystems">
+                <classRef name="PropulsionSystemData"/>
+            </objectlist> 
+        </attribute>
+  
+        <attribute name="vectoringSystemData" comment="variable length list of vectoring system data">
+            <objectlist countFieldName="numberOfVectoringNozzleSystems">
+                <classRef name="VectoringNozzleSystem"/>
+            </objectlist> 
+        </attribute>
+       
+    </class>
+
+</classes>

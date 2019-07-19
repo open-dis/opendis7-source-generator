@@ -1,0 +1,13 @@
+
+    private final String description;
+
+    %s(String description)
+    {
+        this.description = description;
+    }
+
+    public String getDescription()
+    {
+        return description;
+    }
+}

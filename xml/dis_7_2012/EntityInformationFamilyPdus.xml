@@ -1,0 +1,450 @@
+<classes>
+
+    <class name="EntityInformationFamilyPdu" inheritsFrom="PduBase" comment="Section 5.3.3. Common superclass for EntityState, Collision, collision-elastic, and entity state update PDUs. This should be abstract.">
+ 
+       <initialValue name="protocolFamily" value="DISProtocolFamily.ENTITY_INFORMATION_INTERACTION"/>
+           
+    </class>
+ 
+    <class name="EntityStatePdu" inheritsFrom="EntityInformationFamilyPdu" comment="Represents the postion and state of one entity in the world. Section 7.2.2.">
+ 
+        <initialValue name="pduType" value="DISPDUType.ENTITY_STATE"/>
+  
+        <attribute name="entityID" comment="Unique ID for an entity that is tied to this state information">
+            <classref name="EntityID"/> 
+        </attribute>
+  
+        <attribute name="forceId" comment="What force this entity is affiliated with, eg red, blue, neutral, etc">
+            <sisoenum type="ForceID" comment="uid 6"/>
+        </attribute>
+ 
+        <attribute name="numberOfVariableParameters" hidden="true" comment="How many variable parameters are in the variable length list. In earlier versions of DIS these were known as articulation parameters">
+            <primitive type="uint8"/>
+        </attribute>
+
+        <attribute name="entityType" comment="Describes the type of entity in the world">
+            <classref name="EntityType"/>
+        </attribute>
+
+        <attribute name="alternativeEntityType">
+            <classref name="EntityType"/>
+        </attribute>
+
+        <attribute name="entityLinearVelocity" comment="Describes the speed of the entity in the world">
+            <classref name="Vector3Float"/>
+        </attribute>
+
+        <attribute name="entityLocation" comment="describes the location of the entity in the world">
+            <classref name="Vector3Double"/>
+        </attribute>
+
+        <attribute name="entityOrientation" comment="describes the orientation of the entity, in euler angles">
+            <classref name="EulerAngles"/>
+        </attribute>
+
+        <attribute name="entityAppearance" comment="a series of bit flags that are used to help draw the entity, such as smoking, on fire, etc.">
+            <primitive type="uint32"/>
+        </attribute>
+
+        <attribute name="deadReckoningParameters" comment="parameters used for dead reckoning">
+            <classref name="DeadReckoningParameters"/>
+        </attribute>
+
+        <attribute name="marking" comment="characters that can be used for debugging, or to draw unique strings on the side of entities in the world">
+            <classref name="EntityMarking"/>
+        </attribute>
+ 
+        <attribute name="capabilities" comment="a series of bit flags">
+            <sisobitfield type="EntityCapabilities" defaultValue="new LandPlatformCapabilities()" comment="uid 55"/>
+        </attribute>
+
+        <attribute name="variableParameters" comment="variable length list of variable parameters. In earlier DIS versions this was articulation parameters.">
+            <objectlist countFieldName="numberOfVariableParameters">
+                <classref name="VariableParameter"/>
+            </objectlist> 
+        </attribute>
+
+    </class>
+
+    <class name="FastEntityStatePdu" inheritsFrom="EntityInformationFamilyPdu" comment="Represents the postion and state of one entity in the world. This is identical in function to entity state pdu, but generates less garbage to collect in the Java world. Section 7.2.2.">
+ 
+        <initialValue name="pduType" value="DISPDUType.ENTITY_STATE"/>
+        
+        <attribute name="site" comment="The site ID">
+            <primitive type="uint16"/>
+        </attribute>
+ 
+        <attribute name="application" comment="The application ID">
+            <primitive type="uint16"/>
+        </attribute>
+ 
+        <attribute name="entity" comment="the entity ID">
+            <primitive type="uint16"/>
+        </attribute>
+  
+        <attribute name="forceId" comment="what force this entity is affiliated with, eg red, blue, neutral, etc">
+            <primitive type="uint8"/>
+        </attribute>
+ 
+        <attribute name="numberOfVariableParameters" hidden="true" comment="How many variable (nee articulation) parameters are in the variable length list">
+            <primitive type="uint8"/>
+        </attribute>
+
+        <attribute name="entityKind" comment="Kind of entity">
+            <primitive type="uint8"/>
+        </attribute>
+    
+        <attribute name="domain" comment="Domain of entity (air, surface, subsurface, space, etc)">
+            <primitive type="uint8"/>
+        </attribute>
+    
+        <attribute name="country" comment="country to which the design of the entity is attributed" >
+            <primitive type="uint16"/>
+        </attribute>
+    
+        <attribute name="category" comment="category of entity">
+            <primitive type="uint8"/>
+        </attribute>
+    
+        <attribute name="subcategory" comment="subcategory of entity">
+            <primitive type="uint8"/>
+        </attribute>
+    
+        <attribute name="specific" comment="specific info based on subcategory field">
+            <primitive type="uint8"/>
+        </attribute>
+    
+        <attribute name="extra">
+            <primitive type="uint8"/>
+        </attribute>
+
+        <attribute name="altEntityKind" comment="Kind of entity">
+            <primitive type="uint8"/>
+        </attribute>
+    
+        <attribute name="altDomain" comment="Domain of entity (air, surface, subsurface, space, etc)">
+            <primitive type="uint8"/>
+        </attribute>
+    
+        <attribute name="altCountry" comment="country to which the design of the entity is attributed" >
+            <primitive type="uint16"/>
+        </attribute>
+    
+        <attribute name="altCategory" comment="category of entity">
+            <primitive type="uint8"/>
+        </attribute>
+    
+        <attribute name="altSubcategory" comment="subcategory of entity">
+            <primitive type="uint8"/>
+        </attribute>
+    
+        <attribute name="altSpecific" comment="specific info based on subcategory field">
+            <primitive type="uint8"/>
+        </attribute>
+    
+        <attribute name="altExtra">
+            <primitive type="uint8"/>
+        </attribute>
+
+        <attribute name="xVelocity" comment="X velo">
+            <primitive type="float32"/>
+        </attribute>
+  
+        <attribute name="yVelocity" comment="y Value">
+            <primitive type="float32"/>
+        </attribute>
+  
+        <attribute name="zVelocity" comment="Z value">
+            <primitive type="float32"/>
+        </attribute>
+
+        <attribute name="xLocation" comment="X value">
+            <primitive type="float64"/>
+        </attribute>
+  
+        <attribute name="yLocation" comment="y Value">
+            <primitive type="float64"/>
+        </attribute>
+  
+        <attribute name="zLocation" comment="Z value">
+            <primitive type="float64"/>
+        </attribute>
+
+        <attribute name="psi">
+            <primitive type="float32"/>
+        </attribute>
+  
+        <attribute name="theta">
+            <primitive type="float32"/>
+        </attribute>
+  
+        <attribute name="phi">
+            <primitive type="float32"/>
+        </attribute>
+
+        <attribute name="entityAppearance" comment="a series of bit flags that are used to help draw the entity, such as smoking, on fire, etc.">
+            <primitive type="uint32"/>
+        </attribute>
+
+        <attribute name="deadReckoningAlgorithm" comment="enumeration of what dead reckoning algorighm to use">
+            <primitive type="uint8"/>
+        </attribute>
+  
+        <attribute name="otherParameters" comment="other parameters to use in the dead reckoning algorithm">
+            <primitivelist length="15" fixedlength="true">
+                <primitive type="uint8"/>
+            </primitivelist>
+        </attribute>
+
+        <attribute name="xAcceleration" comment="X value">
+            <primitive type="float32"/>
+        </attribute>
+  
+        <attribute name="yAcceleration" comment="y Value">
+            <primitive type="float32"/>
+        </attribute>
+  
+        <attribute name="zAcceleration" comment="Z value">
+            <primitive type="float32"/>
+        </attribute>
+
+        <attribute name="xAngularVelocity" comment="X value">
+            <primitive type="float32"/>
+        </attribute>
+  
+        <attribute name="yAngularVelocity" comment="y Value">
+            <primitive type="float32"/>
+        </attribute>
+  
+        <attribute name="zAngularVelocity" comment="Z value">
+            <primitive type="float32"/>
+        </attribute>
+
+        <attribute name="marking" comment="characters that can be used for debugging, or to draw unique strings on the side of entities in the world">
+            <primitivelist length="12" couldBeString="true" fixedlength="true">
+                <primitive type="uint8"/>
+            </primitivelist>
+        </attribute>
+ 
+        <attribute name="capabilities" comment="a series of bit flags">
+            <primitive type="uint16"/>
+        </attribute>
+
+        <attribute name="variableParameters" comment="variable length list of variable parameters. In earlier versions of DIS these were known as articulation parameters">
+            <objectlist countFieldName="numberOfVariableParameters">
+                <classref name="VariableParameter"/>
+            </objectlist> 
+        </attribute>
+
+    </class>
+
+    <class name="CollisionPdu" inheritsFrom="EntityInformationFamilyPdu" comment="Section 7.2.3 Collisions between entities shall be communicated by issuing a Collision PDU.">
+
+        <initialValue name="pduType" value="DISPDUType.COLLISION"/>
+
+        <attribute name="issuingEntityID" comment="This field shall identify the entity that is issuing the PDU, and shall be represented by an Entity Identifier record (see 6.2.28).">
+            <classref name="EntityID"/>
+        </attribute>
+
+        <attribute name="collidingEntityID" comment="This field shall identify the entity that has collided with the issuing entity (see 5.3.3.4). This field shall be represented by an Entity Identifier record (see 6.2.28).">
+            <classref name="EntityID"/>
+        </attribute>
+
+        <attribute name="eventID" comment="This field shall contain an identification generated by the issuing simulation application to associate related collision events. This field shall be represented by an Event Identifier record (see 6.2.34).">
+            <classref name="EventIdentifier"/>
+        </attribute>
+
+        <attribute name="collisionType" comment="This field shall identify the type of collision. The Collision Type field shall be represented by an 8-bit record of enumerations">
+            <sisoenum type="CollisionType" comment="uid 189"/>
+        </attribute>
+
+        <attribute name="pad" comment="some padding">
+            <primitive type="uint8" defaultValue="0"/>
+        </attribute>
+
+        <attribute name="velocity" comment="This field shall contain the velocity (at the time the collision is detected) of the issuing entity. The velocity shall be represented in world coordinates. This field shall be represented by the Linear Velocity Vector record [see 6.2.95 item c)].">
+            <classref name="Vector3Float"/>
+        </attribute>
+
+        <attribute name="mass" comment="This field shall contain the mass of the issuing entity, and shall be represented by a 32-bit floating point number representing kilograms.">
+            <primitive type="float32"/>
+        </attribute>
+
+        <attribute name="location" comment="This field shall specify the location of the collision with respect to the entity with which the issuing entity collided. The Location field shall be represented by an Entity Coordinate Vector record [see 6.2.95 item a)].">
+            <classref name="Vector3Float"/>
+        </attribute>
+
+    </class>
+
+    <class name="CollisionElasticPdu" inheritsFrom="EntityInformationFamilyPdu" comment="Information about elastic collisions in a DIS exercise shall be communicated using a Collision-Elastic PDU. Section 7.2.4.">
+
+        <initialValue name="pduType" value="DISPDUType.COLLISION_ELASTIC"/>
+        
+        <attribute name="issuingEntityID" comment="This field shall identify the entity that is issuing the PDU and shall be represented by an Entity Identifier record (see 6.2.28)">
+            <classref name="EntityID"/>
+        </attribute>
+
+        <attribute name="collidingEntityID" comment="This field shall identify the entity that has collided with the issuing entity. This field shall be a valid identifier of an entity or server capable of responding to the receipt of this Collision-Elastic PDU. This field shall be represented by an Entity Identifier record (see 6.2.28).">
+            <classref name="EntityID"/>
+        </attribute>
+
+        <attribute name="collisionEventID" comment="This field shall contain an identification generated by the issuing simulation application to associate related collision events. This field shall be represented by an Event Identifier record (see 6.2.34).">
+            <classref name="EventIdentifier"/>
+        </attribute>
+
+        <attribute name="pad" comment="some padding">
+            <primitive type="uint16" defaultValue="0"/>
+        </attribute>
+
+        <attribute name="contactVelocity" comment="This field shall contain the velocity at the time the collision is detected at the point the collision is detected. The velocity shall be represented in world coordinates. This field shall be represented by the Linear Velocity Vector record [see 6.2.95 item c)]">
+            <classref name="Vector3Float"/>
+        </attribute>
+
+        <attribute name="mass" comment="This field shall contain the mass of the issuing entity and shall be represented by a 32-bit floating point number representing kilograms">
+            <primitive type="float32"/>
+        </attribute>
+
+        <attribute name="locationOfImpact" comment="This field shall specify the location of the collision with respect to the entity with which the issuing entity collided. This field shall be represented by an Entity Coordinate Vector record [see 6.2.95 item a)].">
+            <classref name="Vector3Float"/>
+        </attribute>
+
+        <attribute name="collisionIntermediateResultXX" comment="These six records represent the six independent components of a positive semi-definite matrix formed by pre-multiplying and post-multiplying the tensor of inertia, by the anti-symmetric matrix generated by the moment arm, and shall be represented by 32-bit floating point numbers (see 5.3.4.4)">
+            <primitive type="float32"/>
+        </attribute>
+
+        <attribute name="collisionIntermediateResultXY" comment="tensor values">
+            <primitive type="float32"/>
+        </attribute>
+
+        <attribute name="collisionIntermediateResultXZ" comment="tensor values">
+            <primitive type="float32"/>
+        </attribute>
+
+        <attribute name="collisionIntermediateResultYY" comment="tensor values">
+            <primitive type="float32"/>
+        </attribute>
+
+        <attribute name="collisionIntermediateResultYZ" comment="tensor values">
+            <primitive type="float32"/>
+        </attribute>
+
+        <attribute name="collisionIntermediateResultZZ" comment="tensor values">
+            <primitive type="float32"/>
+        </attribute>
+
+        <attribute name="unitSurfaceNormal" comment="This record shall represent the normal vector to the surface at the point of collision detection. The surface normal shall be represented in world coordinates. This field shall be represented by an Entity Coordinate Vector record [see 6.2.95 item a)].">
+            <classref name="Vector3Float"/>
+        </attribute>
+
+        <attribute name="coefficientOfRestitution" comment="This field shall represent the degree to which energy is conserved in a collision and shall be represented by a 32-bit floating point number. In addition, it represents a free parameter by which simulation application developers may &quot;tune&quot; their collision interactions.">
+            <primitive type="float32"/>
+        </attribute>
+
+    </class>
+
+    <class name="EntityStateUpdatePdu" inheritsFrom="EntityInformationFamilyPdu" comment="Nonstatic information about a particular entity may be communicated by issuing an Entity State Update PDU. Section 7.2.5.">
+
+        <initialValue name="pduType" value="DISPDUType.ENTITY_STATE_UPDATE"/>
+
+        <attribute name="entityID" comment="This field shall identify the entity issuing the PDU, and shall be represented by an Entity Identifier record (see 6.2.28).">
+            <classref name="EntityID"/>
+        </attribute>
+
+        <attribute name="padding1" comment="Padding">
+            <primitive type="uint8" value="0"/>
+        </attribute>
+
+        <attribute name="numberOfVariableParameters" hidden="true" comment="This field shall specify the number of variable parameters present. This field shall be represented by an 8-bit unsigned integer (see Annex I).">
+            <primitive type="uint8"/>
+        </attribute>
+
+        <attribute name="entityLinearVelocity" comment="This field shall specify an entity's linear velocity. The coordinate system for an entity's linear velocity depends on the dead reckoning algorithm used. This field shall be represented by a Linear Velocity Vector record [see 6.2.95 item c)]).">
+            <classref name="Vector3Float"/>
+        </attribute>
+
+        <attribute name="entityLocation" comment="This field shall specify an entity's physical location in the simulated world and shall be represented by a World Coordinates record (see 6.2.97).">
+            <classref name="Vector3Double"/>
+        </attribute>
+
+        <attribute name="entityOrientation" comment="This field shall specify an entity's orientation and shall be represented by an Euler Angles record (see 6.2.33).">
+            <classref name="EulerAngles"/>
+        </attribute>
+
+        <attribute name="entityAppearance" comment="This field shall specify the dynamic changes to the entity's appearance attributes. This field shall be represented by an Entity Appearance record (see 6.2.26).">
+            <primitive type="uint32"/>
+        </attribute>
+
+        <attribute name="variableParameters" comment="This field shall specify the parameter values for each Variable Parameter record that is included (see 6.2.93 and Annex I).">
+            <objectlist countFieldName="numberOfVariableParameters">
+                <classref name="VariableParameter"/>
+            </objectlist>
+        </attribute>
+
+    </class>
+
+    <class name="AttributePdu" inheritsFrom="EntityInformationFamilyPdu" comment="Information about individual attributes for a particular entity, other object, or event may be communicated using an Attribute PDU. The Attribute PDU shall not be used to exchange data available in any other PDU except where explicitly mentioned in the PDU issuance instructions within this standard. See 5.3.6 for the information requirements and issuance and receipt rules for this PDU. Section 7.2.6.">
+
+        <initialValue name="pduType" value="DISPDUType.ATTRIBUTE"/>
+
+        <attribute name="originatingSimulationAddress" comment="This field shall identify the simulation issuing the Attribute PDU. It shall be represented by a Simulation Address record (see 6.2.79).">
+            <classref name="SimulationAddress"/>
+        </attribute>
+
+        <attribute name="padding1" comment="Padding">
+            <primitive type="int32"/>
+        </attribute>
+
+        <attribute name="padding2" comment="Padding">
+            <primitive type="int16"/>
+        </attribute>
+
+        <attribute name="attributeRecordPduType" comment="This field shall represent the type of the PDU that is being extended or updated, if applicable. It shall be represented by an 8-bit enumeration.">
+            <sisoenum type="DISPDUType" comment="uid 4"/>
+        </attribute>
+
+        <attribute name="attributeRecordProtocolVersion" comment="This field shall indicate the Protocol Version associated with the Attribute Record PDU Type. It shall be represented by an 8-bit enumeration.">
+            <sisoenum type="DISProtocolFamily" comment="uid 5"/>
+        </attribute>
+
+        <attribute name="masterAttributeRecordType" comment="This field shall contain the Attribute record type of the Attribute records in the PDU if they all have the same Attribute record type. It shall be represented by a 32-bit enumeration.">
+            <sisoenum type="VariableRecordTypes" comment="uid 66"/>
+        </attribute>
+
+        <attribute name="actionCode" comment="This field shall identify the action code applicable to this Attribute PDU. The Action Code shall apply to all Attribute records contained in the PDU. It shall be represented by an 8-bit enumeration.">
+            <sisoenum type="DISAttributeActionCode" comment="uid 295"/>
+        </attribute>
+
+        <attribute name="padding3" comment="Padding">
+            <primitive type="uint8"/>
+        </attribute>
+
+        <attribute name="numberAttributeRecordSet" hidden="true" comment="This field shall specify the number of Attribute Record Sets that make up the remainder of the PDU. It shall be represented by a 16-bit unsigned integer.">
+            <primitive type="uint16"/>
+        </attribute>
+
+        <attribute name="attributeRecordSets">
+            <objectlist countFieldName="numberAttributeRecordSet">
+                <classref name="AttributeRecordSet"/>
+            </objectlist>
+        </attribute>
+    </class>
+    
+    <class name="AttributeRecordSet" inheritsFrom="root">
+        
+        <attribute name="entityId">
+            <classref name="EntityID"/>
+        </attribute>
+        
+        <attribute name="numberOfAttributeRecords" hidden="true" >
+            <primitive type="uint16"/>
+        </attribute>
+        
+        <attribute name="attributeRecords">
+            <objectlist countFieldName="numberOfAttributeRecords">
+                <classref name="Attribute"/>
+            </objectlist>
+        </attribute>
+        
+    </class>
+    
+</classes>

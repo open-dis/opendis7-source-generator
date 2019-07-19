@@ -1,0 +1,113 @@
+<classes>
+    <class name="InformationOperationsFamilyPdu" inheritsFrom="PduBase" >
+        
+        <initialValue name="protocolFamily" value="DISProtocolFamily.INFORMATION_OPERATIONS"/>
+     
+        <attribute name="originatingSimID" comment="Object originating the request">
+            <classRef name= "EntityID"/>
+        </attribute>
+
+    </class>
+    
+    <class name="InformationOperationsActionPdu" inheritsFrom="InformationOperationsFamilyPdu"
+           comment="Section 7.12.2: Actions initiated by an IO simulation to support interactions with other IO simulations shall be communicated using this PDU.">
+          
+        <initialValue name="pduType" value="DISPDUType.INFORMATION_OPERATIONS_ACTION"/>
+       
+        <attribute name="receivingSimID" comment="the simulation to which this PDU is addressed">
+            <classRef name= "EntityID"/>
+        </attribute>
+        
+        <attribute name="requestID" comment="request ID">
+            <primitive type= "uint32"/>
+        </attribute>
+              
+        <attribute name="IOWarfareType">
+            <sisoenum type="IOActionIOWarfareType" comment="uid 285"/>
+        </attribute>
+        
+        <attribute name="IOSimulationSource">
+            <sisoenum type="IOActionIOSimulationSource" comment="uid 286"/>
+        </attribute>
+        
+        <attribute name="IOActionType">
+            <sisoenum type="IOActionIOActionType" comment="uid 287"/>
+        </attribute>
+        
+        <attribute name="IOActionPhase">
+            <sisoenum type="IOActionIOActionPhase" comment="uid 288"/>
+        </attribute>
+        
+        <attribute name="padding1">
+            <primitive type="uint32"/>
+        </attribute>
+       
+        <attribute name="ioAttackerID">
+            <classRef name="EntityID"/>
+        </attribute>
+        
+        <attribute name="ioPrimaryTargetID">
+            <classRef name="EntityID"/>
+        </attribute>
+      
+        <attribute name="padding2">
+            <primitive type="uint16"/>
+        </attribute>
+ 
+        <attribute name="numberOfIORecords" hidden="true">
+            <primitive type="uint16"/>
+        </attribute>
+    
+        <attribute name="ioRecords">
+            <objectlist countFieldName="numberOfIORecords">
+                <classRef name="IORecord"/>
+            </objectlist> 
+        </attribute>
+        
+    </class>
+    
+    <class name="InformationOperationsReportPdu" inheritsFrom="InformationOperationsFamilyPdu"
+           comment="Section 7.12.3: The information operations status of an entity shall be conveyed with this PDU">
+          
+        <initialValue name="pduType" value="DISPDUType.INFORMATION_OPERATIONS_REPORT"/>
+       
+        <attribute name = "ioSimSource">         
+            <sisoenum type="IOActionIOSimulationSource" comment="uid 286"/>
+        </attribute>
+        
+        <attribute name="ioReportType" comment="request ID">
+            <sisoenum type="IOReportIOReportType" comment="uid 289"/>
+        </attribute>
+        
+        <attribute name="padding1">
+            <primitive type="uint8"/>
+        </attribute>
+        
+        <attribute name="ioAttackerID">
+            <classRef name="EntityID"/>
+        </attribute>
+        
+        <attribute name="ioPrimaryTargetID">
+            <classRef name="EntityID"/>
+        </attribute>
+      
+        <attribute name="padding2">
+            <primitive type="uint16"/>
+        </attribute>
+        
+        <attribute name="padding3">
+            <primitive type="uint16"/>
+        </attribute>
+
+        <attribute name="numberOfIORecords" hidden="true">
+            <primitive type="uint16"/>
+        </attribute>
+    
+        <attribute name="ioRecords">
+            <objectlist countFieldName="numberOfIORecords">
+                <classRef name="IORecord"/>
+            </objectlist> 
+        </attribute>
+        
+    </class>
+</classes>

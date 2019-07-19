@@ -1,0 +1,11 @@
+package %s;
+
+import edu.nps.moves.dis.*;
+
+/**
+ * Generated from XML, %s<br>
+ * %s marshal size %s<br>
+ * %s
+ */
+public class %s extends DisBitSet %s
+{

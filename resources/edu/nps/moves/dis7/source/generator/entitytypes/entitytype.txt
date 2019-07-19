@@ -1,0 +1,15 @@
+package %s;
+
+import edu.nps.moves.dis.*;
+import edu.nps.moves.dis.enumerations.*;
+
+abstract public class Base extends EntityType
+{
+    public Base()
+    {
+        setCountry(Country.%s);
+        setEntityKind(EntityKind.%s);
+        setDomain(Domain.inst(%s.%s));
+    }
+}
+

@@ -1,0 +1,28 @@
+package %s;
+
+import edu.nps.moves.dis.EntityType;
+import edu.nps.moves.dis.Domain;
+
+public class EntityTypeFactory {
+
+    /*******************************************************/
+    public static EntityType create(EntityKind kind)
+    {
+      return new EntityType()
+          .setEntityKind(kind);
+    }
+
+    public static EntityType create(EntityKind kind, Domain domain)
+    {
+        return create(kind)
+            .setDomain(domain);
+    }
+
+    public static EntityType create(EntityKind kind, Domain domain, Country country)
+    {
+      return create(kind, domain)
+          .setCountry(country);
+    }
+
+    /*******************************************************/
+

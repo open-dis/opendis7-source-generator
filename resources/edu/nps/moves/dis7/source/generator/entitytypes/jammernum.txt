@@ -1,0 +1,80 @@
+package edu.nps.moves.dis.jammers.Deception;
+package edu.nps.moves.dis.jammers.Deception.Repeater.Blah;
+package %s;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.nio.ByteBuffer;
+
+/**
+ * Category.java created on May 8, 2019 MOVES Institute Naval Postgraduate School, Monterey, CA, USA www.nps.edu
+ *
+ * @author Mike Bailey, jmbailey@nps.edu
+ * @version $Id$
+ */
+public enum Category implements edu.nps.moves.dis.JammerCategory
+public enum JammerKind implements edu.nps.moves.dis.JammerKind
+public enum SubCategory implements edu.nps.moves.dis.SubCategory
+public enum Specific implements edu.nps.moves.dis.Specific
+public enum %s implements edu.nps.moves.dis.%s
+{
+    AGCandGateStealer,
+    Analyzer,
+    Angle,
+    AngleandFalseTarget,
+    AngleandGateStealer,
+    AngleandRandomRangeProgramsRANRAP,
+    AngleandVelocity,
+    AutomaticGainControlAGC,
+    Colinear,
+    ConstantFalseAlarmRate,
+    DoubleCross,
+    DownLink,
+    FalseTarget,
+    FigureEight,
+    GateStealer,
+    GateStealerandRepeater,
+    GlintEnhance,
+    ImageFrequency,
+    JitteredPulseRepetitionFrequency,
+    JitteredPulseWidth,
+    PseudorandomNoisePRN,
+    Pulse,
+    PulseCompressionDeception,
+    RandomRangeProgramsRANRAP,
+    Refraction,
+    Repeater,
+    Scintillation,
+    Serrodyne,
+    Velocity;
+
+    @Override
+    public int getMarshalledSize()
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void marshal(DataOutputStream dos)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void unmarshal(DataInputStream dis)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void marshal(ByteBuffer buff)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void unmarshal(ByteBuffer buff)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+}
