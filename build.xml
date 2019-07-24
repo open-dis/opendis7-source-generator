@@ -70,4 +70,387 @@
     nbproject/build-impl.xml file. 
 
     -->
+   
+    <target name="package-all-jars" depends="package-dis7-class-jar,
+                                             package-dis7-entities-all-jar,
+                                             package-dis7-entities-china-jar,
+                                             package-dis7-entities-germany-jar,
+                                             package-dis7-entities-nato-jar,
+                                             package-dis7-entities-russia-jar,
+                                             package-dis7-entities-usa-air-jar,
+                                             package-dis7-entities-usa-all-jar,
+                                             package-dis7-entities-usa-land-jar,
+                                             package-dis7-entities-usa-munitions-jar,
+                                             package-dis7-entities-usa-surface-jar,
+                                             package-dis7-source-jar"/>
+    
+    <target name="package-dis7-source-jar" depends="jar">
+        <local name="store.jar.name"/>
+        <local name="store.dir"/>
+        <local name="store.jar"/>
+        
+        <property name="store.jar.name" value="open-dis7-src"/>
+        <property name="store.dir" value="dist/"/>
+        <property name="store.jar" value="${store.dir}/${store.jar.name}.jar"/>
+
+        <echo message="Packaging DIS 7 source (no entities) into a single JAR at ${store.jar}"/>
+        <mkdir dir="${store.dir}"/>
+
+        <jar destfile="${store.jar}"
+             basedir = "src-generated/java"
+             excludes = ".keep, README.md, edu/nps/moves/dis/entities/**">
+
+            <manifest>
+                <attribute name="Built-By" value="open-dis-7-source-generator"/>
+                <attribute name="Specification-Title" value="DIS 7 Java Source"/>
+                <attribute name="Specification-Version" value="7.0"/>
+                <attribute name="Specification-Vendor" value="Naval Postgraduate School"/>
+                <attribute name="Implementation-Title" value="edu.nps.moves.dis"/>
+                <attribute name="Implementation-Version" value="build01"/>
+                <attribute name="Implementation-Vendor" value="Naval Postgraduate School"/>
+            </manifest>
+        </jar>
+    </target>
+    
+    <target name="package-dis7-class-jar" depends="jar">
+        <local name="store.jar.name"/>
+        <local name="store.dir"/>
+        <local name="store.jar"/>
+        
+        <property name="store.jar.name" value="open-dis7"/>
+        <property name="store.dir" value="dist/"/>
+        <property name="store.jar" value="${store.dir}/${store.jar.name}.jar"/>
+
+        <echo message="Packaging DIS 7 classes (no entities) into a single JAR at ${store.jar}"/>
+        <mkdir dir="${store.dir}"/>
+
+        <jar destfile="${store.jar}"
+             basedir = "build/classes"
+             excludes = ".keep, README.md, edu/nps/moves/dis7/**, edu/nps/moves/dis/entities/**">
+
+            <manifest>
+                <attribute name="Built-By" value="open-dis-7-source-generator"/>
+                <attribute name="Specification-Title" value="DIS 7 Java Classes"/>
+                <attribute name="Specification-Version" value="7.0"/>
+                <attribute name="Specification-Vendor" value="Naval Postgraduate School"/>
+                <attribute name="Implementation-Title" value="edu.nps.moves.dis"/>
+                <attribute name="Implementation-Version" value="build01"/>
+                <attribute name="Implementation-Vendor" value="Naval Postgraduate School"/>
+            </manifest>
+        </jar>
+    </target>
+    
+    <target name="package-dis7-entities-all-jar" depends="jar">
+        <local name="store.jar.name"/>
+        <local name="store.dir"/>
+        <local name="store.jar"/>
+        
+        <property name="store.jar.name" value="open-dis7-entities-all"/>
+        <property name="store.dir" value="dist/"/>
+        <property name="store.jar" value="${store.dir}/${store.jar.name}.jar"/>
+
+        <echo message="Packaging all DIS 7 entities into a single JAR at ${store.jar}"/>
+        <mkdir dir="${store.dir}"/>
+
+        <jar destfile="${store.jar}"
+             basedir = "build/classes"
+             includes = "edu/nps/moves/dis/entities/**"
+             excludes = ".keep, README.md">
+
+            <manifest>
+                <attribute name="Built-By" value="open-dis-7-source-generator"/>
+                <attribute name="Specification-Title" value="DIS 7 Java Entities"/>
+                <attribute name="Specification-Version" value="7.0"/>
+                <attribute name="Specification-Vendor" value="Naval Postgraduate School"/>
+                <attribute name="Implementation-Title" value="edu.nps.moves.dis"/>
+                <attribute name="Implementation-Version" value="build01"/>
+                <attribute name="Implementation-Vendor" value="Naval Postgraduate School"/>
+            </manifest>
+        </jar>
+    </target>
+    
+    <target name="package-dis7-entities-china-jar" depends="jar">
+        <local name="store.jar.name"/>
+        <local name="store.dir"/>
+        <local name="store.jar"/>
+        
+        <property name="store.jar.name" value="open-dis7-entities-chn"/>
+        <property name="store.dir" value="dist/"/>
+        <property name="store.jar" value="${store.dir}/${store.jar.name}.jar"/>
+
+        <echo message="Packaging DIS 7 Chinese entities into a single JAR at ${store.jar}"/>
+        <mkdir dir="${store.dir}"/>
+
+        <jar destfile="${store.jar}"
+             basedir = "build/classes"
+             includes = "edu/nps/moves/dis/entities/EntityTypeFactory.class,edu/nps/moves/dis/entities/uid2EntityClass.properties,edu/nps/moves/dis/entities/chn/**"
+             excludes = ".keep, README.md">
+
+            <manifest>
+                <attribute name="Built-By" value="open-dis-7-source-generator"/>
+                <attribute name="Specification-Title" value="DIS 7 Java Chinese Entities"/>
+                <attribute name="Specification-Version" value="7.0"/>
+                <attribute name="Specification-Vendor" value="Naval Postgraduate School"/>
+                <attribute name="Implementation-Title" value="edu.nps.moves.dis"/>
+                <attribute name="Implementation-Version" value="build01"/>
+                <attribute name="Implementation-Vendor" value="Naval Postgraduate School"/>
+            </manifest>
+        </jar>
+    </target>
+    
+    <target name="package-dis7-entities-germany-jar" depends="jar">
+        <local name="store.jar.name"/>
+        <local name="store.dir"/>
+        <local name="store.jar"/>
+        
+        <property name="store.jar.name" value="open-dis7-entities-deu"/>
+        <property name="store.dir" value="dist/"/>
+        <property name="store.jar" value="${store.dir}/${store.jar.name}.jar"/>
+
+        <echo message="Packaging DIS 7 German entities into a single JAR at ${store.jar}"/>
+        <mkdir dir="${store.dir}"/>
+
+        <jar destfile="${store.jar}"
+             basedir = "build/classes"
+             includes = "edu/nps/moves/dis/entities/EntityTypeFactory.class,edu/nps/moves/dis/entities/uid2EntityClass.properties,edu/nps/moves/dis/entities/deu/**"
+             excludes = ".keep, README.md">
+
+            <manifest>
+                <attribute name="Built-By" value="open-dis-7-source-generator"/>
+                <attribute name="Specification-Title" value="DIS 7 Java German Entities"/>
+                <attribute name="Specification-Version" value="7.0"/>
+                <attribute name="Specification-Vendor" value="Naval Postgraduate School"/>
+                <attribute name="Implementation-Title" value="edu.nps.moves.dis"/>
+                <attribute name="Implementation-Version" value="build01"/>
+                <attribute name="Implementation-Vendor" value="Naval Postgraduate School"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="package-dis7-entities-russia-jar" depends="jar">
+        <local name="store.jar.name"/>
+        <local name="store.dir"/>
+        <local name="store.jar"/>
+        
+        <property name="store.jar.name" value="open-dis7-entities-rus"/>
+        <property name="store.dir" value="dist/"/>
+        <property name="store.jar" value="${store.dir}/${store.jar.name}.jar"/>
+
+        <echo message="Packaging DIS 7 Russian entities into a single JAR at ${store.jar}"/>
+        <mkdir dir="${store.dir}"/>
+
+        <jar destfile="${store.jar}"
+             basedir = "build/classes"
+             includes = "edu/nps/moves/dis/entities/EntityTypeFactory.class,edu/nps/moves/dis/entities/uid2EntityClass.properties,edu/nps/moves/dis/entities/rus/**"
+             excludes = ".keep, README.md">
+
+            <manifest>
+                <attribute name="Built-By" value="open-dis-7-source-generator"/>
+                <attribute name="Specification-Title" value="DIS 7 Java Russian Entities"/>
+                <attribute name="Specification-Version" value="7.0"/>
+                <attribute name="Specification-Vendor" value="Naval Postgraduate School"/>
+                <attribute name="Implementation-Title" value="edu.nps.moves.dis"/>
+                <attribute name="Implementation-Version" value="build01"/>
+                <attribute name="Implementation-Vendor" value="Naval Postgraduate School"/>
+            </manifest>
+        </jar>
+    </target>
+    
+    <target name="package-dis7-entities-usa-all-jar" depends="jar">
+        <local name="store.jar.name"/>
+        <local name="store.dir"/>
+        <local name="store.jar"/>
+        
+        <property name="store.jar.name" value="open-dis7-entities-usa-all"/>
+        <property name="store.dir" value="dist/"/>
+        <property name="store.jar" value="${store.dir}/${store.jar.name}.jar"/>
+
+        <echo message="Packaging DIS 7 American entities into a single JAR at ${store.jar}"/>
+        <mkdir dir="${store.dir}"/>
+
+        <jar destfile="${store.jar}"
+             basedir = "build/classes"
+             includes = "edu/nps/moves/dis/entities/EntityTypeFactory.class,edu/nps/moves/dis/entities/uid2EntityClass.properties,edu/nps/moves/dis/entities/usa/**"
+             excludes = ".keep, README.md">
+
+            <manifest>
+                <attribute name="Built-By" value="open-dis-7-source-generator"/>
+                <attribute name="Specification-Title" value="DIS 7 Java American Entities"/>
+                <attribute name="Specification-Version" value="7.0"/>
+                <attribute name="Specification-Vendor" value="Naval Postgraduate School"/>
+                <attribute name="Implementation-Title" value="edu.nps.moves.dis"/>
+                <attribute name="Implementation-Version" value="build01"/>
+                <attribute name="Implementation-Vendor" value="Naval Postgraduate School"/>
+            </manifest>
+        </jar>
+    </target>
+    
+    <target name="package-dis7-entities-usa-munitions-jar" depends="jar">
+        <local name="store.jar.name"/>
+        <local name="store.dir"/>
+        <local name="store.jar"/>
+        
+        <property name="store.jar.name" value="open-dis7-entities-usa-munitions"/>
+        <property name="store.dir" value="dist/"/>
+        <property name="store.jar" value="${store.dir}/${store.jar.name}.jar"/>
+
+        <echo message="Packaging DIS 7 American munitions entities into a single JAR at ${store.jar}"/>
+        <mkdir dir="${store.dir}"/>
+
+        <jar destfile="${store.jar}"
+             basedir = "build/classes"
+             includes = "edu/nps/moves/dis/entities/EntityTypeFactory.class,edu/nps/moves/dis/entities/uid2EntityClass.properties,edu/nps/moves/dis/entities/usa/munition/**"
+             excludes = ".keep, README.md">
+
+            <manifest>
+                <attribute name="Built-By" value="open-dis-7-source-generator"/>
+                <attribute name="Specification-Title" value="DIS 7 Java American Munition Entities"/>
+                <attribute name="Specification-Version" value="7.0"/>
+                <attribute name="Specification-Vendor" value="Naval Postgraduate School"/>
+                <attribute name="Implementation-Title" value="edu.nps.moves.dis"/>
+                <attribute name="Implementation-Version" value="build01"/>
+                <attribute name="Implementation-Vendor" value="Naval Postgraduate School"/>
+            </manifest>
+        </jar>
+    </target>
+    
+    <target name="package-dis7-entities-usa-air-jar" depends="jar">
+        <local name="store.jar.name"/>
+        <local name="store.dir"/>
+        <local name="store.jar"/>
+        
+        <property name="store.jar.name" value="open-dis7-entities-usa-air"/>
+        <property name="store.dir" value="dist/"/>
+        <property name="store.jar" value="${store.dir}/${store.jar.name}.jar"/>
+
+        <echo message="Packaging DIS 7 American air entities into a single JAR at ${store.jar}"/>
+        <mkdir dir="${store.dir}"/>
+
+        <jar destfile="${store.jar}"
+             basedir = "build/classes"
+             includes = "edu/nps/moves/dis/entities/EntityTypeFactory.class,edu/nps/moves/dis/entities/uid2EntityClass.properties,edu/nps/moves/dis/entities/usa/platform/air/**"
+             excludes = ".keep, README.md">
+
+            <manifest>
+                <attribute name="Built-By" value="open-dis-7-source-generator"/>
+                <attribute name="Specification-Title" value="DIS 7 Java American Air Entities"/>
+                <attribute name="Specification-Version" value="7.0"/>
+                <attribute name="Specification-Vendor" value="Naval Postgraduate School"/>
+                <attribute name="Implementation-Title" value="edu.nps.moves.dis"/>
+                <attribute name="Implementation-Version" value="build01"/>
+                <attribute name="Implementation-Vendor" value="Naval Postgraduate School"/>
+            </manifest>
+        </jar>
+    </target>
+    <target name="package-dis7-entities-usa-land-jar" depends="jar">
+        <local name="store.jar.name"/>
+        <local name="store.dir"/>
+        <local name="store.jar"/>
+        
+        <property name="store.jar.name" value="open-dis7-entities-usa-land"/>
+        <property name="store.dir" value="dist/"/>
+        <property name="store.jar" value="${store.dir}/${store.jar.name}.jar"/>
+
+        <echo message="Packaging DIS 7 American land entities into a single JAR at ${store.jar}"/>
+        <mkdir dir="${store.dir}"/>
+
+        <jar destfile="${store.jar}"
+             basedir = "build/classes"
+             includes = "edu/nps/moves/dis/entities/EntityTypeFactory.class,edu/nps/moves/dis/entities/uid2EntityClass.properties,edu/nps/moves/dis/entities/usa/platform/land/**"
+             excludes = ".keep, README.md">
+
+            <manifest>
+                <attribute name="Built-By" value="open-dis-7-source-generator"/>
+                <attribute name="Specification-Title" value="DIS 7 Java American Land Entities"/>
+                <attribute name="Specification-Version" value="7.0"/>
+                <attribute name="Specification-Vendor" value="Naval Postgraduate School"/>
+                <attribute name="Implementation-Title" value="edu.nps.moves.dis"/>
+                <attribute name="Implementation-Version" value="build01"/>
+                <attribute name="Implementation-Vendor" value="Naval Postgraduate School"/>
+            </manifest>
+        </jar>
+    </target>
+    <target name="package-dis7-entities-usa-surface-jar" depends="jar">
+        <local name="store.jar.name"/>
+        <local name="store.dir"/>
+        <local name="store.jar"/>
+        
+        <property name="store.jar.name" value="open-dis7-entities-usa-surface"/>
+        <property name="store.dir" value="dist/"/>
+        <property name="store.jar" value="${store.dir}/${store.jar.name}.jar"/>
+
+        <echo message="Packaging DIS 7 American surface entities into a single JAR at ${store.jar}"/>
+        <mkdir dir="${store.dir}"/>
+
+        <jar destfile="${store.jar}"
+             basedir = "build/classes"
+             includes = "edu/nps/moves/dis/entities/EntityTypeFactory.class,edu/nps/moves/dis/entities/uid2EntityClass.properties,edu/nps/moves/dis/entities/usa/platform/surface/**"
+             excludes = ".keep, README.md">
+
+            <manifest>
+                <attribute name="Built-By" value="open-dis-7-source-generator"/>
+                <attribute name="Specification-Title" value="DIS 7 Java American Surface Entities"/>
+                <attribute name="Specification-Version" value="7.0"/>
+                <attribute name="Specification-Vendor" value="Naval Postgraduate School"/>
+                <attribute name="Implementation-Title" value="edu.nps.moves.dis"/>
+                <attribute name="Implementation-Version" value="build01"/>
+                <attribute name="Implementation-Vendor" value="Naval Postgraduate School"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="package-dis7-entities-nato-jar" depends="jar">
+        <local name="store.jar.name"/>
+        <local name="store.dir"/>
+        <local name="store.jar"/>
+        
+        <property name="store.jar.name" value="open-dis7-entities-nato"/>
+        <property name="store.dir" value="dist/"/>
+        <property name="store.jar" value="${store.dir}/${store.jar.name}.jar"/>
+
+        <echo message="Packaging DIS 7 Nato entities (no USA) into a single JAR at ${store.jar}"/>
+        <mkdir dir="${store.dir}"/>
+
+        <jar destfile="${store.jar}"
+             basedir = "build/classes"
+             excludes = ".keep, README.md"
+             includes =    "edu/nps/moves/dis/entities/EntityTypeFactory.class,
+                            edu/nps/moves/dis/entities/uid2EntityClass.properties,
+                            edu/nps/moves/dis/entities/alb/**,
+                            edu/nps/moves/dis/entities/bel/**,
+                            edu/nps/moves/dis/entities/bgr/**,
+                            edu/nps/moves/dis/entities/can/**,
+                            edu/nps/moves/dis/entities/cze/**,
+                            edu/nps/moves/dis/entities/deu/**,
+                            edu/nps/moves/dis/entities/dnk/**,
+                            edu/nps/moves/dis/entities/esp/**,
+                            edu/nps/moves/dis/entities/est/**,
+                            edu/nps/moves/dis/entities/fra/**,
+                            edu/nps/moves/dis/entities/gbr/**,
+                            edu/nps/moves/dis/entities/grc/**,
+                            edu/nps/moves/dis/entities/hrv/**,
+                            edu/nps/moves/dis/entities/hun/**,
+                            edu/nps/moves/dis/entities/ita/**,
+                            edu/nps/moves/dis/entities/ltu/**,
+                            edu/nps/moves/dis/entities/lva/**,
+                            edu/nps/moves/dis/entities/mne/**,
+                            edu/nps/moves/dis/entities/nld/**,
+                            edu/nps/moves/dis/entities/nor/**,
+                            edu/nps/moves/dis/entities/pol/**,
+                            edu/nps/moves/dis/entities/prt/**,
+                            edu/nps/moves/dis/entities/roy/**,
+                            edu/nps/moves/dis/entities/svk/**,
+                            edu/nps/moves/dis/entities/tur/**">
+
+            <manifest>
+                <attribute name="Built-By" value="open-dis-7-source-generator"/>
+                <attribute name="Specification-Title" value="DIS 7 Java Nato Entities"/>
+                <attribute name="Specification-Version" value="7.0"/>
+                <attribute name="Specification-Vendor" value="Naval Postgraduate School"/>
+                <attribute name="Implementation-Title" value="edu.nps.moves.dis"/>
+                <attribute name="Implementation-Version" value="build01"/>
+                <attribute name="Implementation-Vendor" value="Naval Postgraduate School"/>
+            </manifest>
+        </jar>
+    </target>
 </project>

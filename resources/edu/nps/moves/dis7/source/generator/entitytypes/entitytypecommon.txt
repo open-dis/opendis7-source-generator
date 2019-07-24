@@ -1,0 +1,22 @@
+package %s;
+
+import edu.nps.moves.dis.*;
+import edu.nps.moves.dis.enumerations.*;
+
+/**
+ * %s
+ *
+ * Country: %s
+ * Entity kind: %s
+ * Domain: %s
+ *
+ * Entity uid: %s
+ */
+public class %s extends EntityType
+{
+    public %s()
+    {
+        setCountry(Country.%s);
+        setEntityKind(EntityKind.%s);
+        setDomain(Domain.inst(%s.%s));
+
