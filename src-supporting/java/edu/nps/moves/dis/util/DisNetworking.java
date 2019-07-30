@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2008-2019, MOVES Institute, Naval Postgraduate School. All rights reserved.
+ * This work is licensed under the BSD open source license, available at https://www.movesinstitute.org/licenses/bsd.html
+ */
+
 package edu.nps.moves.dis.util;
 
 import edu.nps.moves.dis.Pdu;
@@ -6,14 +11,10 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.*;
 import java.util.Enumeration;
-import java.util.List;
 
 /**
  * DisNetworking.java created on Jul 29, 2019
- * MOVES Institute Naval Postgraduate School, Monterey, CA, USA www.nps.edu
- *
- * @author Mike Bailey, jmbailey@nps.edu
- * @version $Id$
+ * Simple multicast receive and send methods
  */
 public class DisNetworking
 {

@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2008-2019, MOVES Institute, Naval Postgraduate School. All rights reserved.
+ * This work is licensed under the BSD open source license, available at https://www.movesinstitute.org/licenses/bsd.html
+ */
+
 package edu.nps.moves.dis;
 
 import java.io.DataInputStream;
@@ -6,9 +11,6 @@ import java.nio.ByteBuffer;
 
 /**
  * Marshaller.java created on Apr 22, 2019 MOVES Institute Naval Postgraduate School, Monterey, CA, USA www.nps.edu
- *
- * @author Mike Bailey, jmbailey@nps.edu
- * @version $Id$
  */
 public interface Marshaller
 {

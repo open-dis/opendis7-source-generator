@@ -1,7 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Copyright (c) 2008-2019, MOVES Institute, Naval Postgraduate School. All rights reserved.
+ * This work is licensed under the BSD open source license, available at https://www.movesinstitute.org/licenses/bsd.html
  */
 
 package edu.nps.moves.dis.util;
@@ -17,7 +16,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * DisThreadedNetIF.java created on Jul 29, 2019
- * This is a thread-safe, multi cast DIS network interface class.
+ * This is a thread-safe, multicast DIS network interface class.
  * It is a singleton, meaning one instance per VM.  If a DIS needs to send and receive over
  * more than one network address, this class can be modified to be multiply instanciated;
  * MOVES Institute Naval Postgraduate School, Monterey, CA, USA www.nps.edu
