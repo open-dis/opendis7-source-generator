@@ -3074,9 +3074,8 @@
     <!-- End records -->
 
     <!-- PDUs start here. Everything before this were records that are contained inside of PDUs -->
-    <!-- note, should be abstract but can't be due to PduContainer (which hasn't been examined or tested.  Might be a candidate for removal. -->
   
-    <class name="Pdu" inheritsFrom="root" comment="Base class of PduBase and LiveEntityPdu">
+    <class name="Pdu" inheritsFrom="root" abstract="true" comment="Base class of PduBase and LiveEntityPdu">
        
         <attribute name="protocolVersion" comment="The version of the protocol. 5=DIS-1995, 6=DIS-1998, 7=DIS-2012"> 
             <sisoenum type="DISProtocolVersion" comment="uid 3" defaultValue="DISProtocolVersion.IEEE_12781_2012"/>  <!-- DIS 7 -->
@@ -3118,6 +3117,7 @@
     </class>
 
   <!-- Generic holder of PDUs. This is mostly for XML compatability -->
+  <!-- this doesn't unmarshal properly
     <class name="PduContainer" 
            inheritsFrom="root"
            comment="Used for XML compatability. A container that holds PDUs"
@@ -3134,7 +3134,7 @@
         </attribute>
         
     </class>
-
+  -->
     <!-- This is some experimental XML that combines the field description with 
     enumerations and bitfields. I'm not convinced by the approach; the enumerations
     are in the EBV document, which is more changeable and faster
