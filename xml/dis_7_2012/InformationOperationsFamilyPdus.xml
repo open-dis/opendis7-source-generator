@@ -1,5 +1,5 @@
 <classes>
-    <class name="InformationOperationsFamilyPdu" inheritsFrom="PduBase" >
+    <class name="InformationOperationsFamilyPdu" abstract="true" inheritsFrom="PduBase" >
         
         <initialValue name="protocolFamily" value="DISProtocolFamily.INFORMATION_OPERATIONS"/>
      
@@ -10,7 +10,7 @@
     </class>
     
     <class name="InformationOperationsActionPdu" inheritsFrom="InformationOperationsFamilyPdu"
-           comment="Section 7.12.2: Actions initiated by an IO simulation to support interactions with other IO simulations shall be communicated using this PDU.">
+           comment="5.13.3.1 Used to communicate an IO attack or the effects of an IO attack on one or more target entities.">
           
         <initialValue name="pduType" value="DISPDUType.INFORMATION_OPERATIONS_ACTION"/>
        
@@ -67,7 +67,7 @@
     </class>
     
     <class name="InformationOperationsReportPdu" inheritsFrom="InformationOperationsFamilyPdu"
-           comment="Section 7.12.3: The information operations status of an entity shall be conveyed with this PDU">
+           comment="5.13.4.1 Used to communicate the effects of an IO attack on one or more target entities.">
           
         <initialValue name="pduType" value="DISPDUType.INFORMATION_OPERATIONS_REPORT"/>
        

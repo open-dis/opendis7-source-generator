@@ -1,5 +1,5 @@
 <classes>
-   <class name="SimulationManagementWithReliabilityFamilyPdu" inheritsFrom="PduBase">
+   <class name="SimulationManagementWithReliabilityFamilyPdu" abstract="true" inheritsFrom="PduBase">
 
         <initialValue name="protocolFamily" value="DISProtocolFamily.SIMULATION_MANAGEMENT_WITH_RELIABILITY"/>
 
@@ -13,7 +13,7 @@
 
     </class>
 
-    <class name="CreateEntityReliablePdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu" comment="Section 5.3.12.1: creation of an entity , reliable.">
+    <class name="CreateEntityReliablePdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu" comment="5.12.4.2 Serves the same function as the Create Entity PDU but with the addition of reliability service levels.">
       
         <initialValue name="pduType" value="DISPDUType.CREATE_ENTITY_R"/>
 
@@ -35,7 +35,7 @@
 
     </class>
 
-    <class name="RemoveEntityReliablePdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu" comment="Section 5.3.12.2: Removal of an entity , reliable.">
+    <class name="RemoveEntityReliablePdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu" comment="5.12.4.3 Contains the same information as found in the Remove Entity PDU with the addition of the level of reliability service to be used for the removal action being requested.">
       
         <initialValue name="pduType" value="DISPDUType.REMOVE_ENTITY_R"/>
 
@@ -57,7 +57,7 @@
 
     </class>
 
-    <class name="StartResumeReliablePdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu" comment="Section 5.3.12.3: Start resume simulation, relaible.">
+    <class name="StartResumeReliablePdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu" comment="5.12.4.4 Serves the same function as the Start/Resume PDU but with the addition of reliability service levels">
       
         <initialValue name="pduType" value="DISPDUType.START_RESUME_R"/>
 
@@ -87,7 +87,7 @@
   
     </class> 
  
-    <class name="StopFreezeReliablePdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu" comment="Section 5.3.12.4: Stop freeze simulation, relaible.">
+    <class name="StopFreezeReliablePdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu" comment="5.12.4.5 Serves the same function as the Stop/Freeze PDU (see 5.6.5.5.1) but with the addition of reliability service levels.">
       
         <initialValue name="pduType" value="DISPDUType.STOP_FREEZE_R"/>
    
@@ -118,7 +118,7 @@
     </class>
    
     <class name="AcknowledgeReliablePdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
-           comment="Section 5.3.12.5: Ack receipt of a start-resume, stop-freeze, create-entity or remove enitty (reliable) pdus.">
+           comment="5.12.4.6 Serves the same function as the Acknowledge PDU but is used to acknowledge the receipt of a Create Entity-R PDU, a Remove Entity-R PDU, a Start/Resume-R PDU, or a Stop/Freeze-R PDU.">
       
         <initialValue name="pduType" value="DISPDUType.ACKNOWLEDGE_R"/>
    
@@ -137,7 +137,7 @@
     </class>
  
     <class name="ActionRequestReliablePdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
-           comment="Section 5.3.12.6: request from a simulation manager to a managed entity to perform a specified action.">
+           comment="5.12.4.7 Serves the same function as the Action Request PDU but with the addition of reliability service levels.">
       
         <initialValue name="pduType" value="DISPDUType.ACTION_REQUEST_R"/>
    
@@ -184,7 +184,7 @@
     
     </class>
     
-    <class name="ActionResponseReliablePdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu" comment="Section 5.3.12.7: Response from an entity to an action request PDU.">
+    <class name="ActionResponseReliablePdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu" comment="5.12.4.8 Serves the same function as the Action Response PDU (see 5.6.5.8.1) but is used to acknowledge the receipt of an Action Request-R PDU.">
       
         <initialValue name="pduType" value="DISPDUType.ACTION_RESPONSE_R"/>
    
@@ -218,7 +218,7 @@
 
     </class>
 
-    <class name="DataQueryReliablePdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu" comment="Section 5.3.12.8: request for data from an entity.">
+    <class name="DataQueryReliablePdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu" comment="5.12.4.9 Serves the same function as the Data Query PDU but with the addition of reliability service levels">
       
         <initialValue name="pduType" value="DISPDUType.DATA_QUERY_R"/>
    
@@ -265,7 +265,7 @@
     </class>
 
     <class name="SetDataReliablePdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
-           comment="Section 5.3.12.9: initializing or chaning internal state information, reliable.">
+           comment="5.12.4.10 Serves the same function as the Set Data PDU but with the addition of reliability service levels.">
       
         <initialValue name="pduType" value="DISPDUType.SET_DATA_R"/>
    
@@ -307,7 +307,7 @@
     </class>
 
     <class name="DataReliablePdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
-           comment="Section 5.3.12.10: issued in response to a data query R or set dataR pdu.">
+           comment="5.12.4.11 Serves the same function as the Data PDU but with the addition of reliability service levels and is used in response to a Data Query-R PDU, a Data-R PDU, or a Set Data-R PDU.">
       
         <initialValue name="pduType" value="DISPDUType.DATA_R"/>
    
@@ -350,7 +350,7 @@
     </class>
 
     <class name="EventReportReliablePdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
-           comment="Section 5.3.12.11: reports the occurance of a significatnt event to the simulation manager.">
+           comment="5.12.4.12 Contains the same information as found in the Event Report PDU.">
       
         <initialValue name="pduType" value="DISPDUType.EVENT_REPORT_R"/>
    
@@ -385,7 +385,7 @@
     </class>
     
     <class name="CommentReliablePdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
-           comment="Section 5.3.12.12: Arbitrary messages. Only reliable this time.">
+           comment="5.12.4.13 Serves the same function as the Comment PDU.">
       
         <initialValue name="pduType" value="DISPDUType.COMMENT_R"/>
    
@@ -411,7 +411,7 @@
     </class>
 
     <class name="RecordQueryReliablePdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
-           comment="Section 5.3.12.13: A request for one or more records of data from an entity.">
+           comment="5.12.4.14 Used to communicate a request for data in record format.">
       
         <initialValue name="pduType" value="DISPDUType.RECORD_QUERY_R"/>
   
@@ -448,7 +448,7 @@
     </class>
 
     <class name="SetRecordReliablePdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
-            comment="Section 5.3.12.14: Initializing or changing internal parameter info.">
+            comment="5.12.4.15 Used to set or change certain parameter values. These parameter values are contained within a record format as compared to the datum format used in the Set Data-R PDU.">
           
         <initialValue name="pduType" value="DISPDUType.SET_RECORD_R"/>
        
@@ -485,7 +485,7 @@
     </class>
     
     <class name="RecordReliablePdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
-           comment="Section 7.11.16: Response to RecordQueryReliablePdu. ">
+           comment="5.12.4.16 Used to respond to a Record Query-R PDU or a Set Record-R PDU. It is used to provide information requested in a Record Query-R PDU, to confirm the information received in a Set Record-R PDU, and to confirm the receipt of a periodic or unsolicited Record-R PDU when the acknowledged service level is used.">
         
         <initialValue name="pduType" value="DISPDUType.RECORD_R"/>
 

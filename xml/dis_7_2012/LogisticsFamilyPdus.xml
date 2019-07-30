@@ -1,15 +1,14 @@
 <classes>
     <!--Logistics protocol Family: Section 7.4.2 Service Request PDU, 7.4.3 Resupply Offer PDU -->
 
-    <class name="LogisticsFamilyPdu" inheritsFrom="PduBase" comment=" Abstract superclass for logistics PDUs. Section 7.4" >
+    <class name="LogisticsFamilyPdu" inheritsFrom="PduBase" abstract="true" comment="Abstract superclass for logistics PDUs. Section 7.4" >
      
         <initialValue name="protocolFamily" value="DISProtocolFamily.LOGISTICS"/>
   
     </class>
 
     <class name="ServiceRequestPdu" inheritsFrom="LogisticsFamilyPdu"
-           comment="Service Request PDU shall be used to communicate information associated with
-                           one entity requesting a service from another). Section 7.4.2">
+           comment="5.5.5 Communicate information associated with one entity requesting a service from another.">
         
         <initialValue name="pduType" value="DISPDUType.SERVICE_REQUEST"/>
 
@@ -42,7 +41,7 @@
 
     </class>
 
-    <class name="ResupplyOfferPdu" inheritsFrom="LogisticsFamilyPdu" comment="Information used to communicate the offer of supplies by a supplying entity to a receiving entity. Section 7.4.3">
+    <class name="ResupplyOfferPdu" inheritsFrom="LogisticsFamilyPdu" comment="5.5.6 Communicate the offer of supplies by a supplying entity to a receiving entity.">
 
         <initialValue name="pduType" value="DISPDUType.RESUPPLY_OFFER"/>
 
@@ -79,7 +78,7 @@
 
     </class>
 
-    <class name="ResupplyReceivedPdu" inheritsFrom="LogisticsFamilyPdu" comment="Section 7.4.4. Receipt of supplies is communicated by issuing Resupply Received PDU.">
+    <class name="ResupplyReceivedPdu" inheritsFrom="LogisticsFamilyPdu" comment="5.5.7 Used to acknowledge the receipt of supplies by the receiving entity.">
 
         <initialValue name="pduType" value="DISPDUType.RESUPPLY_RECEIVED"/>
 
@@ -112,7 +111,7 @@
 
     </class>
 
-    <class name="ResupplyCancelPdu" inheritsFrom="LogisticsFamilyPdu" comment="Information used to communicate the offer of supplies by a supplying entity to a receiving entity. Section 7.4.3">
+    <class name="ResupplyCancelPdu" inheritsFrom="LogisticsFamilyPdu" comment="5.5.8 Used to communicate the canceling of a resupply service provided through logistics support.">
 
         <initialValue name="pduType" value="DISPDUType.RESUPPLY_CANCEL"/>
 
@@ -128,7 +127,7 @@
         
     </class>
     
-    <class name="RepairCompletePdu" inheritsFrom="LogisticsFamilyPdu" comment="Section 7.4.6. Service Request PDU is received and repair is complete.">
+    <class name="RepairCompletePdu" inheritsFrom="LogisticsFamilyPdu" comment="5.5.10 Used by the repairing entity to communicate the repair that has been performed for the entity that requested repair service.">
 
         <initialValue name="pduType" value="DISPDUType.REPAIR_COMPLETE"/>
 
@@ -150,7 +149,7 @@
 
     </class>
 
-    <class name="RepairResponsePdu" inheritsFrom="LogisticsFamilyPdu" comment="Section 7.4.7. Sent after repair complete PDU.">
+    <class name="RepairResponsePdu" inheritsFrom="LogisticsFamilyPdu" comment="5.5.11 used by the receiving entity to acknowledge the receipt of a Repair Complete PDU">
 
         <initialValue name="pduType" value="DISPDUType.REPAIR_RESPONSE"/>
 

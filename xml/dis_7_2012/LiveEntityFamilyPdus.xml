@@ -1,5 +1,5 @@
 <classes>
-       <class name="LiveEntityPdu" inheritsFrom="Pdu"
+       <class name="LiveEntityPdu" abstract="true" inheritsFrom="Pdu"
            comment="The live entity PDUs have a slightly different header">
 
         <attribute name="subprotocolNumber" comment="Subprotocol used to decode the PDU. Section 13 of EBV.">
@@ -12,13 +12,13 @@
 
     </class>
     
-    <class name="LiveEntityFamilyPdu" inheritsFrom="LiveEntityPdu">
+    <class name="LiveEntityFamilyPdu" abstract="true" inheritsFrom="LiveEntityPdu">
      
         <initialValue name="protocolFamily" value="DISProtocolFamily.LIVE_ENTITY_LE_INFORMATION_INTERACTION"/>
  
     </class>
     
-    <class name="TspiPdu" inheritsFrom="LiveEntityFamilyPdu">
+    <class name="TspiPdu" inheritsFrom="LiveEntityFamilyPdu" comment="9.4.2 The Time Space Position Information (TSPI) PDU shall communicate information about the LE’s state vector.">
         
         <initialValue name="pduType" value="DISPDUType.TSPI"/>
                
@@ -70,7 +70,7 @@
         
     </class>
     
-    <class name="AppearancePdu" inheritsFrom="LiveEntityFamilyPdu">
+    <class name="AppearancePdu" inheritsFrom="LiveEntityFamilyPdu" comment="9.4.3 Communicate information about the appearance of a live entity.">
         
         <initialValue name="pduType" value="DISPDUType.APPEARANCE"/>
         
@@ -113,7 +113,7 @@
         </attribute>
     </class>
     
-    <class name="ArticulatedPartsPdu" inheritsFrom="LiveEntityFamilyPdu">
+    <class name="ArticulatedPartsPdu" inheritsFrom="LiveEntityFamilyPdu" comment="9.4.4 Communicate information about an entity’s articulated and attached parts.">
         
         <initialValue name="pduType" value="DISPDUType.ARTICULATED_PARTS"/>
 
@@ -133,7 +133,7 @@
         
     </class>
     
-    <class name="LEFirePdu" inheritsFrom="LiveEntityFamilyPdu">
+    <class name="LEFirePdu" inheritsFrom="LiveEntityFamilyPdu" comment="9.4.5 Representation of weapons fire in a DIS exercise involving LEs.">
         
         <initialValue name="pduType" value="DISPDUType.LE_FIRE"/>
 
@@ -175,7 +175,7 @@
         
     </class>
     
-    <class name="LEDetonationPdu" inheritsFrom="LiveEntityFamilyPdu">
+    <class name="LEDetonationPdu" inheritsFrom="LiveEntityFamilyPdu" comment="9.4.6 Communicate information associated with the impact or detonation of a munition.">
         
         <initialValue name="pduType" value="DISPDUType.LE_DETONATION"/>
         

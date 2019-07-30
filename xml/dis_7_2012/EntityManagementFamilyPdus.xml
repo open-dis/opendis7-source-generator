@@ -1,12 +1,12 @@
 <classes>
-    <class name="EntityManagementFamilyPdu" inheritsFrom="PduBase" comment=" Managment of grouping of PDUs, and more. Section 7.8">
+    <class name="EntityManagementFamilyPdu" abstract="true" inheritsFrom="PduBase" comment=" Managment of grouping of PDUs, and more. Section 7.8">
    
         <initialValue name="protocolFamily" value="DISProtocolFamily.ENTITY_MANAGEMENT"/>
     
     </class>
 
     <class name="AggregateStatePdu" inheritsFrom="EntityManagementFamilyPdu"
-           comment="Section 5.3.9.1 informationa bout aggregating entities anc communicating information about the aggregated entities. requires manual intervention to fix the padding between entityID lists and silent aggregate sysem lists this padding  is dependent on how many entityIDs there are, and needs to be on a 32 bit word boundary. UNFINISHED">
+           comment="5.9.2.2 The Aggregate State PDU shall be used to communicate the state and other pertinent information about an aggregated unit.">
     
         <initialValue name="pduType" value="DISPDUType.AGGREGATE_STATE"/>
      
@@ -78,12 +78,6 @@
             </objectlist> 
         </attribute>
         
-        <!--<attribute name="padTo32" comment="^^^padding to put the start of the next list on a 32 bit boundary. Each of the IDs above=48, if there's an odd number, make this 2 bytes else 0">
-            <primitivelist length="2"> for 0 data
-                <primitive type="uint8"/>
-            </primitivelist>
-        </attribute> -->
-        
         <attribute name="padTo32">
             <padtoboundary length="32"/>
         </attribute>
@@ -113,7 +107,7 @@
     </class>
  
     <class name="IsGroupOfPdu" inheritsFrom="EntityManagementFamilyPdu"
-           comment="Information about a particular group of entities grouped together for the purposes of netowrk bandwidth reduction or aggregation. Needs manual cleanup. The GED size requires a database lookup. Section 7.8.3 UNFINISHED">
+           comment="5.9.3.1 The IsGroupOf PDU shall communicate information about the individual states of a group of entities, including state information that is necessary for the receiving simulation applications to represent the issuing group of entities in the simulation applications’ own simulation.">
     
         <initialValue name="pduType" value="DISPDUType.ISGROUPOF"/>
      
@@ -186,7 +180,7 @@
 
 
     <class name="IsPartOfPdu" inheritsFrom="EntityManagementFamilyPdu"
-           comment=" The joining of two or more simulation entities is communicated by this PDU. Section 7.8.5">
+           comment="5.9.5 Used to request hierarchical linkage of separately hosted simulation entities">
 
         <initialValue name="pduType" value="DISPDUType.ISPARTOF"/>
  

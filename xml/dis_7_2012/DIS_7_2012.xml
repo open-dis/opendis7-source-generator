@@ -2949,53 +2949,7 @@
   
     </class>
 
-    <!-- End records -->
-
-    <!-- PDUs start here. Everything before this were records that are contained inside of PDUs -->
-  
-    <!--<class name="Pdu" inheritsFrom="root" implements="Marshaller" comment="Base class of PduBase and LiveEntityPdu">-->
-    <class name="Pdu" inheritsFrom="root" comment="Base class of PduBase and LiveEntityPdu">
-       
-        <attribute name="protocolVersion" comment="The version of the protocol. 5=DIS-1995, 6=DIS-1998, 7=DIS-2012"> 
-            <sisoenum type="DISProtocolVersion" comment="uid 3" defaultValue="DISProtocolVersion.IEEE_12781_2012"/>  <!-- DIS 7 -->
-        </attribute>
-  
-        <attribute name="exerciseID" comment="Exercise ID">
-            <primitive type= "uint8" defaultValue="0"/>
-        </attribute>
-  
-        <attribute name="pduType" comment="Type of pdu, unique for each PDU class">
-            <sisoenum type="DISPDUType" comment="uid 4"/> 
-        </attribute>
-  
-        <attribute name="protocolFamily" comment="value that refers to the protocol family, eg SimulationManagement, et">
-            <sisoenum type="DISProtocolFamily" comment="uid 5"/>
-        </attribute>
-  
-        <attribute name="timestamp" comment="Timestamp value">
-            <primitive type="uint32"/>
-        </attribute>
-  
-        <attribute name="length" comment="Length, in bytes, of the PDU">
-            <primitive type="uint16"/>
-        </attribute>    
-        
-    </class>/>
-
-    <class name="PduBase" inheritsFrom="Pdu"
-           comment="The superclass for all PDUs except LiveEntitys. This incorporates the PduHeader record, section 7.2.2">
-
-        <attribute name="pduStatus" comment="PDU Status Record. Described in 6.2.67. This field is not present in earlier DIS versions ">
-           <classref name="PduStatus"/>
-        </attribute>
-
-        <attribute name="padding" comment="zero-filled array of padding">
-            <primitive type="uint8" defaultValue="0"/>
-        </attribute>
-
-    </class>
-
-     <class name="LiveEntityRelativeWorldCoordinates" inheritsFrom="root" comment="16 bit fixed binaries">
+    <class name="LiveEntityRelativeWorldCoordinates" inheritsFrom="root" comment="16 bit fixed binaries">
         
         <attribute name="referencePoint">
             <primitive type="uint16"/>
@@ -3116,6 +3070,51 @@
             <classRef name="LEVector3FixedByte"/>
         </attribute>
         
+    </class>
+    <!-- End records -->
+
+    <!-- PDUs start here. Everything before this were records that are contained inside of PDUs -->
+    <!-- note, should be abstract but can't be due to PduContainer (which hasn't been examined or tested.  Might be a candidate for removal. -->
+  
+    <class name="Pdu" inheritsFrom="root" comment="Base class of PduBase and LiveEntityPdu">
+       
+        <attribute name="protocolVersion" comment="The version of the protocol. 5=DIS-1995, 6=DIS-1998, 7=DIS-2012"> 
+            <sisoenum type="DISProtocolVersion" comment="uid 3" defaultValue="DISProtocolVersion.IEEE_12781_2012"/>  <!-- DIS 7 -->
+        </attribute>
+  
+        <attribute name="exerciseID" comment="Exercise ID">
+            <primitive type= "uint8" defaultValue="0"/>
+        </attribute>
+  
+        <attribute name="pduType" comment="Type of pdu, unique for each PDU class">
+            <sisoenum type="DISPDUType" comment="uid 4"/> 
+        </attribute>
+  
+        <attribute name="protocolFamily" comment="value that refers to the protocol family, eg SimulationManagement, et">
+            <sisoenum type="DISProtocolFamily" comment="uid 5"/>
+        </attribute>
+  
+        <attribute name="timestamp" comment="Timestamp value">
+            <primitive type="uint32"/>
+        </attribute>
+  
+        <attribute name="length" comment="Length, in bytes, of the PDU">
+            <primitive type="uint16"/>
+        </attribute>    
+        
+    </class>/>
+
+    <class name="PduBase" abstract="true" inheritsFrom="Pdu"
+           comment="The superclass for all PDUs except LiveEntitys. This incorporates the PduHeader record, section 7.2.2">
+
+        <attribute name="pduStatus" comment="PDU Status Record. Described in 6.2.67. This field is not present in earlier DIS versions ">
+           <classref name="PduStatus"/>
+        </attribute>
+
+        <attribute name="padding" comment="zero-filled array of padding">
+            <primitive type="uint8" defaultValue="0"/>
+        </attribute>
+
     </class>
 
   <!-- Generic holder of PDUs. This is mostly for XML compatability -->
