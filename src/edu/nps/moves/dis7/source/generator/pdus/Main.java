@@ -55,6 +55,7 @@ public class Main
     public static final String SPECIALCASE = "specialCase";
     public static final String DOMAINHOLDER = "domainHolder";
     public static final String PADTOBOUNDARY = "padtoboundary";
+    public static final String ABSTRACT = "abstract";
     
     public static final String JAVA = "java";
     public static final String CPP = "cpp";
@@ -557,6 +558,10 @@ public class Main
                         
                     case SPECIALCASE:
                         currentGeneratedClass.setSpecialCase(attributes.getValue(idx));
+                        break;
+                        
+                    case ABSTRACT:
+                        currentGeneratedClass.setAbstract(attributes.getValue(idx));
                         break;
                 }
             }

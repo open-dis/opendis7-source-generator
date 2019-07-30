@@ -36,6 +36,9 @@ public class GeneratedClass
     /** Special case for, e.g., enum collection/subclass */
     protected String specialCase;
     
+    /** whether this class should be abstract */
+    protected boolean abstractClass = false;
+    
     /** Constructor */
     public GeneratedClass()
     {
@@ -144,5 +147,15 @@ public class GeneratedClass
     public String getSpecialCase()
     {
         return specialCase;
+    }
+
+    void setAbstract(String tf)
+    {
+        this.abstractClass = Boolean.parseBoolean(tf);
+    }
+    
+    public boolean isAbstract()
+    {
+      return abstractClass;
     }
 }

@@ -137,6 +137,8 @@ public class JavaGenerator extends Generator
     @Override
     public void writeClasses()
     {
+        readTemplates();  // get the license
+        
         this.createDirectory();
 
         Iterator it = classDescriptions.values().iterator();
@@ -186,6 +188,9 @@ public class JavaGenerator extends Generator
      */
     private void writeClass(PrintWriter pw, GeneratedClass aClass)
     {
+        writeLicense(pw,aClass);
+        pw.flush();
+        
         if(aClass.getSpecialCase() != null) {
             writeSpecialCase(pw, aClass);
             return;
@@ -231,6 +236,9 @@ public class JavaGenerator extends Generator
     String domainTemplate1;
     String domainTemplate2;
     String domainTemplate3;
+    String specSource;
+    String license;
+    
     private void writeSpecialCase(PrintWriter pw, GeneratedClass aClass)
     {
         if(aClass.getSpecialCase().equals(Main.DOMAINHOLDER)) {
@@ -240,7 +248,7 @@ public class JavaGenerator extends Generator
     private void writeDomain(PrintWriter pw, GeneratedClass aClass)
     {
         if(domainTemplate1 == null)
-            readDomainTemplates();
+            readTemplates();
         
         pw.println(String.format(domainTemplate1));
         for(ClassAttribute attr : aClass.getClassAttributes()) {
@@ -253,12 +261,14 @@ public class JavaGenerator extends Generator
         pw.close();
     }
     
-    private void readDomainTemplates()
+    private void readTemplates()
     {
         try {
             domainTemplate1 = loadOneTemplate("domainpart1.txt");
             domainTemplate2 = loadOneTemplate("domainpart2.txt");
             domainTemplate3 = loadOneTemplate("domainpart3.txt");
+            specSource      = loadOneTemplate("dis7spec.txt");
+            license         = loadOneTemplate("dis7javalicense.txt");
         }
         catch (Exception ex) {
             throw new RuntimeException(ex);
@@ -269,7 +279,18 @@ public class JavaGenerator extends Generator
     {
         return new String(Files.readAllBytes(Paths.get(getClass().getResource(s).toURI())));
     }
-       
+    
+    /**
+     * Write the license text as a java comment at the top of the file.
+     */
+    
+    private void writeLicense(PrintWriter pw, GeneratedClass aClass)
+    {
+      if(license == null)
+        System.out.println("bp");
+      pw.println(license);
+      pw.println();
+    }
     /**
      * Writes the package and package import code at the top of the Java source file
      *
@@ -295,8 +316,6 @@ public class JavaGenerator extends Generator
         }
 
         pw.println();
-
-        pw.println();
     }
 
     /**
@@ -309,14 +328,10 @@ public class JavaGenerator extends Generator
     {
         // Print class comments header
         pw.println("/**");
-        if (aClass.getClassComments() != null) {
+        if (aClass.getClassComments() != null)
             pw.println(" * " + aClass.getClassComments());
-            pw.println(" *");
-            pw.println(" * Copyright (c) 2008-2019, MOVES Institute, Naval Postgraduate School. All rights reserved.");
-            pw.println(" * This work is licensed under the BSD open source license, available at https://www.movesinstitute.org/licenses/bsd.html");
-            pw.println(" *");
-            pw.println(" * @author DMcG");
-        }
+        
+        pw.println(" * "+specSource);
         pw.println(" */");
     }
 
@@ -332,10 +347,12 @@ public class JavaGenerator extends Generator
         String parentClass = aClass.getParentClass();
         String interfaces = aClass.getInterfaces();
 
+        String abstractcls = aClass.isAbstract() ? "abstract " : "";
+        
         if (parentClass.equalsIgnoreCase("root"))
             parentClass = "Object";
 
-        pw.print("public class " + aClass.getName() + " extends " + parentClass + " implements Serializable");
+        pw.print("public "+ abstractcls + "class " + aClass.getName() + " extends " + parentClass + " implements Serializable");
         if(interfaces != null)
             pw.println(","+interfaces);
         else
