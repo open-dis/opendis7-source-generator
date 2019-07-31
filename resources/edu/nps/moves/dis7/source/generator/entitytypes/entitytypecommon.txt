@@ -10,7 +10,7 @@ import edu.nps.moves.dis.enumerations.*;
  * Entity kind: %s
  * Domain: %s
  *
- * Entity uid: %s
+ * Entity type uid: %s
  */
 public class %s extends EntityType
 {

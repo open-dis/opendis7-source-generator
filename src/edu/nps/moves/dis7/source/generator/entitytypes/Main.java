@@ -458,10 +458,8 @@ public class Main
     {
       DataPkt data = d;
       if (data == null) {
-        data = buildEntityCommon(fixName(currentCategory));
+        data = buildEntityCommon(fixName(currentCategory),currentCategory.uid);
       }
-
-      //appendCategoryStatement(currentCategory, data.sb);
       appendStatement(currentCategory, "Category", data.sb);
 
       if (d == null) {
@@ -473,10 +471,8 @@ public class Main
     {
       DataPkt data = d;
       if (data == null) {
-        data = buildEntityCommon(fixName(currentSubCategory));
+        data = buildEntityCommon(fixName(currentSubCategory), currentSubCategory.uid);
       }
-      //appendCategoryStatement(this.currentCategory, data.sb);
-      //appendSubCategoryStatement(currentSubCategory, data.sb);
       appendStatement(currentCategory, "Category", data.sb);
       appendStatement(currentSubCategory, "SubCategory", data.sb);
 
@@ -488,11 +484,8 @@ public class Main
     {
       DataPkt data = d;
       if (data == null) {
-        data = buildEntityCommon(fixName(currentSpecific));
+        data = buildEntityCommon(fixName(currentSpecific),currentSpecific.uid);
       }
-      //appendCategoryStatement(this.currentCategory, data.sb);
-      //appendSubCategoryStatement(currentSubCategory, data.sb);
-      //appendSpecificStatement(currentSpecific, data.sb);
       appendStatement(currentCategory, "Category", data.sb);
       appendStatement(currentSubCategory, "SubCategory", data.sb);
       appendStatement(currentSpecific, "Specific", data.sb);
@@ -505,12 +498,8 @@ public class Main
     {
       DataPkt data = d;
       if (data == null) {
-        data = buildEntityCommon(fixName(currentExtra));
+        data = buildEntityCommon(fixName(currentExtra),currentExtra.uid);
       }
-      //appendCategoryStatement(this.currentCategory, data.sb);
-      //appendSubCategoryStatement(currentSubCategory, data.sb);
-      //appendSpecificStatement(currentSpecific, data.sb);
-      //appendExtraStatement(currentExtra, data.sb);
       appendStatement(currentCategory, "Category", data.sb);
       appendStatement(currentSubCategory, "SubCategory", data.sb);
       appendStatement(currentSpecific, "Specific", data.sb);
@@ -520,7 +509,7 @@ public class Main
         saveEntityFile(data,currentExtra.uid);
     }
 
-    private DataPkt buildEntityCommon(String fixedName)
+    private DataPkt buildEntityCommon(String fixedName, String uid)
     {
         try {
         DataPkt data = new DataPkt();
@@ -576,7 +565,7 @@ public class Main
         }
 
         data.pkg = pkg;
-        data.entityUid = currentEntity.uid;
+        data.entityUid = uid; //currentEntity.uid;
         data.countryNm = countryNm;
         data.entKindNm = entKindNm;
         data.entKindNmDescription = entKindDescription;
