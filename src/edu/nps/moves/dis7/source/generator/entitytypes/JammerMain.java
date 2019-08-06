@@ -5,8 +5,6 @@
  */
 package edu.nps.moves.dis7.source.generator.entitytypes;
 
-//import edu.nps.moves.dis.enumerations.LandPlatformAppearance;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -19,515 +17,576 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import java.lang.reflect.Method;
+import java.util.List;
+import org.apache.commons.io.FileUtils;
 
 /**
- * Main.java created on Apr 16, 2019 MOVES Institute Naval Postgraduate School, Monterey, CA, USA www.nps.edu
+ * Main.java created on Aug 6, 2019 MOVES Institute Naval Postgraduate School, Monterey, CA, USA www.nps.edu
  *
  * @author Mike Bailey, jmbailey@nps.edu
  * @version $Id$
  */
 public class JammerMain
 {
-    private final File outputDirectory;
-    private final String basePackageName;
-    private final String xmlPath;
+  private final File outputDirectory;
+  private final String basePackageName;
+  private final String xmlPath;
 
-    private String jammerEnumTemplate;
-    private String jammerClassTemplate;
-    private String jammerBaseTemplate;
+  String jammerTechniqueTemplate;
 
-    public JammerMain(String xmlPth, String outputDir, String packageName)
+  class DataPkt
+  {
+    String pkg;
+    File directory;
+    StringBuilder sb;
+    String clsNm;
+  }
+
+  public JammerMain(String xmlPath, String outputDir, String packageName)
+  {
+    this.basePackageName = packageName;
+    this.xmlPath = xmlPath;
+    this.outputDirectory = new File(outputDir);
+  }
+
+  String getDescription(Method enumGetter, Method descriptionGetter, int i) throws Exception
+  {
+    Object enumObj = getEnum(enumGetter, i);
+    return (String) descriptionGetter.invoke(enumObj, (Object[]) null);
+  }
+
+  String getName(Method enumGetter, Method nameGetter, int i) throws Exception
+  {
+    Object enumObj = getEnum(enumGetter, i);
+    return (String) nameGetter.invoke(enumObj, (Object[]) null);
+  }
+
+  Object getEnum(Method enumGetter, int i) throws Exception
+  {
+    return enumGetter.invoke(null, i);
+  }
+
+  private void run() throws SAXException, IOException, ParserConfigurationException
+  {
+    FileUtils.cleanDirectory(outputDirectory);
+
+    SAXParserFactory factory = SAXParserFactory.newInstance();
+    factory.setValidating(false);
+    factory.setNamespaceAware(true);
+    factory.setXIncludeAware(true);
+
+    loadTemplates();
+
+    //System.out.println("Generating jammers: ");
+    factory.newSAXParser().parse(new File(xmlPath), new MyHandler());
+  }
+
+  private void loadTemplates()
+  {
+    try {
+      jammerTechniqueTemplate = loadOneTemplate("jammertechnique.txt");
+    }
+    catch (Exception ex) {
+      throw new RuntimeException(ex);
+    }
+  }
+
+  private String loadOneTemplate(String s) throws Exception
+  {
+    return new String(Files.readAllBytes(Paths.get(getClass().getResource(s).toURI())));
+  }
+
+  class DescriptionElem
+  {
+    String description;
+    String value;
+
+    String pkgFromDescription;
+    String enumFromDescription;
+    ArrayList<DescriptionElem> children = new ArrayList<>();
+  }
+
+  class JammerKindElem extends DescriptionElem
+  {
+    ArrayList<JammerCategoryElem> categories = new ArrayList<>();
+  }
+
+  class JammerCategoryElem extends DescriptionElem
+  {
+    JammerKindElem parent;
+  }
+
+  class JammerSubCategoryElem extends DescriptionElem
+  {
+    JammerCategoryElem parent;
+  }
+
+  class JammerSpecificElem extends DescriptionElem
+  {
+    JammerSubCategoryElem parent;
+  }
+
+  public class MyHandler extends DefaultHandler
+  {
+    ArrayList<JammerKindElem> jammers = new ArrayList<>();
+    JammerKindElem currentKind;
+    JammerCategoryElem currentCategory;
+    JammerSubCategoryElem currentSubCategory;
+    JammerSpecificElem currentSpecific;
+    String specTitleDate = "";
+
+    @Override
+    public void startElement(String uri, String localName, String qName, Attributes attributes)
     {
-        basePackageName = packageName;
-        xmlPath = xmlPth;
-        outputDirectory = new File(outputDir);
+      if (qName.equalsIgnoreCase("revision")) {
+        if (specTitleDate.length() <= 0) // only want the first/latest
+          specTitleDate = legalJavaDoc(attributes.getValue("title") + ", " + attributes.getValue("date"));
+        return;
+      }
 
-        loadFileTemplates();
+      if (attributes.getValue("deprecated") != null)
+        return;
+
+      switch (qName) {
+
+        case "jammer_kind":
+          currentKind = new JammerKindElem();
+          currentKind.value = attributes.getValue("value");
+          currentKind.description = attributes.getValue("description");
+          jammers.add(currentKind);
+          break;
+
+        case "jammer_category":
+          if (currentKind == null)
+            break;
+
+          currentCategory = new JammerCategoryElem();
+          currentCategory.value = attributes.getValue("value");
+          currentCategory.description = attributes.getValue("description");
+          currentCategory.parent = currentKind;
+          setUniquePkgAndEmail(currentCategory, (List) currentKind.categories);
+          currentKind.categories.add(currentCategory);
+          break;
+
+        case "jammer_subcategory":
+          if (currentCategory == null)
+            break;
+          currentSubCategory = new JammerSubCategoryElem();
+          currentSubCategory.value = attributes.getValue("value");
+          currentSubCategory.description = attributes.getValue("description");
+          currentSubCategory.parent = currentCategory;
+          setUniquePkgAndEmail(currentSubCategory, (List) currentCategory.children);
+          currentCategory.children.add(currentSubCategory);
+          break;
+
+        case "jammer_specific":
+          if (currentSubCategory == null)
+            break;
+          currentSpecific = new JammerSpecificElem();
+          currentSpecific.value = attributes.getValue("value");
+          currentSpecific.description = attributes.getValue("description");
+          currentSpecific.parent = currentSubCategory;
+          setUniquePkgAndEmail(currentSpecific, (List) currentSubCategory.children);
+          currentSubCategory.children.add(currentSpecific);
+          break;
+
+        default:
+      }
     }
 
-    private void run() throws SAXException, IOException, ParserConfigurationException
+    @Override
+    public void endElement(String uri, String localName, String qName)
     {
-/*        LandPlatformAppearance e = new LandPlatformAppearance();
-LandPlatformAppearance.Bits en = LandPlatformAppearance.Bits.TRAILING_DUST_CLOUD;
-Class c = en.cls;
-Enum<?> nuts = (Enum<?>)c.getEnumConstants()[0];
-     System.out.println("nuts");   
-*/        
-        MyHandler handler = new MyHandler();
+      try {
+        switch (qName) {
 
-        SAXParserFactory factory = SAXParserFactory.newInstance();
-        factory.setValidating(false);
-        factory.setNamespaceAware(true);
-        factory.setXIncludeAware(true);
-        factory.newSAXParser().parse(new File(xmlPath), handler);
+          case "jammer_kind":
+            if (currentKind != null)
+              writeKindFile(null);
+            currentKind = null;
+            break;
+
+          case "jammer_category":
+            if (currentCategory != null) //might have been deprecated
+              writeCategoryFile(null);
+            currentCategory = null;
+            break;
+
+          case "jammer_subcategory":
+            if (currentSubCategory != null) // might have been deprecated
+              writeSubCategoryFile(null);
+            currentSubCategory = null;
+            break;
+
+          case "jammer_specific":
+            if (currentSpecific != null) // might have been deprecated)
+              writeSpecificFile(null);
+            currentSpecific = null;
+            break;
+
+          default:
+        }
+      }
+      catch (Exception ex) {
+        throw new RuntimeException(ex);
+      }
     }
 
-    private void loadFileTemplates()
+    @Override
+    public void endDocument() throws SAXException
     {
-        try {
-            jammerEnumTemplate = loadOneTemplate("jammerenum.txt");
-            jammerClassTemplate = loadOneTemplate("jammerclass.txt");
-            jammerBaseTemplate = loadOneTemplate("jammerbase.txt");
-        }
-        catch (Exception ex) {
-            throw new RuntimeException(ex);
-        }
     }
 
-    private String loadOneTemplate(String s) throws Exception
+    private void saveJammerFile(DataPkt data)
     {
-        return new String(Files.readAllBytes(Paths.get(getClass().getResource(s).toURI())));
+      data.sb.append("    }\n}\n");
+      saveFile(data.directory, data.clsNm + ".java", data.sb.toString());
     }
 
-    class JammerTechniqueElem
+    private void appendCommonStatements(DataPkt data)
     {
-        String name;
-        String uid;
-        ArrayList<JammerKindElem> kinds = new ArrayList<>();
+      String contents = String.format(jammerTechniqueTemplate, data.pkg,
+        specTitleDate, "284",data.clsNm,data.clsNm);
+      data.sb.append(contents);
     }
 
-    class JammerKindElem
+    private void appendStatement(DescriptionElem elem, String typ, StringBuilder sb)
     {
-        String value;
-        String description;
-        ArrayList<JammerCategoryElem> categories = new ArrayList<>();
+      String template = "        set" + typ + "((byte)%s); // %s\n";
+      sb.append(String.format(template, elem.value, elem.description));
     }
 
-    class JammerCategoryElem
+    private void writeKindFile(DataPkt d)
     {
-        String value;
-        String description;
-        ArrayList<JammerSubCategoryElem> subcategories = new ArrayList<>();
-        JammerKindElem parent;
+      DataPkt data = d;
+      if (data == null) {
+        data = buildJammerCommon(fixName(currentKind), currentKind);
+        appendStatement(currentKind, "Kind", data.sb);
+        saveJammerFile(data);
+      }
     }
 
-    class JammerSubCategoryElem
+    private void writeCategoryFile(DataPkt d)
     {
-        String value;
-        String description;
-        ArrayList<JammerSpecificElem> specifics = new ArrayList<>();
-        JammerCategoryElem parent;
+      DataPkt data = d;
+      if (data == null) {
+        data = buildJammerCommon(fixName(currentCategory), currentCategory);
+      }
+      appendStatement(currentKind, "Kind", data.sb);
+      appendStatement(currentCategory, "Category", data.sb);
+
+      if (d == null) {
+        saveJammerFile(data);
+      }
     }
 
-    class JammerSpecificElem
+    private void writeSubCategoryFile(DataPkt d)
     {
-        String value;
-        String description;
-        JammerSubCategoryElem parent;
+      DataPkt data = d;
+      if (data == null) {
+        data = buildJammerCommon(fixName(currentSubCategory), currentSubCategory);
+      }
+      appendStatement(currentKind, "Kind", data.sb);
+      appendStatement(currentCategory, "Category", data.sb);
+      appendStatement(currentSubCategory, "SubCategory", data.sb);
+
+      if (d == null)
+        saveJammerFile(data);
     }
 
-    public class MyHandler extends DefaultHandler
+    private void writeSpecificFile(DataPkt d) throws Exception
     {
-        JammerTechniqueElem currentTechnique;
-        JammerKindElem currentKind;
-        JammerCategoryElem currentCategory;
-        JammerSubCategoryElem currentSubCategory;
-        JammerSpecificElem currentSpecific;
-
-        //HashSet<String> unhandledElems = new HashSet<>();
-        @Override
-        public void startElement(String uri, String localName, String qName, Attributes attributes)
-        {
-            switch (qName) {
-                case "jammer_technique":
-                    currentTechnique = new JammerTechniqueElem();
-                    currentTechnique.name = attributes.getValue("name");
-                    currentTechnique.uid = attributes.getValue("uid");
-                    break;
-
-                case "jammer_kind":
-                    currentKind = new JammerKindElem();
-                    currentKind.value = attributes.getValue("value");
-                    currentKind.description = attributes.getValue("description");
-                    currentTechnique.kinds.add(currentKind);
-                    break;
-
-                case "jammer_category":
-                    if (currentKind == null)
-                        break;
-                    currentCategory = new JammerCategoryElem();
-                    currentCategory.value = attributes.getValue("value");
-                    currentCategory.description = attributes.getValue("description");
-                    currentCategory.parent = currentKind;
-                    currentKind.categories.add(currentCategory);
-                    break;
-
-                case "jammer_subcategory":
-
-                    if (currentCategory == null)
-                        break;
-                    currentSubCategory = new JammerSubCategoryElem();
-                    currentSubCategory.value = attributes.getValue("value");
-                    currentSubCategory.description = attributes.getValue("description");
-                    currentSubCategory.parent = currentCategory;
-                    currentCategory.subcategories.add(currentSubCategory);
-                    break;
-
-                case "jammer_specific":
-                    if (currentSubCategory == null)
-                        break;
-                    currentSpecific = new JammerSpecificElem();
-                    currentSpecific.value = attributes.getValue("value");
-                    currentSpecific.description = attributes.getValue("description");
-
-                    currentSpecific.parent = currentSubCategory;
-                    currentSubCategory.specifics.add(currentSpecific);
-                    break;
-
-                default:
-                //unhandledElems.add(qName);
-
-            }
-        }
-
-        @Override
-        public void endElement(String uri, String localName, String qName)
-        {
-            try {
-                switch (qName) {
-                    case "jammer_technique":
-                        writeJammerKindFile(currentTechnique);
-                        break;
-
-                    case "jammer_kind":
-                        if (currentKind != null) {
-                            writeBaseClasses(currentKind);
-                            currentKind = null;
-                        }
-                        else
-                            System.out.println("endElement with no current element " + qName);
-                        break;
-
-                    case "jammer_category":
-                        if (currentCategory != null) {
-                            if (currentCategory.subcategories.isEmpty())
-                                writeFile(currentCategory);
-                            else
-                                writeBaseClasses(currentCategory);
-                            currentCategory = null;
-                        }
-                        else
-                            System.out.println("endElement with no current element " + qName);
-                        break;
-
-                    case "jammer_subcategory":
-                        if (currentSubCategory != null) {
-                            if (currentSubCategory.specifics.isEmpty())
-                                writeFile(currentSubCategory);
-                            else
-                                writeBaseClasses(currentSubCategory);
-                            currentSubCategory = null;
-                        }
-                        else
-                            System.out.println("endElement with no current element " + qName);
-                        break;
-
-                    case "jammer_specific":
-                        if (currentSpecific != null) {
-                            writeFile(currentSpecific);
-                            currentSpecific = null;
-                        }
-                        else
-                            System.out.println("endElement with no current element " + qName);
-                        break;
-
-                    default:
-                }
-            }
-            catch (Exception ex) {
-                throw new RuntimeException(ex);
-            }
-        }
-
-        @Override
-        public void endDocument() throws SAXException
-        {
-
-        }
-
-        private void writeJammerKindFile(JammerTechniqueElem elem)
-        {
-            StringBuilder sb = new StringBuilder();
-            for (JammerKindElem kind : elem.kinds) {
-                sb.append("    ");
-                sb.append(fixName(kind.description).toUpperCase());  //todo handle values
-                sb.append(" (");
-                sb.append(kind.value);
-                sb.append(", \"");
-                sb.append(kind.description.replace('"', '\''));
-                sb.append("\"),\n");
-            }
-            sb.setLength(sb.length() - 2);
-
-            String contents = String.format(jammerEnumTemplate, basePackageName, "JammerKind", "JammerKind", sb.toString(), "JammerKind", "JammerKind", "JammerKind", "JammerKind");
-            saveFile(outputDirectory, "JammerKind.java", contents);
-        }
-
-        private void writeBaseClasses(JammerKindElem ent) throws Exception
-        {
-            StringBuilder sb = new StringBuilder();
-            buildPackagePath(ent, sb);
-            File dir = new File(outputDirectory, sb.toString());
-            dir.mkdirs();
-
-            String pkg = basePackageName + "." + pathToPackage(sb.toString());
-            String pkgBackOne = parentPackage(pkg);
-            String kind = fixName(ent.description).toUpperCase();
-
-            String contents = String.format(jammerBaseTemplate, pkg, pkgBackOne, "JammerKind", "edu.nps.moves.dis.JammingTechnique", "Kind", "JammerKind", kind);
-            saveFile(dir, "Base.java", contents);
-
-            sb.setLength(0);
-            for (JammerCategoryElem cat : ent.categories) {
-                sb.append("    ");
-                sb.append(fixName(cat.description).toUpperCase()); //todo handle values
-                sb.append(" (");
-                sb.append(cat.value);
-                sb.append(", \"");
-                sb.append(cat.description.replace('"', '\''));
-                sb.append("\"),\n");
-            }
-            sb.setLength(sb.length() - 2);
-            contents = String.format(jammerEnumTemplate, pkg, "Category", "JammerCategory", sb.toString(), "Category", "Category", "Category", "Category");
-            saveFile(dir, "Category.java", contents);
-        }
-
-        private void writeBaseClasses(JammerCategoryElem cat) throws Exception
-        {
-            StringBuilder sb = new StringBuilder();
-            buildPackagePath(cat, sb);
-            File dir = new File(outputDirectory, sb.toString());
-            dir.mkdirs();
-
-            String pkg = basePackageName + "." + pathToPackage(sb.toString());
-            String pkgBackOne = parentPackage(pkg);
-            String category = fixName(cat.description).toUpperCase();
-
-            String contents = String.format(jammerBaseTemplate, pkg, pkgBackOne, "Category", pkgBackOne + ".Base", "Category", "Category", category);
-            saveFile(dir, "Base.java", contents);
-
-            sb.setLength(0);
-            for (JammerSubCategoryElem sub : cat.subcategories) {
-                sb.append("    ");
-                sb.append(fixName(sub.description).toUpperCase());
-                sb.append(" (");
-                sb.append(sub.value);
-                sb.append(", \"");
-                sb.append(sub.description.replace('"', '\''));
-                sb.append("\"),\n");
-            }
-            sb.setLength(sb.length() - 2);
-
-            contents = String.format(jammerEnumTemplate, pkg, "SubCategory", "JammerSubCategory", sb.toString(), "SubCategory", "SubCategory", "SubCategory", "SubCategory");
-            saveFile(dir, "SubCategory.java", contents);
-        }
-
-        private void writeBaseClasses(JammerSubCategoryElem sub) throws Exception
-        {
-            StringBuilder sb = new StringBuilder();
-            buildPackagePath(sub, sb);
-            File dir = new File(outputDirectory, sb.toString());
-            dir.mkdirs();
-
-            String pkg = basePackageName + "." + pathToPackage(sb.toString());
-            String pkgBackOne = parentPackage(pkg);
-            String subcat = fixName(sub.description).toUpperCase();
-
-            String contents = String.format(jammerBaseTemplate, pkg, pkgBackOne, "SubCategory", pkgBackOne + ".Base", "Subcategory", "SubCategory", subcat);
-            saveFile(dir, "Base.java", contents);
-
-            sb.setLength(0);
-            for (JammerSpecificElem spec : sub.specifics) {
-                sb.append("    ");
-                sb.append(fixName(spec.description).toUpperCase());
-                sb.append(" (");
-                sb.append(spec.value);
-                sb.append(", \"");
-                sb.append(spec.description.replace('"', '\''));
-                sb.append("\"),\n");
-            }
-            sb.setLength(sb.length() - 2);
-
-            contents = String.format(jammerEnumTemplate, pkg, "Specific", "JammerSpecific", sb.toString(), "Specific", "Specific", "Specific", "Specific");
-            saveFile(dir, "Specific.java", contents);
-        }
-
-        private void writeFile(JammerSpecificElem spec) throws Exception
-        {
-            StringBuilder sb = new StringBuilder();
-            buildPackagePath(spec.parent, sb);
-
-            File dir = new File(outputDirectory, sb.toString());
-            dir.mkdirs();
-
-            String pkg = basePackageName + "." + pathToPackage(sb.toString());
-            String classNm = fixName(spec.description);
-            String specEnum = classNm.toUpperCase();
-
-            String contents = String.format(jammerClassTemplate, pkg, classNm, classNm, "Specific", "Specific", specEnum);
-            saveFile(dir, classNm + ".java", contents);
-        }
-
-        private void writeFile(JammerSubCategoryElem spec) throws Exception
-        {
-            StringBuilder sb = new StringBuilder();
-            buildPackagePath(spec.parent, sb);
-
-            File dir = new File(outputDirectory, sb.toString());
-            dir.mkdirs();
-
-            File f = new File(dir, fixName(spec.description) + ".java");
-            f.createNewFile();
-
-            String pkg = basePackageName + "." + pathToPackage(sb.toString());
-            String classNm = fixName(spec.description);
-            String subcatEnum = classNm.toUpperCase();
-
-            String contents = String.format(jammerClassTemplate, pkg, classNm, classNm, "Subcategory", "SubCategory", subcatEnum);  // cap diff not error
-            saveFile(dir, classNm + ".java", contents);
-        }
-
-        private void writeFile(JammerCategoryElem spec) throws Exception
-        {
-            StringBuilder sb = new StringBuilder();
-            buildPackagePath(spec.parent, sb);
-
-            File dir = new File(outputDirectory, sb.toString());
-            dir.mkdirs();
-
-            File f = new File(dir, fixName(spec.description) + ".java");
-            f.createNewFile();
-
-            String pkg = basePackageName + "." + pathToPackage(sb.toString());
-            String classNm = fixName(spec.description);
-            String catEnum = classNm.toUpperCase();
-
-            String contents = String.format(jammerClassTemplate, pkg, classNm, classNm, "Category", "Category", catEnum);
-            saveFile(dir, classNm + ".java", contents);
-        }
-
-        private void saveFile(File parentDir, String name, String contents)
-        {
-            // save file
-            File target = new File(parentDir, name);
-            FileWriter fw = null;
-            try {
-                target.createNewFile();
-                fw = new FileWriter(target);
-                fw.write(contents);
-                fw.flush();
-                fw.close();
-            }
-            catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        }
-
-        private void buildPackagePath(JammerKindElem kind, StringBuilder sb) throws Exception
-        {
-            sb.append(fixName(kind.description));
-            sb.append("/");
-        }
-
-        private void buildPackagePath(JammerCategoryElem cat, StringBuilder sb) throws Exception
-        {
-            buildPackagePath(cat.parent, sb);
-            sb.append(fixName(cat.description));
-            sb.append("/");
-        }
-
-        private void buildPackagePath(JammerSubCategoryElem sub, StringBuilder sb) throws Exception
-        {
-            buildPackagePath(sub.parent, sb);
-            sb.append(fixName(sub.description));
-            sb.append("/");
-        }
-
-        private String buildPackagePath(JammerSpecificElem spec, StringBuilder sb) throws Exception
-        {
-            buildPackagePath(spec.parent, sb);
-            sb.append(fixName(spec.description));
-            sb.append("/");
-            return sb.toString();
-        }
-
-        private String pathToPackage(String s)
-        {
-            s = s.replace("/", ".");
-            if (s.endsWith("."))
-                s = s.substring(0, s.length() - 1);
-            return s;
-        }
-
-        private String parentPackage(String s)
-        {
-            return s.substring(0, s.lastIndexOf('.'));
-        }
-
-        private String fixName(String s)
-        {
-            String r = s.trim();
-            // Convert any of these chars to underbar (u2013 is a hyphen observed in source XML):
-            r = r.replaceAll(" ", "");
-
-            r = r.replaceAll("[\\h-/,\";:\\u2013]", "_");
-
-            // Remove any of these chars (u2019 is an apostrophe observed in source XML):
-            r = r.replaceAll("[()}{}'.#&\\u2019]", "");
-
-            // Special case the plus character:
-            r = r.replace("+", "PLUS");
-
-            // Collapse all contiguous underbars:
-            r = r.replaceAll("_{2,}", "_");
-
-            // If there's nothing there, put in something:
-            if (r.isEmpty() || r.equals("_"))
-                r = "undef";
-
-            // Java identifier can't start with digit
-            if (Character.isDigit(r.charAt(0)))
-                r = "_" + r;
-            return r;
-        }
-
-        String maybeSpecialCase(String s, String dflt)
-        {
-            String lc = s.toLowerCase();
-            if (lc.equals("united states"))
-                return "USA";
-            if (lc.equals("not_used"))
-                return "";
-            return dflt;
-        }
-
-        String smallCountryName(String s, String integ)
-        {
-            if (integ.equals("0"))
-                return "";  // "other
-
-            if (s.length() <= 3)
-                return s;
-            try {
-                s = s.substring(s.indexOf("(") + 1, s.indexOf(")"));
-                if (s.length() > 3) {
-                    return maybeSpecialCase(s, integ);
-                }
-                return s;
-            }
-            catch (Exception ex) {
-                return integ;
-            }
-        }
+      DataPkt data = d;
+      if (data == null) {
+        data = buildJammerCommon(fixName(currentSpecific), currentSpecific);
+      }
+      appendStatement(currentKind, "Kind", data.sb);
+      appendStatement(currentCategory, "Category", data.sb);
+      appendStatement(currentSubCategory, "SubCategory", data.sb);
+      appendStatement(currentSpecific, "Specific", data.sb);
+
+      if (d == null)
+        saveJammerFile(data);
     }
 
-    public static void main(String[] args)
+    private DataPkt buildJammerCommon(String fixedName, DescriptionElem elem)
     {
-        try {
-            new JammerMain(args[0], args[1], args[2]).run();
+      try {
+        DataPkt data = new DataPkt();
+        data.sb = new StringBuilder();
+        buildPackagePathAbstract(elem, data.sb);
+
+        data.directory = new File(outputDirectory, data.sb.toString());
+        data.directory.mkdirs();
+
+        // Protect against duplicate class names
+        int i = 1;
+        while (new File(data.directory, fixedName + ".java").exists()) {
+          fixedName = fixedName + i++;
         }
-        catch (SAXException | IOException | ParserConfigurationException ex) {
-            ex.printStackTrace();
-        }
+
+        String pkg = basePackageName + "." + pathToPackage(data.sb.toString());
+        data.pkg = pkg;
+        data.clsNm = fixedName;
+        data.sb.setLength(0);
+
+        appendCommonStatements(data);
+        return data;
+      }
+      catch (Exception ex) {
+        throw new RuntimeException(ex);
+      }
     }
+  }
+
+  private void saveFile(File parentDir, String name, String contents)
+  {
+    // save file
+    File target = new File(parentDir, name);
+    try {
+      target.createNewFile();
+      try (FileWriter fw = new FileWriter(target)) {
+        fw.write(contents);
+        fw.flush();
+      }
+    }
+    catch (IOException ex) {
+      throw new RuntimeException("Error saving " + name + ": " + ex.getLocalizedMessage(), ex);
+    }
+  }
+
+  private void setUniquePkgAndEmail(DescriptionElem elem, List<DescriptionElem> lis)
+  {
+    String mangledDescription = fixName(elem);
+    mangledDescription = makeUnique(mangledDescription, lis);
+    elem.pkgFromDescription = mangledDescription;
+    elem.enumFromDescription = mangledDescription.toUpperCase();
+  }
+
+  private String makeUnique(String s, List<DescriptionElem> lis)
+  {
+    String news = s;
+    for (int i = 1; i < 1000; i++) {
+      outer:
+      {
+        for (DescriptionElem hd : lis) {
+          if (hd.pkgFromDescription.equalsIgnoreCase(news))
+            break outer;
+        }
+        return news;
+      }
+      news = s + i;
+    }
+    throw new RuntimeException("Problem generating unique name for " + s);
+  }
+
+  private void buildPackagePathAbstract(DescriptionElem elem, StringBuilder sb) throws Exception
+  {
+    if (elem instanceof JammerKindElem)
+      buildPackagePath((JammerKindElem) elem, sb);
+    else if (elem instanceof JammerCategoryElem)
+      buildPackagePath((JammerCategoryElem) elem, sb);
+    else if (elem instanceof JammerSubCategoryElem)
+      buildPackagePath((JammerSubCategoryElem) elem, sb);
+    else if (elem instanceof JammerSpecificElem)
+      buildPackagePath((JammerSpecificElem) elem, sb);
+  }
+
+  private void buildPackagePath(JammerKindElem kind, StringBuilder sb) throws Exception
+  {
+    sb.append(fixName(kind.description));
+    sb.append("/");
+  }
+
+  private void buildPackagePath(JammerCategoryElem cat, StringBuilder sb) throws Exception
+  {
+    buildPackagePath(cat.parent, sb);
+    sb.append(fixName(cat.description));
+    sb.append("/");
+  }
+
+  private void buildPackagePath(JammerSubCategoryElem sub, StringBuilder sb) throws Exception
+  {
+    buildPackagePath(sub.parent, sb);
+    sb.append(fixName(sub.description));
+    sb.append("/");
+  }
+
+  private void buildPackagePath(JammerSpecificElem spec, StringBuilder sb) throws Exception
+  {
+    buildPackagePath(spec.parent, sb);
+    sb.append(fixName(spec.description));
+    sb.append("/");
+    //return sb.toString();
+  }
+
+  private String pathToPackage(String s)
+  {
+    s = s.replace("/", ".");
+    if (s.endsWith("."))
+      s = s.substring(0, s.length() - 1);
+    return s;
+  }
+
+  String maybeSpecialCase(String s, String dflt)
+  {
+    String lc = s.toLowerCase();
+    if (lc.equals("united states"))
+      return "USA";
+    if (lc.equals("not_used"))
+      return "";
+    return dflt;
+  }
+
+  String smallCountryName(String s, String integ)
+  {
+    if (integ.equals("0"))
+      return "";  // "other
+
+    if (s.length() <= 3)
+      return s;
+    try {
+      s = s.substring(s.indexOf("(") + 1, s.indexOf(")"));
+      if (s.length() > 3) {
+        return maybeSpecialCase(s, integ);
+      }
+      return s;
+    }
+    catch (Exception ex) {
+      return integ;
+    }
+  }
+
+  private void printUnsupportedMessage(String elname, String eldesc, JammerCategoryElem cat)
+  {
+    StringBuilder bldr = new StringBuilder();
+    bldr.append(cat.description);
+
+    System.out.println("XML element " + elname + " {" + eldesc + "in " + bldr.toString() + " not supported");
+  }
+
+  private void printUnsupportedMessage(String elname, String eldesc, JammerSubCategoryElem sub)
+  {
+    StringBuilder bldr = new StringBuilder();
+    bldr.append(sub.description);
+    bldr.append("/");
+    bldr.append(sub.parent.description);
+
+    System.out.println("XML element " + elname + " {" + eldesc + "in " + bldr.toString() + " not supported");
+  }
+
+  private String legalJavaDoc(String s)
+  {
+    s = s.replace("<", "&lt;");
+    s = s.replace(">", "&gt;");
+    s = s.replace("&", "&amp;");
+    return s;
+  }
+
+  private String tryParent(DescriptionElem elem)
+  {
+    if (elem instanceof JammerSpecificElem)
+      return fixName(((JammerSpecificElem) elem).parent.description);
+
+    if (elem instanceof JammerSubCategoryElem)
+      return fixName(((JammerSubCategoryElem) elem).parent.description);
+
+    if (elem instanceof JammerCategoryElem)
+      return fixName(((JammerCategoryElem) elem).parent.description);
+
+    return null;
+  }
+
+  private String makeNonNumeric(DescriptionElem elem, String s)
+  {
+    if (s.startsWith("_"))
+      s = s.substring(1);
+
+    while (isNumeric(s)) {
+      String p = tryParent(elem);
+      if (p == null)
+        return "_" + s;
+      s = p + "_" + s;
+    }
+    return s;
+  }
+
+  private boolean isNumeric(String s)
+  {
+    try {
+      int i = Integer.parseInt(s);
+      return true;
+    }
+    catch (Throwable t) {
+      return false;
+    }
+  }
+
+  private String fixName(DescriptionElem elem)
+  {
+    String r = fixName(elem.description);
+    if (isNumeric(r) | isNumeric(r.substring(1))) {
+      r = makeNonNumeric(elem, r);
+    }
+    return r;
+  }
+
+  private String fixName(String s)
+  {
+    String r = s.trim();
+
+    // Convert any of these chars to underbar (u2013 is a hyphen observed in source XML):
+    r = r.replaceAll(" ", "");
+
+    r = r.replaceAll("[\\h-/,\";:\\u2013]", "_");
+
+    // Remove any of these chars (u2019 is an apostrophe observed in source XML):
+    r = r.replaceAll("[\\[\\]()}{}'.#&\\u2019]", "");
+
+    // Special case the plus character:
+    r = r.replace("+", "PLUS");
+
+    // Collapse all contiguous underbars:
+    r = r.replaceAll("_{2,}", "_");
+
+    r = r.replace("<=", "LTE");
+    r = r.replace("<", "LT");
+    r = r.replace(">=", "GTE");
+    r = r.replace(">", "GT");
+    r = r.replace("=", "EQ");
+    r = r.replace("%", "pct");
+
+    // If there's nothing there, put in something:
+    if (r.isEmpty() || r.equals("_"))
+      r = "undef";
+
+    // Java identifier can't start with digit
+    if (Character.isDigit(r.charAt(0)))
+      r = "_" + r;
+    //System.out.println("In: "+s+" out: "+r);
+    return r;
+  }
+
+  /*
+  private String xmlPath = "xml/SISO/SISO_REF_010_v25/SISO_REF_010.xml";
+  private File outputDirectory = new File("src-generated/java/edu/nps/moves/dis/jammers");
+  private String basePackageName = "edu.nps.moves.dis.jammers";
+  */
+  public static void main(String[] args)
+  {
+    try {
+      if(args == null || args.length != 3)
+        new JammerMain(
+          "xml/SISO/SISO_REF_010_v25/SISO_REF_010.xml",
+          "src-generated/java/edu/nps/moves/dis/jammers",
+          "edu.nps.moves.dis.jammers"
+          ).run();
+      else
+        new JammerMain(args[0], args[1], args[2]).run();
+    }
+    catch (SAXException | IOException | ParserConfigurationException ex) {
+      System.err.println(ex.getClass().getSimpleName() + ": " + ex.getLocalizedMessage());
+    }
+  }
 }

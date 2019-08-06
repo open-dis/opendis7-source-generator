@@ -1728,28 +1728,8 @@
         </attribute>
      
     </class>
-
-    <class name="JammingTechnique" inheritsFrom="root" comment="Jamming technique. Section 6.2.49, uid 284">
-
-        <attribute name="kind">
-            <classRef name="JammerKind" defaultValue="edu.nps.moves.dis.jammers.JammerKind.DECEPTIONANDNOISE"/>
-        </attribute>
-     
-        <attribute name="category">
-            <classRef name="JammerCategory" defaultValue="edu.nps.moves.dis.jammers.DeceptionandNoise.Category.GATESTEALERANDNOISE"/>
-        </attribute>
-     
-        <attribute name="subcategory">
-            <classRef name="JammerSubCategory" defaultValue="edu.nps.moves.dis.jammers.DeceptionandNoise.GateStealerandNoise.SubCategory.NOISEANDVGPO"/>
-        </attribute>
-     
-        <attribute name="specific">
-            <classRef name="JammerSpecific" defaultValue="edu.nps.moves.dis.jammers.DeceptionandNoise.GateStealerandNoise.NoiseandVGPO.Specific.LOWLEVELNOISEANDVGPO"/>
-        </attribute>
-
-    </class>
     
-    <class name="JammingTechniqueRaw" inheritsFrom="root" comment="Jamming technique. Section 6.2.49, uid 284">
+    <class name="JammingTechnique" inheritsFrom="root" comment="Jamming technique. Section 6.2.49, uid 284">
 
         <attribute name="kind">
             <primitive type="uint8"/>
