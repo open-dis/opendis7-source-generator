@@ -2047,7 +2047,7 @@
             <primitive type="uint8"/>
         </attribute>
     
-        <attribute name="subcategory" comment="subcategory of entity">
+        <attribute name="subCategory" comment="subcategory of entity">
             <primitive type="uint8"/>
         </attribute>
 

@@ -50,23 +50,6 @@ public class JammerMain
     this.outputDirectory = new File(outputDir);
   }
 
-  String getDescription(Method enumGetter, Method descriptionGetter, int i) throws Exception
-  {
-    Object enumObj = getEnum(enumGetter, i);
-    return (String) descriptionGetter.invoke(enumObj, (Object[]) null);
-  }
-
-  String getName(Method enumGetter, Method nameGetter, int i) throws Exception
-  {
-    Object enumObj = getEnum(enumGetter, i);
-    return (String) nameGetter.invoke(enumObj, (Object[]) null);
-  }
-
-  Object getEnum(Method enumGetter, int i) throws Exception
-  {
-    return enumGetter.invoke(null, i);
-  }
-
   private void run() throws SAXException, IOException, ParserConfigurationException
   {
     FileUtils.cleanDirectory(outputDirectory);
@@ -129,7 +112,6 @@ public class JammerMain
 
   public class MyHandler extends DefaultHandler
   {
-    ArrayList<JammerKindElem> jammers = new ArrayList<>();
     JammerKindElem currentKind;
     JammerCategoryElem currentCategory;
     JammerSubCategoryElem currentSubCategory;
@@ -154,7 +136,6 @@ public class JammerMain
           currentKind = new JammerKindElem();
           currentKind.value = attributes.getValue("value");
           currentKind.description = attributes.getValue("description");
-          jammers.add(currentKind);
           break;
 
         case "jammer_category":
@@ -165,7 +146,7 @@ public class JammerMain
           currentCategory.value = attributes.getValue("value");
           currentCategory.description = attributes.getValue("description");
           currentCategory.parent = currentKind;
-          setUniquePkgAndEmail(currentCategory, (List) currentKind.categories);
+          setUniquePkgAndEmnum(currentCategory, (List) currentKind.categories);
           currentKind.categories.add(currentCategory);
           break;
 
@@ -176,7 +157,7 @@ public class JammerMain
           currentSubCategory.value = attributes.getValue("value");
           currentSubCategory.description = attributes.getValue("description");
           currentSubCategory.parent = currentCategory;
-          setUniquePkgAndEmail(currentSubCategory, (List) currentCategory.children);
+          setUniquePkgAndEmnum(currentSubCategory, (List) currentCategory.children);
           currentCategory.children.add(currentSubCategory);
           break;
 
@@ -187,7 +168,7 @@ public class JammerMain
           currentSpecific.value = attributes.getValue("value");
           currentSpecific.description = attributes.getValue("description");
           currentSpecific.parent = currentSubCategory;
-          setUniquePkgAndEmail(currentSpecific, (List) currentSubCategory.children);
+          setUniquePkgAndEmnum(currentSpecific, (List) currentSubCategory.children);
           currentSubCategory.children.add(currentSpecific);
           break;
 
@@ -356,7 +337,7 @@ public class JammerMain
     }
   }
 
-  private void setUniquePkgAndEmail(DescriptionElem elem, List<DescriptionElem> lis)
+  private void setUniquePkgAndEmnum(DescriptionElem elem, List<DescriptionElem> lis)
   {
     String mangledDescription = fixName(elem);
     mangledDescription = makeUnique(mangledDescription, lis);
