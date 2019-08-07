@@ -1739,7 +1739,7 @@
             <primitive type="uint8"/>
         </attribute>
      
-        <attribute name="subcategory">
+        <attribute name="subCategory">
             <primitive type="uint8"/>
         </attribute>
      

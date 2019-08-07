@@ -57,8 +57,13 @@ public abstract class Generator
     {
         System.out.println("creating directory");
         System.out.println("directory=" + this.getDirectory());
-        boolean success = (new File(this.getDirectory())).mkdirs();
+        File dir = new File(this.getDirectory());
+        boolean success = dir.mkdirs();
         
+        System.out.println("cleaning directory");
+        for(File f : dir.listFiles())
+          if(!f.isDirectory() && !f.getName().equals(".keep") && !f.getName().equals("README.md"))
+            f.delete();
     }
 
     /**

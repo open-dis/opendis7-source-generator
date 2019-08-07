@@ -16,6 +16,7 @@ import java.util.HashSet;
 import java.util.Properties;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
+import org.apache.commons.io.FileUtils;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -68,6 +69,7 @@ public class Main
 
     private void run() throws SAXException, IOException, ParserConfigurationException
     {
+        FileUtils.cleanDirectory(outputDirectory);
         // Manual:
         uid2ClassName = new Properties();
         uid2ClassName.load(getClass().getResourceAsStream("Uid2ClassName.properties"));
