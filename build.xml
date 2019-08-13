@@ -84,6 +84,7 @@
                                              package-dis7-entities-usa-surface-jar,
                                              package-dis7-source-jar"/>
     
+    <!-- done in open-dis7-java project
     <target name="package-dis7-source-jar">
         <local name="store.jar.name"/>
         <local name="store.dir"/>
@@ -110,8 +111,9 @@
                 <attribute name="Implementation-Vendor" value="Naval Postgraduate School"/>
             </manifest>
         </jar>
-    </target>
+    </target> -->
     
+    <!-- done in open-dis7-java project 
     <target name="package-dis7-class-jar">
         <local name="store.jar.name"/>
         <local name="store.dir"/>
@@ -139,7 +141,7 @@
             </manifest>
         </jar>
     </target>
-    
+    -->
     <target name="package-dis7-entities-all-jar">
         <local name="store.jar.name"/>
         <local name="store.dir"/>
