@@ -3,7 +3,7 @@
  * This work is licensed under the BSD open source license, available at https://www.movesinstitute.org/licenses/bsd.html
  */
 
-package edu.nps.moves.dis;
+package edu.nps.moves.dis7;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

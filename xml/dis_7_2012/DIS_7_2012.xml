@@ -24,9 +24,9 @@
         annotations here are used only by XMLPG, the source code generation tool.
     -->
 <!--, edu.nps.moves.disenum.*, edu.nps.moves.disutil.*"-->
-    <java imports="java.util.*, java.io.*, edu.nps.moves.dis.enumerations.*"
-          package="edu.nps.moves.dis"
-          directory="main/java/edu/nps/moves/dis"/>
+    <java imports="java.util.*, java.io.*, edu.nps.moves.dis7.enumerations.*"
+          package="edu.nps.moves.dis7"
+          directory="main/java/edu/nps/moves/dis7"/>
 
     <!-- csharp langauge specific packages. These are added information for xmlpg -->
 

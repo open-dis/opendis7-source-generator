@@ -1,6 +1,6 @@
-package edu.nps.moves.dis.entities;
+package edu.nps.moves.dis7.entities;
 
-import edu.nps.moves.dis.EntityType;
+import edu.nps.moves.dis7.EntityType;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Constructor;

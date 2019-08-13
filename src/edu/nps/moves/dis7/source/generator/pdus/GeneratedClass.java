@@ -27,6 +27,9 @@ public class GeneratedClass
     /** parent class */
     protected String parentClass;
     
+    /** alias for class */
+    protected String aliasFor;
+    
     /** interfaces */
     protected String interfaces;
     
@@ -157,5 +160,15 @@ public class GeneratedClass
     public boolean isAbstract()
     {
       return abstractClass;
+    }
+
+    public void setAliasFor(String aliasFor)
+    {
+      this.aliasFor = aliasFor;
+    }
+    
+    public String getAliasFor()
+    {
+      return aliasFor;
     }
 }

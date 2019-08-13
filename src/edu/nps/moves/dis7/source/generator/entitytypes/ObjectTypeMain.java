@@ -592,19 +592,14 @@ public class ObjectTypeMain
     return r;
   }
 
-  /*
-  private String xmlPath = "xml/SISO/SISO_REF_010_v25/SISO_REF_010.xml";
-  private File outputDirectory = new File("src-generated/java/edu/nps/moves/dis/jammers");
-  private String basePackageName = "edu.nps.moves.dis.jammers";
-  */
   public static void main(String[] args)
   {
     try {
       if(args == null || args.length != 3)
         new ObjectTypeMain(
           "xml/SISO/SISO_REF_010_v25/SISO_REF_010.xml",
-          "src-generated/java/edu/nps/moves/dis/objecttypes",
-          "edu.nps.moves.dis.objecttypes"
+          "src-generated/java/edu/nps/moves/dis7/objecttypes",
+          "edu.nps.moves.dis7.objecttypes"
           ).run();
       else
         new ObjectTypeMain(args[0], args[1], args[2]).run();

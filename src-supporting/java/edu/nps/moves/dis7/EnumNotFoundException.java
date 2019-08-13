@@ -3,14 +3,15 @@
  * This work is licensed under the BSD open source license, available at https://www.movesinstitute.org/licenses/bsd.html
  */
 
-package edu.nps.moves.dis;
+package edu.nps.moves.dis7;
 
 /**
- * Category.java created on May 7, 2019
- * Marker interface to polymorphize category field in Pdus
+ * EnumNotFoundException.java created on Apr 15, 2019
  */
-public interface Category
+public class EnumNotFoundException extends Exception
 {
-    int getValue();
-    String getDescription();
+  public EnumNotFoundException (String s)
+  {
+      super(s);
+  }
 }

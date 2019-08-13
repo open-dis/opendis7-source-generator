@@ -5,10 +5,10 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import edu.nps.moves.dis.*;
+import edu.nps.moves.dis7.*;
 
 /* marshal size 8 bits*/
-public enum %s implements edu.nps.moves.dis.%s
+public enum %s implements edu.nps.moves.dis7.%s
 {
 %s;
 

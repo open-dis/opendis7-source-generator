@@ -3,10 +3,10 @@
  * This work is licensed under the BSD open source license, available at https://www.movesinstitute.org/licenses/bsd.html
  */
 
-package edu.nps.moves.dis.util;
+package edu.nps.moves.dis7.util;
 
-import edu.nps.moves.dis.*;
-import edu.nps.moves.dis.enumerations.*;
+import edu.nps.moves.dis7.*;
+import edu.nps.moves.dis7.enumerations.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.ByteBuffer;
@@ -415,15 +415,15 @@ public class PduFactory
     return (CommentPdu) addBoilerPlate(pdu);
   }
 
-  public ElectronicEmissionsPdu makeElectronicEmissionsPdu()
+  public ElectromagneticEmissionPdu makeElectromagneticEmissionPdu()
   {
-    ElectronicEmissionsPdu pdu = new ElectronicEmissionsPdu()
+    ElectromagneticEmissionPdu pdu = new ElectromagneticEmissionPdu()
       .setEmittingEntityID(newEntityID())
       .setEventID(newEventIdentifier());
     /*
             .setStateUpdateIndicator(ElectromagneticEmissionStateUpdateIndicator.HEARTBEAT_UPDATE)
      */
-    return (ElectronicEmissionsPdu) addBoilerPlate(pdu);
+    return (ElectromagneticEmissionPdu) addBoilerPlate(pdu);
   }
 
   public DesignatorPdu makeDesignatorPdu()
@@ -480,9 +480,9 @@ public class PduFactory
     return (ReceiverPdu) addBoilerPlate(pdu);
   }
 
-  public IffPdu makeIffPdu()
+  public IFFPdu makeIffPdu()
   {
-    IffPdu pdu = new IffPdu()
+    IFFPdu pdu = new IFFPdu()
       .setEmittingEntityId(newEntityID())
       .setEventID(newEventIdentifier());
     /*
@@ -491,7 +491,7 @@ public class PduFactory
             .setSystemID(newSystemIdentifier())
      */
 
-    return (IffPdu) addBoilerPlate(pdu);
+    return (IFFPdu) addBoilerPlate(pdu);
   }
 
   public UnderwaterAcousticPdu makeUnderwaterAcousticPdu()
@@ -506,11 +506,11 @@ public class PduFactory
     return (UnderwaterAcousticPdu) addBoilerPlate(pdu);
   }
 
-  public SeesPdu makeSeesPdu()
+  public SEESPdu makeSeesPdu()
   {
-    SeesPdu pdu = new SeesPdu();
+    SEESPdu pdu = new SEESPdu();
 
-    return (SeesPdu) addBoilerPlate(pdu);
+    return (SEESPdu) addBoilerPlate(pdu);
   }
 
   public IntercomSignalPdu makeIntercomSignalPdu()
@@ -625,11 +625,11 @@ public class PduFactory
     return (MinefieldDataPdu) addBoilerPlate(pdu);
   }
 
-  public MinefieldResponseNackPdu makeMinefieldResponseNackPdu()
+  public MinefieldResponseNACKPdu makeMinefieldResponseNACKPdu()
   {
-    MinefieldResponseNackPdu pdu = new MinefieldResponseNackPdu();
+    MinefieldResponseNACKPdu pdu = new MinefieldResponseNACKPdu();
 
-    return (MinefieldResponseNackPdu) addBoilerPlate(pdu);
+    return (MinefieldResponseNACKPdu) addBoilerPlate(pdu);
   }
 
   public EnvironmentalProcessPdu makeEnvironmentalProcessPdu()
@@ -700,9 +700,9 @@ public class PduFactory
     return (ArealObjectStatePdu) addBoilerPlate(pdu);
   }
 
-  public TspiPdu makeTspiPdu()
+  public TSPIPdu makeTSPIPdu()
   {
-    TspiPdu pdu = new TspiPdu()
+    TSPIPdu pdu = new TSPIPdu()
       .setLiveEntityId(newEntityID());
     /*
             .setDeadReckoningParameters(newLiveDeadReckoningParameters())
@@ -712,7 +712,7 @@ public class PduFactory
             .setOrientationError(new LiveEntityOrientationError())
             .setPositionError(new LiveEntityPositionError())*/;
     pdu.setSubprotocolNumber(DISLiveEntitySubprotocolNumber.NO_SUBPROTOCOL);
-    return (TspiPdu) addBoilerPlate(pdu);
+    return (TSPIPdu) addBoilerPlate(pdu);
   }
 
   public AppearancePdu makeAppearancePdu()
@@ -772,156 +772,156 @@ public class PduFactory
     return (LEDetonationPdu) addBoilerPlate(pdu);
   }
 
-  public CreateEntityReliablePdu makeCreateEntityReliablePdu()
+  public CreateEntityRPdu makeCreateEntityRPdu()
   {
-    CreateEntityReliablePdu pdu = new CreateEntityReliablePdu();
+    CreateEntityRPdu pdu = new CreateEntityRPdu();
     /*
             .setRequiredReliabilityService(RequiredReliabilityService.ACKNOWLEDGED);
      */
     pdu.setOriginatingID(newSimulationIdentifier())
       .setReceivingID(newSimulationIdentifier());
-    return (CreateEntityReliablePdu) addBoilerPlate(pdu);
+    return (CreateEntityRPdu) addBoilerPlate(pdu);
   }
 
-  public RemoveEntityReliablePdu makeRemoveEntityReliablePdu()
+  public RemoveEntityRPdu makeRemoveEntityRPdu()
   {
-    RemoveEntityReliablePdu pdu = new RemoveEntityReliablePdu();
+    RemoveEntityRPdu pdu = new RemoveEntityRPdu();
     /*
             .setRequiredReliabilityService(RequiredReliabilityService.ACKNOWLEDGED)
      */
-    return (RemoveEntityReliablePdu) addBoilerPlate(pdu);
+    return (RemoveEntityRPdu) addBoilerPlate(pdu);
   }
 
-  public StartResumeReliablePdu makeStartResumeReliablePdu()
+  public StartResumeRPdu makeStartResumeRPdu()
   {
-    StartResumeReliablePdu pdu = new StartResumeReliablePdu();
+    StartResumeRPdu pdu = new StartResumeRPdu();
     /*
             .setRealWorldTime(new ClockTime())
             .setRequiredReliabilityService(RequiredReliabilityService.ACKNOWLEDGED)
             .setSimulationTime(new ClockTime())
      */
-    return (StartResumeReliablePdu) addBoilerPlate(pdu);
+    return (StartResumeRPdu) addBoilerPlate(pdu);
   }
 
-  public StopFreezeReliablePdu makeStopFreezeReliablePdu()
+  public StopFreezeRPdu makeStopFreezeRPdu()
   {
-    StopFreezeReliablePdu pdu = new StopFreezeReliablePdu();
+    StopFreezeRPdu pdu = new StopFreezeRPdu();
     /*
             .setFrozenBehavior(new StopFreezeFrozenBehavior())
             .setRealWorldTime(new ClockTime())
             .setReason(StopFreezeReason.OTHER)
             .setRequiredReliablityService(RequiredReliabilityService.ACKNOWLEDGED)
      */
-    return (StopFreezeReliablePdu) addBoilerPlate(pdu);
+    return (StopFreezeRPdu) addBoilerPlate(pdu);
   }
 
-  public AcknowledgeReliablePdu makeAcknowledgeReliablePdu()
+  public AcknowledgeRPdu makeAcknowledgeRPdu()
   {
-    AcknowledgeReliablePdu pdu = new AcknowledgeReliablePdu();
+    AcknowledgeRPdu pdu = new AcknowledgeRPdu();
     pdu.setOriginatingID(newSimulationIdentifier());
     /*
             .setAcknowledgeFlag(AcknowledgeAcknowledgeFlag.CREATE_ENTITY)
             .setResponseFlag(AcknowledgeResponseFlag.OTHER);
             .setPduStatus((byte)0)
      */
-    return (AcknowledgeReliablePdu) addBoilerPlate(pdu);
+    return (AcknowledgeRPdu) addBoilerPlate(pdu);
   }
 
-  public ActionRequestReliablePdu makeActionRequestReliablePdu()
+  public ActionRequestRPdu makeActionRequestRPdu()
   {
-    ActionRequestReliablePdu pdu = new ActionRequestReliablePdu();
+    ActionRequestRPdu pdu = new ActionRequestRPdu();
     /*
             .setActionID(ActionRequestActionID.OTHER)
             .setRequiredReliabilityService(RequiredReliabilityService.ACKNOWLEDGED)
      */
-    return (ActionRequestReliablePdu) addBoilerPlate(pdu);
+    return (ActionRequestRPdu) addBoilerPlate(pdu);
   }
 
-  public ActionResponseReliablePdu makeActionResponseReliablePdu()
+  public ActionResponseRPdu makeActionResponseRPdu()
   {
-    ActionResponseReliablePdu pdu = new ActionResponseReliablePdu();
+    ActionResponseRPdu pdu = new ActionResponseRPdu();
     /*
             .setResponseStatus(ActionResponseRequestStatus.OTHER)
      */
-    return (ActionResponseReliablePdu) addBoilerPlate(pdu);
+    return (ActionResponseRPdu) addBoilerPlate(pdu);
   }
 
-  public DataQueryReliablePdu makeDataQueryReliablePdu()
+  public DataQueryRPdu makeDataQueryRPdu()
   {
-    DataQueryReliablePdu pdu = new DataQueryReliablePdu();
+    DataQueryRPdu pdu = new DataQueryRPdu();
     pdu.setOriginatingID(new SimulationIdentifier());
     pdu.setReceivingID(newSimulationIdentifier());
     /*
             .setRequiredReliabilityService(RequiredReliabilityService.ACKNOWLEDGED);
      */
-    return (DataQueryReliablePdu) addBoilerPlate(pdu);
+    return (DataQueryRPdu) addBoilerPlate(pdu);
   }
 
-  public SetDataReliablePdu makeSetDataReliablePdu()
+  public SetDataRPdu makeSetDataRPdu()
   {
-    SetDataReliablePdu pdu = new SetDataReliablePdu();
+    SetDataRPdu pdu = new SetDataRPdu();
     pdu.setReceivingID(newSimulationIdentifier());
     pdu.setOriginatingID(newSimulationIdentifier());
     /*
             .setRequiredReliabilityService(RequiredReliabilityService.ACKNOWLEDGED);
      */
-    return (SetDataReliablePdu) addBoilerPlate(pdu);
+    return (SetDataRPdu) addBoilerPlate(pdu);
   }
 
-  public DataReliablePdu makeDataReliablePdu()
+  public DataRPdu makeDataRPdu()
   {
-    DataReliablePdu pdu = new DataReliablePdu();
+    DataRPdu pdu = new DataRPdu();
     pdu.setOriginatingID(newSimulationIdentifier());
     pdu.setReceivingID(newSimulationIdentifier());
     /*
             .setRequiredReliabilityService(RequiredReliabilityService.ACKNOWLEDGED);
      */
-    return (DataReliablePdu) addBoilerPlate(pdu);
+    return (DataRPdu) addBoilerPlate(pdu);
   }
 
-  public EventReportReliablePdu makeEventReportReliablePdu()
+  public EventReportRPdu makeEventReportRPdu()
   {
-    EventReportReliablePdu pdu = new EventReportReliablePdu();
+    EventReportRPdu pdu = new EventReportRPdu();
     /*
             .setEventType(EventReportEventType.OTHER)
      */
-    return (EventReportReliablePdu) addBoilerPlate(pdu);
+    return (EventReportRPdu) addBoilerPlate(pdu);
   }
 
-  public CommentReliablePdu makeCommentReliablePdu()
+  public CommentRPdu makeCommentRPdu()
   {
-    CommentReliablePdu pdu = new CommentReliablePdu();
+    CommentRPdu pdu = new CommentRPdu();
 
-    return (CommentReliablePdu) addBoilerPlate(pdu);
+    return (CommentRPdu) addBoilerPlate(pdu);
   }
 
-  public RecordReliablePdu makeRecordReliablePdu()
+  public RecordRPdu makeRecordRPdu()
   {
-    RecordReliablePdu pdu = new RecordReliablePdu();
+    RecordRPdu pdu = new RecordRPdu();
     /*
             .setEventType(RecordREventType.OTHER)
             .setRequiredReliabilityService(RequiredReliabilityService.ACKNOWLEDGED)
      */
-    return (RecordReliablePdu) addBoilerPlate(pdu);
+    return (RecordRPdu) addBoilerPlate(pdu);
   }
 
-  public SetRecordReliablePdu makeSetRecordReliablePdu()
+  public SetRecordRPdu makeSetRecordRPdu()
   {
-    SetRecordReliablePdu pdu = new SetRecordReliablePdu();
+    SetRecordRPdu pdu = new SetRecordRPdu();
     /*
             .setRequiredReliabilityService(RequiredReliabilityService.ACKNOWLEDGED)
      */
-    return (SetRecordReliablePdu) addBoilerPlate(pdu);
+    return (SetRecordRPdu) addBoilerPlate(pdu);
   }
 
-  public RecordQueryReliablePdu makeRecordQueryReliablePdu()
+  public RecordQueryRPdu makeRecordQueryReliablePdu()
   {
-    RecordQueryReliablePdu pdu = new RecordQueryReliablePdu();
+    RecordQueryRPdu pdu = new RecordQueryRPdu();
     /*
             .setEventType(RecordQueryREventType.PERIODIC)
             .setRequiredReliabilityService(RequiredReliabilityService.ACKNOWLEDGED)
      */
-    return (RecordQueryReliablePdu) addBoilerPlate(pdu);
+    return (RecordQueryRPdu) addBoilerPlate(pdu);
   }
 
   public CollisionElasticPdu makeCollisionElasticPdu()
@@ -1149,7 +1149,7 @@ public class PduFactory
         break;
 
       case ELECTROMAGNETIC_EMISSION:
-        aPdu = new ElectronicEmissionsPdu();
+        aPdu = new ElectromagneticEmissionPdu();
         break;
 
       case DESIGNATOR:
@@ -1169,7 +1169,7 @@ public class PduFactory
         break;
 
       case IFF:
-        aPdu = new IffPdu();
+        aPdu = new IFFPdu();
         break;
 
       case UNDERWATER_ACOUSTIC:
@@ -1177,7 +1177,7 @@ public class PduFactory
         break;
 
       case SUPPLEMENTAL_EMISSION_ENTITY_STATE:
-        aPdu = new SeesPdu();
+        aPdu = new SEESPdu();
         break;
 
       case INTERCOM_SIGNAL:
@@ -1217,7 +1217,7 @@ public class PduFactory
         break;
 
       case MINEFIELD_RESPONSE_NACK:
-        aPdu = new MinefieldResponseNackPdu();
+        aPdu = new MinefieldResponseNACKPdu();
         break;
 
       case ENVIRONMENTAL_PROCESS:
@@ -1241,7 +1241,7 @@ public class PduFactory
         break;
 
       case TSPI:
-        aPdu = new TspiPdu();
+        aPdu = new TSPIPdu();
         break;
 
       case APPEARANCE:
@@ -1261,63 +1261,63 @@ public class PduFactory
         break;
 
       case CREATE_ENTITY_R:
-        aPdu = new CreateEntityReliablePdu();
+        aPdu = new CreateEntityRPdu();
         break;
 
       case REMOVE_ENTITY_R:
-        aPdu = new RemoveEntityReliablePdu();
+        aPdu = new RemoveEntityRPdu();
         break;
 
       case START_RESUME_R:
-        aPdu = new StartResumeReliablePdu();
+        aPdu = new StartResumeRPdu();
         break;
 
       case STOP_FREEZE_R:
-        aPdu = new StopFreezeReliablePdu();
+        aPdu = new StopFreezeRPdu();
         break;
 
       case ACKNOWLEDGE_R:
-        aPdu = new AcknowledgeReliablePdu();
+        aPdu = new AcknowledgeRPdu();
         break;
 
       case ACTION_REQUEST_R:
-        aPdu = new ActionRequestReliablePdu();
+        aPdu = new ActionRequestRPdu();
         break;
 
       case ACTION_RESPONSE_R:
-        aPdu = new ActionResponseReliablePdu();
+        aPdu = new ActionResponseRPdu();
         break;
 
       case DATA_QUERY_R:
-        aPdu = new DataQueryReliablePdu();
+        aPdu = new DataQueryRPdu();
         break;
 
       case SET_DATA_R:
-        aPdu = new SetDataReliablePdu();
+        aPdu = new SetDataRPdu();
         break;
 
       case DATA_R:
-        aPdu = new DataReliablePdu();
+        aPdu = new DataRPdu();
         break;
 
       case EVENT_REPORT_R:
-        aPdu = new EventReportReliablePdu();
+        aPdu = new EventReportRPdu();
         break;
 
       case COMMENT_R:
-        aPdu = new CommentReliablePdu();
+        aPdu = new CommentRPdu();
         break;
 
       case RECORD_R:
-        aPdu = new RecordReliablePdu();
+        aPdu = new RecordRPdu();
         break;
 
       case SET_RECORD_R:
-        aPdu = new SetRecordReliablePdu();
+        aPdu = new SetRecordRPdu();
         break;
 
       case RECORD_QUERY_R:
-        aPdu = new RecordQueryReliablePdu();
+        aPdu = new RecordQueryRPdu();
         break;
 
       case COLLISION_ELASTIC:

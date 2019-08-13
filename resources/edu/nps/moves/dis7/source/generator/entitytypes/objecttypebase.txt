@@ -1,6 +1,6 @@
 package %s;
 
-public class %s extends edu.nps.moves.dis.ObjectType
+public class %s extends edu.nps.moves.dis7.ObjectType
 {
     /* uid %s */
     public %s()

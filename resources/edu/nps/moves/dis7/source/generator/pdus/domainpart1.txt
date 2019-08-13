@@ -1,4 +1,4 @@
-package edu.nps.moves.dis;
+package edu.nps.moves.dis7;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -6,7 +6,7 @@ import java.lang.reflect.Method;
 import java.nio.ByteBuffer;
 import java.lang.reflect.InvocationTargetException;
 
-import edu.nps.moves.dis.enumerations.*;
+import edu.nps.moves.dis7.enumerations.*;
 
 /**
  * An example approximating a Java enum "superclass".  Can't use an interface, because we need the two

@@ -28,6 +28,7 @@ public class Main
 {
     // Elements and attributes we look for in our XML pdu description files:
     public static final String INHERITSFROM = "inheritsFrom";
+    public static final String ALIASFOR = "aliasFor";
     public static final String IMPLEMENTS = "implements";
     public static final String XMLROOTELEMENT = "xmlRootElement";
     public static final String SISOENUM = "sisoenum";
@@ -542,7 +543,11 @@ public class Main
                         //System.out.println("inherits from " + attributes.getValue(idx));
                         currentGeneratedClass.setParentClass(attributes.getValue(idx));
                         break;
-                    
+                        
+                    case ALIASFOR: // write empty subclass
+                        currentGeneratedClass.setAliasFor(attributes.getValue(idx));
+                        break;
+                        
                     case IMPLEMENTS:
                         currentGeneratedClass.setInterfaces(attributes.getValue(idx));
                         break;

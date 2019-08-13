@@ -66,12 +66,12 @@ public class ObjectTypeMain
     {
         Method[] ma;
         try {
-            ma = getEnumMethods("edu.nps.moves.dis.enumerations.PlatformDomain");
+            ma = getEnumMethods("edu.nps.moves.dis7.enumerations.PlatformDomain");
             platformDomainFromInt = ma[FORVALUE];
             platformDomainName = ma[NAME];
             platformDomainDescription = ma[DESCRIPTION];
 
-            ma = getEnumMethods("edu.nps.moves.dis.enumerations.ObjectKind");
+            ma = getEnumMethods("edu.nps.moves.dis7.enumerations.ObjectKind");
             objKindFromInt = ma[FORVALUE];
             objKindName = ma[NAME];
             objKindDescription = ma[DESCRIPTION];

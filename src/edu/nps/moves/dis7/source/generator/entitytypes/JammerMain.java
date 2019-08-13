@@ -551,8 +551,8 @@ public class JammerMain
 
   /*
   private String xmlPath = "xml/SISO/SISO_REF_010_v25/SISO_REF_010.xml";
-  private File outputDirectory = new File("src-generated/java/edu/nps/moves/dis/jammers");
-  private String basePackageName = "edu.nps.moves.dis.jammers";
+  private File outputDirectory = new File("src-generated/java/edu/nps/moves/dis7/jammers");
+  private String basePackageName = "edu.nps.moves.dis7.jammers";
   */
   public static void main(String[] args)
   {
@@ -560,8 +560,8 @@ public class JammerMain
       if(args == null || args.length != 3)
         new JammerMain(
           "xml/SISO/SISO_REF_010_v25/SISO_REF_010.xml",
-          "src-generated/java/edu/nps/moves/dis/jammers",
-          "edu.nps.moves.dis.jammers"
+          "src-generated/java/edu/nps/moves/dis7/jammers",
+          "edu.nps.moves.dis7.jammers"
           ).run();
       else
         new JammerMain(args[0], args[1], args[2]).run();

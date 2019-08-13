@@ -5,7 +5,7 @@
  */
 package edu.nps.moves.dis7.source.generator.entitytypes;
 
-//import edu.nps.moves.dis.enumerations.LandPlatformAppearance;
+//import edu.nps.moves.dis7.enumerations.LandPlatformAppearance;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -274,7 +274,7 @@ Enum<?> nuts = (Enum<?>)c.getEnumConstants()[0];
             String pkgBackOne = parentPackage(pkg);
             String kind = fixName(ent.description).toUpperCase();
 
-            String contents = String.format(jammerBaseTemplate, pkg, pkgBackOne, "JammerKind", "edu.nps.moves.dis.JammingTechnique", "Kind", "JammerKind", kind);
+            String contents = String.format(jammerBaseTemplate, pkg, pkgBackOne, "JammerKind", "edu.nps.moves.dis7.JammingTechnique", "Kind", "JammerKind", kind);
             saveFile(dir, "Base.java", contents);
 
             sb.setLength(0);

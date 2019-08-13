@@ -1,5 +1,3 @@
-package edu.nps.moves.dis.jammers.Deception;
-package edu.nps.moves.dis.jammers.Deception.Repeater.Blah;
 package %s;
 
 import java.io.DataInputStream;
@@ -12,11 +10,11 @@ import java.nio.ByteBuffer;
  * @author Mike Bailey, jmbailey@nps.edu
  * @version $Id$
  */
-public enum Category implements edu.nps.moves.dis.JammerCategory
-public enum JammerKind implements edu.nps.moves.dis.JammerKind
-public enum SubCategory implements edu.nps.moves.dis.SubCategory
-public enum Specific implements edu.nps.moves.dis.Specific
-public enum %s implements edu.nps.moves.dis.%s
+public enum Category implements edu.nps.moves.dis7.JammerCategory
+public enum JammerKind implements edu.nps.moves.dis7.JammerKind
+public enum SubCategory implements edu.nps.moves.dis7.SubCategory
+public enum Specific implements edu.nps.moves.dis7.Specific
+public enum %s implements edu.nps.moves.dis7.%s
 {
     AGCandGateStealer,
     Analyzer,

@@ -31,6 +31,7 @@ public class Main
 {
     private File outputDirectory;
     private Properties uid2ClassName;
+    private Properties uid4aliases;
     private Properties interfaceInjection;
     private HashMap<String,String> uidClassNames;
     private HashSet<String> uidDoNotGenerate;
@@ -73,6 +74,8 @@ public class Main
         // Manual:
         uid2ClassName = new Properties();
         uid2ClassName.load(getClass().getResourceAsStream("Uid2ClassName.properties"));
+        uid4aliases = new Properties();
+        uid4aliases.load(getClass().getResourceAsStream("uid4aliases.properties"));
         
         // Final:
         uidClassNames = new HashMap<>();
@@ -493,6 +496,10 @@ public class Main
                 return;
             }
         */
+            Properties aliasNames = null;
+            if(el.uid.equals("4"))
+              aliasNames = uid4aliases;
+            
             StringBuilder sb = new StringBuilder();
 
             // Header section
@@ -527,22 +534,33 @@ public class Main
             // enum section
             if (el.elems.isEmpty())
                 sb.append(String.format(enumTemplate2, "NOT_SPECIFIED", "0", "undefined by SISO spec"));
-            else
-                el.elems.forEach((row) -> {
-                    String xrefName = null;
-                    if(row.xrefclassuid != null)
+            else{
+                Properties aliases = aliasNames;
+                el.elems.forEach((row) -> {                    
+                    String enumName = createEnumName(row.description);
+                    writeOneEnum(sb, row, enumName);
+                    // Check for aliases
+                    if(aliases != null && aliases.getProperty(row.value)!=null)
+                      writeOneEnum(sb,row,aliases.getProperty(row.value));
+                  /*  if(row.xrefclassuid != null)
                         xrefName=uidClassNames.get(row.xrefclassuid);
+                    
                     if(xrefName == null) {
+                        String nm=null;
                         sb.append(String.format(enumFootnoteCommentTemplate, htmlize(row.description)+( row.footnote==null?"":", "+htmlize(row.footnote))));
-                        sb.append(String.format(enumTemplate2, createEnumName(row.description), row.value, row.description.replace('"', '\'')));
+                        sb.append(String.format(enumTemplate2, enumName, row.value, row.description.replace('"', '\'')));
+                        if(aliases != null && aliases.get(row.value) != null) {
+                           sb.append(String.format(enumFootnoteCommentTemplate, htmlize(row.description)+( row.footnote==null?"":", "+htmlize(row.footnote))));
+                           sb.append(String.format(enumTemplate2, nm = enumName, row.value, row.description.replace('"', '\'')));
+                        }
                     }
                     else {
                         sb.append(String.format(enumCommentTemplate,xrefName));
                         sb.append(String.format(enumTemplate21, createEnumName(row.description), row.value, row.description.replace('"', '\''),xrefName));
-                    }
+                    }*/
 
                 });
-
+            }
             if (el.elems.size() > 0)
                 sb.setLength(sb.length() - 2);
             sb.append(";\n");
@@ -581,6 +599,23 @@ public class Main
         {
             return s.replace("&","and");
         }
+        
+      private void writeOneEnum(StringBuilder sb, EnumRowElem row, String enumName)
+      {
+        String xrefName = null;
+        if (row.xrefclassuid != null)
+          xrefName = uidClassNames.get(row.xrefclassuid);
+
+        if (xrefName == null) {
+          sb.append(String.format(enumFootnoteCommentTemplate, htmlize(row.description) + (row.footnote == null ? "" : ", " + htmlize(row.footnote))));
+          sb.append(String.format(enumTemplate2, enumName, row.value, row.description.replace('"', '\'')));
+
+        }
+        else {
+          sb.append(String.format(enumCommentTemplate, xrefName));
+          sb.append(String.format(enumTemplate21, createEnumName(row.description), row.value, row.description.replace('"', '\''), xrefName));
+        }
+      }
         
         private String createEnumName(String s)
         {

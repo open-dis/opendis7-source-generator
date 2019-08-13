@@ -1,7 +1,7 @@
 package %s;
 
-import edu.nps.moves.dis.*;
-import edu.nps.moves.dis.enumerations.*;
+import edu.nps.moves.dis7.*;
+import edu.nps.moves.dis7.enumerations.*;
 
 abstract public class Base extends EntityType
 {

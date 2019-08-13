@@ -5,7 +5,7 @@
 
     </class>
 
-    <class name="ElectronicEmissionsPdu" inheritsFrom="DistributedEmissionsFamilyPdu"
+    <class name="ElectromagneticEmissionPdu" inheritsFrom="DistributedEmissionsFamilyPdu"
            comment="7.6.2 Communicate active electromagnetic emissions, including radar and radar-related electronic warfare (e.g., jamming). Exceptions include IFF interrogations and replies, navigation aids, voice, beacon and data radio communications, directed energy weapons, and laser ranging and designation systems, which are handled by other PDUs. Section 5.3.7.1.">
     
         <initialValue name="pduType" value="DISPDUType.ELECTROMAGNETIC_EMISSION"/>
@@ -280,7 +280,7 @@
  
     </class> 
     
-    <class name="IffPdu" inheritsFrom="DistributedEmissionsFamilyPdu" Comment="7.6.5.1 Information about military and civilian interrogators, transponders, and specific other electronic systems. See 5.7.6">
+    <class name="IFFPdu" inheritsFrom="DistributedEmissionsFamilyPdu" Comment="7.6.5.1 Information about military and civilian interrogators, transponders, and specific other electronic systems. See 5.7.6">
         
         <initialValue name="pduType" value="DISPDUType.IFF"/>
     
@@ -314,8 +314,10 @@
    
     </class>
     
+    <class name="IdentificationFriendOrFoePdu" comment="more descriptive name for an IFFPdu" aliasFor="IFFPdu"/>
+
     <!-- basic IFF spec needs work, is incomplete, since it is impossible to unmarshall an IFFPdu and know what further layers are present, we can only go this far -->
-    <class name="IffLayer2Pdu" inheritsFrom="IffPdu"
+    <class name="IFFLayer2Pdu" inheritsFrom="IFFPdu"
            comment="Section 5.3.7.4.2 When present, layer 2 should follow layer 1 and have the following fields. This requires manual cleanup.
            the beamData attribute semantics are used in multiple ways. UNFINSISHED">
           
@@ -339,7 +341,7 @@
             <primitive type="uint16"/>
         </attribute>
         
-       <attribute name="fundamentalIffParameters" comment="variable length list of fundamental parameters.">
+       <attribute name="fundamentalIFFParameters" comment="variable length list of fundamental parameters.">
             <objectlist countFieldName="numberOfParameters">
                 <classRef name="IFFFundamentalParameterData"/>
             </objectlist> 
@@ -347,7 +349,7 @@
     
     </class>
     
-    <class name="SeesPdu" inheritsFrom="DistributedEmissionsFamilyPdu" comment="7.6.6 Certain supplemental information on an entity’s physical state and emissions. See 5.7.7">
+    <class name="SEESPdu" inheritsFrom="DistributedEmissionsFamilyPdu" comment="7.6.6 Certain supplemental information on an entity’s physical state and emissions. See 5.7.7">
  
         <initialValue name="pduType" value="DISPDUType.SUPPLEMENTAL_EMISSION_ENTITY_STATE"/>
    
@@ -388,5 +390,7 @@
         </attribute>
        
     </class>
+    
+    <class name="SupplementalEmissionEntityStatePdu" comment="more descriptive name for a SEESPdu" aliasFor="SEESPdu"/>
 
 </classes>

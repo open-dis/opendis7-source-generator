@@ -279,7 +279,7 @@
         
     </class>
 
-    <class name="MinefieldResponseNackPdu" inheritsFrom="MinefieldFamilyPdu"
+    <class name="MinefieldResponseNACKPdu" inheritsFrom="MinefieldFamilyPdu"
            comment="5.10.5 Contains information about the requesting entity and the PDU(s) that were not received in response to a query.">
 
         <initialValue name="pduType" value="DISPDUType.MINEFIELD_RESPONSE_NACK"/>

@@ -201,6 +201,13 @@ public class JavaGenerator extends Generator
         writeClassComments(pw, aClass);
         pw.flush();
         writeClassDeclaration(pw, aClass);
+        
+        if(aClass.getAliasFor()!= null) {
+            pw.flush();
+            pw.close();
+            return;
+        }
+        
         pw.flush();
         writeIvars(pw, aClass);
         pw.flush();
@@ -344,6 +351,12 @@ public class JavaGenerator extends Generator
     private void writeClassDeclaration(PrintWriter pw, GeneratedClass aClass)
     {
         // Class declaration
+        if(aClass.getAliasFor() != null) {
+          pw.println("public class "+aClass.getName()+" extends "+aClass.getAliasFor());
+          pw.println("{}");
+          return;
+        }
+        
         String parentClass = aClass.getParentClass();
         String interfaces = aClass.getInterfaces();
 

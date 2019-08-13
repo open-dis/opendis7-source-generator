@@ -17,8 +17,8 @@
         <initialValue name="protocolFamily" value="DISProtocolFamily.LIVE_ENTITY_LE_INFORMATION_INTERACTION"/>
  
     </class>
-    
-    <class name="TspiPdu" inheritsFrom="LiveEntityFamilyPdu" comment="9.4.2 The Time Space Position Information (TSPI) PDU shall communicate information about the LE’s state vector.">
+
+    <class name="TSPIPdu" inheritsFrom="LiveEntityFamilyPdu" comment="9.4.2 The Time Space Position Information (TSPI) PDU shall communicate information about the LE’s state vector.">
         
         <initialValue name="pduType" value="DISPDUType.TSPI"/>
                
@@ -69,6 +69,8 @@
         </attribute>
         
     </class>
+    
+    <class name="TimeSpacePositionInformationPdu" comment="more descriptive name for a TSPIPdu" aliasFor="TSPIPdu"/>
     
     <class name="AppearancePdu" inheritsFrom="LiveEntityFamilyPdu" comment="9.4.3 Communicate information about the appearance of a live entity.">
         
@@ -132,7 +134,7 @@
         </attribute>
         
     </class>
-    
+ 
     <class name="LEFirePdu" inheritsFrom="LiveEntityFamilyPdu" comment="9.4.5 Representation of weapons fire in a DIS exercise involving LEs.">
         
         <initialValue name="pduType" value="DISPDUType.LE_FIRE"/>
@@ -175,6 +177,8 @@
         
     </class>
     
+    <class name="LiveEntityFirePdu" comment="more descriptive name for a LEFirePdu" aliasFor="LEFirePdu"/>
+
     <class name="LEDetonationPdu" inheritsFrom="LiveEntityFamilyPdu" comment="9.4.6 Communicate information associated with the impact or detonation of a munition.">
         
         <initialValue name="pduType" value="DISPDUType.LE_DETONATION"/>
@@ -229,4 +233,6 @@
         
     </class>
     
+    <class name="LiveEntityDetonationPdu" comment="more descriptive name for a LEDetonationPdu" aliasFor="LEDetonationPdu"/>
+
 </classes>

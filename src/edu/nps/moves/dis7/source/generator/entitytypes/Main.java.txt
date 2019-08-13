@@ -75,27 +75,27 @@ public class Main
     {
         Method[] ma;
         try {
-            ma = getEnumMethods("edu.nps.moves.dis.enumerations.PlatformDomain");
+            ma = getEnumMethods("edu.nps.moves.dis7.enumerations.PlatformDomain");
             platformDomainFromInt = ma[FORVALUE];
             platformDomainName = ma[NAME];
             platformDomainDescription = ma[DESCRIPTION];
 
-            ma = getEnumMethods("edu.nps.moves.dis.enumerations.Country");
+            ma = getEnumMethods("edu.nps.moves.dis7.enumerations.Country");
             countryFromInt = ma[FORVALUE];
             countryName = ma[NAME];
             countryDescription = ma[DESCRIPTION];
 
-            ma = getEnumMethods("edu.nps.moves.dis.enumerations.EntityKind");
+            ma = getEnumMethods("edu.nps.moves.dis7.enumerations.EntityKind");
             kindFromInt = ma[FORVALUE];
             kindName = ma[NAME];
             kindDescription = ma[DESCRIPTION];
 
-            ma = getEnumMethods("edu.nps.moves.dis.enumerations.MunitionDomain");
+            ma = getEnumMethods("edu.nps.moves.dis7.enumerations.MunitionDomain");
             munitionDomainFromInt = ma[FORVALUE];
             munitionDomainName = ma[NAME];
             munitionDomainDescription = ma[DESCRIPTION];
 
-            ma = getEnumMethods("edu.nps.moves.dis.enumerations.SupplyDomain");
+            ma = getEnumMethods("edu.nps.moves.dis7.enumerations.SupplyDomain");
             supplyDomainFromInt = ma[FORVALUE];
             supplyDomainName = ma[NAME];
             supplyDomainDescription = ma[DESCRIPTION];

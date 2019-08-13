@@ -146,7 +146,7 @@
             </primitivelist>
         </attribute>
         
-        <attribute name="padTo32">
+        <attribute name="padTo32" comment="Wireshark (incorrectly) reports malformed packet unless the whole datagram is aligned to 32-bit boundary; spec says only the pdu">
             <padtoboundary length="32"/>
         </attribute>
         
@@ -237,7 +237,7 @@
             </primitivelist> 
         </attribute>
         
-        <attribute name="padTo32">
+        <attribute name="padTo32" comment="Wireshark (incorrectly) reports malformed packet unless the whole datagram is aligned to 32-bit boundary; spec says only the pdu">
             <padtoboundary length="32"/>
         </attribute>
        
