@@ -33,7 +33,7 @@ public class ObjectTypeMain
   private final String basePackageName;
   private final String xmlPath;
 
-  String jammerTechniqueTemplate;
+  String objectTypeTemplate;
 
   class DataPkt
   {
@@ -68,7 +68,7 @@ public class ObjectTypeMain
   private void loadTemplates()
   {
     try {
-      jammerTechniqueTemplate = loadOneTemplate("objecttype.txt");
+      objectTypeTemplate = loadOneTemplate("objecttype.txt");
     }
     catch (Exception ex) {
       throw new RuntimeException(ex);
@@ -173,7 +173,7 @@ public class ObjectTypeMain
           currentObject.children.add(currentCategory);
           break;
 
-        case "jammer_specific":
+        case "subcategory":
           if (currentCategory == null)
             break;
           currentSubCategory = new SubCategoryElem();
@@ -253,7 +253,7 @@ public class ObjectTypeMain
 
     private void appendCommonStatements(DataPkt data)
     {
-      String contents = String.format(jammerTechniqueTemplate, data.pkg,
+      String contents = String.format(objectTypeTemplate, data.pkg,
         specTitleDate, currentCot.uid,data.clsNm,data.clsNm);
       data.sb.append(contents);
     }
