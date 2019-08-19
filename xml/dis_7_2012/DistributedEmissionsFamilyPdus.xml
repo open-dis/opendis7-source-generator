@@ -282,7 +282,7 @@
     
     <class name="IFFPdu" inheritsFrom="DistributedEmissionsFamilyPdu" Comment="7.6.5.1 Information about military and civilian interrogators, transponders, and specific other electronic systems. See 5.7.6">
         
-        <initialValue name="pduType" value="DISPDUType.IFF"/>
+        <initialValue name="pduType" value="DISPDUType.IDENTIFICATION_FRIEND_OR_FOE"/>
     
         <attribute name="emittingEntityId" comment="ID of the entity that is the source of the emissions">
             <classRef name="EntityID"/>
