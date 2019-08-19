@@ -537,11 +537,13 @@ public class Main
             else{
                 Properties aliases = aliasNames;
                 el.elems.forEach((row) -> {                    
-                    String enumName = createEnumName(row.description);
-                    writeOneEnum(sb, row, enumName);
                     // Check for aliases
                     if(aliases != null && aliases.getProperty(row.value)!=null)
                       writeOneEnum(sb,row,aliases.getProperty(row.value));
+                    else {
+                      String enumName = createEnumName(row.description);
+                      writeOneEnum(sb, row, enumName);
+                    }
                   /*  if(row.xrefclassuid != null)
                         xrefName=uidClassNames.get(row.xrefclassuid);
                     
