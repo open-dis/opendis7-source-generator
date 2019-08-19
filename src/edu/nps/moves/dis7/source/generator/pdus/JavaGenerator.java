@@ -579,6 +579,7 @@ public class JavaGenerator extends Generator
                     break;
                 case CLASSREF:
                 case SISO_ENUM:
+                case SISO_BITFIELD:
                     pw.print("   marshalSize += ");
                     pw.println(anAttribute.getName() + ".getMarshalledSize();");
                     break;
