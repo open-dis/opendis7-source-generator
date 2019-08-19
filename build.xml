@@ -71,8 +71,7 @@
 
     -->
    
-    <target name="package-all-jars" depends="package-dis7-class-jar,
-                                             package-dis7-entities-all-jar,
+    <target name="package-all-jars" depends="package-dis7-entities-all-jar,
                                              package-dis7-entities-china-jar,
                                              package-dis7-entities-germany-jar,
                                              package-dis7-entities-nato-jar,
@@ -81,8 +80,7 @@
                                              package-dis7-entities-usa-all-jar,
                                              package-dis7-entities-usa-land-jar,
                                              package-dis7-entities-usa-munitions-jar,
-                                             package-dis7-entities-usa-surface-jar,
-                                             package-dis7-source-jar"/>
+                                             package-dis7-entities-usa-surface-jar"/>
     
     <!-- done in open-dis7-java project
     <target name="package-dis7-source-jar">
