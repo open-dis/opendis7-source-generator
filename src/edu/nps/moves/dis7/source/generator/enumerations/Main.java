@@ -70,6 +70,7 @@ public class Main
 
     private void run() throws SAXException, IOException, ParserConfigurationException
     {
+        outputDirectory.mkdirs();
         FileUtils.cleanDirectory(outputDirectory);
         // Manual:
         uid2ClassName = new Properties();
