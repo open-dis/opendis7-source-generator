@@ -155,6 +155,7 @@ public class Main
 
   private void run() throws SAXException, IOException, ParserConfigurationException
   {
+    outputDirectory.mkdirs();
     FileUtils.cleanDirectory(outputDirectory);
     
     SAXParserFactory factory = SAXParserFactory.newInstance();
