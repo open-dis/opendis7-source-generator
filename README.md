@@ -83,5 +83,5 @@ If you desire to update the `open-dis7-java` project with any or all of the prod
   * open-dis7-entities-usa-munitions.jar
   * open-dis7-entities-usa-surface.jar
   * **open-dis7-entities-javadoc.jar**
-2. **Omitting the `entities` directory**, copy the tree of java source files (*.java) **from**<br/>`open-dis7-source-generator/src-generated/java/edu/nps/moves/dis7` **to**<br/>`open-dis7-java/src-generated/edu/nps/moves/dis7`:
+2. **Omitting the `entities` directory**, copy the tree of java source files (*.java) **from**<br/>`open-dis7-source-generator/src-generated/java/edu/nps/moves/dis7` **to**<br/>`open-dis7-java/src-generated/edu/nps/moves/dis7`.
 	
