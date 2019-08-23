@@ -1,5 +1,6 @@
 package edu.nps.moves.dis7.source.generator.pdus;
 
+import edu.nps.moves.dis7.source.generator.pdus.ClassAttribute.ClassAttributeType;
 import java.io.*;
 import java.util.*;
 import javax.xml.parsers.*;
@@ -39,7 +40,7 @@ public class Main
     public static final String INITIALVALUE = "initialvalue";
     public static final String NAME = "name";
     public static final String CLASSREF = "classref";
-    public static final String COUNTFIELDNAME = "countFieldName";
+    public static final String COUNTFIELDNAME = "countfieldname";
     public static final String TYPE = "type";
     public static final String DEFAULTVALUE = "defaultvalue";
     public static final String PRIMITIVE = "primitive";
@@ -747,6 +748,7 @@ public class Main
                     // eliminates the setter method. This code assumes that the count field
                     // attribute has already been processed.
                     List ats = currentGeneratedClass.getClassAttributes();
+                    backReferenceCountField(attributes, ats, idx, currentClassAttribute.getAttributeKind());/*
                     boolean atFound = false;
 
                     for (int jdx = 0; jdx < ats.size(); jdx++) {
@@ -760,40 +762,68 @@ public class Main
                     }
                     if (atFound == false) {
                         System.out.println("Could not find a matching attribute for the length field for " + attributes.getValue(idx));
-                    }
+                    } */
                 }
             }
         }
-        private void handlePrimitiveList(Attributes attributes)
-        {
-            currentClassAttribute.setAttributeKind(ClassAttribute.ClassAttributeType.PRIMITIVE_LIST);
+      private void backReferenceCountField(Attributes attributes, List ats, int idx, ClassAttributeType lstType)
+      {
+        boolean atFound = false;
 
-            for (int idx = 0; idx < attributes.getLength(); idx++) {
-                switch (attributes.getQName(idx).toLowerCase()) {
-                    case COULDBESTRING:
-                        if (attributes.getValue(idx).equalsIgnoreCase(TRUE))
-                            currentClassAttribute.setCouldBeString(true);
-                        break;
+        for (int jdx = 0; jdx < ats.size(); jdx++) {
+          ClassAttribute at = (ClassAttribute) ats.get(jdx);
+          if (at.getName().equals(attributes.getValue(idx))) {
+            at.setIsDynamicListLengthField(lstType == ClassAttributeType.OBJECT_LIST);
+            at.setIsPrimitiveListLengthField(lstType == ClassAttributeType.PRIMITIVE_LIST);
+            at.setDynamicListClassAttribute(currentClassAttribute);
+            atFound = true;
 
-                    case LENGTH:
-                        String length = attributes.getValue(idx);
-                        try {
-                            int listLen = Integer.parseInt(length);
-                            currentClassAttribute.setListLength(listLen);
-                        }
-                        catch (NumberFormatException e) {
-                            System.out.println("Invalid list length found. Bad format for integer " + length);
-                            currentClassAttribute.setListLength(0);
-                        }
-                        break;
-                    case FIXEDLENGTH:
-                        currentClassAttribute.setFixedLength(Boolean.parseBoolean(attributes.getValue(idx)));
-                        break;
-                    default:
-                        currentClassAttribute.setListLength(0); //Apr8
-                        break;
-                }
-            }
+            break;
+          }
         }
+        if (atFound == false) {
+          System.out.println("Could not find a matching attribute for the length field for " + attributes.getValue(idx));
+        }
+      }
+      
+      private void handlePrimitiveList(Attributes attributes)
+      {
+        currentClassAttribute.setAttributeKind(ClassAttribute.ClassAttributeType.PRIMITIVE_LIST);
+        
+        for (int idx = 0; idx < attributes.getLength(); idx++) {
+          String nm = attributes.getQName(idx).toLowerCase();
+          switch (attributes.getQName(idx).toLowerCase()) {
+            case COULDBESTRING:
+              if (attributes.getValue(idx).equalsIgnoreCase(TRUE))
+                currentClassAttribute.setCouldBeString(true);
+              break;
+
+            case LENGTH:
+              String length = attributes.getValue(idx);
+              try {
+                int listLen = Integer.parseInt(length);
+                currentClassAttribute.setListLength(listLen);
+              }
+              catch (NumberFormatException e) {
+                System.out.println("Invalid list length found. Bad format for integer " + length);
+                currentClassAttribute.setListLength(0);
+              }
+              break;
+              
+            case FIXEDLENGTH:
+              currentClassAttribute.setFixedLength(Boolean.parseBoolean(attributes.getValue(idx)));
+              break;
+              
+            case COUNTFIELDNAME:
+              currentClassAttribute.setCountFieldName(attributes.getValue(idx));
+              backReferenceCountField(attributes, currentGeneratedClass.getClassAttributes(), idx, currentClassAttribute.getAttributeKind());
+              break;
+              
+            default:
+              currentClassAttribute.setListLength(0); //Apr8
+              break;
+          }
+        }
+      }
     }
 }

@@ -111,6 +111,7 @@
         </attribute>       
     </class>
 
+    <!-- Special cased because of the dataLength fieldS which are a bit length 
     <class name="SignalPdu" inheritsFrom="RadioCommunicationsFamilyPdu"
            comment="5.8.4 Conveys the audio or digital data carried by the simulated radio or intercom transmission.">
     
@@ -150,8 +151,53 @@
             <padtoboundary length="32"/>
         </attribute>
         
-    </class>
-
+      </class>
+    
+      <class name="IntercomSignalPdu" inheritsFrom="RadioCommunicationsFamilyPdu" comment="5.8.6 Conveys the audio or digital data that is used to communicate between simulated intercom devices">
+   
+        <initialValue name="pduType" value="DISPDUType.INTERCOM_SIGNAL"/>
+  
+        <attribute name="intercomReferenceID">
+            <classRef name= "IntercomReferenceID"/>
+        </attribute>
+  
+        <attribute name="intercomNumber" comment="ID of communications device">
+            <primitive type= "uint16"/>
+        </attribute>
+  
+        <attribute name="encodingScheme" comment="encoding scheme">
+            <primitive type= "uint16"/>
+        </attribute>
+  
+        <attribute name="tdlType" comment="tactical data link type">
+            <sisoenum type="SignalTDLType" comment="uid 178"/>
+        </attribute>
+  
+        <attribute name="sampleRate" comment="sample rate">
+            <primitive type= "uint32"/>
+        </attribute>
+  
+        <attribute name="dataLength" hidden="true" comment="data length">
+            <primitive type= "uint16"/>
+        </attribute>
+  
+        <attribute name="samples" comment="samples">
+            <primitive type= "uint16"/>
+        </attribute>
+ 
+        <attribute name="data" comment="data bytes">
+            <primitivelist length="0" countFieldName="dataLength">
+                <primitive type="uint8"/>
+            </primitivelist> 
+        </attribute>
+        
+        <attribute name="padTo32" comment="Wireshark (incorrectly) reports malformed packet unless the whole datagram is aligned to 32-bit boundary; spec says only the pdu">
+            <padtoboundary length="32"/>
+        </attribute>
+       
+     </class>
+    -->
+    
     <class name="ReceiverPdu" inheritsFrom="RadioCommunicationsFamilyPdu"
            comment="5.8.5 Communicates the state of a particular radio receiver. Its primary application is in communicating state information to radio network monitors, data loggers, and similar applications for use in debugging, supervision, and after-action review.">
     
@@ -199,50 +245,6 @@
         
     </class>
     
-    <class name="IntercomSignalPdu" inheritsFrom="RadioCommunicationsFamilyPdu" comment="5.8.6 Conveys the audio or digital data that is used to communicate between simulated intercom devices">
-   
-        <initialValue name="pduType" value="DISPDUType.INTERCOM_SIGNAL"/>
-  
-        <attribute name="intercomReferenceID">
-            <classRef name= "IntercomReferenceID"/>
-        </attribute>
-  
-        <attribute name="intercomNumber" comment="ID of communications device">
-            <primitive type= "uint16"/>
-        </attribute>
-  
-        <attribute name="encodingScheme" comment="encoding scheme">
-            <primitive type= "uint16"/>
-        </attribute>
-  
-        <attribute name="tdlType" comment="tactical data link type">
-            <sisoenum type="SignalTDLType" comment="uid 178"/>
-        </attribute>
-  
-        <attribute name="sampleRate" comment="sample rate">
-            <primitive type= "uint32"/>
-        </attribute>
-  
-        <attribute name="dataLength" hidden="true" comment="data length">
-            <primitive type= "uint16"/>
-        </attribute>
-  
-        <attribute name="samples" comment="samples">
-            <primitive type= "uint16"/>
-        </attribute>
- 
-        <attribute name="data" comment="data bytes">
-            <primitivelist length="0" countFieldName="dataLength">
-                <primitive type="uint8"/>
-            </primitivelist> 
-        </attribute>
-        
-        <attribute name="padTo32" comment="Wireshark (incorrectly) reports malformed packet unless the whole datagram is aligned to 32-bit boundary; spec says only the pdu">
-            <padtoboundary length="32"/>
-        </attribute>
-       
-     </class>
-
     <class name="IntercomControlPdu" inheritsFrom="RadioCommunicationsFamilyPdu"
            comment="5.8.7 Communicates the state of a particular intercom device, request an action of another intercom device, or respond to an action request.">
    

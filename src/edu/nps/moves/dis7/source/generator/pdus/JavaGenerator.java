@@ -41,7 +41,8 @@ public class JavaGenerator extends Generator
      * sizes of various primitive types
      */
     Properties primitiveSizes = new Properties();
-
+    HashMap<String,Integer> primitiveSizesMap = new HashMap<>();
+    
     /**
      * A property list that contains java-specific code generation information, such as package names, imports, etc.
      */
@@ -129,6 +130,17 @@ public class JavaGenerator extends Generator
         primitiveSizes.setProperty("int64", "8");
         primitiveSizes.setProperty("float32", "4");
         primitiveSizes.setProperty("float64", "8");
+        
+        primitiveSizesMap.put("uint8", 1);
+        primitiveSizesMap.put("uint16", 2);
+        primitiveSizesMap.put("uint32", 4);
+        primitiveSizesMap.put("uint64", 8);
+        primitiveSizesMap.put("int8", 1);
+        primitiveSizesMap.put("int16", 2);
+        primitiveSizesMap.put("int32", 4);
+        primitiveSizesMap.put("int64", 8);
+        primitiveSizesMap.put("float32", 4);
+        primitiveSizesMap.put("float64", 8); 
     }
 
     /**
@@ -561,6 +573,7 @@ public class JavaGenerator extends Generator
         pw.println();
         // Not all object are setup to implement Marshaller; should be done
         //pw.println("@Override");
+        pw.println("/** Returns the size of this serialized object in bytes*/");
         pw.println("public int getMarshalledSize()");
         pw.println("{");
         pw.println("   int marshalSize = 0; ");
@@ -632,6 +645,7 @@ public class JavaGenerator extends Generator
                 case PRIMITIVE:
                     if (anAttribute.getIsDynamicListLengthField() == false) {
                         String beanType = types.getProperty(anAttribute.getType());
+                        pw.println("/** Setter for {@link "+aClass.getName()+"#"+anAttribute.getName()+"}*/");
                         pw.print("public ");
                         pw.print(aClass.getName());
                         pw.println(" set" + this.initialCap(anAttribute.getName()) + "(" + beanType + " p" + this.initialCap(anAttribute.getName()) + ")");
@@ -640,7 +654,7 @@ public class JavaGenerator extends Generator
                         pw.println("}");
 
                         pw.println();
-
+                        pw.println("/** Getter for {@link "+aClass.getName()+"#"+anAttribute.getName()+"}*/");
                         pw.println("public " + beanType + " get" + this.initialCap(anAttribute.getName()) + "()");
                         pw.println("{\n    return " + anAttribute.getName() + "; \n}");
                         pw.println();
@@ -673,6 +687,7 @@ public class JavaGenerator extends Generator
 
                 // The attribute is a class of some sort. Generate getters and setters.
                 case CLASSREF:
+                    pw.println("/** Setter for {@link "+aClass.getName()+"#"+anAttribute.getName()+"}*/");
                     pw.print("public ");
                     pw.print(aClass.getName());
                     pw.println(" set" + this.initialCap(anAttribute.getName()) + "(" + anAttribute.getType() + " p" + this.initialCap(anAttribute.getName()) + ")");
@@ -680,7 +695,8 @@ public class JavaGenerator extends Generator
                     pw.println("    return this;");
                     pw.println("}");
                     pw.println();
-
+                    
+                    pw.println("/** Getter for {@link "+aClass.getName()+"#"+anAttribute.getName()+"}*/");
                     pw.println("public " + anAttribute.getType() + " get" + this.initialCap(anAttribute.getName()) + "()");
                     pw.println("{\n    return " + anAttribute.getName() + "; \n}");
                     pw.println();
@@ -688,6 +704,7 @@ public class JavaGenerator extends Generator
                     
                 // The attribute is an array of some sort. Generate getters and setters.
                 case PRIMITIVE_LIST:
+                    pw.println("/** Setter for {@link "+aClass.getName()+"#"+anAttribute.getName()+"}*/");
                     pw.print("public ");
                     pw.print(aClass.getName());
                     pw.println(" set" + this.initialCap(anAttribute.getName()) + "(" + types.getProperty(anAttribute.getType()) + "[] p" + this.initialCap(anAttribute.getName()) + ")");
@@ -700,13 +717,15 @@ public class JavaGenerator extends Generator
                     pw.println("    return this;");
                     pw.println("}");
                     pw.println();
-
+                    
+                    pw.println("/** Getter for {@link "+aClass.getName()+"#"+anAttribute.getName()+"}*/");
                     pw.println("public " + types.getProperty(anAttribute.getType()) + "[] get" + this.initialCap(anAttribute.getName()) + "()");
                     pw.println("{\n    return " + anAttribute.getName() + "; \n}");
                     pw.println();
                     break;
 
                 case OBJECT_LIST:
+                    pw.println("/** Setter for {@link "+aClass.getName()+"#"+anAttribute.getName()+"}*/");
                     pw.print("public ");
                     pw.print(aClass.getName());
                     pw.println(" set" + this.initialCap(anAttribute.getName()) + "(List<" + anAttribute.getType() + ">" + " p" + this.initialCap(anAttribute.getName()) + ")");
@@ -715,7 +734,7 @@ public class JavaGenerator extends Generator
                     pw.println("}");
 
                     pw.println();
-
+                    pw.println("/** Getter for {@link "+aClass.getName()+"#"+anAttribute.getName()+"}*/");
                     pw.println("public List<" + anAttribute.getType() + ">" + " get" + this.initialCap(anAttribute.getName()) + "()");
                     pw.println("{\n    return " + anAttribute.getName() + "; \n}");
                     pw.println();
@@ -723,6 +742,7 @@ public class JavaGenerator extends Generator
 
                 case SISO_ENUM:
                     String enumtype = anAttribute.getType();
+                    pw.println("/** Setter for {@link "+aClass.getName()+"#"+anAttribute.getName()+"}*/");
                     pw.print("public ");
                     pw.print(aClass.getName());
                     pw.println(" set" + this.initialCap(anAttribute.getName()) + "(" + enumtype + " p" + this.initialCap(anAttribute.getName()) + ")");
@@ -731,7 +751,7 @@ public class JavaGenerator extends Generator
                     pw.println("}");
 
                     pw.println();
-
+                    pw.println("/** Getter for {@link "+aClass.getName()+"#"+anAttribute.getName()+"}*/");
                     pw.println("public " + enumtype + " get" + this.initialCap(anAttribute.getName()) + "()");
                     pw.println("{\n    return " + anAttribute.getName() + "; \n}");
                     pw.println();
@@ -739,6 +759,7 @@ public class JavaGenerator extends Generator
                     
                 case SISO_BITFIELD:
                     String bitfieldtype = anAttribute.getType();
+                    pw.println("/** Setter for {@link "+aClass.getName()+"#"+anAttribute.getName()+"}*/");
                     pw.print("public ");
                     pw.print(aClass.getName());
                     pw.println(" set" + this.initialCap(anAttribute.getName()) + "(" + bitfieldtype + " p" + this.initialCap(anAttribute.getName()) + ")");
@@ -747,7 +768,8 @@ public class JavaGenerator extends Generator
                     pw.println("}");
 
                     pw.println();
-
+                    
+                    pw.println("/** Setter for {@link "+aClass.getName()+"#"+anAttribute.getName()+"}*/");
                     pw.println("public " + bitfieldtype + " get" + this.initialCap(anAttribute.getName()) + "()");
                     pw.println("{\n    return " + anAttribute.getName() + "; \n}");
                     pw.println();
@@ -833,7 +855,7 @@ public class JavaGenerator extends Generator
         pw.println(" * @param dos The DataOutputStream");
         pw.println(" */");
  
-        pw.println("public void marshal(DataOutputStream dos)");
+        pw.println("public void marshal(DataOutputStream dos) throws Exception");
         pw.println("{");
 
         // If we're a sublcass of another class, we should first call super
@@ -855,22 +877,27 @@ public class JavaGenerator extends Generator
             String capped;
             switch (anAttribute.getAttributeKind()) {
 
-                // Write out a method call to serialize a primitive type
-                case PRIMITIVE:
-                    marshalType = marshalTypes.getProperty(anAttribute.getType());
-                    capped = this.initialCap(marshalType);
+            // Write out a method call to serialize a primitive type
+              case PRIMITIVE:
+                marshalType = marshalTypes.getProperty(anAttribute.getType());
+                capped = this.initialCap(marshalType);
 
-                    // If we're a normal primitivetype, marshal out directly; otherwise, marshall out
-                    // the list length.
-                    if (anAttribute.getIsDynamicListLengthField() == false) {
-                        pw.println("       dos.write" + capped + "( (" + marshalType + ")" + anAttribute.getName() + ");");
-                    }
-                    else {
-                        ClassAttribute listAttribute = anAttribute.getDynamicListClassAttribute();
-                        pw.println("       dos.write" + capped + "( (" + marshalType + ")" + listAttribute.getName() + ".size());");
-                    }
+                // If we're a normal primitivetype, marshal out directly; otherwise, marshall out
+                // the list length.
+                if (anAttribute.getIsDynamicListLengthField()) {
+                  ClassAttribute listAttribute = anAttribute.getDynamicListClassAttribute();
+                  pw.println("       dos.write" + capped + "( (" + marshalType + ")" + listAttribute.getName() + ".size());");
+                }
+                
+                else if (anAttribute.getIsPrimitiveListLengthField()) {
+                  ClassAttribute listAttribute = anAttribute.getDynamicListClassAttribute();
+                  pw.println("       dos.write" + capped + "( (" + marshalType + ")" + listAttribute.getName() + ".length);");
+                }
 
-                    break;
+                else {
+                  pw.println("       dos.write" + capped + "( (" + marshalType + ")" + anAttribute.getName() + ");");
+                }
+                break;
 
                 case SISO_ENUM:
                     /* if(anAttribute.enumMarshalSize.equals("1"))
@@ -957,7 +984,7 @@ public class JavaGenerator extends Generator
         pw.println(" * @return marshalled size");
         pw.println(" */");
 
-        pw.println("public int unmarshal(DataInputStream dis)");
+        pw.println("public int unmarshal(DataInputStream dis) throws Exception");
         pw.println("{");
         pw.flush();
         pw.println("    int uPosition = 0;");
@@ -1022,10 +1049,10 @@ public class JavaGenerator extends Generator
                         pw.println("            uPosition += " + attributeName + "[idx].unmarshal(dis);");
                     }
                     else { // It's a primitive
+                        int primitiveByteSize = primitiveSizesMap.get(anAttribute.getType());
                         capped = this.initialCap(marshalType);
-                        pw.println("            " + anAttribute.getName() + "[idx] = dis.read" + capped + "(); // mike check");
-                        pw.println("        uPosition += "+attributeName + ".length; // todo, multiply by prim size mike");
-                        // mike here
+                        pw.println("            " + anAttribute.getName() + "[idx] = dis.read" + capped + "();");
+                        pw.println("        uPosition += ("+attributeName + ".length * "+primitiveByteSize+");");
                     }
                     break;
                     
@@ -1123,10 +1150,13 @@ public class JavaGenerator extends Generator
 
                     // If we're a normal primitivetype, marshal out directly; otherwise, marshall out
                     // the list length.
-                    if(anAttribute.getIsDynamicListLengthField() == false)
-                        pw.println("   buff.put" + capped + "( (" + marshalType + ")" + anAttribute.getName() + ");");//pw.println("       dos.write"
+                    if(anAttribute.getIsDynamicListLengthField())
+                       pw.println("   buff.put" + capped + "( (" + marshalType + ")" + anAttribute.getDynamicListClassAttribute().getName() + ".size());");
+                    else if(anAttribute.getIsPrimitiveListLengthField())
+                       pw.println("   buff.put" + capped + "( (" + marshalType + ")" + anAttribute.getDynamicListClassAttribute().getName() + ".length);");
                     else
-                        pw.println("   buff.put" + capped + "( (" + marshalType + ")" + anAttribute.getDynamicListClassAttribute().getName() + ".size());");//pw.println("       dos.write"
+                       pw.println("   buff.put" + capped + "( (" + marshalType + ")" + anAttribute.getName() + ");");
+
                     break;
                     
                 case SISO_ENUM:
@@ -1151,7 +1181,7 @@ public class JavaGenerator extends Generator
                         capped = this.initialCap(marshalType);
                         if( capped.equals("Byte") )
                             capped = "";    // ByteBuffer just has put() for bytesf
-                        pw.println("       buff.put" + capped + "((" + marshalType + ")" + anAttribute.getName() + "[idx]);"); // have to cast to right type ////pw.println("           dos.write"
+                        pw.println("       buff.put" + capped + "((" + marshalType + ")" + anAttribute.getName() + "[idx]);");
                     }
                     else
                         pw.println("       " + anAttribute.getName() + "[idx].marshal(buff);" ); //"[idx].marshal(dos);" )
@@ -1514,7 +1544,7 @@ public class JavaGenerator extends Generator
 		try {
 			//pw.println();
 			pw.println(" /*");
-			pw.println("  * The equals method doesn't always work--mostly it works only on classes that consist only of primitives. Be careful.");
+			pw.println("  * Override of default equals method.  Calls equalsImpl() for content comparison.");
 			pw.println("  */");
 			pw.println("@Override");
 			pw.println(" public boolean equals(Object obj)");
@@ -1534,9 +1564,7 @@ public class JavaGenerator extends Generator
 			System.out.println(e);
 		}
 
-		writeEqualityImplMethod(pw, aClass); // Write impl for establishing
-												// equality
-
+		writeEqualityImplMethod(pw, aClass); // Write impl for establishing content equality
 	}
 
     /**
@@ -1565,10 +1593,12 @@ public class JavaGenerator extends Generator
             pw.println(" {");
             pw.println("     boolean ivarsEqual = true;");
             pw.println();
-
+            /*
+            redundant with equals method above
             pw.println("    if(!(obj instanceof " + aClass.getName() + "))");
             pw.println("        return false;");
             pw.println();
+            */
             pw.println("     final " + aClass.getName() + " rhs = ("
                 + aClass.getName() + ")obj;");
             pw.println();
@@ -1576,6 +1606,8 @@ public class JavaGenerator extends Generator
             for (int idx = 0; idx < aClass.getClassAttributes().size(); idx++) {
                 ClassAttribute anAttribute = (ClassAttribute) aClass
                     .getClassAttributes().get(idx);
+                if(anAttribute.isHidden())
+                  continue;
 
                 if (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE) {
                     pw.println("     if( ! (" + anAttribute.getName()

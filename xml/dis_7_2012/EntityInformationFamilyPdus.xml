@@ -407,7 +407,7 @@
         </attribute>
 
         <attribute name="masterAttributeRecordType" comment="This field shall contain the Attribute record type of the Attribute records in the PDU if they all have the same Attribute record type. It shall be represented by a 32-bit enumeration.">
-            <sisoenum type="VariableRecordTypes" comment="uid 66"/>
+            <sisoenum type="VariableRecordType" comment="uid 66"/>
         </attribute>
 
         <attribute name="actionCode" comment="This field shall identify the action code applicable to this Attribute PDU. The Action Code shall apply to all Attribute records contained in the PDU. It shall be represented by an 8-bit enumeration.">

@@ -281,12 +281,12 @@
             <primitive type="uint32"/>
         </attribute>
 
-        <attribute name="recordLength" commment="Total length of the record in octets, including padding. The record shall end on a 64-bit boundary after any padding. = 6 + K + P">
+        <attribute name="recordLength" hidden="true" commment="Total length of the record in octets, including padding. The record shall end on a 64-bit boundary after any padding. = 6 + K + P">
             <primitive type="uint16"/>
         </attribute>
 
         <attribute name="recordSpecificFields" commment="The attribute data format conforming to that specified by the record type. K bytes long">
-            <primitivelist length="0">
+            <primitivelist length="0" countFieldName="recordLength">
                 <primitive type="uint8"/>
             </primitivelist>
         </attribute>
@@ -1299,7 +1299,7 @@
     <class name="FixedDatum" inheritsFrom="root" comment="Fixed Datum Record. Section 6.2.38">
    
         <attribute name="fixedDatumID" comment="ID of the fixed datum, an enumeration">
-            <sisoenum type="VariableRecordTypes" comment="uid 66"/>
+            <sisoenum type="VariableRecordType" comment="uid 66"/>
         </attribute>
   
         <attribute name="fixedDatumValue" comment="Value for the fixed datum">
@@ -1529,7 +1529,7 @@
     <class name="IOCommsNodeRecord" inheritsFrom="IORecord" comment="6.2.48.2">
         
         <attribute name="recordType" initialValue="5501">
-            <sisoenum type="VariableRecordTypes" defaultValue="VariableRecordTypes.IO_COMMUNICATIONS_NODE" comment="uid 66"/>
+            <sisoenum type="VariableRecordType" defaultValue="VariableRecordType.IO_COMMUNICATIONS_NODE" comment="uid 66"/>
         </attribute>
         
         <attribute name="recordLength" initialValue="16">
@@ -1553,7 +1553,7 @@
     <class name="IOEffectRecord" inheritsFrom="IORecord" comment="6.2.48.3">
         
         <attribute name="recordType" initialValue="5500">
-            <sisoenum type="VariableRecordTypes" defaultValue="VariableRecordTypes.IO_EFFECT" comment="uid 66"/>
+            <sisoenum type="VariableRecordType" defaultValue="VariableRecordType.IO_EFFECT" comment="uid 66"/>
         </attribute>
         
         <attribute name="recordLength" initialValue="16">
@@ -1607,7 +1607,7 @@
     <class name="IFFData" inheritsFrom="root" comment="repeating element in IFF Data specification record">
      
         <attribute name="recordType" comment="enumeration for type of record">
-            <sisoenum type="VariableRecordTypes" comment="uid 66"/>
+            <sisoenum type="VariableRecordType" comment="uid 66"/>
         </attribute>
   
         <attribute name="recordLength" comment="length of record, including padding">
@@ -2194,18 +2194,18 @@
 
         <attribute name="recordIDs" comment="variable length list of 32 bit record types">
             <objectlist countFieldName="numberOfRecords">
-                <sisoenum type="VariableRecordTypes" comment="uid = 66"/>
-                <!--<classRef name="VariableRecordTypes"/>-->
+                <sisoenum type="VariableRecordType" comment="uid = 66"/>
+                <!--<classRef name="VariableRecordType"/>-->
             </objectlist> 
         </attribute>
 
     </class>
 
     <class name="RecordSpecificationElement" inheritsFrom="root"
-           comment="Synthetic record, made up from section 6.2.72. This is used to acheive a repeating variable list element.">
+           comment="Synthetic record, made up from section 6.2.73. This is used to achieve a repeating variable list element.&#60;p&#62;recordLength, recordCount and recordValues must be set by hand so the.">
 
         <attribute name="recordID" comment="the data structure used to convey the parameter values of the record for each record. 32 bit enumeration.">
-            <sisoenum type="VariableRecordTypes" comment="uid = 66"/>
+            <sisoenum type="VariableRecordType" comment="uid = 66"/>
         </attribute>
 
         <attribute name="recordSetSerialNumber" comment="the serial number of the first record in the block of records">
@@ -2229,15 +2229,11 @@
                 <primitive type="uint8"/>
             </primitivelist>
         </attribute>
-
-        <!--<attribute name="padTo64" comment="Padding of 0 to 63 unused bits as required for 32-bit alignment of the Record Set field.">
+        
+        <attribute name="padTo64" comment="used if required to make entire record size an even multiple of 8 bytes">
             <primitivelist length="0">
                 <primitive type="uint8"/>
             </primitivelist>
-        </attribute> -->
-        
-        <attribute name="padTo64">
-            <padtoboundary length="64"/>
         </attribute>
     </class>
 
@@ -2407,7 +2403,7 @@
     <class name="StandardVariableRecord" inheritsFrom="root" comment="Section 6.2.83">
         
         <attribute name="recordType">
-            <sisoenum type="VariableRecordTypes" comment="uid 66"/>
+            <sisoenum type="VariableRecordType" comment="uid 66"/>
         </attribute>
         
         <attribute name="recordLength" hidden="true" >
@@ -2605,12 +2601,13 @@
 
     </class>
 
+    <!-- This is special-cased because of the complexity of dealing with the length-in-bits field
     <class name="VariableDatum" 
            inheritsFrom="root" 
            comment="the variable datum type, the datum length, and the value for that variable datum type. Section 6.2.93">
 
         <attribute name="variableDatumID" comment="Type of variable datum to be transmitted. 32 bit enumeration defined in EBV">
-            <sisoenum type="VariableRecordTypes" comment="uid 66"/>
+            <sisoenum type="VariableRecordType" comment="uid 66"/>
         </attribute>
 
         <attribute name="variableDatumLength" comment="Length, IN BITS, of the variable datum.">
@@ -2618,47 +2615,18 @@
         </attribute>
 
         <attribute name="variableDatumValue" comment="This can be any number of bits long, depending on the datum.">
-            <primitivelist length="0">
+            <primitivelist length="0" bitCountFieldName="variableDatumLength">
                 <primitive type="uint8"/>
             </primitivelist>
         </attribute>
-
-        <!--<attribute name="paddingTo64bits">
-            <primitivelist length="0">
-                <primitive type="uint8"/>
-            </primitivelist>
-        </attribute> -->
         
        <attribute name="padding">
             <padtoboundary length="64"/>
         </attribute>
 
     </class>
-<!-- don't recognize this 
-    <class name="VariableParameter" inheritsFrom="root" comment="specification of additional information associated with an entity or detonation, not otherwise accounted for in a PDU 6.2.94.1">
+    -->
 
-        <attribute name="recordType" comment="the identification of the Variable Parameter record. Enumeration from EBV">
-            <primitive type="unsigned byte"/>
-        </attribute>
-
-        <attribute name="variableParameterFields1" comment="Variable parameter data fields. Two doubles minus one byte">
-            <primitive type="double"/>
-        </attribute>
-
-        <attribute name="variableParameterFields2" comment="Variable parameter data fields. ">
-            <primitive type="unsigned int"/>
-        </attribute>
-
-        <attribute name="variableParameterFields3" comment="Variable parameter data fields. ">
-            <primitive type="unsigned short"/>
-        </attribute>
-
-        <attribute name="variableParameterFields4" comment="Variable parameter data fields. ">
-            <primitive type="unsigned byte"/>
-        </attribute>
-  
-    </class>
--->
     <class name="VariableParameter" inheritsFrom="root" comment="used in DetonationPdu, ArticulatedPartsPdu among others">
         
         <attribute name="recordType" comment="the identification of the Variable Parameter record. Enumeration from EBV">
@@ -2826,7 +2794,7 @@
     <class name="VariableTransmitterParameters" inheritsFrom="root" comment="Relates to radios. Section 6.2.95">
 
         <attribute name="recordType" comment="Type of VTP">
-            <sisoenum type="VariableRecordTypes" comment="uid 66"/>
+            <sisoenum type="VariableRecordType" comment="uid 66"/>
         </attribute>
 
         <attribute name="recordLength" comment="Length, in bytes">
@@ -3055,7 +3023,7 @@
 
     <!-- PDUs start here. Everything before this were records that are contained inside of PDUs -->
   
-    <class name="Pdu" inheritsFrom="root" abstract="true" comment="Base class of PduBase and LiveEntityPdu">
+    <class name="Pdu" inheritsFrom="root" abstract="true" implements="Marshaller" comment="Base class of PduBase and LiveEntityPdu">
        
         <attribute name="protocolVersion" comment="The version of the protocol. 5=DIS-1995, 6=DIS-1998, 7=DIS-2012"> 
             <sisoenum type="DISProtocolVersion" comment="uid 3" defaultValue="DISProtocolVersion.IEEE_12781_2012"/>  <!-- DIS 7 -->

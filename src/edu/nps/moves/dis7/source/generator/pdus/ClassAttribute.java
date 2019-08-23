@@ -48,14 +48,13 @@ public class ClassAttribute
      */
     protected String countFieldName;
     
-    /** If this is a primitive type (specifically some sort of integer) we may be the count
-     * field for a variable length list. If that's the case, the getter method is different,
-     * and there is no setter method. Instead we simply use the current actual length of
-     * the dynamic list.
+    /** 
+     * Which of list or array is it
      */
+    protected boolean isPrimitiveListLengthField = false;
     protected boolean isDynamicListLengthField = false;
     
-    /** If this is a dynamic length list field, we also need the field that this tells the 
+    /** If this is a dynamic length list field or primitive list, we also need the field that this tells the 
      * length for.
      */
     protected ClassAttribute dynamicListClassAttribute = null;
@@ -277,6 +276,15 @@ public class ClassAttribute
         return isDynamicListLengthField;
     }
     
+    public void setIsPrimitiveListLengthField(boolean b)
+    {
+        isPrimitiveListLengthField = b;
+    }
+    public boolean getIsPrimitiveListLengthField()
+    {
+        return isPrimitiveListLengthField;
+    }
+
     public void setDynamicListClassAttribute(ClassAttribute attr)
     {
         dynamicListClassAttribute = attr;
