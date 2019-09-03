@@ -1,8 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Copyright (c) 2008-2019, MOVES Institute, Naval Postgraduate School. All rights reserved.
+ * This work is licensed under the BSD open source license, available at https://www.movesinstitute.org/licenses/bsd.html
  */
+
 package edu.nps.moves.dis7.source.generator.enumerations;
 
 import java.io.File;

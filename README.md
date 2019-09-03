@@ -166,7 +166,7 @@ When the project is "run", as described above, the class which serves as the ent
 4. `edu.nps.moves.dis7.source.generator.entitytypes.ObjectTypeMain` -- produces miscellaneous object classes from the SISO specification
 5. `edu.nps.moves.dis7.source.generator.entitytypes.Main` -- produces entity type classes from the SISO specification
 
-The order of execution of these 5 sections is important: each potentially relies on the existence of classes created by the execution of the prior steps.  Doing a single "Run project" command as described above will compile all classes found by Netbeans at that moment. Because some later steps require compiled enumerations, the first run will end in error.  Running a second time will cause the just-created enumeration classes to be compiled, and the subsequent steps can then complete.
+The order of execution of these 5 sections is important: each potentially relies on the existence of classes created by the execution of the prior steps.  Doing a single "Run project" command as described above will first compile all classes found by Netbeans at that moment. Because some later steps require compiled enumerations, the first run will end in error.  Running a second time will cause the just-created enumeration classes to be compiled, and the subsequent steps can then complete.
 
 <h4>Source Generation Method -- Pdus</h4>
 
