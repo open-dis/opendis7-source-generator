@@ -514,6 +514,11 @@ public class JammerMain
     return r;
   }
 
+/**
+ * Naming conventions for cleaning up provided names
+ * @param s enumeration string from XML data file
+ * @return normalized name
+ */
   private String fixName(String s)
   {
     String r = s.trim();

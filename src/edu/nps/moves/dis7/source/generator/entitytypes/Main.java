@@ -651,6 +651,11 @@ public class Main
       return s;
   }
 
+/**
+ * Naming conventions for cleaning up provided names
+ * @param s enumeration string from XML data file
+ * @return normalized name
+ */
   private String buidKindOrDomainPackagePart(String s)
   {
     s = fixName(s);

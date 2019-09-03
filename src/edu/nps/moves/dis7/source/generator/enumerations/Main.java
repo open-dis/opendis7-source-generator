@@ -125,6 +125,10 @@ public class Main
         System.out.println("Complete. " + handler.enums.size() + " enums created.");
     }
 
+    /**
+     * https://docs.oracle.com/javase/8/docs/api/java/lang/String.html#format-java.lang.String-java.lang.Object...-
+     * https://docs.oracle.com/javase/8/docs/api/java/util/Formatter.html#syntax
+     */
     private void loadEnumTemplates()
     {
         try {
@@ -619,7 +623,11 @@ public class Main
           sb.append(String.format(enumTemplate21, createEnumName(row.description), row.value, row.description.replace('"', '\''), xrefName));
         }
       }
-        
+        /**
+         * Naming conventions for enumeration names
+         * @param s enumeration string from XML data file
+         * @return normalized name
+         */
         private String createEnumName(String s)
         {
             String r = s.toUpperCase();
