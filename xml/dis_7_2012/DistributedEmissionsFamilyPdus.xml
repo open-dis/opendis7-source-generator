@@ -244,7 +244,7 @@
             <primitive type="uint16"/>
         </attribute>
         
-        <attribute name="acousticEmitter">
+        <attribute name="acousticEmitter" comment="TODO">
             <classRef name="AcousticEmitter"/>
         </attribute>
 
