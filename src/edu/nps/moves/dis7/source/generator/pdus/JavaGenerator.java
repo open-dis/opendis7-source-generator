@@ -83,8 +83,10 @@ public class JavaGenerator extends Generator
             System.exit(-1);
         }
 
-        // Set up a mapping between the strings used in the XML file and the strings used
-        // in the java file, specifically the data types. This could be externalized to
+        final String UNSIGNED_INT8 = "uint8"; // TODO generalize this approach
+        
+        // Set up a mapping between the strings used in the Open-DIS XML file and the strings used
+        // in the generated java file, specifically the data types. This could be externalized to
         // a properties file, but there's only a dozen or so and an external props file
         // would just add some complexity.
         // dont quite get this.  looks in error
@@ -99,7 +101,7 @@ public class JavaGenerator extends Generator
         types.setProperty("float32", "float");
         types.setProperty("float64", "double");
     
-        // Set up the mapping between primitive types and marshal types.       
+        // Set up the mapping between Open-DIS primitive types and marshal types.       
         marshalTypes.setProperty("uint8", "byte");
         marshalTypes.setProperty("uint16", "short");
         marshalTypes.setProperty("uint32", "int");
@@ -389,6 +391,11 @@ public class JavaGenerator extends Generator
         pw.println("{");
     }
 
+    /**
+     * Write instance variables
+     * @param pw
+     * @param aClass 
+     */
     private void writeIvars(PrintWriter pw, GeneratedClass aClass)
     {
         List ivars = aClass.getClassAttributes();
