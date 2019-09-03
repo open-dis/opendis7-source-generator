@@ -94,7 +94,7 @@
             </objectlist> 
         </attribute>
         
-        <attribute name="numberOfVariableDatumRecords" hidden="true" comment="number of variable datum records">
+        <attribute name="numberOfVariableDatumRecords" hidden="true" comment="Number of variable datum records, handled automatically by marshaller at run time (and not modifiable by end-user programmers)">
             <primitive type= "uint32"/>
         </attribute>
       

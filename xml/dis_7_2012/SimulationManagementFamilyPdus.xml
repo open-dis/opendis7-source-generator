@@ -113,7 +113,7 @@ Remove Entity PDU. See 5.6.5.6.">
             <primitive type="uint32"/>
         </attribute>
     
-        <attribute name="numberOfVariableDatumRecords" hidden="true" comment="Number of variable datum records">
+        <attribute name="numberOfVariableDatumRecords" hidden="true" comment="Number of variable datum records, handled automatically by marshaller at run time (and not modifiable by end-user programmers)">
             <primitive type="uint32"/>
         </attribute>
     
@@ -148,7 +148,7 @@ Request PDU with an Action Response PDU. See 5.6.5.8.">
             <primitive type="uint32"/>
         </attribute>
     
-        <attribute name="numberOfVariableDatumRecords" hidden="true" comment="Number of variable datum records">
+        <attribute name="numberOfVariableDatumRecords" hidden="true" comment="Number of variable datum records, handled automatically by marshaller at run time (and not modifiable by end-user programmers)">
             <primitive type="uint32"/>
         </attribute>
     
@@ -182,7 +182,7 @@ Request PDU with an Action Response PDU. See 5.6.5.8.">
             <primitive type="uint32"/>
         </attribute>
       
-        <attribute name="numberOfVariableDatumRecords" hidden="true" comment="Number of variable datum records">
+        <attribute name="numberOfVariableDatumRecords" hidden="true" comment="Number of variable datum records, handled automatically by marshaller at run time (and not modifiable by end-user programmers)">
             <primitive type="uint32"/>
         </attribute>
       
@@ -217,7 +217,7 @@ Request PDU with an Action Response PDU. See 5.6.5.8.">
             <primitive type="uint32"/>
         </attribute>
       
-        <attribute name="numberOfVariableDatumRecords" hidden="true" comment="Number of variable datum records">
+        <attribute name="numberOfVariableDatumRecords" hidden="true" comment="Number of variable datum records, handled automatically by marshaller at run time (and not modifiable by end-user programmers)">
             <primitive type="uint32"/>
         </attribute>
       
@@ -251,7 +251,7 @@ Request PDU with an Action Response PDU. See 5.6.5.8.">
             <primitive type="uint32"/>
         </attribute>
       
-        <attribute name="numberOfVariableDatumRecords" hidden="true" comment="Number of variable datum records">
+        <attribute name="numberOfVariableDatumRecords" hidden="true" comment="Number of variable datum records, handled automatically by marshaller at run time (and not modifiable by end-user programmers)">
             <primitive type="uint32"/>
         </attribute>
       
@@ -286,7 +286,7 @@ Request PDU with an Action Response PDU. See 5.6.5.8.">
             <primitive type="uint32"/>
         </attribute>
       
-        <attribute name="numberOfVariableDatumRecords" hidden="true" comment="Number of variable datum records">
+        <attribute name="numberOfVariableDatumRecords" hidden="true" comment="Number of variable datum records, handled automatically by marshaller at run time (and not modifiable by end-user programmers)">
             <primitive type="uint32"/>
         </attribute>
       
@@ -313,7 +313,7 @@ Request PDU with an Action Response PDU. See 5.6.5.8.">
             <primitive type="uint32"/>
         </attribute>
       
-        <attribute name="numberOfVariableDatumRecords" hidden="true" comment="Number of variable datum records">
+        <attribute name="numberOfVariableDatumRecords" hidden="true" comment="Number of variable datum records, handled automatically by marshaller at run time (and not modifiable by end-user programmers)">
             <primitive type="uint32"/>
         </attribute>
       
