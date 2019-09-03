@@ -62,7 +62,7 @@
             <primitive type= "uint16"/>
         </attribute>
       
-        <attribute name="numberOfSilentEntityTypes" hidden="true" comment="number of silent entity types">
+        <attribute name="numberOfSilentEntityTypes" hidden="true" comment="Number of silent entity types, handled automatically by marshaller at run time (and not modifiable by end-user programmers)">
             <primitive type= "uint16"/>
         </attribute>
       
