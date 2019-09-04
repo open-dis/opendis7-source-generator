@@ -67,6 +67,8 @@ The instructions below reference them in order.
 6. **Choose "2 make pdus"** from the run configurations list
 7. **Run Project** from the `Run` menu
 8. **In Project Properties/Sources** add the `src-specialcase/java` folder to the "Source Package Folders"
+
+	(Note: The step above changes Netbeans project configuration files, but those changes should not be committed to the Git repository.)
 9. **Build Project** from the `Run` menu (not needed if "compile on save")<hr/>
 10. **Choose "3 make jammers"** from the run configurations list
 11. **Run Project** from the `Run` menu
