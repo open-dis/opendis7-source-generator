@@ -30,12 +30,27 @@ The Java language is inherently cross-platform and any OS on any hardware for wh
 1. Apache **Netbeans 11** Integrated Development Environment ("IDE")
 2. Apache **Ant** Java build tool (integrated in Netbeans)
 3. **Git** version control system (for downloading project; supported in Netbeans)
+4. OpenJdk Java version 12.0.2
 
 The project is hosted on **github.com** and the support files which are used to define the project structure are also included.  Following the procedure below, a simple download, then a small number of additional steps are all that are required to build the source files for a DIS distribution.
 
 The project does not automatically download runtime dependencies like a **Maven**-based project.  Only one external dependency is used, and that is the Apache **Commons-IO** library.  The jar for that is found in the `libs/` directory of the project.
 
 <H3>Generation Procedure</H3>
+
+(The following steps are ripe for automation using a custom Ant/Netbeans task.)
+
+There are five separate class groups that are generated separately.  Some need prior groups to be built and compiled before they can be compiled with no errors.  There are several defined source folder in the project.  One is `./src-specialcase` . This small group of class files requires the presence of the generated pdus before properly compiling.  Similarly the pdus require the presence of the enumerations before they can be built.
+
+To handle this complexity, 5 separate run configurations have been defined and numbered:
+
+* 1 make enums
+* 2 make pdus
+* 3 make jammers
+* 4 make object types
+* 5 make entities
+
+The instructions below reference them in order.
 
 1. **Clone project**
 	(You may alternatively use the built-in Git support in Netbeans.)  The command-line execution is:
@@ -44,30 +59,35 @@ The project does not automatically download runtime dependencies like a **Maven*
 
 2. **Open Netbeans 11, navigate to clone directory**
 
-	`File->Open Project->open-dis7-source-generator`
+	`File->Open Project->open-dis7-source-generator`<hr/>
 
+3. **Choose "1 make enums"** from the run configurations list
 4. **Run Project** from the `Run` menu
+5. **Build Project** from the `Run` menu (not needed if "compile on save")<hr/>
+6. **Choose "2 make pdus"** from the run configurations list
+7. **Run Project** from the `Run` menu
+8. **In Project Properties/Sources** add the `src-specialcase/java` folder to the "Source Package Folders"
+9. **Build Project** from the `Run` menu (not needed if "compile on save")<hr/>
+10. **Choose "3 make jammers"** from the run configurations list
+11. **Run Project** from the `Run` menu
+12. **Choose "4 make object types"** from the run configurations list
+13. **Run Project** from the `Run` menu
 
-	First run will end in error such as<br/>
-`Exception in thread "main" java.lang.RuntimeException: java.lang.ClassNotFoundException: edu.nps.moves.dis7.enumerations.PlatformDomain`
-
-5. **Run Project again**
-
-	Should be no errors.
-
-6. **`Run->Build Project`**
+14. **Choose "5 make entities"** from the run configurations list
+15. **Run Project** from the `Run` menu
+16. **Clean and Build Project** from the `Run` menu
 
 	This step takes a while since there are over 20000 entity classes.
 
-	A jar file named `open-dis7-source-generator.jar` is created, but it is not used.
+	A jar file named `open-dis7-source-generator.jar` is created, but it is not used.<hr/>
 
-7. **From the File window, right-click** `build.xml`
+17. **From the File window, right-click** `build.xml`
 
-8. **Select** `Run Target->Other Targets->package-all-jars`
+18. **Select** `Run Target->Other Targets->package-all-jars`
 
-9. **Select** `Run Target->Other Targets->javadoc entities`
+19. **Select** `Run Target->Other Targets->javadoc entities`
 
-	This step takes a while.
+	These steps take a while and produce the products below.
 	
 <H3>Products</H3>
 
