@@ -91,7 +91,13 @@ The instructions below reference them in order.
 
 	These steps take a while and produce the products below.
 	
-<H3>Products</H3>
+<H3>Deploying Products</H3>
+
+Once a proper build has been achieved in the open-dis7-source-generator project, 
+it becomes time to update the deployed version maintained in the open-dis7-java project.
+
+Some care has to be taken to ensure that any changes in that tree are accounted for
+by the source generator beforehand, so that code changes and improvements aren't lost.
 
 1. The generated source resides in the `src-generated` directory.
 2. The generated entity jars reside in the `dist` directory.
