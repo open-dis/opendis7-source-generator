@@ -167,7 +167,7 @@ public class SignalPdu extends RadioCommunicationsFamilyPdu implements Serializa
   /**
    * Getter for {@link SignalPdu#dataLength}
    *
-   * @return valud of field
+   * @return value of field
    */
   public short getDataLength()
   {
@@ -225,8 +225,9 @@ public class SignalPdu extends RadioCommunicationsFamilyPdu implements Serializa
   }
 
   /* *************************** */
- /* Marshal / unmarshal methods */
- /* *************************** */
+  /* Marshal / unmarshal methods */
+  /* *************************** */
+  
   /**
    * Serializes an object to a DataOutputStream.
    *
@@ -280,6 +281,7 @@ public class SignalPdu extends RadioCommunicationsFamilyPdu implements Serializa
     uPosition += 2;
     samples = (short) dis.readUnsignedShort();
     uPosition += 2;
+    
     for (int idx = 0; idx < byteLength; idx++) {
       data[idx] = dis.readByte();
     }
