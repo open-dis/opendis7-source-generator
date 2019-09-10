@@ -51,6 +51,7 @@
     <xi:include href="InformationOperationsFamilyPdus.xml"/>
     <xi:include href="LiveEntityFamilyPdus.xml"/>
 
+    <!-- The "domainHolder" special case is not used.  Instead, find the Domain class in the src-specialcase directory
     <class name="Domain" inheritsFrom="root" specialCase="domainHolder" comment="A special class to contain and act as a super class for Domain enums">
         <attribute name="domain1">
             <sisoenum type="PlatformDomain" comment="uid 8"/>
@@ -61,7 +62,7 @@
         <attribute name="domain3">
             <sisoenum type="SupplyDomain" comment="uid 600" /> 
         </attribute>           
-    </class>
+    </class> -->
 
     <class name="AcousticEmitter" inheritsFrom="root" comment=" information about a specific UA emitter. Section 6.2.2.">
     

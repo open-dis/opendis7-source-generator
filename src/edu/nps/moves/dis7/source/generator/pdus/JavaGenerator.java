@@ -208,12 +208,12 @@ public class JavaGenerator extends Generator
     {
         writeLicense(pw,aClass);
         pw.flush();
-        
+        /*
         if(aClass.getSpecialCase() != null) {
             writeSpecialCase(pw, aClass);
             return;
         }
-        
+        */
         writeImports(pw, aClass);
         pw.flush();
         writeClassComments(pw, aClass);
@@ -258,12 +258,12 @@ public class JavaGenerator extends Generator
         pw.close();
     }
 
-    String domainTemplate1;
+  /*  String domainTemplate1;
     String domainTemplate2;
-    String domainTemplate3;
+    String domainTemplate3;*/
     String specSource;
     String license;
-    
+    /*
     private void writeSpecialCase(PrintWriter pw, GeneratedClass aClass)
     {
         if(aClass.getSpecialCase().equals(Main.DOMAINHOLDER)) {
@@ -285,13 +285,13 @@ public class JavaGenerator extends Generator
         pw.flush();
         pw.close();
     }
-    
+    */
     private void readTemplates()
     {
         try {
-            domainTemplate1 = loadOneTemplate("domainpart1.txt");
-            domainTemplate2 = loadOneTemplate("domainpart2.txt");
-            domainTemplate3 = loadOneTemplate("domainpart3.txt");
+         //   domainTemplate1 = loadOneTemplate("domainpart1.txt");
+         //   domainTemplate2 = loadOneTemplate("domainpart2.txt");
+         //   domainTemplate3 = loadOneTemplate("domainpart3.txt");
             specSource      = loadOneTemplate("dis7spec.txt");
             license         = loadOneTemplate("dis7javalicense.txt");
         }

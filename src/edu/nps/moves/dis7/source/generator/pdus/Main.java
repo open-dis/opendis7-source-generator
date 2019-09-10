@@ -59,7 +59,7 @@ public class Main
     public static final String SERIALIZE = "serialize";
     public static final String HIDDEN = "hidden";
     public static final String SPECIALCASE = "specialCase";
-    public static final String DOMAINHOLDER = "domainHolder";
+    //public static final String DOMAINHOLDER = "domainHolder";
     public static final String PADTOBOUNDARY = "padtoboundary";
     public static final String ABSTRACT = "abstract";
     
@@ -265,6 +265,9 @@ public class Main
      *
      * AST is a reference to "abstract syntax tree", which this really isn't, but
      * sort of is.
+     * 10 Sep 2019, I think this method can be removed.  If a class is missing, it will
+     * show up soon enough when the products are compiled.  It's had to be hacked to
+     * get around some of the special cases.
      */
     private boolean astIsPlausible()
     { 
@@ -288,6 +291,7 @@ public class Main
         generatedClassNames.put("JammerSpecific",new GeneratedClass());
         generatedClassNames.put("EntityCapabilities", new GeneratedClass());
         generatedClassNames.put("PduStatus", new GeneratedClass());
+        generatedClassNames.put("Domain", new GeneratedClass());
         
         // trip through every class specified
         for(GeneratedClass aClass : generatedClassNames.values()) {
@@ -359,6 +363,7 @@ public class Main
         generatedClassNames.remove("JammerSpecific");
         generatedClassNames.remove("EntityCapabilities");
         generatedClassNames.remove("PduStatus");
+        generatedClassNames.remove("Domain");
 
         return true;
     } // end of astIsPlausible
