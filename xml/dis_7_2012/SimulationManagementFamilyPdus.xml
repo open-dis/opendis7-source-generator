@@ -309,18 +309,12 @@ Request PDU with an Action Response PDU. See 5.6.5.8.">
     
         <initialValue name="pduType" value="DISPDUType.COMMENT"/>
     
-        <attribute name="numberOfFixedDatumRecords" hidden="true" comment="Number of fixed datum records">
+        <attribute name="numberOfFixedDatumRecords" hidden="true" comment="Number of fixed datum records, not used in this Pdu">
             <primitive type="uint32"/>
         </attribute>
-      
+        
         <attribute name="numberOfVariableDatumRecords" hidden="true" comment="Number of variable datum records, handled automatically by marshaller at run time (and not modifiable by end-user programmers)">
             <primitive type="uint32"/>
-        </attribute>
-      
-        <attribute name="fixedDatums" comment="variable length list of fixed datums">
-            <objectlist countFieldName="numberOfFixedDatumRecords">
-                <classRef name="FixedDatum"/>
-            </objectlist> 
         </attribute>
       
         <attribute name="variableDatums" comment="variable length list of variable length datums">

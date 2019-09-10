@@ -411,18 +411,12 @@
       
         <initialValue name="pduType" value="DISPDUType.COMMENT_RELIABLE"/>
    
-        <attribute name="numberOfFixedDatumRecords" hidden="true" comment="Fixed datum record count">
+        <attribute name="numberOfFixedDatumRecords" hidden="true" comment="Fixed datum record count, not used in this Pdu">
             <primitive type="uint32"/>
         </attribute>
    
         <attribute name="numberOfVariableDatumRecords" hidden="true" comment="variable datum record count">
             <primitive type="uint32"/>
-        </attribute>
-   
-        <attribute name="fixedDatumRecords" comment="Fixed datum records">
-            <objectlist countFieldName="numberOfFixedDatumRecords">
-                <classRef name="FixedDatum"/>
-            </objectlist> 
         </attribute>
     
         <attribute name="variableDatumRecords" comment="Variable datum records">
