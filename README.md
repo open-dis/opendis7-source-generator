@@ -240,4 +240,10 @@ When a SAX "start" element is encountered, a new Java object is created -- one o
 
 When a SAX "end" element is encountered, the "current" element is written out as a complete EntityType class, with specific category, subcategory, etc., values. Template files are used as above.
 
+Further work:
+Refactor Java generator classes
+Implement other language outputs
+Improve descriptions / javadoc in XML
+Implement information "toString()" methods for classes like EulerAngles, EntityID, EntityKind
+
 *Document end*

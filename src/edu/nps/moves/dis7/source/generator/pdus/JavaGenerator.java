@@ -1566,7 +1566,7 @@ public class JavaGenerator extends Generator
 			pw.println("    if(obj == null)");
 			pw.println("       return false;");
 			pw.println();
-			pw.println("    if(getClass() != obj.getClass())");
+			pw.println("    if(!getClass().isAssignableFrom(obj.getClass())) //if(getClass() != obj.getClass())");
 			pw.println("        return false;");
 			pw.println();
 			pw.println("    return equalsImpl(obj);");
@@ -1614,56 +1614,43 @@ public class JavaGenerator extends Generator
                 + aClass.getName() + ")obj;");
             pw.println();
 
-            for (int idx = 0; idx < aClass.getClassAttributes().size(); idx++) {
-                ClassAttribute anAttribute = (ClassAttribute) aClass
-                    .getClassAttributes().get(idx);
-                if(anAttribute.isHidden())
-                  continue;
+          for (int idx = 0; idx < aClass.getClassAttributes().size(); idx++) {
+            ClassAttribute anAttribute = (ClassAttribute) aClass.getClassAttributes().get(idx);
+            if (anAttribute.isHidden())
+              continue;
+            String attname = anAttribute.getName();
+            
+            switch (anAttribute.getAttributeKind()) {
+              case PRIMITIVE:
+                pw.println("     if( ! (" + attname + " == rhs." + attname + ")) ivarsEqual = false;");
+                break;
 
-                if (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE) {
-                    pw.println("     if( ! (" + anAttribute.getName()
-                        + " == rhs." + anAttribute.getName()
-                        + ")) ivarsEqual = false;");
-                }
+              case SISO_ENUM:
+                pw.println("     if( ! (" + attname + " == rhs." + attname + ")) ivarsEqual = false;");
+                break;
 
-                if (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.SISO_ENUM) {
-                    pw.println("     if( ! (" + anAttribute.getName()
-                        + " == rhs." + anAttribute.getName()
-                        + ")) ivarsEqual = false;");
-                }
+              case SISO_BITFIELD:
+              case CLASSREF:
+                pw.println("     if( ! (" + attname + ".equals( rhs." + attname + ") )) ivarsEqual = false;");
+                break;
+                
+              case PRIMITIVE_LIST:
+                pw.println();
+                pw.println("     for(int idx = 0; idx < "+ anAttribute.getListLength() + "; idx++)");
+                pw.println("     {");
+                pw.println("          if(!(" + attname + "[idx] == rhs." + attname + "[idx])) ivarsEqual = false;");
+                pw.println("     }");
+                pw.println();
+                break;
 
-                if (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF) {
-                    pw.println("     if( ! (" + anAttribute.getName()
-                        + ".equals( rhs." + anAttribute.getName()
-                        + ") )) ivarsEqual = false;");
-                }
-
-                if ((anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE_LIST)) {
-                    pw.println();
-                    pw.println("     for(int idx = 0; idx < "
-                        + anAttribute.getListLength() + "; idx++)");
-                    pw.println("     {");
-                    pw.println("          if(!(" + anAttribute.getName()
-                        + "[idx] == rhs." + anAttribute.getName()
-                        + "[idx])) ivarsEqual = false;");
-                    pw.println("     }");
-                    pw.println();
-                }
-
-                if ((anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST)) {
-                    pw.println();
-                    pw.println("     for(int idx = 0; idx < "
-                        + anAttribute.getName() + ".size(); idx++)");
-
-                    // pw.println("        " + anAttribute.getType() + " x = ("
-                    // + anAttribute.getType() + ")" + anAttribute.getName() +
-                    // ".get(idx);");
-                    pw.println("        if( ! ( " + anAttribute.getName()
-                        + ".get(idx).equals(rhs." + anAttribute.getName()
-                        + ".get(idx)))) ivarsEqual = false;");
-                    pw.println();
-                }
+              case OBJECT_LIST:
+                pw.println();
+                pw.println("     for(int idx = 0; idx < " + attname + ".size(); idx++)");
+                pw.println("        if( ! ( " + attname + ".get(idx).equals(rhs." + attname + ".get(idx)))) ivarsEqual = false;");
+                pw.println();
+                break;
             }
+          }
 
             //pw.println();
             if (aClass.getParentClass().equalsIgnoreCase("root")) {
