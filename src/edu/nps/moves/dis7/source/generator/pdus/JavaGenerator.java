@@ -251,8 +251,10 @@ public class JavaGenerator extends Generator
         pw.flush();
 
         //this.writeXmlMarshallMethod(pw, aClass);
-        this.writeEqualityMethod(pw, aClass);
+        writeEqualityMethod(pw, aClass);
 
+        writeToStringMethod(pw, aClass);
+        
         pw.println("} // end of class");
         pw.flush();
         pw.close();
@@ -1578,7 +1580,7 @@ public class JavaGenerator extends Generator
 		writeEqualityImplMethod(pw, aClass); // Write impl for establishing content equality
 	}
 
-    /**
+  /**
      * write equalsImpl(...) method to this class to parent or subclasses
      *
      * @param pw
@@ -1665,7 +1667,77 @@ public class JavaGenerator extends Generator
             System.out.println(e);
         }
     }
+ 
+    /**
+     * Build the toString() method for this class, using the toString() methods of the
+     * fields of the object
+     * @param pw
+     * @param aClass 
+     */
+    public void writeToStringMethod(PrintWriter pw, GeneratedClass aClass)
+    {
+        pw.println();
+        pw.println(" @Override");
+        pw.println(" public String toString()");
+        pw.println(" {");
+        pw.println("    StringBuilder sb = new StringBuilder();");
+        pw.println("    sb.append(getClass().getSimpleName()+\":\\n\");\n");
+
+        ArrayList<ClassAttribute> objlists = new ArrayList<>();
+
+        aClass.getClassAttributes().forEach(attr -> {
+            if (!attr.isHidden()) {
+                switch(attr.getAttributeKind()) {
+                    case PRIMITIVE_LIST:
+                        writePrimitiveList(pw,attr);
+                        break;
+                    case OBJECT_LIST:
+                        objlists.add(attr);
+                        break;
+                    default:
+                        writeOneToString(pw,attr);
+                }
+            }
+        });
+
+        if (!objlists.isEmpty())
+            objlists.forEach(attr -> writeList(pw, attr));
     
+        pw.println();
+        pw.println("   return sb.toString();");
+        pw.println(" }");
+    }
+  
+    private void writePrimitiveList(PrintWriter pw, ClassAttribute attr)
+    {
+        pw.print("    sb.append(\" ");
+        pw.print(attr.getName());
+        pw.println(": \").append(\"\\n\");");
+        pw.print("    sb.append(Arrays.toString(");
+        pw.print(attr.getName());
+        pw.println(")).append(\"\\n\");");
+    }
+  
+    private void writeList(PrintWriter pw, ClassAttribute attr)
+    {
+        pw.print("    sb.append(\" ");
+        pw.print(attr.getName());
+        pw.println(": \").append(\"\\n\");");
+        pw.print("    ");
+        pw.print(attr.getName());
+        pw.println(".forEach(r->{ sb.append(r.getClass().getSimpleName()).append(\": \").append(r).append(\"\\n\");});");
+    
+    }
+    
+    private void writeOneToString(PrintWriter pw, ClassAttribute attr)
+    {
+        pw.print("    sb.append(\" ");
+        pw.print(attr.getName());
+        pw.print(": \").append(");
+        pw.print(attr.getName());
+        pw.println(").append(\"\\n\");");
+    }
+   
     /** 
      * returns a string with the first letter capitalized. 
      */

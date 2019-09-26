@@ -424,7 +424,7 @@ public class Main
             sb.append(";\n");
 
             // footer section
-            sb.append(String.format(dictEnumTemplate3, clsName));
+            sb.append(String.format(dictEnumTemplate3, clsName, clsName));
 
             // save file
             File target = new File(outputDirectory, clsName + ".java");
@@ -471,7 +471,7 @@ public class Main
                 sb.setLength(sb.length() - 2);
             sb.append(";\n");
 
-            sb.append(String.format(bitsetTemplate2, clsName, el.size, clsName, clsName, clsName, clsName));
+            sb.append(String.format(bitsetTemplate2, clsName, el.size, clsName, clsName, clsName, clsName, clsName));
 
             // save file
             File target = new File(outputDirectory, clsName + ".java");
@@ -582,11 +582,11 @@ public class Main
             // but figure out the smallest primitive size needed to hold it.
             int sz = Integer.parseInt(el.size);
             if(sz <= 8)
-               sb.append(String.format(enumTemplate3_8, clsName, clsName));
+               sb.append(String.format(enumTemplate3_8, clsName, clsName, clsName));
             else if(sz <= 16)
-               sb.append(String.format(enumTemplate3_16, clsName, clsName));
+               sb.append(String.format(enumTemplate3_16, clsName, clsName, clsName));
             else
-               sb.append(String.format(enumTemplate3_32, clsName, clsName));
+               sb.append(String.format(enumTemplate3_32, clsName, clsName, clsName));
 
             // save file
             File target = new File(outputDirectory, clsName + ".java");

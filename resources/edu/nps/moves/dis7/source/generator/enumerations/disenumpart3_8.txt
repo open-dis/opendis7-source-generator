@@ -38,4 +38,10 @@
     {
         return 1; // 8 bits
     }
+    
+    @Override
+    public String toString()
+    {
+        return "%s: " + name() + ": " + getValue(); 
+    }
 }

@@ -1,0 +1,212 @@
+BitFieldRoundTripTest
+Sent pdu: 
+Alternative EntityType: EntityType:
+ entityKind: EntityKind: OTHER: 0
+ domain: Other
+ country: Country: UNITED_STATES_OF_AMERICA_USA: 225
+ category: 0
+ subCategory: 0
+ specific: 0
+ extra: 0
+
+Entity Capabilities: LandPlatformCapabilities: {}
+Dead Reckoning Parameters: DeadReckoningParameters:
+ deadReckoningAlgorithm: DeadReckoningAlgorithm: OTHER: 0
+ parameters: 
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+ entityLinearAcceleration: Vector3Float:
+ x: 0.0
+ y: 0.0
+ z: 0.0
+
+ entityAngularVelocity: Vector3Float:
+ x: 0.0
+ y: 0.0
+ z: 0.0
+
+
+Entity Appearance: 0
+Entity ID: EntityID:
+ siteID: 2
+ applicationID: 3
+ entityID: 0
+
+Entity Linear Velocity: Vector3Float:
+ x: 5.0
+ y: 0.0
+ z: 0.0
+
+Entity Location: Vector3Double:
+ x: 10.0
+ y: 20.0
+ z: 1.0
+
+Entity Orientation: EulerAngles:
+ psi: 35.0
+ theta: 45.0
+ phi: 25.0
+
+Entity Type: MK48_14_logisticsplatformtruck:
+ entityKind: EntityKind: PLATFORM: 1
+ domain: Land
+ country: Country: UNITED_STATES_OF_AMERICA_USA: 225
+ category: 7
+ subCategory: 18
+ specific: 1
+ extra: 0
+
+Exercise ID: 1
+Force ID: ForceID: FRIENDLY_9: 25
+Length: 144
+Marking: EntityMarking:
+ characterSet: EntityMarkingCharacterSet: UNUSED: 0
+ characters: 
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+Pdu Status: PduStatus: 00101000
+Pdu Type: DISPDUType: ENTITY_STATE: 1
+Protocol Family: DISProtocolFamily: ENTITY_INFORMATION_INTERACTION: 1
+Protocol Version: DISProtocolVersion: IEEE_12781_2012: 7
+Timestamp: -1352736935
+Variable Parameters: []
+
+Rcvd pdu: 
+Alternative EntityType: EntityType:
+ entityKind: EntityKind: OTHER: 0
+ domain: Other
+ country: Country: UNITED_STATES_OF_AMERICA_USA: 225
+ category: 0
+ subCategory: 0
+ specific: 0
+ extra: 0
+
+Entity Capabilities: LandPlatformCapabilities: {}
+Dead Reckoning Parameters: DeadReckoningParameters:
+ deadReckoningAlgorithm: DeadReckoningAlgorithm: OTHER: 0
+ parameters: 
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+ entityLinearAcceleration: Vector3Float:
+ x: 0.0
+ y: 0.0
+ z: 0.0
+
+ entityAngularVelocity: Vector3Float:
+ x: 0.0
+ y: 0.0
+ z: 0.0
+
+
+Entity Appearance: 0
+Entity ID: EntityID:
+ siteID: 2
+ applicationID: 3
+ entityID: 0
+
+Entity Linear Velocity: Vector3Float:
+ x: 5.0
+ y: 0.0
+ z: 0.0
+
+Entity Location: Vector3Double:
+ x: 10.0
+ y: 20.0
+ z: 1.0
+
+Entity Orientation: EulerAngles:
+ psi: 35.0
+ theta: 45.0
+ phi: 25.0
+
+Entity Type: MK48_14_logisticsplatformtruck:
+ entityKind: EntityKind: PLATFORM: 1
+ domain: Land
+ country: Country: UNITED_STATES_OF_AMERICA_USA: 225
+ category: 7
+ subCategory: 18
+ specific: 1
+ extra: 0
+
+Exercise ID: 1
+Force ID: ForceID: FRIENDLY_9: 25
+Length: 144
+Marking: EntityMarking:
+ characterSet: EntityMarkingCharacterSet: UNUSED: 0
+ characters: 
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+Pdu Status: PduStatus: 00101000
+Pdu Type: DISPDUType: ENTITY_STATE: 1
+Protocol Family: DISProtocolFamily: ENTITY_INFORMATION_INTERACTION: 1
+Protocol Version: DISProtocolVersion: IEEE_12781_2012: 7
+Timestamp: -1352736935
+Variable Parameters: []
+
+MarshalEnumsTest
+DataQueryPduRoundTripTest
+PduFactoryTest
+FixedAndVariableDatumRoundTripTest
+CreateAllPduTypesTest
+EntityStatePduTest
+ObjectTypeMarshallTest
+CreateAllObjectTypesTest
+NullFieldsEntityMarshallTest
+AllPduRoundTripTest
+Recorder log at /var/folders/15/f_ggfzbn3g96p9bpbw33hmz80000gn/T/1569519670157-0
+
+Recorder log file closed
+Replaying DIS logs.
+Replaying /var/folders/15/f_ggfzbn3g96p9bpbw33hmz80000gn/T/1569519670157-0/Pdusave.dislog
+Beginning of DIS capture file, Pdusave.dislog.  
+72
+End of replay from Pdusave.dislog
+End of DIS capture file, Pdusave.dislog.
+SignalPdusTest
+SignalPdusTest finished
+CommentPdusTest
+
+Thanks for using JUnit! Support its development at https://junit.org/sponsoring
+
+╷
+└─ JUnit Jupiter ✔
+   ├─ Bit Field Round TripTest ✔
+   │  └─ testBitFieldRoundTrip() ✔
+   ├─ Marshal Enums Test ✔
+   │  └─ testGoodMarshall() ✔
+   ├─ Data Query Pdu Round Test ✔
+   │  └─ testRoundTrip() ✔
+   ├─ Pdu Factory Test ✔
+   │  └─ testCreateAllPdus() ✔
+   ├─ Fixed and Variable Datum Round Trip Test ✔
+   │  └─ TestRoundTrip() ✔
+   ├─ CreateAllPduTypesTest ✔
+   │  └─ testCreateAll() ✔
+   ├─ Entity State Pdu Test ✔
+   │  └─ testEntityCapabilities() ✔
+   ├─ Object Type Marshal Test ✔
+   │  ├─ testGoodMarshall() ✔
+   │  └─ testNoSubCategory() ✔
+   ├─ All Object Types Create ✔
+   │  └─ testCreateAllObjectTypes() ✔
+   ├─ Null Fields Entity Marshall Test ✔
+   │  ├─ testGoodMarshall() ✔
+   │  └─ testNoSpecificNoExtraMarshal() ✔
+   ├─ All Pdu Round Trip Test ✔
+   │  └─ testRoundTripAllPdus() ✔
+   ├─ Signal Pdus Test ✔
+   │  └─ testRoundTrip() ✔
+   └─ Comment Pdus Test ✔
+      └─ testRoundTrip() 10026 ms ✔
+
+Test run finished after 20253 ms
+[        14 containers found      ]
+[         0 containers skipped    ]
+[        14 containers started    ]
+[         0 containers aborted    ]
+[        14 containers successful ]
+[         0 containers failed     ]
+[        15 tests found           ]
+[         0 tests skipped         ]
+[        15 tests started         ]
+[         0 tests aborted         ]
+[        15 tests successful      ]
+[         0 tests failed          ]

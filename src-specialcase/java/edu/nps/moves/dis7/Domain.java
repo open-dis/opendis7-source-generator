@@ -59,7 +59,7 @@ public class Domain
 
   private void init()
   {
-    Class c = enumInst.getClass();
+    Class<?> c = enumInst.getClass();
     try {
       //@formatter:off
       marshalBuff = c.getDeclaredMethod("marshal", new Class[]{ByteBuffer.class});

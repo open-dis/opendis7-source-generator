@@ -62,4 +62,10 @@
       setbits(start,length,val);
       return this;
   }
+  
+  @Override
+  public String toString()
+  {
+      return "%s: " + super.toString();
+  }
 }
