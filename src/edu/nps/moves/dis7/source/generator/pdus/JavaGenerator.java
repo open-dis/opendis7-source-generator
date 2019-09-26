@@ -1681,7 +1681,7 @@ public class JavaGenerator extends Generator
         pw.println(" public String toString()");
         pw.println(" {");
         pw.println("    StringBuilder sb = new StringBuilder();");
-        pw.println("    sb.append(getClass().getSimpleName()+\":\\n\");\n");
+        pw.println("    sb.append(getClass().getSimpleName()).append(\":\\n\");\n");
 
         ArrayList<ClassAttribute> objlists = new ArrayList<>();
 
