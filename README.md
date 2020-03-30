@@ -10,7 +10,7 @@ This work is an update/continuation of the **`open-dis/xmlpg`** project created 
 1. To provide reference implementations of the DIS protocol network messages in several languages.
 2. To do so by means of single XML descriptions of the protocol which are then referenced by individual language generators.
 
-While there exists code in the project to generate source in javascript, python and other languages, that code is legacy, and to-date, only the Java implementation is complete.
+While there exists code in the project to generate source in JavaScript, Python and other languages, that code is legacy, and so far only the Java implementation is complete.
 
 This work is driven by two specifications.
 
@@ -30,11 +30,11 @@ The Java language is inherently cross-platform and any OS on any hardware for wh
 1. Apache **Netbeans 11** Integrated Development Environment ("IDE")
 2. Apache **Ant** Java build tool (integrated in Netbeans)
 3. **Git** version control system (for downloading project; supported in Netbeans)
-4. OpenJdk Java version 12.0.2
+4. OpenJdk Java version 13.0.2
 
 The project is hosted on **github.com** and the support files which are used to define the project structure are also included.  Following the procedure below, a simple download, then a small number of additional steps are all that are required to build the source files for a DIS distribution.
 
-The project does not automatically download runtime dependencies like a **Maven**-based project.  Only one external dependency is used, and that is the Apache **Commons-IO** library.  The jar for that is found in the `libs/` directory of the project.
+The project does not automatically download run-time dependencies like a **Maven**-based project.  Only one external dependency is used, and that is the Apache **Commons-IO** library.  The jar for that is found in the `libs/` directory of the project.
 
 <H3>Generation Procedure</H3>
 
@@ -77,6 +77,9 @@ The instructions below reference them in order.
 
 14. **Choose "5 make entities"** from the run configurations list
 15. **Run Project** from the `Run` menu
+
+	This step takes a while since there are over 20000 entity classes.
+
 16. **Clean and Build Project** from the `Run` menu
 
 	This step takes a while since there are over 20000 entity classes.
@@ -117,7 +120,10 @@ If you desire to update the `open-dis7-java` project with any or all of the prod
   * open-dis7-entities-usa-munitions.jar
   * open-dis7-entities-usa-surface.jar
   * **open-dis7-entities-javadoc.jar**
-2. Do three separate file copy operations to the open-dis7-java project:
+
+2. Developers need to be sure to perform a diff with files already in the open-dis7-java repository so that any changes there are reflected in the source-generation algorithms.
+
+3. Do three separate source-file copy operations to the open-dis7-java project:
 	* **Omitting the `entities` directory**, copy the tree of java source files (\*.java) 
 <br/>**from**<br/>`open-dis7-source-generator/`**`src-generated`**`/java/edu/nps/moves/dis7` 
 <br/>**to**<br/>`open-dis7-java/src-generated/edu/nps/moves/dis7`.
