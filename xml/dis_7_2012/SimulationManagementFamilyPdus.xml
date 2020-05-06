@@ -101,7 +101,7 @@ Remove Entity PDU. See 5.6.5.6.">
     
         <initialValue name="pduType" value="DISPDUType.ACTION_REQUEST"/>
     
-        <attribute name="requestID" comment="identifies the request being made by the simulaton manager">
+        <attribute name="requestID" comment="identifies the request being made by the simulation manager">
             <primitive type="uint32"/>
         </attribute>
     
