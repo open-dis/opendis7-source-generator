@@ -143,7 +143,7 @@
             <classRef name="EntityID"/>
         </attribute>
         
-        <attribute name="flags" comment="Bits defined in IEE Std.">
+        <attribute name="flags" comment="Bits defined in IEEE Standard">
             <primitive type="uint8"/>
         </attribute>
         
