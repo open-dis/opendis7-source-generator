@@ -11,6 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import edu.nps.moves.dis7.source.generator.pdus.ClassAttribute.ClassAttributeType;
+import java.io.IOException;
 
 
 /**
@@ -45,14 +46,14 @@ public class JavaGenerator extends Generator
      * sizes of various primitive types
      */
     Properties primitiveSizes = new Properties();
-    HashMap<String,Integer> primitiveSizesMap = new HashMap<>();
+    Map<String,Integer> primitiveSizesMap = new HashMap<>();
     
     /**
      * A property list that contains java-specific code generation information, such as package names, imports, etc.
      */
     Properties javaProperties;
 
-    public JavaGenerator(HashMap pClassDescriptions, Properties pJavaProperties)
+    public JavaGenerator(Map<String, GeneratedClass> pClassDescriptions, Properties pJavaProperties)
     {
         super(pClassDescriptions, pJavaProperties);
 
@@ -192,9 +193,9 @@ public class JavaGenerator extends Generator
                 // System.out.println("trying to make class "+name);
                 this.writeClass(pw, aClass);
             }
-            catch (Exception e) {
-                e.printStackTrace();
-                System.out.println("error creating source code " + e);
+            catch (IOException e) {
+                e.printStackTrace(System.err);
+                System.err.println("error creating source code " + e);
             }
 
         } // End while
@@ -337,8 +338,9 @@ public class JavaGenerator extends Generator
         // Write the various import statements
         String imports = languageProperties.getProperty("imports");
         StringTokenizer tokenizer = new StringTokenizer(imports, ", ");
+        String aPackage;
         while (tokenizer.hasMoreTokens()) {
-            String aPackage = (String) tokenizer.nextToken();
+            aPackage = tokenizer.nextToken();
             pw.println("import " + aPackage + ";");
         }
 
@@ -466,7 +468,7 @@ public class JavaGenerator extends Generator
                 case PRIMITIVE_LIST:
                     attributeType = anAttribute.getType();
                     listLength = anAttribute.getListLength();
-                    listLengthString = (new Integer(listLength)).toString();
+                    listLengthString = "" + listLength;
 
                     if (anAttribute.getComment() != null) {
                         pw.println("   /** " + anAttribute.getComment() + " */");
@@ -480,7 +482,7 @@ public class JavaGenerator extends Generator
                 case OBJECT_LIST:
                     attributeType = anAttribute.getType();
                     listLength = anAttribute.getListLength();
-                    listLengthString = (new Integer(listLength)).toString();
+                    listLengthString = "" + listLength;
 
                     if (anAttribute.getComment() != null)
                         pw.println("   /** " + anAttribute.getComment() + " */");
@@ -1323,7 +1325,7 @@ public class JavaGenerator extends Generator
 
                     if(anAttribute.getUnderlyingTypeIsEnum()) {
                         pw.println("    " +anAttribute.getType() + " anX = "+anAttribute.getType() + ".unmarshalEnum(buff);");
-                        pw.println("    " + anAttribute.getName() + ".add(anX);");;
+                        pw.println("    " + anAttribute.getName() + ".add(anX);");
                     }
                     else {
                         marshalType = marshalTypes.getProperty(anAttribute.getType());
@@ -1545,14 +1547,16 @@ public class JavaGenerator extends Generator
     }
    */
  
-    /*
-	 * Write the code for an equality operator. This allows you to compare two
-	 * objects for equality. The code should look like
-	 * 
-	 * bool operator ==(const ClassName& rhs) return (_ivar1==rhs._ivar1 &&
-	 * _var2 == rhs._ivar2 ...)
-	 * 
-	 */
+    /**
+     * Write the code for an equality operator. This allows you to compare two
+     * objects for equality.The code should look like
+     *
+     * bool operator ==(const ClassName&; rhs) return (_ivar1==rhs._ivar1 &;&;
+     * _var2 == rhs._ivar2 ...)
+     *
+     * @param pw
+     * @param aClass
+     */
 	public void writeEqualityMethod(PrintWriter pw, GeneratedClass aClass) {
 		try {
 			//pw.println();
@@ -1617,7 +1621,7 @@ public class JavaGenerator extends Generator
             pw.println();
 
           for (int idx = 0; idx < aClass.getClassAttributes().size(); idx++) {
-            ClassAttribute anAttribute = (ClassAttribute) aClass.getClassAttributes().get(idx);
+            ClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
             if (anAttribute.isHidden())
               continue;
             String attname = anAttribute.getName();
@@ -1741,18 +1745,22 @@ public class JavaGenerator extends Generator
     /** 
      * returns a string with the first letter capitalized. 
      */
+    @Override
     public String initialCap(String aString)
     {
       if(aString == null)   //test test!
         return "";
-        StringBuffer stb = new StringBuffer(aString);
-        stb.setCharAt(0, Character.toUpperCase(aString.charAt(0)));
-        
-        return new String(stb);
+      
+      StringBuffer stb = new StringBuffer(aString);
+      stb.setCharAt(0, Character.toUpperCase(aString.charAt(0)));
+
+      return new String(stb);
     }
+    
     /**
      * returns a string with the first letter lower case.
      */
+    @Override
     public String initialLower(String aString)
     {
         StringBuffer stb = new StringBuffer(aString);

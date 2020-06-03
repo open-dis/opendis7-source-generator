@@ -17,7 +17,6 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import java.lang.reflect.Method;
 import java.util.List;
 import org.apache.commons.io.FileUtils;
 
@@ -92,7 +91,7 @@ public class ObjectTypeMain
 
   class CotElem extends DescriptionElem
   {
-    ArrayList<ObjectElem> objects = new ArrayList<>();
+    List<DescriptionElem> objects = new ArrayList<>();
     String uid;
     String domain;
   }
@@ -159,7 +158,7 @@ public class ObjectTypeMain
           currentObject.description = attributes.getValue("description");
           currentObject.parent = currentCot;
           currentCot.domain = currentObject.domain;
-          setUniquePkgAndEmail(currentObject, (List) currentCot.objects);
+          setUniquePkgAndEmail(currentObject, currentCot.objects);
           currentCot.objects.add(currentObject);
           break;
 
@@ -170,7 +169,7 @@ public class ObjectTypeMain
           currentCategory.value = attributes.getValue("value");
           currentCategory.description = attributes.getValue("description");
           currentCategory.parent = currentObject;
-          setUniquePkgAndEmail(currentCategory, (List) currentObject.children);
+          setUniquePkgAndEmail(currentCategory, currentObject.children);
           currentObject.children.add(currentCategory);
           break;
 
@@ -181,7 +180,7 @@ public class ObjectTypeMain
           currentSubCategory.value = attributes.getValue("value");
           currentSubCategory.description = attributes.getValue("description");
           currentSubCategory.parent = currentCategory;
-          setUniquePkgAndEmail(currentSubCategory, (List) currentCategory.children);
+          setUniquePkgAndEmail(currentSubCategory, currentCategory.children);
           currentCategory.children.add(currentSubCategory);
           break;
 
@@ -543,7 +542,7 @@ public class ObjectTypeMain
       int i = Integer.parseInt(s);
       return true;
     }
-    catch (Throwable t) {
+    catch (NumberFormatException t) {
       return false;
     }
   }

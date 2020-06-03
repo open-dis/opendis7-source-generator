@@ -17,7 +17,6 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import java.lang.reflect.Method;
 import java.util.List;
 import org.apache.commons.io.FileUtils;
 
@@ -88,12 +87,12 @@ public class JammerMain
 
     String pkgFromDescription;
     String enumFromDescription;
-    ArrayList<DescriptionElem> children = new ArrayList<>();
+    List<DescriptionElem> children = new ArrayList<>();
   }
 
   class JammerKindElem extends DescriptionElem
   {
-    ArrayList<JammerCategoryElem> categories = new ArrayList<>();
+    List<DescriptionElem> categories = new ArrayList<>();
   }
 
   class JammerCategoryElem extends DescriptionElem
@@ -147,7 +146,7 @@ public class JammerMain
           currentCategory.value = attributes.getValue("value");
           currentCategory.description = attributes.getValue("description");
           currentCategory.parent = currentKind;
-          setUniquePkgAndEmnum(currentCategory, (List) currentKind.categories);
+          setUniquePkgAndEmnum(currentCategory, currentKind.categories);
           currentKind.categories.add(currentCategory);
           break;
 
@@ -158,7 +157,7 @@ public class JammerMain
           currentSubCategory.value = attributes.getValue("value");
           currentSubCategory.description = attributes.getValue("description");
           currentSubCategory.parent = currentCategory;
-          setUniquePkgAndEmnum(currentSubCategory, (List) currentCategory.children);
+          setUniquePkgAndEmnum(currentSubCategory, currentCategory.children);
           currentCategory.children.add(currentSubCategory);
           break;
 
@@ -169,7 +168,7 @@ public class JammerMain
           currentSpecific.value = attributes.getValue("value");
           currentSpecific.description = attributes.getValue("description");
           currentSpecific.parent = currentSubCategory;
-          setUniquePkgAndEmnum(currentSpecific, (List) currentSubCategory.children);
+          setUniquePkgAndEmnum(currentSpecific, currentSubCategory.children);
           currentSubCategory.children.add(currentSpecific);
           break;
 
@@ -500,7 +499,7 @@ public class JammerMain
       int i = Integer.parseInt(s);
       return true;
     }
-    catch (Throwable t) {
+    catch (NumberFormatException t) {
       return false;
     }
   }

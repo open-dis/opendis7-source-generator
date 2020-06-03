@@ -213,7 +213,7 @@ public class Main
     String domain;
     String country;
     String uid;
-    ArrayList<CategoryElem> categories = new ArrayList<>();
+    List<DescriptionElem> categories = new ArrayList<>();
   }
 
   class CategoryElem extends DescriptionElem
@@ -295,7 +295,7 @@ public class Main
           currentCategory.description = attributes.getValue("description");
           currentCategory.uid = attributes.getValue("uid");
           currentCategory.parent = currentEntity;
-          setUniquePkgAndEmail(currentCategory, (List) currentEntity.categories);
+          setUniquePkgAndEmail(currentCategory, currentEntity.categories);
           currentEntity.categories.add(currentCategory);
           break;
 
@@ -315,7 +315,7 @@ public class Main
           currentSubCategory.description = attributes.getValue("description");
           currentSubCategory.uid = attributes.getValue("uid");
           currentSubCategory.parent = currentCategory;
-          setUniquePkgAndEmail(currentSubCategory, (List) currentCategory.children);
+          setUniquePkgAndEmail(currentSubCategory, currentCategory.children);
           currentCategory.children.add(currentSubCategory);
           break;
 
@@ -331,7 +331,7 @@ public class Main
           currentSpecific.description = attributes.getValue("description");
           currentSpecific.uid = attributes.getValue("uid");
           currentSpecific.parent = currentSubCategory;
-          setUniquePkgAndEmail(currentSpecific, (List) currentSubCategory.children);
+          setUniquePkgAndEmail(currentSpecific, currentSubCategory.children);
           currentSubCategory.children.add(currentSpecific);
           break;
 
@@ -343,7 +343,7 @@ public class Main
           currentExtra.description = attributes.getValue("description");
           currentExtra.uid = attributes.getValue("uid");
           currentExtra.parent = currentSpecific;
-          setUniquePkgAndEmail(currentExtra, (List) currentSpecific.children);
+          setUniquePkgAndEmail(currentExtra, currentSpecific.children);
           currentSpecific.children.add(currentExtra);
           break;
 
@@ -814,7 +814,7 @@ public class Main
       int i = Integer.parseInt(s);
       return true;
     }
-    catch(Throwable t) {
+    catch(NumberFormatException t) {
       return false;
     }
   }

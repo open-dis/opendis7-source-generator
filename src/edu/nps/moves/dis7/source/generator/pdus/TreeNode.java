@@ -13,7 +13,7 @@ import java.util.*;
 public class TreeNode 
 {
     GeneratedClass aClass = null;
-    List<TreeNode> children = new ArrayList<TreeNode>();
+    List<TreeNode> children = new ArrayList<>();
 
     public TreeNode(GeneratedClass aClass)
     {
@@ -40,14 +40,11 @@ public class TreeNode
         children.add(new TreeNode(aClass));
     }
     
-    public void getList(List aList)
+    public void getList(List<TreeNode> aList)
     {
         aList.addAll(children);
         
-        Iterator it = children.iterator();
-        while(it.hasNext())
-        {
-            TreeNode aNode = (TreeNode)it.next();
+        for (TreeNode aNode : children) {
             aNode.getList(aList);
         }
         

@@ -17,17 +17,19 @@ public abstract class Generator
 {
     /** Contains abstract descriptions of all the classes, key = name, value = object
     */
-    protected HashMap classDescriptions;
+    protected Map<String, GeneratedClass> classDescriptions;
     
     /** Directory in which to write the class code */
-    public String  directory;
+    public String directory;
     
     protected Properties languageProperties;
     
     /**
      * Constructor
+     * @param pClassDescriptions
+     * @param pLanguageProperties
      */
-    public Generator(HashMap pClassDescriptions, Properties pLanguageProperties)
+    public Generator(Map<String, GeneratedClass> pClassDescriptions, Properties pLanguageProperties)
     {
         classDescriptions = pClassDescriptions;
         languageProperties = pLanguageProperties;
@@ -90,6 +92,8 @@ public abstract class Generator
     
     /** 
      * returns a string with the first letter capitalized. 
+     * @param aString
+     * @return 
      */
     public String initialCap(String aString)
     {
@@ -100,6 +104,8 @@ public abstract class Generator
     }
     /**
      * returns a string with the first letter lower case.
+     * @param aString
+     * @return 
      */
     public String initialLower(String aString)
     {
@@ -186,12 +192,9 @@ public abstract class Generator
            
        }    // end of loop through bits   
              
-       
        return startBit;
         
     }
-    
-    
 
 }
 

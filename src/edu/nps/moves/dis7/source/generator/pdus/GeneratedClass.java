@@ -17,10 +17,10 @@ import java.util.*;
 public class GeneratedClass 
 {
     /** A list of all the attributes (ivars) of one class */
-    protected List<ClassAttribute> classAttributes = new ArrayList();
+    protected List<ClassAttribute> classAttributes = new ArrayList<>();
     
     /** A list of attribute names and initial values for those attributes. */
-    protected List<InitialValue> initialValues = new ArrayList();
+    protected List<InitialValue> initialValues = new ArrayList<>();
     
     /** comments for this generated class */
     private String comment;
@@ -82,31 +82,36 @@ public class GeneratedClass
         name = pName;
     }
     
-    /** Add one ivar/attribute to the class */
+    /** Add one ivar/attribute to the class
+     * @param anAttribute */
     public void addClassAttribute(ClassAttribute anAttribute)
     {
         classAttributes.add(anAttribute);
     }
     
-    /** Return a list of all the attributes of the class */
+    /** Return a list of all the attributes of the class
+     * @return  */
     public List<ClassAttribute> getClassAttributes()
     {
         return classAttributes;
     }
     
-    /** Add one initial value to the class */
+    /** Add one initial value to the class
+     * @param anInitialValue */
     public void addInitialValue(InitialValue anInitialValue)
     {
         initialValues.add(anInitialValue);
     }
     
-    /** Return a list of all the initial values of the class */
+    /** Return a list of all the initial values of the class
+     * @return  */
     public List<InitialValue> getInitialValues()
     {
         return initialValues;
     }
     
-    /** Set the comments associated with this class */
+    /** Set the comments associated with this class
+     * @param comments */
     public void setComment(String comments)
     {
         comment = comments;
@@ -114,21 +119,21 @@ public class GeneratedClass
     
     
     
-    /** get the comments associated with this class */
+    /** get the comments associated with this class
+     * @return  */
     public String getClassComments()
     {
         return comment;
     }
     
+    @Override
     public String toString()
     {
-        String result = new String();
-        
-        result = "Name: " + name + "\n" + "Comment: " + comment + "\n";
+        String result = "Name: " + name + "\n" + "Comment: " + comment + "\n";
         
         for(int idx = 0; idx < classAttributes.size(); idx++)
         {
-            ClassAttribute attribute = (ClassAttribute)classAttributes.get(idx);
+            ClassAttribute attribute = classAttributes.get(idx);
             String anAttribute = "  Name: " + attribute.getName() + " Comment: " + attribute.getComment() + 
                                  " Kind: " + attribute.getAttributeKind() + " Type:" + attribute.getType() + "\n";
             result = result + anAttribute;

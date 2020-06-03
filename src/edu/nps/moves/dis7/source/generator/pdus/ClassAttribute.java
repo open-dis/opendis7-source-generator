@@ -95,7 +95,7 @@ public class ClassAttribute
     /** Some fields are really bit fields, with flags that constitute subranges. */
     protected boolean isBitField = false;
     
-    protected List bitFieldList = new ArrayList();
+    protected List<BitField> bitFieldList = new ArrayList<>();
     
     /** Should we serialize this attribute to the message or not? By default yes, but
      * this can be overridden by the attribute serialize="false" in the xml
@@ -104,7 +104,9 @@ public class ClassAttribute
     
     protected String enumMarshalSize = "8";
     
-    /** Get the name of the class attribute/iname*/
+    /** Get the name of the class attribute/iname
+     * @return 
+     */
     public String getName()
     {
         return name;
@@ -115,7 +117,8 @@ public class ClassAttribute
         name = pName;
     }
    
-    /** get the kind of the attribute (primitive, list, array, etc. */
+    /** get the kind of the attribute (primitive, list, array, etc.)
+     * @return  */
     public ClassAttributeType getAttributeKind()
     {
         return attributeKind;
@@ -126,7 +129,9 @@ public class ClassAttribute
         attributeKind = pKind;
     }
     
-    /** Get the type of the field */
+    /** Get the type of the field
+     * @return  
+     */
     public String getType()
     {
         return type;
@@ -147,7 +152,9 @@ public class ClassAttribute
         initialClass = s;
     }
     
-    /** Comment */
+    /** Comment
+     * @return  
+     */
     public String getComment()
     {
         return comment;
@@ -200,20 +207,19 @@ public class ClassAttribute
     
     /** 
      * Returns true if 1) this is a list,  either fixed or variable, and 2) contains a class
+     * @return 
      */
     public boolean listIsClass()
     {
         if(! ((attributeKind == ClassAttributeType.PRIMITIVE_LIST) || (attributeKind == ClassAttributeType.OBJECT_LIST)))
             return false;
         
-        if(underlyingTypeIsPrimitive)
-            return false;
-        
-        return true;
+        return !underlyingTypeIsPrimitive;
     }
     
     /**
      * Set the default value for a primitive type 
+     * @return 
      */
     public String getDefaultValue()
     {
@@ -222,6 +228,7 @@ public class ClassAttribute
     
     /** 
      * Return the default value for a primitive type
+     * @param pValue
      */
     public void setDefaultValue(String pValue)
     {
@@ -230,6 +237,7 @@ public class ClassAttribute
     
     /**
      * sets true if the underlying type of a list is a primitive, false if it is a class
+     * @param newValue
      */
     public void setUnderlyingTypeIsPrimitive(boolean newValue)
     {
@@ -238,6 +246,7 @@ public class ClassAttribute
     
     /**
      * returns true if this is a list and the underlying type is a primitive
+     * @return 
      */
     public boolean getUnderlyingTypeIsPrimitive()
     {
@@ -246,6 +255,7 @@ public class ClassAttribute
     
    /**
      * sets true if the underlying type of a list is a enum
+     * @param newValue
      */
     public void setUnderlyingTypeIsEnum(boolean newValue)
     {
@@ -254,6 +264,7 @@ public class ClassAttribute
     
     /**
      * returns true if this is a list and the underlying type is a primitive
+     * @return 
      */
     public boolean getUnderlyingTypeIsEnum()
     {

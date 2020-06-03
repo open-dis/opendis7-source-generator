@@ -44,7 +44,7 @@ public class ObjcGenerator extends Generator
         */
     Properties objcProperties;
 
-    public ObjcGenerator(HashMap pClassDescriptions, Properties pObjcProperties)
+    public ObjcGenerator(Map<String, GeneratedClass> pClassDescriptions, Properties pObjcProperties)
     {
         super(pClassDescriptions, pObjcProperties);
 
@@ -109,6 +109,7 @@ public class ObjcGenerator extends Generator
     /**
      * Generates the cpp source code classes
      */
+    @Override
     public void writeClasses()
     {
         this.createDirectory();
@@ -137,6 +138,7 @@ public class ObjcGenerator extends Generator
    
 /**
  * Generate a c++ header file for the classes
+ * @param aClass
  */
 public void writeHeaderFile(GeneratedClass aClass)
 {
@@ -147,170 +149,169 @@ public void writeHeaderFile(GeneratedClass aClass)
         String headerFullPath = getDirectory() + "/" + name + ".h";
         File outputFile = new File(headerFullPath);
         outputFile.createNewFile();
-        PrintWriter pw = new PrintWriter(outputFile);
-
         // Write includes for any classes we may reference. this generates multiple #includes if we
         // use a class multiple times, but that's innocuous. We could sort and do a unqiue to prevent
         // this if so inclined.
-
-        boolean hasVariableLengthList = false;
-
-        for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
-        {
-            ClassAttribute anAttribute = (ClassAttribute)aClass.getClassAttributes().get(idx);
-
-            // If this attribute is a class, we need to do an import on that class
-            if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF)
+        try (PrintWriter pw = new PrintWriter(outputFile)) {
+            
+            boolean hasVariableLengthList = false;
+            
+            for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
             {
-                pw.println("#import \"" + anAttribute.getType() + ".h\"");
+                ClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
+                
+                // If this attribute is a class, we need to do an import on that class
+                if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF)
+                {
+                    pw.println("#import \"" + anAttribute.getType() + ".h\"");
+                }
+                
+                if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST)
+                {
+                    hasVariableLengthList = true;
+                    pw.println("#import \"" + anAttribute.getType() + ".h\"");
+                }
             }
-
-            if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST)
+            
+            pw.println("#import <Foundation/Foundation.h>");
+            
+            
+            // if we inherit from another class we need to do an include on it
+            if(!(aClass.getParentClass().equalsIgnoreCase("root")))
             {
-                hasVariableLengthList = true;
-                pw.println("#import \"" + anAttribute.getType() + ".h\"");
+                pw.println("#import \"" + aClass.getParentClass() + ".h\"");
             }
-        }
-
-        pw.println("#import <Foundation/Foundation.h>");
-        
-
-        // if we inherit from another class we need to do an include on it
-        if(!(aClass.getParentClass().equalsIgnoreCase("root")))
-        {
-             pw.println("#import \"" + aClass.getParentClass() + ".h\"");
-        }
-
-         pw.println("#import \"DataInput.h\"");
-         pw.println("#import \"DataOutput.h\"");
-
-        pw.println();
-        pw.println();
-
-        // Print out the class comments, if any
-        if(aClass.getClassComments() != null)
-        {
-            pw.println("// " + aClass.getClassComments() );
+            
+            pw.println("#import \"DataInput.h\"");
+            pw.println("#import \"DataOutput.h\"");
+            
             pw.println();
-            pw.println("// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. ");
-            pw.println("//");
-            pw.println("// @author DMcG");
             pw.println();
+            
+            // Print out the class comments, if any
+            if(aClass.getClassComments() != null)
+            {
+                pw.println("// " + aClass.getClassComments() );
+                pw.println();
+                pw.println("// Copyright (c) 2007-2009, MOVES Institute, Naval Postgraduate School. All rights reserved. ");
+                pw.println("//");
+                pw.println("// @author DMcG");
+                pw.println();
+            }
+            
+            // Print out class header and ivars
+            
+            if(aClass.getParentClass().equalsIgnoreCase("root"))
+                pw.println("@interface  " + aClass.getName() + ": NSObject");
+            else
+                pw.println("@interface " + aClass.getName() + " : " + aClass.getParentClass());
+            
+            pw.println("{");
+            
+            // Print out ivars.
+            
+            for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
+            {
+                ClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
+                
+                if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE)
+                {
+                    if(anAttribute.getComment() != null)
+                        pw.println("  " + "/** " + anAttribute.getComment() + " */");
+                    
+                    pw.println("  " + types.get(anAttribute.getType()) + " " + anAttribute.getName() + "; ");
+                    pw.println();
+                    
+                }
+                
+                if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF)
+                {
+                    if(anAttribute.getComment() != null)
+                        pw.println("  " + "/** " + anAttribute.getComment() + " */");
+                    
+                    pw.println("  " + anAttribute.getType() + " " + "*" + anAttribute.getName() + "; ");
+                    pw.println();
+                }
+                
+                if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
+                {
+                    if(anAttribute.getComment() != null)
+                        pw.println("  " + "/** " + anAttribute.getComment() + " */");
+                    
+                    pw.println("  " + types.get(anAttribute.getType()) + " " + anAttribute.getName() + "[" + anAttribute.getListLength() + "]; ");
+                    pw.println("  // Length of the above array");
+                    pw.println("  int " + anAttribute.getName() + "Length;");
+                    pw.println("  // Ptr to the array (fixes a syntax types problem with properties)");
+                    pw.println("   " + types.get(anAttribute.getType()) + " * " + anAttribute.getName() + "Ptr; ");
+                    pw.println();
+                }
+                
+                if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST)
+                {
+                    if(anAttribute.getComment() != null)
+                        pw.println("  " + "/** " + anAttribute.getComment() + " */");
+                    
+                    pw.println("  NSMutableArray *" + anAttribute.getName() + "; ");
+                    pw.println();
+                }
+            } // end ivars
+            
+            pw.println("}");
+            pw.println();
+            
+            // Do properties
+            for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
+            {
+                // @property(readwrite, assign) unsigned char protocolVersion;
+                ClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
+                
+                if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE)
+                {
+                    pw.println("@property(readwrite, assign) " + types.get(anAttribute.getType()) + " "  + anAttribute.getName() + "; ");
+                }
+                
+                if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF)
+                {
+                    pw.println("@property(readwrite, retain) " + anAttribute.getType() + "* "  + anAttribute.getName() + "; ");
+                }
+                
+                if((anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE_LIST))
+                {
+                    pw.println("@property(readwrite) " + types.get(anAttribute.getType()) + "* " + anAttribute.getName() + "Ptr;");
+                    pw.println("@property(readonly) int " + anAttribute.getName() + "Length;");
+                }
+                
+                if((anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST) )
+                {
+                    pw.println("@property(readwrite, retain) " + "NSMutableArray*" + anAttribute.getName() + "; ");
+                }
+                
+            } // end of properties
+            
+            pw.println();
+            
+            pw.println("-(id)init; // Initializer");
+            pw.println("-(void)dealloc;");
+            
+            // Marshal and unmarshal methods
+            pw.println("-(void)marshalUsingStream:(DataOutput*) dataStream;");
+            pw.println("-(void)unmarshalUsingStream:(DataInput*) dataStream;");
+            
+            // Generate a getMarshalledSize() method header
+            pw.println();
+            pw.println("-(int)getMarshalledSize;");
+            pw.println();
+            pw.println("@end");
+            pw.println();
+            
+            this.writeLicenseNotice(pw);
+            
+            pw.flush();
         }
-
-         // Print out class header and ivars
-
-        if(aClass.getParentClass().equalsIgnoreCase("root"))
-            pw.println("@interface  " + aClass.getName() + ": NSObject");
-        else
-            pw.println("@interface " + aClass.getName() + " : " + aClass.getParentClass());
-
-        pw.println("{");
-
-        // Print out ivars. 
-
-        for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
-        {
-            ClassAttribute anAttribute = (ClassAttribute)aClass.getClassAttributes().get(idx);
-
-            if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE)
-            {
-                if(anAttribute.getComment() != null)
-                    pw.println("  " + "/** " + anAttribute.getComment() + " */");
-
-                pw.println("  " + types.get(anAttribute.getType()) + " " + anAttribute.getName() + "; ");
-                pw.println();
-
-            }
-
-            if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF)
-            {
-                if(anAttribute.getComment() != null)
-                    pw.println("  " + "/** " + anAttribute.getComment() + " */");
-
-                 pw.println("  " + anAttribute.getType() + " " + "*" + anAttribute.getName() + "; ");
-                 pw.println();
-            }
-
-            if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
-            {
-                if(anAttribute.getComment() != null)
-                    pw.println("  " + "/** " + anAttribute.getComment() + " */");
-
-                pw.println("  " + types.get(anAttribute.getType()) + " " + anAttribute.getName() + "[" + anAttribute.getListLength() + "]; ");
-                pw.println("  // Length of the above array");
-                pw.println("  int " + anAttribute.getName() + "Length;");
-                pw.println("  // Ptr to the array (fixes a syntax types problem with properties)");
-                pw.println("   " + types.get(anAttribute.getType()) + " * " + anAttribute.getName() + "Ptr; ");
-                pw.println();
-            }
-
-            if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST)
-            {
-                if(anAttribute.getComment() != null)
-                    pw.println("  " + "/** " + anAttribute.getComment() + " */");
-
-                pw.println("  NSMutableArray *" + anAttribute.getName() + "; ");
-                pw.println();
-            }
-        } // end ivars
-
-        pw.println("}");
-        pw.println();
-
-        // Do properties
-         for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
-         {
-             // @property(readwrite, assign) unsigned char protocolVersion;
-            ClassAttribute anAttribute = (ClassAttribute)aClass.getClassAttributes().get(idx);
-
-            if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE)
-            {
-               pw.println("@property(readwrite, assign) " + types.get(anAttribute.getType()) + " "  + anAttribute.getName() + "; ");
-            }
-
-            if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF)
-            {
-               pw.println("@property(readwrite, retain) " + anAttribute.getType() + "* "  + anAttribute.getName() + "; ");
-            }
-
-            if((anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE_LIST))
-            {
-                pw.println("@property(readwrite) " + types.get(anAttribute.getType()) + "* " + anAttribute.getName() + "Ptr;");
-                pw.println("@property(readonly) int " + anAttribute.getName() + "Length;");
-            }
-
-            if((anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST) )
-            {
-               pw.println("@property(readwrite, retain) " + "NSMutableArray*" + anAttribute.getName() + "; ");
-            }
-
-         } // end of properties      
-
-        pw.println();
-
-        pw.println("-(id)init; // Initializer");
-        pw.println("-(void)dealloc;");
-
-        // Marshal and unmarshal methods
-        pw.println("-(void)marshalUsingStream:(DataOutput*) dataStream;");
-        pw.println("-(void)unmarshalUsingStream:(DataInput*) dataStream;");
-
-        // Generate a getMarshalledSize() method header
-        pw.println();
-        pw.println("-(int)getMarshalledSize;");
-        pw.println();
-        pw.println("@end");
-        pw.println();
-        
-        this.writeLicenseNotice(pw);
-
-        pw.flush();
-        pw.close();
-    } // End of try
-    catch(Exception e)
+    } // End of try // End of try
+    catch(IOException e)
     {
-        System.out.println(e);
+        System.err.println(e);
     }
 
 } // End write header file
@@ -324,62 +325,61 @@ public void writeObjcFile(GeneratedClass aClass)
         String headerFullPath = getDirectory() + "/" + name + ".m";
         File outputFile = new File(headerFullPath);
         outputFile.createNewFile();
-        PrintWriter pw = new PrintWriter(outputFile);
-
-        pw.println("#import \"" + aClass.getName() + ".h\" ");
-        pw.println();
-
-        pw.println();
-
-        pw.println("@implementation " + aClass.getName());
-
-        pw.println();
-        // Write the synthesize decl for the properties
-        for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
-        {
-            ClassAttribute anAttribute = (ClassAttribute)aClass.getClassAttributes().get(idx);
-            if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
+        try (PrintWriter pw = new PrintWriter(outputFile)) {
+            pw.println("#import \"" + aClass.getName() + ".h\" ");
+            pw.println();
+            
+            pw.println();
+            
+            pw.println("@implementation " + aClass.getName());
+            
+            pw.println();
+            // Write the synthesize decl for the properties
+            for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
             {
-                pw.println("@synthesize " + anAttribute.getName() + "Ptr;");
-                pw.println("@synthesize " + anAttribute.getName() + "Length;");
+                ClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
+                if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
+                {
+                    pw.println("@synthesize " + anAttribute.getName() + "Ptr;");
+                    pw.println("@synthesize " + anAttribute.getName() + "Length;");
+                }
+                else
+                {
+                    pw.println("@synthesize " + anAttribute.getName() + ";");
+                }
             }
-            else
-            {
-                pw.println("@synthesize " + anAttribute.getName() + ";");
-            }
+            pw.println();
+            
+            // Write fixed array access methods. Irritatingly, it doesn't seem to be
+            // possible to do this via properties.
+            
+            // Write initalizer
+            this.writeInitializer(pw, aClass);
+            this.writeDeallocMethod(pw, aClass);
+            
+            
+            
+            // Write marshal and unmarshal methods
+            this.writeMarshalMethod(pw, aClass);
+            this.writeUnmarshalMethod(pw, aClass);
+            
+            // Write a comparision operator
+            //this.writeEqualityOperator(pw, aClass);
+            
+            // Method to determine the marshalled length of the PDU
+            this.writeGetMarshalledSizeMethod(pw, aClass);
+            pw.println("@end\n");
+            pw.println("\n");
+            
+            // License notice
+            this.writeLicenseNotice(pw);
+            
+            pw.flush();
         }
-        pw.println();
-
-        // Write fixed array access methods. Irritatingly, it doesn't seem to be
-        // possible to do this via properties.
-
-        // Write initalizer
-        this.writeInitializer(pw, aClass);
-        this.writeDeallocMethod(pw, aClass);
-
-       
-
-        // Write marshal and unmarshal methods
-        this.writeMarshalMethod(pw, aClass);
-        this.writeUnmarshalMethod(pw, aClass);
-
-        // Write a comparision operator
-        //this.writeEqualityOperator(pw, aClass);
-
-        // Method to determine the marshalled length of the PDU
-        this.writeGetMarshalledSizeMethod(pw, aClass);
-        pw.println("@end\n");
-        pw.println("\n");
-
-        // License notice
-        this.writeLicenseNotice(pw);
-
-        pw.flush();
-        pw.close();
     }
-    catch(Exception e)
+    catch(IOException e)
     {
-        System.out.println(e);
+        System.err.println(e);
     }
 }
 
@@ -412,7 +412,7 @@ public void writeEqualityOperator(PrintWriter pw, GeneratedClass aClass)
 
         for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
         {
-            ClassAttribute anAttribute = (ClassAttribute)aClass.getClassAttributes().get(idx);
+            ClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
 
             if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE || anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF)
             {
@@ -467,8 +467,11 @@ public void writeEqualityOperator(PrintWriter pw, GeneratedClass aClass)
 }
 
 /**
- * Write the code for a method that marshals out the object into a DIS format
- * byte array.
+ * Write the code for a method that marshals out the object into a DIS
+ * format byte array.
+ *
+ * @param pw
+ * @param aClass
  */
 public void writeMarshalMethod(PrintWriter pw, GeneratedClass aClass)
 {
@@ -490,7 +493,7 @@ public void writeMarshalMethod(PrintWriter pw, GeneratedClass aClass)
 
         for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
         {
-            ClassAttribute anAttribute = (ClassAttribute)aClass.getClassAttributes().get(idx);
+            ClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
 
             if(anAttribute.shouldSerialize == false)
             {
@@ -600,7 +603,7 @@ public void writeUnmarshalMethod(PrintWriter pw, GeneratedClass aClass)
 
     for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
     {
-        ClassAttribute anAttribute = (ClassAttribute)aClass.getClassAttributes().get(idx);
+        ClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
 
         if(anAttribute.shouldSerialize == false)
         {
@@ -693,7 +696,7 @@ private void writeInitializer(PrintWriter pw, GeneratedClass aClass)
 
     for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
     {
-        ClassAttribute attribute = (ClassAttribute)aClass.getClassAttributes().get(idx);
+        ClassAttribute attribute = aClass.getClassAttributes().get(idx);
         if((attribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE) ||
            (attribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF))
         {
@@ -702,11 +705,11 @@ private void writeInitializer(PrintWriter pw, GeneratedClass aClass)
     }
 
         // Set initial values
-        List usedValues = new ArrayList();
+        List<String> usedValues = new ArrayList<>();
 
         for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
         {
-            ClassAttribute attribute = (ClassAttribute)aClass.getClassAttributes().get(idx);
+            ClassAttribute attribute = aClass.getClassAttributes().get(idx);
             if((attribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE))
             {
                 if(attribute.getDefaultValue() != null)
@@ -735,7 +738,7 @@ private void writeInitializer(PrintWriter pw, GeneratedClass aClass)
 
        for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
        {
-          ClassAttribute attribute = (ClassAttribute)aClass.getClassAttributes().get(idx);
+          ClassAttribute attribute = aClass.getClassAttributes().get(idx);
 
           // Every primitive that doesn't have an initial value gets set to zero
           if(attribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE)
@@ -858,12 +861,12 @@ public void writeDeallocMethod(PrintWriter pw, GeneratedClass aClass)
     pw.println("{");
     for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
     {
-        ClassAttribute anAttribute = (ClassAttribute)aClass.getClassAttributes().get(idx);
+        ClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
 
         ClassAttribute.ClassAttributeType kind = anAttribute.getAttributeKind();
 
-        if( (kind == anAttribute.attributeKind.CLASSREF) ||
-            (kind == anAttribute.attributeKind.OBJECT_LIST))
+        if( (kind == ClassAttribute.ClassAttributeType.CLASSREF) ||
+            (kind == ClassAttribute.ClassAttributeType.OBJECT_LIST))
         {
              pw.println("  [" + anAttribute.getName() + " release];" );
         }
@@ -876,7 +879,8 @@ public void writeDeallocMethod(PrintWriter pw, GeneratedClass aClass)
 /**
 * returns a string with the first letter capitalized.
 */
-public String initialCap(String aString)
+    @Override
+    public String initialCap(String aString)
 {
     StringBuffer stb = new StringBuffer(aString);
     stb.setCharAt(0, Character.toUpperCase(aString.charAt(0)));
@@ -897,7 +901,7 @@ private boolean classHasOnlyPrimitives(GeneratedClass aClass)
     // Flip flag to false if anything is not a primitive.
     for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
     {
-        ClassAttribute anAttribute = (ClassAttribute)aClass.getClassAttributes().get(idx);
+        ClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
         if(anAttribute.getAttributeKind() != ClassAttribute.ClassAttributeType.PRIMITIVE)
         {
             isAllPrimitive = false;

@@ -43,12 +43,11 @@ public class CppGenerator extends Generator
         */
     Properties cppProperties;
     
-    public CppGenerator(HashMap pClassDescriptions, Properties pCppProperties)
+    public CppGenerator(Map<String, GeneratedClass> pClassDescriptions, Properties pCppProperties)
     {
         super(pClassDescriptions, pCppProperties);
 
         Properties systemProperties = System.getProperties();
-        String directory = null;
         String clDirectory = systemProperties.getProperty("xmlpg.generatedSourceDir");
 
         // Directory to place generated source code
@@ -109,6 +108,7 @@ public class CppGenerator extends Generator
     /**
      * Generates the cpp source code classes
      */
+    @Override
     public void writeClasses()
     {
         this.createDirectory();
@@ -159,37 +159,37 @@ public class CppGenerator extends Generator
             String headerFullPath = getDirectory() + "/" + headerFile + ".h";
             File outputFile = new File(headerFullPath);
             outputFile.createNewFile();
-            PrintWriter pw = new PrintWriter(outputFile);
-            
-            String libMacro = languageProperties.getProperty("microsoftLibMacro");
-            String library = languageProperties.getProperty("microsoftLibDef");
-            
-            pw.println("#ifndef " + headerFile.toUpperCase() + "_H");
-            pw.println("#define " + headerFile.toUpperCase() + "_H");
-            
-            pw.println("#if defined(_MSC_VER) || defined(__CYGWIN__) || defined(__MINGW32__) || defined( __BCPLUSPLUS__)  || defined( __MWERKS__)");
-            pw.println("#  ifdef EXPORT_LIBRARY");
-            pw.println("#    define " + "EXPORT_MACRO"  + " __declspec(dllexport)");
-            pw.println("#  else");
-            pw.println("#    define EXPORT_MACRO  __declspec(dllimport)");
-            pw.println("#  endif");
-            pw.println("#else");
-            pw.println("#  define " + "EXPORT_MACRO");
-            pw.println("#endif");
-            
-            pw.println("#endif");
-            
-            pw.flush();
-            pw.close();
+            try (PrintWriter pw = new PrintWriter(outputFile)) {
+                String libMacro = languageProperties.getProperty("microsoftLibMacro");
+                String library = languageProperties.getProperty("microsoftLibDef");
+                
+                pw.println("#ifndef " + headerFile.toUpperCase() + "_H");
+                pw.println("#define " + headerFile.toUpperCase() + "_H");
+                
+                pw.println("#if defined(_MSC_VER) || defined(__CYGWIN__) || defined(__MINGW32__) || defined( __BCPLUSPLUS__)  || defined( __MWERKS__)");
+                pw.println("#  ifdef EXPORT_LIBRARY");
+                pw.println("#    define " + "EXPORT_MACRO"  + " __declspec(dllexport)");
+                pw.println("#  else");
+                pw.println("#    define EXPORT_MACRO  __declspec(dllimport)");
+                pw.println("#  endif");
+                pw.println("#else");
+                pw.println("#  define " + "EXPORT_MACRO");
+                pw.println("#endif");
+                
+                pw.println("#endif");
+                
+                pw.flush();
+            }
         }
-        catch(Exception e)
+        catch(IOException e)
         {
-            System.out.println(e);
+            System.err.println(e);
         }
 }
 
 /**
  * Generate a c++ header file for the classes
+ * @param aClass
  */
 public void writeHeaderFile(GeneratedClass aClass)
 {
@@ -200,247 +200,247 @@ public void writeHeaderFile(GeneratedClass aClass)
         String headerFullPath = getDirectory() + "/" + name + ".h";
         File outputFile = new File(headerFullPath);
         outputFile.createNewFile();
-        PrintWriter pw = new PrintWriter(outputFile);
-        
         // Write the usual #ifdef to prevent multiple inclusions by the preprocessor
-        pw.println("#ifndef " + aClass.getName().toUpperCase() + "_H");
-        pw.println("#define " + aClass.getName().toUpperCase() + "_H");
-        pw.println();
-        
-        // Write includes for any classes we may reference. this generates multiple #includes if we
-        // use a class multiple times, but that's innocuous. We could sort and do a unqiue to prevent
-        // this if so inclined.
-        
-        String namespace = languageProperties.getProperty("namespace");
-        if(namespace == null)
-            namespace = "";
-        else
-            namespace = namespace + "/";
-        
-        boolean hasVariableLengthList = false;
-        
-        for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
-        {
-            ClassAttribute anAttribute = (ClassAttribute)aClass.getClassAttributes().get(idx);
+        try (PrintWriter pw = new PrintWriter(outputFile)) {
+            // Write the usual #ifdef to prevent multiple inclusions by the preprocessor
+            pw.println("#ifndef " + aClass.getName().toUpperCase() + "_H");
+            pw.println("#define " + aClass.getName().toUpperCase() + "_H");
+            pw.println();
             
-            // If this attribute is a class, we need to do an import on that class
-            if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF)
-            { 
-                pw.println("#include <" + namespace + anAttribute.getType() + ".h>");
-            }
-            
-            // if this attribute is a variable-length list that holds a class, we need to
-            // do an import on the class that is in the list.
-            if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST)
-            { 
-                pw.println("#include <" + namespace + anAttribute.getType() + ".h>");
-                hasVariableLengthList = true;
-            }
-        }
-        
-        if(hasVariableLengthList == true)
-        {
-           pw.println("#include <vector>");
-        }
-        
-        // if we inherit from another class we need to do an include on it
-        if(!(aClass.getParentClass().equalsIgnoreCase("root")))
-        {
-             pw.println("#include <" + namespace + aClass.getParentClass() + ".h>");
-        }
-           
-        // "the usual" includes.
-        // pw.println("#include <vector>");
-        //pw.println("#include <iostream>");
-        pw.println("#include <" + namespace + "DataStream.h>");
-        
-         // This is a macro file included only for microsoft compilers. set in the cpp properties tag.
-        String msMacroFile = "msLibMacro";
-        
-        if(msMacroFile != null)
-        {
-            pw.println("#include <" + namespace + msMacroFile + ".h>");
-        }
-        
-        pw.println();
+            // Write includes for any classes we may reference. this generates multiple #includes if we
+            // use a class multiple times, but that's innocuous. We could sort and do a unqiue to prevent
+            // this if so inclined.
 
-        pw.println();
-        
-        // Print out namespace, if any
-        namespace = languageProperties.getProperty("namespace");
-        if(namespace != null)
-        {
-            pw.println("namespace " + namespace);
+            String namespace = languageProperties.getProperty("namespace");
+            if(namespace == null)
+                namespace = "";
+            else
+                namespace = namespace + "/";
+            
+            boolean hasVariableLengthList = false;
+            
+            for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
+            {
+                ClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
+                
+                // If this attribute is a class, we need to do an import on that class
+                if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF)
+                {
+                    pw.println("#include <" + namespace + anAttribute.getType() + ".h>");
+                }
+                
+                // if this attribute is a variable-length list that holds a class, we need to
+                // do an import on the class that is in the list.
+                if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST)
+                {
+                    pw.println("#include <" + namespace + anAttribute.getType() + ".h>");
+                    hasVariableLengthList = true;
+                }
+            }
+            
+            if(hasVariableLengthList == true)
+            {
+                pw.println("#include <vector>");
+            }
+            
+            // if we inherit from another class we need to do an include on it
+            if(!(aClass.getParentClass().equalsIgnoreCase("root")))
+            {
+                pw.println("#include <" + namespace + aClass.getParentClass() + ".h>");
+            }
+            
+            // "the usual" includes.
+            // pw.println("#include <vector>");
+            //pw.println("#include <iostream>");
+            pw.println("#include <" + namespace + "DataStream.h>");
+            
+            // This is a macro file included only for microsoft compilers. set in the cpp properties tag.
+            String msMacroFile = "msLibMacro";
+            
+            if(msMacroFile != null)
+            {
+                pw.println("#include <" + namespace + msMacroFile + ".h>");
+            }
+            
+            pw.println();
+            
+            pw.println();
+            
+            // Print out namespace, if any
+            namespace = languageProperties.getProperty("namespace");
+            if(namespace != null)
+            {
+                pw.println("namespace " + namespace);
+                pw.println("{");
+            }
+            
+            
+            // Print out the class comments, if any
+            if(aClass.getClassComments() != null)
+            {
+                pw.println("// " + aClass.getClassComments() );
+            }
+            
+            pw.println();
+            pw.println("// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. ");
+            pw.println("// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html");
+            pw.println("//");
+            pw.println("// @author DMcG, jkg");
+            pw.println();
+            
+            if(hasVariableLengthList == true)
+            {
+                pw.println("#pragma warning(disable: 4251 ) // Disables warning for stl vector template DLL export in msvc");
+                pw.println();
+            }
+            
+            
+            // Print out class header and ivars
+            
+            String macroName = languageProperties.getProperty("microsoftLibMacro");
+            
+            if(aClass.getParentClass().equalsIgnoreCase("root"))
+                pw.println("class EXPORT_MACRO " + aClass.getName());
+            else
+                pw.println("class EXPORT_MACRO " + aClass.getName() + " : public " + aClass.getParentClass());
+            
             pw.println("{");
-        }
-       
-        
-        // Print out the class comments, if any
-        if(aClass.getClassComments() != null)
-        {
-            pw.println("// " + aClass.getClassComments() );
-        }
-        
-        pw.println();
-        pw.println("// Copyright (c) 2007-2012, MOVES Institute, Naval Postgraduate School. All rights reserved. ");
-        pw.println("// Licensed under the BSD open source license. See http://www.movesinstitute.org/licenses/bsd.html");
-        pw.println("//");
-        pw.println("// @author DMcG, jkg");
-        pw.println();
-        
-        if(hasVariableLengthList == true)
-        {
-            pw.println("#pragma warning(disable: 4251 ) // Disables warning for stl vector template DLL export in msvc");
-            pw.println();
-        }
             
-        
-         // Print out class header and ivars
-        
-        String macroName = languageProperties.getProperty("microsoftLibMacro");
-        
-        if(aClass.getParentClass().equalsIgnoreCase("root"))
-            pw.println("class EXPORT_MACRO " + aClass.getName());
-        else
-            pw.println("class EXPORT_MACRO " + aClass.getName() + " : public " + aClass.getParentClass());
-        
-        pw.println("{");
-         
-        // Print out ivars. These are made protected for now.
-        pw.println("protected:");
+            // Print out ivars. These are made protected for now.
+            pw.println("protected:");
             
-        for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
-        {
-            ClassAttribute anAttribute = (ClassAttribute)aClass.getClassAttributes().get(idx);
-            
-            if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE)
-            { 
-                if(anAttribute.getComment() != null)
-                    pw.println("  " + "/** " + anAttribute.getComment() + " */");
-                  
-                pw.println("  " + types.get(anAttribute.getType()) + " " + IVAR_PREFIX + anAttribute.getName() + "; ");
-                pw.println();
-
-            }
-            
-            if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF)
-            { 
-                if(anAttribute.getComment() != null)
-                    pw.println("  " + "/** " + anAttribute.getComment() + " */");
+            for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
+            {
+                ClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
                 
-                 pw.println("  " + anAttribute.getType() + " " + IVAR_PREFIX + anAttribute.getName() + "; ");
-                 pw.println();
-            }
-            
-            if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
-            { 
-                if(anAttribute.getComment() != null)
-                    pw.println("  " + "/** " + anAttribute.getComment() + " */");
-                
-                pw.println("  " + types.get(anAttribute.getType()) + " " + IVAR_PREFIX + anAttribute.getName() + "[" + anAttribute.getListLength() + "]; ");
-                pw.println();
-            }
-            
-            if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST)
-            { 
-                if(anAttribute.getComment() != null)
-                    pw.println("  " + "/** " + anAttribute.getComment() + " */");
-                
-                pw.println("  std::vector<" + anAttribute.getType() + "> " + IVAR_PREFIX + anAttribute.getName() + "; ");
-                pw.println();
-            }
-        }
-        
-        
-        // Delcare ctor and dtor in the public area
-        pw.println("\n public:");
-        // Constructor
-        pw.println("    " + aClass.getName() + "();");
-        
-        
-        // Destructor
-        pw.println("    virtual ~" + aClass.getName() + "();");
-        pw.println();
-       
-        
-        // Marshal and unmarshal methods
-        pw.println("    virtual void marshal(DataStream& dataStream) const;");
-        pw.println("    virtual void unmarshal(DataStream& dataStream);");
-        pw.println();
-        
-        // Getter and setter methods for each ivar
-        for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
-        {
-            ClassAttribute anAttribute = (ClassAttribute)aClass.getClassAttributes().get(idx);
-            
-            if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE)
-            { 
-                pw.println("    " + types.get(anAttribute.getType()) + " " + "get" + this.initialCap(anAttribute.getName()) + "() const; ");
-                if(anAttribute.getIsDynamicListLengthField() == false)
+                if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE)
                 {
-                     pw.println("    void " + "set" + this.initialCap(anAttribute.getName()) + "(" + types.get(anAttribute.getType()) + " pX); ");
+                    if(anAttribute.getComment() != null)
+                        pw.println("  " + "/** " + anAttribute.getComment() + " */");
+                    
+                    pw.println("  " + types.get(anAttribute.getType()) + " " + IVAR_PREFIX + anAttribute.getName() + "; ");
+                    pw.println();
+                    
+                }
+                
+                if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF)
+                {
+                    if(anAttribute.getComment() != null)
+                        pw.println("  " + "/** " + anAttribute.getComment() + " */");
+                    
+                    pw.println("  " + anAttribute.getType() + " " + IVAR_PREFIX + anAttribute.getName() + "; ");
+                    pw.println();
+                }
+                
+                if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
+                {
+                    if(anAttribute.getComment() != null)
+                        pw.println("  " + "/** " + anAttribute.getComment() + " */");
+                    
+                    pw.println("  " + types.get(anAttribute.getType()) + " " + IVAR_PREFIX + anAttribute.getName() + "[" + anAttribute.getListLength() + "]; ");
+                    pw.println();
+                }
+                
+                if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST)
+                {
+                    if(anAttribute.getComment() != null)
+                        pw.println("  " + "/** " + anAttribute.getComment() + " */");
+                    
+                    pw.println("  std::vector<" + anAttribute.getType() + "> " + IVAR_PREFIX + anAttribute.getName() + "; ");
+                    pw.println();
                 }
             }
             
-            if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF)
-            { 
-                pw.println("    " + anAttribute.getType() + "& " + "get" + this.initialCap(anAttribute.getName()) + "(); ");
-                pw.println("    const " + anAttribute.getType() + "&  get" + this.initialCap(anAttribute.getName()) + "() const; ");
-                pw.println("    void set" + this.initialCap(anAttribute.getName()) + "(const " + anAttribute.getType() + "    &pX);");
-            } 
             
-            if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
-            { 
-                // Sleaze. We need to figure out what type of array we are, and this is slightly complex. 
-                String arrayType = this.getArrayType(anAttribute.getType());
-                pw.println("    " + arrayType + "*  get" + this.initialCap(anAttribute.getName()) + "(); ");
-                pw.println("    const " + arrayType + "*  get" + this.initialCap(anAttribute.getName()) + "() const; ");
-                pw.println("    void set" + this.initialCap(anAttribute.getName()) + "( const " + arrayType + "*    pX);");
-                if(anAttribute.getCouldBeString() == true)
+            // Delcare ctor and dtor in the public area
+            pw.println("\n public:");
+            // Constructor
+            pw.println("    " + aClass.getName() + "();");
+            
+            
+            // Destructor
+            pw.println("    virtual ~" + aClass.getName() + "();");
+            pw.println();
+            
+            
+            // Marshal and unmarshal methods
+            pw.println("    virtual void marshal(DataStream& dataStream) const;");
+            pw.println("    virtual void unmarshal(DataStream& dataStream);");
+            pw.println();
+            
+            // Getter and setter methods for each ivar
+            for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
+            {
+                ClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
+                
+                if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE)
                 {
-                    pw.println("    void " + "setByString" + this.initialCap(anAttribute.getName()) + "(const " + arrayType + "* pX);");
+                    pw.println("    " + types.get(anAttribute.getType()) + " " + "get" + this.initialCap(anAttribute.getName()) + "() const; ");
+                    if(anAttribute.getIsDynamicListLengthField() == false)
+                    {
+                        pw.println("    void " + "set" + this.initialCap(anAttribute.getName()) + "(" + types.get(anAttribute.getType()) + " pX); ");
+                    }
                 }
 
+                if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF)
+                {
+                    pw.println("    " + anAttribute.getType() + "& " + "get" + this.initialCap(anAttribute.getName()) + "(); ");
+                    pw.println("    const " + anAttribute.getType() + "&  get" + this.initialCap(anAttribute.getName()) + "() const; ");
+                    pw.println("    void set" + this.initialCap(anAttribute.getName()) + "(const " + anAttribute.getType() + "    &pX);");
+                }
+                
+                if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
+                {
+                    // Sleaze. We need to figure out what type of array we are, and this is slightly complex.
+                    String arrayType = this.getArrayType(anAttribute.getType());
+                    pw.println("    " + arrayType + "*  get" + this.initialCap(anAttribute.getName()) + "(); ");
+                    pw.println("    const " + arrayType + "*  get" + this.initialCap(anAttribute.getName()) + "() const; ");
+                    pw.println("    void set" + this.initialCap(anAttribute.getName()) + "( const " + arrayType + "*    pX);");
+                    if(anAttribute.getCouldBeString() == true)
+                    {
+                        pw.println("    void " + "setByString" + this.initialCap(anAttribute.getName()) + "(const " + arrayType + "* pX);");
+                    }
+                    
+                }
+                
+                
+                if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST)
+                {
+                    pw.println("    std::vector<" + anAttribute.getType() + ">& " + "get" + this.initialCap(anAttribute.getName()) + "(); ");
+                    pw.println("    const std::vector<" + anAttribute.getType() + ">& " + "get" + this.initialCap(anAttribute.getName()) + "() const; ");
+                    pw.println("    void set" + this.initialCap(anAttribute.getName()) + "(const std::vector<" + anAttribute.getType() + ">&    pX);");
+                }
+                
+                pw.println();
             }
             
-            
-            if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST)
-            { 
-                pw.println("    std::vector<" + anAttribute.getType() + ">& " + "get" + this.initialCap(anAttribute.getName()) + "(); ");
-                pw.println("    const std::vector<" + anAttribute.getType() + ">& " + "get" + this.initialCap(anAttribute.getName()) + "() const; ");
-                pw.println("    void set" + this.initialCap(anAttribute.getName()) + "(const std::vector<" + anAttribute.getType() + ">&    pX);");
-            }
-            
+            // Generate a getMarshalledSize() method header
             pw.println();
-        }    
-        
-        // Generate a getMarshalledSize() method header
-        pw.println();
-        pw.println("virtual int getMarshalledSize() const;");
-        pw.println();
-        
-        // Generate an equality operator 
-        pw.println("     bool operator  ==(const " + aClass.getName() + "& rhs) const;");
-        
-        pw.println("};");
-        
-        // Close out namespace brace, if any
-        if(namespace != null)
-        {
-            pw.println("}");
+            pw.println("virtual int getMarshalledSize() const;");
+            pw.println();
+            
+            // Generate an equality operator
+            pw.println("     bool operator  ==(const " + aClass.getName() + "& rhs) const;");
+            
+            pw.println("};");
+            
+            // Close out namespace brace, if any
+            if(namespace != null)
+            {
+                pw.println("}");
+            }
+            
+            // Close if #ifndef statement that prevents multiple #includes
+            pw.println("\n#endif");
+            
+            this.writeLicenseNotice(pw);
+            
+            pw.flush();
         }
-        
-        // Close if #ifndef statement that prevents multiple #includes
-        pw.println("\n#endif");
-        
-        this.writeLicenseNotice(pw);
-        
-        pw.flush();
-        pw.close();
-    } // End of try
-    catch(Exception e)
+    } // End of try // End of try
+    catch(IOException e)
     {
-        System.out.println(e);
+        System.err.println(e);
     }
                 
 } // End write header file
@@ -454,56 +454,55 @@ public void writeCppFile(GeneratedClass aClass)
         String headerFullPath = getDirectory() + "/" + name + ".cpp";
         File outputFile = new File(headerFullPath);
         outputFile.createNewFile();
-        PrintWriter pw = new PrintWriter(outputFile);
-         
-        String namespace = languageProperties.getProperty("namespace");
-        if(namespace==null)
-            namespace ="";
-        else
-            namespace=namespace +"/";
-        
-        pw.println("#include <" + namespace + aClass.getName() + ".h> ");
-        pw.println();
-        
-        namespace = languageProperties.getProperty("namespace");
-        if(namespace != null)
-        {
-            pw.println("using namespace " + namespace + ";\n");
+        try (PrintWriter pw = new PrintWriter(outputFile)) {
+            String namespace = languageProperties.getProperty("namespace");
+            if(namespace==null)
+                namespace ="";
+            else
+                namespace=namespace +"/";
+            
+            pw.println("#include <" + namespace + aClass.getName() + ".h> ");
+            pw.println();
+            
+            namespace = languageProperties.getProperty("namespace");
+            if(namespace != null)
+            {
+                pw.println("using namespace " + namespace + ";\n");
+            }
+            
+            pw.println();
+            
+            // Write ctor
+            this.writeCtor(pw, aClass);
+            this.writeDtor(pw, aClass);
+            
+            // Write the getter and setter methods for each of the attributes
+            for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
+            {
+                ClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
+                this.writeGetterMethod(pw, aClass, anAttribute);
+                this.writeSetterMethod(pw, aClass, anAttribute);
+            }
+            
+            // Write marshal and unmarshal methods
+            this.writeMarshalMethod(pw, aClass);
+            this.writeUnmarshalMethod(pw, aClass);
+            
+            // Write a comparision operator
+            this.writeEqualityOperator(pw, aClass);
+            
+            // Method to determine the marshalled length of the PDU
+            this.writeGetMarshalledSizeMethod(pw, aClass);
+            
+            // License notice
+            this.writeLicenseNotice(pw);
+            
+            pw.flush();
         }
-        
-        pw.println();
-        
-        // Write ctor 
-        this.writeCtor(pw, aClass);
-        this.writeDtor(pw, aClass);
-        
-        // Write the getter and setter methods for each of the attributes
-        for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
-        {
-            ClassAttribute anAttribute = (ClassAttribute)aClass.getClassAttributes().get(idx);
-            this.writeGetterMethod(pw, aClass, anAttribute);
-            this.writeSetterMethod(pw, aClass, anAttribute);
-        }
-        
-        // Write marshal and unmarshal methods
-        this.writeMarshalMethod(pw, aClass);
-        this.writeUnmarshalMethod(pw, aClass);
-        
-        // Write a comparision operator
-        this.writeEqualityOperator(pw, aClass);
-        
-        // Method to determine the marshalled length of the PDU
-        this.writeGetMarshalledSizeMethod(pw, aClass);
-        
-        // License notice
-        this.writeLicenseNotice(pw);
-       
-        pw.flush();
-        pw.close();
     }
-    catch(Exception e)
+    catch(IOException e)
     {
-        System.out.println(e);
+        System.err.println(e);
     }
 }
 
@@ -536,7 +535,7 @@ public void writeEqualityOperator(PrintWriter pw, GeneratedClass aClass)
         
         for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
         {
-            ClassAttribute anAttribute = (ClassAttribute)aClass.getClassAttributes().get(idx);
+            ClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
             
             if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE || anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF)
             {
@@ -593,6 +592,8 @@ public void writeEqualityOperator(PrintWriter pw, GeneratedClass aClass)
 /**
  * Write the code for a method that marshals out the object into a DIS format
  * byte array.
+ * @param pw
+ * @param aClass
  */
 public void writeMarshalMethod(PrintWriter pw, GeneratedClass aClass)
 {
@@ -614,7 +615,7 @@ public void writeMarshalMethod(PrintWriter pw, GeneratedClass aClass)
         
         for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
         {
-            ClassAttribute anAttribute = (ClassAttribute)aClass.getClassAttributes().get(idx);
+            ClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
             
             if(anAttribute.shouldSerialize == false)
             {
@@ -698,7 +699,7 @@ public void writeMarshalMethod(PrintWriter pw, GeneratedClass aClass)
     }
   catch(Exception e)
   {
-      System.out.println(e);
+      System.err.println(e);
   }
 }
 
@@ -718,7 +719,7 @@ public void writeUnmarshalMethod(PrintWriter pw, GeneratedClass aClass)
     
     for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
     {
-        ClassAttribute anAttribute = (ClassAttribute)aClass.getClassAttributes().get(idx);
+        ClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
         
         if(anAttribute.shouldSerialize == false)
         {
@@ -805,7 +806,7 @@ private void writeCtor(PrintWriter pw, GeneratedClass aClass)
     
     for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
     {
-        ClassAttribute attribute = (ClassAttribute)aClass.getClassAttributes().get(idx);
+        ClassAttribute attribute = aClass.getClassAttributes().get(idx);
         if((attribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE) ||
            (attribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF) ||
            (attribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST))
@@ -833,7 +834,7 @@ private void writeCtor(PrintWriter pw, GeneratedClass aClass)
     
         for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
         {
-            ClassAttribute anAttribute = (ClassAttribute)aClass.getClassAttributes().get(idx);   
+            ClassAttribute anAttribute = aClass.getClassAttributes().get(idx);   
             
             // This is a primitive type; initialize it to either the default value specified in 
             // the XML file or to zero. Tends to minimize the possiblity
@@ -900,7 +901,7 @@ private void writeCtor(PrintWriter pw, GeneratedClass aClass)
     
        for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
        {
-          ClassAttribute attribute = (ClassAttribute)aClass.getClassAttributes().get(idx);
+          ClassAttribute attribute = aClass.getClassAttributes().get(idx);
         
           // We need to initialize primitive array types
           if(attribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
@@ -929,7 +930,7 @@ private void writeDtor(PrintWriter pw, GeneratedClass aClass)
     
     for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
     {
-        ClassAttribute anAttribute = (ClassAttribute)aClass.getClassAttributes().get(idx);
+        ClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
         
         // We need to deallocate ivars that are objects....
         if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST)
@@ -1012,8 +1013,9 @@ public void writeSetterMethod(PrintWriter pw, GeneratedClass aClass, ClassAttrib
     { 
         pw.println("void " + aClass.getName()  + "::" + "set" + this.initialCap(anAttribute.getName()) + "(" + types.get(anAttribute.getType()) + " pX)");
         pw.println("{");
-        if(anAttribute.getIsDynamicListLengthField() == false)
-        pw.println( "    " +  IVAR_PREFIX + anAttribute.getName() + " = pX;");
+        if(!anAttribute.getIsDynamicListLengthField())
+            pw.println( "    " +  IVAR_PREFIX + anAttribute.getName() + " = pX;");
+        
         pw.println("}\n");
     }
     
@@ -1135,16 +1137,13 @@ public void writeGetMarshalledSizeMethod(PrintWriter pw, GeneratedClass aClass)
     pw.println("    return marshalSize;");
     pw.println("}");
     pw.println();
-    
-    
-    
-     
 }
     
 /** 
 * returns a string with the first letter capitalized. 
 */
-public String initialCap(String aString)
+    @Override
+    public String initialCap(String aString)
 {
     StringBuffer stb = new StringBuffer(aString);
     stb.setCharAt(0, Character.toUpperCase(aString.charAt(0)));
@@ -1165,7 +1164,7 @@ private boolean classHasOnlyPrimitives(GeneratedClass aClass)
     // Flip flag to false if anything is not a primitive.
     for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
     {
-        ClassAttribute anAttribute = (ClassAttribute)aClass.getClassAttributes().get(idx);
+        ClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
         if(anAttribute.getAttributeKind() != ClassAttribute.ClassAttributeType.PRIMITIVE)
         {
             isAllPrimitive = false;

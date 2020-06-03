@@ -76,7 +76,7 @@ public class Main
     public static final String STATICIVAR = "staticivar";
     
     /** Contains the database of all the classes described by the XML document */
-    protected HashMap<String,GeneratedClass> generatedClassNames = new HashMap();
+    protected Map<String, GeneratedClass> generatedClassNames = new HashMap<>();
     
     /** The language types we generate */
     public enum LanguageType {CPP, JAVA, CSHARP, OBJECTIVEC, JAVASCRIPT, PYTHON }
@@ -112,7 +112,7 @@ public class Main
     Properties pythonProperties = new Properties();
     
     /** Hash table of all the primitive types we can use (short, long, byte, etc.)*/
-    private HashSet primitiveTypes = new HashSet();
+    private Set<String> primitiveTypes = new HashSet<>();
     
     /** Directory in which the java class package is created */
     private String javaDirectory = null;
@@ -121,8 +121,8 @@ public class Main
     private String cppDirectory = null;
     
     //PES
-	/** Directory in which the C# classes are created */
-	private String csharpDirectory = null;
+    /** Directory in which the C# classes are created */
+    private String csharpDirectory = null;
 
     /** Director in which the objc classes are created */
     private String objcDirectory = null;
@@ -345,7 +345,7 @@ public class Main
                             break;
                         }
                     }
-                    currentClass = (GeneratedClass)generatedClassNames.get(currentClass.getParentClass());
+                    currentClass = generatedClassNames.get(currentClass.getParentClass());
                 }
                 if(!found)
                 {

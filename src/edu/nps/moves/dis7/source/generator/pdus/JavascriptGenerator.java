@@ -6,13 +6,13 @@
 package edu.nps.moves.dis7.source.generator.pdus;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Properties;
-import java.util.Stack;
 
 /* not thouroughly examined, global change: VARIABLE_LIST to OBJECT_LIST and FIXED_LIST to PRIMITIVE_LIST */
 /**
@@ -47,7 +47,7 @@ public class JavascriptGenerator extends Generator
     Properties primitiveSizes = new Properties();
     
     
-    public JavascriptGenerator(HashMap pClassDescriptions, Properties pJavascriptProperties)
+    public JavascriptGenerator(Map<String, GeneratedClass> pClassDescriptions, Properties pJavascriptProperties)
     {
         super(pClassDescriptions, pJavascriptProperties);
         this.javascriptProperties = pJavascriptProperties;
@@ -207,10 +207,10 @@ public class JavascriptGenerator extends Generator
               // print the source code of the class to the file
               this.writeClass(pw, aClass);
            }
-           catch(Exception e)
+           catch(IOException e)
            {
-               System.out.println("error creating source code " + e);
-               e.printStackTrace();
+               System.err.println("error creating source code " + e);
+               e.printStackTrace(System.err);
            }
             
         } // End while
@@ -303,7 +303,7 @@ public class JavascriptGenerator extends Generator
     {
         // Get all the attributes of the class in the correct order
         
-        List classHierarchy = new ArrayList();
+        List<GeneratedClass> classHierarchy = new ArrayList<>();
         GeneratedClass otherClass = aClass;
         do
         {
@@ -315,11 +315,11 @@ public class JavascriptGenerator extends Generator
         }
         while(true);
         
-        List allAttributes = new ArrayList();
+        List<ClassAttribute> allAttributes = new ArrayList<>();
         for(int jdx = classHierarchy.size() -1; jdx >= 0; jdx--)
         {
-            GeneratedClass thisLevel = (GeneratedClass)classHierarchy.get(jdx);
-            List ivars = thisLevel.getClassAttributes();
+            GeneratedClass thisLevel = classHierarchy.get(jdx);
+            List<ClassAttribute> ivars = thisLevel.getClassAttributes();
             allAttributes.addAll(ivars);
         }
        
@@ -331,7 +331,7 @@ public class JavascriptGenerator extends Generator
         
         for(int idx = 0; idx < allAttributes.size(); idx++)
         {
-            ClassAttribute anAttribute = (ClassAttribute)allAttributes.get(idx);
+            ClassAttribute anAttribute = allAttributes.get(idx);
             
             // Some attributes can be marked as do-not-marshal
             if(anAttribute.shouldSerialize == false)
@@ -426,7 +426,7 @@ public class JavascriptGenerator extends Generator
     private void writeDecoder(PrintWriter pw, GeneratedClass aClass)
     {
         
-        List classHierarchy = new ArrayList();
+        List<GeneratedClass> classHierarchy = new ArrayList<>();
         GeneratedClass otherClass = aClass;
         do
         {
@@ -438,11 +438,11 @@ public class JavascriptGenerator extends Generator
         }
         while(true);
         
-        List allAttributes = new ArrayList();
+        List<ClassAttribute> allAttributes = new ArrayList<>();
         for(int jdx = classHierarchy.size() -1; jdx >= 0; jdx--)
         {
-            GeneratedClass thisLevel = (GeneratedClass)classHierarchy.get(jdx);
-            List ivars = thisLevel.getClassAttributes();
+            GeneratedClass thisLevel = classHierarchy.get(jdx);
+            List<ClassAttribute> ivars = thisLevel.getClassAttributes();
             allAttributes.addAll(ivars);
         }
                 
@@ -452,7 +452,7 @@ public class JavascriptGenerator extends Generator
         
         for(int idx = 0; idx < allAttributes.size(); idx++)
         {
-            ClassAttribute anAttribute = (ClassAttribute)allAttributes.get(idx);
+            ClassAttribute anAttribute = allAttributes.get(idx);
             
             // Some attributes can be marked as do-not-marshal
             if(anAttribute.shouldSerialize == false)
@@ -662,7 +662,7 @@ public class JavascriptGenerator extends Generator
     private void writeIvars(PrintWriter pw, GeneratedClass aClass)
     {
         //List ivars = aClass.getClassAttributes();
-        List classHierarchy = new ArrayList();
+        List<GeneratedClass> classHierarchy = new ArrayList<>();
         GeneratedClass otherClass = aClass;
         do
         {
@@ -677,7 +677,7 @@ public class JavascriptGenerator extends Generator
         
         for(int jdx = classHierarchy.size() -1; jdx >= 0; jdx--)
         {
-            GeneratedClass thisLevel = (GeneratedClass)classHierarchy.get(jdx);
+            GeneratedClass thisLevel = classHierarchy.get(jdx);
             List ivars = thisLevel.getClassAttributes();
         
         for(int idx = 0; idx < ivars.size(); idx++)
@@ -736,7 +736,7 @@ public class JavascriptGenerator extends Generator
             {
                 String attributeType = anAttribute.getType();
                 int listLength = anAttribute.getListLength();
-                String listLengthString = (new Integer(listLength)).toString();
+                String listLengthString = "" + listLength;
                 
                 if(anAttribute.getComment() != null)
                 {
@@ -763,7 +763,7 @@ public class JavascriptGenerator extends Generator
             {
                 String attributeType = anAttribute.getType();
                 int listLength = anAttribute.getListLength();
-                String listLengthString = (new Integer(listLength)).toString();
+                String listLengthString = "" + listLength;
                 
                 if(anAttribute.getComment() != null)
                 {

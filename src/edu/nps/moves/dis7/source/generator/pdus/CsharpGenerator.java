@@ -4,6 +4,7 @@
  */
 package edu.nps.moves.dis7.source.generator.pdus;
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,13 +60,12 @@ public class CsharpGenerator extends Generator {
     /** PES 02/10/2009 Added to save all classes linked to Upper Class (PDU)
      * Will be used to allow automatic setting of Length when Marshall method called
      */
-    Map<String, String> classesInstantiated = new HashMap<String, String>();
+    Map<String, String> classesInstantiated = new HashMap<>();
 
-    public CsharpGenerator(HashMap pClassDescriptions, Properties pCsharpProperties) {
+    public CsharpGenerator(Map<String, GeneratedClass> pClassDescriptions, Properties pCsharpProperties) {
         super(pClassDescriptions, pCsharpProperties);
 
         Properties systemProperties = System.getProperties();
-        String directory = null;
         String clDirectory = systemProperties.getProperty("xmlpg.generatedSourceDir");
         String clNamespace = systemProperties.getProperty("xmlpg.namespace");
         String clUsing = systemProperties.getProperty("xmlpg.using");
@@ -167,6 +167,7 @@ public class CsharpGenerator extends Generator {
     /**
      * Generate the classes and write them to a directory
      */
+    @Override
     public void writeClasses() {
         this.createDirectory();
 
@@ -217,32 +218,31 @@ public class CsharpGenerator extends Generator {
                 File outputFile = new File(fullPath);
                 outputFile.createNewFile();
                 //System.out.println("created output file");
-
-                PrintWriter pw = new PrintWriter(outputFile);
-                PrintStringBuffer psw = new PrintStringBuffer(); //PES 05/01/2009
-                
-                //System.out.println("psw is " + PrintStringBuffer.class.getName());
-                //System.out.println("created pw, psw " + pw + ", " + psw.toString());
-
-                //PES 05/01/2009 modified to print data to a stringbuilder prior to output to a file
-                //will use this to post process any changes
-                this.writeClass(psw, aClass);
-                //System.out.println("wrote class");
-
-                //See if any post processing is needed
-                this.postProcessData(psw, aClass);
-                //System.out.println("post processed");
-
-                // print the source code of the class to the file
-                pw.print(psw.toString());
-                pw.flush();
-                pw.close();
+                try (PrintWriter pw = new PrintWriter(outputFile)) {
+                    PrintStringBuffer psw = new PrintStringBuffer(); //PES 05/01/2009
+                    
+                    //System.out.println("psw is " + PrintStringBuffer.class.getName());
+                    //System.out.println("created pw, psw " + pw + ", " + psw.toString());
+                    
+                    //PES 05/01/2009 modified to print data to a stringbuilder prior to output to a file
+                    //will use this to post process any changes
+                    this.writeClass(psw, aClass);
+                    //System.out.println("wrote class");
+                    
+                    //See if any post processing is needed
+                    this.postProcessData(psw, aClass);
+                    //System.out.println("post processed");
+                    
+                    // print the source code of the class to the file
+                    pw.print(psw.toString());
+                    pw.flush();
+                } //PES 05/01/2009
 
             }
-            catch (Exception e)
+            catch (IOException e)
             {
-                e.printStackTrace();
-                System.out.println("error creating source code " + e);
+                e.printStackTrace(System.err);
+                System.err.println("error creating source code " + e);
             }
 
         } // End while
@@ -252,6 +252,8 @@ public class CsharpGenerator extends Generator {
     /**
      * Generate a source code file with getters, setters, ivars, and marshal/unmarshal
      * methods for one class.
+     * @param pw
+     * @param aClass
      */
     public void writeClass(PrintStringBuffer pw, GeneratedClass aClass) {
         // Note inside of the DIS XML1998 or XML1995 file the following needs to be inserted
@@ -373,7 +375,7 @@ public class CsharpGenerator extends Generator {
         //Following will find the classes that are referenced within the current class being processed
         //These will then be added to the Xmlinclude attribute to allow the reflection of those classes
         List ivars = aClass.getClassAttributes();
-        List referencedClasses = new ArrayList();
+        List<String> referencedClasses = new ArrayList<>();
 
         for (int idx = 0; idx < ivars.size(); idx++) {
             ClassAttribute anAttribute = (ClassAttribute) ivars.get(idx);
@@ -477,7 +479,7 @@ public class CsharpGenerator extends Generator {
             {
                 String attributeType = anAttribute.getType();
                 int listLength = anAttribute.getListLength();
-                String listLengthString = (new Integer(listLength)).toString();
+                String listLengthString = "" + listLength;
 
                 if (anAttribute.getComment() != null)
                 {
@@ -559,7 +561,7 @@ public class CsharpGenerator extends Generator {
                         break;
                     }
                 }
-                currentClass = (GeneratedClass) classDescriptions.get(currentClass.getParentClass());
+                currentClass = classDescriptions.get(currentClass.getParentClass());
             }
             if (!found) {
 
@@ -720,10 +722,11 @@ public class CsharpGenerator extends Generator {
     /**
      * Some fields have integers with bit fields defined, eg an integer where 
      * bits 0-2 represent some value, while bits 3-4 represent another value, 
-     * and so on. This writes accessor and mutator methods for those fields.
+     * and so on.This writes accessor and mutator methods for those fields.
      * 
      * @param pw
      * @param aClass 
+     * @param indent 
      */
     public void writeBitflagMethods(PrintStringBuffer pw, GeneratedClass aClass, int indent)
     {
@@ -1078,7 +1081,7 @@ public class CsharpGenerator extends Generator {
     }
 
     private void writeMarshalMethod(PrintStringBuffer pw, GeneratedClass aClass, int indent) {
-        List ivars = aClass.getClassAttributes();
+        List<ClassAttribute> ivars;
         String baseclassName = aClass.getParentClass();
         String newKeyword = ""; //PES 032209 added to remove warning from C# compiler
 
@@ -1103,7 +1106,7 @@ public class CsharpGenerator extends Generator {
 
                     //There was a key test if the upper class is PDU.
                     //If so then can add new method to retrieve pdu length
-                    if (!key.equals(null)) {
+                    if (key != null) {
                         matchValue = key;
                         foundMatch = true;
 
@@ -1180,9 +1183,9 @@ public class CsharpGenerator extends Generator {
 
         //This is a way to make sure that the variable used to store the count uses the .Length nomenclature.  There was no way
         //for me to determine if the OneByteChunk was used as it defaulted to a short data type.
-        ArrayList<String> variableListfix = new ArrayList<String>();
+        List<String> variableListfix = new ArrayList<>();
         for (int idx = 0; idx < ivars.size(); idx++) {
-            ClassAttribute anAttribute = (ClassAttribute) ivars.get(idx);
+            ClassAttribute anAttribute = ivars.get(idx);
             if (anAttribute.getType().equalsIgnoreCase("OneByteChunk")) {
                 variableListfix.add(anAttribute.getName());
             }
@@ -1190,7 +1193,7 @@ public class CsharpGenerator extends Generator {
 
 
         for (int idx = 0; idx < ivars.size(); idx++) {
-            ClassAttribute anAttribute = (ClassAttribute) ivars.get(idx);
+            ClassAttribute anAttribute = ivars.get(idx);
             
             // Some attributes can be marked as do-not-marshal
             if(anAttribute.shouldSerialize == false)
@@ -1318,7 +1321,7 @@ public class CsharpGenerator extends Generator {
     }
 
     private void writeUnmarshallMethod(PrintStringBuffer pw, GeneratedClass aClass, int indent) {
-        List ivars = aClass.getClassAttributes();
+        List<ClassAttribute> ivars;
         String baseclassName;
 
         String newKeyword = ""; //PES 032209 added to remove warning from C# compiler
@@ -1353,7 +1356,7 @@ public class CsharpGenerator extends Generator {
 
         ivars = aClass.getClassAttributes();
         for (int idx = 0; idx < ivars.size(); idx++) {
-            ClassAttribute anAttribute = (ClassAttribute) ivars.get(idx);
+            ClassAttribute anAttribute = ivars.get(idx);
 
             // Some attributes can be marked as do-not-marshal
             if(anAttribute.shouldSerialize == false)
@@ -1459,7 +1462,7 @@ public class CsharpGenerator extends Generator {
     //printing out all the data, the format used is not nice.  This method however will display faster than using the XML reflection method provided.
     //Only used for debugging purposes until a better method could be developed.
     private void writeReflectionMethod(PrintStringBuffer pw, GeneratedClass aClass, int indent) {
-        List ivars = aClass.getClassAttributes();
+        List<ClassAttribute> ivars;
         String tab = "\\t ";
 
         String newKeyword = ""; //PES 032209 added to remove warning from C# compiler
@@ -1504,16 +1507,16 @@ public class CsharpGenerator extends Generator {
 
         //This is a way to make sure that the variable used to store the count uses the .Length nomenclature.  There was no way
         //for me to determine if the OneByteChunk was used as it defaulted to a short data type.
-        ArrayList<String> variableListfix = new ArrayList<String>();
+        List<String> variableListfix = new ArrayList<>();
         for (int idx = 0; idx < ivars.size(); idx++) {
-            ClassAttribute anAttribute = (ClassAttribute) ivars.get(idx);
+            ClassAttribute anAttribute = ivars.get(idx);
             if (anAttribute.getType().equalsIgnoreCase("OneByteChunk")) {
                 variableListfix.add(anAttribute.getName());
             }
         }
 
         for (int idx = 0; idx < ivars.size(); idx++) {
-            ClassAttribute anAttribute = (ClassAttribute) ivars.get(idx);
+            ClassAttribute anAttribute = ivars.get(idx);
 
             // Write out a method call to reflect a primitive type
             if (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE) {
@@ -1681,7 +1684,7 @@ public class CsharpGenerator extends Generator {
 
             for (int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
             {
-                ClassAttribute anAttribute = (ClassAttribute) aClass.getClassAttributes().get(idx);
+                ClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
 
                 if (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE)
                 {
@@ -1795,7 +1798,7 @@ public class CsharpGenerator extends Generator {
             }
 
             for (int idx = 0; idx < aClass.getClassAttributes().size(); idx++) {
-                ClassAttribute anAttribute = (ClassAttribute) aClass.getClassAttributes().get(idx);
+                ClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
 
                 if (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE_LIST ||
                     anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST ||
@@ -1866,6 +1869,7 @@ public class CsharpGenerator extends Generator {
     /**
      * returns a string with the first letter capitalized.
      */
+    @Override
     public String initialCap(String aString) {
         StringBuffer stb = new StringBuffer(aString);
         stb.setCharAt(0, Character.toUpperCase(aString.charAt(0)));
@@ -1956,19 +1960,19 @@ public class CsharpGenerator extends Generator {
         String findString;
         String newString;
 
-        if (this.disVersion == "1998")
+        if ("1998".equals(this.disVersion))
         {
             //for (int i = 0; i < 2; i++) {
                 startfind = pw.sb.indexOf("Note that");
                 endfind = pw.sb.indexOf("for any computations.");
-                pw.sb.replace(startfind, endfind + 21, "This value must be set for any PDU using it to work!" + pw.newline + "/// This value should be the number of bits used.");
+                pw.sb.replace(startfind, endfind + 21, "This value must be set for any PDU using it to work!" + PrintStringBuffer.newline + "/// This value should be the number of bits used.");
             //}
 
             startfind = pw.sb.indexOf("dos.WriteUnsignedInt((uint)this._variableDatums.Count);");
             pw.sb.replace(startfind, startfind + 43, "dos.WriteUnsignedInt((uint)this._variableDatumLength); //Post processed");
 
             findString = "_variableDatumLength = dis.ReadUnsignedInt();";
-            newString = pw.newline + "        int variableCount = (int)(this._variableDatumLength / 64) + (this._variableDatumLength % 64 > 0 ? 1 : 0);  //Post processed";
+            newString = PrintStringBuffer.newline + "        int variableCount = (int)(this._variableDatumLength / 64) + (this._variableDatumLength % 64 > 0 ? 1 : 0);  //Post processed";
             startfind = pw.sb.indexOf(findString);
             pw.sb.insert(startfind + findString.length() + 1, newString);
 
@@ -1993,7 +1997,7 @@ public class CsharpGenerator extends Generator {
     }
 
     private void writeLicenseNotice(PrintStringBuffer pw) {
-        pw.println("// Copyright (c) 1995-2009 held by the author(s).  All rights reserved.");
+        pw.println("// Copyright (c) 1995-2020 held by the author(s).  All rights reserved.");
         pw.println("// Redistribution and use in source and binary forms, with or without");
         pw.println("// modification, are permitted provided that the following conditions");
         pw.println("// are met:");
@@ -2037,7 +2041,7 @@ class PrintStringBuffer {
     }
 
     public void print(int nrOfIndents, String s) {
-        sb.append(getPaddingOfLength(nrOfIndents) + s);
+        sb.append(getPaddingOfLength(nrOfIndents)).append(s);
     }
 
     public void print(String s) {
@@ -2057,7 +2061,7 @@ class PrintStringBuffer {
     }
 
     public void println(String s) {
-        sb.append(s + newline);
+        sb.append(s).append(newline);
     }
 
     /**
@@ -2066,7 +2070,7 @@ class PrintStringBuffer {
      * @param s line to print
      */
     public void println(int nrOfIndents, String s) {
-        sb.append(getPaddingOfLength(nrOfIndents) + s + newline);
+        sb.append(getPaddingOfLength(nrOfIndents)).append(s).append(newline);
     }
 
     @Override

@@ -5,13 +5,13 @@
 package edu.nps.moves.dis7.source.generator.pdus;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 import java.util.ArrayList;
-import java.util.ListIterator;
+import java.util.Map;
 /* not thouroughly examined, global change: VARIABLE_LIST to OBJECT_LIST and FIXED_LIST to PRIMITIVE_LIST */
 /**
  *
@@ -24,7 +24,7 @@ public class PythonGenerator extends Generator
     public Properties marshalTypes = new Properties();
     public Properties unmarshalTypes = new Properties();
     
-    public PythonGenerator(HashMap pClassDescriptions, Properties pythonProperties)
+    public PythonGenerator(Map<String, GeneratedClass> pClassDescriptions, Properties pythonProperties)
     {
         super(pClassDescriptions, pythonProperties);
         
@@ -56,6 +56,7 @@ public class PythonGenerator extends Generator
         unmarshalTypes.setProperty("float", "float");
     }
 
+    @Override
     public void writeClasses()
     {
        List sortedClasses =  this.sortClasses();
@@ -63,13 +64,13 @@ public class PythonGenerator extends Generator
        
        this.createDirectory();
         
-       PrintWriter pw = null;
+       PrintWriter pw;
        
        try
        {
             // Create the new, empty file, and create printwriter object for output to it
-            String outputFileName = (String)languageProperties.getProperty("filename");
-            String directoryName = (String)languageProperties.getProperty("directory");
+            String outputFileName = languageProperties.getProperty("filename");
+            String directoryName = languageProperties.getProperty("directory");
             System.out.println("putting network code in " + directoryName + "/" + outputFileName);
             File outputFile = new File(directoryName + "/" + outputFileName);
             outputFile.getParentFile().mkdirs();
@@ -99,9 +100,9 @@ public class PythonGenerator extends Generator
          pw.flush();
          pw.close();
        }
-        catch(Exception e)
+        catch(IOException e)
         {
-            System.out.println("problem creating class " + e);
+            System.err.println("problem creating class " + e);
         }
  
    } // end of writeClasses
@@ -138,7 +139,7 @@ public class PythonGenerator extends Generator
                 if(defaultValue == null)
                     defaultValue = "0";
                 
-                boolean hasComment = anAttribute.getComment() == null ? false:true;
+                boolean hasComment = anAttribute.getComment() != null;
      
                 pw.println(INDENT + INDENT  + "self." + anAttribute.getName() + " = " + defaultValue);
                 if(hasComment)
@@ -165,7 +166,7 @@ public class PythonGenerator extends Generator
             {
                 String attributeType = anAttribute.getType();
                 int listLength = anAttribute.getListLength();
-                String listLengthString = (new Integer(listLength)).toString();
+                String listLengthString = "" + listLength;
                 
                 
                 if(anAttribute.getUnderlyingTypeIsPrimitive() == true)
@@ -204,7 +205,7 @@ public class PythonGenerator extends Generator
             {
                 String attributeType = anAttribute.getType();
                 int listLength = anAttribute.getListLength();
-                String listLengthString = (new Integer(listLength)).toString();
+                String listLengthString = "" + listLength;
                 
                 pw.println(INDENT + INDENT + "self." + anAttribute.getName() + " = []");
                 
@@ -260,7 +261,9 @@ public class PythonGenerator extends Generator
         pw.flush();
     }
     
-    /** The method that writes out the python marshalling code */
+    /** The method that writes out the python marshalling code
+     * @param pw
+     * @param aClass */
     public void writeMarshal(PrintWriter pw, GeneratedClass aClass)
     {
         pw.println();
@@ -537,25 +540,27 @@ public class PythonGenerator extends Generator
     
     /**
      * Python doesn't like forward-declaring classes, so a subclass must be
-     * declared after its superclass. This reorders the list of classes 
-     * so that this is the case. This re-creates the semantic class inheritance
-     * tree structure, then traverses the tree in preorder fashion to ensure
-     * that a base class is written before a subclass. The implementation is
-     * a little wonky in places.
+     * declared after its superclass.This reorders the list of classes so that
+     * this is the case. This re-creates the semantic class inheritance tree
+     * structure, then traverses the tree in preorder fashion to ensure that a
+     * base class is written before a subclass. The implementation is a little
+     * wonky in places.
+     *
+     * @return
      */
     public List sortClasses()
     {
-        List allClasses = new ArrayList(classDescriptions.values());
-        List sortedClasses = new ArrayList();
+        List<GeneratedClass> allClasses = new ArrayList<>(classDescriptions.values());
+        List<GeneratedClass> sortedClasses = new ArrayList<>();
         
         TreeNode root = new TreeNode(null);
         
         while(allClasses.size() > 0)
         {
-            ListIterator li = allClasses.listIterator();
+            Iterator<GeneratedClass> li = allClasses.listIterator();
             while(li.hasNext())
             {
-                GeneratedClass aClass = (GeneratedClass)li.next();
+                GeneratedClass aClass = li.next();
                 if(aClass.getParentClass().equalsIgnoreCase("root"))
                 {
                     root.addClass(aClass);
@@ -566,7 +571,7 @@ public class PythonGenerator extends Generator
            li = allClasses.listIterator();
            while(li.hasNext())
             {
-                GeneratedClass aClass = (GeneratedClass)li.next();
+                GeneratedClass aClass = li.next();
                 TreeNode aNode = root.findClass(aClass.getParentClass());
                 if(aNode != null)
                 {
@@ -579,13 +584,13 @@ public class PythonGenerator extends Generator
         } // while all classes still has content
 
         // Get a sorted list
-        List blah = new ArrayList();
+        List<TreeNode> blah = new ArrayList<>();
         root.getList(blah);
         
-        Iterator it = blah.iterator();
+        Iterator<TreeNode> it = blah.iterator();
         while(it.hasNext())
         {
-            TreeNode node = (TreeNode)it.next();
+            TreeNode node = it.next();
             if(node.aClass != null)
                 sortedClasses.add(node.aClass);
         }
