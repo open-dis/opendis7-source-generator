@@ -468,4 +468,25 @@
         </jar>
         <delete dir="${basedir}/dist/entitiesJavadoc"/>
     </target>
+    
+    <!-- Invoke this in lieu of step #3 in ./README.md -->
+    <target name="copy-files" depends="init">
+        <copy todir="../open-dis7-java/src-generated" overwrite="true">
+            <!-- src-generated/java -->
+            <fileset dir="${src.java.dir}">
+                <exclude name="**/entities/**"/>
+                <exclude name=".keep"/>
+                <exclude name="README.md"/>
+            </fileset>
+            <!-- src-specialcase/java -->
+            <fileset dir="${src.java3.dir}">
+                <exclude name="**/README.md"/>
+            </fileset>
+            <!-- src-supporting/java -->
+            <fileset dir="${src.java2.dir}">
+                <exclude name="**/README.md"/>
+                <exclude name="**/lasttestoutput.txt"/>
+            </fileset>
+        </copy>
+    </target>
 </project>

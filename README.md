@@ -133,6 +133,10 @@ If you desire to update the `open-dis7-java` project with any or all of the prod
 	* Copy the files 
 <br/>**from**<br/> `open-dis7-source-generator/`**`src-supporting/`**`java/edu/nps/moves/dis7`
 <br/>**to**<br/> `open-dis7-java/src-generated/edu/nps/moves/dis7`.
+<br/>
+<pre> **Or, the above can more easily be accomplished by the following Ant target:
+      **Select** `Run Target->Other Targets->copy-files`
+</pre>
 
 <h3>Project Directory Structure</h3>
 
