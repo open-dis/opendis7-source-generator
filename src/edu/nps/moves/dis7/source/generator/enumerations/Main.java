@@ -13,7 +13,9 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
 import org.apache.commons.io.FileUtils;
@@ -168,7 +170,7 @@ public class Main
         String name;
         String size;
         String footnote;
-        ArrayList<EnumRowElem> elems = new ArrayList<>();
+        List<EnumRowElem> elems = new ArrayList<>();
     }
 
     class EnumRowElem
@@ -183,7 +185,7 @@ public class Main
     {
         String name;
         String uid;
-        ArrayList<DictionaryRowElem> elems = new ArrayList<>();
+        List<DictionaryRowElem> elems = new ArrayList<>();
     }
 
     class DictionaryRowElem
@@ -197,7 +199,7 @@ public class Main
         String name;
         String size;
         String uid;
-        ArrayList<BitfieldRowElem> elems = new ArrayList<>();
+        List<BitfieldRowElem> elems = new ArrayList<>();
     }
 
     class BitfieldRowElem
@@ -240,19 +242,19 @@ public class Main
 
     public class MyHandler extends DefaultHandler
     {
-        ArrayList<EnumElem> enums = new ArrayList<>();
+        List<EnumElem> enums = new ArrayList<>();
         EnumElem currentEnum;
         EnumRowElem currentEnumRow;
 
-        ArrayList<DictionaryElem> dictionaries = new ArrayList<>();
+        List<DictionaryElem> dictionaries = new ArrayList<>();
         DictionaryElem currentDict;
         DictionaryRowElem currentDictRow;
 
-        ArrayList<BitfieldElem> bitfields = new ArrayList<>();
+        List<BitfieldElem> bitfields = new ArrayList<>();
         BitfieldElem currentBitfield;
         BitfieldRowElem currentBitfieldRow;
 
-        HashSet<String> testElems = new HashSet<>();
+        Set<String> testElems = new HashSet<>();
 /*
         private void maybeSysOut(String xref, String msg)
         {
@@ -388,7 +390,7 @@ public class Main
             }
         }
 
-        HashSet<String> dictNames = new HashSet<>();
+        Set<String> dictNames = new HashSet<>();
 
         private void writeOutDict(DictionaryElem el)
         {
@@ -488,7 +490,7 @@ public class Main
             }
         }
 
-        HashSet<String> enumNames = new HashSet<>();
+        Set<String> enumNames = new HashSet<>();
 
         private void writeOutEnum(EnumElem el)
         {
