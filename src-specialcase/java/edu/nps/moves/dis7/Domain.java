@@ -78,17 +78,17 @@ public class Domain
 
   public int getValue()
   {
-    return (Integer) invoke(getValue, (Object[]) null);
+    return (Integer) invoke(getValue, null);
   }
 
   public String getDescription()
   {
-    return (String) invoke(getDescription, (Object[]) null);
+    return (String) invoke(getDescription, null);
   }
 
   public int getMarshalledSize()
   {
-    return (Integer) invoke(mSize, (Object[]) null);
+    return (Integer) invoke(mSize, null);
   }
 
   public void marshal(DataOutputStream dos)

@@ -453,12 +453,8 @@
             </manifest>
         </jar>
     </target>
-    <target name="javadoc entities">
-        <javadoc destdir="${basedir}/dist/entitiesJavadoc">
-            <packageset dir="src-generated/java">
-                <include name="edu/nps/moves/dis7/entities/**"/>
-            </packageset>
-        </javadoc>
+    <target name="javadoc entities" depends="init">
+        <javadoc destdir="${basedir}/dist/entitiesJavadoc" sourcepath="src-generated/java" classpath="${build.classes.dir}"/>
         <jar destfile="${basedir}/dist/open-dis7-entities-javadoc.jar" basedir="${basedir}/dist/entitiesJavadoc">            
             <manifest>
                 <attribute name="Built-By" value="open-dis-7-source-generator"/>
