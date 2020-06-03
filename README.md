@@ -40,7 +40,7 @@ The project does not automatically download run-time dependencies like a **Maven
 
 (The following steps are ripe for automation using a custom Ant/Netbeans task.)
 
-There are five separate class groups that are generated separately.  Some need prior groups to be built and compiled before they can be compiled with no errors.  There are several defined source folder in the project.  One is `./src-specialcase` . This small group of class files requires the presence of the generated pdus before properly compiling.  Similarly the pdus require the presence of the enumerations before they can be built.
+There are five separate class groups that are generated separately.  Some need prior groups to be built and compiled before they can be compiled with no errors.  There are several defined source folders in the project.  One is `./src-specialcase`. This small group of class files requires the presence of the generated pdus before properly compiling.  Similarly the pdus require the presence of the enumerations before they can be built.
 
 To handle this complexity, 5 separate run configurations have been defined and numbered:
 
@@ -203,7 +203,7 @@ There are several logical output types described separately in the specification
 
 When the project is "run", as described above, the class which serves as the entry point, or "main", is `src/edu/nps/moves/dis7/source/generator/Main`.  As mentioned above, the 5 types of Java classes which are generated are done so independently.  To that end, the main entry just listed simply calls similar Java "main" methods in 5 separate classes:
 
-1.  `edu.nps.moves.dis7.source.generator.enumerations.Main` -- produces enumerations from the SISO specification
+1. `edu.nps.moves.dis7.source.generator.enumerations.Main` -- produces enumerations from the SISO specification
 2. `edu.nps.moves.dis7.source.generator.pdus.Main` -- produces Pdus and assorted sub-object classes from the IEEE-derived XML inputs
 3. `edu.nps.moves.dis7.source.generator.entitytypes.JammerMain` -- produces radio jammer classes from the SISO specification
 4. `edu.nps.moves.dis7.source.generator.entitytypes.ObjectTypeMain` -- produces miscellaneous object classes from the SISO specification
