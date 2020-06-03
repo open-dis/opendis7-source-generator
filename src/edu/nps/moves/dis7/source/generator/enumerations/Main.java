@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import javax.xml.parsers.ParserConfigurationException;
@@ -35,9 +36,9 @@ public class Main
     private Properties uid2ClassName;
     private Properties uid4aliases;
     private Properties interfaceInjection;
-    private HashMap<String,String> uidClassNames;
-    private HashSet<String> uidDoNotGenerate;
-    private HashMap<String,String> uid2ExtraInterface;
+    private Map<String,String> uidClassNames;
+    private Set<String> uidDoNotGenerate;
+    private Map<String,String> uid2ExtraInterface;
     private String packageName;
     private String xmlPath;
 
