@@ -489,4 +489,14 @@
             </fileset>
         </copy>
     </target>
+    
+    <!-- Need to clean out previously generated source when rebuilding -->
+    <target name="-post-clean">
+        <delete includeemptydirs="true">
+            <!-- src-generated/java -->
+            <fileset dir="${src.java.dir}">
+                <include name="edu/**"/>
+            </fileset>
+        </delete>
+    </target>
 </project>
