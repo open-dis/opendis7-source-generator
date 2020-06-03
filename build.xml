@@ -469,7 +469,7 @@
         <delete dir="${basedir}/dist/entitiesJavadoc"/>
     </target>
     
-    <!-- Invoke this in lieu of step #3 in ./README.md -->
+    <!-- Invoke this in lieu of step #3 under "If you desire to update the open-dis7-java" project in ./README.md -->
     <target name="copy-files" depends="init">
         <copy todir="../open-dis7-java/src-generated" overwrite="true">
             <!-- src-generated/java -->
