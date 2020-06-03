@@ -429,7 +429,7 @@ public class Main
             // save file
             File target = new File(outputDirectory, clsName + ".java");
             target.getParentFile().mkdirs();
-            FileWriter fw = null;
+            FileWriter fw;
             try {
                 target.createNewFile();
                 fw = new FileWriter(target);
@@ -438,7 +438,7 @@ public class Main
                 fw.close();
             }
             catch (IOException ex) {
-                ex.printStackTrace();
+                ex.printStackTrace(System.err);
             }
         }
 
@@ -475,7 +475,7 @@ public class Main
 
             // save file
             File target = new File(outputDirectory, clsName + ".java");
-            FileWriter fw = null;
+            FileWriter fw;
             try {
                 target.createNewFile();
                 fw = new FileWriter(target);
@@ -484,7 +484,7 @@ public class Main
                 fw.close();
             }
             catch (IOException ex) {
-                ex.printStackTrace();
+                ex.printStackTrace(System.err);
             }
         }
 
@@ -590,7 +590,7 @@ public class Main
 
             // save file
             File target = new File(outputDirectory, clsName + ".java");
-            FileWriter fw = null;
+            FileWriter fw;
             try {
                 target.createNewFile();
                 fw = new FileWriter(target);
@@ -599,7 +599,7 @@ public class Main
                 fw.close();
             }
             catch (IOException ex) {
-                ex.printStackTrace();
+                ex.printStackTrace(System.err);
             }
         }
         private String htmlize(String s)
@@ -705,7 +705,7 @@ public class Main
             new Main(args[0], args[1], args[2]).run();
         }
         catch (SAXException | IOException | ParserConfigurationException ex) {
-            ex.printStackTrace();
+            ex.printStackTrace(System.err);
         }
     }
 }

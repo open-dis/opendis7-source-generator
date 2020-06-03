@@ -730,11 +730,11 @@ public class CsharpGenerator extends Generator {
      */
     public void writeBitflagMethods(PrintStringBuffer pw, GeneratedClass aClass, int indent)
     {
-        List attributes = aClass.getClassAttributes();
+        List<ClassAttribute> attributes = aClass.getClassAttributes();
         
         for(int idx = 0; idx < attributes.size(); idx++)
         {
-            ClassAttribute anAttribute = (ClassAttribute)attributes.get(idx);
+            ClassAttribute anAttribute = attributes.get(idx);
            
             
             switch(anAttribute.getAttributeKind())

@@ -566,7 +566,7 @@ public class JavaGenerator extends Generator
                     }
 
                 }
-                currentClass = (GeneratedClass) classDescriptions.get(currentClass.getParentClass());
+                currentClass = classDescriptions.get(currentClass.getParentClass());
             }
             if (!found) {
                 System.out.println("Could not find initial value matching attribute name ("+attName+" for " + anInit.getVariable() + " in class " + aClass.getName());

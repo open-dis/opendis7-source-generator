@@ -47,10 +47,11 @@ public class InitialValue
     
     /** 
      * Returns the "standard" method name for a setter, given the variable name.
+     * @return 
      */
     public String getSetterMethodName()
     {
-        String methodName = new String(variable);
+        String methodName = variable;
         methodName = "set" + this.initialCap(methodName);
         
         return methodName;
@@ -58,10 +59,11 @@ public class InitialValue
     
     /** 
      * Returns the "standard" method name for a setter, given the variable name.
+     * @return 
      */
 	public String getSetterMethodNameCSharp() //PES added for CSharp Support
 	{
-		String methodName = new String(variable);
+		String methodName = variable;
 		//My original intent was to just remove the "set" prefix, however other problems were encountered such as
 		//the DIS1998.XML file had one type with a capital letter in the beginning (IntercomSignalPDU --> TdlType)
 		//this caused problems as it was already capitialized and the get/set method would have had the same name. Therefore
@@ -78,6 +80,8 @@ public class InitialValue
     
     /** 
      * returns a string with the first letter capitalized. 
+     * @param aString
+     * @return 
      */
     public String initialCap(String aString)
     {

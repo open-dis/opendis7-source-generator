@@ -311,7 +311,7 @@ public class JavascriptGenerator extends Generator
             if(otherClass.getParentClass().equalsIgnoreCase("root"))
                 break;
             String pClassName = otherClass.getParentClass();
-            otherClass = (GeneratedClass)classDescriptions.get(pClassName);
+            otherClass = classDescriptions.get(pClassName);
         }
         while(true);
         
@@ -434,7 +434,7 @@ public class JavascriptGenerator extends Generator
             if(otherClass.getParentClass().equalsIgnoreCase("root"))
                 break;
             String pClassName = otherClass.getParentClass();
-            otherClass = (GeneratedClass)classDescriptions.get(pClassName);
+            otherClass = classDescriptions.get(pClassName);
         }
         while(true);
         
@@ -670,7 +670,7 @@ public class JavascriptGenerator extends Generator
             if(otherClass.getParentClass().equalsIgnoreCase("root"))
                 break;
             String pClassName = otherClass.getParentClass();
-            otherClass = (GeneratedClass)classDescriptions.get(pClassName);
+            otherClass = classDescriptions.get(pClassName);
         }
         while(true);
        

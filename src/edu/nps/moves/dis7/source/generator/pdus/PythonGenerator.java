@@ -238,7 +238,7 @@ public class PythonGenerator extends Generator
                             break;
                         }
                     }
-                    currentClass = (GeneratedClass)classDescriptions.get(currentClass.getParentClass());
+                    currentClass = classDescriptions.get(currentClass.getParentClass());
                 }
                 if(!found)
                 {
