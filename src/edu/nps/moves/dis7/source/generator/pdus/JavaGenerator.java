@@ -79,8 +79,8 @@ public class JavaGenerator extends Generator
             System.out.println("Source code directory set to " + clDirectory);
         }
         catch (Exception e) {
-            System.out.println("Required property not set. Modify the XML file to include the missing property");
-            System.out.println(e);
+            System.err.println("Required property not set. Modify the XML file to include the missing property");
+            System.err.println(e);
             System.exit(-1);
         }
 
@@ -1118,7 +1118,7 @@ public class JavaGenerator extends Generator
         } // End of loop through ivars for writing the unmarshal method
 
         pw.println("    }\n    catch(Exception e)");
-        pw.println("    { \n      System.out.println(e); \n    }");
+        pw.println("    { \n      System.err.println(e); \n    }");
         
         pw.println("    return getMarshalledSize();");
         pw.println("}\n");
@@ -1539,7 +1539,7 @@ public class JavaGenerator extends Generator
         */
        /* 
         pw.println("    } // end try \n    catch(Exception e)");
-        pw.println("    { \n      System.out.println(e);}");
+        pw.println("    { \n      System.err.println(e);}");
         
         pw.println("    } // end of marshalXml method");
         
@@ -1578,7 +1578,7 @@ public class JavaGenerator extends Generator
 			pw.println("    return equalsImpl(obj);");
 			pw.println(" }");
 		} catch (Exception e) {
-			System.out.println(e);
+			System.err.println(e);
 		}
 
 		writeEqualityImplMethod(pw, aClass); // Write impl for establishing content equality
@@ -1668,7 +1668,7 @@ public class JavaGenerator extends Generator
             pw.println(" }");
         }
         catch (Exception e) {
-            System.out.println(e);
+            System.err.println(e);
         }
     }
  
