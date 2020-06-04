@@ -1229,7 +1229,7 @@ public class JavaGenerator extends Generator
                     }
                     else
                     {
-                        pw.println("        " + anAttribute.getType() + " a" + initialCap(anAttribute.getType() + " = (" + anAttribute.getType() + ")" + anAttribute.getName() + ".get(idx);"));
+                        pw.println("        " + anAttribute.getType() + " a" + initialCap(anAttribute.getType() + " = " + anAttribute.getName() + ".get(idx);"));
                         pw.println("        a" + initialCap(anAttribute.getType()) + ".marshal(buff);" );
                     }
 
