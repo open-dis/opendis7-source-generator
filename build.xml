@@ -490,6 +490,17 @@
         </copy>
     </target>
     
+    <target name="copy-jars" depends="init">
+        <copy todir="../open-dis7-java/entityjars" overwrite="true">
+            <fileset dir="${dist.dir}">
+                <include name="*.jar"/>
+                <exclude name="*source-generator*"/>
+                <exclude name="READEME*"/>
+                <exclude name="**/lib"/>
+            </fileset>
+        </copy>
+    </target>
+    
     <!-- Need to clean out previously generated source when rebuilding -->
     <target name="-post-clean">
         <delete includeemptydirs="true">

@@ -121,6 +121,10 @@ If you desire to update the `open-dis7-java` project with any or all of the prod
   * open-dis7-entities-usa-munitions.jar
   * open-dis7-entities-usa-surface.jar
   * **open-dis7-entities-javadoc.jar**
+<br/>
+<pre> **Or, the above can more easily be accomplished by the following Ant target:
+      **Select** `Run Target->Other Targets->copy-jars`
+</pre>
 
 2. Developers need to be sure to perform a diff with files already in the open-dis7-java repository so that any changes there are reflected in the source-generation algorithms.
 
