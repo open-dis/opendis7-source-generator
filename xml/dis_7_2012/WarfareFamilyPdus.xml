@@ -26,7 +26,7 @@
             <classRef name="EventIdentifier"/>
         </attribute>
 
-        <attribute name="fireMissionIndex" comment="This field shall identify the fire mission (see 5.4.3.3). This field shall be representedby a 32-bit unsigned integer.">
+        <attribute name="fireMissionIndex" comment="This field shall identify the fire mission (see 5.4.3.3). This field shall be represented by a 32-bit unsigned integer.">
             <primitive type="uint32"/>
         </attribute>
 
