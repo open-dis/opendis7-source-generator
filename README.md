@@ -50,7 +50,8 @@ To handle this complexity, 5 separate run configurations have been defined and n
 * 4 make object types
 * 5 make entities
 
-The instructions below reference them in order.
+The instructions below reference them in order. 
+** Of note, avoid a NetBeans (Clean/Build) unless it is desired to re-generate source from scratch.
 
 1. **Clone project**
 	(You may alternatively use the built-in Git support in Netbeans.)  The command-line execution is:
@@ -69,18 +70,18 @@ The instructions below reference them in order.
 8. **In Project Properties/Sources** add the `src-specialcase/java` folder to the "Source Package Folders"
 
 	(Note: The step above changes Netbeans project configuration files, but those changes should not be committed to the Git repository.)
+
 9. **Build Project** from the `Run` menu (not needed if "compile on save")<hr/>
 10. **Choose "3 make jammers"** from the run configurations list
 11. **Run Project** from the `Run` menu
 12. **Choose "4 make object types"** from the run configurations list
 13. **Run Project** from the `Run` menu
-
 14. **Choose "5 make entities"** from the run configurations list
 15. **Run Project** from the `Run` menu
 
 	This step takes a while since there are over 20000 entity classes.
 
-16. **Clean and Build Project** from the `Run` menu
+16. **Build Project** from the `Run` menu
 
 	This step takes a while since there are over 20000 entity classes.
 
