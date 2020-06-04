@@ -292,7 +292,7 @@
             <classRef name="EventIdentifier"/>
         </attribute>
       
-        <attribute name="location" comment="Location wrt entity. There is some ambugiuity in the standard here, but this is the order it is listed in the table.">
+        <attribute name="location" comment="Location wrt entity. There is some ambiguity in the standard here, but this is the order it is listed in the table.">
             <classRef name="Vector3Float"/>
         </attribute>
       
