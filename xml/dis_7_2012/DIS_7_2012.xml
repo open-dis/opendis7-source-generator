@@ -1682,7 +1682,7 @@
 
     </class>
 
-    <class name="IntercomCommunicationsParameters" inheritsFrom="root" comment="Intercom communcations parameters. Section 6.2.46">
+    <class name="IntercomCommunicationsParameters" inheritsFrom="root" comment="Intercom communications parameters. Section 6.2.46">
 
         <attribute name="recordType" comment="Type of intercom parameters record">
             <sisoenum type="IntercomControlRecordType" comment="uid 185"/>
