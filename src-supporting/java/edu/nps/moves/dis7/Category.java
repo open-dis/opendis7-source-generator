@@ -11,6 +11,15 @@ package edu.nps.moves.dis7;
  */
 public interface Category
 {
+    /**
+     * 
+     * @return the value of this SubCategory
+     */
     int getValue();
+    
+    /**
+     * 
+     * @return the description of this SubCategory
+     */
     String getDescription();
 }
