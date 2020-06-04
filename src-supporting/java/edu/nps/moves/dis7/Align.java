@@ -111,7 +111,7 @@ public class Align
           dis.read();
       }
       catch(IOException ex) {
-          ex.printStackTrace();
+          ex.printStackTrace(System.err);
           throw new RuntimeException("IOException ex: "+ex.getLocalizedMessage());
       }
   }
@@ -122,7 +122,7 @@ public class Align
           dos.writeByte(0);
       }
       catch(IOException ex) {
-          ex.printStackTrace();
+          ex.printStackTrace(System.err);
           throw new RuntimeException("IOException ex: "+ex.getLocalizedMessage());
       }
       

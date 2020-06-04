@@ -21,6 +21,7 @@ public interface Marshaller
 
     /**
      * Packs a Pdu into the ByteBuffer.
+     * @throws java.lang.Exception
      * @see java.nio.ByteBuffer
      * @param buff The ByteBuffer at the position to begin writing
      */
@@ -28,6 +29,8 @@ public interface Marshaller
     
     /**
      * Unpacks a Pdu from the underlying data.
+     * @return 
+     * @throws java.lang.Exception
      * @see java.nio.ByteBuffer
      * @param buff The ByteBuffer at the position to begin reading
      */
