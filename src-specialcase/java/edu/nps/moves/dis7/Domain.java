@@ -33,17 +33,33 @@ public class Domain
   private Method getDescription;
 
   //@formatter:off
+
+    /**
+     *
+     * @param d
+     * @return
+     */
   public static Domain inst(PlatformDomain d)
   {
     return _inst(d);
   }  //  uid 8
 
-  public static Domain inst(MunitionDomain d)
+    /**
+     *
+     * @param d
+     * @return
+     */
+    public static Domain inst(MunitionDomain d)
   {
     return _inst(d);
   }  //  uid 14
 
-  public static Domain inst(SupplyDomain d)
+    /**
+     *
+     * @param d
+     * @return
+     */
+    public static Domain inst(SupplyDomain d)
   {
     return _inst(d);
   }  //  uid 600
@@ -76,32 +92,57 @@ public class Domain
     }
   }
 
-  public int getValue()
+    /**
+     *
+     * @return
+     */
+    public int getValue()
   {
     return (Integer) invoke(getValue, null);
   }
 
-  public String getDescription()
+    /**
+     *
+     * @return
+     */
+    public String getDescription()
   {
     return (String) invoke(getDescription, null);
   }
 
-  public int getMarshalledSize()
+    /**
+     *
+     * @return
+     */
+    public int getMarshalledSize()
   {
     return (Integer) invoke(mSize, null);
   }
 
-  public void marshal(DataOutputStream dos)
+    /**
+     *
+     * @param dos
+     */
+    public void marshal(DataOutputStream dos)
   {
     invoke(marshalDos, new Object[]{dos});
   }
 
-  public void marshal(ByteBuffer buff)
+    /**
+     *
+     * @param buff
+     */
+    public void marshal(ByteBuffer buff)
   {
     invoke(marshalBuff, new Object[]{buff});
   }
 
-  public int unmarshal(DataInputStream dis)
+    /**
+     *
+     * @param dis
+     * @return
+     */
+    public int unmarshal(DataInputStream dis)
   {
     Object o = invoke(unmarshalDis, new Object[]{dis});
     enumInst = o;
@@ -109,7 +150,12 @@ public class Domain
     return getMarshalledSize();
   }
 
-  public int unmarshal(ByteBuffer buff)
+    /**
+     *
+     * @param buff
+     * @return
+     */
+    public int unmarshal(ByteBuffer buff)
   {
     Object o = invoke(unmarshalBuff, new Object[]{buff});
     enumInst = o;
