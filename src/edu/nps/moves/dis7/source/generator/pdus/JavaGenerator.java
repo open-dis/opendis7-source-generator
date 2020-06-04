@@ -6,12 +6,12 @@ package edu.nps.moves.dis7.source.generator.pdus;
 
 import java.util.*;
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import edu.nps.moves.dis7.source.generator.pdus.ClassAttribute.ClassAttributeType;
-import java.io.IOException;
 
 
 /**
@@ -866,8 +866,9 @@ public class JavaGenerator extends Generator
         //pw.println();
         pw.println("/**");
         pw.println(" * Serializes an object to a DataOutputStream.");
+        pw.println(" * @throws java.lang.Exception if something goes wrong");
         pw.println(" * @see java.io.DataOutputStream");
-        pw.println(" * @param dos The DataOutputStream");
+        pw.println(" * @param dos the OutputStream");
         pw.println(" */");
  
         pw.println("public void marshal(DataOutputStream dos) throws Exception");
@@ -901,16 +902,16 @@ public class JavaGenerator extends Generator
                 // the list length.
                 if (anAttribute.getIsDynamicListLengthField()) {
                   ClassAttribute listAttribute = anAttribute.getDynamicListClassAttribute();
-                  pw.println("       dos.write" + capped + "( (" + marshalType + ")" + listAttribute.getName() + ".size());");
+                  pw.println("       dos.write" + capped + "(" + listAttribute.getName() + ".size());");
                 }
                 
                 else if (anAttribute.getIsPrimitiveListLengthField()) {
                   ClassAttribute listAttribute = anAttribute.getDynamicListClassAttribute();
-                  pw.println("       dos.write" + capped + "( (" + marshalType + ")" + listAttribute.getName() + ".length);");
+                  pw.println("       dos.write" + capped + "(" + listAttribute.getName() + ".length);");
                 }
 
                 else {
-                  pw.println("       dos.write" + capped + "( (" + marshalType + ")" + anAttribute.getName() + ");");
+                  pw.println("       dos.write" + capped + "(" + anAttribute.getName() + ");");
                 }
                 break;
 
@@ -994,9 +995,10 @@ public class JavaGenerator extends Generator
         pw.println();
         pw.println("/**");
         pw.println(" * Unserializes an object from a DataInputStream.");
+        pw.println(" * @throws java.lang.Exception if something goes wrong");
         pw.println(" * @see java.io.DataInputStream");
-        pw.println(" * @param dis The DataInputStream");
-        pw.println(" * @return marshalled size");
+        pw.println(" * @param dis the InputStream");
+        pw.println(" * @return unmarshalled size");
         pw.println(" */");
 
         pw.println("public int unmarshal(DataInputStream dis) throws Exception");
@@ -1538,7 +1540,7 @@ public class JavaGenerator extends Generator
         } // End of loop through the ivars for a marshal method
         */
        /* 
-        pw.println("    } // end try \n    catch(Exception e)");
+        pw.println("    } // end try \n    catch(IOException e)");
         pw.println("    { \n      System.err.println(e);}");
         
         pw.println("    } // end of marshalXml method");
@@ -1557,32 +1559,32 @@ public class JavaGenerator extends Generator
      * @param pw
      * @param aClass
      */
-	public void writeEqualityMethod(PrintWriter pw, GeneratedClass aClass) {
-		try {
-			//pw.println();
-			pw.println(" /*");
-			pw.println("  * Override of default equals method.  Calls equalsImpl() for content comparison.");
-			pw.println("  */");
-			pw.println("@Override");
-			pw.println(" public boolean equals(Object obj)");
-			pw.println(" {");
-			pw.println("    if(this == obj)");
-			pw.println("      return true;");
-			pw.println();
-			pw.println("    if(obj == null)");
-			pw.println("       return false;");
-			pw.println();
-			pw.println("    if(!getClass().isAssignableFrom(obj.getClass())) //if(getClass() != obj.getClass())");
-			pw.println("        return false;");
-			pw.println();
-			pw.println("    return equalsImpl(obj);");
-			pw.println(" }");
-		} catch (Exception e) {
-			System.err.println(e);
-		}
+    public void writeEqualityMethod(PrintWriter pw, GeneratedClass aClass) {
+        try {
+            //pw.println();
+            pw.println(" /*");
+            pw.println("  * Override of default equals method.  Calls equalsImpl() for content comparison.");
+            pw.println("  */");
+            pw.println("@Override");
+            pw.println(" public boolean equals(Object obj)");
+            pw.println(" {");
+            pw.println("    if(this == obj)");
+            pw.println("      return true;");
+            pw.println();
+            pw.println("    if(obj == null)");
+            pw.println("       return false;");
+            pw.println();
+            pw.println("    if(!getClass().isAssignableFrom(obj.getClass())) //if(getClass() != obj.getClass())");
+            pw.println("        return false;");
+            pw.println();
+            pw.println("    return equalsImpl(obj);");
+            pw.println(" }");
+        } catch (Exception e) {
+            System.err.println(e);
+        }
 
-		writeEqualityImplMethod(pw, aClass); // Write impl for establishing content equality
-	}
+        writeEqualityImplMethod(pw, aClass); // Write impl for establishing content equality
+    }
 
   /**
      * write equalsImpl(...) method to this class to parent or subclasses
