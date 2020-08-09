@@ -8,6 +8,7 @@ package edu.nps.moves.dis7.source.generator.enumerations;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -66,9 +67,12 @@ public class Main
 
     public Main(String xmlPath, String outputDir, String packageName)
     {
-        this.packageName = packageName;
         this.xmlPath = xmlPath;
         outputDirectory = new File(outputDir);
+        this.packageName = packageName;
+        System.out.println ("          xmlPath=" + xmlPath);
+        System.out.println ("  outputDirectory=" + outputDirectory);
+        System.out.println ("      packageName=" + packageName);
     }
 
     private void run() throws SAXException, IOException, ParserConfigurationException
@@ -123,8 +127,9 @@ public class Main
 
         System.out.println("Begin enum generation ...");
         MyHandler handler = new MyHandler();
-        factory.newSAXParser().parse(new File(xmlPath), handler);
+        factory.newSAXParser().parse(new File(xmlPath), handler); // apparently can't reuse xmlFile
 
+        System.out.println("xmlFile.path=" + xmlFile.getAbsolutePath());
         System.out.println("Complete. " + handler.enums.size() + " enums created.");
     }
 
@@ -223,7 +228,7 @@ public class Main
                 case "dict":
                     String uid = attributes.getValue("uid");
                     if (uid != null) {
-                        String name = attributes.getValue("name");
+                        String name = attributes.getValue("name").replaceAll(" ","").replaceAll("-",""); // name canonicalization C14N
                         String name2 = Main.this.uid2ClassName.getProperty(uid);
                         if(name2 != null)
                           uidClassNames.put(uid, name2);
@@ -272,10 +277,10 @@ public class Main
             switch (qName) {
                 case "enum":
                     currentEnum = new EnumElem();
-                    currentEnum.name = attributes.getValue("name");
+                    currentEnum.name = attributes.getValue("name").replaceAll(" ","").replaceAll("-",""); // name canonicalization C14N
                     currentEnum.uid = attributes.getValue("uid");
                     currentEnum.size = attributes.getValue("size");
-                    currentEnum.footnote = attributes.getValue("footnote");
+                    currentEnum.footnote = attributes.getValue("footnote").replaceAll("—","-"); // mdash
                     enums.add(currentEnum);
                     //maybeSysOut(attributes.getValue("xref"), "enum uid " + currentEnum.uid + " " + currentEnum.name);
                     break;
@@ -286,7 +291,7 @@ public class Main
                     currentEnumRow = new EnumRowElem();
                     currentEnumRow.description = attributes.getValue("description");
                     currentEnumRow.value = attributes.getValue("value");
-                    currentEnumRow.footnote = attributes.getValue("footnote");
+                    currentEnumRow.footnote = attributes.getValue("footnote").replaceAll("—","-");
                     currentEnumRow.xrefclassuid = attributes.getValue("xref");
                     currentEnum.elems.add(currentEnumRow);
                     //maybeSysOut(attributes.getValue("xref"), "enumrow uid " + currentEnum.uid + " " + currentEnum.name + " " + currentEnumRow.value + " " + currentEnumRow.description);
@@ -294,7 +299,7 @@ public class Main
 
                 case "bitfield":
                     currentBitfield = new BitfieldElem();
-                    currentBitfield.name = attributes.getValue("name");
+                    currentBitfield.name = attributes.getValue("name").replaceAll(" ","").replaceAll("-","").replaceAll("—",""); // name canonicalization C14N
                     currentBitfield.size = attributes.getValue("size");
                     currentBitfield.uid = attributes.getValue("uid");
                     bitfields.add(currentBitfield);
@@ -305,7 +310,7 @@ public class Main
                     if (currentBitfield == null)
                         break;
                     currentBitfieldRow = new BitfieldRowElem();
-                    currentBitfieldRow.name = attributes.getValue("name");
+                    currentBitfieldRow.name = attributes.getValue("name").replaceAll(" ","").replaceAll("-",""); // name canonicalization C14N
                     currentBitfieldRow.description = attributes.getValue("description");
                     currentBitfieldRow.bitposition = attributes.getValue("bit_position");
                     String len = attributes.getValue("length");
@@ -318,7 +323,7 @@ public class Main
 
                 case "dict":
                     currentDict = new DictionaryElem();
-                    currentDict.name = attributes.getValue("name");
+                    currentDict.name = attributes.getValue("name").replaceAll(" ","").replaceAll("-",""); // name canonicalization C14N
                     currentDict.uid = attributes.getValue("uid");
                     dictionaries.add(currentDict);
                     //maybeSysOut(attributes.getValue("xref"), "dict uid " + currentDict.uid + " " + currentDict.name);
@@ -351,7 +356,6 @@ public class Main
                 case "jammer_specific":
                 default:
                     testElems.add(qName);
-
             }
         }
 
@@ -435,7 +439,7 @@ public class Main
             FileWriter fw;
             try {
                 target.createNewFile();
-                fw = new FileWriter(target);
+                fw = new FileWriter(target, StandardCharsets.UTF_8);
                 fw.write(sb.toString());
                 fw.flush();
                 fw.close();
@@ -533,6 +537,7 @@ public class Main
             if (otherIf != null)
                 additionalInterface = "implements "+otherIf;
             */
+            /* enumeration initial template, de-spacify name */
             if(el.footnote == null)
               sb.append(String.format(enumTemplate1,             packageName, specTitleDate,  "UID " + el.uid, el.size, el.name, clsName, additionalInterface));
             else
@@ -607,7 +612,7 @@ public class Main
         }
         private String htmlize(String s)
         {
-            return s.replace("&","and");
+            return s.replace("&","and").replace("&","and");
         }
         
       private void writeOneEnum(StringBuilder sb, EnumRowElem row, String enumName)
