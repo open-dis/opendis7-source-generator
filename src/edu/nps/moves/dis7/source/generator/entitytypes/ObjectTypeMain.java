@@ -8,6 +8,7 @@ package edu.nps.moves.dis7.source.generator.entitytypes;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -77,7 +78,7 @@ public class ObjectTypeMain
 
   private String loadOneTemplate(String s) throws Exception
   {
-    return new String(Files.readAllBytes(Paths.get(getClass().getResource(s).toURI())));
+    return new String(Files.readAllBytes(Paths.get(getClass().getResource(s).toURI())), StandardCharsets.UTF_8.name());
   }
 
   class DescriptionElem
