@@ -8,6 +8,7 @@ import java.util.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -187,7 +188,7 @@ public class JavaGenerator extends Generator
                 File outputFile = new File(fullPath);
                 outputFile.getParentFile().mkdirs();
                 outputFile.createNewFile();
-                PrintWriter pw = new PrintWriter(outputFile);
+                PrintWriter pw = new PrintWriter(outputFile, StandardCharsets.UTF_8.name());
 
                 // print the source code of the class to the file
                 // System.out.println("trying to make class "+name);
@@ -203,7 +204,7 @@ public class JavaGenerator extends Generator
     } // End write classes
 
     /**
-     * Generate a source code file with getters, setters, ivars, and marshal/unmarshal methods for one class.
+     * Generate a source code file with accessor methods (getters and setters), ivars, and marshal/unmarshal methods for one class.
      */
     private void writeClass(PrintWriter pw, GeneratedClass aClass)
     {
@@ -994,7 +995,7 @@ public class JavaGenerator extends Generator
     {
         pw.println();
         pw.println("/**");
-        pw.println(" * Unserializes an object from a DataInputStream.");
+        pw.println(" * Deserializes an object from a DataInputStream.");
         pw.println(" * @throws java.lang.Exception if something goes wrong");
         pw.println(" * @see java.io.DataInputStream");
         pw.println(" * @param dis the InputStream");
