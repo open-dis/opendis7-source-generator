@@ -3,7 +3,7 @@ This is a project to generate a type-safe java implementation of the DIS Protoco
 
 **IMPORTANT!**  This project is not complete and is in a testing phase.  Until this notice is removed, use the DIS libraries under the **open-dis-java** and **Enumerations** projects.
 
-<H3>Background</H3>
+<h3>Background</h3>
 
 This work is an update/continuation of the **`open-dis/xmlpg`** project created by the late Don McGregor of the Naval Postgraduate School.  Its goal is twofold:
 
@@ -23,20 +23,20 @@ The SISO specification is issued in several file formats.  One of these is XML a
 
 A **`SAX`** ("Simple API for XML") Java implementation is used to process the XML input files.  String templates for the various output classes are used to define the basic structure of the generated code, and these files are found in the **`resources/edu/moves/dis7/source/generator`** directory.
 
-<H3>Development Environment</H3>
+<h3>Development Environment</h3>
 
 The Java language is inherently cross-platform and any OS on any hardware for which a Java run-time is available should *theoretically* support running of this project.  However, the configuration used by the initial developer is the following:
 
 1. Apache **Netbeans 11** Integrated Development Environment ("IDE")
 2. Apache **Ant** Java build tool (integrated in Netbeans)
 3. **Git** version control system (for downloading project; supported in Netbeans)
-4. OpenJdk Java version 13.0.2
+4. OpenJdk Java version 14.0.2
 
 The project is hosted on **github.com** and the support files which are used to define the project structure are also included.  Following the procedure below, a simple download, then a small number of additional steps are all that are required to build the source files for a DIS distribution.
 
 The project does not automatically download run-time dependencies like a **Maven**-based project.  Only one external dependency is used, and that is the Apache **Commons-IO** library.  The jar for that is found in the `libs/` directory of the project.
 
-<H3>Generation Procedure</H3>
+<h3>Generation Procedure</h3>
 
 (The following steps are ripe for automation using a custom Ant/Netbeans task.)
 
@@ -58,7 +58,7 @@ The instructions below reference them in order.
 	
 	`git clone https://github.com/open-dis/open-dis7-source-generator.git`
 
-2. **Open Netbeans 11, navigate to clone directory**
+2. **Open Netbeans 12, navigate to clone directory**
 
 	`File->Open Project->open-dis7-source-generator`<hr/>
 
@@ -95,7 +95,7 @@ The instructions below reference them in order.
 
 	These steps take a while and produce the products below.
 	
-<H3>Deploying Products</H3>
+<h3>Deploying Products</h3>
 
 Once a proper build has been achieved in the open-dis7-source-generator project, 
 it becomes time to update the deployed version maintained in the open-dis7-java project.
@@ -103,8 +103,8 @@ it becomes time to update the deployed version maintained in the open-dis7-java 
 Some care has to be taken to ensure that any changes in that tree are accounted for
 by the source generator beforehand, so that code changes and improvements aren't lost.
 
-1. The generated source resides in the `src-generated` directory.
-2. The generated entity jars reside in the `dist` directory.
+1. The generated source         resides in the `src-generated` directory.
+2. The generated entity jars    reside  in the `dist` directory.
 3. The generated entity javadoc resides in the `dist` directory.
 
 If you desire to update the `open-dis7-java` project with any or all of the products from this project, clone that project locally, then follow this procedure:
