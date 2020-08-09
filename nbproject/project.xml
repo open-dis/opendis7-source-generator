@@ -6,8 +6,8 @@
             <name>open-dis7-source-generator</name>
             <source-roots>
                 <root id="src.dir"/>
-                <root id="src.java2.dir"/>
                 <root id="src.java.dir"/>
+                <root id="src.java2.dir"/>
                 <root id="src.resources.dir"/>
             </source-roots>
             <test-roots>
