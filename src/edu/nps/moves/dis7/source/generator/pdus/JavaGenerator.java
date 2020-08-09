@@ -1553,7 +1553,7 @@ public class JavaGenerator extends Generator
      * Write the code for an equality operator. This allows you to compare two
      * objects for equality.The code should look like
      *
-     * bool operator ==(const ClassName&; rhs) return (_ivar1==rhs._ivar1 &;&;
+     * bool operator ==(const ClassName&amp; rhs) return (_ivar1==rhs._ivar1 &amp;&amp;
      * _var2 == rhs._ivar2 ...)
      *
      * @param pw
