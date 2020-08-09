@@ -19,6 +19,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import java.lang.reflect.Method;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -189,7 +190,7 @@ public class Main
 
   private String loadOneTemplate(String s) throws Exception
   {
-    return new String(Files.readAllBytes(Paths.get(getClass().getResource(s).toURI())));
+    return new String(Files.readAllBytes(Paths.get(getClass().getResource(s).toURI())), StandardCharsets.UTF_8.name());
   }
   
   private void saveUidFactory()
