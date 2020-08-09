@@ -71,7 +71,6 @@
     -->
 
     <target description="Build and test whole project." name="all">
-        <echo message="TODO figure out how to ant-ify build menus, which are a necessary prerequisite"/>
         <!-- <fail message="under development, not yet ready."/> -->
         <antcall target="clean"/>
         <echo message="compile generator classes"/>
@@ -115,9 +114,19 @@
     </target>
     
     <target name="clean-all-generated-jars">
-        <mkdir dir="dist" description="ensure dist directory present"/>
+        <mkdir dir="dist" description="ensure necessary directory present"/>
         <delete verbose="true">
             <fileset dir="dist" includes="*.jar"/>
+        </delete>
+    </target>
+    
+    <target name="clean-generated-source">
+        <mkdir dir="src-generated/java" description="ensure necessary directory present"/>
+        <delete verbose="true" includeEmptyDirs="true">
+            <fileset dir="src-generated/java">
+                <include name="**/*.java"/>
+                <exclude name="**/README.md"/>
+            </fileset>
         </delete>
     </target>
    
@@ -510,10 +519,12 @@
         </jar>
     </target>
     
+    <property name="SISO-REF-010.xml" value="SISO-REF-010.xml"/>
+    
     <target name="generate-source-code" depends="init">
         <echo message="generate-source-code 1 make pdus,         edu.nps.moves.dis7.source.generator.enumerations.Main"/>
         <java classname="edu.nps.moves.dis7.source.generator.enumerations.Main">
-            <arg value="xml/SISO/SISO_REF_010_v25/SISO_REF_010.xml"/>
+            <arg value="xml/SISO/${SISO-REF-010.xml}"/>
             <arg value="src-generated/java/edu/nps/moves/dis7/enumerations"/>
             <arg value="edu.nps.moves.dis7.enumerations"/>
             <classpath>
@@ -521,6 +532,7 @@
                 <pathelement path="libs/commons-io-2.6.jar"/>
             </classpath>
         </java>
+        <!-- <antcall target="compile"/>incremental compilation checks -->
         
         <echo message="generate-source-code 2 make pdus,         edu.nps.moves.dis7.source.generator.pdus.Main"/>
         <java classname="edu.nps.moves.dis7.source.generator.pdus.Main">
@@ -533,10 +545,11 @@
                 <pathelement path="libs/commons-io-2.6.jar"/>
             </classpath>
         </java>
+        <antcall target="compile"/><!-- incremental compilation checks -->
         
         <echo message="generate-source-code 3 make jammers,      edu.nps.moves.dis7.source.generator.entitytypes.JammerMain"/>
         <java classname="edu.nps.moves.dis7.source.generator.entitytypes.JammerMain">
-            <arg value="xml/SISO/SISO_REF_010_v25/SISO_REF_010.xml"/>
+            <arg value="xml/SISO/${SISO-REF-010.xml}"/>
             <arg value="src-generated/java/edu/nps/moves/dis7/jammers"/>
             <arg value="edu.nps.moves.dis7.jammers"/>
             <classpath>
@@ -544,10 +557,11 @@
                 <pathelement path="libs/commons-io-2.6.jar"/>
             </classpath>
         </java>
+        <antcall target="compile"/><!-- incremental compilation checks -->
         
         <echo message="generate-source-code 4 make object types, edu.nps.moves.dis7.source.generator.entitytypes.ObjectTypeMain"/>
         <java classname="edu.nps.moves.dis7.source.generator.entitytypes.ObjectTypeMain">
-            <arg value="xml/SISO/SISO_REF_010_v25/SISO_REF_010.xml"/>
+            <arg value="xml/SISO/${SISO-REF-010.xml}"/>
             <arg value="src-generated/java/edu/nps/moves/dis7/objecttypes"/>
             <arg value="edu.nps.moves.dis7.objecttypes"/>
             <classpath>
@@ -555,12 +569,12 @@
                 <pathelement path="libs/commons-io-2.6.jar"/>
             </classpath>
         </java>
-        
-        <antcall target="compile"/><!-- gain access to necesary classes for generate-source-code 5 -->
+        <antcall target="compile"/><!-- incremental compilation checks -->
+        <!-- must compile to gain access to necesary classes for generate-source-code 5 -->
         
         <echo message="generate-source-code 5 make entities,     edu.nps.moves.dis7.source.generator.entitytypes.Main"/>
         <java classname="edu.nps.moves.dis7.source.generator.entitytypes.Main">
-            <arg value="xml/SISO/SISO_REF_010_v25/SISO_REF_010.xml"/>
+            <arg value="xml/SISO/${SISO-REF-010.xml}"/>
             <arg value="src-generated/java/edu/nps/moves/dis7/entities"/>
             <arg value="edu.nps.moves.dis7.entities"/>
             <classpath>
