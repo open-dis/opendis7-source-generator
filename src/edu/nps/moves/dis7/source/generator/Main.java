@@ -15,7 +15,7 @@ package edu.nps.moves.dis7.source.generator;
 public class Main
 {
   // @formatter:off
-  static String sisoXmlFile = "xml/SISO/SISO_REF_010_v25/SISO_REF_010.xml";
+  static String sisoXmlFile = "xml/SISO/SISO-REF-010.xml";
   static String pduXmlFile  = "xml/dis_7_2012/DIS_7_2012.xml";
 
   static String enumOutputPath       = "src-generated/java/edu/nps/moves/dis7/enumerations";

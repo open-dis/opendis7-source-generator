@@ -8,6 +8,7 @@ package edu.nps.moves.dis7.source.generator.entitytypes;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -136,6 +137,8 @@ public class JammerMain
           currentKind = new JammerKindElem();
           currentKind.value = attributes.getValue("value");
           currentKind.description = attributes.getValue("description");
+          if (currentKind.description != null)
+              currentKind.description = currentKind.description.replaceAll("—","-").replaceAll("–","-").replaceAll("\"", "").replaceAll("\'", "");
           break;
 
         case "jammer_category":
@@ -145,6 +148,8 @@ public class JammerMain
           currentCategory = new JammerCategoryElem();
           currentCategory.value = attributes.getValue("value");
           currentCategory.description = attributes.getValue("description");
+          if (currentCategory.description != null)
+              currentCategory.description = currentCategory.description.replaceAll("—","-").replaceAll("–","-").replaceAll("\"", "").replaceAll("\'", "");
           currentCategory.parent = currentKind;
           setUniquePkgAndEmnum(currentCategory, currentKind.categories);
           currentKind.categories.add(currentCategory);
@@ -156,6 +161,8 @@ public class JammerMain
           currentSubCategory = new JammerSubCategoryElem();
           currentSubCategory.value = attributes.getValue("value");
           currentSubCategory.description = attributes.getValue("description");
+          if (currentSubCategory.description != null)
+              currentSubCategory.description = currentSubCategory.description.replaceAll("—","-").replaceAll("–","-").replaceAll("\"", "").replaceAll("\'", "");
           currentSubCategory.parent = currentCategory;
           setUniquePkgAndEmnum(currentSubCategory, currentCategory.children);
           currentCategory.children.add(currentSubCategory);
@@ -167,6 +174,8 @@ public class JammerMain
           currentSpecific = new JammerSpecificElem();
           currentSpecific.value = attributes.getValue("value");
           currentSpecific.description = attributes.getValue("description");
+          if (currentSpecific.description != null)
+              currentSpecific.description = currentSpecific.description.replaceAll("—","-").replaceAll("–","-").replaceAll("\"", "").replaceAll("\'", "");
           currentSpecific.parent = currentSubCategory;
           setUniquePkgAndEmnum(currentSpecific, currentSubCategory.children);
           currentSubCategory.children.add(currentSpecific);
@@ -327,7 +336,7 @@ public class JammerMain
     File target = new File(parentDir, name);
     try {
       target.createNewFile();
-      try (FileWriter fw = new FileWriter(target)) {
+      try (FileWriter fw = new FileWriter(target, StandardCharsets.UTF_8)) {
         fw.write(contents);
         fw.flush();
       }
@@ -555,7 +564,7 @@ public class JammerMain
   }
 
   /*
-  private String xmlPath = "xml/SISO/SISO_REF_010_v25/SISO_REF_010.xml";
+  private String xmlPath = "xml/SISO/SISO-REF-010.xml";
   private File outputDirectory = new File("src-generated/java/edu/nps/moves/dis7/jammers");
   private String basePackageName = "edu.nps.moves.dis7.jammers";
   */
@@ -564,7 +573,7 @@ public class JammerMain
     try {
       if(args == null || args.length != 3)
         new JammerMain(
-          "xml/SISO/SISO_REF_010_v25/SISO_REF_010.xml",
+          "xml/SISO/SISO-REF-010.xml",
           "src-generated/java/edu/nps/moves/dis7/jammers",
           "edu.nps.moves.dis7.jammers"
           ).run();

@@ -157,6 +157,8 @@ public class ObjectTypeMain
           currentObject.kind = attributes.getValue("kind");
           currentObject.domain = attributes.getValue("domain");
           currentObject.description = attributes.getValue("description");
+          if (currentObject.description != null)
+              currentObject.description = currentObject.description.replaceAll("—","-").replaceAll("–","-").replaceAll("\"", "").replaceAll("\'", "");
           currentObject.parent = currentCot;
           currentCot.domain = currentObject.domain;
           setUniquePkgAndEmail(currentObject, currentCot.objects);
@@ -169,6 +171,8 @@ public class ObjectTypeMain
           currentCategory = new CategoryElem();
           currentCategory.value = attributes.getValue("value");
           currentCategory.description = attributes.getValue("description");
+          if (currentCategory.description != null)
+              currentCategory.description = currentCategory.description.replaceAll("—","-").replaceAll("–","-").replaceAll("\"", "").replaceAll("\'", "");
           currentCategory.parent = currentObject;
           setUniquePkgAndEmail(currentCategory, currentObject.children);
           currentObject.children.add(currentCategory);
@@ -180,6 +184,8 @@ public class ObjectTypeMain
           currentSubCategory = new SubCategoryElem();
           currentSubCategory.value = attributes.getValue("value");
           currentSubCategory.description = attributes.getValue("description");
+          if (currentSubCategory.description != null)
+              currentSubCategory.description = currentSubCategory.description.replaceAll("—","-").replaceAll("–","-").replaceAll("\"", "").replaceAll("\'", "");
           currentSubCategory.parent = currentCategory;
           setUniquePkgAndEmail(currentSubCategory, currentCategory.children);
           currentCategory.children.add(currentSubCategory);
@@ -371,7 +377,7 @@ public class ObjectTypeMain
     File target = new File(parentDir, name);
     try {
       target.createNewFile();
-      try (FileWriter fw = new FileWriter(target)) {
+      try (FileWriter fw = new FileWriter(target, StandardCharsets.UTF_8)) {
         fw.write(contents);
         fw.flush();
       }
@@ -603,7 +609,7 @@ public class ObjectTypeMain
     try {
       if(args == null || args.length != 3)
         new ObjectTypeMain(
-          "xml/SISO/SISO_REF_010_v25/SISO_REF_010.xml",
+          "xml/SISO/SISO-REF-010.xml",
           "src-generated/java/edu/nps/moves/dis7/objecttypes",
           "edu.nps.moves.dis7.objecttypes"
           ).run();

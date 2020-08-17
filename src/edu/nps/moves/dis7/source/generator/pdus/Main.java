@@ -213,6 +213,8 @@ public class Main
             System.out.println("Allowable languages are java, cpp, objc, python, and csharp");
             System.exit(0);
         }
+        System.out.println ("          xmlFile=" + args[0]);
+        System.out.println ("         language=" + args[1]);
         
         Main.preflightArgs(args[0], args[1]);
         
@@ -230,9 +232,9 @@ public class Main
             FileInputStream fis = new FileInputStream(xmlFile);
             fis.close();
             
-            if(!(language.equalsIgnoreCase(JAVA) || language.equalsIgnoreCase(CPP) ||
-               language.equalsIgnoreCase(OBJC) || language.equalsIgnoreCase(CSHARP) ||
-               language.equalsIgnoreCase(JAVASCRIPT) || language.equalsIgnoreCase(PYTHON) ))
+            if(!(language.equalsIgnoreCase(JAVA)       || language.equalsIgnoreCase(CPP) ||
+                 language.equalsIgnoreCase(OBJC)       || language.equalsIgnoreCase(CSHARP) ||
+                 language.equalsIgnoreCase(JAVASCRIPT) || language.equalsIgnoreCase(PYTHON) ))
             {
                 System.out.println("Not a valid language to generate. The options are java, cpp, objc, javascript, python and csharp");
                 System.out.println("Usage: Xmlpg xmlFile language"); 
@@ -243,13 +245,14 @@ public class Main
         {
             System.out.println("XML file " + xmlFile + " not found. Please check the path and try again");
             System.out.println("Usage: Xmlpg xmlFile language"); 
+            fnfe.printStackTrace();
             System.exit(0);
         }
         catch(IOException e)
         {
             System.out.println("Problem with arguments to Xmlpg. Please check them.");
             System.out.println("Usage: Xmlpg xmlFile language"); 
-
+            e.printStackTrace();
             System.exit(0);
         }
     }

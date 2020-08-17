@@ -280,7 +280,9 @@ public class Main
                     currentEnum.name = attributes.getValue("name").replaceAll(" ","").replaceAll("-",""); // name canonicalization C14N
                     currentEnum.uid = attributes.getValue("uid");
                     currentEnum.size = attributes.getValue("size");
-                    currentEnum.footnote = attributes.getValue("footnote").replaceAll("—","-"); // mdash
+                    currentEnum.footnote = attributes.getValue("footnote");
+                    if (currentEnum.footnote != null)
+                        currentEnum.footnote.replaceAll("—","-").replaceAll("–","-").replaceAll("\"", "").replaceAll("\'", ""); // mdash
                     enums.add(currentEnum);
                     //maybeSysOut(attributes.getValue("xref"), "enum uid " + currentEnum.uid + " " + currentEnum.name);
                     break;
@@ -290,8 +292,12 @@ public class Main
                         break;
                     currentEnumRow = new EnumRowElem();
                     currentEnumRow.description = attributes.getValue("description");
+                    if (currentEnumRow.description != null)
+                        currentEnumRow.description = currentEnumRow.description.replaceAll("—","-").replaceAll("–","-").replaceAll("\"", "").replaceAll("\'", "");
                     currentEnumRow.value = attributes.getValue("value");
-                    currentEnumRow.footnote = attributes.getValue("footnote").replaceAll("—","-");
+                    currentEnumRow.footnote = attributes.getValue("footnote");
+                    if (currentEnum.footnote != null)
+                        currentEnum.footnote = currentEnum.footnote.replaceAll("—","-").replaceAll("–","-").replaceAll("\"", "").replaceAll("\'", "");
                     currentEnumRow.xrefclassuid = attributes.getValue("xref");
                     currentEnum.elems.add(currentEnumRow);
                     //maybeSysOut(attributes.getValue("xref"), "enumrow uid " + currentEnum.uid + " " + currentEnum.name + " " + currentEnumRow.value + " " + currentEnumRow.description);
@@ -312,6 +318,8 @@ public class Main
                     currentBitfieldRow = new BitfieldRowElem();
                     currentBitfieldRow.name = attributes.getValue("name").replaceAll(" ","").replaceAll("-",""); // name canonicalization C14N
                     currentBitfieldRow.description = attributes.getValue("description");
+                    if (currentBitfieldRow.description != null)
+                        currentBitfieldRow.description = currentBitfieldRow.description.replaceAll("—","-").replaceAll("–","-").replaceAll("\"", "").replaceAll("\'", "");
                     currentBitfieldRow.bitposition = attributes.getValue("bit_position");
                     String len = attributes.getValue("length");
                     if (len != null)
@@ -335,6 +343,8 @@ public class Main
                     currentDictRow = new DictionaryRowElem();
                     currentDictRow.value = attributes.getValue("value");
                     currentDictRow.description = attributes.getValue("description");
+                    if (currentDictRow.description != null)
+                        currentDictRow.description = currentDictRow.description.replaceAll("—","-").replaceAll("–","-").replaceAll("\"", "").replaceAll("\'", "");
                     currentDict.elems.add(currentDictRow);
                     //maybeSysOut(attributes.getValue("xref"), "dictrow uid" + currentDict.uid + " " + currentDict.name + " " + currentDictRow.value + " " + currentDictRow.description);
                     break;
@@ -400,9 +410,16 @@ public class Main
         private void writeOutDict(DictionaryElem el)
         {
             String clsName = uidClassNames.get(el.uid); //Main.this.uid2ClassName.getProperty(el.uid);
-            if (clsName == null) {
+            if (clsName == null)
+            {
                 System.err.println("Didn't find a class name for uid = " + el.uid);
                 return;
+            }
+            String classNameCorrected = clsName;
+            if (classNameCorrected.contains("Link11/11"))
+            {
+                classNameCorrected = classNameCorrected.replace("Link11/11B", "Link11_11B"); // Fix slash in entry
+                System.err.println("classNameCorrected=" + classNameCorrected);
             }
             StringBuilder sb = new StringBuilder();
 
@@ -412,14 +429,14 @@ public class Main
             if (otherIf != null)
                 additionalInterface = ", " + otherIf;
 
-            sb.append(String.format(dictEnumTemplate1, specTitleDate, packageName, "UID " + el.uid, clsName, additionalInterface));
+            sb.append(String.format(dictEnumTemplate1, specTitleDate, packageName, "UID " + el.uid, classNameCorrected, additionalInterface));
 
             dictNames.clear();
             // enum section
             el.elems.forEach((row) -> {
                 String name = row.value.replaceAll("[^a-zA-Z0-9]", ""); // only chars and numbers
                 if (!dictNames.contains(name)) {
-                    sb.append(String.format(dictEnumTemplate2, name, row.description.replace('"', '\'')));
+                    sb.append(String.format(dictEnumTemplate2, name, row.description.replaceAll("\"", "").replaceAll("\'", "")));
                     dictNames.add(name);
                 }
                 else
@@ -431,10 +448,10 @@ public class Main
             sb.append(";\n");
 
             // footer section
-            sb.append(String.format(dictEnumTemplate3, clsName, clsName));
+            sb.append(String.format(dictEnumTemplate3, classNameCorrected, classNameCorrected));
 
             // save file
-            File target = new File(outputDirectory, clsName + ".java");
+            File target = new File(outputDirectory, classNameCorrected + ".java");
             target.getParentFile().mkdirs();
             FileWriter fw;
             try {
@@ -445,6 +462,9 @@ public class Main
                 fw.close();
             }
             catch (IOException ex) {
+                System.out.flush();
+                System.err.println (ex.getMessage() + " target.getAbsolutePath()=" + target.getAbsolutePath() 
+                      + ", classNameCorrected=" + classNameCorrected);
                 ex.printStackTrace(System.err);
             }
         }
@@ -453,24 +473,33 @@ public class Main
         {
             String clsName = uidClassNames.get(el.uid); //Main.this.uid2ClassName.getProperty(el.uid);
             if (clsName == null)
+            {
+                System.err.println("Didn't find a class name for uid = " + el.uid);
                 return;
+            }
+            String classNameCorrected = clsName;
+            if (classNameCorrected.contains("Link11/11"))
+            {
+                classNameCorrected = classNameCorrected.replace("Link11/11B", "Link11_11B"); // Fix slash in entry
+                System.err.println("classNameCorrected=" + classNameCorrected);
+            }
             StringBuilder sb = new StringBuilder();
       
             String otherInf = uid2ExtraInterface.get(el.uid);
 
-            sb.append(String.format(bitsetTemplate1, packageName, specTitleDate, "UID " + el.uid, el.size, el.name, clsName, (otherInf==null?"":"implements "+otherInf)));
+            sb.append(String.format(bitsetTemplate1, packageName, specTitleDate, "UID " + el.uid, el.size, el.name, classNameCorrected, (otherInf==null?"":"implements "+otherInf)));
             enumNames.clear();
             el.elems.forEach((row) -> {
                 String xrefName = null;
                 if (row.xrefclassuid != null)
                     xrefName = uidClassNames.get(row.xrefclassuid); //Main.this.uid2ClassName.getProperty(row.xrefclassuid);
                 if (xrefName != null) {
-                    sb.append(String.format(bitsetXrefCommentTemplate, htmlize((row.description==null?"":row.description+", ")),xrefName));
+                    sb.append(String.format(bitsetXrefCommentTemplate, htmlize((row.description==null?"":row.description.replaceAll("\"", "").replaceAll("\'", "")+", ")),xrefName));
                     sb.append(String.format(bitsetTemplate16, createEnumName(row.name), row.bitposition, row.length, xrefName));
                 }
                 else {
                     if(row.description != null)
-                        sb.append(String.format(bitsetCommentTemplate, (htmlize(row.description))));
+                        sb.append(String.format(bitsetCommentTemplate, (htmlize(row.description.replaceAll("\"", "").replaceAll("\'", "")))));
                     sb.append(String.format(bitsetTemplate15, createEnumName(row.name), row.bitposition, row.length));
                 }
             });
@@ -478,19 +507,22 @@ public class Main
                 sb.setLength(sb.length() - 2);
             sb.append(";\n");
 
-            sb.append(String.format(bitsetTemplate2, clsName, el.size, clsName, clsName, clsName, clsName, clsName));
+            sb.append(String.format(bitsetTemplate2, classNameCorrected, el.size, classNameCorrected, classNameCorrected, classNameCorrected, classNameCorrected, classNameCorrected));
 
             // save file
-            File target = new File(outputDirectory, clsName + ".java");
+            File target = new File(outputDirectory, classNameCorrected + ".java");
             FileWriter fw;
             try {
                 target.createNewFile();
-                fw = new FileWriter(target);
+                fw = new FileWriter(target, StandardCharsets.UTF_8);
                 fw.write(sb.toString());
                 fw.flush();
                 fw.close();
             }
             catch (IOException ex) {
+                System.out.flush();
+                System.err.println (ex.getMessage() + " target.getAbsolutePath()=" + target.getAbsolutePath() 
+                      + ", classNameCorrected=" + classNameCorrected);
                 ex.printStackTrace(System.err);
             }
         }
@@ -501,7 +533,16 @@ public class Main
         {
             String clsName = uidClassNames.get(el.uid); //Main.this.uid2ClassName.getProperty(el.uid);
             if (clsName == null)
+            {
+                System.err.println("Didn't find a class name for uid = " + el.uid);
                 return;
+            }
+            String classNameCorrected = clsName;
+            if (classNameCorrected.contains("Link11/11"))
+            {
+                classNameCorrected = classNameCorrected.replace("Link11/11B", "Link11_11B"); // Fix slash in entry
+                System.err.println("classNameCorrected=" + classNameCorrected);
+            }
             
         /*    if(Main.this.uidDoNotGenerate.contains(el.uid)) {
                 System.out.println("Not generating "+clsName);
@@ -539,9 +580,9 @@ public class Main
             */
             /* enumeration initial template, de-spacify name */
             if(el.footnote == null)
-              sb.append(String.format(enumTemplate1,             packageName, specTitleDate,  "UID " + el.uid, el.size, el.name, clsName, additionalInterface));
+              sb.append(String.format(enumTemplate1,             packageName, specTitleDate,  "UID " + el.uid, el.size, el.name, classNameCorrected, additionalInterface));
             else
-              sb.append(String.format(enumTemplate1WithFootnote, packageName, specTitleDate,  "UID " + el.uid, el.size, el.name, el.footnote, clsName, additionalInterface));
+              sb.append(String.format(enumTemplate1WithFootnote, packageName, specTitleDate,  "UID " + el.uid, el.size, el.name, el.footnote, classNameCorrected, additionalInterface));
 
             enumNames.clear();
             // enum section
@@ -554,7 +595,7 @@ public class Main
                     if(aliases != null && aliases.getProperty(row.value)!=null)
                       writeOneEnum(sb,row,aliases.getProperty(row.value));
                     else {
-                      String enumName = createEnumName(row.description);
+                      String enumName = createEnumName(row.description.replaceAll("\"", "").replaceAll("\'", ""));
                       writeOneEnum(sb, row, enumName);
                     }
                   /*  if(row.xrefclassuid != null)
@@ -562,16 +603,16 @@ public class Main
                     
                     if(xrefName == null) {
                         String nm=null;
-                        sb.append(String.format(enumFootnoteCommentTemplate, htmlize(row.description)+( row.footnote==null?"":", "+htmlize(row.footnote))));
-                        sb.append(String.format(enumTemplate2, enumName, row.value, row.description.replace('"', '\'')));
+                        sb.append(String.format(enumFootnoteCommentTemplate, htmlize(row.descriptionrow.description.replaceAll("\"", "").replaceAll("\'", ""))+( row.footnote==null?"":", "+htmlize(row.footnote))));
+                        sb.append(String.format(enumTemplate2, enumName, row.value, row.description.replaceAll("\"", "").replaceAll("\'", "")));
                         if(aliases != null && aliases.get(row.value) != null) {
                            sb.append(String.format(enumFootnoteCommentTemplate, htmlize(row.description)+( row.footnote==null?"":", "+htmlize(row.footnote))));
-                           sb.append(String.format(enumTemplate2, nm = enumName, row.value, row.description.replace('"', '\'')));
+                           sb.append(String.format(enumTemplate2, nm = enumName, row.value, row.description.replaceAll("\"", "").replaceAll("\'", "")));
                         }
                     }
                     else {
                         sb.append(String.format(enumCommentTemplate,xrefName));
-                        sb.append(String.format(enumTemplate21, createEnumName(row.description), row.value, row.description.replace('"', '\''),xrefName));
+                        sb.append(String.format(enumTemplate21, createEnumName(row.descriptionrow.description.replaceAll("\"", "").replaceAll("\'", "")), row.value, row.description.replaceAll("\"", "").replaceAll("\'", ""),xrefName));
                     }*/
 
                 });
@@ -583,30 +624,33 @@ public class Main
             if (el.size == null)
                 el.size = "8";
 
-            sb.append(String.format(enumTemplate25, clsName, el.size, clsName, clsName, clsName, clsName));
+            sb.append(String.format(enumTemplate25, classNameCorrected, el.size, classNameCorrected, classNameCorrected, classNameCorrected, classNameCorrected));
 
             // footer section
             // Many enums come in with smaller bit widths or in-between bitwidths;  Leave handling the odd balls up to the user 
             // but figure out the smallest primitive size needed to hold it.
             int sz = Integer.parseInt(el.size);
             if(sz <= 8)
-               sb.append(String.format(enumTemplate3_8, clsName, clsName, clsName));
+               sb.append(String.format(enumTemplate3_8, classNameCorrected, classNameCorrected, classNameCorrected));
             else if(sz <= 16)
-               sb.append(String.format(enumTemplate3_16, clsName, clsName, clsName));
+               sb.append(String.format(enumTemplate3_16, classNameCorrected, classNameCorrected, classNameCorrected));
             else
-               sb.append(String.format(enumTemplate3_32, clsName, clsName, clsName));
+               sb.append(String.format(enumTemplate3_32, classNameCorrected, classNameCorrected, classNameCorrected));
 
             // save file
-            File target = new File(outputDirectory, clsName + ".java");
+            File target = new File(outputDirectory, classNameCorrected + ".java");
             FileWriter fw;
             try {
                 target.createNewFile();
-                fw = new FileWriter(target);
+                fw = new FileWriter(target, StandardCharsets.UTF_8);
                 fw.write(sb.toString());
                 fw.flush();
                 fw.close();
             }
             catch (IOException ex) {
+                System.out.flush();
+                System.err.println (ex.getMessage() + " target.getAbsolutePath()=" + target.getAbsolutePath() 
+                      + ", classNameCorrected=" + classNameCorrected);
                 ex.printStackTrace(System.err);
             }
         }
@@ -622,13 +666,13 @@ public class Main
           xrefName = uidClassNames.get(row.xrefclassuid);
 
         if (xrefName == null) {
-          sb.append(String.format(enumFootnoteCommentTemplate, htmlize(row.description) + (row.footnote == null ? "" : ", " + htmlize(row.footnote))));
-          sb.append(String.format(enumTemplate2, enumName, row.value, row.description.replace('"', '\'')));
+          sb.append(String.format(enumFootnoteCommentTemplate, htmlize(row.description.replaceAll("\"", "").replaceAll("\'", "")) + (row.footnote == null ? "" : ", " + htmlize(row.footnote))));
+          sb.append(String.format(enumTemplate2, enumName, row.value, row.description.replaceAll("\"", "").replaceAll("\'", "")));
 
         }
         else {
           sb.append(String.format(enumCommentTemplate, xrefName));
-          sb.append(String.format(enumTemplate21, createEnumName(row.description), row.value, row.description.replace('"', '\''), xrefName));
+          sb.append(String.format(enumTemplate21, createEnumName(row.description.replaceAll("\"", "").replaceAll("\'", "")), row.value, row.description.replaceAll("\"", "").replaceAll("\'", ""), xrefName));
         }
       }
         /**
