@@ -26,13 +26,15 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
- * Main.java created on Apr 16, 2019 MOVES Institute Naval Postgraduate School, Monterey, CA, USA www.nps.edu
+ * GenerateEnumerations.java created on Apr 16, 2019 MOVES Institute Naval Postgraduate School, Monterey, CA, USA www.nps.edu
  *
  * @author Mike Bailey, jmbailey@nps.edu
  * @version $Id$
  */
-public class Main
+public class GenerateEnumerations
 {
+    private String             xmlPath = edu.nps.moves.dis7.source.generator.Main.DEFAULT_SISO_XML_FILE;
+    
     private File outputDirectory;
     private Properties uid2ClassName;
     private Properties uid4aliases;
@@ -41,7 +43,6 @@ public class Main
     private Set<String> uidDoNotGenerate;
     private Map<String,String> uid2ExtraInterface;
     private String packageName;
-    private String xmlPath;
 
     private String enumTemplate1;
     private String enumTemplate1WithFootnote;
@@ -65,7 +66,7 @@ public class Main
 
     private String specTitleDate = null;
 
-    public Main(String xmlPath, String outputDir, String packageName)
+    public GenerateEnumerations(String xmlPath, String outputDir, String packageName)
     {
         this.xmlPath = xmlPath;
         outputDirectory = new File(outputDir);
@@ -229,7 +230,7 @@ public class Main
                     String uid = attributes.getValue("uid");
                     if (uid != null) {
                         String name = attributes.getValue("name").replaceAll(" ","").replaceAll("-",""); // name canonicalization C14N
-                        String name2 = Main.this.uid2ClassName.getProperty(uid);
+                        String name2 = GenerateEnumerations.this.uid2ClassName.getProperty(uid);
                         if(name2 != null)
                           uidClassNames.put(uid, name2);
                         else
@@ -544,7 +545,7 @@ public class Main
                 System.err.println("classNameCorrected=" + classNameCorrected);
             }
             
-        /*    if(Main.this.uidDoNotGenerate.contains(el.uid)) {
+        /*    if(GenerateEnumerations.this.uidDoNotGenerate.contains(el.uid)) {
                 System.out.println("Not generating "+clsName);
                 return;
             }
@@ -754,7 +755,7 @@ public class Main
     public static void main(String[] args)
     {
         try {
-            new Main(args[0], args[1], args[2]).run();
+            new GenerateEnumerations(args[0], args[1], args[2]).run();
         }
         catch (SAXException | IOException | ParserConfigurationException ex) {
             ex.printStackTrace(System.err);

@@ -31,6 +31,9 @@ import org.xml.sax.helpers.*;
  */
 public class Main 
 {
+    String  xmlFile = "xml/dis_7_2012/DIS_7_2012.xml";
+    String language = "java";
+        
     // Elements and attributes we look for in our XML pdu description files:
     public static final String INHERITSFROM = "inheritsFrom";
     public static final String ALIASFOR = "aliasFor";
@@ -136,7 +139,8 @@ public class Main
      */
     public Main(String xmlDescriptionFileName, String languageToGenerate)
     {
-        System.out.println(xmlDescriptionFileName+" "+languageToGenerate);
+        System.out.println("xmlDescriptionFileName="+xmlDescriptionFileName);
+        System.out.println("    languageToGenerate="+languageToGenerate);
         try {
             DefaultHandler handler = new MyHandler();
 
@@ -211,10 +215,15 @@ public class Main
         {
             System.out.println("Usage: Xmlpg xmlFile language"); 
             System.out.println("Allowable languages are java, cpp, objc, python, and csharp");
-            System.exit(0);
+//            System.exit(0);
         }
-        System.out.println ("          xmlFile=" + args[0]);
-        System.out.println ("         language=" + args[1]);
+        else
+        {
+             xmlFile = args[0];
+            language = args[1];
+        }
+        System.out.println ("          xmlFile=" + xmlFile);
+        System.out.println ("         language=" + language);
         
         Main.preflightArgs(args[0], args[1]);
         

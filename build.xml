@@ -522,8 +522,9 @@
     <property name="SISO-REF-010.xml" value="SISO-REF-010.xml"/>
     
     <target name="generate-source-code" depends="init">
-        <echo message="generate-source-code 1 make pdus,         edu.nps.moves.dis7.source.generator.enumerations.Main"/>
-        <java classname="edu.nps.moves.dis7.source.generator.enumerations.Main">
+        <echo message="================================================================================="/>
+        <echo message="generate-source-code 1 make pdus,         edu.nps.moves.dis7.source.generator.enumerations.GenerateEnumerations"/>
+        <java classname="edu.nps.moves.dis7.source.generator.enumerations.GenerateEnumerations">
             <arg value="xml/SISO/${SISO-REF-010.xml}"/>
             <arg value="src-generated/java/edu/nps/moves/dis7/enumerations"/>
             <arg value="edu.nps.moves.dis7.enumerations"/>
@@ -534,6 +535,7 @@
         </java>
         <!-- <antcall target="compile"/>incremental compilation checks -->
         
+        <echo message="================================================================================="/>
         <echo message="generate-source-code 2 make pdus,         edu.nps.moves.dis7.source.generator.pdus.Main"/>
         <java classname="edu.nps.moves.dis7.source.generator.pdus.Main">
             <arg value="xml/dis_7_2012/DIS_7_2012.xml"/>
@@ -547,8 +549,9 @@
         </java>
         <!-- not yet ready to compile here, more autogeneration needed -->
         
-        <echo message="generate-source-code 3 make jammers,      edu.nps.moves.dis7.source.generator.entitytypes.JammerMain"/>
-        <java classname="edu.nps.moves.dis7.source.generator.entitytypes.JammerMain">
+        <echo message="================================================================================="/>
+        <echo message="generate-source-code 3 make jammers,      edu.nps.moves.dis7.source.generator.entitytypes.GenerateJammers"/>
+        <java classname="edu.nps.moves.dis7.source.generator.entitytypes.GenerateJammers">
             <arg value="xml/SISO/${SISO-REF-010.xml}"/>
             <arg value="src-generated/java/edu/nps/moves/dis7/jammers"/>
             <arg value="edu.nps.moves.dis7.jammers"/>
@@ -559,8 +562,9 @@
         </java>
         <!-- <antcall target="compile"/> incremental compilation checks -->
         
-        <echo message="generate-source-code 4 make object types, edu.nps.moves.dis7.source.generator.entitytypes.ObjectTypeMain"/>
-        <java classname="edu.nps.moves.dis7.source.generator.entitytypes.ObjectTypeMain">
+        <echo message="================================================================================="/>
+        <echo message="generate-source-code 4 make object types, edu.nps.moves.dis7.source.generator.entitytypes.GenerateObjectTypes"/>
+        <java classname="edu.nps.moves.dis7.source.generator.entitytypes.GenerateObjectTypes">
             <arg value="xml/SISO/${SISO-REF-010.xml}"/>
             <arg value="src-generated/java/edu/nps/moves/dis7/objecttypes"/>
             <arg value="edu.nps.moves.dis7.objecttypes"/>
@@ -572,8 +576,9 @@
         <!-- <antcall target="compile"/> incremental compilation checks -->
         <!-- must compile to gain access to necesary classes for generate-source-code 5 -->
         
-        <echo message="generate-source-code 5 make entities,     edu.nps.moves.dis7.source.generator.entitytypes.Main"/>
-        <java classname="edu.nps.moves.dis7.source.generator.entitytypes.Main">
+        <echo message="================================================================================="/>
+        <echo message="generate-source-code 5 make entities,     edu.nps.moves.dis7.source.generator.entitytypes.GenerateEntityTypes"/>
+        <java classname="edu.nps.moves.dis7.source.generator.entitytypes.GenerateEntityTypes">
             <arg value="xml/SISO/${SISO-REF-010.xml}"/>
             <arg value="src-generated/java/edu/nps/moves/dis7/entities"/>
             <arg value="edu.nps.moves.dis7.entities"/>
@@ -586,6 +591,7 @@
             </classpath>
         </java>
         <echo message="generate-source-code complete"/>
+        <echo message="================================================================================="/>
     </target>
     
     <target name="package-dis7-entities-javadoc-jar" depends="init">
