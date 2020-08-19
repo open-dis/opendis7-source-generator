@@ -157,6 +157,8 @@ public class JavaGenerator extends Generator
     @Override
     public void writeClasses()
     {
+        int classCount = 0;
+        
         readTemplates();  // get the license
         
         this.createDirectory();
@@ -193,6 +195,7 @@ public class JavaGenerator extends Generator
                 // print the source code of the class to the file
                 // System.out.println("trying to make class "+name);
                 this.writeClass(pw, aClass);
+                classCount++;
             }
             catch (IOException e) {
                 e.printStackTrace(System.err);
@@ -200,6 +203,8 @@ public class JavaGenerator extends Generator
             }
 
         } // End while
+        
+        System.out.println (JavaGenerator.class.getName() + " complete, " + classCount + " classes written.");
 
     } // End write classes
 

@@ -74,6 +74,7 @@
         <!-- <fail message="under development, not yet ready."/> -->
         <antcall target="clean"/>
         <antcall target="clean-all-generated-jars"/>
+        <echo message="================================================================================="/>
         <echo message="compile generator classes (given limited path entries in project classpath)"/>
         <antcall target="compile"/>
         <!-- TODO remove...
@@ -533,7 +534,7 @@
                 <pathelement path="libs/commons-io-2.6.jar"/>
             </classpath>
         </java>
-        <!-- <antcall target="compile"/>incremental compilation checks -->
+        <antcall target="compile"/><!-- incremental compilation checks -->
         
         <echo message="================================================================================="/>
         <echo message="generate-source-code 2 make pdus,         edu.nps.moves.dis7.source.generator.pdus.GeneratePdus"/>
@@ -560,7 +561,7 @@
                 <pathelement path="libs/commons-io-2.6.jar"/>
             </classpath>
         </java>
-        <!-- <antcall target="compile"/> incremental compilation checks -->
+        <!-- not yet ready to compile here, more autogeneration needed -->
         
         <echo message="================================================================================="/>
         <echo message="generate-source-code 4 make object types, edu.nps.moves.dis7.source.generator.entitytypes.GenerateObjectTypes"/>

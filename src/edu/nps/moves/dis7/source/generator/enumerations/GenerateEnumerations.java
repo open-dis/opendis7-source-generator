@@ -36,7 +36,7 @@ public class GenerateEnumerations
     // set defaults to allow direct run
     private        File   outputDirectory;
     private static String outputDirectoryPath = "src-generated/java/edu/nps/moves/dis7/enumerations";
-    private static String     basePackageName =                    "edu.nps.moves.dis7.enumerations";
+    private static String         packageName =                    "edu.nps.moves.dis7.enumerations";
     private static String            language = edu.nps.moves.dis7.source.generator.GenerateOpenDis7JavaPackages.DEFAULT_LANGUAGE;
     private static String         sisoXmlFile = edu.nps.moves.dis7.source.generator.GenerateOpenDis7JavaPackages.DEFAULT_SISO_XML_FILE;
     
@@ -46,7 +46,6 @@ public class GenerateEnumerations
     private Map<String,String> uidClassNames;
     private Set<String> uidDoNotGenerate;
     private Map<String,String> uid2ExtraInterface;
-    private String packageName;
 
     private String enumTemplate1;
     private String enumTemplate1WithFootnote;
@@ -78,9 +77,9 @@ public class GenerateEnumerations
         if (!outputDir.isEmpty())
             outputDirectoryPath = outputDir;
         if (!packageName.isEmpty())
-           basePackageName = packageName;
+             this.packageName = packageName;
         System.out.println ("              xmlFile=" + sisoXmlFile);
-        System.out.println ("      basePackageName=" + basePackageName);
+        System.out.println ("          packageName=" + this.packageName);
         System.out.println ("  outputDirectoryPath=" + outputDirectoryPath);
         
         outputDirectory  = new File(outputDirectoryPath);
@@ -141,7 +140,7 @@ public class GenerateEnumerations
         MyHandler handler = new MyHandler();
         factory.newSAXParser().parse(xmlFile, handler); // apparently can't reuse xmlFile
 
-        System.out.println("Complete. " + handler.enums.size() + " enums created.");
+        System.out.println (GenerateEnumerations.class.getName() + " complete, " + handler.enums.size() + " enums created.");
     }
 
     /**
@@ -187,8 +186,8 @@ public class GenerateEnumerations
         String name;
         String size;
         String footnote;
-        List<EnumRowElem> elems = new ArrayList<>();
-    }
+        List<EnumRowElem> elems                 = new ArrayList<>();
+    } 
 
     class EnumRowElem
     {
@@ -298,10 +297,28 @@ public class GenerateEnumerations
                     //maybeSysOut(attributes.getValue("xref"), "enum uid " + currentEnum.uid + " " + currentEnum.name);
                     break;
 
+                case "meta":
+                    if (currentEnum == null)
+                        break;
+                    if ((currentEnumRow.description == null) || currentEnumRow.description.isEmpty())
+                    {
+                        String   key = attributes.getValue("key");
+                        String value = attributes.getValue("value");
+                        if (key != null)
+                            currentEnumRow.description = key.toUpperCase() + "_";
+                        if (value != null)
+                            currentEnumRow.description += value;
+                        if (currentEnumRow.description != null)
+                            currentEnumRow.description = currentEnumRow.description.replaceAll("—","-").replaceAll("–","-").replaceAll("\"", "").replaceAll("\'", "")
+                                                                                   .replaceAll(" ","").replaceAll("/","");
+                    }
+                    break;
+
                 case "enumrow":
                     if (currentEnum == null)
                         break;
                     currentEnumRow = new EnumRowElem();
+                    // TODO if description is empty, get meta key-value
                     currentEnumRow.description = attributes.getValue("description");
                     if (currentEnumRow.description != null)
                         currentEnumRow.description = currentEnumRow.description.replaceAll("—","-").replaceAll("–","-").replaceAll("\"", "").replaceAll("\'", "");
@@ -365,6 +382,7 @@ public class GenerateEnumerations
                         specTitleDate = attributes.getValue("title") + ", " + attributes.getValue("date");
                     break;
 
+                // fall throughs
                 case "cot":
                 case "cet":
                 case "copyright":
@@ -445,6 +463,11 @@ public class GenerateEnumerations
 
             dictNames.clear();
             // enum section
+            if (el.elems.size() > 2000)
+            {
+                System.out.println ("Enumerations class " + packageName + classNameCorrected + " has " + el.elems.size() +
+                    ", possibly too large?");
+            }
             el.elems.forEach((row) -> {
                 String name = row.value.replaceAll("[^a-zA-Z0-9]", ""); // only chars and numbers
                 if (!dictNames.contains(name)) {
@@ -502,6 +525,11 @@ public class GenerateEnumerations
 
             sb.append(String.format(bitsetTemplate1, packageName, specTitleDate, "UID " + el.uid, el.size, el.name, classNameCorrected, (otherInf==null?"":"implements "+otherInf)));
             enumNames.clear();
+            if (el.elems.size() > 2000)
+            {
+                System.out.println ("Enumerations class " + packageName + classNameCorrected + " has " + el.elems.size() +
+                    ", possibly too large?");
+            }
             el.elems.forEach((row) -> {
                 String xrefName = null;
                 if (row.xrefclassuid != null)
@@ -541,6 +569,8 @@ public class GenerateEnumerations
         }
 
         Set<String> enumNames = new HashSet<>();
+        
+        List<EnumRowElem> additionalRowElements = new ArrayList<>(); // overflow to avoid dreaded "code too large" error
 
         private void writeOutEnum(EnumElem el)
         {
@@ -568,6 +598,7 @@ public class GenerateEnumerations
               aliasNames = uid4aliases;
             
             StringBuilder sb = new StringBuilder();
+            StringBuilder sb_additional = new StringBuilder(); // handle overflow
 
             // Header section
             String additionalInterface = "";
@@ -604,6 +635,14 @@ public class GenerateEnumerations
                 sb.append(String.format(enumTemplate2, "NOT_SPECIFIED", "0", "undefined by SISO spec"));
             else{
                 Properties aliases = aliasNames;
+                if (el.elems.size() > 2000)
+                {
+                    System.out.println ("Enumerations class " + packageName + classNameCorrected + " has " + el.elems.size() +
+                        ", possibly too large?  Dropping enumerations above 2000... TODO create auxiliary class with remainder");
+                    // https://stackoverflow.com/questions/1184636/shrinking-an-arraylist-to-a-new-size
+                    additionalRowElements = el.elems.subList(2000, el.elems.size());
+                    el.elems.subList(2000, el.elems.size()).clear();
+                }
                 el.elems.forEach((row) -> {                    
                     // Check for aliases
                     if(aliases != null && aliases.getProperty(row.value)!=null)
@@ -630,6 +669,22 @@ public class GenerateEnumerations
                     }*/
 
                 });
+//                if (additionalRowElements.size() > 0)
+//                {
+//                    additionalRowElements.forEach((row) -> {                    
+//                        // Check for aliases
+//                        if(aliases != null && aliases.getProperty(row.value)!=null)
+//                          writeOneEnum(sb_additional,row,aliases.getProperty(row.value));
+//                        else {
+//                          String enumName = createEnumName(row.description.replaceAll("\"", "").replaceAll("\'", ""));
+//                          writeOneEnum(sb_additional, row, enumName);
+//                        }
+//                    });
+//                    sb_additional.setLength(sb.length() - 2);
+//                    sb_additional.append(";\n");
+//                    additionalRowElements.clear();
+                    // TODO finish
+//                }
             }
             if (el.elems.size() > 0)
                 sb.setLength(sb.length() - 2);
@@ -715,7 +770,7 @@ public class GenerateEnumerations
 
             // Java identifier can't start with digit
             if (Character.isDigit(r.charAt(0)))
-                r = "$" + r;
+                r = "NAME_" + r; // originally "$"
 
             // Handle multiply defined entries in the XML by appending a digit:
             String origR = r;

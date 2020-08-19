@@ -32,7 +32,7 @@ public class GenerateObjectTypes
     // set defaults to allow direct run
     private        File   outputDirectory;
     private static String outputDirectoryPath = "src-generated/java/edu/nps/moves/dis7/entitytypes";
-    private static String     basePackageName =                    "edu.nps.moves.dis7.entitytypes";
+    private static String         packageName =                    "edu.nps.moves.dis7.entitytypes";
     private static String            language = edu.nps.moves.dis7.source.generator.GenerateOpenDis7JavaPackages.DEFAULT_LANGUAGE;
     private static String             sisoXmlFile = edu.nps.moves.dis7.source.generator.GenerateOpenDis7JavaPackages.DEFAULT_SISO_XML_FILE;
 
@@ -53,10 +53,10 @@ public class GenerateObjectTypes
         if (!outputDir.isEmpty())
             outputDirectoryPath = outputDir;
         if (!packageName.isEmpty())
-           basePackageName = packageName;
+           this.packageName = packageName;
         System.out.println (GenerateObjectTypes.class.getName());
         System.out.println ("              xmlFile=" + sisoXmlFile);
-        System.out.println ("      basePackageName=" + basePackageName);
+        System.out.println ("          packageName=" + this.packageName);
         System.out.println ("  outputDirectoryPath=" + outputDirectoryPath);
         
         outputDirectory  = new File(outputDirectoryPath);
@@ -76,7 +76,9 @@ public class GenerateObjectTypes
     loadTemplates();
 
     //System.out.println("Generating jammers: ");
-    factory.newSAXParser().parse(new File(sisoXmlFile), new MyHandler());
+    MyHandler handler = new MyHandler();
+    factory.newSAXParser().parse(new File(sisoXmlFile), handler);
+    System.out.println (GenerateObjectTypes.class.getName() + " complete."); // TODO  + handler.enums.size() + " enums created.");
   }
 
   private void loadTemplates()
@@ -136,6 +138,7 @@ public class GenerateObjectTypes
     CategoryElem currentCategory;
     SubCategoryElem currentSubCategory;
     String specTitleDate = "";
+    int filesWrittenCount = 0;
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes)
@@ -370,7 +373,7 @@ public class GenerateObjectTypes
           fixedName = fixedName + i++;
         }
 
-        String pkg = basePackageName + "." + pathToPackage(data.sb.toString());
+        String pkg = packageName + "." + pathToPackage(data.sb.toString());
         data.pkg = pkg;
         data.clsNm = fixedName;
         data.sb.setLength(0);

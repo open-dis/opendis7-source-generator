@@ -37,7 +37,7 @@ public class GenerateEntityTypes
     // set defaults to allow direct run
     private        File   outputDirectory;
     private static String outputDirectoryPath = "src-generated/java/edu/nps/moves/dis7/entitytypes";
-    private static String     basePackageName =                    "edu.nps.moves.dis7.entitytypes";
+    private static String         packageName =                    "edu.nps.moves.dis7.entitytypes";
     private static String            language = edu.nps.moves.dis7.source.generator.GenerateOpenDis7JavaPackages.DEFAULT_LANGUAGE;
     private static String         sisoXmlFile = edu.nps.moves.dis7.source.generator.GenerateOpenDis7JavaPackages.DEFAULT_SISO_XML_FILE;
 
@@ -70,10 +70,10 @@ public class GenerateEntityTypes
         if (!outputDir.isEmpty())
             outputDirectoryPath = outputDir;
         if (!packageName.isEmpty())
-           basePackageName = packageName;
+           this.packageName = packageName;
         System.out.println (GenerateEntityTypes.class.getName());
         System.out.println ("              xmlFile=" + sisoXmlFile);
-        System.out.println ("      basePackageName=" + basePackageName);
+        System.out.println ("          packageName=" + this.packageName);
         System.out.println ("  outputDirectoryPath=" + outputDirectoryPath);
         
         outputDirectory  = new File(outputDirectoryPath);
@@ -153,12 +153,17 @@ public class GenerateEntityTypes
 
   String getDescription(Method enumGetter, Method descriptionGetter, int i) throws Exception
   {
+      if (enumGetter == null)
+          return ""; // TODO confirm
+      
     Object enumObj = getEnum(enumGetter, i);
     return (String) descriptionGetter.invoke(enumObj, (Object[]) null);
   }
 
   String getName(Method enumGetter, Method nameGetter, int i) throws Exception
   {
+      if (enumGetter == null)
+          return ""; // TODO fix
     Object enumObj = getEnum(enumGetter, i);
     return (String) nameGetter.invoke(enumObj, (Object[]) null);
   }
@@ -168,6 +173,7 @@ public class GenerateEntityTypes
     if (enumGetter == null)
     {
         System.err.println ("NPE: getEnum (enumGetter == null, i=" + i + ")");
+        return null;
     }
     return enumGetter.invoke(null, i);
   }
@@ -183,16 +189,19 @@ public class GenerateEntityTypes
     factory.setXIncludeAware(true);
 
     loadTemplates();
-    buildKindDomainCountryInstances();
+//    buildKindDomainCountryInstances(); // TODO unit test before built?
     
     System.out.println("Generating entities:");
-    factory.newSAXParser().parse(new File(sisoXmlFile), new MyHandler());
+    MyHandler handler = new MyHandler();
+    factory.newSAXParser().parse(new File(sisoXmlFile), handler);
     
-    if(uid2ClassWriter != null) {
+    if(uid2ClassWriter != null) 
+    {
        uid2ClassWriter.flush();
        uid2ClassWriter.close();
     }
     saveUidFactory();
+    System.out.println (GenerateEntityTypes.class.getName() + " complete."); // TODO  + handler.enums.size() + " enums created.");
   }
 
   private void loadTemplates()
@@ -266,6 +275,7 @@ public class GenerateEntityTypes
     String specTitleDate = "";
     boolean inCot = false;   // we don't want categories, subcategories, etc. from this group
     boolean inCetUid30 = false;
+    int filesWrittenCount = 0;
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes)
@@ -431,6 +441,7 @@ public class GenerateEntityTypes
             break;
 
           default:
+            break;
         }
       }
       catch (Exception ex) {
@@ -546,7 +557,7 @@ public class GenerateEntityTypes
         DataPkt data = new DataPkt();
 
         data.sb = new StringBuilder();
-        System.err.println("buildEntityCommon fixedName=" + fixedName + ", uid=" + uid + ", outputDirectory=" + outputDirectory); // debug trace
+//        System.err.println("buildEntityCommon fixedName=" + fixedName + ", uid=" + uid + ", outputDirectory=" + outputDirectory); // debug trace
         
         buildPackagePath(currentEntity, data);
         data.directory = new File(outputDirectory, data.sb.toString());
@@ -557,9 +568,9 @@ public class GenerateEntityTypes
         while(new File(data.directory,fixedName+".java").exists()){
           fixedName = fixedName+ i++;
         }
-        System.err.println("fixedName.java=" + fixedName + ".java"); // debug trace
+//        System.err.println("fixedName.java=" + fixedName + ".java"); // debug trace
 
-        String pkg = basePackageName + "." + pathToPackage(data.sb.toString());
+        String pkg = packageName + "." + pathToPackage(data.sb.toString());
         int countryInt = Integer.parseInt(currentEntity.country);
         String countryNm = getName(countryFromInt, countryName, countryInt);
 
@@ -704,23 +715,23 @@ public class GenerateEntityTypes
         System.err.println("buildPackagePath data.sb 0: data = null");
     if (data.sb == null)
         System.err.println("buildPackagePath data.sb 0.5: data.sb = null");
-    if  (data.sb.toString().isEmpty())
-         System.err.println("buildPackagePath data.sb 1: empty string");
-    else System.err.println("buildPackagePath data.sb 1: " + data.sb.toString());
+//    if  (data.sb.toString().isEmpty())
+//         System.err.println("buildPackagePath data.sb 1: empty string");
+//    else System.err.println("buildPackagePath data.sb 1: " + data.sb.toString());
     
     // TODO failing here
     String countrydesc = GenerateEntityTypes.this.getDescription(countryFromInt, countryDescription, Integer.parseInt(ent.country));
-    System.err.println("countrydesc=" + countrydesc);
+//    System.err.println("countrydesc=" + countrydesc);
     data.countryNamePretty = countrydesc;
     data.sb.append(buildCountryPackagePart(countrydesc));
     data.sb.append("/");
-    System.err.println("buildPackagePathdata.sb 2: " + data.sb.toString());
+//    System.err.println("buildPackagePathdata.sb 2: " + data.sb.toString());
 
     String kindname = getName(kindFromInt, kindName, Integer.parseInt(ent.kind));
     kindname = buidKindOrDomainPackagePart(kindname);
     data.sb.append(buidKindOrDomainPackagePart(kindname));
     data.sb.append("/");
-    System.err.println("buildPackagePathdata.sb 3: " + data.sb.toString());
+//    System.err.println("buildPackagePathdata.sb 3: " + data.sb.toString());
 
     String domainname;
     String kindnamelc = kindname.toLowerCase();
@@ -740,7 +751,7 @@ public class GenerateEntityTypes
     domainname = buidKindOrDomainPackagePart(domainname);
     data.sb.append(buidKindOrDomainPackagePart(domainname));
     data.sb.append("/");
-    System.err.println("buildPackagePathdata.sb 4: " + data.sb.toString());
+//    System.err.println("buildPackagePathdata.sb 4: " + data.sb.toString());
   }
 
   private String pathToPackage(String s)

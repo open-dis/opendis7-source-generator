@@ -8,6 +8,7 @@ Deleting directory C:\x3d-github\open-dis7-source-generator\build
 clean:
 clean-all-generated-jars:
 Created dir: C:\x3d-github\open-dis7-source-generator\dist
+=================================================================================
 compile generator classes (given limited path entries in project classpath)
 init:
 deps-jar:
@@ -28,13 +29,22 @@ generate-source-code:
 generate-source-code 1 make enums,         edu.nps.moves.dis7.source.generator.enumerations.GenerateEnumerations
 edu.nps.moves.dis7.source.generator.enumerations.GenerateEnumerations
               xmlFile=xml/SISO/SISO-REF-010.xml
-      basePackageName=edu.nps.moves.dis7.enumerations
+          packageName=edu.nps.moves.dis7.enumerations
   outputDirectoryPath=src-generated/java/edu/nps/moves/dis7/enumerations
 actual directory path=C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations
 Begin uid preprocess...
 Begin enum generation ...
+Enumerations class edu.nps.moves.dis7.enumerationsEmitterName has 2497, possibly too large?  Dropping enumerations above 2000... TODO create auxiliary class with remainder
 original classNameCorrected=Link11/11BEncryptionFlag, revised classNameCorrected=Link11_11BEncryptionFlag
-Complete. 402 enums created.
+edu.nps.moves.dis7.source.generator.enumerations.GenerateEnumerations complete, 402 enums created.
+init:
+Deleting: C:\x3d-github\open-dis7-source-generator\build\built-jar.properties
+deps-jar:
+Updating property file: C:\x3d-github\open-dis7-source-generator\build\built-jar.properties
+Compiling 459 source files to C:\x3d-github\open-dis7-source-generator\build\classes
+warning: [options] bootstrap class path not set in conjunction with -source 8
+1 warning
+compile:
 =================================================================================
 generate-source-code 2 make pdus,         edu.nps.moves.dis7.source.generator.pdus.GeneratePdus
 edu.nps.moves.dis7.source.generator.pdus.GeneratePdus
@@ -44,241 +54,244 @@ Source code directory set to src-generated/java
 creating directory
 directory=src-generated/java
 cleaning directory src-generated\java
+edu.nps.moves.dis7.source.generator.pdus.JavaGenerator complete, 240 classes written.
+edu.nps.moves.dis7.source.generator.pdus.GeneratePdus complete.
 =================================================================================
 generate-source-code 3 make jammers,      edu.nps.moves.dis7.source.generator.entitytypes.GenerateJammers
 edu.nps.moves.dis7.source.generator.entitytypes.GenerateJammers
               xmlFile=xml/SISO/SISO-REF-010.xml
-      basePackageName=edu.nps.moves.dis7.jammers
+          packageName=edu.nps.moves.dis7.jammers
   outputDirectoryPath=src-generated/java/edu/nps/moves/dis7/jammers
 actual directory path=C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\jammers
+edu.nps.moves.dis7.source.generator.entitytypes.GenerateJammers complete.
 =================================================================================
 generate-source-code 4 make object types, edu.nps.moves.dis7.source.generator.entitytypes.GenerateObjectTypes
 edu.nps.moves.dis7.source.generator.entitytypes.GenerateObjectTypes
               xmlFile=xml/SISO/SISO-REF-010.xml
-      basePackageName=edu.nps.moves.dis7.objecttypes
+          packageName=edu.nps.moves.dis7.objecttypes
   outputDirectoryPath=src-generated/java/edu/nps/moves/dis7/objecttypes
 actual directory path=C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\objecttypes
+edu.nps.moves.dis7.source.generator.entitytypes.GenerateObjectTypes complete.
 =================================================================================
 generate-source-code 5 make entities,     edu.nps.moves.dis7.source.generator.entitytypes.GenerateEntityTypes
 edu.nps.moves.dis7.source.generator.entitytypes.GenerateEntityTypes
               xmlFile=xml/SISO/SISO-REF-010.xml
-      basePackageName=edu.nps.moves.dis7.entities
+          packageName=edu.nps.moves.dis7.entities
   outputDirectoryPath=src-generated/java/edu/nps/moves/dis7/entities
 actual directory path=C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities
-Exception in thread "main" java.lang.RuntimeException: java.lang.ClassNotFoundException: edu.nps.moves.dis7.enumerations.PlatformDomain
-	at edu.nps.moves.dis7.source.generator.entitytypes.GenerateEntityTypes.buildKindDomainCountryInstances(GenerateEntityTypes.java:135)
-	at edu.nps.moves.dis7.source.generator.entitytypes.GenerateEntityTypes.run(GenerateEntityTypes.java:186)
-	at edu.nps.moves.dis7.source.generator.entitytypes.GenerateEntityTypes.main(GenerateEntityTypes.java:926)
-Java Result: 1
+Generating entities:
+XML element subcategory_xref {Sizein Powder Spill/4/1/0 not supported
+XML element subcategory_xref {Sizein Biologics/4/4/0 not supported
+edu.nps.moves.dis7.source.generator.entitytypes.GenerateEntityTypes complete.
 generate-source-code complete
 =================================================================================
 init:
 Deleting: C:\x3d-github\open-dis7-source-generator\build\built-jar.properties
 deps-jar:
 Updating property file: C:\x3d-github\open-dis7-source-generator\build\built-jar.properties
-Compiling 1039 source files to C:\x3d-github\open-dis7-source-generator\build\classes
+Compiling 21294 source files to C:\x3d-github\open-dis7-source-generator\build\classes
 warning: [options] bootstrap class path not set in conjunction with -source 8
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\APAParameterIndexAPAStatus.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AcknowledgeAcknowledgeFlag.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AcknowledgeResponseFlag.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\Acronyms.java:2: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\ActionRequestActionID.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\ActionResponseRequestStatus.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AddSpecificDimensionEnumerationsforSubsurfaceAreaSize.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AddVariantsforAirCategory201Insect.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AddVariantsforLandCategory200Mammal.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AddVariantsforSubsurfaceCategoriesFishMolluskCrustaceanandInsect.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AggregateStateAggregateKind.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AggregateStateAggregateState.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AggregateStateFormation.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AggregateStateSpecific.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AggregateStateSubcategory.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AirPlatformAppearance.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AirPlatformCapabilities.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AircraftAddressSource.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AircraftIdentificationType.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AircraftPresentDomain.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AircraftTypeWake.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AnimalLifeformGroupSizeRangeEnumerationforallDomains.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AntennaSelection.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AntennaStatus.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceAntiCollisionDayNight.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceCamouflageType.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceCanopy.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceConcealedMovement.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceConcealedPosition.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceDamage.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceEntityorObjectState.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceEnvironmentalDensity.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceHatch.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceLauncherOperational.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceLifeFormComplianceStatus.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceLifeFormPosture.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceLifeFormWeaponImplement.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceLifeformHealth.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceLinearObjectLaneMarkerVisible.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceLinearObjectTankDitchBreach.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceNVGMode.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceNavigationPositionBrightness.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceObjectGeneralDamage.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceObjectGeneralIEDPresent.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceObjectGeneralPredistributed.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceObjectSpecificBreachState.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceObjectSpecificChemicalType.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearancePaintScheme.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceSubsurfaceHatch.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceSupplyDeployed.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceTrailingEffects.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\ArealObjectAppearanceMinefield.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\ArticulatedPartsTypeClass.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\ArticulatedPartsTypeMetric.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AttachedPartDetachedIndicator.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AttachedParts.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AustralianCategoryOverlay.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\BeamStatusBeamState.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\BuildingPaintScheme.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\CCTTSINCGARSClearChannel.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\CCTTSINCGARSStartofMessage.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\CIGIExtensionPacketID.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\CapabilityReport.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\Class10SupplyCategoryMaterialtoSupportNonMilitaryPrograms.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\Class11SupplyCategorySuppliesNonDoctrinal.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\Class12SupplyCategorySlingLoadsNonDoctrinal.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\Class1SupplyCategorySubsistence.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\Class2SupplyCategoryClothingIndividualEquipmentToolsAdminSupplies.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\Class3SupplyCategoryPetroleumOilsLubricants.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\Class4SupplyCategoryConstructionMaterials.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\Class6SupplyCategoryPersonnelDemandItems.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\Class7SupplyCategoryMajorItems.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\Class8SupplyCategoryMedicalMaterial.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\Class9SupplyCategoryRepairPartsandComponents.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\CollisionType.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\Color.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\ComponentVisualDamageStatusSmoke.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\ComponentVisualDamageStatusSurfaceDamage.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\Country.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\CoverShroudStatus.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\CryptoKeyIDCryptoMode.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\CulturalFeatureAppearance.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\CulturalFeatureCapabilities.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\DEDamageDescriptionComponentDamageStatus.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\DEDamageDescriptionComponentVisualDamageStatus.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\DEDamageDescriptionComponentVisualSmokeColor.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\DEFireFlags.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\DEFireFlagsStateUpdateFlag.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\DEFirePulseShape.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\DEPrecisionAimpointBeamSpotType.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\DISAttributeActionCode.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\DISLiveEntitySubprotocolNumber.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\DISPDUStatusActiveInterrogationIndicatorAII.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\DISPDUStatusCoupledExtensionIndicatorCEI.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\DISPDUStatusDetonationTypeIndicatorDTI.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\DISPDUStatusFireTypeIndicatorFTI.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\DISPDUStatusIFFSimulationModeISM.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\DISPDUStatusIntercomAttachedIndicatorIAI.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\DISPDUStatusLVCIndicatorLVC.java:1: error: <identifier> expected
-package null;
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\DISPDUStatusRadioAttachedIndicatorRAI.java:1: error: <identifier> expected
-package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A01Paluma.java:19: error: <identifier> expected
+        setCountry(Country.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A01Paluma.java:20: error: <identifier> expected
+        setEntityKind(EntityKind.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A01Paluma.java:21: error: <identifier> expected
+        setDomain(Domain.inst(PlatformDomain.));
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A02Mermaid.java:19: error: <identifier> expected
+        setCountry(Country.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A02Mermaid.java:20: error: <identifier> expected
+        setEntityKind(EntityKind.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A02Mermaid.java:21: error: <identifier> expected
+        setDomain(Domain.inst(PlatformDomain.));
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A03Shepparton.java:19: error: <identifier> expected
+        setCountry(Country.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A03Shepparton.java:20: error: <identifier> expected
+        setEntityKind(EntityKind.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A03Shepparton.java:21: error: <identifier> expected
+        setDomain(Domain.inst(PlatformDomain.));
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A04Benalla.java:19: error: <identifier> expected
+        setCountry(Country.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A04Benalla.java:20: error: <identifier> expected
+        setEntityKind(EntityKind.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A04Benalla.java:21: error: <identifier> expected
+        setDomain(Domain.inst(PlatformDomain.));
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A04MartinPosadillo.java:19: error: <identifier> expected
+        setCountry(Country.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A04MartinPosadillo.java:20: error: <identifier> expected
+        setEntityKind(EntityKind.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A04MartinPosadillo.java:21: error: <identifier> expected
+        setDomain(Domain.inst(PlatformDomain.));
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A064.java:19: error: <identifier> expected
+        setCountry(Country.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A064.java:20: error: <identifier> expected
+        setEntityKind(EntityKind.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A064.java:21: error: <identifier> expected
+        setDomain(Domain.inst(PlatformDomain.));
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A0644ball1tracermix.java:19: error: <identifier> expected
+        setCountry(Country.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A0644ball1tracermix.java:20: error: <identifier> expected
+        setEntityKind(EntityKind.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A0644ball1tracermix.java:21: error: <identifier> expected
+        setDomain(Domain.inst(PlatformDomain.));
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A1.java:19: error: <identifier> expected
+        setCountry(Country.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A1.java:20: error: <identifier> expected
+        setEntityKind(EntityKind.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A1.java:21: error: <identifier> expected
+        setDomain(Domain.inst(PlatformDomain.));
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A100Beddgelert.java:19: error: <identifier> expected
+        setCountry(Country.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A100Beddgelert.java:20: error: <identifier> expected
+        setEntityKind(EntityKind.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A100Beddgelert.java:21: error: <identifier> expected
+        setDomain(Domain.inst(PlatformDomain.));
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A103SultanVenturerex_Bibury.java:19: error: <identifier> expected
+        setCountry(Country.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A103SultanVenturerex_Bibury.java:20: error: <identifier> expected
+        setEntityKind(EntityKind.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A103SultanVenturerex_Bibury.java:21: error: <identifier> expected
+        setDomain(Domain.inst(PlatformDomain.));
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A106Alsatian.java:19: error: <identifier> expected
+        setCountry(Country.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A106Alsatian.java:20: error: <identifier> expected
+        setEntityKind(EntityKind.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A106Alsatian.java:21: error: <identifier> expected
+        setDomain(Domain.inst(PlatformDomain.));
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A107Messina.java:19: error: <identifier> expected
+        setCountry(Country.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A107Messina.java:20: error: <identifier> expected
+        setEntityKind(EntityKind.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A107Messina.java:21: error: <identifier> expected
+        setDomain(Domain.inst(PlatformDomain.));
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109A.java:19: error: <identifier> expected
+        setCountry(Country.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109A.java:20: error: <identifier> expected
+        setEntityKind(EntityKind.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109A.java:21: error: <identifier> expected
+        setDomain(Domain.inst(PlatformDomain.));
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109AMkII.java:19: error: <identifier> expected
+        setCountry(Country.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109AMkII.java:20: error: <identifier> expected
+        setEntityKind(EntityKind.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109AMkII.java:21: error: <identifier> expected
+        setDomain(Domain.inst(PlatformDomain.));
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109AMkIIMAX.java:19: error: <identifier> expected
+        setCountry(Country.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109AMkIIMAX.java:20: error: <identifier> expected
+        setEntityKind(EntityKind.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109AMkIIMAX.java:21: error: <identifier> expected
+        setDomain(Domain.inst(PlatformDomain.));
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109BA.java:19: error: <identifier> expected
+        setCountry(Country.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109BA.java:20: error: <identifier> expected
+        setEntityKind(EntityKind.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109BA.java:21: error: <identifier> expected
+        setDomain(Domain.inst(PlatformDomain.));
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109Bayleaf.java:19: error: <identifier> expected
+        setCountry(Country.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109Bayleaf.java:20: error: <identifier> expected
+        setEntityKind(EntityKind.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109Bayleaf.java:21: error: <identifier> expected
+        setDomain(Domain.inst(PlatformDomain.));
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109C.java:19: error: <identifier> expected
+        setCountry(Country.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109C.java:20: error: <identifier> expected
+        setEntityKind(EntityKind.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109C.java:21: error: <identifier> expected
+        setDomain(Domain.inst(PlatformDomain.));
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109CM.java:19: error: <identifier> expected
+        setCountry(Country.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109CM.java:20: error: <identifier> expected
+        setEntityKind(EntityKind.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109CM.java:21: error: <identifier> expected
+        setDomain(Domain.inst(PlatformDomain.));
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109CMAX.java:19: error: <identifier> expected
+        setCountry(Country.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109CMAX.java:20: error: <identifier> expected
+        setEntityKind(EntityKind.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109CMAX.java:21: error: <identifier> expected
+        setDomain(Domain.inst(PlatformDomain.));
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109EOA.java:19: error: <identifier> expected
+        setCountry(Country.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109EOA.java:20: error: <identifier> expected
+        setEntityKind(EntityKind.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109EOA.java:21: error: <identifier> expected
+        setDomain(Domain.inst(PlatformDomain.));
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109EPower.java:19: error: <identifier> expected
+        setCountry(Country.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109EPower.java:20: error: <identifier> expected
+        setEntityKind(EntityKind.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109EPower.java:21: error: <identifier> expected
+        setDomain(Domain.inst(PlatformDomain.));
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109EPowerElite.java:19: error: <identifier> expected
+        setCountry(Country.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109EPowerElite.java:20: error: <identifier> expected
+        setEntityKind(EntityKind.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109EPowerElite.java:21: error: <identifier> expected
+        setDomain(Domain.inst(PlatformDomain.));
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109GdiF.java:19: error: <identifier> expected
+        setCountry(Country.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109GdiF.java:20: error: <identifier> expected
+        setEntityKind(EntityKind.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109GdiF.java:21: error: <identifier> expected
+        setDomain(Domain.inst(PlatformDomain.));
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109K.java:19: error: <identifier> expected
+        setCountry(Country.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109K.java:20: error: <identifier> expected
+        setEntityKind(EntityKind.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109K.java:21: error: <identifier> expected
+        setDomain(Domain.inst(PlatformDomain.));
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109K2.java:19: error: <identifier> expected
+        setCountry(Country.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109K2.java:20: error: <identifier> expected
+        setEntityKind(EntityKind.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109K2.java:21: error: <identifier> expected
+        setDomain(Domain.inst(PlatformDomain.));
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109KM.java:19: error: <identifier> expected
+        setCountry(Country.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109KM.java:20: error: <identifier> expected
+        setEntityKind(EntityKind.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109KM.java:21: error: <identifier> expected
+        setDomain(Domain.inst(PlatformDomain.));
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109KN.java:19: error: <identifier> expected
+        setCountry(Country.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109KN.java:20: error: <identifier> expected
+        setEntityKind(EntityKind.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109KN.java:21: error: <identifier> expected
+        setDomain(Domain.inst(PlatformDomain.));
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109LUH.java:19: error: <identifier> expected
+        setCountry(Country.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109LUH.java:20: error: <identifier> expected
+        setEntityKind(EntityKind.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109LUH.java:21: error: <identifier> expected
+        setDomain(Domain.inst(PlatformDomain.));
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109M.java:19: error: <identifier> expected
+        setCountry(Country.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109M.java:20: error: <identifier> expected
+        setEntityKind(EntityKind.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109M.java:21: error: <identifier> expected
+        setDomain(Domain.inst(PlatformDomain.));
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109SGrand.java:19: error: <identifier> expected
+        setCountry(Country.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109SGrand.java:20: error: <identifier> expected
+        setEntityKind(EntityKind.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A109SGrand.java:21: error: <identifier> expected
+        setDomain(Domain.inst(PlatformDomain.));
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A110Orangeleafex_BalderLondon_ex_HudsonProgress.java:19: error: <identifier> expected
+        setCountry(Country.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A110Orangeleafex_BalderLondon_ex_HudsonProgress.java:20: error: <identifier> expected
+        setEntityKind(EntityKind.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A110Orangeleafex_BalderLondon_ex_HudsonProgress.java:21: error: <identifier> expected
+        setDomain(Domain.inst(PlatformDomain.));
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A111Oakleaf.java:19: error: <identifier> expected
+        setCountry(Country.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A111Oakleaf.java:20: error: <identifier> expected
+        setEntityKind(EntityKind.);
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A111Oakleaf.java:21: error: <identifier> expected
+        setDomain(Domain.inst(PlatformDomain.));
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\und\undef\undef\A112Felicity.java:19: error: <identifier> expected
+        setCountry(Country.);
 100 errors
 1 warning
-only showing the first 100 errors, of 459 total; use -Xmaxerrs if you would like to see more
-BUILD FAILED (total time: 13 seconds)
+only showing the first 100 errors, of 62139 total; use -Xmaxerrs if you would like to see more
+BUILD FAILED (total time: 1 minute 42 seconds)

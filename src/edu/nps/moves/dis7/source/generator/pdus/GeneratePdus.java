@@ -32,9 +32,6 @@ import org.xml.sax.helpers.*;
 public class GeneratePdus 
 {
     // set defaults to allow direct run
-    private        File   outputDirectory;
-    private static String outputDirectoryPath = "src-generated/java/edu/nps/moves/dis7/entitytypes";
-    private static String     basePackageName =                    "edu.nps.moves.dis7.entitytypes";
     private static String            language = edu.nps.moves.dis7.source.generator.GenerateOpenDis7JavaPackages.DEFAULT_LANGUAGE;
     private static String         sisoXmlFile = edu.nps.moves.dis7.source.generator.GenerateOpenDis7JavaPackages.DEFAULT_SISO_XML_FILE;
         
@@ -236,6 +233,7 @@ public class GeneratePdus
         checkArguments(sisoXmlFile, language);
         
         new GeneratePdus(sisoXmlFile, language);   
+        System.out.println (GeneratePdus.class.getName() + " complete.");
     }
     
     /*
