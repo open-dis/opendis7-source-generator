@@ -523,7 +523,7 @@
     
     <target name="generate-source-code" depends="init">
         <echo message="================================================================================="/>
-        <echo message="generate-source-code 1 make pdus,         edu.nps.moves.dis7.source.generator.enumerations.GenerateEnumerations"/>
+        <echo message="generate-source-code 1 make enums,         edu.nps.moves.dis7.source.generator.enumerations.GenerateEnumerations"/>
         <java classname="edu.nps.moves.dis7.source.generator.enumerations.GenerateEnumerations">
             <arg value="xml/SISO/${SISO-REF-010.xml}"/>
             <arg value="src-generated/java/edu/nps/moves/dis7/enumerations"/>
@@ -536,8 +536,8 @@
         <!-- <antcall target="compile"/>incremental compilation checks -->
         
         <echo message="================================================================================="/>
-        <echo message="generate-source-code 2 make pdus,         edu.nps.moves.dis7.source.generator.pdus.Main"/>
-        <java classname="edu.nps.moves.dis7.source.generator.pdus.Main">
+        <echo message="generate-source-code 2 make pdus,         edu.nps.moves.dis7.source.generator.pdus.GeneratePdus"/>
+        <java classname="edu.nps.moves.dis7.source.generator.pdus.GeneratePdus">
             <arg value="xml/dis_7_2012/DIS_7_2012.xml"/>
             <arg value="java"/>
             <jvmarg value="-Dxmlpg.generatedSourceDir=src-generated/java"/>

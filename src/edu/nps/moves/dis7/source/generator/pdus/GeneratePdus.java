@@ -12,27 +12,31 @@ import org.xml.sax.*;
 import org.xml.sax.helpers.*;
 
 /**
- * A class that reads an XML file in a specific format, and spits out a Java, C#,
+ * A class that reads an XML file in a specific format, and spits out Java, C#,
  * Objective-C, or C++ classes that do <i>most</i> of the work of the protocol.<p>
  *
- * This can rely on properties set in the XML file for the language. For example,
+ * <p>This can rely on properties set in the XML file for the language. For example,
  * the Java element in the XML file can specify whether Hibernate or JAXB support
- * is included in the generated code.<p>
+ * is included in the generated code.</p>
  * 
- * There is a huge risk of using variable names that have ambiguous meaning
+ * <p>There is a huge risk of using variable names that have ambiguous meaning
  * here, as many of the terms such as "class" are also used
- * by java or c++. <p>
+ * by java or c++. </p>
  *
- * In effect this is reading an XML file and creating an abstract description of
+ * <p>In effect this is reading an XML file and creating an abstract description of
  * the protocol data units. That abstract description is written out as source
- * code in various languages, such as C++, Java, etc.
+ * code in various languages, such as C++, Java, etc.</p>
  *
- * @author DMcG and Mike Bailey
+ * @author Don McGregor, Mike Bailey and Don Brutzman
  */
-public class Main 
+public class GeneratePdus 
 {
-    String  xmlFile = "xml/dis_7_2012/DIS_7_2012.xml";
-    String language = "java";
+    // set defaults to allow direct run
+    private        File   outputDirectory;
+    private static String outputDirectoryPath = "src-generated/java/edu/nps/moves/dis7/entitytypes";
+    private static String     basePackageName =                    "edu.nps.moves.dis7.entitytypes";
+    private static String            language = edu.nps.moves.dis7.source.generator.GenerateOpenDis7JavaPackages.DEFAULT_LANGUAGE;
+    private static String         sisoXmlFile = edu.nps.moves.dis7.source.generator.GenerateOpenDis7JavaPackages.DEFAULT_SISO_XML_FILE;
         
     // Elements and attributes we look for in our XML pdu description files:
     public static final String INHERITSFROM = "inheritsFrom";
@@ -137,10 +141,8 @@ public class Main
      * java objects can be used to generate code templates of any language,
      * once you write the translator.
      */
-    public Main(String xmlDescriptionFileName, String languageToGenerate)
-    {
-        System.out.println("xmlDescriptionFileName="+xmlDescriptionFileName);
-        System.out.println("    languageToGenerate="+languageToGenerate);
+    public GeneratePdus(String xmlDescriptionFileName, String languageToGenerate)
+    {       
         try {
             DefaultHandler handler = new MyHandler();
 
@@ -210,31 +212,37 @@ public class Main
      */
     public static void main(String args[])
     {
-        for(String s : args) System.out.println(s);
+        System.out.println (GeneratePdus.class.getName());
         if(args.length < 2 || args.length > 2)
         {
-            System.out.println("Usage: Xmlpg xmlFile language"); 
+            System.out.println("Arguments:"); 
+            for(String s : args)
+                System.out.print (s);
+            System.out.println("Usage: xmlFile language"); 
             System.out.println("Allowable languages are java, cpp, objc, python, and csharp");
+            System.out.println("Continuing with default values..."); 
 //            System.exit(0);
         }
         else
         {
-             xmlFile = args[0];
-            language = args[1];
+            if (!args[0].isEmpty())
+                sisoXmlFile = args[0];
+            if (!args[1].isEmpty())
+                   language = args[1];
         }
-        System.out.println ("          xmlFile=" + xmlFile);
-        System.out.println ("         language=" + language);
+        System.out.println (" sisoXmlFile=" + sisoXmlFile);
+        System.out.println ("    language=" + language);
         
-        Main.preflightArgs(args[0], args[1]);
+        checkArguments(sisoXmlFile, language);
         
-	    new Main(args[0], args[1]);   
+        new GeneratePdus(sisoXmlFile, language);   
     }
     
     /*
      * Does a sanity check on the args passed in: does the XML file exist, and is
      * the language valid.
      */
-    public static void preflightArgs(String xmlFile, String language)
+    public static void checkArguments(String xmlFile, String language)
     {
         try 
         {

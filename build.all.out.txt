@@ -24,476 +24,261 @@ compile:
 init:
 init:
 generate-source-code:
-generate-source-code 1 make pdus,         edu.nps.moves.dis7.source.generator.enumerations.Main
-          xmlPath=xml/SISO/SISO-REF-010.xml
-  outputDirectory=src-generated\java\edu\nps\moves\dis7\enumerations
-      packageName=edu.nps.moves.dis7.enumerations
+=================================================================================
+generate-source-code 1 make enums,         edu.nps.moves.dis7.source.generator.enumerations.GenerateEnumerations
+edu.nps.moves.dis7.source.generator.enumerations.GenerateEnumerations
+              xmlFile=xml/SISO/SISO-REF-010.xml
+      basePackageName=edu.nps.moves.dis7.enumerations
+  outputDirectoryPath=src-generated/java/edu/nps/moves/dis7/enumerations
+actual directory path=C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations
 Begin uid preprocess...
 Begin enum generation ...
-classNameCorrected=Link11_11BEncryptionFlag
-xmlFile.path=C:\x3d-github\open-dis7-source-generator\xml\SISO\SISO-REF-010.xml
+original classNameCorrected=Link11/11BEncryptionFlag, revised classNameCorrected=Link11_11BEncryptionFlag
 Complete. 402 enums created.
-generate-source-code 2 make pdus,         edu.nps.moves.dis7.source.generator.pdus.Main
-xml/dis_7_2012/DIS_7_2012.xml
-java
-          xmlFile=xml/dis_7_2012/DIS_7_2012.xml
-         language=java
-xml/dis_7_2012/DIS_7_2012.xml java
+=================================================================================
+generate-source-code 2 make pdus,         edu.nps.moves.dis7.source.generator.pdus.GeneratePdus
+edu.nps.moves.dis7.source.generator.pdus.GeneratePdus
+ sisoXmlFile=xml/dis_7_2012/DIS_7_2012.xml
+    language=java
 Source code directory set to src-generated/java
 creating directory
 directory=src-generated/java
-cleaning directory
-generate-source-code 3 make jammers,      edu.nps.moves.dis7.source.generator.entitytypes.JammerMain
-generate-source-code 4 make object types, edu.nps.moves.dis7.source.generator.entitytypes.ObjectTypeMain
-generate-source-code 5 make entities,     edu.nps.moves.dis7.source.generator.entitytypes.Main
-          xmlPath=xml/SISO/SISO-REF-010.xml
-  outputDirectory=src-generated\java\edu\nps\moves\dis7\entities
-      packageName=edu.nps.moves.dis7.entities
-Generating entities:
-buildEntityCommon fixedName=PoliceCar, uid=31164, outputDirectory=src-generated\java\edu\nps\moves\dis7\entities
-buildPackagePath data.sb 1: empty string
-NPE: getEnum (enumGetter == null, i=1)
-endElement qName=subcategory, java.lang.NullPointerException
-Exception in thread "main" java.lang.RuntimeException: java.lang.RuntimeException: java.lang.NullPointerException
-	at edu.nps.moves.dis7.source.generator.entitytypes.Main$MyHandler.endElement(Main.java:427)
-	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.endElement(AbstractSAXParser.java:618)
-	at java.xml/com.sun.org.apache.xerces.internal.xinclude.XIncludeHandler.endElement(XIncludeHandler.java:1111)
-	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanEndElement(XMLDocumentFragmentScannerImpl.java:1727)
-	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.next(XMLDocumentFragmentScannerImpl.java:2898)
-	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl.next(XMLDocumentScannerImpl.java:605)
-	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.next(XMLNSDocumentScannerImpl.java:112)
-	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:541)
-	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
-	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
-	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
-	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1224)
-	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
-	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl.parse(SAXParserImpl.java:324)
-	at java.xml/javax.xml.parsers.SAXParser.parse(SAXParser.java:330)
-	at edu.nps.moves.dis7.source.generator.entitytypes.Main.run(Main.java:178)
-	at edu.nps.moves.dis7.source.generator.entitytypes.Main.main(Main.java:912)
-Caused by: java.lang.RuntimeException: java.lang.NullPointerException
-	at edu.nps.moves.dis7.source.generator.entitytypes.Main$MyHandler.buildEntityCommon(Main.java:607)
-	at edu.nps.moves.dis7.source.generator.entitytypes.Main$MyHandler.writeSubCategoryFile(Main.java:494)
-	at edu.nps.moves.dis7.source.generator.entitytypes.Main$MyHandler.endElement(Main.java:401)
-	... 16 more
-Caused by: java.lang.NullPointerException
-	at edu.nps.moves.dis7.source.generator.entitytypes.Main.getEnum(Main.java:161)
-	at edu.nps.moves.dis7.source.generator.entitytypes.Main.getDescription(Main.java:145)
-	at edu.nps.moves.dis7.source.generator.entitytypes.Main.buildPackagePath(Main.java:701)
-	at edu.nps.moves.dis7.source.generator.entitytypes.Main.access$1600(Main.java:34)
-	at edu.nps.moves.dis7.source.generator.entitytypes.Main$MyHandler.buildEntityCommon(Main.java:540)
-	... 18 more
+cleaning directory src-generated\java
+=================================================================================
+generate-source-code 3 make jammers,      edu.nps.moves.dis7.source.generator.entitytypes.GenerateJammers
+edu.nps.moves.dis7.source.generator.entitytypes.GenerateJammers
+              xmlFile=xml/SISO/SISO-REF-010.xml
+      basePackageName=edu.nps.moves.dis7.jammers
+  outputDirectoryPath=src-generated/java/edu/nps/moves/dis7/jammers
+actual directory path=C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\jammers
+=================================================================================
+generate-source-code 4 make object types, edu.nps.moves.dis7.source.generator.entitytypes.GenerateObjectTypes
+edu.nps.moves.dis7.source.generator.entitytypes.GenerateObjectTypes
+              xmlFile=xml/SISO/SISO-REF-010.xml
+      basePackageName=edu.nps.moves.dis7.objecttypes
+  outputDirectoryPath=src-generated/java/edu/nps/moves/dis7/objecttypes
+actual directory path=C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\objecttypes
+=================================================================================
+generate-source-code 5 make entities,     edu.nps.moves.dis7.source.generator.entitytypes.GenerateEntityTypes
+edu.nps.moves.dis7.source.generator.entitytypes.GenerateEntityTypes
+              xmlFile=xml/SISO/SISO-REF-010.xml
+      basePackageName=edu.nps.moves.dis7.entities
+  outputDirectoryPath=src-generated/java/edu/nps/moves/dis7/entities
+actual directory path=C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities
+Exception in thread "main" java.lang.RuntimeException: java.lang.ClassNotFoundException: edu.nps.moves.dis7.enumerations.PlatformDomain
+	at edu.nps.moves.dis7.source.generator.entitytypes.GenerateEntityTypes.buildKindDomainCountryInstances(GenerateEntityTypes.java:135)
+	at edu.nps.moves.dis7.source.generator.entitytypes.GenerateEntityTypes.run(GenerateEntityTypes.java:186)
+	at edu.nps.moves.dis7.source.generator.entitytypes.GenerateEntityTypes.main(GenerateEntityTypes.java:926)
 Java Result: 1
 generate-source-code complete
+=================================================================================
 init:
 Deleting: C:\x3d-github\open-dis7-source-generator\build\built-jar.properties
 deps-jar:
 Updating property file: C:\x3d-github\open-dis7-source-generator\build\built-jar.properties
 Compiling 1039 source files to C:\x3d-github\open-dis7-source-generator\build\classes
 warning: [options] bootstrap class path not set in conjunction with -source 8
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\ActionRequestPdu.java:34: error: cannot find symbol
-   protected List< VariableDatum > variableDatums = new ArrayList< VariableDatum >();
-  symbol:   class VariableDatum
-  location: class ActionRequestPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\ActionRequestPdu.java:108: error: cannot find symbol
-public ActionRequestPdu setVariableDatums(List<VariableDatum> pVariableDatums)
-  symbol:   class VariableDatum
-  location: class ActionRequestPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\ActionRequestPdu.java:115: error: cannot find symbol
-public List<VariableDatum> getVariableDatums()
-  symbol:   class VariableDatum
-  location: class ActionRequestPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\ActionRequestRPdu.java:43: error: cannot find symbol
-   protected List< VariableDatum > variableDatumRecords = new ArrayList< VariableDatum >();
-  symbol:   class VariableDatum
-  location: class ActionRequestRPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\ActionRequestRPdu.java:159: error: cannot find symbol
-public ActionRequestRPdu setVariableDatumRecords(List<VariableDatum> pVariableDatumRecords)
-  symbol:   class VariableDatum
-  location: class ActionRequestRPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\ActionRequestRPdu.java:166: error: cannot find symbol
-public List<VariableDatum> getVariableDatumRecords()
-  symbol:   class VariableDatum
-  location: class ActionRequestRPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\ActionResponsePdu.java:34: error: cannot find symbol
-   protected List< VariableDatum > variableDatums = new ArrayList< VariableDatum >();
-  symbol:   class VariableDatum
-  location: class ActionResponsePdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\ActionResponsePdu.java:108: error: cannot find symbol
-public ActionResponsePdu setVariableDatums(List<VariableDatum> pVariableDatums)
-  symbol:   class VariableDatum
-  location: class ActionResponsePdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\ActionResponsePdu.java:115: error: cannot find symbol
-public List<VariableDatum> getVariableDatums()
-  symbol:   class VariableDatum
-  location: class ActionResponsePdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\ActionResponseRPdu.java:34: error: cannot find symbol
-   protected List< VariableDatum > variableDatumRecords = new ArrayList< VariableDatum >();
-  symbol:   class VariableDatum
-  location: class ActionResponseRPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\ActionResponseRPdu.java:108: error: cannot find symbol
-public ActionResponseRPdu setVariableDatumRecords(List<VariableDatum> pVariableDatumRecords)
-  symbol:   class VariableDatum
-  location: class ActionResponseRPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\ActionResponseRPdu.java:115: error: cannot find symbol
-public List<VariableDatum> getVariableDatumRecords()
-  symbol:   class VariableDatum
-  location: class ActionResponseRPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\AggregateStatePdu.java:78: error: cannot find symbol
-   protected List< VariableDatum > variableDatumList = new ArrayList< VariableDatum >();
-  symbol:   class VariableDatum
-  location: class AggregateStatePdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\AggregateStatePdu.java:322: error: cannot find symbol
-public AggregateStatePdu setVariableDatumList(List<VariableDatum> pVariableDatumList)
-  symbol:   class VariableDatum
-  location: class AggregateStatePdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\AggregateStatePdu.java:329: error: cannot find symbol
-public List<VariableDatum> getVariableDatumList()
-  symbol:   class VariableDatum
-  location: class AggregateStatePdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\EntityType.java:22: error: cannot find symbol
-   protected Domain  domain =  Domain.inst(PlatformDomain.OTHER); 
-  symbol:   class Domain
-  location: class EntityType
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\EntityType.java:75: error: cannot find symbol
-public EntityType setDomain(Domain pDomain)
-  symbol:   class Domain
-  location: class EntityType
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\EntityType.java:82: error: cannot find symbol
-public Domain getDomain()
-  symbol:   class Domain
-  location: class EntityType
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\CommentPdu.java:25: error: cannot find symbol
-   protected List< VariableDatum > variableDatums = new ArrayList< VariableDatum >();
-  symbol:   class VariableDatum
-  location: class CommentPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\CommentPdu.java:53: error: cannot find symbol
-public CommentPdu setVariableDatums(List<VariableDatum> pVariableDatums)
-  symbol:   class VariableDatum
-  location: class CommentPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\CommentPdu.java:60: error: cannot find symbol
-public List<VariableDatum> getVariableDatums()
-  symbol:   class VariableDatum
-  location: class CommentPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\CommentRPdu.java:25: error: cannot find symbol
-   protected List< VariableDatum > variableDatumRecords = new ArrayList< VariableDatum >();
-  symbol:   class VariableDatum
-  location: class CommentRPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\CommentRPdu.java:53: error: cannot find symbol
-public CommentRPdu setVariableDatumRecords(List<VariableDatum> pVariableDatumRecords)
-  symbol:   class VariableDatum
-  location: class CommentRPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\CommentRPdu.java:60: error: cannot find symbol
-public List<VariableDatum> getVariableDatumRecords()
-  symbol:   class VariableDatum
-  location: class CommentRPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\DataPdu.java:34: error: cannot find symbol
-   protected List< VariableDatum > variableDatums = new ArrayList< VariableDatum >();
-  symbol:   class VariableDatum
-  location: class DataPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\DataPdu.java:108: error: cannot find symbol
-public DataPdu setVariableDatums(List<VariableDatum> pVariableDatums)
-  symbol:   class VariableDatum
-  location: class DataPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\DataPdu.java:115: error: cannot find symbol
-public List<VariableDatum> getVariableDatums()
-  symbol:   class VariableDatum
-  location: class DataPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\DataQueryPdu.java:34: error: cannot find symbol
-   protected List< VariableDatum > variableDatums = new ArrayList< VariableDatum >();
-  symbol:   class VariableDatum
-  location: class DataQueryPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\DataQueryPdu.java:108: error: cannot find symbol
-public DataQueryPdu setVariableDatums(List<VariableDatum> pVariableDatums)
-  symbol:   class VariableDatum
-  location: class DataQueryPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\DataQueryPdu.java:115: error: cannot find symbol
-public List<VariableDatum> getVariableDatums()
-  symbol:   class VariableDatum
-  location: class DataQueryPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\DataQueryRPdu.java:43: error: cannot find symbol
-   protected List< VariableDatum > variableDatumRecords = new ArrayList< VariableDatum >();
-  symbol:   class VariableDatum
-  location: class DataQueryRPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\DataQueryRPdu.java:159: error: cannot find symbol
-public DataQueryRPdu setVariableDatumRecords(List<VariableDatum> pVariableDatumRecords)
-  symbol:   class VariableDatum
-  location: class DataQueryRPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\DataQueryRPdu.java:166: error: cannot find symbol
-public List<VariableDatum> getVariableDatumRecords()
-  symbol:   class VariableDatum
-  location: class DataQueryRPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\DataRPdu.java:40: error: cannot find symbol
-   protected List< VariableDatum > variableDatumRecords = new ArrayList< VariableDatum >();
-  symbol:   class VariableDatum
-  location: class DataRPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\DataRPdu.java:142: error: cannot find symbol
-public DataRPdu setVariableDatumRecords(List<VariableDatum> pVariableDatumRecords)
-  symbol:   class VariableDatum
-  location: class DataRPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\DataRPdu.java:149: error: cannot find symbol
-public List<VariableDatum> getVariableDatumRecords()
-  symbol:   class VariableDatum
-  location: class DataRPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\DatumSpecification.java:28: error: cannot find symbol
-   protected List< VariableDatum > variableDatumIDList = new ArrayList< VariableDatum >();
-  symbol:   class VariableDatum
-  location: class DatumSpecification
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\DatumSpecification.java:72: error: cannot find symbol
-public DatumSpecification setVariableDatumIDList(List<VariableDatum> pVariableDatumIDList)
-  symbol:   class VariableDatum
-  location: class DatumSpecification
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\DatumSpecification.java:79: error: cannot find symbol
-public List<VariableDatum> getVariableDatumIDList()
-  symbol:   class VariableDatum
-  location: class DatumSpecification
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\EventReportPdu.java:34: error: cannot find symbol
-   protected List< VariableDatum > variableDatums = new ArrayList< VariableDatum >();
-  symbol:   class VariableDatum
-  location: class EventReportPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\EventReportPdu.java:108: error: cannot find symbol
-public EventReportPdu setVariableDatums(List<VariableDatum> pVariableDatums)
-  symbol:   class VariableDatum
-  location: class EventReportPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\EventReportPdu.java:115: error: cannot find symbol
-public List<VariableDatum> getVariableDatums()
-  symbol:   class VariableDatum
-  location: class EventReportPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\EventReportRPdu.java:34: error: cannot find symbol
-   protected List< VariableDatum > variableDatumRecords = new ArrayList< VariableDatum >();
-  symbol:   class VariableDatum
-  location: class EventReportRPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\EventReportRPdu.java:108: error: cannot find symbol
-public EventReportRPdu setVariableDatumRecords(List<VariableDatum> pVariableDatumRecords)
-  symbol:   class VariableDatum
-  location: class EventReportRPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\EventReportRPdu.java:115: error: cannot find symbol
-public List<VariableDatum> getVariableDatumRecords()
-  symbol:   class VariableDatum
-  location: class EventReportRPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\IsGroupOfPdu.java:37: error: cannot find symbol
-   protected List< VariableDatum > groupedEntityDescriptions = new ArrayList< VariableDatum >();
-  symbol:   class VariableDatum
-  location: class IsGroupOfPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\IsGroupOfPdu.java:134: error: cannot find symbol
-public IsGroupOfPdu setGroupedEntityDescriptions(List<VariableDatum> pGroupedEntityDescriptions)
-  symbol:   class VariableDatum
-  location: class IsGroupOfPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\IsGroupOfPdu.java:141: error: cannot find symbol
-public List<VariableDatum> getGroupedEntityDescriptions()
-  symbol:   class VariableDatum
-  location: class IsGroupOfPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\SetDataPdu.java:34: error: cannot find symbol
-   protected List< VariableDatum > variableDatums = new ArrayList< VariableDatum >();
-  symbol:   class VariableDatum
-  location: class SetDataPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\SetDataPdu.java:108: error: cannot find symbol
-public SetDataPdu setVariableDatums(List<VariableDatum> pVariableDatums)
-  symbol:   class VariableDatum
-  location: class SetDataPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\SetDataPdu.java:115: error: cannot find symbol
-public List<VariableDatum> getVariableDatums()
-  symbol:   class VariableDatum
-  location: class SetDataPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\SetDataRPdu.java:40: error: cannot find symbol
-   protected List< VariableDatum > variableDatumRecords = new ArrayList< VariableDatum >();
-  symbol:   class VariableDatum
-  location: class SetDataRPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\SetDataRPdu.java:142: error: cannot find symbol
-public SetDataRPdu setVariableDatumRecords(List<VariableDatum> pVariableDatumRecords)
-  symbol:   class VariableDatum
-  location: class SetDataRPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\SetDataRPdu.java:149: error: cannot find symbol
-public List<VariableDatum> getVariableDatumRecords()
-  symbol:   class VariableDatum
-  location: class SetDataRPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\ActionRequestPdu.java:34: error: cannot find symbol
-   protected List< VariableDatum > variableDatums = new ArrayList< VariableDatum >();
-  symbol:   class VariableDatum
-  location: class ActionRequestPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\ActionRequestPdu.java:60: error: cannot find symbol
-        VariableDatum listElement = variableDatums.get(idx);
-  symbol:   class VariableDatum
-  location: class ActionRequestPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\ActionRequestPdu.java:145: error: cannot find symbol
-            VariableDatum aVariableDatum = variableDatums.get(idx);
-  symbol:   class VariableDatum
-  location: class ActionRequestPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\ActionRequestPdu.java:187: error: cannot find symbol
-            VariableDatum anX = new VariableDatum();
-  symbol:   class VariableDatum
-  location: class ActionRequestPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\ActionRequestPdu.java:187: error: cannot find symbol
-            VariableDatum anX = new VariableDatum();
-  symbol:   class VariableDatum
-  location: class ActionRequestPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\ActionRequestPdu.java:225: error: cannot find symbol
-        VariableDatum aVariableDatum = variableDatums.get(idx);
-  symbol:   class VariableDatum
-  location: class ActionRequestPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\ActionRequestPdu.java:256: error: cannot find symbol
-    VariableDatum anX = new VariableDatum();
-  symbol:   class VariableDatum
-  location: class ActionRequestPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\ActionRequestPdu.java:256: error: cannot find symbol
-    VariableDatum anX = new VariableDatum();
-  symbol:   class VariableDatum
-  location: class ActionRequestPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\ActionRequestRPdu.java:43: error: cannot find symbol
-   protected List< VariableDatum > variableDatumRecords = new ArrayList< VariableDatum >();
-  symbol:   class VariableDatum
-  location: class ActionRequestRPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\ActionRequestRPdu.java:72: error: cannot find symbol
-        VariableDatum listElement = variableDatumRecords.get(idx);
-  symbol:   class VariableDatum
-  location: class ActionRequestRPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\ActionRequestRPdu.java:199: error: cannot find symbol
-            VariableDatum aVariableDatum = variableDatumRecords.get(idx);
-  symbol:   class VariableDatum
-  location: class ActionRequestRPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\ActionRequestRPdu.java:247: error: cannot find symbol
-            VariableDatum anX = new VariableDatum();
-  symbol:   class VariableDatum
-  location: class ActionRequestRPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\ActionRequestRPdu.java:247: error: cannot find symbol
-            VariableDatum anX = new VariableDatum();
-  symbol:   class VariableDatum
-  location: class ActionRequestRPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\ActionRequestRPdu.java:288: error: cannot find symbol
-        VariableDatum aVariableDatum = variableDatumRecords.get(idx);
-  symbol:   class VariableDatum
-  location: class ActionRequestRPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\ActionRequestRPdu.java:322: error: cannot find symbol
-    VariableDatum anX = new VariableDatum();
-  symbol:   class VariableDatum
-  location: class ActionRequestRPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\ActionRequestRPdu.java:322: error: cannot find symbol
-    VariableDatum anX = new VariableDatum();
-  symbol:   class VariableDatum
-  location: class ActionRequestRPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\ActionResponsePdu.java:34: error: cannot find symbol
-   protected List< VariableDatum > variableDatums = new ArrayList< VariableDatum >();
-  symbol:   class VariableDatum
-  location: class ActionResponsePdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\ActionResponsePdu.java:60: error: cannot find symbol
-        VariableDatum listElement = variableDatums.get(idx);
-  symbol:   class VariableDatum
-  location: class ActionResponsePdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\ActionResponsePdu.java:145: error: cannot find symbol
-            VariableDatum aVariableDatum = variableDatums.get(idx);
-  symbol:   class VariableDatum
-  location: class ActionResponsePdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\ActionResponsePdu.java:187: error: cannot find symbol
-            VariableDatum anX = new VariableDatum();
-  symbol:   class VariableDatum
-  location: class ActionResponsePdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\ActionResponsePdu.java:187: error: cannot find symbol
-            VariableDatum anX = new VariableDatum();
-  symbol:   class VariableDatum
-  location: class ActionResponsePdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\ActionResponsePdu.java:225: error: cannot find symbol
-        VariableDatum aVariableDatum = variableDatums.get(idx);
-  symbol:   class VariableDatum
-  location: class ActionResponsePdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\ActionResponsePdu.java:256: error: cannot find symbol
-    VariableDatum anX = new VariableDatum();
-  symbol:   class VariableDatum
-  location: class ActionResponsePdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\ActionResponsePdu.java:256: error: cannot find symbol
-    VariableDatum anX = new VariableDatum();
-  symbol:   class VariableDatum
-  location: class ActionResponsePdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\ActionResponseRPdu.java:34: error: cannot find symbol
-   protected List< VariableDatum > variableDatumRecords = new ArrayList< VariableDatum >();
-  symbol:   class VariableDatum
-  location: class ActionResponseRPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\ActionResponseRPdu.java:60: error: cannot find symbol
-        VariableDatum listElement = variableDatumRecords.get(idx);
-  symbol:   class VariableDatum
-  location: class ActionResponseRPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\ActionResponseRPdu.java:145: error: cannot find symbol
-            VariableDatum aVariableDatum = variableDatumRecords.get(idx);
-  symbol:   class VariableDatum
-  location: class ActionResponseRPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\ActionResponseRPdu.java:187: error: cannot find symbol
-            VariableDatum anX = new VariableDatum();
-  symbol:   class VariableDatum
-  location: class ActionResponseRPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\ActionResponseRPdu.java:187: error: cannot find symbol
-            VariableDatum anX = new VariableDatum();
-  symbol:   class VariableDatum
-  location: class ActionResponseRPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\ActionResponseRPdu.java:225: error: cannot find symbol
-        VariableDatum aVariableDatum = variableDatumRecords.get(idx);
-  symbol:   class VariableDatum
-  location: class ActionResponseRPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\ActionResponseRPdu.java:256: error: cannot find symbol
-    VariableDatum anX = new VariableDatum();
-  symbol:   class VariableDatum
-  location: class ActionResponseRPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\ActionResponseRPdu.java:256: error: cannot find symbol
-    VariableDatum anX = new VariableDatum();
-  symbol:   class VariableDatum
-  location: class ActionResponseRPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\AggregateStatePdu.java:78: error: cannot find symbol
-   protected List< VariableDatum > variableDatumList = new ArrayList< VariableDatum >();
-  symbol:   class VariableDatum
-  location: class AggregateStatePdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\AggregateStatePdu.java:131: error: cannot find symbol
-        VariableDatum listElement = variableDatumList.get(idx);
-  symbol:   class VariableDatum
-  location: class AggregateStatePdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\AggregateStatePdu.java:392: error: cannot find symbol
-            VariableDatum aVariableDatum = variableDatumList.get(idx);
-  symbol:   class VariableDatum
-  location: class AggregateStatePdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\AggregateStatePdu.java:472: error: cannot find symbol
-            VariableDatum anX = new VariableDatum();
-  symbol:   class VariableDatum
-  location: class AggregateStatePdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\AggregateStatePdu.java:472: error: cannot find symbol
-            VariableDatum anX = new VariableDatum();
-  symbol:   class VariableDatum
-  location: class AggregateStatePdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\AggregateStatePdu.java:543: error: cannot find symbol
-        VariableDatum aVariableDatum = variableDatumList.get(idx);
-  symbol:   class VariableDatum
-  location: class AggregateStatePdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\AggregateStatePdu.java:607: error: cannot find symbol
-    VariableDatum anX = new VariableDatum();
-  symbol:   class VariableDatum
-  location: class AggregateStatePdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\AggregateStatePdu.java:607: error: cannot find symbol
-    VariableDatum anX = new VariableDatum();
-  symbol:   class VariableDatum
-  location: class AggregateStatePdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\EntityType.java:22: error: cannot find symbol
-   protected Domain  domain =  Domain.inst(PlatformDomain.OTHER); 
-  symbol:   variable Domain
-  location: class EntityType
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\CommentPdu.java:25: error: cannot find symbol
-   protected List< VariableDatum > variableDatums = new ArrayList< VariableDatum >();
-  symbol:   class VariableDatum
-  location: class CommentPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\CommentPdu.java:44: error: cannot find symbol
-        VariableDatum listElement = variableDatums.get(idx);
-  symbol:   class VariableDatum
-  location: class CommentPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\CommentPdu.java:81: error: cannot find symbol
-            VariableDatum aVariableDatum = variableDatums.get(idx);
-  symbol:   class VariableDatum
-  location: class CommentPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\CommentPdu.java:112: error: cannot find symbol
-            VariableDatum anX = new VariableDatum();
-  symbol:   class VariableDatum
-  location: class CommentPdu
-C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\CommentPdu.java:112: error: cannot find symbol
-            VariableDatum anX = new VariableDatum();
-  symbol:   class VariableDatum
-  location: class CommentPdu
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\APAParameterIndexAPAStatus.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AcknowledgeAcknowledgeFlag.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AcknowledgeResponseFlag.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\Acronyms.java:2: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\ActionRequestActionID.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\ActionResponseRequestStatus.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AddSpecificDimensionEnumerationsforSubsurfaceAreaSize.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AddVariantsforAirCategory201Insect.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AddVariantsforLandCategory200Mammal.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AddVariantsforSubsurfaceCategoriesFishMolluskCrustaceanandInsect.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AggregateStateAggregateKind.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AggregateStateAggregateState.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AggregateStateFormation.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AggregateStateSpecific.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AggregateStateSubcategory.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AirPlatformAppearance.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AirPlatformCapabilities.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AircraftAddressSource.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AircraftIdentificationType.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AircraftPresentDomain.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AircraftTypeWake.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AnimalLifeformGroupSizeRangeEnumerationforallDomains.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AntennaSelection.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AntennaStatus.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceAntiCollisionDayNight.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceCamouflageType.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceCanopy.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceConcealedMovement.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceConcealedPosition.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceDamage.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceEntityorObjectState.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceEnvironmentalDensity.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceHatch.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceLauncherOperational.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceLifeFormComplianceStatus.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceLifeFormPosture.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceLifeFormWeaponImplement.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceLifeformHealth.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceLinearObjectLaneMarkerVisible.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceLinearObjectTankDitchBreach.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceNVGMode.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceNavigationPositionBrightness.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceObjectGeneralDamage.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceObjectGeneralIEDPresent.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceObjectGeneralPredistributed.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceObjectSpecificBreachState.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceObjectSpecificChemicalType.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearancePaintScheme.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceSubsurfaceHatch.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceSupplyDeployed.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AppearanceTrailingEffects.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\ArealObjectAppearanceMinefield.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\ArticulatedPartsTypeClass.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\ArticulatedPartsTypeMetric.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AttachedPartDetachedIndicator.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AttachedParts.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\AustralianCategoryOverlay.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\BeamStatusBeamState.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\BuildingPaintScheme.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\CCTTSINCGARSClearChannel.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\CCTTSINCGARSStartofMessage.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\CIGIExtensionPacketID.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\CapabilityReport.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\Class10SupplyCategoryMaterialtoSupportNonMilitaryPrograms.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\Class11SupplyCategorySuppliesNonDoctrinal.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\Class12SupplyCategorySlingLoadsNonDoctrinal.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\Class1SupplyCategorySubsistence.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\Class2SupplyCategoryClothingIndividualEquipmentToolsAdminSupplies.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\Class3SupplyCategoryPetroleumOilsLubricants.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\Class4SupplyCategoryConstructionMaterials.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\Class6SupplyCategoryPersonnelDemandItems.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\Class7SupplyCategoryMajorItems.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\Class8SupplyCategoryMedicalMaterial.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\Class9SupplyCategoryRepairPartsandComponents.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\CollisionType.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\Color.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\ComponentVisualDamageStatusSmoke.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\ComponentVisualDamageStatusSurfaceDamage.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\Country.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\CoverShroudStatus.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\CryptoKeyIDCryptoMode.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\CulturalFeatureAppearance.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\CulturalFeatureCapabilities.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\DEDamageDescriptionComponentDamageStatus.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\DEDamageDescriptionComponentVisualDamageStatus.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\DEDamageDescriptionComponentVisualSmokeColor.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\DEFireFlags.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\DEFireFlagsStateUpdateFlag.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\DEFirePulseShape.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\DEPrecisionAimpointBeamSpotType.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\DISAttributeActionCode.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\DISLiveEntitySubprotocolNumber.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\DISPDUStatusActiveInterrogationIndicatorAII.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\DISPDUStatusCoupledExtensionIndicatorCEI.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\DISPDUStatusDetonationTypeIndicatorDTI.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\DISPDUStatusFireTypeIndicatorFTI.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\DISPDUStatusIFFSimulationModeISM.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\DISPDUStatusIntercomAttachedIndicatorIAI.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\DISPDUStatusLVCIndicatorLVC.java:1: error: <identifier> expected
+package null;
+C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\DISPDUStatusRadioAttachedIndicatorRAI.java:1: error: <identifier> expected
+package null;
 100 errors
 1 warning
-only showing the first 100 errors, of 191 total; use -Xmaxerrs if you would like to see more
-BUILD FAILED (total time: 18 seconds)
-
+only showing the first 100 errors, of 459 total; use -Xmaxerrs if you would like to see more
+BUILD FAILED (total time: 13 seconds)

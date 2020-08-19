@@ -29,15 +29,17 @@ import org.apache.commons.io.FileUtils;
  * GenerateEntityTypes.java created on Jul 22, 2019
  * MOVES Institute Naval Postgraduate School, Monterey, CA, USA www.nps.edu
  *
- * @author Mike Bailey, jmbailey@nps.edu
+ * @author Don McGregor, Mike Bailey and Don Brutzman
  * @version $Id$
  */
 public class GenerateEntityTypes
 {
-  private final File   outputDirectory;
-  private final String outputDirectoryPath ="src-generated/java/edu/nps/moves/dis7/entities";
-  private final String     basePackageName = "edu.nps.moves.dis7.entities";
-  private       String             xmlPath = edu.nps.moves.dis7.source.generator.Main.DEFAULT_SISO_XML_FILE;
+    // set defaults to allow direct run
+    private        File   outputDirectory;
+    private static String outputDirectoryPath = "src-generated/java/edu/nps/moves/dis7/entitytypes";
+    private static String     basePackageName =                    "edu.nps.moves.dis7.entitytypes";
+    private static String            language = edu.nps.moves.dis7.source.generator.GenerateOpenDis7JavaPackages.DEFAULT_LANGUAGE;
+    private static String         sisoXmlFile = edu.nps.moves.dis7.source.generator.GenerateOpenDis7JavaPackages.DEFAULT_SISO_XML_FILE;
 
   private BufferedWriter uid2ClassWriter = null;
     
@@ -61,19 +63,21 @@ public class GenerateEntityTypes
     private String entityUid;
   }
 
-  public GenerateEntityTypes(String xmlPath, String outputDir, String packageName)
+  public GenerateEntityTypes(String xmlFile, String outputDir, String packageName)
   {
-      if (!xmlPath.isEmpty())
-        this.xmlPath = xmlPath;
-      System.out.println ("              xmlPath=" + this.xmlPath);
-      if (!packageName.isEmpty())
-        this.basePackageName = packageName;
-      System.out.println ("      basePackageName=" + this.basePackageName);
-      if (!outputDir.isEmpty())
-           outputDirectoryPath = outputDir;
-      System.out.println ("  outputDirectoryPath=" + this.outputDirectoryPath);
-      outputDirectory  = new File(outputDirectoryPath);
-      System.out.println ("actual directory path=" + outputDirectory.getAbsolutePath());
+        if (!xmlFile.isEmpty())
+             sisoXmlFile = xmlFile;
+        if (!outputDir.isEmpty())
+            outputDirectoryPath = outputDir;
+        if (!packageName.isEmpty())
+           basePackageName = packageName;
+        System.out.println (GenerateEntityTypes.class.getName());
+        System.out.println ("              xmlFile=" + sisoXmlFile);
+        System.out.println ("      basePackageName=" + basePackageName);
+        System.out.println ("  outputDirectoryPath=" + outputDirectoryPath);
+        
+        outputDirectory  = new File(outputDirectoryPath);
+        System.out.println ("actual directory path=" + outputDirectory.getAbsolutePath());
   }
 
   Method platformDomainFromInt;
@@ -182,7 +186,7 @@ public class GenerateEntityTypes
     buildKindDomainCountryInstances();
     
     System.out.println("Generating entities:");
-    factory.newSAXParser().parse(new File(xmlPath), new MyHandler());
+    factory.newSAXParser().parse(new File(sisoXmlFile), new MyHandler());
     
     if(uid2ClassWriter != null) {
        uid2ClassWriter.flush();
@@ -918,7 +922,7 @@ public class GenerateEntityTypes
     try 
     {
         if  (args.length == 0)
-             new GenerateEntityTypes("", "", "").run();
+             new GenerateEntityTypes("",      "",      ""     ).run(); // use defaults
         else new GenerateEntityTypes(args[0], args[1], args[2]).run();
     }
     catch (SAXException | IOException | ParserConfigurationException ex)

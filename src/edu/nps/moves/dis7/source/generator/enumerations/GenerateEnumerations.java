@@ -28,14 +28,18 @@ import org.xml.sax.helpers.DefaultHandler;
 /**
  * GenerateEnumerations.java created on Apr 16, 2019 MOVES Institute Naval Postgraduate School, Monterey, CA, USA www.nps.edu
  *
- * @author Mike Bailey, jmbailey@nps.edu
+ * @author Don McGregor, Mike Bailey and Don Brutzman
  * @version $Id$
  */
 public class GenerateEnumerations
 {
-    private String             xmlPath = edu.nps.moves.dis7.source.generator.Main.DEFAULT_SISO_XML_FILE;
+    // set defaults to allow direct run
+    private        File   outputDirectory;
+    private static String outputDirectoryPath = "src-generated/java/edu/nps/moves/dis7/enumerations";
+    private static String     basePackageName =                    "edu.nps.moves.dis7.enumerations";
+    private static String            language = edu.nps.moves.dis7.source.generator.GenerateOpenDis7JavaPackages.DEFAULT_LANGUAGE;
+    private static String         sisoXmlFile = edu.nps.moves.dis7.source.generator.GenerateOpenDis7JavaPackages.DEFAULT_SISO_XML_FILE;
     
-    private File outputDirectory;
     private Properties uid2ClassName;
     private Properties uid4aliases;
     private Properties interfaceInjection;
@@ -66,14 +70,21 @@ public class GenerateEnumerations
 
     private String specTitleDate = null;
 
-    public GenerateEnumerations(String xmlPath, String outputDir, String packageName)
+    public GenerateEnumerations(String xmlFile, String outputDir, String packageName)
     {
-        this.xmlPath = xmlPath;
-        outputDirectory = new File(outputDir);
-        this.packageName = packageName;
-        System.out.println ("          xmlPath=" + xmlPath);
-        System.out.println ("  outputDirectory=" + outputDirectory);
-        System.out.println ("      packageName=" + packageName);
+        System.out.println (GenerateEnumerations.class.getName());
+        if (!xmlFile.isEmpty())
+             sisoXmlFile = xmlFile;
+        if (!outputDir.isEmpty())
+            outputDirectoryPath = outputDir;
+        if (!packageName.isEmpty())
+           basePackageName = packageName;
+        System.out.println ("              xmlFile=" + sisoXmlFile);
+        System.out.println ("      basePackageName=" + basePackageName);
+        System.out.println ("  outputDirectoryPath=" + outputDirectoryPath);
+        
+        outputDirectory  = new File(outputDirectoryPath);
+        System.out.println ("actual directory path=" + outputDirectory.getAbsolutePath());
     }
 
     private void run() throws SAXException, IOException, ParserConfigurationException
@@ -118,7 +129,7 @@ public class GenerateEnumerations
             System.out.println(ent.getKey() + " " + ent.getValue());
         }
          */
-        File xmlFile = new File(xmlPath);
+        File xmlFile = new File(sisoXmlFile);
         SAXParserFactory factory = SAXParserFactory.newInstance();
         factory.setValidating(false);
         factory.setNamespaceAware(true);
@@ -128,9 +139,8 @@ public class GenerateEnumerations
 
         System.out.println("Begin enum generation ...");
         MyHandler handler = new MyHandler();
-        factory.newSAXParser().parse(new File(xmlPath), handler); // apparently can't reuse xmlFile
+        factory.newSAXParser().parse(xmlFile, handler); // apparently can't reuse xmlFile
 
-        System.out.println("xmlFile.path=" + xmlFile.getAbsolutePath());
         System.out.println("Complete. " + handler.enums.size() + " enums created.");
     }
 
@@ -419,8 +429,9 @@ public class GenerateEnumerations
             String classNameCorrected = clsName;
             if (classNameCorrected.contains("Link11/11"))
             {
+                System.err.print  ( "original classNameCorrected=" + classNameCorrected);
                 classNameCorrected = classNameCorrected.replace("Link11/11B", "Link11_11B"); // Fix slash in entry
-                System.err.println("classNameCorrected=" + classNameCorrected);
+                System.err.println(", revised classNameCorrected=" + classNameCorrected);
             }
             StringBuilder sb = new StringBuilder();
 
@@ -481,8 +492,9 @@ public class GenerateEnumerations
             String classNameCorrected = clsName;
             if (classNameCorrected.contains("Link11/11"))
             {
+                System.err.print  ( "original classNameCorrected=" + classNameCorrected);
                 classNameCorrected = classNameCorrected.replace("Link11/11B", "Link11_11B"); // Fix slash in entry
-                System.err.println("classNameCorrected=" + classNameCorrected);
+                System.err.println(", revised classNameCorrected=" + classNameCorrected);
             }
             StringBuilder sb = new StringBuilder();
       
@@ -541,8 +553,9 @@ public class GenerateEnumerations
             String classNameCorrected = clsName;
             if (classNameCorrected.contains("Link11/11"))
             {
+                System.err.print  ( "original classNameCorrected=" + classNameCorrected);
                 classNameCorrected = classNameCorrected.replace("Link11/11B", "Link11_11B"); // Fix slash in entry
-                System.err.println("classNameCorrected=" + classNameCorrected);
+                System.err.println(", revised classNameCorrected=" + classNameCorrected);
             }
             
         /*    if(GenerateEnumerations.this.uidDoNotGenerate.contains(el.uid)) {
@@ -755,7 +768,9 @@ public class GenerateEnumerations
     public static void main(String[] args)
     {
         try {
-            new GenerateEnumerations(args[0], args[1], args[2]).run();
+            if  (args.length == 0)
+                 new GenerateEnumerations("",      "",      ""     ).run(); // use defaults
+            else new GenerateEnumerations(args[0], args[1], args[2]).run();
         }
         catch (SAXException | IOException | ParserConfigurationException ex) {
             ex.printStackTrace(System.err);

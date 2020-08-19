@@ -10,7 +10,7 @@ import java.util.*;
 /**
  * Abstract superclass for all the concrete language generators, such as java, c++, etc.
  *
- * @author DMcG
+ * @author Don McGregor, Mike Bailey and Don Brutzman
  */
 
 public abstract class Generator 
@@ -66,7 +66,7 @@ public abstract class Generator
         File dir = new File(this.getDirectory());
         boolean success = dir.mkdirs();
         
-        System.out.println("cleaning directory");
+        System.out.println("cleaning directory " + dir.getPath());
         for(File f : dir.listFiles())
           if(!f.isDirectory() && !f.getName().equals(".keep") && !f.getName().equals("README.md"))
             f.delete();

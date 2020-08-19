@@ -22,18 +22,21 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 
 /**
- * Main.java created on Aug 6, 2019 MOVES Institute Naval Postgraduate School, Monterey, CA, USA www.nps.edu
+ * GenerateOpenDis7JavaPackages.java created on Aug 6, 2019 MOVES Institute Naval Postgraduate School, Monterey, CA, USA www.nps.edu
  *
- * @author Mike Bailey, jmbailey@nps.edu
+ * @author Don McGregor, Mike Bailey and Don Brutzman
  * @version $Id$
  */
 public class GenerateObjectTypes
 {
-  private final File outputDirectory;
-  private final String basePackageName;
-  private String             xmlPath = edu.nps.moves.dis7.source.generator.Main.DEFAULT_SISO_XML_FILE;
+    // set defaults to allow direct run
+    private        File   outputDirectory;
+    private static String outputDirectoryPath = "src-generated/java/edu/nps/moves/dis7/entitytypes";
+    private static String     basePackageName =                    "edu.nps.moves.dis7.entitytypes";
+    private static String            language = edu.nps.moves.dis7.source.generator.GenerateOpenDis7JavaPackages.DEFAULT_LANGUAGE;
+    private static String             sisoXmlFile = edu.nps.moves.dis7.source.generator.GenerateOpenDis7JavaPackages.DEFAULT_SISO_XML_FILE;
 
-  String objectTypeTemplate;
+    String objectTypeTemplate;
 
   class DataPkt
   {
@@ -43,11 +46,21 @@ public class GenerateObjectTypes
     String clsNm;
   }
 
-  public GenerateObjectTypes(String xmlPath, String outputDir, String packageName)
+  public GenerateObjectTypes(String xmlFile, String outputDir, String packageName)
   {
-    this.basePackageName = packageName;
-    this.xmlPath = xmlPath;
-    this.outputDirectory = new File(outputDir);
+        if (!xmlFile.isEmpty())
+             sisoXmlFile = xmlFile;
+        if (!outputDir.isEmpty())
+            outputDirectoryPath = outputDir;
+        if (!packageName.isEmpty())
+           basePackageName = packageName;
+        System.out.println (GenerateObjectTypes.class.getName());
+        System.out.println ("              xmlFile=" + sisoXmlFile);
+        System.out.println ("      basePackageName=" + basePackageName);
+        System.out.println ("  outputDirectoryPath=" + outputDirectoryPath);
+        
+        outputDirectory  = new File(outputDirectoryPath);
+        System.out.println ("actual directory path=" + outputDirectory.getAbsolutePath());
   }
 
   private void run() throws SAXException, IOException, ParserConfigurationException
@@ -63,7 +76,7 @@ public class GenerateObjectTypes
     loadTemplates();
 
     //System.out.println("Generating jammers: ");
-    factory.newSAXParser().parse(new File(xmlPath), new MyHandler());
+    factory.newSAXParser().parse(new File(sisoXmlFile), new MyHandler());
   }
 
   private void loadTemplates()
@@ -607,14 +620,9 @@ public class GenerateObjectTypes
   public static void main(String[] args)
   {
     try {
-      if(args == null || args.length != 3)
-        new GenerateObjectTypes(
-          "xml/SISO/SISO-REF-010.xml",
-          "src-generated/java/edu/nps/moves/dis7/objecttypes",
-          "edu.nps.moves.dis7.objecttypes"
-          ).run();
-      else
-        new GenerateObjectTypes(args[0], args[1], args[2]).run();
+        if  (args.length == 0)
+             new GenerateObjectTypes("",      "",      ""     ).run(); // use defaults
+        else new GenerateObjectTypes(args[0], args[1], args[2]).run();
     }
     catch (SAXException | IOException | ParserConfigurationException ex) {
       System.err.println(ex.getClass().getSimpleName() + ": " + ex.getLocalizedMessage());

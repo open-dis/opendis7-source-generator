@@ -22,18 +22,22 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 
 /**
- * Main.java created on Aug 6, 2019 MOVES Institute Naval Postgraduate School, Monterey, CA, USA www.nps.edu
+ * GenerateOpenDis7JavaPackages.java created on Aug 6, 2019 
+ MOVES Institute Naval Postgraduate School, Monterey, CA, USA www.nps.edu
  *
- * @author Mike Bailey, jmbailey@nps.edu
+ * @author Don McGregor, Mike Bailey and Don Brutzman
  * @version $Id$
  */
 public class GenerateJammers
 {
-  private final File outputDirectory;
-  private final String basePackageName;
-  private String         xmlPath = edu.nps.moves.dis7.source.generator.Main.DEFAULT_SISO_XML_FILE;
+    // set defaults to allow direct run
+    private        File   outputDirectory;
+    private static String outputDirectoryPath = "src-generated/java/edu/nps/moves/dis7/entitytypes";
+    private static String     basePackageName =                    "edu.nps.moves.dis7.entitytypes";
+    private static String            language = edu.nps.moves.dis7.source.generator.GenerateOpenDis7JavaPackages.DEFAULT_LANGUAGE;
+    private static String         sisoXmlFile = edu.nps.moves.dis7.source.generator.GenerateOpenDis7JavaPackages.DEFAULT_SISO_XML_FILE;
 
-  String jammerTechniqueTemplate;
+    String jammerTechniqueTemplate;
 
   class DataPkt
   {
@@ -43,11 +47,21 @@ public class GenerateJammers
     String clsNm;
   }
 
-  public GenerateJammers(String xmlPath, String outputDir, String packageName)
+  public GenerateJammers(String xmlFile, String outputDir, String packageName)
   {
-    this.basePackageName = packageName;
-    this.xmlPath = xmlPath;
-    this.outputDirectory = new File(outputDir);
+        if (!xmlFile.isEmpty())
+             sisoXmlFile = xmlFile;
+        if (!outputDir.isEmpty())
+            outputDirectoryPath = outputDir;
+        if (!packageName.isEmpty())
+           basePackageName = packageName;
+        System.out.println (GenerateJammers.class.getName());
+        System.out.println ("              xmlFile=" + sisoXmlFile);
+        System.out.println ("      basePackageName=" + basePackageName);
+        System.out.println ("  outputDirectoryPath=" + outputDirectoryPath);
+        
+        outputDirectory  = new File(outputDirectoryPath);
+        System.out.println ("actual directory path=" + outputDirectory.getAbsolutePath());
   }
 
   private void run() throws SAXException, IOException, ParserConfigurationException
@@ -63,7 +77,7 @@ public class GenerateJammers
     loadTemplates();
 
     //System.out.println("Generating jammers: ");
-    factory.newSAXParser().parse(new File(xmlPath), new MyHandler());
+    factory.newSAXParser().parse(new File(sisoXmlFile), new MyHandler());
   }
 
   private void loadTemplates()
@@ -468,9 +482,9 @@ public class GenerateJammers
 
   private String legalJavaDoc(String s)
   {
-    s = s.replace("<", "&lt;");
-    s = s.replace(">", "&gt;");
-    s = s.replace("&", "&amp;");
+        s = s.replace("<", "&lt;");
+        s = s.replace(">", "&gt;");
+        s = s.replace("&", "&amp;");
     return s;
   }
 
@@ -564,21 +578,16 @@ public class GenerateJammers
   }
 
   /*
-  private String xmlPath = "xml/SISO/SISO-REF-010.xml";
+  private String xmlFile = "xml/SISO/SISO-REF-010.xml";
   private File outputDirectory = new File("src-generated/java/edu/nps/moves/dis7/jammers");
   private String basePackageName = "edu.nps.moves.dis7.jammers";
   */
   public static void main(String[] args)
   {
     try {
-      if(args == null || args.length != 3)
-        new GenerateJammers(
-          "xml/SISO/SISO-REF-010.xml",
-          "src-generated/java/edu/nps/moves/dis7/jammers",
-          "edu.nps.moves.dis7.jammers"
-          ).run();
-      else
-        new GenerateJammers(args[0], args[1], args[2]).run();
+        if  (args.length == 0)
+             new GenerateJammers("",      "",      ""     ).run(); // use defaults
+        else new GenerateJammers(args[0], args[1], args[2]).run();
     }
     catch (SAXException | IOException | ParserConfigurationException ex) {
       System.err.println(ex.getClass().getSimpleName() + ": " + ex.getLocalizedMessage());

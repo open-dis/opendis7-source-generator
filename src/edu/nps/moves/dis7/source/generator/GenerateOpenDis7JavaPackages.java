@@ -6,15 +6,17 @@
 package edu.nps.moves.dis7.source.generator;
 
 /**
- * GenerateEnumerations.java created on Jul 17, 2019
+ * GenerateOpenDis7JavaPackages.java created on Jul 17, 2019
  * MOVES Institute Naval Postgraduate School, Monterey, CA, USA www.nps.edu
  *
- * @author Mike Bailey, jmbailey@nps.edu
+ * @author Don McGregor, Mike Bailey and Don Brutzman
  * @version $Id$
  */
-public class Main
+public class GenerateOpenDis7JavaPackages
 {
   // @formatter:off
+    
+  // shared static defaults
   public static final String      DEFAULT_LANGUAGE = "java";
   public static final String DEFAULT_SISO_XML_FILE = "xml/SISO/SISO-REF-010.xml";
   public static final String  DEFAULT_PDU_XML_FILE = "xml/dis_7_2012/DIS_7_2012.xml";
@@ -34,6 +36,7 @@ public class Main
 
   public static void main(String[] args)
   {
+    System.out.println (GenerateOpenDis7JavaPackages.class.getName());
     // ENUMERATIONS
     System.out.println("------------- Generating enumerations in "+enumPackage+" -------------");
     edu.nps.moves.dis7.source.generator.enumerations.GenerateEnumerations.main(new String[]{DEFAULT_SISO_XML_FILE, enumOutputPath, enumPackage});
@@ -42,7 +45,7 @@ public class Main
     System.out.println("------------- Generating pdus in "+pduPackage+" -------------");
     System.getProperties().setProperty("xmlpg.generatedSourceDir", pduOutputPath); // legacy parameter passing
     System.getProperties().setProperty("xmlpg.package", pduPackage);
-    edu.nps.moves.dis7.source.generator.pdus.Main.main(new String[]{DEFAULT_PDU_XML_FILE, "java"});
+    edu.nps.moves.dis7.source.generator.pdus.GeneratePdus.main(new String[]{DEFAULT_PDU_XML_FILE, "java"});
 
     // JAMMERS
     System.out.println("------------- Generating jammers in "+jammerPackage+" -------------");
