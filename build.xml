@@ -150,7 +150,8 @@
     </target>
    
     <target name="package-all-entity-jars" depends="clean-all-generated-jars-javadoc,
-                                                    package-dis7-entities-javadoc-jar,
+                                                    package-dis7-enumerations-javadoc-jar,
+                                                    package-dis7-enumerations-all-jar,
                                                     package-dis7-entities-china-jar,
                                                     package-dis7-entities-germany-jar,
                                                     package-dis7-entities-nato-jar,
@@ -159,8 +160,7 @@
                                                     package-dis7-entities-usa-all-jar,
                                                     package-dis7-entities-usa-land-jar,
                                                     package-dis7-entities-usa-munitions-jar,
-                                                    package-dis7-entities-usa-surface-jar,
-                                                    package-dis7-entities-all-jar">
+                                                    package-dis7-entities-usa-surface-jar">
         <echo message="package-all-entity-jars complete"/>
     </target>
     
@@ -207,7 +207,7 @@
         <mkdir dir="${store.dir}"/>
 
         <jar destfile="${store.jar}"
-             basedir = "build/classes"
+              basedir="build/classes"
              excludes = ".keep, README.md, edu/nps/moves/dis7/entities/**">
 
             <manifest>
@@ -222,12 +222,12 @@
         </jar>
     </target>
     -->
-    <target name="package-dis7-entities-all-jar">
+    <target name="package-dis7-enumerations-all-jar">
         <local name="store.jar.name"/>
         <local name="store.dir"/>
         <local name="store.jar"/>
         
-        <property name="store.jar.name" value="open-dis7-entities-all"/>
+        <property name="store.jar.name" value="open-dis7-enumerations-all"/>
         <property name="store.dir" value="dist"/>
         <property name="store.jar" value="${store.dir}/${store.jar.name}.jar"/>
 
@@ -235,10 +235,15 @@
         <mkdir dir="${store.dir}"/>
 
         <jar destfile="${store.jar}"
-             basedir = "build/classes"
-             includes = "edu/nps/moves/dis7/entities/**"
-             excludes = ".keep, README.md">
-
+              basedir="."
+             includes="edu/nps/moves/dis7/**"
+             excludes=".keep"
+            zip64Mode="always">
+                <fileset dir="build/classes"/>
+                <fileset dir="src"/>
+                <fileset dir="src-generated/java"/>
+                <fileset dir="src-specialcase/java"/>
+                <fileset dir="src-supporting/java"/>
             <manifest>
                 <attribute name="Built-By" value="open-dis-7-source-generator"/>
                 <attribute name="Specification-Title" value="OpenDIS7 Entities"/>
@@ -264,9 +269,9 @@
         <mkdir dir="${store.dir}"/>
 
         <jar destfile="${store.jar}"
-             basedir = "build/classes"
-             includes = "edu/nps/moves/dis7/entities/EntityTypeFactory.class,edu/nps/moves/dis7/entities/uid2EntityClass.properties,edu/nps/moves/dis7/entities/chn/**"
-             excludes = ".keep, README.md">
+              basedir="build/classes"
+             includes="README.md,edu/nps/moves/dis7/entities/EntityTypeFactory.class,edu/nps/moves/dis7/entities/uid2EntityClass.properties,edu/nps/moves/dis7/entities/chn/**"
+             excludes=".keep">
 
             <manifest>
                 <attribute name="Built-By" value="open-dis-7-source-generator"/>
@@ -293,9 +298,9 @@
         <mkdir dir="${store.dir}"/>
 
         <jar destfile="${store.jar}"
-             basedir = "build/classes"
-             includes = "edu/nps/moves/dis7/entities/EntityTypeFactory.class,edu/nps/moves/dis7/entities/uid2EntityClass.properties,edu/nps/moves/dis7/entities/deu/**"
-             excludes = ".keep, README.md">
+              basedir="build/classes"
+             includes="README.md,edu/nps/moves/dis7/entities/EntityTypeFactory.class,edu/nps/moves/dis7/entities/uid2EntityClass.properties,edu/nps/moves/dis7/entities/deu/**"
+             excludes=".keep">
 
             <manifest>
                 <attribute name="Built-By" value="open-dis-7-source-generator"/>
@@ -322,9 +327,9 @@
         <mkdir dir="${store.dir}"/>
 
         <jar destfile="${store.jar}"
-             basedir = "build/classes"
-             includes = "edu/nps/moves/dis7/entities/EntityTypeFactory.class,edu/nps/moves/dis7/entities/uid2EntityClass.properties,edu/nps/moves/dis7/entities/rus/**"
-             excludes = ".keep, README.md">
+              basedir="build/classes"
+             includes="README.md,edu/nps/moves/dis7/entities/EntityTypeFactory.class,edu/nps/moves/dis7/entities/uid2EntityClass.properties,edu/nps/moves/dis7/entities/rus/**"
+             excludes=".keep">
 
             <manifest>
                 <attribute name="Built-By" value="open-dis-7-source-generator"/>
@@ -351,9 +356,9 @@
         <mkdir dir="${store.dir}"/>
 
         <jar destfile="${store.jar}"
-             basedir = "build/classes"
-             includes = "edu/nps/moves/dis7/entities/EntityTypeFactory.class,edu/nps/moves/dis7/entities/uid2EntityClass.properties,edu/nps/moves/dis7/entities/usa/**"
-             excludes = ".keep, README.md">
+              basedir="build/classes"
+             includes="README.md,edu/nps/moves/dis7/entities/EntityTypeFactory.class,edu/nps/moves/dis7/entities/uid2EntityClass.properties,edu/nps/moves/dis7/entities/usa/**"
+             excludes=".keep">
 
             <manifest>
                 <attribute name="Built-By" value="open-dis-7-source-generator"/>
@@ -380,9 +385,9 @@
         <mkdir dir="${store.dir}"/>
 
         <jar destfile="${store.jar}"
-             basedir = "build/classes"
-             includes = "edu/nps/moves/dis7/entities/EntityTypeFactory.class,edu/nps/moves/dis7/entities/uid2EntityClass.properties,edu/nps/moves/dis7/entities/usa/munition/**"
-             excludes = ".keep, README.md">
+              basedir="build/classes"
+             includes="edu/nps/moves/dis7/entities/EntityTypeFactory.class,edu/nps/moves/dis7/entities/uid2EntityClass.properties,edu/nps/moves/dis7/entities/usa/munition/**"
+             excludes=".keep">
 
             <manifest>
                 <attribute name="Built-By" value="open-dis-7-source-generator"/>
@@ -409,9 +414,9 @@
         <mkdir dir="${store.dir}"/>
 
         <jar destfile="${store.jar}"
-             basedir = "build/classes"
-             includes = "edu/nps/moves/dis7/entities/EntityTypeFactory.class,edu/nps/moves/dis7/entities/uid2EntityClass.properties,edu/nps/moves/dis7/entities/usa/platform/air/**"
-             excludes = ".keep, README.md">
+              basedir="build/classes"
+             includes="edu/nps/moves/dis7/entities/EntityTypeFactory.class,edu/nps/moves/dis7/entities/uid2EntityClass.properties,edu/nps/moves/dis7/entities/usa/platform/air/**"
+             excludes=".keep">
 
             <manifest>
                 <attribute name="Built-By" value="open-dis-7-source-generator"/>
@@ -438,9 +443,9 @@
         <mkdir dir="${store.dir}"/>
 
         <jar destfile="${store.jar}"
-             basedir = "build/classes"
-             includes = "edu/nps/moves/dis7/entities/EntityTypeFactory.class,edu/nps/moves/dis7/entities/uid2EntityClass.properties,edu/nps/moves/dis7/entities/usa/platform/land/**"
-             excludes = ".keep, README.md">
+              basedir="build/classes"
+             includes="edu/nps/moves/dis7/entities/EntityTypeFactory.class,edu/nps/moves/dis7/entities/uid2EntityClass.properties,edu/nps/moves/dis7/entities/usa/platform/land/**"
+             excludes=".keep">
 
             <manifest>
                 <attribute name="Built-By" value="open-dis-7-source-generator"/>
@@ -467,9 +472,9 @@
         <mkdir dir="${store.dir}"/>
 
         <jar destfile="${store.jar}"
-             basedir = "build/classes"
-             includes = "edu/nps/moves/dis7/entities/EntityTypeFactory.class,edu/nps/moves/dis7/entities/uid2EntityClass.properties,edu/nps/moves/dis7/entities/usa/platform/surface/**"
-             excludes = ".keep, README.md">
+              basedir="build/classes"
+             includes="edu/nps/moves/dis7/entities/EntityTypeFactory.class,edu/nps/moves/dis7/entities/uid2EntityClass.properties,edu/nps/moves/dis7/entities/usa/platform/surface/**"
+             excludes=".keep">
 
             <manifest>
                 <attribute name="Built-By" value="open-dis-7-source-generator"/>
@@ -496,7 +501,7 @@
         <mkdir dir="${store.dir}"/>
 
         <jar destfile="${store.jar}"
-             basedir = "build/classes"
+              basedir="build/classes"
              excludes = ".keep, README.md"
              includes =    "edu/nps/moves/dis7/entities/EntityTypeFactory.class,
                             edu/nps/moves/dis7/entities/uid2EntityClass.properties,
@@ -632,10 +637,10 @@
         </javadoc>
     </target>
     
-    <target name="package-dis7-entities-javadoc-jar" depends="init,javadoc">
+    <target name="package-dis7-enumerations-javadoc-jar" depends="init,javadoc">
         <!-- original javadoc: destdir="${basedir}/dist/entitiesJavadoc"
         <jar destfile="${basedir}/dist/open-dis7-entities-javadoc.jar" basedir="${basedir}/dist/entitiesJavadoc"> -->
-        <jar destfile="${basedir}/dist/open-dis7-entities-javadoc.jar" basedir="javadoc">
+        <jar destfile="${basedir}/dist/open-dis7-enumerations-javadoc.jar" basedir="javadoc">
             <manifest>
                 <attribute name="Built-By" value="open-dis-7-source-generator"/>
                 <attribute name="Specification-Title" value="OpenDIS7 Entities Javadoc"/>
@@ -678,15 +683,15 @@
                 <exclude name="*source-generator*"/>
                 <exclude name="READEME*"/>
                 <exclude name="**/lib"/>
-                <exclude name="open-dis7-entities-all.jar"/>
+                <exclude name="open-dis7-enumerations-all.jar"/>
             </fileset>
         </copy>
         -->
-        <echo message="copy ${dist.dir}/open-dis7-entities-all.jar, open-dis7-entities-javadoc.jar to ../open-dis7-java/dist"/>
+        <echo message="copy ${dist.dir}/open-dis7-enumerations-all.jar, open-dis7-enumerations-javadoc.jar to ../open-dis7-java/dist"/>
         <copy todir="../open-dis7-java/dist" overwrite="true" verbose="true" force="true" failonerror="true">
             <fileset dir="${dist.dir}">
-                <include name="open-dis7-entities-all.jar"/>
-                <include name="open-dis7-entities-javadoc.jar"/>
+                <include name="open-dis7-enumerations-all.jar"/>
+                <include name="open-dis7-enumerations-javadoc.jar"/>
             </fileset>
         </copy>
     </target>
