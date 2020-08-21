@@ -126,8 +126,8 @@
         <antcall target="test"/>
         <antcall target="javadoc"/>
         <antcall target="package-all-entity-jars"/>
-        <antcall target="copy-files"/>
-        <antcall target="copy-jars"/>
+        <antcall target="copy-generated-files-to-open-dis7-java"/> <!-- useful for debugging, accepted updates in version control there  -->
+        <antcall target="copy-generated-jars-to-open-dis7-java"/>
         <echo message="build all complete"/>
     </target>
     
@@ -654,28 +654,37 @@
     </target>
     
     <!-- Invoke this in lieu of step #3 under "If you desire to update the open-dis7-java" project in ./README.md -->
-    <target name="copy-files" depends="init">
+    <target name="copy-generated-files-to-open-dis7-java" depends="init">
         <copy todir="../open-dis7-java/src-generated" overwrite="true">
-            <!-- src-generated/java -->
+            <fileset dir="src-generated/java">
+                <include name="**/*.java"/>
+            </fileset>
+            <fileset dir="src-specialcase/java">
+                <include name="**/*.java"/>
+            </fileset>
+            <fileset dir="src-supporting/java">
+                <include name="**/*.java"/>
+            </fileset>
+            <!-- src-generated/java
             <fileset dir="${src.java.dir}">
                 <exclude name="**/entities/**"/>
                 <exclude name=".keep"/>
                 <exclude name="README.md"/>
-            </fileset>
-            <!-- src-specialcase/java -->
+            </fileset> -->
+            <!-- src-specialcase/java
             <fileset dir="${src.java3.dir}">
                 <exclude name="**/README.md"/>
-            </fileset>
-            <!-- src-supporting/java -->
+            </fileset> -->
+            <!-- src-supporting/java
             <fileset dir="${src.java2.dir}">
                 <exclude name="**/README.md"/>
                 <exclude name="**/lasttestoutput.txt"/>
-            </fileset>
+            </fileset> -->
         </copy>
     </target>
     
-    <target name="copy-jars" depends="init">
-        <!--
+    <target name="copy-generated-jars-to-open-dis7-java" depends="init">
+        <!-- TODO verify then remove
         <echo message="copy jars from ${dist.dir} to ../open-dis7-java/entityjars"/>
         <copy todir="../open-dis7-java/entityjars" overwrite="true" verbose="true">
             <fileset dir="${dist.dir}">
