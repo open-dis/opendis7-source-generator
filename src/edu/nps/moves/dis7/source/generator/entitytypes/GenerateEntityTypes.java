@@ -189,7 +189,7 @@ public class GenerateEntityTypes
     factory.setXIncludeAware(true);
 
     loadTemplates();
-//    buildKindDomainCountryInstances(); // TODO unit test before built?
+    buildKindDomainCountryInstances(); // TODO unit test before built?
     
     System.out.println("Generating entities:");
     MyHandler handler = new MyHandler();
@@ -912,7 +912,13 @@ public class GenerateEntityTypes
 
     // If there's nothing there, put in something:
     if (r.isEmpty() || r.equals("_"))
+    {
+      System.err.print("fixname: erroneous name \"" + s + "\"");
+      if (!s.equals(r))
+        System.err.print( " converted to \"" + r + "\"");
+      System.err.println();
       r = "undef";
+    }
 
     // Java identifier can't start with digit
     if (Character.isDigit(r.charAt(0)))
@@ -925,11 +931,6 @@ public class GenerateEntityTypes
 
   public static void main(String[] args)
   {
-        
-    // debugging alternative, must also adjust project path
-//    new GenerateEntityTypes ("xml/SISO/SISO-REF-010.xml",
-//              "src-generated/java/edu/nps/moves/dis7/entities",
-//              "edu.nps.moves.dis7.entities").run();
     try 
     {
         if  (args.length == 0)
