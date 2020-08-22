@@ -664,9 +664,10 @@
         <echo message="   enumerations packaged into jar archives by open-dis7-source-generator and"/>
         <echo message="   PDU classes  packaged into jar archives by open-dis7-java project."/>
         
-        <delete includeemptydirs="true" verbose="true" failonerror="false">
+        <delete includeemptydirs="true" failonerror="false"><!-- verbose="true" -->
             <fileset dir="../open-dis7-java/src-generated" includes="**/*"/>
         </delete>
+        <mkdir dir="../open-dis7-java/src-generated"/>
         <copy todir="../open-dis7-java/src-generated" overwrite="true">
             <fileset dir="src-generated/java">
                 <include name="**/*.java"/>
@@ -685,16 +686,17 @@
         <echo message="   enumerations packaged into jar archives by open-dis7-source-generator and"/>
         <echo message="   PDU classes  packaged into jar archives by open-dis7-java project."/>
         
-        <delete includeemptydirs="true" verbose="true" failonerror="false">
+        <delete includeemptydirs="true" failonerror="false"><!-- verbose="true" -->
             <fileset dir="../open-dis7-java/dist">
                 <include name="open-dis7-enumerations-classes.jar"/>
                 <include name="open-dis7-enumerations-source.jar"/>
                 <include name="open-dis7-enumerations-javadoc.jar"/>
             </fileset>
         </delete>
-        <echo message="copy ${dist.dir}/open-dis7-enumerations-classes.jar, -source.jar, javadoc.jar to ../open-dis7-java/dist"/>
+        <mkdir dir="../open-dis7-java/dist"/>
+        <echo message="copy dist/open-dis7-enumerations-classes.jar, -source.jar, -javadoc.jar to ../open-dis7-java/dist"/>
         <copy todir="../open-dis7-java/dist" overwrite="true" verbose="true" force="true" failonerror="true">
-            <fileset dir="${dist.dir}">
+            <fileset dir="dist">
                 <include name="open-dis7-enumerations-classes.jar"/>
                 <include name="open-dis7-enumerations-source.jar"/>
                 <include name="open-dis7-enumerations-javadoc.jar"/>
