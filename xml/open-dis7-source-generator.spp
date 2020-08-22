@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project>
+	<Folder FolderName="XML Files" ExtStr="xml;cml;math;rdf;smil;svg;wml">
+		<File FilePath="SISO\SISO-REF-010.xml" HomeFolder="Yes"/>
+		<File FilePath="SISO\SISO-REF-010.xsd" HomeFolder="Yes"/>
+		<File FilePath="dis_7_2012\DIS_7_2012.xml" HomeFolder="Yes"/>
+		<File FilePath="dis_7_2012\DistributedEmissionsFamilyPdus.xml" HomeFolder="Yes"/>
+		<File FilePath="dis_7_2012\EntityInformationFamilyPdus.xml" HomeFolder="Yes"/>
+		<File FilePath="dis_7_2012\EntityManagementFamilyPdus.xml" HomeFolder="Yes"/>
+		<File FilePath="dis_7_2012\InformationOperationsFamilyPdus.xml" HomeFolder="Yes"/>
+		<File FilePath="dis_7_2012\LiveEntityFamilyPdus.xml" HomeFolder="Yes"/>
+		<File FilePath="dis_7_2012\LogisticsFamilyPdus.xml" HomeFolder="Yes"/>
+		<File FilePath="dis_7_2012\MinefieldFamilyPdus.xml" HomeFolder="Yes"/>
+		<File FilePath="dis_7_2012\RadioCommunicationsFamilyPdus.xml" HomeFolder="Yes"/>
+		<File FilePath="dis_7_2012\SimulationManagementFamilyPdus.xml" HomeFolder="Yes"/>
+		<File FilePath="dis_7_2012\SimulationManagementWithReliabilityFamilyPdus.xml" HomeFolder="Yes"/>
+		<File FilePath="dis_7_2012\SyntheticEnvironmentFamilyPdus.xml" HomeFolder="Yes"/>
+		<File FilePath="dis_7_2012\WarfareFamilyPdus.xml" HomeFolder="Yes"/>
+	</Folder>
+	<Folder FolderName="XSL Files" ExtStr="xsl;xslt"/>
+</Project>
