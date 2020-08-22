@@ -86,7 +86,10 @@ public enum %s implements edu.nps.moves.dis7.%s
         }
         return 1;
     }
-
+  /**
+   * Returns size of this serialized object in bytes
+   * @return size in bytes
+   */
     @Override
     public int getMarshalledSize()
     {

@@ -19,6 +19,10 @@
         return getEnumForValue(buff.getShort());
     }   
 
+  /**
+   * Returns size of this serialized object in bytes
+   * @return size in bytes
+   */
     public int getMarshalledSize()
     {
         return 2; // 16 bits
