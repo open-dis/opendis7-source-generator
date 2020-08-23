@@ -142,6 +142,24 @@ public class GenerateEnumerations
 
         System.out.println (GenerateEnumerations.class.getName() + " complete, " + handler.enums.size() + " enums created.");
     }
+        /**
+         * Replace special characters in name with underscore _ character
+         * @param name name value (typically from XML)
+         * @return normalized name
+         */
+        public final String fixName(String name)
+        {
+            if ((name==null) || name.isEmpty())
+            {
+                System.err.println("fixName() found empty name... replaced with \"undefinedName\"");
+                return "undefinedName";
+            }
+            return name.replaceAll(" ","_").replaceAll(".","_").replaceAll("-","_").replaceAll("—","").replaceAll("/","_").replaceAll("&","_");
+        }
+        public final String htmlize(String s)
+        {
+            return s.replace("&","and").replace("&","and");
+        }
 
     /**
      * https://docs.oracle.com/javase/8/docs/api/java/lang/String.html#format-java.lang.String-java.lang.Object...-
@@ -238,7 +256,7 @@ public class GenerateEnumerations
                 case "dict":
                     String uid = attributes.getValue("uid");
                     if (uid != null) {
-                        String name = attributes.getValue("name").replaceAll(" ","").replaceAll("-",""); // name canonicalization C14N
+                        String name = fixName(attributes.getValue("name")); // name canonicalization C14N
                         String name2 = GenerateEnumerations.this.uid2ClassName.getProperty(uid);
                         if(name2 != null)
                           uidClassNames.put(uid, name2);
@@ -287,8 +305,8 @@ public class GenerateEnumerations
             switch (qName) {
                 case "enum":
                     currentEnum = new EnumElem();
-                    currentEnum.name = attributes.getValue("name").replaceAll(" ","").replaceAll("-",""); // name canonicalization C14N
-                    currentEnum.uid = attributes.getValue("uid");
+                    currentEnum.name = fixName(attributes.getValue("name")); // name canonicalization C14N
+                    currentEnum.uid  = attributes.getValue("uid");
                     currentEnum.size = attributes.getValue("size");
                     currentEnum.footnote = attributes.getValue("footnote");
                     if (currentEnum.footnote != null)
@@ -333,7 +351,7 @@ public class GenerateEnumerations
 
                 case "bitfield":
                     currentBitfield = new BitfieldElem();
-                    currentBitfield.name = attributes.getValue("name").replaceAll(" ","").replaceAll("-","").replaceAll("—",""); // name canonicalization C14N
+                    currentBitfield.name = fixName(attributes.getValue("name")); // name canonicalization C14N
                     currentBitfield.size = attributes.getValue("size");
                     currentBitfield.uid = attributes.getValue("uid");
                     bitfields.add(currentBitfield);
@@ -344,7 +362,7 @@ public class GenerateEnumerations
                     if (currentBitfield == null)
                         break;
                     currentBitfieldRow = new BitfieldRowElem();
-                    currentBitfieldRow.name = attributes.getValue("name").replaceAll(" ","").replaceAll("-",""); // name canonicalization C14N
+                    currentBitfieldRow.name = fixName(attributes.getValue("name")); // name canonicalization C14N
                     currentBitfieldRow.description = attributes.getValue("description");
                     if (currentBitfieldRow.description != null)
                         currentBitfieldRow.description = currentBitfieldRow.description.replaceAll("—","-").replaceAll("–","-").replaceAll("\"", "").replaceAll("\'", "");
@@ -359,7 +377,7 @@ public class GenerateEnumerations
 
                 case "dict":
                     currentDict = new DictionaryElem();
-                    currentDict.name = attributes.getValue("name").replaceAll(" ","").replaceAll("-",""); // name canonicalization C14N
+                    currentDict.name = fixName(attributes.getValue("name")); // name canonicalization C14N
                     currentDict.uid = attributes.getValue("uid");
                     dictionaries.add(currentDict);
                     //maybeSysOut(attributes.getValue("xref"), "dict uid " + currentDict.uid + " " + currentDict.name);
@@ -637,8 +655,8 @@ public class GenerateEnumerations
                 Properties aliases = aliasNames;
                 if (el.elems.size() > 2000)
                 {
-                    System.out.println ("Enumerations class " + packageName + classNameCorrected + " has " + el.elems.size() +
-                        ", possibly too large?  Dropping enumerations above 2000... TODO create auxiliary class with remainder");
+                    System.out.println ("Enumerations class " + packageName + "." + classNameCorrected + " has " + el.elems.size() + ", possibly too large?");
+                    System.out.println ("   dropping enumerations above 2000... TODO create auxiliary class with remainder");
                     // https://stackoverflow.com/questions/1184636/shrinking-an-arraylist-to-a-new-size
                     additionalRowElements = el.elems.subList(2000, el.elems.size());
                     el.elems.subList(2000, el.elems.size()).clear();
@@ -722,10 +740,6 @@ public class GenerateEnumerations
                       + ", classNameCorrected=" + classNameCorrected);
                 ex.printStackTrace(System.err);
             }
-        }
-        private String htmlize(String s)
-        {
-            return s.replace("&","and").replace("&","and");
         }
         
       private void writeOneEnum(StringBuilder sb, EnumRowElem row, String enumName)

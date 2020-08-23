@@ -349,7 +349,6 @@ public class JavaGenerator extends Generator
             aPackage = tokenizer.nextToken();
             pw.println("import " + aPackage + ";");
         }
-
         pw.println();
     }
 
@@ -594,7 +593,11 @@ public class JavaGenerator extends Generator
         pw.println();
         // Not all object are setup to implement Marshaller; should be done
         //pw.println("@Override");
-        pw.println("/** Returns the size of this serialized object in bytes*/");
+        pw.println(
+"  /**\n" +
+"   * Returns size of this serialized object in bytes\n" +
+"   * @return size in bytes\n" +
+"   */");
         pw.println("public int getMarshalledSize()");
         pw.println("{");
         pw.println("   int marshalSize = 0; ");

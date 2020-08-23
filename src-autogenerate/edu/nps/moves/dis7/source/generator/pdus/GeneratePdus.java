@@ -12,8 +12,8 @@ import org.xml.sax.*;
 import org.xml.sax.helpers.*;
 
 /**
- * A class that reads an XML file in a specific format, and spits out Java, C#,
- * Objective-C, or C++ classes that do <i>most</i> of the work of the protocol.<p>
+ * <p>A class that reads an XML file in a specific format, and spits out Java, C#,
+ * Objective-C, or C++ classes that do <i>most</i> of the work of the protocol.</p>
  *
  * <p>This can rely on properties set in the XML file for the language. For example,
  * the Java element in the XML file can specify whether Hibernate or JAXB support

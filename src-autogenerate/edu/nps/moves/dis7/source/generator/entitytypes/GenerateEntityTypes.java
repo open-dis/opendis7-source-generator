@@ -52,6 +52,7 @@ public class GenerateEntityTypes
     File directory;
     StringBuilder sb;
     
+    private String fullName;
     private String countryNm;
     private String entKindNm;
     private String domainName;
@@ -485,7 +486,8 @@ public class GenerateEntityTypes
     private void appendCommonStatements(DataPkt data)
     {
       String contents = String.format(entityCommonTemplate, data.pkg, 
-                                      specTitleDate, data.countryNamePretty, data.entKindNmDescription, data.domainVal, data.entityUid,
+                                      specTitleDate, data.fullName, 
+                                      data.countryNamePretty, data.entKindNmDescription, data.domainVal, data.entityUid,
                                       data.clsNm, data.clsNm, data.countryNm, data.entKindNm, data.domainName, data.domainVal);
       data.sb.append(contents);
     }
@@ -500,7 +502,7 @@ public class GenerateEntityTypes
     {
       DataPkt data = d;
       if (data == null) {
-        data = buildEntityCommon(fixName(currentCategory),currentCategory.uid);
+        data = buildEntityCommon(currentCategory.toString(), fixName(currentCategory),currentCategory.uid);
       }
       appendStatement(currentCategory, "Category", data.sb);
 
@@ -513,7 +515,7 @@ public class GenerateEntityTypes
     {
       DataPkt data = d;
       if (data == null) {
-        data = buildEntityCommon(fixName(currentSubCategory), currentSubCategory.uid);
+        data = buildEntityCommon(currentSubCategory.toString(), fixName(currentSubCategory), currentSubCategory.uid);
       }
       appendStatement(currentCategory, "Category", data.sb);
       appendStatement(currentSubCategory, "SubCategory", data.sb);
@@ -526,7 +528,7 @@ public class GenerateEntityTypes
     {
       DataPkt data = d;
       if (data == null) {
-        data = buildEntityCommon(fixName(currentSpecific),currentSpecific.uid);
+        data = buildEntityCommon(currentSpecific.toString(), fixName(currentSpecific),currentSpecific.uid);
       }
       appendStatement(currentCategory, "Category", data.sb);
       appendStatement(currentSubCategory, "SubCategory", data.sb);
@@ -540,7 +542,7 @@ public class GenerateEntityTypes
     {
       DataPkt data = d;
       if (data == null) {
-        data = buildEntityCommon(fixName(currentExtra),currentExtra.uid);
+        data = buildEntityCommon(currentExtra.toString(), fixName(currentExtra),currentExtra.uid);
       }
       appendStatement(currentCategory, "Category", data.sb);
       appendStatement(currentSubCategory, "SubCategory", data.sb);
@@ -551,11 +553,14 @@ public class GenerateEntityTypes
         saveEntityFile(data,currentExtra.uid);
     }
 
-    private DataPkt buildEntityCommon(String fixedName, String uid)
+    private DataPkt buildEntityCommon(String fullName, String fixedName, String uid)
     {
         try {
         DataPkt data = new DataPkt();
 
+        if  (fullName == null)
+             data.fullName = "";
+        else data.fullName = fullName;
         data.sb = new StringBuilder();
 //        System.err.println("buildEntityCommon fixedName=" + fixedName + ", uid=" + uid + ", outputDirectory=" + outputDirectory); // debug trace
         

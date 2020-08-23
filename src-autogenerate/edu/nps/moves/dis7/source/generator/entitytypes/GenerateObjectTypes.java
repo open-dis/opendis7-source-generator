@@ -159,7 +159,7 @@ public class GenerateObjectTypes
           if(uid.equals("226") || uid.equals("227") || uid.equals("228")) {
             currentCot = new CotElem();
             currentCot.uid = uid;
-            currentCot.description = specialCaseObjectTypeName(attributes.getValue("name"));  // not an error
+            currentCot.description = specialCaseObjectTypeName(GenerateEnumerations.fixName(attributes.getValue("name")));  // not an error
           }
           else
             currentCot = null;
