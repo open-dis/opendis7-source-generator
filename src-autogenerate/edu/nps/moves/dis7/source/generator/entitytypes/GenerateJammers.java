@@ -67,7 +67,7 @@ public class GenerateJammers
   private void run() throws SAXException, IOException, ParserConfigurationException
   {
     outputDirectory.mkdirs();
-    FileUtils.cleanDirectory(outputDirectory);
+//  FileUtils.cleanDirectory(outputDirectory); // do NOT clean directory, results can co-exist with other classes
 
     SAXParserFactory factory = SAXParserFactory.newInstance();
     factory.setValidating(false);
@@ -549,7 +549,7 @@ public class GenerateJammers
     String r = s.trim();
 
     // Convert any of these chars to underbar (u2013 is a hyphen observed in source XML):
-    r = r.replaceAll(" ", "_").replaceAll("-", "_");
+    r = r.replaceAll(", ", "_").replaceAll(" ", "_").replaceAll("-", "_");
 
     r = r.replaceAll("[\\h-/,\";:\\u2013]", "_");
 
@@ -570,8 +570,14 @@ public class GenerateJammers
     r = r.replace("%", "pct");
 
     // If there's nothing there, put in something:
-    if (r.isEmpty() || r.equals("_"))
-      r = "undef";
+    if (r.trim().isEmpty() || r.equals("_"))
+    {
+      System.err.print("fixname: erroneous name \"" + s + "\"");
+      r = "undefinedName";
+      if (!s.equals(r))
+        System.err.print( " converted to \"" + r + "\"");
+      System.err.println();
+    }
 
     // Java identifier can't start with digit
     if (Character.isDigit(r.charAt(0)))

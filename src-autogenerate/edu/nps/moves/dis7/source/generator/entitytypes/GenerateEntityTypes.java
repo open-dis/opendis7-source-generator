@@ -182,7 +182,7 @@ public class GenerateEntityTypes
   private void run() throws SAXException, IOException, ParserConfigurationException
   {
     outputDirectory.mkdirs();
-    FileUtils.cleanDirectory(outputDirectory);
+//  FileUtils.cleanDirectory(outputDirectory); // do NOT clean directory, results can co-exist with other classes
     
     SAXParserFactory factory = SAXParserFactory.newInstance();
     factory.setValidating(false);
@@ -332,11 +332,11 @@ public class GenerateEntityTypes
           break;
 
         case "subcategory_xref":
-          printUnsupportedMessage("subcategory_xref", attributes.getValue("description"), currentCategory);
+          printUnsupportedContainedELementMessage("subcategory_xref", attributes.getValue("description"), currentCategory);
           break;
 
         case "subcategory_range":
-          printUnsupportedMessage("subcategory_range", attributes.getValue("description"), currentCategory);
+          printUnsupportedContainedELementMessage("subcategory_range", attributes.getValue("description"), currentCategory);
           break;
           
         case "subcategory":
@@ -354,7 +354,7 @@ public class GenerateEntityTypes
           break;
 
         case "specific_range":
-          printUnsupportedMessage("specific_range", attributes.getValue("description"), currentSubCategory);
+          printUnsupportedContainedELementMessage("specific_range", attributes.getValue("description"), currentSubCategory);
           break;
 
         case "specific":
@@ -801,7 +801,7 @@ public class GenerateEntityTypes
     }
   }
 
-  private void printUnsupportedMessage(String elname, String eldesc, CategoryElem cat)
+  private void printUnsupportedContainedELementMessage(String elname, String eldesc, CategoryElem cat)
   {
     StringBuilder bldr = new StringBuilder();
     bldr.append(cat.description);
@@ -812,10 +812,10 @@ public class GenerateEntityTypes
     bldr.append("/");
     bldr.append(cat.parent.country);
 
-    System.out.println("XML element " + elname + " {" + eldesc + "in " + bldr.toString() + " not supported");
+    System.err.println("contained XML element " + elname + " (" + eldesc + " in " + bldr.toString() + ") not supported");
   }
 
-  private void printUnsupportedMessage(String elname, String eldesc, SubCategoryElem sub)
+  private void printUnsupportedContainedELementMessage(String elname, String eldesc, SubCategoryElem sub)
   {
     StringBuilder bldr = new StringBuilder();
     bldr.append(sub.description);
@@ -828,7 +828,7 @@ public class GenerateEntityTypes
     bldr.append("/");
     bldr.append(sub.parent.parent.country);
 
-    System.out.println("XML element " + elname + " {" + eldesc + "in " + bldr.toString() + " not supported");
+    System.err.println("contained XML element " + elname + " (" + eldesc + " in " + bldr.toString() + ") not supported");
   }
 
   private String legalJavaDoc(String s)
@@ -895,7 +895,7 @@ public class GenerateEntityTypes
     String r = s.trim();
   
     // Convert any of these chars to underbar (u2013 is a hyphen observed in source XML):
-    r = r.replaceAll(" ", "_").replaceAll("-", "_");
+    r = r.replaceAll(", ", "_").replaceAll(" ", "_").replaceAll("-", "_");
 
     r = r.replaceAll("[\\h-/,\";:\\u2013]", "_");
 
@@ -916,13 +916,13 @@ public class GenerateEntityTypes
     r = r.replaceAll("%",  "pct");
 
     // If there's nothing there, put in something:
-    if (r.isEmpty() || r.equals("_"))
+    if (r.trim().isEmpty() || r.equals("_"))
     {
       System.err.print("fixname: erroneous name \"" + s + "\"");
+      r = "undefinedName";
       if (!s.equals(r))
         System.err.print( " converted to \"" + r + "\"");
       System.err.println();
-      r = "undef";
     }
 
     // Java identifier can't start with digit

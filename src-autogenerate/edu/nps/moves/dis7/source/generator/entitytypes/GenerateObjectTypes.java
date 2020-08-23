@@ -20,7 +20,6 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import java.util.List;
 import org.apache.commons.io.FileUtils;
-import edu.nps.moves.dis7.source.generator.enumerations.GenerateEnumerations;
 
 /**
  * GenerateOpenDis7JavaPackages.java created on Aug 6, 2019 MOVES Institute Naval Postgraduate School, Monterey, CA, USA www.nps.edu
@@ -67,7 +66,7 @@ public class GenerateObjectTypes
   private void run() throws SAXException, IOException, ParserConfigurationException
   {
     outputDirectory.mkdirs();
-    FileUtils.cleanDirectory(outputDirectory);
+//  FileUtils.cleanDirectory(outputDirectory); // do NOT clean directory, results can co-exist with other classes
 
     SAXParserFactory factory = SAXParserFactory.newInstance();
     factory.setValidating(false);
@@ -160,7 +159,7 @@ public class GenerateObjectTypes
           if(uid.equals("226") || uid.equals("227") || uid.equals("228")) {
             currentCot = new CotElem();
             currentCot.uid = uid;
-            currentCot.description = specialCaseObjectTypeName(GenerateEnumerations.fixName(attributes.getValue("name")));  // not an error
+            currentCot.description = fixName(specialCaseObjectTypeName(attributes.getValue("name")));  // not an error
           }
           else
             currentCot = null;
@@ -590,7 +589,7 @@ public class GenerateObjectTypes
     String r = s.trim();
 
     // Convert any of these chars to underbar (u2013 is a hyphen observed in source XML):
-    r = r.replaceAll(" ", "_").replaceAll("-", "_");
+    r = r.replaceAll(", ", "_").replaceAll(" ", "_").replaceAll("-", "_");
 
     r = r.replaceAll("[\\h-/,\";:\\u2013]", "_");
 
@@ -611,8 +610,14 @@ public class GenerateObjectTypes
     r = r.replace("%", "pct");
 
     // If there's nothing there, put in something:
-    if (r.isEmpty() || r.equals("_"))
-      r = "undef";
+    if (r.trim().isEmpty() || r.equals("_"))
+    {
+      System.err.print("fixname: erroneous name \"" + s + "\"");
+      r = "undefinedName";
+      if (!s.equals(r))
+        System.err.print( " converted to \"" + r + "\"");
+      System.err.println();
+    }
 
     // Java identifier can't start with digit
     if (Character.isDigit(r.charAt(0)))
