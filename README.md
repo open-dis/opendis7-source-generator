@@ -3,6 +3,8 @@ This is a project to generate a type-safe java implementation of the DIS Protoco
 
 **IMPORTANT!**  This project is not complete and is in a testing phase.  Until this notice is removed, use the DIS libraries under the **open-dis-java** and **Enumerations** projects.
 
+**PROGRESS.** All build tasks are now performable using Ant, documented dependencies on Netbeans that follow on this page will be revised.
+
 <h3>Background</h3>
 
 This work is an update/continuation of the **`open-dis/xmlpg`** project created by the late Don McGregor of the Naval Postgraduate School.  Its goal is twofold:
