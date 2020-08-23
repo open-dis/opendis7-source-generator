@@ -20,6 +20,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import java.util.List;
 import org.apache.commons.io.FileUtils;
+import edu.nps.moves.dis7.source.generator.enumerations.GenerateEnumerations;
 
 /**
  * GenerateOpenDis7JavaPackages.java created on Aug 6, 2019 MOVES Institute Naval Postgraduate School, Monterey, CA, USA www.nps.edu
@@ -589,7 +590,7 @@ public class GenerateObjectTypes
     String r = s.trim();
 
     // Convert any of these chars to underbar (u2013 is a hyphen observed in source XML):
-    r = r.replaceAll(" ", "");
+    r = r.replaceAll(" ", "_").replaceAll("-", "_");
 
     r = r.replaceAll("[\\h-/,\";:\\u2013]", "_");
 

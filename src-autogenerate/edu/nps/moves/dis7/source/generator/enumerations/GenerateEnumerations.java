@@ -147,7 +147,7 @@ public class GenerateEnumerations
          * @param name name value (typically from XML)
          * @return normalized name
          */
-        public final String fixName(String name)
+        public final static String fixName(String name)
         {
             if ((name==null) || name.isEmpty())
             {
@@ -156,7 +156,7 @@ public class GenerateEnumerations
             }
             return name.replaceAll(" ","_").replaceAll(".","_").replaceAll("-","_").replaceAll("—","").replaceAll("/","_").replaceAll("&","_");
         }
-        public final String htmlize(String s)
+        public final static String htmlize(String s)
         {
             return s.replace("&","and").replace("&","and");
         }

@@ -549,7 +549,7 @@ public class GenerateJammers
     String r = s.trim();
 
     // Convert any of these chars to underbar (u2013 is a hyphen observed in source XML):
-    r = r.replaceAll(" ", "");
+    r = r.replaceAll(" ", "_").replaceAll("-", "_");
 
     r = r.replaceAll("[\\h-/,\";:\\u2013]", "_");
 
