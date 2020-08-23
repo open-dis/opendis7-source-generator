@@ -103,7 +103,7 @@
                 <pathelement path="src-supporting/java"/>
             </src>
             <classpath>
-                <pathelement path="libs/commons-io-2.6.jar"/>
+                <pathelement path="lib/commons-io-2.6.jar"/>
             </classpath>
             <!-- https://ant.apache.org/manual/Tasks/javac.html#bootstrap -->
             <!-- https://stackoverflow.com/questions/4134803/ant-passing-compilerarg-into-javac -->
@@ -561,7 +561,7 @@
             <arg value="edu.nps.moves.dis7.enumerations"/>
             <classpath>
                 <pathelement path="build/classes"/>
-                <pathelement path="libs/commons-io-2.6.jar"/>
+                <pathelement path="lib/commons-io-2.6.jar"/>
             </classpath>
         </java>
         <!-- <antcall target="compile"/>incremental compilation checks -->
@@ -575,7 +575,7 @@
             <jvmarg value="-Dxmlpg.package=edu.nps.moves.dis7"/>
             <classpath>
                 <pathelement path="build/classes"/>
-                <pathelement path="libs/commons-io-2.6.jar"/>
+                <pathelement path="lib/commons-io-2.6.jar"/>
             </classpath>
         </java>
         <!-- not yet ready to compile here, more autogeneration needed -->
@@ -588,7 +588,7 @@
             <arg value="edu.nps.moves.dis7.jammers"/>
             <classpath>
                 <pathelement path="build/classes"/>
-                <pathelement path="libs/commons-io-2.6.jar"/>
+                <pathelement path="lib/commons-io-2.6.jar"/>
             </classpath>
         </java>
         <!-- not yet ready to compile here, more autogeneration needed -->
@@ -601,7 +601,7 @@
             <arg value="edu.nps.moves.dis7.objecttypes"/>
             <classpath>
                 <pathelement path="build/classes"/>
-                <pathelement path="libs/commons-io-2.6.jar"/>
+                <pathelement path="lib/commons-io-2.6.jar"/>
             </classpath>
         </java>
         <!-- <antcall target="compile"/> incremental compilation checks -->
@@ -618,7 +618,7 @@
                 <pathelement path="src-generated/java"/>
                 <pathelement path="src-specialcase/java"/>
                 <pathelement path="src-supporting/java"/>
-                <pathelement path="libs/commons-io-2.6.jar"/>
+                <pathelement path="lib/commons-io-2.6.jar"/>
             </classpath>
         </java>
         <echo message="generate-source-code complete"/>
@@ -639,7 +639,7 @@
                 <include name="src-supporting/java/**/*.java"/>
             </fileset>
             <classpath>
-                <pathelement path="libs/commons-io-2.6.jar"/>
+                <pathelement path="lib/commons-io-2.6.jar"/>
             </classpath>
         </javadoc>
     </target>
