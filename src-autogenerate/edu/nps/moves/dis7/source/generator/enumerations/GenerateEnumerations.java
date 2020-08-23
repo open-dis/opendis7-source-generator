@@ -89,7 +89,7 @@ public class GenerateEnumerations
     private void run() throws SAXException, IOException, ParserConfigurationException
     {
         outputDirectory.mkdirs();
-        FileUtils.cleanDirectory(outputDirectory);
+    //  FileUtils.cleanDirectory(outputDirectory); // do NOT clean directory, results can co-exist with other classes
         // Manual:
         uid2ClassName = new Properties();
         uid2ClassName.load(getClass().getResourceAsStream("Uid2ClassName.properties"));
@@ -149,7 +149,7 @@ public class GenerateEnumerations
          */
         public final static String fixName(String name)
         {
-            if ((name==null) || name.isEmpty())
+            if ((name==null) || name.trim().isEmpty())
             {
                 System.err.println("fixName() found empty name... replaced with \"undefinedName\"");
                 return "undefinedName";
@@ -650,13 +650,19 @@ public class GenerateEnumerations
             enumNames.clear();
             // enum section
             if (el.elems.isEmpty())
+            {
                 sb.append(String.format(enumTemplate2, "NOT_SPECIFIED", "0", "undefined by SISO spec"));
+                String elementName = "(undefined element)";
+                if (el.name != null)
+                       elementName = el.name;
+                System.err.println(elementName + " error while generating enumerations: NOT_SPECIFIED undefined by SISO spec");
+            }
             else{
                 Properties aliases = aliasNames;
                 if (el.elems.size() > 2000)
                 {
-                    System.out.println ("Enumerations class " + packageName + "." + classNameCorrected + " has " + el.elems.size() + ", possibly too large?");
-                    System.out.println ("   dropping enumerations above 2000... TODO create auxiliary class with remainder");
+                    System.err.println ("Enumerations class " + packageName + "." + classNameCorrected + " has " + el.elems.size() + ", possibly too large?");
+                    System.err.println ("   dropping enumerations above 2000... TODO create auxiliary class with remainder");
                     // https://stackoverflow.com/questions/1184636/shrinking-an-arraylist-to-a-new-size
                     additionalRowElements = el.elems.subList(2000, el.elems.size());
                     el.elems.subList(2000, el.elems.size()).clear();
