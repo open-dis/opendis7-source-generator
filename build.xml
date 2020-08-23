@@ -64,7 +64,7 @@
     -->
     
     <tstamp>
-        <format property="timestamp" pattern="d MMMM yyyy hh:mm:ss"/>
+        <format property="timestamp" pattern="d MMMM yyyy HH:mm:ss"/>
     </tstamp>
     
     <!-- javadoc manifest properties -->
@@ -140,8 +140,7 @@
         <mkdir dir="src-generated/java" description="ensure necessary directory present"/>
         <delete verbose="false" includeEmptyDirs="true">
             <fileset dir="src-generated/java">
-                <include name="**/*.java"/>
-                <exclude name="**/README.md"/>
+                <include name="**/*"/>
             </fileset>
         </delete>
     </target>
@@ -188,6 +187,7 @@
               basedir="."
              includes="edu/nps/moves/dis7/**"
              excludes=".keep"
+               update="true"
             zip64Mode="always">
             <fileset dir="build/classes"/>
             <!-- https://docs.oracle.com/javase/tutorial/deployment/jar/manifestindex.html -->
@@ -228,6 +228,7 @@
               basedir="."
              includes="edu/nps/moves/dis7/**"
              excludes=".keep"
+               update="true"
             zip64Mode="always">
             <fileset dir="src-autogenerate"/>
             <fileset dir="src-generated/java"/>
@@ -552,7 +553,7 @@
     
     <property name="SISO-REF-010.xml" value="SISO-REF-010.xml"/>
     
-    <target name="generate-source-code" depends="init">
+    <target name="generate-source-code">
         <echo message="================================================================================="/>
         <echo message="generate-source-code 1 make enums,         edu.nps.moves.dis7.source.generator.enumerations.GenerateEnumerations"/>
         <java classname="edu.nps.moves.dis7.source.generator.enumerations.GenerateEnumerations">
@@ -625,14 +626,14 @@
         <echo message="================================================================================="/>
     </target>
     
-    <target name="javadoc" depends="init">
+    <target name="javadoc">
         <javadoc  classpath="${build.classes.dir}"
                     destdir="javadoc"
             useexternalfile="yes"
                     verbose="false">
             <!-- useexternalfile="yes" avoids command error: filename or extension is too long -->
             <fileset dir="." defaultexcludes="yes">
-                <include name="**/*.java"/>
+            <!--<include name="**/*.java"/> TODO needed? -->
                 <include name="src-autogenerate/**/*.java"/>
                 <include name="src-generated/java/**/*.java"/>
                 <include name="src-specialcase/java/**/*.java"/>
@@ -649,6 +650,7 @@
         
         <echo message="Packaging javadoc documentation for all generated OpenDIS7 entity enumerations into a single JAR"/>
         <jar destfile="dist/open-dis7-enumerations-javadoc.jar"
+               update="true"
               basedir="javadoc">
             
             <!-- https://docs.oracle.com/javase/tutorial/deployment/jar/manifestindex.html -->
@@ -682,7 +684,7 @@
     </target>
     
     <!-- Invoke this in lieu of step #3 under "If you desire to update the open-dis7-java" project in ./README.md -->
-    <target name="copy-generated-files-to-open-dis7-java" depends="init">
+    <target name="copy-generated-files-to-open-dis7-java">
         <echo message="Both enumerations and PDUs are created by open-dis7-source-generator, with"/>
         <echo message="   enumerations packaged into jar archives by open-dis7-source-generator and"/>
         <echo message="   PDU classes  packaged into jar archives by open-dis7-java project."/>
@@ -704,7 +706,7 @@
         </copy>
     </target>
     
-    <target name="copy-generated-jars-to-open-dis7-java" depends="init">
+    <target name="copy-generated-jars-to-open-dis7-java">
         <echo message="Both enumerations and PDUs are created by open-dis7-source-generator, with"/>
         <echo message="   enumerations packaged into jar archives by open-dis7-source-generator and"/>
         <echo message="   PDU classes  packaged into jar archives by open-dis7-java project."/>
