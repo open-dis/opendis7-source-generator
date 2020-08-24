@@ -118,7 +118,7 @@
         <antcall target="test"/><!-- TODO add tests -->
         <antcall target="javadoc"/>
         <antcall target="jar"/>
-        <antcall target="copy-generated-files-to-open-dis7-java" description="useful for debugging, accepted updates in version control there "/>
+        <antcall target="copy-generated-files-to-open-dis7-java" description="useful for debugging, accepted updates in version control there"/>
         <antcall target="copy-generated-jars-to-open-dis7-java"/>
         <echo message="build all complete"/>
     </target>
@@ -156,14 +156,13 @@
         <echo message="Implementation-Version = ${timestamp}"/>
         <echo message="Implementation-Vendor  = ${Implementation-Vendor}"/>
 
-        <antcall target="package-dis7-enumerations-all-jars"/>
+        <antcall target="jar.classes"/>
+        <antcall target="jar.source"/>
+        <antcall target="jar.javadoc"/>
     </target>
    
-    <target name="package-dis7-enumerations-all-jars" 
-         depends="clean-all-generated-jars-javadoc,
-                  package-dis7-enumerations-classes-jar,
-                  package-dis7-enumerations-source-jar,
-                  package-dis7-enumerations-javadoc-jar">
+    <target name="package-dis7-enumerations-prior-jars" 
+         depends="">
            
             <!-- seems unnecessary
                 package-dis7-entities-china-jar,
@@ -176,10 +175,10 @@
                 package-dis7-entities-usa-munitions-jar,
                 package-dis7-entities-usa-surface-jar
             -->
-        <echo message=" package-dis7-enumerations-all-jars complete"/>
+        <echo message=" package-dis7-enumerations-prior-jars complete"/>
     </target>
 
-    <target name="package-dis7-enumerations-classes-jar">
+    <target name="jar.classes">
         <mkdir dir="dist"/>
         
         <echo message="Packaging .class binaries for all generated OpenDIS7 entity enumerations into a single JAR"/>
@@ -220,7 +219,7 @@
         </jar>
     </target>
     
-    <target name="package-dis7-enumerations-source-jar">
+    <target name="jar.source">
         <mkdir dir="dist"/>
         
         <echo message="Packaging .java source for all generated OpenDIS7 entity enumerations into a single JAR"/>
@@ -645,7 +644,7 @@
         </javadoc>
     </target>
     
-    <target name="package-dis7-enumerations-javadoc-jar" depends="init,javadoc">
+    <target name="jar.javadoc"><!-- depends="javadoc" -->
         <mkdir dir="dist"/>
         
         <echo message="Packaging javadoc documentation for all generated OpenDIS7 entity enumerations into a single JAR"/>
@@ -686,8 +685,8 @@
     <!-- Invoke this in lieu of step #3 under "If you desire to update the open-dis7-java" project in ./README.md -->
     <target name="copy-generated-files-to-open-dis7-java">
         <echo message="Both enumerations and PDUs are created by open-dis7-source-generator, with"/>
-        <echo message="   enumerations packaged into jar archives by open-dis7-source-generator and"/>
-        <echo message="   PDU classes  packaged into jar archives by open-dis7-java project."/>
+        <echo message="   PDU classes  packaged into open-dis7-*.jar              archives by open-dis7-java project and"/>
+        <echo message="   enumerations packaged into open-dis7-enumerations-*.jar archives by open-dis7-source-generator."/>
         
         <delete includeemptydirs="true" failonerror="false"><!-- verbose="true" -->
             <fileset dir="../open-dis7-java/src-generated" includes="**/*"/>
@@ -706,10 +705,10 @@
         </copy>
     </target>
     
-    <target name="copy-generated-jars-to-open-dis7-java">
+    <target name="copy-generated-jars-to-open-dis7-java" depends="jar">
         <echo message="Both enumerations and PDUs are created by open-dis7-source-generator, with"/>
-        <echo message="   enumerations packaged into jar archives by open-dis7-source-generator and"/>
-        <echo message="   PDU classes  packaged into jar archives by open-dis7-java project."/>
+        <echo message="   PDU classes  packaged into open-dis7-*.jar              archives by open-dis7-java project and"/>
+        <echo message="   enumerations packaged into open-dis7-enumerations-*.jar archives by open-dis7-source-generator."/>
         
         <delete includeemptydirs="true" failonerror="false"><!-- verbose="true" -->
             <fileset dir="../open-dis7-java/dist">
