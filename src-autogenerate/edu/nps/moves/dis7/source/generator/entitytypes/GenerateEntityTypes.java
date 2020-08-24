@@ -761,6 +761,7 @@ public class GenerateEntityTypes
 
   private String pathToPackage(String s)
   {
+    s.replaceAll("_",""); // no underscore divider
     s = s.replace("/", ".");
     if (s.endsWith("."))
       s = s.substring(0, s.length() - 1);
@@ -887,6 +888,7 @@ public class GenerateEntityTypes
     if(isNumeric(r) | isNumeric(r.substring(1))){
       r = makeNonNumeric(elem,r);    
     }
+    r = r.substring(0,1) + r.substring(1).replaceAll("_",""); // no underscore divider after first character
     return r;
   }
   
@@ -895,7 +897,9 @@ public class GenerateEntityTypes
     String r = s.trim();
   
     // Convert any of these chars to underbar (u2013 is a hyphen observed in source XML):
-    r = r.replaceAll(", ", "_").replaceAll(" ", "_").replaceAll("-", "_");
+    r = r.trim().replaceAll(",", " ").replaceAll("—"," ").replaceAll("-", " ").replaceAll("\\."," ").replaceAll("&"," ")
+                                     .replaceAll("/"," ").replaceAll("\"", " ").replaceAll("\'", " ").replaceAll("( )+"," ").replaceAll(" ", "_");
+    r = r.substring(0,1) + r.substring(1).replaceAll("_",""); // no underscore divider after first character
 
     r = r.replaceAll("[\\h-/,\";:\\u2013]", "_");
 
@@ -914,23 +918,26 @@ public class GenerateEntityTypes
     r = r.replaceAll(">",  "GT");
     r = r.replaceAll("=",  "EQ");
     r = r.replaceAll("%",  "pct");
-
+    
+    // Java identifier can't start with digit
+    if (Character.isDigit(r.charAt(0)))
+        r = "_" + r;
+    
+    if (r.contains("__"))
+    {
+        System.err.println("fixname contains multiple underscores: " + r);
+        r = r.replaceAll("__", "_");
+    }
     // If there's nothing there, put in something:
     if (r.trim().isEmpty() || r.equals("_"))
     {
       System.err.print("fixname: erroneous name \"" + s + "\"");
       r = "undefinedName";
       if (!s.equals(r))
-        System.err.print( " converted to \"" + r + "\"");
+           System.err.print( " converted to \"" + r + "\"");
       System.err.println();
     }
-
-    // Java identifier can't start with digit
-    if (Character.isDigit(r.charAt(0)))
-        r = "_" + r;
-    r = r.replaceAll("—","-").replaceAll("–","-").replaceAll("\"", "").replaceAll("\'", "");
-    
-    //System.out.println("fixName in: "+s+" out: "+r);
+    //System.out.println("In: "+s+" out: "+r);
     return r;
   }
 

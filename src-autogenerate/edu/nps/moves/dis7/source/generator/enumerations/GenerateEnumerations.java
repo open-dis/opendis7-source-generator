@@ -154,7 +154,17 @@ public class GenerateEnumerations
                 System.err.println("fixName() found empty name... replaced with \"undefinedName\"");
                 return "undefinedName";
             }
-            return name.replaceAll(" ","_").replaceAll(".","_").replaceAll("-","_").replaceAll("—","").replaceAll("/","_").replaceAll("&","_");
+            // https://stackoverflow.com/questions/14080164/how-to-replace-a-string-in-java-which-contains-dot/14080194
+            // https://stackoverflow.com/questions/2932392/java-how-to-replace-2-or-more-spaces-with-single-space-in-string-and-delete-lead
+            String newName = name.trim().replaceAll(",", " ").replaceAll("—"," ").replaceAll("-", " ").replaceAll("\\."," ").replaceAll("&"," ")
+                                        .replaceAll("/"," ").replaceAll("\"", " ").replaceAll("\'", " ").replaceAll("( )+"," ").replaceAll(" ", "_");
+            newName.replaceAll("_",""); // no underscore divider
+            if (newName.contains("__"))
+            {
+                System.err.println("fixname: " + newName);
+                newName = newName.replaceAll("__", "_");
+            }
+            return newName;
         }
         public final static String htmlize(String s)
         {
@@ -651,11 +661,11 @@ public class GenerateEnumerations
             // enum section
             if (el.elems.isEmpty())
             {
-                sb.append(String.format(enumTemplate2, "NOT_SPECIFIED", "0", "undefined by SISO spec"));
                 String elementName = "(undefined element)";
                 if (el.name != null)
                        elementName = el.name;
-                System.err.println(elementName + " error while generating enumerations: NOT_SPECIFIED undefined by SISO spec");
+                sb.append(String.format(enumTemplate2, "SELF", "0", elementName + " details not found in SISO spec"));
+                System.err.println(elementName + " error while generating enumerations: SELF details not found in SISO spec");
             }
             else{
                 Properties aliases = aliasNames;
@@ -790,7 +800,7 @@ public class GenerateEnumerations
 
             // Java identifier can't start with digit
             if (Character.isDigit(r.charAt(0)))
-                r = "NAME_" + r; // originally "$"
+                r = "_" + r; // originally "$"
 
             // Handle multiply defined entries in the XML by appending a digit:
             String origR = r;
