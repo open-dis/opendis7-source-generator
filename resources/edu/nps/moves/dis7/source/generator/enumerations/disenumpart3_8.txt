@@ -44,6 +44,6 @@
     @Override
     public String toString()
     {
-        return "%s: " + name() + ": " + getValue(); 
+        return "%s: " + getValue() + " " + name(); 
     }
 }
