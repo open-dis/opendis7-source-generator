@@ -123,6 +123,14 @@
         <echo message="build all complete"/>
     </target>
     
+    <target name="clean.pduLog" description="clean recorded pduLog files">
+        <delete verbose="true">
+            <fileset dir="pduLog">
+                <include name="*.dislog"/>
+            </fileset>
+        </delete>
+    </target>
+    
     <target name="clean" depends="clean-all-generated-jars-javadoc,clean-generated-source">
         <echo message="make clean complete"/>
     </target>
