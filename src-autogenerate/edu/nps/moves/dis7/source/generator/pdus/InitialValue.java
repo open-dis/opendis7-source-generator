@@ -47,7 +47,7 @@ public class InitialValue
     
     /** 
      * Returns the "standard" method name for a setter, given the variable name.
-     * @return 
+     * @return method name corresponding to variable setter
      */
     public String getSetterMethodName()
     {
@@ -59,7 +59,7 @@ public class InitialValue
     
     /** 
      * Returns the "standard" method name for a setter, given the variable name.
-     * @return 
+     * @return  method name corresponding to variable setter
      */
 	public String getSetterMethodNameCSharp() //PES added for CSharp Support
 	{
@@ -80,8 +80,8 @@ public class InitialValue
     
     /** 
      * returns a string with the first letter capitalized. 
-     * @param aString
-     * @return 
+     * @param aString of interest
+     * @return same string with first letter capitalized
      */
     public String initialCap(String aString)
     {

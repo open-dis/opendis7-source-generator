@@ -262,8 +262,8 @@ public class PythonGenerator extends Generator
     }
     
     /** The method that writes out the python marshalling code
-     * @param pw
-     * @param aClass */
+     * @param pw PrintWriter
+     * @param aClass of interest */
     public void writeMarshal(PrintWriter pw, GeneratedClass aClass)
     {
         pw.println();
@@ -460,8 +460,8 @@ public class PythonGenerator extends Generator
      * bits 0-2 represent some value, while bits 3-4 represent another value, 
      * and so on. This writes accessor and mutator methods for those fields.
      * 
-     * @param pw
-     * @param aClass 
+     * @param pw PrintWriter
+     * @param aClass of interest 
      */
     public void writeFlagMethods(PrintWriter pw, GeneratedClass aClass)
     {

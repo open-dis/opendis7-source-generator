@@ -87,8 +87,8 @@ public class IntercomSignalPdu extends RadioCommunicationsFamilyPdu implements S
 
   /**
    * Setter for {@link IntercomSignalPdu#intercomReferenceID}
-   * @param pIntercomReferenceID
-   * @return 
+   * @param pIntercomReferenceID ID of interest
+   * @return same object to permit progressive setters
    */
   public IntercomSignalPdu setIntercomReferenceID(IntercomReferenceID pIntercomReferenceID)
   {
@@ -98,7 +98,7 @@ public class IntercomSignalPdu extends RadioCommunicationsFamilyPdu implements S
 
   /**
    * Getter for {@link IntercomSignalPdu#intercomReferenceID}
-   * @return 
+   * @return value of interest
    */
   public IntercomReferenceID getIntercomReferenceID()
   {
@@ -107,8 +107,8 @@ public class IntercomSignalPdu extends RadioCommunicationsFamilyPdu implements S
 
   /**
    * Setter for {@link IntercomSignalPdu#intercomNumber}
-   * @param pIntercomNumber
-   * @return 
+   * @param pIntercomNumber value of interest
+   * @return same object to permit progressive setters
    */
   public IntercomSignalPdu setIntercomNumber(short pIntercomNumber)
   {
@@ -118,7 +118,7 @@ public class IntercomSignalPdu extends RadioCommunicationsFamilyPdu implements S
 
   /**
    * Getter for {@link IntercomSignalPdu#intercomNumber}
-   * @return 
+   * @return value of interest
    */
   public short getIntercomNumber()
   {
@@ -127,8 +127,8 @@ public class IntercomSignalPdu extends RadioCommunicationsFamilyPdu implements S
 
   /**
    * Setter for {@link IntercomSignalPdu#encodingScheme}
-   * @param pEncodingScheme
-   * @return 
+   * @param pEncodingScheme value of interest
+   * @return same object to permit progressive setters
    */
   public IntercomSignalPdu setEncodingScheme(short pEncodingScheme)
   {
@@ -138,7 +138,7 @@ public class IntercomSignalPdu extends RadioCommunicationsFamilyPdu implements S
 
   /**
    * Getter for {@link IntercomSignalPdu#encodingScheme}
-   * @return 
+   * @return value of interest
    */
   public short getEncodingScheme()
   {
@@ -147,8 +147,8 @@ public class IntercomSignalPdu extends RadioCommunicationsFamilyPdu implements S
 
   /**
    * Setter for {@link IntercomSignalPdu#tdlType}
-   * @param pTdlType
-   * @return 
+   * @param pTdlType value of interest
+   * @return same object to permit progressive setters
    */
   public IntercomSignalPdu setTdlType(SignalTDLType pTdlType)
   {
@@ -158,7 +158,7 @@ public class IntercomSignalPdu extends RadioCommunicationsFamilyPdu implements S
 
   /**
    * Getter for {@link IntercomSignalPdu#tdlType}
-   * @return 
+   * @return value of interest
    */
   public SignalTDLType getTdlType()
   {
@@ -167,8 +167,8 @@ public class IntercomSignalPdu extends RadioCommunicationsFamilyPdu implements S
 
   /**
    * Setter for {@link IntercomSignalPdu#sampleRate}
-   * @param pSampleRate
-   * @return 
+   * @param pSampleRate value of interest
+   * @return same object to permit progressive setters
    */
   public IntercomSignalPdu setSampleRate(int pSampleRate)
   {
@@ -178,7 +178,7 @@ public class IntercomSignalPdu extends RadioCommunicationsFamilyPdu implements S
 
   /**
    * Getter for {@link IntercomSignalPdu#sampleRate}
-   * @return 
+   * @return value of interest
    */
   public int getSampleRate()
   {
@@ -205,7 +205,7 @@ public class IntercomSignalPdu extends RadioCommunicationsFamilyPdu implements S
   /**
    * Getter for {@link SignalPdu#dataLength}
    *
-   * @return value of field
+   * @return value of interestvalue of field
    */
   public short getDataLength()
   {
@@ -214,8 +214,8 @@ public class IntercomSignalPdu extends RadioCommunicationsFamilyPdu implements S
 
   /**
    * Setter for {@link IntercomSignalPdu#samples}
-   * @param pSamples
-   * @return 
+   * @param pSamples value of interest
+   * @return same object to permit progressive setters
    */
   public IntercomSignalPdu setSamples(short pSamples)
   {
@@ -225,7 +225,7 @@ public class IntercomSignalPdu extends RadioCommunicationsFamilyPdu implements S
 
   /**
    * Getter for {@link IntercomSignalPdu#samples}
-   * @return 
+   * @return value of interest
    */
   public short getSamples()
   {
@@ -234,8 +234,8 @@ public class IntercomSignalPdu extends RadioCommunicationsFamilyPdu implements S
 
   /**
    * Setter for {@link IntercomSignalPdu#data}
-   * @param pData
-   * @return 
+   * @param pData value of interest
+   * @return same object to permit progressive setters
    */
   public IntercomSignalPdu setData(byte[] pData)
   {
@@ -245,7 +245,7 @@ public class IntercomSignalPdu extends RadioCommunicationsFamilyPdu implements S
 
   /**
    * Getter for {@link IntercomSignalPdu#data}
-   * @return 
+   * @return value of interest
    */
   public byte[] getData()
   {

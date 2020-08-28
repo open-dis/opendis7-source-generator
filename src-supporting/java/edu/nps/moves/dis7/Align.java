@@ -62,7 +62,7 @@ public class Align
       return pad;
   }
   
-  /********* Unmarshaling **************/
+  /* ******** Unmarshaling ************* */
   static public int from16bits(ByteBuffer buff)
   {
       int pad = (2 - buff.position() % 2) % 2;

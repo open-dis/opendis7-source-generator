@@ -83,35 +83,35 @@ public class GeneratedClass
     }
     
     /** Add one ivar/attribute to the class
-     * @param anAttribute */
+     * @param anAttribute of interest */
     public void addClassAttribute(ClassAttribute anAttribute)
     {
         classAttributes.add(anAttribute);
     }
     
     /** Return a list of all the attributes of the class
-     * @return  */
+     * @return list of {@link ClassAttribute} values */
     public List<ClassAttribute> getClassAttributes()
     {
         return classAttributes;
     }
     
     /** Add one initial value to the class
-     * @param anInitialValue */
+     * @param anInitialValue of interest */
     public void addInitialValue(InitialValue anInitialValue)
     {
         initialValues.add(anInitialValue);
     }
     
     /** Return a list of all the initial values of the class
-     * @return  */
+     * @return list of {@link InitialValue} settings */
     public List<InitialValue> getInitialValues()
     {
         return initialValues;
     }
     
     /** Set the comments associated with this class
-     * @param comments */
+     * @param comments of interest */
     public void setComment(String comments)
     {
         comment = comments;
@@ -120,7 +120,7 @@ public class GeneratedClass
     
     
     /** get the comments associated with this class
-     * @return  */
+     * @return comments associated with this class */
     public String getClassComments()
     {
         return comment;

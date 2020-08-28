@@ -91,9 +91,9 @@ public abstract class Generator
     }
     
     /** 
-     * returns a string with the first letter capitalized. 
-     * @param aString
-     * @return 
+     * returns a string with the first letter capitalized.
+    * @param aString of interest
+    * @return same string with first letter capitalized
      */
     public String initialCap(String aString)
     {
@@ -104,7 +104,7 @@ public abstract class Generator
     }
     /**
      * returns a string with the first letter lower case.
-     * @param aString
+     * @param aString of interest
      * @return 
      */
     public String initialLower(String aString)

@@ -111,7 +111,7 @@ public class GeneratedClass
     }
     
     /** Set the comments associated with this class
-     * @param comments */
+     * @param comments of interest */
     public void setComment(String comments)
     {
         comment = comments;

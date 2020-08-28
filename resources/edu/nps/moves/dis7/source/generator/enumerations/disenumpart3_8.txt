@@ -41,9 +41,13 @@
         return 1; // 8 bits
     }
     
+  /**
+   * Provide simple identifier
+   * @return ID number and name
+   */
     @Override
     public String toString()
     {
-        return "%s: " + getValue() + " " + name(); 
+        return "%s " + getValue() + " " + name(); 
     }
 }

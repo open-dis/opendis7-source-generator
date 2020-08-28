@@ -121,7 +121,7 @@ public class Domain
 
     /**
      *
-     * @param dos
+     * @param dos 
      */
     public void marshal(DataOutputStream dos)
   {
@@ -130,7 +130,7 @@ public class Domain
 
     /**
      *
-     * @param buff
+     * @param buff The ByteBuffer at the position to begin writing
      */
     public void marshal(ByteBuffer buff)
   {
@@ -139,8 +139,8 @@ public class Domain
 
     /**
      *
-     * @param dis
-     * @return
+     * @param dis DataInputStream
+     * @return unmarshal size
      */
     public int unmarshal(DataInputStream dis)
   {
@@ -152,8 +152,8 @@ public class Domain
 
     /**
      *
-     * @param buff
-     * @return
+     * @param buff The ByteBuffer at the position to begin writing
+     * @return 
      */
     public int unmarshal(ByteBuffer buff)
   {

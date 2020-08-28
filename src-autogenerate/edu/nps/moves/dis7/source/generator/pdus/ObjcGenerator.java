@@ -138,7 +138,7 @@ public class ObjcGenerator extends Generator
    
 /**
  * Generate a c++ header file for the classes
- * @param aClass
+ * @param aClass class of interest
  */
 public void writeHeaderFile(GeneratedClass aClass)
 {
@@ -470,8 +470,8 @@ public void writeEqualityOperator(PrintWriter pw, GeneratedClass aClass)
  * Write the code for a method that marshals out the object into a DIS
  * format byte array.
  *
- * @param pw
- * @param aClass
+ * @param pw PrintWriter
+ * @param aClass of interest
  */
 public void writeMarshalMethod(PrintWriter pw, GeneratedClass aClass)
 {
@@ -878,6 +878,8 @@ public void writeDeallocMethod(PrintWriter pw, GeneratedClass aClass)
 
 /**
 * returns a string with the first letter capitalized.
+* @param aString of interest
+* @return same string with first letter capitalized
 */
     @Override
     public String initialCap(String aString)

@@ -252,8 +252,8 @@ public class CsharpGenerator extends Generator {
     /**
      * Generate a source code file with getters, setters, ivars, and marshal/unmarshal
      * methods for one class.
-     * @param pw
-     * @param aClass
+     * @param pw PrintWriter
+     * @param aClass of interest
      */
     public void writeClass(PrintStringBuffer pw, GeneratedClass aClass) {
         // Note inside of the DIS XML1998 or XML1995 file the following needs to be inserted
@@ -311,8 +311,8 @@ public class CsharpGenerator extends Generator {
     /**
      * Writes the namespace and namespace using code at the top of the C# source file
      *
-     * @param pw
-     * @param aClass
+     * @param pw PrintWriter
+     * @param aClass of interest
      */
     private void writeImports(PrintStringBuffer pw, GeneratedClass aClass) {
 
@@ -342,8 +342,8 @@ public class CsharpGenerator extends Generator {
 
     /**
      * Write the class comments block
-     * @param pw
-     * @param aClass
+     * @param pw PrintWriter
+     * @param aClass of interest
      */
     private void writeClassComments(PrintStringBuffer pw, GeneratedClass aClass, int indent) {
         if (aClass.getClassComments() != null) {
@@ -356,8 +356,8 @@ public class CsharpGenerator extends Generator {
     /**
      * Writes the class declaration, including any inheritence and interfaces
      *
-     * @param pw
-     * @param aClass
+     * @param pw PrintWriter
+     * @param aClass of interest
      */
     private void writeClassDeclaration(PrintStringBuffer pw, GeneratedClass aClass, int indent)
     {
@@ -724,8 +724,8 @@ public class CsharpGenerator extends Generator {
      * bits 0-2 represent some value, while bits 3-4 represent another value, 
      * and so on.This writes accessor and mutator methods for those fields.
      * 
-     * @param pw
-     * @param aClass 
+     * @param pw PrintWriter
+     * @param aClass of interest 
      * @param indent 
      */
     public void writeBitflagMethods(PrintStringBuffer pw, GeneratedClass aClass, int indent)
@@ -1868,6 +1868,8 @@ public class CsharpGenerator extends Generator {
 
     /**
      * returns a string with the first letter capitalized.
+    * @param aString of interest
+    * @return same string with first letter capitalized
      */
     @Override
     public String initialCap(String aString) {

@@ -1,5 +1,5 @@
-
-    public void marshal(DataOutputStream dos) throws IOException
+ 
+   public void marshal(DataOutputStream dos) throws IOException
     {
         dos.writeShort(getValue());
     }
@@ -28,9 +28,13 @@
         return 2; // 16 bits
     }
     
+  /**
+   * Provide simple identifier
+   * @return ID number and name
+   */
     @Override
     public String toString()
     {
-        return "%s: " + getValue() + " " + name(); 
+        return "%s " + getValue() + " " + name(); 
     }
 }

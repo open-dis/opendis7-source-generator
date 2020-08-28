@@ -282,8 +282,8 @@ public class JavascriptGenerator extends Generator
     
     /**
      * Write nodejs exports module to make functions available
-     * @param pw
-     * @param aClass 
+     * @param pw PrintWriter
+     * @param aClass of interest 
      */
     private void writeNodeJsExports(PrintWriter pw, GeneratedClass aClass)
     {
@@ -296,8 +296,8 @@ public class JavascriptGenerator extends Generator
     /**
      * Write a function that encodes dis binary data into an array
      * 
-     * @param pw
-     * @param aClass 
+     * @param pw PrintWriter
+     * @param aClass of interest 
      */
     private void writeEncoder(PrintWriter pw, GeneratedClass aClass)
     {
@@ -420,8 +420,8 @@ public class JavascriptGenerator extends Generator
     }
     /**
      * Write a function that decodes binary data into a javascript object
-     * @param pw
-     * @param aClass 
+     * @param pw PrintWriter
+     * @param aClass of interest 
      */
     private void writeDecoder(PrintWriter pw, GeneratedClass aClass)
     {
@@ -564,8 +564,8 @@ public class JavascriptGenerator extends Generator
     /**
      * Writes the class declaration, including any inheritence and interfaces
      * 
-     * @param pw
-     * @param aClass
+     * @param pw PrintWriter
+     * @param aClass of interest
      */
     private void writeClassDeclaration(PrintWriter pw, GeneratedClass aClass)
     {
@@ -586,8 +586,8 @@ public class JavascriptGenerator extends Generator
      * bits 0-2 represent some value, while bits 3-4 represent another value, 
      * and so on. This writes accessor and mutator methods for those fields.
      * 
-     * @param pw
-     * @param aClass 
+     * @param pw PrintWriter
+     * @param aClass of interest  of interest
      */
     public void writeFlagMethods(PrintWriter pw, GeneratedClass aClass)
     {

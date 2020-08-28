@@ -81,8 +81,8 @@ public class SignalPdu extends RadioCommunicationsFamilyPdu implements Serializa
 
   /**
    * Setter for {@link SignalPdu#header}
-   * @param pHeader
-   * @return 
+   * @param pHeader value of interest
+   * @return same object to permit progressive setters
    */
   public SignalPdu setHeader(RadioCommsHeader pHeader)
   {
@@ -92,7 +92,7 @@ public class SignalPdu extends RadioCommunicationsFamilyPdu implements Serializa
 
   /**
    * Getter for {@link SignalPdu#header}
-   * @return 
+   * @return header
    */
   public RadioCommsHeader getHeader()
   {
@@ -101,8 +101,8 @@ public class SignalPdu extends RadioCommunicationsFamilyPdu implements Serializa
 
   /**
    * Setter for {@link SignalPdu#encodingScheme}
-   * @param pEncodingScheme
-   * @return 
+   * @param pEncodingScheme value of interest
+   * @return same object to permit progressive setters
    */
   public SignalPdu setEncodingScheme(short pEncodingScheme)
   {
@@ -112,7 +112,7 @@ public class SignalPdu extends RadioCommunicationsFamilyPdu implements Serializa
 
   /**
    * Getter for {@link SignalPdu#encodingScheme}
-   * @return 
+   * @return encodingScheme
    */
   public short getEncodingScheme()
   {
@@ -122,8 +122,8 @@ public class SignalPdu extends RadioCommunicationsFamilyPdu implements Serializa
   /**
    * Setter for {@link SignalPdu#tdlType}
    *
-   * @param pTdlType
-   * @return this object
+   * @param pTdlType of interest
+   * @return same object to permit progressive setters
    */
   public SignalPdu setTdlType(SignalTDLType pTdlType)
   {
@@ -133,7 +133,7 @@ public class SignalPdu extends RadioCommunicationsFamilyPdu implements Serializa
 
   /**
    * Getter for {@link SignalPdu#tdlType}
-   * @return 
+   * @return value of interest
    */
   public SignalTDLType getTdlType()
   {
@@ -143,8 +143,8 @@ public class SignalPdu extends RadioCommunicationsFamilyPdu implements Serializa
   /**
    * Setter for {@link SignalPdu#sampleRate}
    *
-   * @param pSampleRate
-   * @return this object
+   * @param pSampleRate of interest
+   * @return same object to permit progressive setters
    */
   public SignalPdu setSampleRate(int pSampleRate)
   {
@@ -154,7 +154,7 @@ public class SignalPdu extends RadioCommunicationsFamilyPdu implements Serializa
 
   /**
    * Getter for {@link SignalPdu#sampleRate}
-   * @return 
+   * @return sampleRate
    */
   public int getSampleRate()
   {
@@ -170,7 +170,7 @@ public class SignalPdu extends RadioCommunicationsFamilyPdu implements Serializa
    * array times 8.
    *
    * @param pDataLength value for field
-   * @return this object
+   * @return same object to permit progressive setters
    */
   public SignalPdu setDataLength(short pDataLength)
   {
@@ -192,7 +192,7 @@ public class SignalPdu extends RadioCommunicationsFamilyPdu implements Serializa
    * Setter for {@link SignalPdu#samples}
    *
    * @param pSamples value for field
-   * @return this object
+   * @return same object to permit progressive setters
    */
   public SignalPdu setSamples(short pSamples)
   {
@@ -218,8 +218,8 @@ public class SignalPdu extends RadioCommunicationsFamilyPdu implements Serializa
    * highest byte boundary. If {@link SignalPdu#dataLength} is not set when the Pdu is sent, the
    * receiver will read a bit length equal to the size of the byte array times 8.
    *
-   * @return this object
-   * @param pData data
+   * @param pData data of interest
+   * @return same object to permit progressive setters
    */
   public SignalPdu setData(byte[] pData)
   {

@@ -328,8 +328,8 @@ public class JavaGenerator extends Generator
     /**
      * Writes the package and package import code at the top of the Java source file
      *
-     * @param pw
-     * @param aClass
+     * @param pw PrintWriter
+     * @param aClass of interest
      */
     private void writeImports(PrintWriter pw, GeneratedClass aClass)
     {
@@ -355,8 +355,8 @@ public class JavaGenerator extends Generator
     /**
      * Write the class comments block
      *
-     * @param pw
-     * @param aClass
+     * @param pw PrintWriter
+     * @param aClass of interest
      */
     private void writeClassComments(PrintWriter pw, GeneratedClass aClass)
     {
@@ -372,8 +372,8 @@ public class JavaGenerator extends Generator
     /**
      * Writes the class declaration, including any inheritance and interfaces
      *
-     * @param pw
-     * @param aClass
+     * @param pw PrintWriter
+     * @param aClass of interest
      */
     private void writeClassDeclaration(PrintWriter pw, GeneratedClass aClass)
     {
@@ -402,8 +402,8 @@ public class JavaGenerator extends Generator
 
     /**
      * Write instance variables
-     * @param pw
-     * @param aClass 
+     * @param pw PrintWriter
+     * @param aClass of interest 
      */
     private void writeIvars(PrintWriter pw, GeneratedClass aClass)
     {
@@ -806,8 +806,8 @@ public class JavaGenerator extends Generator
      * Some fields have integers with bit fields defined, eg an integer where bits 0-2 represent some value, while bits 3-4 represent another value, and so on. This writes accessor and mutator methods
      * for those fields.
      *
-     * @param pw
-     * @param aClass
+     * @param pw PrintWriter
+     * @param aClass of interest
      */
     private void writeBitflagMethods(PrintWriter pw, GeneratedClass aClass)
     {
@@ -1387,8 +1387,8 @@ public class JavaGenerator extends Generator
      *     return data;
      * }</pre>
      *
-     * @param pw
-     * @param aClass
+     * @param pw PrintWriter
+     * @param aClass of interest
      */
     private void writeMarshalMethodToByteArray(PrintWriter pw, GeneratedClass aClass)
     {
@@ -1565,8 +1565,8 @@ public class JavaGenerator extends Generator
      * bool operator ==(const ClassName&amp; rhs) return (_ivar1==rhs._ivar1 &amp;&amp;
      * _var2 == rhs._ivar2 ...)
      *
-     * @param pw
-     * @param aClass
+     * @param pw PrintWriter
+     * @param aClass of interest
      */
     public void writeEqualityMethod(PrintWriter pw, GeneratedClass aClass) {
         try {
@@ -1598,8 +1598,8 @@ public class JavaGenerator extends Generator
   /**
      * write equalsImpl(...) method to this class to parent or subclasses
      *
-     * @param pw
-     * @param aClass
+     * @param pw PrintWriter
+     * @param aClass of interest
      */
     public void writeEqualityImplMethod(PrintWriter pw, GeneratedClass aClass)
     {
@@ -1686,8 +1686,8 @@ public class JavaGenerator extends Generator
     /**
      * Build the toString() method for this class, using the toString() methods of the
      * fields of the object
-     * @param pw
-     * @param aClass 
+     * @param pw PrintWriter
+     * @param aClass of interest 
      */
     public void writeToStringMethod(PrintWriter pw, GeneratedClass aClass)
     {
@@ -1754,7 +1754,9 @@ public class JavaGenerator extends Generator
     }
    
     /** 
-     * returns a string with the first letter capitalized. 
+     * returns a string with the first letter capitalized.
+     * @param aString of interest
+     * @return same string with first letter capitalized
      */
     @Override
     public String initialCap(String aString)

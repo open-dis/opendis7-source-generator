@@ -79,9 +79,9 @@ public class InitialValue
     
     
     /** 
-     * returns a string with the first letter capitalized. 
-     * @param aString
-     * @return 
+     * returns a string with the first letter capitalized.
+     * @param aString of interest
+     * @return same string with first letter capitalized
      */
     public String initialCap(String aString)
     {

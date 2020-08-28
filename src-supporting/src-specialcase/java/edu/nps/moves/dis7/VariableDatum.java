@@ -52,7 +52,7 @@ public class VariableDatum extends Object implements Serializable
    * Setter for {@link VariableDatum#variableDatumID}
    *
    * @param pVariableDatumID
-   * @return this object
+   * @return same object to permit progressive setters
    */
   public VariableDatum setVariableDatumID(VariableRecordType pVariableDatumID)
   {
@@ -78,8 +78,8 @@ public class VariableDatum extends Object implements Serializable
    * {@link VariableDatum#variableDatumValue} is NOT
    * set and this pdu is issued (marshaled), the value used when marshaling this field will be
    * the size of the byte array times 8.
-   * @param bitLength
-   * @return 
+   * @param bitLength number of bits for this field
+   * @return same object to permit progressive setters
    */
   public VariableDatum setVariableDatumLengthInBits(int bitLength)
   {
@@ -95,8 +95,8 @@ public class VariableDatum extends Object implements Serializable
    * {@link VariableDatum#variableDatumValue} is NOT
    * set and this pdu is issued (marshaled), the value used when marshaling this field will be
    * the size of the byte array times 8.
-   * @param byteLength
-   * @return 
+   * @param byteLength number of bytes for this field
+   * @return same object to permit progressive setters
    */
   public VariableDatum setVariableDatumLengthInBytes(int byteLength)
   {
@@ -106,7 +106,7 @@ public class VariableDatum extends Object implements Serializable
   
   /**
    * Getter for {@link VariableDatum#variableDatumLength}
-   * @return 
+   * @return value of interest
    */
   public int getVariableDatumLength()
   {
@@ -121,7 +121,7 @@ public class VariableDatum extends Object implements Serializable
    * highest byte boundary. If {@link VariableDatum#variableDatumLength} is not set when the Pdu is sent, the
    * receiver will read a bit length equal to the size of the byte array times 8.
    * @param pVariableDatumValue
-   * @return this object
+   * @return same object to permit progressive setters
    */
   public VariableDatum setVariableDatumValue(byte[] pVariableDatumValue)
   {
@@ -131,7 +131,7 @@ public class VariableDatum extends Object implements Serializable
 
   /**
    * Getter for {@link VariableDatum#variableDatumValue}
-   * @return 
+   * @return value of interest
    */
   public byte[] getVariableDatumValue()
   {

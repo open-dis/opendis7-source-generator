@@ -26,8 +26,8 @@ public abstract class Generator
     
     /**
      * Constructor
-     * @param pClassDescriptions
-     * @param pLanguageProperties
+     * @param pClassDescriptions of interest
+     * @param pLanguageProperties of interest
      */
     public Generator(Map<String, GeneratedClass> pClassDescriptions, Properties pLanguageProperties)
     {
@@ -92,8 +92,8 @@ public abstract class Generator
     
     /** 
      * returns a string with the first letter capitalized. 
-     * @param aString
-     * @return 
+     * @param aString of interest
+     * @return same string with first letter capitalized
      */
     public String initialCap(String aString)
     {
@@ -104,8 +104,8 @@ public abstract class Generator
     }
     /**
      * returns a string with the first letter lower case.
-     * @param aString
-     * @return 
+     * @param aString of interest
+     * @return same string with first letter lower case
      */
     public String initialLower(String aString)
     {
@@ -118,7 +118,7 @@ public abstract class Generator
     /** This is ugly and brute force, but I don't see an easier way to do it.
      * Given a mask (like 0xf0) we want to know how many bits to shift an
      * integer when masking in a new value. 
-     * @param anAttribute
+     * @param anAttribute of interest
      * @param mask
      * @return 
      */

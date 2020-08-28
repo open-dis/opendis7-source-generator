@@ -206,7 +206,7 @@ public class ClassAttribute
     }
     
     /** 
-     * Returns true if 1) this is a list,  either fixed or variable, and 2) contains a class
+     * Returns true if 1) this is a list, either fixed or variable, and 2) contains a class
      * @return 
      */
     public boolean listIsClass()

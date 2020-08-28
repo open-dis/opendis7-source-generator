@@ -105,7 +105,7 @@ public class ClassAttribute
     protected String enumMarshalSize = "8";
     
     /** Get the name of the class attribute/iname
-     * @return 
+     * @return name
      */
     public String getName()
     {
@@ -118,7 +118,7 @@ public class ClassAttribute
     }
    
     /** get the kind of the attribute (primitive, list, array, etc.)
-     * @return  */
+     * @return attribute kind of interest */
     public ClassAttributeType getAttributeKind()
     {
         return attributeKind;
@@ -130,7 +130,7 @@ public class ClassAttribute
     }
     
     /** Get the type of the field
-     * @return  
+     * @return type 
      */
     public String getType()
     {
@@ -152,8 +152,8 @@ public class ClassAttribute
         initialClass = s;
     }
     
-    /** Comment
-     * @return  
+    /** Comment value
+     * @return comment value 
      */
     public String getComment()
     {
@@ -207,7 +207,7 @@ public class ClassAttribute
     
     /** 
      * Returns true if 1) this is a list,  either fixed or variable, and 2) contains a class
-     * @return 
+     * @return whether list contains a class
      */
     public boolean listIsClass()
     {
@@ -218,8 +218,8 @@ public class ClassAttribute
     }
     
     /**
-     * Set the default value for a primitive type 
-     * @return 
+     * Get the default value for a primitive type 
+     * @return default value
      */
     public String getDefaultValue()
     {
@@ -227,8 +227,8 @@ public class ClassAttribute
     }
     
     /** 
-     * Return the default value for a primitive type
-     * @param pValue
+     * Set the default value for a primitive type
+     * @param pValue value of interest
      */
     public void setDefaultValue(String pValue)
     {
@@ -237,7 +237,7 @@ public class ClassAttribute
     
     /**
      * sets true if the underlying type of a list is a primitive, false if it is a class
-     * @param newValue
+     * @param newValue of interest
      */
     public void setUnderlyingTypeIsPrimitive(boolean newValue)
     {
@@ -246,7 +246,7 @@ public class ClassAttribute
     
     /**
      * returns true if this is a list and the underlying type is a primitive
-     * @return 
+     * @return value of interest
      */
     public boolean getUnderlyingTypeIsPrimitive()
     {
@@ -255,7 +255,7 @@ public class ClassAttribute
     
    /**
      * sets true if the underlying type of a list is a enum
-     * @param newValue
+     * @param newValue of interest
      */
     public void setUnderlyingTypeIsEnum(boolean newValue)
     {
@@ -264,7 +264,7 @@ public class ClassAttribute
     
     /**
      * returns true if this is a list and the underlying type is a primitive
-     * @return 
+     * @return value of interest
      */
     public boolean getUnderlyingTypeIsEnum()
     {
