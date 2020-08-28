@@ -205,7 +205,7 @@ public class IntercomSignalPdu extends RadioCommunicationsFamilyPdu implements S
   /**
    * Getter for {@link SignalPdu#dataLength}
    *
-   * @return value of interestvalue of field
+   * @return value of interest
    */
   public short getDataLength()
   {
