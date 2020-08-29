@@ -31,7 +31,7 @@ public interface Marshaller
     /**
      * 
      * @param dis the input stream to unmarshal from
-     * @return the size of the PDU
+     * @return the size of the marshalled PDU in bytes
      * @throws Exception error during unmarshalling
      */
     int unmarshal(DataInputStream dis) throws Exception;
