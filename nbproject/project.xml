@@ -22,7 +22,10 @@
             <word>classpath</word>
             <word>getters</word>
             <word>html</word>
+            <word>mutator</word>
             <word>txt</word>
+            <word>unmarshal</word>
+            <word>whitespace</word>
         </spellchecker-wordlist>
     </configuration>
 </project>
