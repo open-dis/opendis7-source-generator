@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Project>
-	<Folder FolderName="XML Files" ExtStr="xml;cml;math;rdf;smil;svg;wml">
-		<File FilePath="SISO\SISO-REF-010.xml" HomeFolder="Yes"/>
-		<File FilePath="SISO\SISO-REF-010.xsd" HomeFolder="Yes"/>
+	<Folder FolderName="PDU representations" ExtStr="xml;cml;math;rdf;smil;svg;wml">
 		<File FilePath="dis_7_2012\DIS_7_2012.xml" HomeFolder="Yes"/>
 		<File FilePath="dis_7_2012\DistributedEmissionsFamilyPdus.xml" HomeFolder="Yes"/>
 		<File FilePath="dis_7_2012\EntityInformationFamilyPdus.xml" HomeFolder="Yes"/>
@@ -17,5 +15,8 @@
 		<File FilePath="dis_7_2012\SyntheticEnvironmentFamilyPdus.xml" HomeFolder="Yes"/>
 		<File FilePath="dis_7_2012\WarfareFamilyPdus.xml" HomeFolder="Yes"/>
 	</Folder>
-	<Folder FolderName="XSL Files" ExtStr="xsl;xslt"/>
+	<Folder FolderName="SISO REF-010 enumerations" ExtStr="xsl;xslt;xml;xsd">
+		<File FilePath="SISO\SISO-REF-010.xml" HomeFolder="Yes"/>
+		<File FilePath="SISO\SISO-REF-010.xsd" HomeFolder="Yes"/>
+	</Folder>
 </Project>
