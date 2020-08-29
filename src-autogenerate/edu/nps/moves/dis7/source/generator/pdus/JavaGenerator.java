@@ -593,7 +593,7 @@ public class JavaGenerator extends Generator
         pw.println(
 "  /**\n" +
 "   * Returns size of this serialized (marshalled) object in bytes\n" +
-"   * See <a href=\"https://en.wikipedia.org/wiki/Marshalling_(computer_science)\" target=\"_blank\">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>" +
+"   * See <a href=\"https://en.wikipedia.org/wiki/Marshalling_(computer_science)\" target=\"_blank\">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>\n" +
 "   * @return serialized size in bytes\n" +
 "   */");
         pw.println("public int getMarshalledSize()");
