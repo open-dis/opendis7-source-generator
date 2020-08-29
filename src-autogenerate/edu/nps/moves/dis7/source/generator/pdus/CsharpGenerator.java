@@ -726,7 +726,7 @@ public class CsharpGenerator extends Generator {
      * 
      * @param pw PrintWriter
      * @param aClass of interest 
-     * @param indent 
+     * @param indent number of 4-character whitespace indents
      */
     public void writeBitflagMethods(PrintStringBuffer pw, GeneratedClass aClass, int indent)
     {
@@ -2066,11 +2066,11 @@ class PrintStringBuffer {
 
     /**
      * Indents and prints a line including a newline
-     * @param nrOfIndents Number of 4 space indents to use to indent the code
+     * @param numberOfIndents Number of 4-space indents to use to indent the code
      * @param s line to print
      */
-    public void println(int nrOfIndents, String s) {
-        sb.append(getPaddingOfLength(nrOfIndents)).append(s).append(newline);
+    public void println(int numberOfIndents, String s) {
+        sb.append(getPaddingOfLength(numberOfIndents)).append(s).append(newline);
     }
 
     @Override
