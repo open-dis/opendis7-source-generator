@@ -232,7 +232,7 @@ public class GeneratePdus
         
         checkArguments(sisoXmlFile, language);
         
-        new GeneratePdus(sisoXmlFile, language);   
+        GeneratePdus result = new GeneratePdus(sisoXmlFile, language);  // includes simple list of PDUs
         System.out.println (GeneratePdus.class.getName() + " complete.");
     }
     
