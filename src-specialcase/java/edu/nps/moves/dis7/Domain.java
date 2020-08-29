@@ -111,8 +111,9 @@ public class Domain
   }
 
   /**
-   * Returns size of this serialized object in bytes
-   * @return size in bytes
+   * Returns size of this serialized (marshalled) object in bytes
+   * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
+   * @return serialized size in bytes
    */
     public int getMarshalledSize()
     {
@@ -138,9 +139,11 @@ public class Domain
   }
 
     /**
-     *
+     * Deserializes an object from a DataInputStream.
      * @param dis DataInputStream
-     * @return marshalled size
+     * @see java.io.DataInputStream
+     * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
+     * @return marshalled serialized size in bytes
      */
     public int unmarshal(DataInputStream dis)
   {
@@ -151,9 +154,10 @@ public class Domain
   }
 
     /**
-     *
+     * Deserializes an object from a ByteBuffer.
+     * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
      * @param buff The ByteBuffer at the position to begin writing
-     * @return marshalled size
+     * @return marshalled serialized size in bytes
      */
     public int unmarshal(ByteBuffer buff)
   {

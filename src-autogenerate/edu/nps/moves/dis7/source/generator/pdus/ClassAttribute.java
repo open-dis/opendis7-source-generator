@@ -47,8 +47,8 @@ public class ClassAttribute
     
     protected boolean fixedLength = false;
     
-    /** If this is a variable list length field, when unmarshalling we need to know how many
-     * to unmarshal. This is the name of the filed that contains that count.
+    /** If this is a variable list length field, when unmarshalling we need to know how many list items
+     * to unmarshal. This is the name of the field that contains that count.
      */
     protected String countFieldName;
     

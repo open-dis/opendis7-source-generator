@@ -14,10 +14,11 @@ import java.nio.ByteBuffer;
  */
 public interface Marshaller
 {
-    /**
-     * 
-     * @return size in bytes of a value from a stream
-     */
+  /**
+   * Returns size of this serialized (marshalled) object in bytes
+   * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
+   * @return serialized size in bytes
+   */
     int getMarshalledSize();
     
     /**

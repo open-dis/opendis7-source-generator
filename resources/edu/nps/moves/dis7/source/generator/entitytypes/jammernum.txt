@@ -47,8 +47,9 @@ public enum %s implements edu.nps.moves.dis7.%s
     Velocity;
 
   /**
-   * Returns size of this serialized object in bytes
-   * @return size in bytes
+   * Returns size of this serialized (marshalled) object in bytes
+   * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
+   * @return serialized size in bytes
    */  
     @Override
     public int getMarshalledSize()

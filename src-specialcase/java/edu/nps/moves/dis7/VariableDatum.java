@@ -33,8 +33,9 @@ public class VariableDatum extends Object implements Serializable
   private byte[] padding = new byte[0]; // pad to 64-bit boundary
 
   /**
-   * Returns size of this serialized object in bytes
-   * @return size in bytes
+   * Returns size of this serialized (marshalled) object in bytes
+   * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
+   * @return serialized size in bytes
    */
   public int getMarshalledSize()
   {
@@ -145,7 +146,7 @@ public class VariableDatum extends Object implements Serializable
   /**
    * Serializes an object to a DataOutputStream.
    *
-   * @throws java.lang.Exception
+   * @throws java.lang.Exception if something goes wrong
    * @see java.io.DataOutputStream
    * @param dos The DataOutputStream
    */
@@ -170,12 +171,12 @@ public class VariableDatum extends Object implements Serializable
   }
 
   /**
-   * Unserializes an object from a DataInputStream.
-   *
-   * @throws java.lang.Exception
+   * Deserializes an object from a DataInputStream.
+   * @param dis DataInputStream
    * @see java.io.DataInputStream
-   * @param dis The DataInputStream
-   * @return marshalled size
+   * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
+   * @return marshalled serialized size in bytes
+   * @throws java.lang.Exception if something goes wrong
    */
   public int unmarshal(DataInputStream dis) throws Exception
   {
@@ -229,8 +230,9 @@ public class VariableDatum extends Object implements Serializable
    *
    * @throws java.nio.BufferUnderflowException if buff is too small
    * @see java.nio.ByteBuffer
+   * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
    * @param buff The ByteBuffer at the position to begin reading
-   * @return marshalled size
+   * @return marshalled serialized size in bytes
    * @throws Exception ByteBuffer-generated exception
    */
   public int unmarshal(java.nio.ByteBuffer buff) throws Exception

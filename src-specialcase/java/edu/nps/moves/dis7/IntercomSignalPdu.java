@@ -65,8 +65,9 @@ public class IntercomSignalPdu extends RadioCommunicationsFamilyPdu implements S
   }
 
   /**
-   * Returns the size of this serialized object in bytes
-   * @return size in bytes
+   * Returns size of this serialized (marshalled) object in bytes
+   * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
+   * @return serialized size in bytes
    */
   @Override
   public int getMarshalledSize()
@@ -259,7 +260,7 @@ public class IntercomSignalPdu extends RadioCommunicationsFamilyPdu implements S
   /**
    * Serializes an object to a DataOutputStream.
    *
-     * @throws java.lang.Exception
+   * @throws java.lang.Exception if something goes wrong
    * @see java.io.DataOutputStream
    * @param dos The DataOutputStream
    */
@@ -293,12 +294,12 @@ public class IntercomSignalPdu extends RadioCommunicationsFamilyPdu implements S
   }
 
   /**
-   * Unserializes an object from a DataInputStream.
-   *
-   * @throws java.lang.Exception
+   * Deserializes an object from a DataInputStream.
+   * @param dis DataInputStream
    * @see java.io.DataInputStream
-   * @param dis The DataInputStream
-   * @return marshalled size
+   * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
+   * @return marshalled serialized size in bytes
+   * @throws java.lang.Exception if something goes wrong
    */
   @Override
   public int unmarshal(DataInputStream dis) throws Exception
@@ -371,8 +372,9 @@ public class IntercomSignalPdu extends RadioCommunicationsFamilyPdu implements S
    *
    * @throws java.nio.BufferUnderflowException if buff is too small
    * @see java.nio.ByteBuffer
+   * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
    * @param buff The ByteBuffer at the position to begin reading
-   * @return marshalled size
+   * @return marshalled serialized size in bytes
    * @throws Exception ByteBuffer-generated exception
    */
   @Override

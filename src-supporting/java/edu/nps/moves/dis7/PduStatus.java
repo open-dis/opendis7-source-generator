@@ -85,8 +85,9 @@ public class PduStatus
   }
 
   /**
-   * Returns size of this serialized object in bytes
-   * @return size in bytes
+   * Returns size of this serialized (marshalled) object in bytes
+   * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
+   * @return serialized size in bytes
    */
   public int getMarshalledSize()
   {
@@ -98,6 +99,14 @@ public class PduStatus
     dos.writeByte(value);
   }
 
+    /**
+     * Deserializes an object from a DataInputStream.
+     * @param dis DataInputStream
+     * @see java.io.DataInputStream
+     * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
+     * @return marshalled serialized size in bytes
+     * @throws IOException in case something goes wrong
+     */
   public int unmarshal(DataInputStream dis) throws IOException
   {
     value = dis.readByte();
@@ -109,6 +118,14 @@ public class PduStatus
     buff.put(value);
   }
 
+    /**
+     * Unpacks a Pdu from the underlying data.
+     *
+     * @see java.nio.ByteBuffer
+     * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
+     * @param buff The ByteBuffer at the position to begin writing
+     * @return marshalled serialized size in bytes
+     */
   public int unmarshal(ByteBuffer buff)
   {
     value = buff.get();

@@ -61,8 +61,9 @@ public abstract class DisBitSet extends BitSet implements Marshaller
     }
 
   /**
-   * Returns size of this serialized object in bytes
-   * @return size in bytes
+   * Returns size of this serialized (marshalled) object in bytes
+   * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
+   * @return serialized size in bytes
    */
     @Override
     public int getMarshalledSize()
@@ -98,6 +99,13 @@ public abstract class DisBitSet extends BitSet implements Marshaller
         return reverse(ba); // BitSet will return Little-Endian array, network byte order requires reverse
     }
 
+    /**
+     * Deserializes an object from a DataInputStream.
+     * @param dis DataInputStream
+     * @see java.io.DataInputStream
+     * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
+     * @return marshalled serialized size in bytes
+     */
     @Override
     public int unmarshal(DataInputStream dis)
     {

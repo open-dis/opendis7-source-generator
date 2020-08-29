@@ -416,7 +416,6 @@ public class JavaGenerator extends Generator
             }
             String attributeType;
             int listLength;
-            String listLengthString;
             String clsnm;
             
             String fieldaccess = "protected"; // allow subclassing anAttribute.isHidden()? "private":"protected";
@@ -473,21 +472,19 @@ public class JavaGenerator extends Generator
                 case PRIMITIVE_LIST:
                     attributeType = anAttribute.getType();
                     listLength = anAttribute.getListLength();
-                    listLengthString = "" + listLength;
 
                     if (anAttribute.getComment() != null) {
                         pw.println("   /** " + anAttribute.getComment() + " */");
                     }
 
                     pw.println("   " + fieldaccess + " " + types.getProperty(attributeType) + "[]  " + anAttribute.getName() + " = new "
-                        + types.getProperty(attributeType) + "[" + listLengthString + "]" + "; \n");
+                        + types.getProperty(attributeType) + "[" + listLength + "]" + "; \n");
                     break;
 
                 // The attribute is a variable list of some kind. 
                 case OBJECT_LIST:
                     attributeType = anAttribute.getType();
                     listLength = anAttribute.getListLength();
-                    listLengthString = "" + listLength;
 
                     if (anAttribute.getComment() != null)
                         pw.println("   /** " + anAttribute.getComment() + " */");
@@ -595,8 +592,9 @@ public class JavaGenerator extends Generator
         //pw.println("@Override");
         pw.println(
 "  /**\n" +
-"   * Returns size of this serialized object in bytes\n" +
-"   * @return size in bytes\n" +
+"   * Returns size of this serialized (marshalled) object in bytes\n" +
+"   * See <a href=\"https://en.wikipedia.org/wiki/Marshalling_(computer_science)\" target=\"_blank\">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>" +
+"   * @return serialized size in bytes\n" +
 "   */");
         pw.println("public int getMarshalledSize()");
         pw.println("{");
@@ -1024,8 +1022,9 @@ public class JavaGenerator extends Generator
         pw.println(" * Deserializes an object from a DataInputStream.");
         pw.println(" * @throws java.lang.Exception if something goes wrong");
         pw.println(" * @see java.io.DataInputStream");
+        pw.println(" * See <a href=\"https://en.wikipedia.org/wiki/Marshalling_(computer_science)\" target=\"_blank\">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>");
         pw.println(" * @param dis the InputStream");
-        pw.println(" * @return unmarshalled size");
+        pw.println(" * @return marshalled serialized size in bytes");
         pw.println(" */");
 
         pw.println("public int unmarshal(DataInputStream dis) throws Exception");
@@ -1286,8 +1285,9 @@ public class JavaGenerator extends Generator
         pw.println(" * Unpacks a Pdu from the underlying data.");
         pw.println(" * @throws java.nio.BufferUnderflowException if buff is too small");
         pw.println(" * @see java.nio.ByteBuffer");
+        pw.println(" * See <a href=\"https://en.wikipedia.org/wiki/Marshalling_(computer_science)\" target=\"_blank\">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>");
         pw.println(" * @param buff The ByteBuffer at the position to begin reading");
-        pw.println(" * @return marshalled size");
+        pw.println(" * @return marshalled serialized size in bytes");
         pw.println(" * @throws Exception ByteBuffer-generated exception");
         pw.println(" */");
         pw.println("public int unmarshal(java.nio.ByteBuffer buff) throws Exception"); // throws EnumNotFoundException");

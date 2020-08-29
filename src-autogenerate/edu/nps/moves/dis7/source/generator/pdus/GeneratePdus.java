@@ -766,7 +766,7 @@ public class GeneratePdus
             currentClassAttribute.setAttributeKind(ClassAttribute.ClassAttributeType.OBJECT_LIST);
             for (int idx = 0; idx < attributes.getLength(); idx++) {
                 // Variable list length fields require a name of another field that contains how many
-                // there are. This is used in unmarshalling.
+                // list items there are. This is used in unmarshalling.
                 if (attributes.getQName(idx).equalsIgnoreCase(COUNTFIELDNAME)) {
                     currentClassAttribute.setCountFieldName(attributes.getValue(idx));
 

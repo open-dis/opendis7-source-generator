@@ -187,4 +187,16 @@ public class DisTime
         t = t / 1000l;   // NB: integer division, convert milliseconds to seconds
         return t;
     }
+    /**
+     * Convert timestamp value to string for logging and diagnostics
+     * @param timeStamp value in milliseconds
+     * @see GregorianCalendar
+     * @return string value provided by GregorianCalendar
+     */
+    public static String timeStampToString(int timeStamp)
+    {
+        GregorianCalendar newCalendar = new GregorianCalendar();
+        newCalendar.setTimeInMillis(timeStamp);
+        return newCalendar.toString();
+    }
 }
