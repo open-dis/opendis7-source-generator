@@ -5,6 +5,8 @@
 
 package edu.nps.moves.dis7;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -197,6 +199,7 @@ public class DisTime
     {
         GregorianCalendar newCalendar = new GregorianCalendar();
         newCalendar.setTimeInMillis(timeStamp);
-        return newCalendar.toString();
+        DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+        return formatter.format(newCalendar.getTime());
     }
 }
