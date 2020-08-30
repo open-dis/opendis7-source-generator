@@ -23,7 +23,7 @@ The first describes the DIS protocol in detail -- specifying application algorit
 
 The SISO specification is issued in several file formats.  One of these is XML and that file is used directly by this project.  The IEEE specification is textual and preliminary work was required to describe its contents in several XML files.  Both the SISO file and the IEEE-based XML files used as input to this project are found in the **`XML`** directory.
 
-A **`SAX`** ("Simple API for XML") Java implementation is used to process the XML input files.  String templates for the various output classes are used to define the basic structure of the generated code, and these files are found in the **`resources/edu/moves/dis7/source/generator`** directory.
+A **`SAX`** ("Simple API for XML") Java implementation is used to process the XML input files.  String templates for the various output classes are used to define the basic structure of the generated code, and these files are found in the **`stringTemplates/edu/moves/dis7/source/generator`** directory.
 
 <h3>Development Environment</h3>
 
@@ -152,7 +152,7 @@ The initial project directory looks like:
 ```
 |-- ./libs
 |-- ./nbproject
-|-- ./resources
+|-- ./stringTemplates
 |   `-- ./edu
 |       `-- ./nps
 |           `-- ./moves
@@ -189,7 +189,7 @@ After project execution, the directory tree will also contain:
 
 1. **libs** -- third-party Java libraries used by this project
 2. **nbproject** -- files supporting the Netbeans project structure
-3. **resources** -- supporting files, such as string templates
+3. **stringTemplates** -- supporting files, such as string templates
 4. **src** -- generator Java source files
 5. **src-generated** -- Java source file output from the source generator
 6. **src-specialcase** -- required DIS class files which could not be described by XML
