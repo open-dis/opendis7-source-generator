@@ -217,7 +217,7 @@
                 <section name="edu/nps/moves/dis7/jammers">
                     <attribute name="Sealed" value="true"/>
                 </section>
-                <section name="edu/nps/moves/dis7/objecttypes">
+                <section name="edu/nps/moves/dis7/objectTypes">
                     <attribute name="Sealed" value="true"/>
                 </section>
                 <section name="edu/nps/moves/dis7/source/generator">
@@ -261,7 +261,7 @@
                 <section name="edu/nps/moves/dis7/jammers">
                     <attribute name="Sealed" value="true"/>
                 </section>
-                <section name="edu/nps/moves/dis7/objecttypes">
+                <section name="edu/nps/moves/dis7/objectTypes">
                     <attribute name="Sealed" value="true"/>
                 </section>
                 <section name="edu/nps/moves/dis7/source/generator">
@@ -605,8 +605,8 @@
         <echo message="generate-source-code 4 make object types, edu.nps.moves.dis7.source.generator.entitytypes.GenerateObjectTypes"/>
         <java classname="edu.nps.moves.dis7.source.generator.entitytypes.GenerateObjectTypes">
             <arg value="xml/SISO/${SISO-REF-010.xml}"/>
-            <arg value="src-generated/java/edu/nps/moves/dis7/objecttypes"/>
-            <arg value="edu.nps.moves.dis7.objecttypes"/>
+            <arg value="src-generated/java/edu/nps/moves/dis7/objectTypes"/>
+            <arg value="edu.nps.moves.dis7.objectTypes"/>
             <classpath>
                 <pathelement path="build/classes"/>
                 <pathelement path="lib/commons-io-2.6.jar"/>
@@ -680,7 +680,7 @@
                 <section name="edu/nps/moves/dis7/jammers">
                     <attribute name="Sealed" value="true"/>
                 </section>
-                <section name="edu/nps/moves/dis7/objecttypes">
+                <section name="edu/nps/moves/dis7/objectTypes">
                     <attribute name="Sealed" value="true"/>
                 </section>
                 <section name="edu/nps/moves/dis7/source/generator">
