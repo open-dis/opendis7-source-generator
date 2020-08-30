@@ -27,7 +27,7 @@ import org.apache.commons.io.FileUtils;
 
 /**
  * GenerateEntityTypes.java created on Jul 22, 2019
- * MOVES Institute Naval Postgraduate School, Monterey, CA, USA www.nps.edu
+ * MOVES Institute, Naval Postgraduate School (NPS), Monterey California USA https://www.nps.edu
  *
  * @author Don McGregor, Mike Bailey and Don Brutzman
  * @version $Id$

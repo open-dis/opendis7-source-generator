@@ -21,7 +21,7 @@ import org.xml.sax.helpers.DefaultHandler;
 import java.util.List;
 
 /**
- * GenerateOpenDis7JavaPackages.java created on Aug 6, 2019 MOVES Institute Naval Postgraduate School, Monterey, CA, USA www.nps.edu
+ * GenerateOpenDis7JavaPackages.java created on Aug 6, 2019 MOVES Institute, Naval Postgraduate School (NPS), Monterey California USA https://www.nps.edu
  *
  * @author Don McGregor, Mike Bailey and Don Brutzman
  * @version $Id$

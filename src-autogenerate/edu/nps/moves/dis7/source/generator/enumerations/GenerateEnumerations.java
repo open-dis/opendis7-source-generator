@@ -26,7 +26,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
- * GenerateEnumerations.java created on Apr 16, 2019 MOVES Institute Naval Postgraduate School, Monterey, CA, USA www.nps.edu
+ * GenerateEnumerations.java created on Apr 16, 2019 MOVES Institute, Naval Postgraduate School (NPS), Monterey California USA https://www.nps.edu
  *
  * @author Don McGregor, Mike Bailey and Don Brutzman
  * @version $Id$

@@ -7,7 +7,7 @@ package edu.nps.moves.dis7.source.generator;
 
 /**
  * GenerateOpenDis7JavaPackages.java created on Jul 17, 2019
- * MOVES Institute Naval Postgraduate School, Monterey, CA, USA www.nps.edu
+ * MOVES Institute, Naval Postgraduate School (NPS), Monterey California USA https://www.nps.edu
  *
  * @author Don McGregor, Mike Bailey and Don Brutzman
  * @version $Id$
@@ -24,13 +24,13 @@ public class GenerateOpenDis7JavaPackages
   static String enumOutputPath       = "src-generated/java/edu/nps/moves/dis7/enumerations";
   static String pduOutputPath        = "src-generated/java";
   static String jammerOutputPath     = "src-generated/java/edu/nps/moves/dis7/jammers";
-  static String objectTypeOutputPath = "src-generated/java/edu/nps/moves/dis7/objecttypes";
+  static String objectTypeOutputPath = "src-generated/java/edu/nps/moves/dis7/objectTypes";
   static String entitiesOutputPath   = "src-generated/java/edu/nps/moves/dis7/entities";
 
   static String enumPackage       = "edu.nps.moves.dis7.enumerations";
   static String pduPackage        = "edu.nps.moves.dis7";
   static String jammerPackage     = "edu.nps.moves.dis7.jammers";
-  static String objectTypePackage = "edu.nps.moves.dis7.objecttypes";
+  static String objectTypePackage = "edu.nps.moves.dis7.objectTypes";
   static String entitiesPackage   = "edu.nps.moves.dis7.entities";
   // @formatter:on
 
