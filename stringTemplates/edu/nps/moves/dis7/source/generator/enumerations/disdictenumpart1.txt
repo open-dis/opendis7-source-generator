@@ -1,0 +1,6 @@
+/* Generated from the XML, %s */
+package %s;
+
+/* %s */
+public enum %s
+{

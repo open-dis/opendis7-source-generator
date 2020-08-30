@@ -1,0 +1,14 @@
+package %s;
+
+import edu.nps.moves.dis7.*;
+import edu.nps.moves.dis7.enumerations.*;
+
+/**
+ * %s
+ *
+ * ObjectType uid: %s
+ */
+public class %s extends ObjectType
+{
+    public %s()
+    {

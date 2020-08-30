@@ -1,0 +1,35 @@
+
+    private int value;
+    private final String description;
+
+    %s(int value, String description)
+    {
+        this.value = value;
+        this.description = description;
+    }
+
+    public int getValue()
+    {
+        return value;
+    }
+
+    public String getDescription()
+    {
+        return description;
+    }
+    
+    public static int getEnumBitWidth()
+    {
+      return %s;
+    }
+
+    public static %s getEnumForValue(int i)
+    {
+       for(%s val: %s.values()) {
+          if(val.getValue()==i)
+              return val;
+       }
+       System.err.println("No enumeration found for value " + i + " of enumeration %s");
+       return null;
+    }
+
