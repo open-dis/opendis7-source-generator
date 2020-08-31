@@ -18,17 +18,19 @@ public class GenerateOpenDis7JavaPackages
     
   // shared static defaults
   public static final String      DEFAULT_LANGUAGE = "java";
+  /** xml/SISO/SISO-REF-010.xml */
   public static final String DEFAULT_SISO_XML_FILE = "xml/SISO/SISO-REF-010.xml";
+  /** xml/dis_7_2012/DIS_7_2012.xml */
   public static final String  DEFAULT_PDU_XML_FILE = "xml/dis_7_2012/DIS_7_2012.xml";
 
   static String enumOutputPath       = "src-generated/java/edu/nps/moves/dis7/enumerations";
-  static String pduOutputPath        = "src-generated/java";
+  static String pduOutputPath        = "src-generated/java/edu/nps/moves/dis7/pdus";
   static String jammerOutputPath     = "src-generated/java/edu/nps/moves/dis7/jammers";
   static String objectTypeOutputPath = "src-generated/java/edu/nps/moves/dis7/objectTypes";
   static String entitiesOutputPath   = "src-generated/java/edu/nps/moves/dis7/entities";
 
   static String enumPackage       = "edu.nps.moves.dis7.enumerations";
-  static String pduPackage        = "edu.nps.moves.dis7";
+  static String pduPackage        = "edu.nps.moves.dis7.pdus";
   static String jammerPackage     = "edu.nps.moves.dis7.jammers";
   static String objectTypePackage = "edu.nps.moves.dis7.objectTypes";
   static String entitiesPackage   = "edu.nps.moves.dis7.entities";
@@ -49,15 +51,15 @@ public class GenerateOpenDis7JavaPackages
 
     // JAMMERS
     System.out.println("------------- Generating jammers in "+jammerPackage+" -------------");
-    edu.nps.moves.dis7.source.generator.entitytypes.GenerateJammers.main(new String[]{DEFAULT_SISO_XML_FILE, jammerOutputPath, jammerPackage});
+    edu.nps.moves.dis7.source.generator.entityTypes.GenerateJammers.main(new String[]{DEFAULT_SISO_XML_FILE, jammerOutputPath, jammerPackage});
 
     // Object types
     System.out.println("------------- Generating object types in "+objectTypePackage+" -------------");
-    edu.nps.moves.dis7.source.generator.entitytypes.GenerateObjectTypes.main(new String[]{DEFAULT_SISO_XML_FILE, objectTypeOutputPath, objectTypePackage});
+    edu.nps.moves.dis7.source.generator.entityTypes.GenerateObjectTypes.main(new String[]{DEFAULT_SISO_XML_FILE, objectTypeOutputPath, objectTypePackage});
 
     //ENTITIES
     System.out.println("------------- Generating entity types in "+entitiesPackage+" -------------");
-    edu.nps.moves.dis7.source.generator.entitytypes.GenerateEntityTypes.main(new String[]{DEFAULT_SISO_XML_FILE, entitiesOutputPath, entitiesPackage});
+    edu.nps.moves.dis7.source.generator.entityTypes.GenerateEntityTypes.main(new String[]{DEFAULT_SISO_XML_FILE, entitiesOutputPath, entitiesPackage});
 
     System.out.println("------------- DIS7 source generation complete -------------");
 

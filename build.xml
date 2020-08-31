@@ -84,13 +84,13 @@
         <antcall target="clean"/>
         <antcall target="clean-all-generated-jars-javadoc"/>
         <antcall target="init"/>
-        <echo message="================================================================================="/>
+        <echo message="=================================================================================="/>
         <echo message="compile generator classes (given limited path entries in project classpath)"/>
         <antcall target="compile"/>
         <mkdir dir="dist" description="ensure dist directory present"/>
         <antcall target="generate-source-code"/>
         
-        <echo message="compile src, src-generated, src-specialcase and src-supporting"/>
+        <echo message="compile source directories: src, src-generated, src-specialcase and src-supporting"/>
         <javac destdir="build/classes"
                  debug="on"
                 source="1.8"
@@ -123,7 +123,7 @@
         <echo message="build all complete"/>
     </target>
     
-    <target name="clean.pduLog" description="clean recorded pduLog files">
+    <target name="clean-pduLog" description="clean recorded pduLog files">
         <delete verbose="true">
             <fileset dir="pduLog">
                 <include name="*.dislog"/>
@@ -561,7 +561,7 @@
     <property name="SISO-REF-010.xml" value="SISO-REF-010.xml"/>
     
     <target name="generate-source-code">
-        <echo message="================================================================================="/>
+        <echo message="=================================================================================="/>
         <echo message="generate-source-code 1 make enums,         edu.nps.moves.dis7.source.generator.enumerations.GenerateEnumerations"/>
         <java classname="edu.nps.moves.dis7.source.generator.enumerations.GenerateEnumerations">
             <arg value="xml/SISO/${SISO-REF-010.xml}"/>
@@ -574,13 +574,13 @@
         </java>
         <!-- <antcall target="compile"/>incremental compilation checks -->
         
-        <echo message="================================================================================="/>
+        <echo message="=================================================================================="/>
         <echo message="generate-source-code 2 make pdus,         edu.nps.moves.dis7.source.generator.pdus.GeneratePdus"/>
         <java classname="edu.nps.moves.dis7.source.generator.pdus.GeneratePdus">
             <arg value="xml/dis_7_2012/DIS_7_2012.xml"/>
             <arg value="java"/>
             <jvmarg value="-Dxmlpg.generatedSourceDir=src-generated/java"/>
-            <jvmarg value="-Dxmlpg.package=edu.nps.moves.dis7"/>
+            <jvmarg value="-Dxmlpg.package=edu.nps.moves.dis7.pdus"/>
             <classpath>
                 <pathelement path="build/classes"/>
                 <pathelement path="lib/commons-io-2.6.jar"/>
@@ -588,9 +588,9 @@
         </java>
         <!-- not yet ready to compile here, more autogeneration needed -->
         
-        <echo message="================================================================================="/>
-        <echo message="generate-source-code 3 make jammers,      edu.nps.moves.dis7.source.generator.entitytypes.GenerateJammers"/>
-        <java classname="edu.nps.moves.dis7.source.generator.entitytypes.GenerateJammers">
+        <echo message="=================================================================================="/>
+        <echo message="generate-source-code 3 make jammers,      edu.nps.moves.dis7.source.generator.entityTypes.GenerateJammers"/>
+        <java classname="edu.nps.moves.dis7.source.generator.entityTypes.GenerateJammers">
             <arg value="xml/SISO/${SISO-REF-010.xml}"/>
             <arg value="src-generated/java/edu/nps/moves/dis7/jammers"/>
             <arg value="edu.nps.moves.dis7.jammers"/>
@@ -601,9 +601,9 @@
         </java>
         <!-- not yet ready to compile here, more autogeneration needed -->
         
-        <echo message="================================================================================="/>
-        <echo message="generate-source-code 4 make object types, edu.nps.moves.dis7.source.generator.entitytypes.GenerateObjectTypes"/>
-        <java classname="edu.nps.moves.dis7.source.generator.entitytypes.GenerateObjectTypes">
+        <echo message="=================================================================================="/>
+        <echo message="generate-source-code 4 make object types, edu.nps.moves.dis7.source.generator.entityTypes.GenerateObjectTypes"/>
+        <java classname="edu.nps.moves.dis7.source.generator.entityTypes.GenerateObjectTypes">
             <arg value="xml/SISO/${SISO-REF-010.xml}"/>
             <arg value="src-generated/java/edu/nps/moves/dis7/objectTypes"/>
             <arg value="edu.nps.moves.dis7.objectTypes"/>
@@ -615,9 +615,9 @@
         <!-- <antcall target="compile"/> incremental compilation checks -->
         <!-- must compile to gain access to necesary classes for generate-source-code 5 -->
         
-        <echo message="================================================================================="/>
-        <echo message="generate-source-code 5 make entities,     edu.nps.moves.dis7.source.generator.entitytypes.GenerateEntityTypes"/>
-        <java classname="edu.nps.moves.dis7.source.generator.entitytypes.GenerateEntityTypes">
+        <echo message="=================================================================================="/>
+        <echo message="generate-source-code 5 make entities,     edu.nps.moves.dis7.source.generator.entityTypes.GenerateEntityTypes"/>
+        <java classname="edu.nps.moves.dis7.source.generator.entityTypes.GenerateEntityTypes">
             <arg value="xml/SISO/${SISO-REF-010.xml}"/>
             <arg value="src-generated/java/edu/nps/moves/dis7/entities"/>
             <arg value="edu.nps.moves.dis7.entities"/>
@@ -630,7 +630,7 @@
             </classpath>
         </java>
         <echo message="generate-source-code complete"/>
-        <echo message="================================================================================="/>
+        <echo message="=================================================================================="/>
     </target>
     
     <target name="javadoc">

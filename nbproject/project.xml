@@ -9,7 +9,7 @@
                 <root id="src.src-autogenerate.dir"/>
                 <root id="src.java.dir"/>
                 <root id="src.java2.dir"/>
-                <root id="src.resources.dir"/>
+                <root id="src.stringTemplates.dir"/>
                 <root id="src.xml.dir"/>
             </source-roots>
             <test-roots>

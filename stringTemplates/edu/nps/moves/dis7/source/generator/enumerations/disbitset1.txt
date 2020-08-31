@@ -1,6 +1,6 @@
 package %s;
 
-import edu.nps.moves.dis7.*;
+import edu.nps.moves.dis7.pdus.*;
 
 /**
  * Generated from XML, %s<br>

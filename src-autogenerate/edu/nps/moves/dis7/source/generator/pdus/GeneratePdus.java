@@ -106,7 +106,7 @@ public class GeneratePdus
     /** Objective-C properties */
     Properties objcProperties = new Properties();
     
-    /** Javascript properties */
+    /** JavaScript properties */
     Properties javascriptProperties = new Properties();
 
     /** source code generation options */
@@ -232,7 +232,7 @@ public class GeneratePdus
         
         checkArguments(sisoXmlFile, language);
         
-        GeneratePdus result = new GeneratePdus(sisoXmlFile, language);  // includes simple list of PDUs
+        GeneratePdus generatePdusResult = new GeneratePdus(sisoXmlFile, language);  // includes simple list of PDUs
         System.out.println (GeneratePdus.class.getName() + " complete.");
     }
     

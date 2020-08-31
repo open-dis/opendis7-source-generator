@@ -1,7 +1,7 @@
 package %s;
 
-import edu.nps.moves.dis7.EntityType;
-import edu.nps.moves.dis7.Domain;
+import edu.nps.moves.dis7.pdus.EntityType;
+import edu.nps.moves.dis7.pdus.Domain;
 
 public class EntityTypeFactory {
 

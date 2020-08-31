@@ -1,3 +1,0 @@
-  /**
-   * %sUse {@link %s} values for this field
-   */

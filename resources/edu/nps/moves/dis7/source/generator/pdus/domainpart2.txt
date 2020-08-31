@@ -1,1 +1,0 @@
-  public static Domain inst(%s d) { return _inst(d); }  // %s

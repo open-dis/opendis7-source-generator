@@ -667,7 +667,8 @@ public class GenerateEnumerations
                 sb.append(String.format(enumTemplate2, "SELF", "0", elementName + " details not found in SISO spec"));
                 System.err.println(elementName + " error while generating enumerations: SELF details not found in SISO spec");
             }
-            else{
+            else
+            {
                 Properties aliases = aliasNames;
                 if (el.elems.size() > 2000)
                 {

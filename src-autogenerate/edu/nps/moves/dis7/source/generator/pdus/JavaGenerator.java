@@ -14,7 +14,6 @@ import java.nio.file.Paths;
 
 import edu.nps.moves.dis7.source.generator.pdus.ClassAttribute.ClassAttributeType;
 
-
 /**
  * Given the input object, something of an abstract syntax tree, this generates a source code file in the java language. It has ivars, getters, setters, and serialization/deserialization methods.
  *
@@ -34,7 +33,7 @@ public class JavaGenerator extends Generator
     Properties types = new Properties();
 
     /**
-     * What primitive types should be marshalled as. This may be different from the Java get/set methods, ie an unsigned short might have ints as the getter/setter, but is marshalled as a short.
+     * What primitive types should be marshalled as. This may be different from the Java get/set methods, i.e. an unsigned short might have ints as the getter/setter, but is marshalled as a short.
      */
     Properties marshalTypes = new Properties();
 
@@ -92,61 +91,61 @@ public class JavaGenerator extends Generator
         // a properties file, but there's only a dozen or so and an external props file
         // would just add some complexity.
         // dont quite get this.  looks in error
-        types.setProperty("uint8", "byte");
-        types.setProperty("uint16", "short");
-        types.setProperty("uint32", "int");
-        types.setProperty("uint64", "long");
-        types.setProperty("int8", "byte");
-        types.setProperty("int16", "short");
-        types.setProperty("int32", "int");
-        types.setProperty("int64", "long");
+        types.setProperty("uint8",   "byte");
+        types.setProperty("uint16",  "short");
+        types.setProperty("uint32",  "int");
+        types.setProperty("uint64",  "long");
+        types.setProperty("int8",    "byte");
+        types.setProperty("int16",   "short");
+        types.setProperty("int32",   "int");
+        types.setProperty("int64",   "long");
         types.setProperty("float32", "float");
         types.setProperty("float64", "double");
     
         // Set up the mapping between Open-DIS primitive types and marshal types.       
-        marshalTypes.setProperty("uint8", "byte");
-        marshalTypes.setProperty("uint16", "short");
-        marshalTypes.setProperty("uint32", "int");
-        marshalTypes.setProperty("uint64", "long");
-        marshalTypes.setProperty("int8", "byte");
-        marshalTypes.setProperty("int16", "short");
-        marshalTypes.setProperty("int32", "int");
-        marshalTypes.setProperty("int64", "long");
+        marshalTypes.setProperty("uint8",   "byte");
+        marshalTypes.setProperty("uint16",  "short");
+        marshalTypes.setProperty("uint32",  "int");
+        marshalTypes.setProperty("uint64",  "long");
+        marshalTypes.setProperty("int8",    "byte");
+        marshalTypes.setProperty("int16",   "short");
+        marshalTypes.setProperty("int32",   "int");
+        marshalTypes.setProperty("int64",   "long");
         marshalTypes.setProperty("float32", "float");
         marshalTypes.setProperty("float64", "double");
 
         // Unmarshalling types
-        unmarshalTypes.setProperty("uint8", "UnsignedByte");
-        unmarshalTypes.setProperty("uint16", "UnsignedShort");
-        unmarshalTypes.setProperty("uint32", "int");
-        unmarshalTypes.setProperty("uint64", "long");
-        unmarshalTypes.setProperty("int8", "byte");
-        unmarshalTypes.setProperty("int16", "short");
-        unmarshalTypes.setProperty("int32", "int");
-        unmarshalTypes.setProperty("int64", "long");
+        unmarshalTypes.setProperty("uint8",   "UnsignedByte");
+        unmarshalTypes.setProperty("uint16",  "UnsignedShort");
+        unmarshalTypes.setProperty("uint32",  "int");
+        unmarshalTypes.setProperty("uint64",  "long");
+        unmarshalTypes.setProperty("int8",    "byte");
+        unmarshalTypes.setProperty("int16",   "short");
+        unmarshalTypes.setProperty("int32",   "int");
+        unmarshalTypes.setProperty("int64",   "long");
         unmarshalTypes.setProperty("float32", "float");
         unmarshalTypes.setProperty("float64", "double");
 
         // How big various primitive types are
-        primitiveSizes.setProperty("uint8", "1");
-        primitiveSizes.setProperty("uint16", "2");
-        primitiveSizes.setProperty("uint32", "4");
-        primitiveSizes.setProperty("uint64", "8");
-        primitiveSizes.setProperty("int8", "1");
-        primitiveSizes.setProperty("int16", "2");
-        primitiveSizes.setProperty("int32", "4");
-        primitiveSizes.setProperty("int64", "8");
+        primitiveSizes.setProperty("uint8",   "1");
+        primitiveSizes.setProperty("uint16",  "2");
+        primitiveSizes.setProperty("uint32",  "4");
+        primitiveSizes.setProperty("uint64",  "8");
+        primitiveSizes.setProperty("int8",    "1");
+        primitiveSizes.setProperty("int16",   "2");
+        primitiveSizes.setProperty("int32",   "4");
+        primitiveSizes.setProperty("int64",   "8");
         primitiveSizes.setProperty("float32", "4");
         primitiveSizes.setProperty("float64", "8");
         
-        primitiveSizesMap.put("uint8", 1);
-        primitiveSizesMap.put("uint16", 2);
-        primitiveSizesMap.put("uint32", 4);
-        primitiveSizesMap.put("uint64", 8);
-        primitiveSizesMap.put("int8", 1);
-        primitiveSizesMap.put("int16", 2);
-        primitiveSizesMap.put("int32", 4);
-        primitiveSizesMap.put("int64", 8);
+        primitiveSizesMap.put("uint8",   1);
+        primitiveSizesMap.put("uint16",  2);
+        primitiveSizesMap.put("uint32",  4);
+        primitiveSizesMap.put("uint64",  8);
+        primitiveSizesMap.put("int8",    1);
+        primitiveSizesMap.put("int16",   2);
+        primitiveSizesMap.put("int32",   4);
+        primitiveSizesMap.put("int64",   8);
         primitiveSizesMap.put("float32", 4);
         primitiveSizesMap.put("float64", 8); 
     }
@@ -167,27 +166,31 @@ public class JavaGenerator extends Generator
 
         while (it.hasNext()) {
             try {
-                GeneratedClass aClass = (GeneratedClass) it.next();
-                String name = aClass.getName();
+                GeneratedClass aClass     = (GeneratedClass) it.next();
+                String         aClassName = aClass.getName();
+//                String  pduSubpackageName = "pdus";
 
                 // Create package structure, if any
-                String pack = languageProperties.getProperty("package");
-                String fullPath;
+                String aClassPackageName = languageProperties.getProperty("package");
+                String aClassFullPath;
 
                 // If we have a package specified, replace the dots in the package name (edu.nps.moves.dis)
                 // with slashes (edu/nps/moves/dis and create that directory
-                if (pack != null) {
-                    pack = pack.replace(".", "/");
-                    fullPath = getDirectory() + "/" + pack + "/" + name + ".java";
+                if (aClassPackageName != null) {
+                    aClassPackageName = aClassPackageName.replace(".", "/");
+                    aClassFullPath  = getDirectory() + "/" + aClassPackageName + "/" ;
+//                    if (aClassName.endsWith("Pdu") || aClassPackageName.endsWith("dis7")) //  is there a better way to distinguish?
+//                       aClassFullPath += pduSubpackageName + "/";
+                    aClassFullPath += aClassName + ".java";
                     //System.out.println("full path is " + fullPath);
                 }
                 else {
-                    fullPath = getDirectory() + "/" + name + ".java";
+                    aClassFullPath = getDirectory() + "/" + aClassName + ".java";
                 }
                 //System.out.println("Creating Java source code file for " + fullPath);
 
                 // Create the new, empty file, and create printwriter object for output to it
-                File outputFile = new File(fullPath);
+                File outputFile = new File(aClassFullPath);
                 outputFile.getParentFile().mkdirs();
                 outputFile.createNewFile();
                 PrintWriter pw = new PrintWriter(outputFile, StandardCharsets.UTF_8.name());
@@ -401,7 +404,7 @@ public class JavaGenerator extends Generator
     }
 
     /**
-     * Write instance variables
+     * Write instance variables (ivars)
      * @param pw PrintWriter
      * @param aClass class of interest 
      */
