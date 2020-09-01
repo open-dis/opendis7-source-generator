@@ -83,20 +83,20 @@ public abstract class DisBitSet extends BitSet implements Marshaller
     }
 
     @Override
-    public void marshal(ByteBuffer buff)
+    public void marshal(ByteBuffer byteBuffer)
     {
-        buff.put(marshallCommon());
+        byteBuffer.put(marshallCommon());
     }
 
     public byte[] marshallCommon()
     {
-        byte[] ba = toByteArray();
+        byte[] byteArray = toByteArray();
         // BitSet does not return an array equal in size to that passed to the constructor--it may be smaller.
         // This will put 0's at the end
-        if (ba.length < byteLength)
-            ba = Arrays.copyOf(ba, byteLength);
+        if (byteArray.length < byteLength)
+            byteArray = Arrays.copyOf(byteArray, byteLength);
 
-        return reverse(ba); // BitSet will return Little-Endian array, network byte order requires reverse
+        return reverse(byteArray); // BitSet will return Little-Endian array, network byte order requires reverse
     }
 
     /**
@@ -121,10 +121,10 @@ public abstract class DisBitSet extends BitSet implements Marshaller
     }
 
     @Override
-    public int unmarshal(ByteBuffer buff)
+    public int unmarshal(ByteBuffer byteBuffer)
     {
         byte[] ba = new byte[byteLength];
-        buff.get(ba);
+        byteBuffer.get(ba);
         unmarshalCommon(ba);
         
         return getMarshalledSize();

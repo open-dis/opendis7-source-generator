@@ -1160,20 +1160,20 @@ public class JavaGenerator extends Generator
         //pw.println();
         pw.println("/**");
         pw.println(" * Packs an object into the ByteBuffer.");
-        pw.println(" * @throws java.nio.BufferOverflowException if buff is too small");
-        pw.println(" * @throws java.nio.ReadOnlyBufferException if buff is read only");
+        pw.println(" * @throws java.nio.BufferOverflowException if byteBuffer is too small");
+        pw.println(" * @throws java.nio.ReadOnlyBufferException if byteBuffer is read only");
         pw.println(" * @see java.nio.ByteBuffer");
-        pw.println(" * @param buff The ByteBuffer at the position to begin writing");
+        pw.println(" * @param byteBuffer The ByteBuffer at the position to begin writing");
         pw.println(" * @throws Exception ByteBuffer-generated exception");
         pw.println(" */");
-        pw.println("public void marshal(java.nio.ByteBuffer buff) throws Exception");
+        pw.println("public void marshal(java.nio.ByteBuffer byteBuffer) throws Exception");
         pw.println("{");
 
         // If we're a sublcass of another class, we should first call super
         // to make sure the superclass's ivars are marshaled out.
 
         if(!(aClass.getParentClass().equalsIgnoreCase("root")))
-            pw.println("   super.marshal(buff);");
+            pw.println("   super.marshal(byteBuffer);");
 
         //pw.println("    try \n    {");
 
@@ -1192,23 +1192,23 @@ public class JavaGenerator extends Generator
                     marshalType = marshalTypes.getProperty(anAttribute.getType());
                     capped = this.initialCap(marshalType);
                     if( capped.equals("Byte") )
-                        capped = "";    // ByteBuffer just has put() for bytesf
+                        capped = "";    // ByteBuffer just has put() for bytes
 
                     // If we're a normal primitivetype, marshal out directly; otherwise, marshall out
                     // the list length.
                     if(anAttribute.getIsDynamicListLengthField())
-                       pw.println("   buff.put" + capped + "( (" + marshalType + ")" + anAttribute.getDynamicListClassAttribute().getName() + ".size());");
+                       pw.println("   byteBuffer.put" + capped + "( (" + marshalType + ")" + anAttribute.getDynamicListClassAttribute().getName() + ".size());");
                     else if(anAttribute.getIsPrimitiveListLengthField())
-                       pw.println("   buff.put" + capped + "( (" + marshalType + ")" + anAttribute.getDynamicListClassAttribute().getName() + ".length);");
+                       pw.println("   byteBuffer.put" + capped + "( (" + marshalType + ")" + anAttribute.getDynamicListClassAttribute().getName() + ".length);");
                     else
-                       pw.println("   buff.put" + capped + "( (" + marshalType + ")" + anAttribute.getName() + ");");
+                       pw.println("   byteBuffer.put" + capped + "( (" + marshalType + ")" + anAttribute.getName() + ");");
 
                     break;
                     
                 case SISO_ENUM:
                 case SISO_BITFIELD:
                 case CLASSREF:
-                    pw.println("   " + anAttribute.getName() + ".marshal(buff);" );
+                    pw.println("   " + anAttribute.getName() + ".marshal(byteBuffer);" );
                     break;
                     
                 case PRIMITIVE_LIST:
@@ -1226,11 +1226,11 @@ public class JavaGenerator extends Generator
                     {
                         capped = this.initialCap(marshalType);
                         if( capped.equals("Byte") )
-                            capped = "";    // ByteBuffer just has put() for bytesf
-                        pw.println("       buff.put" + capped + "((" + marshalType + ")" + anAttribute.getName() + "[idx]);");
+                            capped = "";    // ByteBuffer just has put() for bytes
+                        pw.println("       byteBuffer.put" + capped + "((" + marshalType + ")" + anAttribute.getName() + "[idx]);");
                     }
                     else
-                        pw.println("       " + anAttribute.getName() + "[idx].marshal(buff);" ); //"[idx].marshal(dos);" )
+                        pw.println("       " + anAttribute.getName() + "[idx].marshal(byteBuffer);" ); //"[idx].marshal(dos);" )
 
                     pw.println();
                     break;
@@ -1254,12 +1254,12 @@ public class JavaGenerator extends Generator
                             capped = "";    // ByteBuffer just uses put() for bytes
                         }
                         //pw.println("           dos.write" + capped + "(" + anAttribute.getName() + ");");
-                        pw.println("       buff.put" + capped + "(" + anAttribute.getName() + ");");
+                        pw.println("       byteBuffer.put" + capped + "(" + anAttribute.getName() + ");");
                     }
                     else
                     {
                         pw.println("        " + anAttribute.getType() + " a" + initialCap(anAttribute.getType() + " = " + anAttribute.getName() + ".get(idx);"));
-                        pw.println("        a" + initialCap(anAttribute.getType()) + ".marshal(buff);" );
+                        pw.println("        a" + initialCap(anAttribute.getType()) + ".marshal(byteBuffer);" );
                     }
 
                     pw.println("   }");
@@ -1267,13 +1267,13 @@ public class JavaGenerator extends Generator
                     break;
                                   
                 case PADTO16:
-                    pw.println("   "+anAttribute.getName()+" = new byte[Align.to16bits(buff)];");
+                    pw.println("   "+anAttribute.getName()+" = new byte[Align.to16bits(byteBuffer)];");
                     break;
                 case PADTO32:
-                    pw.println("   "+anAttribute.getName()+" = new byte[Align.to32bits(buff)];");
+                    pw.println("   "+anAttribute.getName()+" = new byte[Align.to32bits(byteBuffer)];");
                     break;
                 case PADTO64:
-                    pw.println("   "+anAttribute.getName()+" = new byte[Align.to64bits(buff)];");
+                    pw.println("   "+anAttribute.getName()+" = new byte[Align.to64bits(byteBuffer)];");
                     break;
             }   
         } // End of loop through the ivars for a marshal method
@@ -1286,18 +1286,18 @@ public class JavaGenerator extends Generator
         pw.println();
         pw.println("/**");
         pw.println(" * Unpacks a Pdu from the underlying data.");
-        pw.println(" * @throws java.nio.BufferUnderflowException if buff is too small");
+        pw.println(" * @throws java.nio.BufferUnderflowException if byteBuffer is too small");
         pw.println(" * @see java.nio.ByteBuffer");
         pw.println(" * See <a href=\"https://en.wikipedia.org/wiki/Marshalling_(computer_science)\" target=\"_blank\">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>");
-        pw.println(" * @param buff The ByteBuffer at the position to begin reading");
+        pw.println(" * @param byteBuffer The ByteBuffer at the position to begin reading");
         pw.println(" * @return marshalled serialized size in bytes");
         pw.println(" * @throws Exception ByteBuffer-generated exception");
         pw.println(" */");
-        pw.println("public int unmarshal(java.nio.ByteBuffer buff) throws Exception"); // throws EnumNotFoundException");
+        pw.println("public int unmarshal(java.nio.ByteBuffer byteBuffer) throws Exception"); // throws EnumNotFoundException");
         pw.println("{");
 
         if(!(aClass.getParentClass().equalsIgnoreCase("root")))
-            pw.println("    super.unmarshal(buff);\n");
+            pw.println("    super.unmarshal(byteBuffer);\n");
 
         // Loop through the class attributes, generating the output for each.
         for(ClassAttribute anAttribute : aClass.getClassAttributes()) { 
@@ -1316,20 +1316,20 @@ public class JavaGenerator extends Generator
                         capped = "";
                 
                     if(marshalType.equalsIgnoreCase("UnsignedByte"))
-                        pw.println("    " + anAttribute.getName() + " = (byte)(buff.get() & 0xFF);");               
+                        pw.println("    " + anAttribute.getName() + " = (byte)(byteBuffer.get() & 0xFF);");               
                     else if (marshalType.equalsIgnoreCase("UnsignedShort"))
-                        pw.println("    " + anAttribute.getName() + " = (short)(buff.getShort() & 0xFFFF);");               
+                        pw.println("    " + anAttribute.getName() + " = (short)(byteBuffer.getShort() & 0xFFFF);");               
                     else
-                        pw.println("    " + anAttribute.getName() + " = buff.get" + capped + "();");
+                        pw.println("    " + anAttribute.getName() + " = byteBuffer.get" + capped + "();");
                     break;
                     
                 case SISO_ENUM:
-                    pw.println("    " + anAttribute.getName() + " = "+anAttribute.getType()+".unmarshalEnum(buff);");
+                    pw.println("    " + anAttribute.getName() + " = "+anAttribute.getType()+".unmarshalEnum(byteBuffer);");
                     break;
                     
                 case SISO_BITFIELD:
                 case CLASSREF:         
-                    pw.println("    " + anAttribute.getName() + ".unmarshal(buff);" );
+                    pw.println("    " + anAttribute.getName() + ".unmarshal(byteBuffer);" );
                     break;
 
                 case PRIMITIVE_LIST:
@@ -1338,12 +1338,12 @@ public class JavaGenerator extends Generator
                     marshalType = marshalTypes.getProperty(anAttribute.getType());
 
                     if(marshalType == null) // It's a class  // should be unnecessary w/ refactor
-                        pw.println("        " + anAttribute.getName() + "[idx].unmarshal(buff);" );
+                        pw.println("        " + anAttribute.getName() + "[idx].unmarshal(byteBuffer);" );
                     else { // It's a primitive
                         capped = this.initialCap(marshalType);
                         if( capped.equals("Byte") )
                              capped = "";
-                        pw.println("        " +  anAttribute.getName() + "[idx] = buff.get" + capped + "();");
+                        pw.println("        " +  anAttribute.getName() + "[idx] = byteBuffer.get" + capped + "();");
                     }
                     break;
                     
@@ -1356,7 +1356,7 @@ public class JavaGenerator extends Generator
                     pw.println("    {");
 
                     if(anAttribute.getUnderlyingTypeIsEnum()) {
-                        pw.println("    " +anAttribute.getType() + " anX = "+anAttribute.getType() + ".unmarshalEnum(buff);");
+                        pw.println("    " +anAttribute.getType() + " anX = "+anAttribute.getType() + ".unmarshalEnum(byteBuffer);");
                         pw.println("    " + anAttribute.getName() + ".add(anX);");
                     }
                     else {
@@ -1364,14 +1364,14 @@ public class JavaGenerator extends Generator
 
                         if(marshalType == null) { // It's a class
                             pw.println("    " + anAttribute.getType() + " anX = new " + anAttribute.getType() + "();");                           
-                            pw.println("    anX.unmarshal(buff);");
+                            pw.println("    anX.unmarshal(byteBuffer);");
                             pw.println("    " + anAttribute.getName() + ".add(anX);");
                         }
                         else { // It's a primitive  // should be unnecessary now w/ refactor
                             capped = this.initialCap(marshalType);
                             if( capped.equals("Byte") )
                                 capped = "";
-                            pw.println("    buff.get" + capped + "(" + anAttribute.getName() + ");");
+                            pw.println("    byteBuffer.get" + capped + "(" + anAttribute.getName() + ");");
                         }
                     }
                     pw.println("    }");
@@ -1380,13 +1380,13 @@ public class JavaGenerator extends Generator
                     
                                     
                 case PADTO16:
-                    pw.println("    "+anAttribute.getName() + " = new byte[Align.from16bits(buff)];");
+                    pw.println("    "+anAttribute.getName() + " = new byte[Align.from16bits(byteBuffer)];");
                     break;
                 case PADTO32:
-                    pw.println("    "+anAttribute.getName() + " = new byte[Align.from32bits(buff)];");
+                    pw.println("    "+anAttribute.getName() + " = new byte[Align.from32bits(byteBuffer)];");
                     break;
                 case PADTO64:
-                    pw.println("    "+anAttribute.getName() + " = new byte[Align.from64bits(buff)];");
+                    pw.println("    "+anAttribute.getName() + " = new byte[Align.from64bits(byteBuffer)];");
                     break;
             }
 
@@ -1403,8 +1403,8 @@ public class JavaGenerator extends Generator
      *
      * <pre>public byte[] marshal(){
      *     byte[] data = new byte[getMarshalledSize()];
-     *     java.nio.ByteBuffer buff = java.nio.ByteBuffer.wrap(data);
-     *     marshal(buff);
+     *     java.nio.ByteBuffer byteBuffer = java.nio.ByteBuffer.wrap(data);
+     *     marshal(byteBuffer);
      *     return data;
      * }</pre>
      *
@@ -1423,8 +1423,8 @@ public class JavaGenerator extends Generator
         pw.println("public byte[] marshal() throws Exception");
         pw.println("{");
         pw.println("    byte[] data = new byte[getMarshalledSize()];");
-        pw.println("    java.nio.ByteBuffer buff = java.nio.ByteBuffer.wrap(data);");
-        pw.println("    marshal(buff);");
+        pw.println("    java.nio.ByteBuffer byteBuffer = java.nio.ByteBuffer.wrap(data);");
+        pw.println("    marshal(byteBuffer);");
         pw.println("    return data;");
         pw.println("}");
 

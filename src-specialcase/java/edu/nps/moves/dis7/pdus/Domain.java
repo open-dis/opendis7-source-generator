@@ -131,11 +131,11 @@ public class Domain
 
     /**
      *
-     * @param buff The ByteBuffer at the position to begin writing
+     * @param byteBuffer The ByteBuffer at the position to begin writing
      */
-    public void marshal(ByteBuffer buff)
+    public void marshal(ByteBuffer byteBuffer)
   {
-    invoke(marshalBuff, new Object[]{buff});
+    invoke(marshalBuff, new Object[]{byteBuffer});
   }
 
     /**
@@ -156,12 +156,12 @@ public class Domain
     /**
      * Deserializes an object from a ByteBuffer.
      * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
-     * @param buff The ByteBuffer at the position to begin writing
+     * @param byteBuffer The ByteBuffer at the position to begin writing
      * @return marshalled serialized size in bytes
      */
-    public int unmarshal(ByteBuffer buff)
+    public int unmarshal(ByteBuffer byteBuffer)
   {
-    Object o = invoke(unmarshalBuff, new Object[]{buff});
+    Object o = invoke(unmarshalBuff, new Object[]{byteBuffer});
     enumInst = o;
     init();
     return getMarshalledSize();

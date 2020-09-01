@@ -65,10 +65,10 @@ public enum %s implements edu.nps.moves.dis7.%s
     } 
 
     @Override
-    public void marshal(ByteBuffer buff)
+    public void marshal(ByteBuffer byteBuffer)
     {
         try {
-            buff.put(getValue());
+            byteBuffer.put(getValue());
         }
        catch(Exception ex) {
             showError(ex);
@@ -76,10 +76,10 @@ public enum %s implements edu.nps.moves.dis7.%s
     }
 
     @Override
-    public int unmarshal(ByteBuffer buff)
+    public int unmarshal(ByteBuffer byteBuffer)
     {
         try {
-            value = buff.get();
+            value = byteBuffer.get();
         }
         catch(Exception ex) {
             showError(ex);

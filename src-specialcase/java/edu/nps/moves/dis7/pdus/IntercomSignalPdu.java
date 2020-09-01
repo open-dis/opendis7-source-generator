@@ -341,31 +341,31 @@ public class IntercomSignalPdu extends RadioCommunicationsFamilyPdu implements S
    * @throws java.nio.BufferOverflowException if buff is too small
    * @throws java.nio.ReadOnlyBufferException if buff is read only
    * @see java.nio.ByteBuffer
-   * @param buff The ByteBuffer at the position to begin writing
+   * @param byteBuffer The ByteBuffer at the position to begin writing
    * @throws Exception ByteBuffer-generated exception
    */
   @Override
-  public void marshal(java.nio.ByteBuffer buff) throws Exception
+  public void marshal(java.nio.ByteBuffer byteBuffer) throws Exception
   {
-    super.marshal(buff);
-    intercomReferenceID.marshal(buff);
-    buff.putShort(intercomNumber);
-    buff.putShort(encodingScheme);
-    tdlType.marshal(buff);
-    buff.putInt(sampleRate);
+    super.marshal(byteBuffer);
+    intercomReferenceID.marshal(byteBuffer);
+    byteBuffer.putShort(intercomNumber);
+    byteBuffer.putShort(encodingScheme);
+    tdlType.marshal(byteBuffer);
+    byteBuffer.putInt(sampleRate);
 
     if (dataLength != null)
-      buff.putShort(dataLength);
+      byteBuffer.putShort(dataLength);
     else
-      buff.putShort((dataLength = calculateDataLength()));
+      byteBuffer.putShort((dataLength = calculateDataLength()));
 
-    buff.putShort(samples);
+    byteBuffer.putShort(samples);
 
     for (int idx = 0; idx < data.length; idx++) {
-      buff.put(data[idx]);
+      byteBuffer.put(data[idx]);
     }
-    buff.flip(); // will cause BufferOverflowException if we don't flip here
-    padTo32 = new byte[Align.to32bits(buff)];
+    byteBuffer.flip(); // will cause BufferOverflowException if we don't flip here
+    padTo32 = new byte[Align.to32bits(byteBuffer)];
   }
 
   /**
@@ -374,29 +374,29 @@ public class IntercomSignalPdu extends RadioCommunicationsFamilyPdu implements S
    * @throws java.nio.BufferUnderflowException if buff is too small
    * @see java.nio.ByteBuffer
    * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
-   * @param buff The ByteBuffer at the position to begin reading
+   * @param byteBuffer The ByteBuffer at the position to begin reading
    * @return marshalled serialized size in bytes
    * @throws Exception ByteBuffer-generated exception
    */
   @Override
-  public int unmarshal(java.nio.ByteBuffer buff) throws Exception
+  public int unmarshal(java.nio.ByteBuffer byteBuffer) throws Exception
   {
-    super.unmarshal(buff);
+    super.unmarshal(byteBuffer);
 
-    intercomReferenceID.unmarshal(buff);
-    intercomNumber = (short) (buff.getShort() & 0xFFFF);
-    encodingScheme = (short) (buff.getShort() & 0xFFFF);
-    tdlType = SignalTDLType.unmarshalEnum(buff);
-    sampleRate = buff.getInt();
-    dataLength = (short) (buff.getShort() & 0xFFFF);
+    intercomReferenceID.unmarshal(byteBuffer);
+    intercomNumber = (short) (byteBuffer.getShort() & 0xFFFF);
+    encodingScheme = (short) (byteBuffer.getShort() & 0xFFFF);
+    tdlType = SignalTDLType.unmarshalEnum(byteBuffer);
+    sampleRate = byteBuffer.getInt();
+    dataLength = (short) (byteBuffer.getShort() & 0xFFFF);
     int byteLength = (dataLength + 7) / 8;
     data = new byte[byteLength];
-    samples = (short) (buff.getShort() & 0xFFFF);
+    samples = (short) (byteBuffer.getShort() & 0xFFFF);
     for (int idx = 0; idx < byteLength; idx++) {
-      data[idx] = buff.get();
+      data[idx] = byteBuffer.get();
     }
-    buff.flip(); // will cause BufferUnderflowException if we don't flip here
-    padTo32 = new byte[Align.from32bits(buff)];
+    byteBuffer.flip(); // will cause BufferUnderflowException if we don't flip here
+    padTo32 = new byte[Align.from32bits(byteBuffer)];
     return getMarshalledSize();
   }
 

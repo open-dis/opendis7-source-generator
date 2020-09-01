@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
- * DIS time units are a pain in the ass. DIS time units are arbitrary, and set
+ * DIS time units are a pain to work with. DIS time units are arbitrary, and set
  * equal to 2^31 - 1 time units per hour. The DIS time is set to the number of time
  * units since the start of the hour. The timestamp field in the PDU header is
  * four bytes long and is specified to be an unsigned integer value.<p>

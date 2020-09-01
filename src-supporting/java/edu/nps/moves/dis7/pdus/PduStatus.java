@@ -113,9 +113,9 @@ public class PduStatus
     return 1;
   }
 
-  public void marshal(ByteBuffer buff)
+  public void marshal(ByteBuffer byteBuffer)
   {
-    buff.put(value);
+    byteBuffer.put(value);
   }
 
     /**
@@ -123,12 +123,12 @@ public class PduStatus
      *
      * @see java.nio.ByteBuffer
      * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
-     * @param buff The ByteBuffer at the position to begin writing
+     * @param byteBuffer The ByteBuffer at the position to begin writing
      * @return marshalled serialized size in bytes
      */
-  public int unmarshal(ByteBuffer buff)
+  public int unmarshal(ByteBuffer byteBuffer)
   {
-    value = buff.get();
+    value = byteBuffer.get();
     return 1;
   }
 

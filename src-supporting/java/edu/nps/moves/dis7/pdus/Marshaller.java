@@ -41,16 +41,16 @@ public interface Marshaller
      * Packs a Pdu into the ByteBuffer.
      * @throws Exception error during marshaling
      * @see java.nio.ByteBuffer
-     * @param buff The ByteBuffer at the position to begin writing
+     * @param byteBuffer The ByteBuffer at the position to begin writing
      */
-    void marshal(ByteBuffer buff) throws Exception;
+    void marshal(ByteBuffer byteBuffer) throws Exception;
     
     /**
      * Unpacks a Pdu from the underlying data.
      * @return the size of the PDU
      * @throws Exception error during unmarshalling
      * @see java.nio.ByteBuffer
-     * @param buff The ByteBuffer at the position to begin reading
+     * @param byteBuffer The ByteBuffer at the position to begin reading
      */
-    int unmarshal(ByteBuffer buff) throws Exception;
+    int unmarshal(ByteBuffer byteBuffer) throws Exception;
 }

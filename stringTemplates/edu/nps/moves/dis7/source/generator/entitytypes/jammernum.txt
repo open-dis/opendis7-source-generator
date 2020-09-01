@@ -70,13 +70,13 @@ public enum %s implements edu.nps.moves.dis7.%s
     }
 
     @Override
-    public void marshal(ByteBuffer buff)
+    public void marshal(ByteBuffer byteBuffer)
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void unmarshal(ByteBuffer buff)
+    public void unmarshal(ByteBuffer byteBuffer)
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

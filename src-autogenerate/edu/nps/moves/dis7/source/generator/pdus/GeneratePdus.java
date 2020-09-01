@@ -329,7 +329,6 @@ public class GeneratePdus
                         return false;
                     }
                 }
-            
                 // The class referenced is available elsewehere in the document
                 if(kindOfNode == ClassAttribute.ClassAttributeType.CLASSREF)
                 {
@@ -340,7 +339,6 @@ public class GeneratePdus
                             return false;
                         }
                     }
-                    
                 }
             } // end of trip through one class' attributes
             

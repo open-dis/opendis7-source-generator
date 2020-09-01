@@ -4,9 +4,9 @@
         dos.writeInt(getValue());
     }
 
-    public void marshal(ByteBuffer buff)
+    public void marshal(ByteBuffer byteBuffer)
     {
-        buff.putInt(getValue());
+        byteBuffer.putInt(getValue());
     }
 
     public static %s unmarshalEnum (DataInputStream dis) throws Exception
@@ -14,9 +14,9 @@
         return getEnumForValue(dis.readInt());
     } 
 
-    public static %s unmarshalEnum (ByteBuffer buff)
+    public static %s unmarshalEnum (ByteBuffer byteBuffer)
     {
-        return getEnumForValue(buff.getInt());
+        return getEnumForValue(byteBuffer.getInt());
     }
 
   /**

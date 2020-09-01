@@ -208,22 +208,22 @@ public class VariableDatum extends Object implements Serializable
    * @throws java.nio.BufferOverflowException if buff is too small
    * @throws java.nio.ReadOnlyBufferException if buff is read only
    * @see java.nio.ByteBuffer
-   * @param buff The ByteBuffer at the position to begin writing
+   * @param byteBuffer The ByteBuffer at the position to begin writing
    * @throws Exception ByteBuffer-generated exception
    */
-  public void marshal(java.nio.ByteBuffer buff) throws Exception
+  public void marshal(java.nio.ByteBuffer byteBuffer) throws Exception
   {
-    variableDatumID.marshal(buff);
+    variableDatumID.marshal(byteBuffer);
 
     if (variableDatumLength != null)
-      buff.putInt(variableDatumLength);
+      byteBuffer.putInt(variableDatumLength);
     else
-      buff.putInt(variableDatumLength = calculateDatumLength());
+      byteBuffer.putInt(variableDatumLength = calculateDatumLength());
     for (int idx = 0; idx < variableDatumLength; idx++) //for(int idx = 0; idx < variableDatumValue.length; idx++)
     {
-      buff.put(variableDatumValue[idx]);
+      byteBuffer.put(variableDatumValue[idx]);
     }
-    padding = new byte[Align.to64bits(buff)];
+    padding = new byte[Align.to64bits(byteBuffer)];
   }
 
   /**
@@ -232,20 +232,20 @@ public class VariableDatum extends Object implements Serializable
    * @throws java.nio.BufferUnderflowException if buff is too small
    * @see java.nio.ByteBuffer
    * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
-   * @param buff The ByteBuffer at the position to begin reading
+   * @param byteBuffer The ByteBuffer at the position to begin reading
    * @return marshalled serialized size in bytes
    * @throws Exception ByteBuffer-generated exception
    */
-  public int unmarshal(java.nio.ByteBuffer buff) throws Exception
+  public int unmarshal(java.nio.ByteBuffer byteBuffer) throws Exception
   {
-    variableDatumID = VariableRecordType.unmarshalEnum(buff);
-    variableDatumLength = buff.getInt();
+    variableDatumID = VariableRecordType.unmarshalEnum(byteBuffer);
+    variableDatumLength = byteBuffer.getInt();
     int byteLength = (variableDatumLength + 7) / 8;
     variableDatumValue = new byte[byteLength];
     for (int idx = 0; idx < byteLength; idx++) {
-      variableDatumValue[idx] = buff.get();
+      variableDatumValue[idx] = byteBuffer.get();
     }
-    padding = new byte[Align.from64bits(buff)];
+    padding = new byte[Align.from64bits(byteBuffer)];
     return getMarshalledSize();
   }
 

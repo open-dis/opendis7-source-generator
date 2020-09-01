@@ -20,10 +20,10 @@ import java.util.Arrays;
  */
 public class Align
 {
-  static public int to16bits(ByteBuffer buff)
+  static public int to16bits(ByteBuffer byteBuffer)
   {
-      int pad = (2 - buff.position() % 2) % 2;
-      Arrays.stream(new int[pad]).forEach(x->buff.put((byte)0));
+      int pad = (2 - byteBuffer.position() % 2) % 2;
+      Arrays.stream(new int[pad]).forEach(x->byteBuffer.put((byte)0));
       return pad;
   }
   
@@ -34,10 +34,10 @@ public class Align
       return pad;
   }
   
-  static public int to32bits(ByteBuffer buff)
+  static public int to32bits(ByteBuffer byteBuffer)
   {
-      int pad = (4 - buff.position() % 4) % 4;
-      Arrays.stream(new int[pad]).forEach(x->buff.put((byte)0));
+      int pad = (4 - byteBuffer.position() % 4) % 4;
+      Arrays.stream(new int[pad]).forEach(x->byteBuffer.put((byte)0));
       return pad;
   }
   
@@ -48,10 +48,10 @@ public class Align
       return pad;
   }
   
-  static public int to64bits(ByteBuffer buff)
+  static public int to64bits(ByteBuffer byteBuffer)
   {
-      int pad = (8 - buff.position() % 8) % 8;
-      Arrays.stream(new int[pad]).forEach(x->buff.put((byte)0));
+      int pad = (8 - byteBuffer.position() % 8) % 8;
+      Arrays.stream(new int[pad]).forEach(x->byteBuffer.put((byte)0));
       return pad;
   }
   
@@ -63,10 +63,10 @@ public class Align
   }
   
   /* ******** Unmarshaling ************* */
-  static public int from16bits(ByteBuffer buff)
+  static public int from16bits(ByteBuffer byteBuffer)
   {
-      int pad = (2 - buff.position() % 2) % 2;
-      Arrays.stream(new int[pad]).forEach(x->buff.get());
+      int pad = (2 - byteBuffer.position() % 2) % 2;
+      Arrays.stream(new int[pad]).forEach(x->byteBuffer.get());
       return pad;
   }
   
@@ -77,10 +77,10 @@ public class Align
       return pad;
   }
   
-  static public int from32bits(ByteBuffer buff)
+  static public int from32bits(ByteBuffer byteBuffer)
   {
-      int pad = (4 - buff.position() % 4) % 4;
-      Arrays.stream(new int[pad]).forEach(x->buff.get());
+      int pad = (4 - byteBuffer.position() % 4) % 4;
+      Arrays.stream(new int[pad]).forEach(x->byteBuffer.get());
       return pad;
   }
   
@@ -91,10 +91,10 @@ public class Align
       return pad;
   }
   
-  static public int from64bits(ByteBuffer buff)
+  static public int from64bits(ByteBuffer byteBuffer)
   {
-      int pad = (8 - buff.position() % 8) % 8;
-      Arrays.stream(new int[pad]).forEach(x->buff.get());
+      int pad = (8 - byteBuffer.position() % 8) % 8;
+      Arrays.stream(new int[pad]).forEach(x->byteBuffer.get());
       return pad;
   }
   
