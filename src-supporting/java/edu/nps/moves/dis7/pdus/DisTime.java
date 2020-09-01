@@ -10,50 +10,50 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
- * DIS time units are a pain to work with. DIS time units are arbitrary, and set
+ * <p>DIS time units are a pain to work with. DIS time units are arbitrary, and set
  * equal to 2^31 - 1 time units per hour. The DIS time is set to the number of time
  * units since the start of the hour. The timestamp field in the PDU header is
- * four bytes long and is specified to be an unsigned integer value.<p>
+ * four bytes long and is specified to be an unsigned integer value.</p>
  *
- * There are two types of official timestamps in the PDU header: absolute time and
- * relative time. Absolute time is used when the host is sync'd to UTC, ie the host
+ * <p>There are two types of official timestamps in the PDU header: absolute time and
+ * relative time. Absolute time is used when the host is synchronized to UTC, i.e. the host
  * has access to UTC via Network Time Protocol (NTP). This time can be legitimately
  * compared to the timestamp of packets received from other hosts, since they all
- * refer to the same universal time.<p>
+ * refer to the same universal time.</p>
  *
- * Relative timestamps are used when the host does NOT have access to NTP, and hence
+ * <p>Relative timestamps are used when the host does NOT have access to NTP, and hence
  * the system time might not be coordinated with that of other hosts. This means that
  * a host receiving DIS packets from several hosts might have to set up a per-host
  * table to order packets, and that the PDU timestamp fields from one host is not
- * directly comparable to the PDU timestamp field from another host.
+ * directly comparable to the PDU timestamp field from another host.</p>
  *
- * Absolute timestamps have their LSB set to 1, and relative timestamps have their
+ * <p>Absolute timestamps have their LSB set to 1, and relative timestamps have their
  * LSB set to 0. The idea is to get the current time since the top of the hour,
  * divide by 2^31-1, shift left one bit, then set the LSB to either 0 for relative
- * timestamps or 1 for absolute timestamps.<p>
+ * timestamps or 1 for absolute timestamps.</p>
  *
- * The nature of the data is such that the timestamp fields will roll over once an
+ * <p>The nature of the data is such that the timestamp fields will roll over once an
  * hour, and simulations must be prepared for that. Ie, at the top of the hour
  * outgoing PDUs will have a timestamp of 1, just before the end of the hour the
  * PDUs will have a timestamp of 2^31 - 1, and then they will roll back over to 1.
  * Receiving applications should expect this behavior, and not simply expect a
- * monotonically increasing timestamp field.<p>
+ * monotonically increasing timestamp field.</p>
  *
- * The official DIS timestamps don't work all that well in our (NPS's) applications,
+ * <p>The official DIS timestamps don't work all that well in our (NPS's) applications,
  * which often expect a monotonically increasing timestamp field. To get around this,
  * we use hundreds of a second since the start of the year. The maximum value for
  * this field is 3,153,600,000, which can fit into an unsigned int. The resolution is
  * good enough for most applications, and you typically don't have to worry about
- * rollover, instead getting only a monotonically increasing timestamp value.<p>
+ * rollover, instead getting only a monotonically increasing timestamp value.</p>
  *
- * Note that many applications in the wild have been known to completely ignore
+ * <p>Note that many applications in the wild have been known to completely ignore
  * the standard and to simply put the Unix time (seconds since 1970) into the
- * field. <p>
+ * field. </p>
  *
- * You need to be careful with the shared instance of this class--I'm not at all
+ * <p>You need to be careful with the shared instance of this class--I'm not at all
  * convinced it is thread safe. If you are using multiple threads, I suggest you
  * create a new instance of the class for each thread to prevent the values from
- * getting stomped on.<p>
+ * getting stomped on.</p>
  * 
  * Shared singleton removed.  Mike Bailey, 14 June 2019
  * 
@@ -181,7 +181,7 @@ public class DisTime
      *
      * Unix time (in seconds) rolls over in 2038. 
      *
-     * See the wikipedia page on Unix time for gory details. 
+     * See the Wikipedia page on Unix time for gory details. 
      * @return seconds since 1970
      */
     public long getUnixTimestamp() {
