@@ -3050,7 +3050,7 @@
             <primitive type="uint16"/>
         </attribute>    
         
-    </class>/>
+    </class>
 
     <class name="PduBase" abstract="true" inheritsFrom="Pdu"
            comment="The superclass for all PDUs except LiveEntitys. This incorporates the PduHeader record, section 7.2.2">
