@@ -63,13 +63,24 @@ public abstract class Generator
     {
         System.out.println("creating directory");
         System.out.println("directory=" + this.getDirectory());
-        File dir = new File(this.getDirectory());
-        boolean success = dir.mkdirs();
-        
-        System.out.println("cleaning directory " + dir.getPath());
-        for(File f : dir.listFiles())
-          if(!f.isDirectory() && !f.getName().equals(".keep") && !f.getName().equals("README.md"))
-            f.delete();
+        if (this.getDirectory() != null)
+        {
+            File dir = new File(this.getDirectory());
+            boolean success = dir.mkdirs();
+
+            if (success)
+            {
+                System.out.println("cleaning directory " + dir.getPath());
+                for(File f : dir.listFiles())
+                  if(!f.isDirectory() && !f.getName().equals(".keep") && !f.getName().equals("README.md"))
+                    f.delete();
+            }
+        }
+        else
+        {
+            System.err.println ("Error: invalid invocation, current directory not found");
+            System.exit(1);
+        }
     }
 
     /**
