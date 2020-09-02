@@ -679,6 +679,23 @@ public class JavaGenerator extends Generator
                         pw.println("{\n    " + anAttribute.getName() + " = p" + this.initialCap(anAttribute.getName()) + ";");
                         pw.println("    return this;");
                         pw.println("}");
+                        
+                        // utility setter to allow int types
+                        if (beanType.equals("byte") || beanType.equals("short") || beanType.equals("long"))
+                        {
+                        pw.println("/** Utility setter for {@link "+aClass.getName()+"#"+anAttribute.getName()+"}");
+                        pw.println("  * @param p" + this.initialCap(anAttribute.getName()) + " new value of interest");
+                        pw.println("  * @return same object to permit progressive setters */");
+                        pw.print("public ");
+                        pw.print(aClass.getName());
+                        pw.print(" set" + this.initialCap(anAttribute.getName()) + "(" );
+                        pw.print("int"); // allow int, will then coerce downcasting to beantype when setting
+                        pw.print(" p" + this.initialCap(anAttribute.getName()) + ")");
+                        // TODO overflow checks when downcasting int to given beantype
+                        pw.println("{\n    " + anAttribute.getName() + " = (" + beanType + ") p" + this.initialCap(anAttribute.getName()) + ";");
+                        pw.println("    return this;");
+                        pw.println("}");
+                        }
 
                         pw.println();
                         pw.println("/** Getter for {@link "+aClass.getName()+"#"+anAttribute.getName()+"}");
