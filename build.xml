@@ -827,11 +827,13 @@
         </java>
         <!-- debug -->
         <echo message="======================================="/>
+        <!-- debug
         <echo message="concat xml/${DIS7.schema.filename}"/>
         <concat>
             <fileset dir="xml" includes="${DIS7.schema.filename}"/>
         </concat>
         <echo message="======================================="/>
+        -->
     </target>
     
 </project>
