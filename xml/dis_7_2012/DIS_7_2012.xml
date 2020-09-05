@@ -215,23 +215,23 @@
             <classref name="EulerAngles"/>
         </attribute>
     
-        <attribute name="azimuthBeamwidth" commment="Full width of the beam to the -3dB power density points in the x-y plane of the beam coordinnate system.  Elevation beamwidth is represented by a 32 bit floating point number in units of radians.">
+        <attribute name="azimuthBeamwidth" comment="Full width of the beam to the -3dB power density points in the x-y plane of the beam coordinnate system.  Elevation beamwidth is represented by a 32 bit floating point number in units of radians.">
             <primitive type="float32" defaultValue="0"/>
         </attribute>
     
-        <attribute name="elevationBeamwidth" commment="This field shall specify the full width of the beam to the –3 dB power density points in the x-z plane of the beam coordinate system. Elevation beamwidth shall be represented by a 32-bit floating point number in units of radians.">
+        <attribute name="elevationBeamwidth" comment="This field shall specify the full width of the beam to the –3 dB power density points in the x-z plane of the beam coordinate system. Elevation beamwidth shall be represented by a 32-bit floating point number in units of radians.">
             <primitive type="float32" defaultValue="0"/>
         </attribute>
     
-        <attribute name="referenceSystem" commment="The reference coordinate system wrt which beam direction  is specified. This field should not change over the duration of an exercise. World coordindate systemis prefered for exercises. The entity coordinate system should be used only when highly directional antennas must be precisely modeled.">
+        <attribute name="referenceSystem" comment="The reference coordinate system wrt which beam direction  is specified. This field should not change over the duration of an exercise. World coordindate systemis prefered for exercises. The entity coordinate system should be used only when highly directional antennas must be precisely modeled.">
             <sisoenum type="TransmitterAntennaPatternReferenceSystem" comment="uid 168"/>
         </attribute>
     
-        <attribute name="padding1" commment="Padding">
+        <attribute name="padding1" comment="Padding">
             <primitive type="uint8" defaultValue="0"/>
         </attribute>
     
-        <attribute name="padding2" commment="Padding">
+        <attribute name="padding2" comment="Padding">
             <primitive type="uint16" defaultValue="0"/>
         </attribute>
     
@@ -257,11 +257,11 @@
            comment="An entity's associations with other entities and/or locations. For each association, this record shall specify the type of the association, the associated entity's EntityID and/or the associated location's world coordinates. This record may be used (optionally) in a transfer transaction to send internal state data from the divesting simulation to the acquiring simulation (see 5.9.4). This record may also be used for other purposes. Section 6.2.9">
     
         <attribute name="associationType"
-                   commment="This field shall indicate the type of association. It shall be represented by an 8-bit enumeration. Values for this field are found in Section 14 of SISO-REF-010">
+                   comment="This field shall indicate the type of association. It shall be represented by an 8-bit enumeration. Values for this field are found in Section 14 of SISO-REF-010">
             <sisoenum type="EntityAssociationAssociationType" comment="330"/>
         </attribute>
     
-        <attribute name="padding" commment="Padding">
+        <attribute name="padding" comment="Padding">
             <primitive type="uint8"/>
         </attribute>
     
@@ -278,21 +278,21 @@
     <class name="Attribute" inheritsFrom="root"
            comment="Used to convey information for one or more attributes. Attributes conform to the standard variable record format of 6.2.82. Section 6.2.10.">
 
-        <attribute name="recordType" commment="The record type for this attribute. Enumeration">
+        <attribute name="recordType" comment="The record type for this attribute. Enumeration">
             <primitive type="uint32"/>
         </attribute>
 
-        <attribute name="recordLength" hidden="true" commment="Total length of the record in octets, including padding. The record shall end on a 64-bit boundary after any padding. = 6 + K + P">
+        <attribute name="recordLength" hidden="true" comment="Total length of the record in octets, including padding. The record shall end on a 64-bit boundary after any padding. = 6 + K + P">
             <primitive type="uint16"/>
         </attribute>
 
-        <attribute name="recordSpecificFields" commment="The attribute data format conforming to that specified by the record type. K bytes long">
+        <attribute name="recordSpecificFields" comment="The attribute data format conforming to that specified by the record type. K bytes long">
             <primitivelist length="0" countFieldName="recordLength">
                 <primitive type="uint8"/>
             </primitivelist>
         </attribute>
 
-        <!--<attribute name="paddingTo64Bits" commment="Padding necessary to put the end of the record on a 64 bit boundary">
+        <!--<attribute name="paddingTo64Bits" comment="Padding necessary to put the end of the record on a 64 bit boundary">
             <primitivelist length="2">
                 <primitive type="uint8"/>
             </primitivelist>
@@ -709,55 +709,55 @@
     <class name="BlankingSector" inheritsFrom="root" 
            comment="The Blanking Sector attribute record may be used to convey persistent areas within a scan volume where emitter power for a specific active emitter beam is reduced to an insignificant value. Section 6.2.21.2">
        
-        <attribute name="recordType" commment="record type">
+        <attribute name="recordType" comment="record type">
             <primitive type="uint32" defaultValue="3500"/>
         </attribute>
     
-        <attribute name="recordLength" commment="the length of the Blanking Sector attribute record in octets.">
+        <attribute name="recordLength" comment="the length of the Blanking Sector attribute record in octets.">
             <primitive type="uint16" defaultValue="40"/>
         </attribute>
     
-        <attribute name="padding" commment="Padding">
+        <attribute name="padding" comment="Padding">
             <primitive type="uint16" defaultValue="0"/>
         </attribute>
     
-        <attribute name="emitterNumber" commment="indicates the emitter system for which the blanking sector values are applicable">
+        <attribute name="emitterNumber" comment="indicates the emitter system for which the blanking sector values are applicable">
             <primitive type="uint8"/>
         </attribute>
     
-        <attribute name="beamNumber" commment="indicates the beam for which the blanking sector values are applicable.">
+        <attribute name="beamNumber" comment="indicates the beam for which the blanking sector values are applicable.">
             <primitive type="uint8"/>
         </attribute>
     
-        <attribute name="stateIndicator" commment="indicate if blanking sector data have changed since issuance of the last Blanking Sector attribute record for this beam, if the Blanking Sector attribute record beam has ceased">
+        <attribute name="stateIndicator" comment="indicate if blanking sector data have changed since issuance of the last Blanking Sector attribute record for this beam, if the Blanking Sector attribute record beam has ceased">
             <sisoenum type="EEAttributeStateIndicator" comment="uid 300"/>
         </attribute>
     
-        <attribute name="padding2" commment="Padding">
+        <attribute name="padding2" comment="Padding">
             <primitive type="uint8" defaultValue="0"/>
         </attribute>
     
-        <attribute name="leftAzimuth" commment="This field is provided to indicate the left-most azimuth (clockwise in radians) for which emitted power is reduced. This angle is measured in the X-Y plane of the radar's entity coor- dinate system (see 1.4.3). The range of permissible values is 0 to 2PI, with zero pointing in the X- direction. ">
+        <attribute name="leftAzimuth" comment="This field is provided to indicate the left-most azimuth (clockwise in radians) for which emitted power is reduced. This angle is measured in the X-Y plane of the radar's entity coor- dinate system (see 1.4.3). The range of permissible values is 0 to 2PI, with zero pointing in the X- direction. ">
             <primitive type="float32"/>
         </attribute>
     
-        <attribute name="rightAzimuth" commment="Indicate the right-most azimuth (clockwise in radians) for which emitted power is reduced. This angle is measured in the X-Y plane of the radar's entity coordinate system (see 1.4.3). The range of permissible values is 0 to 2PI , with zero pointing in the X- direction.">
+        <attribute name="rightAzimuth" comment="Indicate the right-most azimuth (clockwise in radians) for which emitted power is reduced. This angle is measured in the X-Y plane of the radar's entity coordinate system (see 1.4.3). The range of permissible values is 0 to 2PI , with zero pointing in the X- direction.">
             <primitive type="float32"/>
         </attribute>
     
-        <attribute name="lowerElevation" commment="This field is provided to indicate the lowest elevation (in radians) for which emit- ted power is reduced. This angle is measured positive upward with respect to the X-Y plane of the radar's entity coordinate system (see 1.4.3). The range of permissible values is -PI/2 to PI/2">
+        <attribute name="lowerElevation" comment="This field is provided to indicate the lowest elevation (in radians) for which emit- ted power is reduced. This angle is measured positive upward with respect to the X-Y plane of the radar's entity coordinate system (see 1.4.3). The range of permissible values is -PI/2 to PI/2">
             <primitive type="float32"/>
         </attribute>
     
-        <attribute name="upperElevation" commment="This field is provided to indicate the highest elevation (in radians) for which emitted power is reduced. This angle is measured positive upward with respect to the X-Y plane of the radar's entitycoordinatesystem(see1.4.3). The range of permissible values is -PI/2 to PI/2">
+        <attribute name="upperElevation" comment="This field is provided to indicate the highest elevation (in radians) for which emitted power is reduced. This angle is measured positive upward with respect to the X-Y plane of the radar's entitycoordinatesystem(see1.4.3). The range of permissible values is -PI/2 to PI/2">
             <primitive type="float32"/>
         </attribute>
     
-        <attribute name="residualPower" commment="This field shall specify the residual effective radiated power in the blanking sector in dBm. ">
+        <attribute name="residualPower" comment="This field shall specify the residual effective radiated power in the blanking sector in dBm. ">
             <primitive type="float32"/>
         </attribute>
     
-        <attribute name="padding3" commment="Padding, 32 bits">
+        <attribute name="padding3" comment="Padding, 32 bits">
             <primitive type="uint64" defaultValue="0"/>
         </attribute>
         
@@ -768,67 +768,67 @@
            inheritsFrom="root" 
            comment="The Angle Deception attribute record may be used to communicate discrete values that are associated with angle deception jamming that cannot be referenced to an emitter mode. The values provided in the record records (provided in the associated Electromagnetic Emission PDU). (The victim radar beams are those that are targeted by the jammer.) Section 6.2.21.2.2">
   
-        <attribute name="recordType" commment="record type">
+        <attribute name="recordType" comment="record type">
             <primitive type="uint32" defaultValue="3501"/>
         </attribute>
     
-        <attribute name="recordLength" commment="the length of the record in octets.">
+        <attribute name="recordLength" comment="the length of the record in octets.">
             <primitive type="uint16" defaultValue="48"/>
         </attribute>
     
-        <attribute name="padding" commment="padding">
+        <attribute name="padding" comment="padding">
             <primitive type="uint16" defaultValue="0"/>
         </attribute>
     
-        <attribute name="emitterNumber" commment="indicates the emitter system for which the angle deception values are applicable. ">
+        <attribute name="emitterNumber" comment="indicates the emitter system for which the angle deception values are applicable. ">
             <primitive type="uint8"/>
         </attribute>
     
-        <attribute name="beamNumber" commment="indicates the jamming beam for which the angle deception values are applicable.">
+        <attribute name="beamNumber" comment="indicates the jamming beam for which the angle deception values are applicable.">
             <primitive type="uint8"/>
         </attribute>
     
-        <attribute name="stateIndicator" commment="This field shall be used to indicate if angle deception data have changed since issuance of the last Angle Deception attribute record for this beam, if the Angle Deception attribute record is part of a heartbeat update to meet periodic update requirements or if the angle deception data for the beam has ceased.">
+        <attribute name="stateIndicator" comment="This field shall be used to indicate if angle deception data have changed since issuance of the last Angle Deception attribute record for this beam, if the Angle Deception attribute record is part of a heartbeat update to meet periodic update requirements or if the angle deception data for the beam has ceased.">
             <sisoenum type="EEAttributeStateIndicator" comment="uid 300"/>
         </attribute>
     
-        <attribute name="padding2" commment="padding">
+        <attribute name="padding2" comment="padding">
             <primitive type="uint8" defaultValue="0"/>
         </attribute>
     
-        <attribute name="azimuthOffset" commment="This field indicates the relative azimuth angle at which the deceptive radar returns are centered. This angle is measured in the X-Y plane of the victim radar's entity coordinate system (see 1.4.3). This angle is measured in radians from the victim radar entity's azimuth for the true jam- mer position to the center of the range of azimuths in which deceptive radar returns are perceived as shown in Figure 43. Positive and negative values indicate that the perceived positions of the jammer are right and left of the true position of the jammer, respectively. The range of permissible values is -PI to PI">
+        <attribute name="azimuthOffset" comment="This field indicates the relative azimuth angle at which the deceptive radar returns are centered. This angle is measured in the X-Y plane of the victim radar's entity coordinate system (see 1.4.3). This angle is measured in radians from the victim radar entity's azimuth for the true jam- mer position to the center of the range of azimuths in which deceptive radar returns are perceived as shown in Figure 43. Positive and negative values indicate that the perceived positions of the jammer are right and left of the true position of the jammer, respectively. The range of permissible values is -PI to PI">
             <primitive type="float32"/>
         </attribute>
     
-        <attribute name="azimuthWidth" commment="indicates the range of azimuths (in radians) through which the deceptive radar returns are perceived, centered on the azimuth offset as shown in Figure 43. The range of permissible values is 0 to 2PI radians">
+        <attribute name="azimuthWidth" comment="indicates the range of azimuths (in radians) through which the deceptive radar returns are perceived, centered on the azimuth offset as shown in Figure 43. The range of permissible values is 0 to 2PI radians">
             <primitive type="float32"/>
         </attribute>
     
-        <attribute name="azimuthPullRate" commment="This field indicates the rate (in radians per second) at which the Azimuth Offset value is changing. Positive and negative values indicate that the Azimuth Offset is moving to the right or left, respectively.">
+        <attribute name="azimuthPullRate" comment="This field indicates the rate (in radians per second) at which the Azimuth Offset value is changing. Positive and negative values indicate that the Azimuth Offset is moving to the right or left, respectively.">
             <primitive type="float32"/>
         </attribute>
     
-        <attribute name="azimuthPullAcceleration" commment="This field indicates the rate (in radians per second squared) at which the Azimuth Pull Rate value is changing. Azimuth Pull Acceleration is defined as positive to the right and negative to the left.">
+        <attribute name="azimuthPullAcceleration" comment="This field indicates the rate (in radians per second squared) at which the Azimuth Pull Rate value is changing. Azimuth Pull Acceleration is defined as positive to the right and negative to the left.">
             <primitive type="float32"/>
         </attribute>
     
-        <attribute name="elevationOffset" commment="This field indicates the relative elevation angle at which the deceptive radar returns begin. This angle is measured as an angle with respect to the X-Y plane of the victim radar's entity coordinate system (see 1.4.3). This angle is measured in radians from the victim radar entity's eleva- tion for the true jammer position to the center of the range of elevations in which deceptive radar returns are perceived as shown in Figure 44. Positive and negative values indicate that the perceived positions of the jammer are above and below the true position of the jammer, respectively. The range of permissible values is -PI/2 to PI/2">
+        <attribute name="elevationOffset" comment="This field indicates the relative elevation angle at which the deceptive radar returns begin. This angle is measured as an angle with respect to the X-Y plane of the victim radar's entity coordinate system (see 1.4.3). This angle is measured in radians from the victim radar entity's eleva- tion for the true jammer position to the center of the range of elevations in which deceptive radar returns are perceived as shown in Figure 44. Positive and negative values indicate that the perceived positions of the jammer are above and below the true position of the jammer, respectively. The range of permissible values is -PI/2 to PI/2">
             <primitive type="float32"/>
         </attribute>
     
-        <attribute name="elevationWidth" commment="This field indicates the range of elevations (in radians) through which the decep- tive radar returns are perceived, centered on the elevation offset as shown in Figure 44. The range of permissible values is 0 to PI radians">
+        <attribute name="elevationWidth" comment="This field indicates the range of elevations (in radians) through which the decep- tive radar returns are perceived, centered on the elevation offset as shown in Figure 44. The range of permissible values is 0 to PI radians">
             <primitive type="float32"/>
         </attribute>
     
-        <attribute name="elevationPullRate" commment="This field indicates the rate (in radians per second) at which the Elevation Off- set value is changing. Positive and negative values indicate that the Elevation Offset is moving up or down, respectively. ">
+        <attribute name="elevationPullRate" comment="This field indicates the rate (in radians per second) at which the Elevation Off- set value is changing. Positive and negative values indicate that the Elevation Offset is moving up or down, respectively. ">
             <primitive type="float32"/>
         </attribute>
     
-        <attribute name="elevationPullAcceleration" commment="This field indicates the rate (in radians per second squared) at which the Elevation Pull Rate value is changing. Elevation Pull Acceleration is defined as positive to upward and negative downward. ">
+        <attribute name="elevationPullAcceleration" comment="This field indicates the rate (in radians per second squared) at which the Elevation Pull Rate value is changing. Elevation Pull Acceleration is defined as positive to upward and negative downward. ">
             <primitive type="float32"/>
         </attribute>
     
-        <attribute name="padding3" commment="">
+        <attribute name="padding3" comment="">
             <primitive type="uint32" defaultValue="0"/>
         </attribute>
 
@@ -838,31 +838,31 @@
     <class name="FalseTargetsAttribute" inheritsFrom="root" 
            comment="The False Targets attribute record shall be used to communicate discrete values that are associated with false targets jamming that cannot be referenced to an emitter mode. The values provided in the False Targets attri- bute record shall be considered valid only for the victim radar beams listed in the jamming beam's Track/Jam Data records (provided in the associated Electromagnetic Emission PDU). Section 6.2.21.3">
        
-        <attribute name="recordType" commment="record type">
+        <attribute name="recordType" comment="record type">
             <primitive type="uint32" defaultValue="3502"/>
         </attribute>
     
-        <attribute name="recordLength" commment="the length of the record in octets.">
+        <attribute name="recordLength" comment="the length of the record in octets.">
             <primitive type="uint16" defaultValue="40"/>
         </attribute>
     
-        <attribute name="padding" commment="padding">
+        <attribute name="padding" comment="padding">
             <primitive type="uint16" defaultValue="0"/>
         </attribute>
     
-        <attribute name="emitterNumber" commment="This field indicates the emitter system generating the false targets.">
+        <attribute name="emitterNumber" comment="This field indicates the emitter system generating the false targets.">
             <primitive type="uint8"/>
         </attribute>
     
-        <attribute name="beamNumber" commment="This field indicates the jamming beam generating the false targets. ">
+        <attribute name="beamNumber" comment="This field indicates the jamming beam generating the false targets. ">
             <primitive type="uint8"/>
         </attribute>
     
-        <attribute name="stateIndicator" commment="This field shall be used to indicate if false target data have changed since issuance of the last False Targets attribute record for this beam, if the False Targets attribute record is part of a heartbeat update to meet periodic update requirements or if false target data for the beam has ceased.">
+        <attribute name="stateIndicator" comment="This field shall be used to indicate if false target data have changed since issuance of the last False Targets attribute record for this beam, if the False Targets attribute record is part of a heartbeat update to meet periodic update requirements or if false target data for the beam has ceased.">
             <sisoenum type="EEAttributeStateIndicator" comment="uid 300"/>
         </attribute>
     
-        <attribute name="padding2" commment="padding">
+        <attribute name="padding2" comment="padding">
             <primitive type="uint8" defaultValue="0"/>
         </attribute>
     
@@ -870,31 +870,31 @@
             <primitive type="uint16" defaultValue="0"/>
         </attribute>
         
-        <attribute name="falseTargetCount" commment="This field indicates the jamming beam generating the false targets. ">
+        <attribute name="falseTargetCount" comment="This field indicates the jamming beam generating the false targets. ">
             <primitive type="uint16"/>
         </attribute>
     
-        <attribute name="walkSpeed" commment="This field shall specify the speed (in meters per second) at which false targets move toward the victim radar. Negative values shall indicate a velocity away from the victim radar. ">
+        <attribute name="walkSpeed" comment="This field shall specify the speed (in meters per second) at which false targets move toward the victim radar. Negative values shall indicate a velocity away from the victim radar. ">
             <primitive type="float32"/>
         </attribute>
     
-        <attribute name="walkAcceleration" commment="This field shall specify the rate (in meters per second squared) at which false tar- gets accelerate toward the victim radar. Negative values shall indicate an acceleration direction away from the victim radar. ">
+        <attribute name="walkAcceleration" comment="This field shall specify the rate (in meters per second squared) at which false tar- gets accelerate toward the victim radar. Negative values shall indicate an acceleration direction away from the victim radar. ">
             <primitive type="float32"/>
         </attribute>
     
-        <attribute name="maximumWalkDistance" commment="This field shall specify the distance (in meters) that a false target is to walk before it pauses in range. ">
+        <attribute name="maximumWalkDistance" comment="This field shall specify the distance (in meters) that a false target is to walk before it pauses in range. ">
             <primitive type="float32"/>
         </attribute>
     
-        <attribute name="keepTime" commment="This field shall specify the time (in seconds) that a false target is to be held at the Maxi- mum Walk Distance before it resets to its initial position. ">
+        <attribute name="keepTime" comment="This field shall specify the time (in seconds) that a false target is to be held at the Maxi- mum Walk Distance before it resets to its initial position. ">
             <primitive type="float32"/>
         </attribute>
     
-        <attribute name="echoSpacing" commment="This field shall specify the distance between false targets in meters. Positive values for this field shall indicate that second and subsequent false targets are initially placed at increasing ranges from the victim radar. ">
+        <attribute name="echoSpacing" comment="This field shall specify the distance between false targets in meters. Positive values for this field shall indicate that second and subsequent false targets are initially placed at increasing ranges from the victim radar. ">
             <primitive type="float32"/>
         </attribute>
         
-        <attribute name="firstTargetOffset" commment="Sets the position of the first false target relative to the jamming entity in meters.">
+        <attribute name="firstTargetOffset" comment="Sets the position of the first false target relative to the jamming entity in meters.">
             <primitive type="float32"/>
         </attribute>
    
