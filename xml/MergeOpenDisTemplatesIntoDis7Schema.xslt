@@ -14,10 +14,9 @@
 
 - several base types undefined
 - unhandled case objectlist
-- unhandled case objectlist
 - unhandled case padtoboundary
-- unhandled case primitivelist
 - unhandled case sisobitfield
+- unhandled case staticivar
 -->
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0"
@@ -261,47 +260,129 @@
             <xsl:when test="(local-name() = 'attribute') and not(classRef)">
                 <xsl:element name="xs:attribute">
                     <xsl:attribute name="name" select="@name"/>
-                    <xsl:attribute name="type">
+                    <xsl:if test="not(count(*[local-name() = 'primitivelist']) > 0)"><!-- otherwise handled by contained xs:simpleType instead -->
+                        <xsl:attribute name="type">
+                            <xsl:choose>
+                                <xsl:when test="(count(*[local-name() = 'primitive']) > 0) and (string-length(primitive/@type) > 0)">
+                                    <xsl:call-template name="simple-type-normalization">
+                                        <xsl:with-param name="originalType">
+                                            <xsl:value-of select="primitive/@type"/>
+                                        </xsl:with-param>
+                                    </xsl:call-template>
+                                </xsl:when>
+                                <xsl:when test="*[local-name() = 'primitive']">
+                                    <xsl:text>xs:string</xsl:text>
+                                    <xsl:call-template name="warning-comment-message">
+                                        <xsl:with-param name="warning">
+                                            <xsl:text>attribute </xsl:text>
+                                            <xsl:value-of select="@name"/>
+                                            <xsl:text> contained primitive has no type definition</xsl:text>
+                                        </xsl:with-param>
+                                    </xsl:call-template>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:text>xs:string</xsl:text>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:attribute>
+                    </xsl:if>
+                    <xsl:call-template name="handle-comment-documentation"/>
+                    <xsl:if test="(count(*[local-name() = 'primitivelist']) > 0) and
+                                  (string-length(primitivelist/@countFieldName) > 0)">
+                        <xsl:call-template name="warning-comment-message">
+                            <xsl:with-param name="warning">
+                                <xsl:value-of select="../@name"/>
+                                <xsl:text> attribute </xsl:text>
+                                <xsl:value-of select="@name"/>
+                                <xsl:text>, type primitivelist</xsl:text>
+                                <xsl:text> length='</xsl:text>
+                                <xsl:value-of select="primitivelist/@length"/>
+                                <xsl:text>' fixedlength='</xsl:text>
+                                <xsl:value-of select="primitivelist/@fixedlength"/>
+                                <xsl:text>' countFieldName='</xsl:text>
+                                <xsl:value-of select="primitivelist/@countFieldName"/>
+                                <xsl:text>' (TODO unhandled), couldBeString='</xsl:text>
+                                <xsl:value-of select="primitivelist/@couldBeString"/>
+                                <xsl:text>' (ignored, ambiguous)</xsl:text>
+                            </xsl:with-param>
+                        </xsl:call-template>
+                        <xsl:variable name="primitiveListType">
+                            <xsl:choose>
+                                <xsl:when test="(string-length(primitivelist/primitive/@type) > 0)">
+                                    <xsl:call-template name="simple-type-normalization">
+                                        <xsl:with-param name="originalType">
+                                            <xsl:value-of select="primitivelist/primitive/@type"/>
+                                        </xsl:with-param>
+                                    </xsl:call-template>
+                                </xsl:when>
+                                <xsl:when test="(primitivelist/@couldBeString = 'true')">
+                                    <xsl:text>xs:string</xsl:text>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:text>xs:string</xsl:text>
+                                    <xsl:call-template name="warning-comment-message">
+                                        <xsl:with-param name="warning">
+                                            <xsl:text>no contained primitive type found with primitiveList</xsl:text>
+                                        </xsl:with-param>
+                                    </xsl:call-template>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:variable>
                         <xsl:choose>
-                            <xsl:when test="(count(*[local-name() = 'primitive']) > 0) and (string-length(primitive/@type) > 0)">
-                                <xsl:call-template name="simple-type-normalization">
-                                    <xsl:with-param name="originalType">
-                                        <xsl:value-of select="primitive/@type"/>
-                                    </xsl:with-param>
-                                </xsl:call-template>
-                            </xsl:when>
-                            <xsl:when test="*[local-name() = 'primitive']">
-                                <xsl:text>xs:string</xsl:text>
-                                <xsl:message>
-                                    <xsl:text>*** Attribute </xsl:text>
-                                    <xsl:value-of select="@name"/>
-                                    <xsl:text> contained primitive has no type definition</xsl:text>
-                                </xsl:message>
+                            <xsl:when test="(string-length(primitivelist/@length) > 0)">
+                                <!-- W3C XML Schema Definition Language (XSD) 1.1 Part 2: Datatypes, 4.3.1 length -->
+                                <!-- https://www.w3.org/TR/xmlschema11-2/#rf-length -->
+                                <!-- https://stackoverflow.com/questions/10192943/is-it-possible-to-specify-a-list-length-on-an-anonymous-type -->
+                                <xs:simpleType><!-- anonymous primitivelist with restricted length -->
+                                    <xs:restriction>
+                                        <xs:simpleType>
+                                            <xs:list itemType='{$primitiveListType}'/>
+                                        </xs:simpleType>
+                                        <xsl:variable name="fixedValue">
+                                            <xsl:choose>
+                                                <xsl:when test="(string-length(primitivelist/@fixedlength) > 0)">
+                                                    <xsl:value-of select="primitivelist/@fixedlength"/>
+                                                </xsl:when>
+                                                <xsl:otherwise>
+                                                    <xsl:text>false</xsl:text>
+                                                </xsl:otherwise>
+                                            </xsl:choose>
+                                        </xsl:variable>
+                                        <xs:length value="{primitivelist/@length}" fixed="{$fixedValue}"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
                             </xsl:when>
                             <xsl:otherwise>
-                                <xsl:text>xs:string</xsl:text>
+                                <xs:simpleType><!-- anonymous primitivelist -->
+                                    <xs:list itemType='{$primitiveListType}'/>
+                                </xs:simpleType>
                             </xsl:otherwise>
                         </xsl:choose>
-                    </xsl:attribute>
-                    <xsl:call-template name="handle-comment-documentation"/>
+                    </xsl:if>
                     <xsl:apply-templates select="*"/>
-                </xsl:element>
+                </xsl:element><!-- name="xs:attribute" -->
             </xsl:when>
             <!-- ===================================== -->
             <xsl:otherwise>
-                <xsl:if test="(not(local-name() = 'initialValue') and not(@name = 'protocolFamily') and not(@name = 'EulerAngles'))">
-                    <xsl:variable name="warningMessage">
-                        <xsl:text>TODO unhandled case </xsl:text>
-                        <xsl:value-of select="local-name()"/>
-                        <xsl:text> </xsl:text>
-                        <xsl:value-of select="@name"/>
-                    </xsl:variable>
-                    <xsl:comment>
-                        <xsl:value-of select="$warningMessage"/>
-                    </xsl:comment>
-                    <xsl:message>
-                        <xsl:value-of select="$warningMessage"/>
-                    </xsl:message>
+                <!-- Developmental checks on completeness of support -->
+                <xsl:if test="not(local-name() = 'initialValue')  and not(@name = 'protocolFamily') and 
+                              not(local-name() = 'primitivelist') and not(@name = 'EulerAngles')">
+                    <xsl:call-template name="warning-comment-message">
+                        <xsl:with-param name="warning">
+                            <xsl:text>TODO unhandled definition: </xsl:text>
+                            <xsl:value-of select="local-name(../..)"/>
+                            <xsl:text> </xsl:text>
+                            <xsl:value-of select="../../@name"/>
+                            <xsl:text> </xsl:text>
+                            <xsl:value-of select="local-name(..)"/>
+                            <xsl:text> </xsl:text>
+                            <xsl:value-of select="../@name"/>
+                            <xsl:text> </xsl:text>
+                            <xsl:value-of select="local-name()"/>
+                            <xsl:text> </xsl:text>
+                            <xsl:value-of select="@name"/><!-- if present -->
+                        </xsl:with-param>
+                    </xsl:call-template>
                 </xsl:if>
             </xsl:otherwise>
         </xsl:choose>
@@ -313,24 +394,20 @@
                                     [(local-name(..) != 'initialValue') and (../@name != 'protocolFamily') and (local-name() != 'value')]"/>
         </xsl:variable>
         <xsl:if test="(count($unhandledAttributes) > 0) and (string-length(local-name($unhandledAttributes[1])) > 0)">
-            <xsl:variable name="warningMessage">
-                <xsl:text> potentially unhandledAttributes:</xsl:text>
-                <xsl:for-each select="$unhandledAttributes">
-                    <xsl:text> </xsl:text>
+            <xsl:call-template name="warning-comment-message">
+                <xsl:with-param name="warning">
+                    <xsl:text>element </xsl:text>
                     <xsl:value-of select="local-name()"/>
-                    <xsl:text>='</xsl:text>
-                    <xsl:value-of select="."/>
-                    <xsl:text>' </xsl:text>
-                </xsl:for-each>
-            </xsl:variable>
-            <xsl:comment>
-                <xsl:value-of select="$warningMessage"/>
-            </xsl:comment>
-            <xsl:message>
-                <xsl:text>*** Element </xsl:text>
-                <xsl:value-of select="local-name()"/>
-                <xsl:value-of select="$warningMessage"/>
-            </xsl:message>
+                    <xsl:text> has potentially unhandledAttributes:</xsl:text>
+                    <xsl:for-each select="$unhandledAttributes">
+                        <xsl:text> </xsl:text>
+                        <xsl:value-of select="local-name()"/>
+                        <xsl:text>='</xsl:text>
+                        <xsl:value-of select="."/>
+                        <xsl:text>' </xsl:text>
+                    </xsl:for-each>
+                </xsl:with-param>
+            </xsl:call-template>
         </xsl:if>
         <!-- common final processing for each original element, if any -->
         
@@ -512,6 +589,20 @@
                 </xsl:message>
             </xsl:otherwise>
         </xsl:choose>
+    </xsl:template>
+
+    <!-- ===================================================== -->
+
+    <xsl:template name="warning-comment-message">
+        <xsl:param name="warning"/>
+        
+        <xsl:comment>
+            <xsl:value-of select="$warning"/>
+        </xsl:comment>
+        <xsl:message>
+            <xsl:text>*** </xsl:text>
+            <xsl:value-of select="$warning"/>
+        </xsl:message>
     </xsl:template>
 
 

@@ -71,11 +71,10 @@
                   <xs:appinfo>The character set (sisoenum EntityMarkingCharacterSet uid 45)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
-            <xs:attribute name="characters" type="xs:string">
+            <xs:attribute name="characters">
                <xs:annotation>
                   <xs:appinfo>The characters</xs:appinfo>
                </xs:annotation>
-               <!--TODO unhandled case primitivelist -->
             </xs:attribute>
          </xs:extension>
       </xs:complexContent>
@@ -356,16 +355,24 @@
                   </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
-            <xs:attribute name="recordSpecificFields" type="xs:string">
+            <xs:attribute name="recordSpecificFields">
                <xs:annotation>
                   <xs:appinfo>The attribute data format conforming to that specified by the record type. K bytes
                      long
                   </xs:appinfo>
                </xs:annotation>
-               <!--TODO unhandled case primitivelist -->
+               <!--Attribute attribute recordSpecificFields, type primitivelist length='0' fixedlength='' countFieldName='recordLength' (TODO unhandled), couldBeString='' (ignored, ambiguous)-->
+               <xs:simpleType>
+                  <xs:restriction>
+                     <xs:simpleType>
+                        <xs:list itemType="xs:unsignedByte"></xs:list>
+                     </xs:simpleType>
+                     <xs:length value="0" fixed="false"></xs:length>
+                  </xs:restriction>
+               </xs:simpleType>
             </xs:attribute>
             <xs:attribute name="padding" type="xs:string">
-               <!--TODO unhandled case padtoboundary -->
+               <!--TODO unhandled definition: class Attribute attribute padding padtoboundary -->
             </xs:attribute>
          </xs:extension>
       </xs:complexContent>
@@ -527,7 +534,7 @@
                <xs:annotation>
                   <xs:appinfo>enumeration</xs:appinfo>
                </xs:annotation>
-               <!--TODO unhandled case sisobitfield -->
+               <!--TODO unhandled definition: class DirectedEnergyDamage attribute componentVisualDamageStatus sisobitfield -->
             </xs:attribute>
             <xs:attribute name="componentVisualSmokeColor" type="xs:string">
                <xs:annotation>
@@ -559,37 +566,37 @@
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="GROUND_BURIAL_DEPTH_OFFSET_BIT" type="xs:string">
-               <!--TODO unhandled case staticivar -->
+               <!--TODO unhandled definition: class DataFilterRecord attribute GROUND_BURIAL_DEPTH_OFFSET_BIT staticivar -->
             </xs:attribute>
             <xs:attribute name="WATER_BURIAL_DEPTH_OFFSET_BIT" type="xs:string">
-               <!--TODO unhandled case staticivar -->
+               <!--TODO unhandled definition: class DataFilterRecord attribute WATER_BURIAL_DEPTH_OFFSET_BIT staticivar -->
             </xs:attribute>
             <xs:attribute name="SNOW_BURIAL_DEPTH_OFFSET_BIT" type="xs:string">
-               <!--TODO unhandled case staticivar -->
+               <!--TODO unhandled definition: class DataFilterRecord attribute SNOW_BURIAL_DEPTH_OFFSET_BIT staticivar -->
             </xs:attribute>
             <xs:attribute name="MINE_ORIENTATION_BIT" type="xs:string">
-               <!--TODO unhandled case staticivar -->
+               <!--TODO unhandled definition: class DataFilterRecord attribute MINE_ORIENTATION_BIT staticivar -->
             </xs:attribute>
             <xs:attribute name="THERMAL_CONSTRAST_BIT" type="xs:string">
-               <!--TODO unhandled case staticivar -->
+               <!--TODO unhandled definition: class DataFilterRecord attribute THERMAL_CONSTRAST_BIT staticivar -->
             </xs:attribute>
             <xs:attribute name="REFLECTANCE_BIT" type="xs:string">
-               <!--TODO unhandled case staticivar -->
+               <!--TODO unhandled definition: class DataFilterRecord attribute REFLECTANCE_BIT staticivar -->
             </xs:attribute>
             <xs:attribute name="MINE_EMPLACEMENT_TIME_BIT" type="xs:string">
-               <!--TODO unhandled case staticivar -->
+               <!--TODO unhandled definition: class DataFilterRecord attribute MINE_EMPLACEMENT_TIME_BIT staticivar -->
             </xs:attribute>
             <xs:attribute name="TRIP_DETONATION_WIRE_BIT" type="xs:string">
-               <!--TODO unhandled case staticivar -->
+               <!--TODO unhandled definition: class DataFilterRecord attribute TRIP_DETONATION_WIRE_BIT staticivar -->
             </xs:attribute>
             <xs:attribute name="FUSING_BIT" type="xs:string">
-               <!--TODO unhandled case staticivar -->
+               <!--TODO unhandled definition: class DataFilterRecord attribute FUSING_BIT staticivar -->
             </xs:attribute>
             <xs:attribute name="SCALAR_DETECTION_COEFFICIENT_BIT" type="xs:string">
-               <!--TODO unhandled case staticivar -->
+               <!--TODO unhandled definition: class DataFilterRecord attribute SCALAR_DETECTION_COEFFICIENT_BIT staticivar -->
             </xs:attribute>
             <xs:attribute name="PAINT_SCHEME_BIT" type="xs:string">
-               <!--TODO unhandled case staticivar -->
+               <!--TODO unhandled definition: class DataFilterRecord attribute PAINT_SCHEME_BIT staticivar -->
             </xs:attribute>
          </xs:extension>
       </xs:complexContent>
@@ -630,13 +637,13 @@
                <xs:annotation>
                   <xs:appinfo>variable length list fixed datum IDs</xs:appinfo>
                </xs:annotation>
-               <!--TODO unhandled case objectlist -->
+               <!--TODO unhandled definition: class DataQueryDatumSpecification attribute fixedDatumIDList objectlist -->
             </xs:attribute>
             <xs:attribute name="variableDatumIDList" type="xs:string">
                <xs:annotation>
                   <xs:appinfo>variable length list variable datum IDs</xs:appinfo>
                </xs:annotation>
-               <!--TODO unhandled case objectlist -->
+               <!--TODO unhandled definition: class DataQueryDatumSpecification attribute variableDatumIDList objectlist -->
             </xs:attribute>
          </xs:extension>
       </xs:complexContent>
@@ -662,13 +669,13 @@
                <xs:annotation>
                   <xs:appinfo>variable length list fixed datums</xs:appinfo>
                </xs:annotation>
-               <!--TODO unhandled case objectlist -->
+               <!--TODO unhandled definition: class DatumSpecification attribute fixedDatumIDList objectlist -->
             </xs:attribute>
             <xs:attribute name="variableDatumIDList" type="xs:string">
                <xs:annotation>
                   <xs:appinfo>variable length list variable datums</xs:appinfo>
                </xs:annotation>
-               <!--TODO unhandled case objectlist -->
+               <!--TODO unhandled definition: class DatumSpecification attribute variableDatumIDList objectlist -->
             </xs:attribute>
          </xs:extension>
       </xs:complexContent>
@@ -802,16 +809,16 @@
                <xs:annotation>
                   <xs:appinfo>list of beam antenna records. See 6.2.9.2</xs:appinfo>
                </xs:annotation>
-               <!--TODO unhandled case objectlist -->
+               <!--TODO unhandled definition: class DirectedEnergyAreaAimpoint attribute beamAntennaParameterList objectlist -->
             </xs:attribute>
             <xs:attribute name="directedEnergyTargetEnergyDepositionRecordList" type="xs:string">
                <xs:annotation>
                   <xs:appinfo>list of DE target deposition records. See 6.2.21.4</xs:appinfo>
                </xs:annotation>
-               <!--TODO unhandled case objectlist -->
+               <!--TODO unhandled definition: class DirectedEnergyAreaAimpoint attribute directedEnergyTargetEnergyDepositionRecordList objectlist -->
             </xs:attribute>
             <xs:attribute name="padding2" type="xs:string">
-               <!--TODO unhandled case padtoboundary -->
+               <!--TODO unhandled definition: class DirectedEnergyAreaAimpoint attribute padding2 padtoboundary -->
             </xs:attribute>
          </xs:extension>
       </xs:complexContent>
@@ -1478,11 +1485,10 @@
                   <xs:appinfo>The character set (sisoenum EntityMarkingCharacterSet uid 45)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
-            <xs:attribute name="characters" type="xs:string">
+            <xs:attribute name="characters">
                <xs:annotation>
                   <xs:appinfo>The characters</xs:appinfo>
                </xs:annotation>
-               <!--TODO unhandled case primitivelist -->
             </xs:attribute>
          </xs:extension>
       </xs:complexContent>
@@ -1603,14 +1609,13 @@
                   <xs:appinfo>padding</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
-            <xs:attribute name="geometry" type="xs:string">
+            <xs:attribute name="geometry">
                <xs:annotation>
                   <xs:appinfo>Geometry or state record</xs:appinfo>
                </xs:annotation>
-               <!--TODO unhandled case primitivelist -->
             </xs:attribute>
             <xs:attribute name="padding2" type="xs:string">
-               <!--TODO unhandled case padtoboundary -->
+               <!--TODO unhandled definition: class Environment attribute padding2 padtoboundary -->
             </xs:attribute>
          </xs:extension>
       </xs:complexContent>
@@ -1871,14 +1876,13 @@
                   <xs:appinfo>The constant offset value that shall be applied to the grid locations for the xi axis</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
-            <xs:attribute name="xiValues" type="xs:string">
+            <xs:attribute name="xiValues">
                <xs:annotation>
                   <xs:appinfo>list of coordinates</xs:appinfo>
                </xs:annotation>
-               <!--TODO unhandled case primitivelist -->
             </xs:attribute>
             <xs:attribute name="padding" type="xs:string">
-               <!--TODO unhandled case padtoboundary -->
+               <!--TODO unhandled definition: class GridAxisDescriptorVariable attribute padding padtoboundary -->
             </xs:attribute>
          </xs:extension>
       </xs:complexContent>
@@ -1911,11 +1915,14 @@
       <xs:complexContent>
          <xs:extension base="GridData">
             <xs:attribute name="numberOfBytes" type="xs:unsignedShort"></xs:attribute>
-            <xs:attribute name="dataValues" type="xs:string">
-               <!--TODO unhandled case primitivelist -->
+            <xs:attribute name="dataValues">
+               <!--GridDataType0 attribute dataValues, type primitivelist length='' fixedlength='' countFieldName='numberOfBytes' (TODO unhandled), couldBeString='' (ignored, ambiguous)-->
+               <xs:simpleType>
+                  <xs:list itemType="xs:unsignedByte"></xs:list>
+               </xs:simpleType>
             </xs:attribute>
             <xs:attribute name="padding" type="xs:string">
-               <!--TODO unhandled case padtoboundary -->
+               <!--TODO unhandled definition: class GridDataType0 attribute padding padtoboundary -->
             </xs:attribute>
          </xs:extension>
       </xs:complexContent>
@@ -1930,11 +1937,14 @@
             <xs:attribute name="fieldScale" type="xs:float"></xs:attribute>
             <xs:attribute name="fieldOffset" type="xs:float"></xs:attribute>
             <xs:attribute name="numberOfValues" type="xs:unsignedShort"></xs:attribute>
-            <xs:attribute name="dataValues" type="xs:string">
-               <!--TODO unhandled case primitivelist -->
+            <xs:attribute name="dataValues">
+               <!--GridDataType1 attribute dataValues, type primitivelist length='' fixedlength='' countFieldName='numberOfValues' (TODO unhandled), couldBeString='' (ignored, ambiguous)-->
+               <xs:simpleType>
+                  <xs:list itemType="xs:unsignedShort"></xs:list>
+               </xs:simpleType>
             </xs:attribute>
             <xs:attribute name="padding" type="xs:string">
-               <!--TODO unhandled case padtoboundary -->
+               <!--TODO unhandled definition: class GridDataType1 attribute padding padtoboundary -->
             </xs:attribute>
          </xs:extension>
       </xs:complexContent>
@@ -1948,8 +1958,11 @@
          <xs:extension base="GridData">
             <xs:attribute name="numberOfValues" type="xs:unsignedShort"></xs:attribute>
             <xs:attribute name="padding" type="xs:unsignedShort"></xs:attribute>
-            <xs:attribute name="dataValues" type="xs:string">
-               <!--TODO unhandled case primitivelist -->
+            <xs:attribute name="dataValues">
+               <!--GridDataType2 attribute dataValues, type primitivelist length='' fixedlength='' countFieldName='numberOfValues' (TODO unhandled), couldBeString='' (ignored, ambiguous)-->
+               <xs:simpleType>
+                  <xs:list itemType="xs:float"></xs:list>
+               </xs:simpleType>
             </xs:attribute>
          </xs:extension>
       </xs:complexContent>
@@ -2082,11 +2095,9 @@
                   <xs:appinfo>length of record, including padding</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
-            <xs:attribute name="recordSpecificFields" type="xs:string">
-               <!--TODO unhandled case primitivelist -->
-            </xs:attribute>
+            <xs:attribute name="recordSpecificFields"></xs:attribute>
             <xs:attribute name="padding" type="xs:string">
-               <!--TODO unhandled case padtoboundary -->
+               <!--TODO unhandled definition: class IFFData attribute padding padtoboundary -->
             </xs:attribute>
          </xs:extension>
       </xs:complexContent>
@@ -2107,7 +2118,7 @@
                <xs:annotation>
                   <xs:appinfo>IFF data records</xs:appinfo>
                </xs:annotation>
-               <!--TODO unhandled case objectlist -->
+               <!--TODO unhandled definition: class IffDataSpecification attribute iffDataRecords objectlist -->
             </xs:attribute>
          </xs:extension>
       </xs:complexContent>
@@ -2149,11 +2160,10 @@
                   <xs:appinfo>Applicable modes enumeration (sisoenum IFFApplicableModes uid 339)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
-            <xs:attribute name="systemSpecificData" type="xs:string">
+            <xs:attribute name="systemSpecificData">
                <xs:annotation>
                   <xs:appinfo>System-specific data</xs:appinfo>
                </xs:annotation>
-               <!--TODO unhandled case primitivelist -->
             </xs:attribute>
          </xs:extension>
       </xs:complexContent>
@@ -2175,14 +2185,13 @@
                   <xs:appinfo>length of record</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
-            <xs:attribute name="recordSpecificField" type="xs:string">
+            <xs:attribute name="recordSpecificField">
                <xs:annotation>
                   <xs:appinfo>This is a placeholder.</xs:appinfo>
                </xs:annotation>
-               <!--TODO unhandled case primitivelist -->
             </xs:attribute>
             <xs:attribute name="padding" type="xs:string">
-               <!--TODO unhandled case padtoboundary -->
+               <!--TODO unhandled definition: class IntercomCommunicationsParameters attribute padding padtoboundary -->
             </xs:attribute>
          </xs:extension>
       </xs:complexContent>
@@ -2297,7 +2306,7 @@
                <xs:annotation>
                   <xs:appinfo>whether a modification has been made to the point object's location or orientation</xs:appinfo>
                </xs:annotation>
-               <!--TODO unhandled case sisobitfield -->
+               <!--TODO unhandled definition: class LinearSegmentParameter attribute segmentModification sisobitfield -->
             </xs:attribute>
             <xs:attribute name="generalSegmentAppearance" type="xs:string">
                <xs:annotation>
@@ -2306,7 +2315,7 @@
                      in Section 12 of SISO-REF-010.
                   </xs:appinfo>
                </xs:annotation>
-               <!--TODO unhandled case sisobitfield -->
+               <!--TODO unhandled definition: class LinearSegmentParameter attribute generalSegmentAppearance sisobitfield -->
             </xs:attribute>
             <xs:attribute name="specificSegmentAppearance" type="xs:unsignedLong">
                <xs:annotation>
@@ -2451,11 +2460,9 @@
       </xs:annotation>
       <xs:complexContent>
          <xs:extension base="root">
-            <xs:attribute name="recordSpecificFields" type="xs:string">
-               <!--TODO unhandled case primitivelist -->
-            </xs:attribute>
+            <xs:attribute name="recordSpecificFields"></xs:attribute>
             <xs:attribute name="padding" type="xs:string">
-               <!--TODO unhandled case padtoboundary -->
+               <!--TODO unhandled definition: class ModulationParameters attribute padding padtoboundary -->
             </xs:attribute>
          </xs:extension>
       </xs:complexContent>
@@ -2822,7 +2829,7 @@
                <xs:annotation>
                   <xs:appinfo>variable length list of 32 bit record types</xs:appinfo>
                </xs:annotation>
-               <!--TODO unhandled case objectlist -->
+               <!--TODO unhandled definition: class RecordQuerySpecification attribute recordIDs objectlist -->
             </xs:attribute>
          </xs:extension>
       </xs:complexContent>
@@ -2860,19 +2867,17 @@
                   <xs:appinfo>the number of records included in the record set</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
-            <xs:attribute name="recordValues" type="xs:string">
+            <xs:attribute name="recordValues">
                <xs:annotation>
                   <xs:appinfo>The concatenated records of the format specified by the Record ID field. The length
                      of this field is the Record Length multiplied by the Record Count, in units of bits.
                   </xs:appinfo>
                </xs:annotation>
-               <!--TODO unhandled case primitivelist -->
             </xs:attribute>
-            <xs:attribute name="padTo64" type="xs:string">
+            <xs:attribute name="padTo64">
                <xs:annotation>
                   <xs:appinfo>used if required to make entire record size an even multiple of 8 bytes</xs:appinfo>
                </xs:annotation>
-               <!--TODO unhandled case primitivelist -->
             </xs:attribute>
          </xs:extension>
       </xs:complexContent>
@@ -2895,7 +2900,7 @@
                <xs:annotation>
                   <xs:appinfo>variable length list record specifications.</xs:appinfo>
                </xs:annotation>
-               <!--TODO unhandled case objectlist -->
+               <!--TODO unhandled definition: class RecordSpecification attribute recordSets objectlist -->
             </xs:attribute>
          </xs:extension>
       </xs:complexContent>
@@ -3050,11 +3055,19 @@
                   <xs:appinfo>number of entity appearance records that follow</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
-            <xs:attribute name="appearanceRecordList" type="xs:string">
+            <xs:attribute name="appearanceRecordList">
                <xs:annotation>
                   <xs:appinfo>Variable length list of appearance records</xs:appinfo>
                </xs:annotation>
-               <!--TODO unhandled case primitivelist -->
+               <!--SilentEntitySystem attribute appearanceRecordList, type primitivelist length='0' fixedlength='' countFieldName='numberOfAppearanceRecords' (TODO unhandled), couldBeString='' (ignored, ambiguous)-->
+               <xs:simpleType>
+                  <xs:restriction>
+                     <xs:simpleType>
+                        <xs:list itemType="xs:unsignedLong"></xs:list>
+                     </xs:simpleType>
+                     <xs:length value="0" fixed="false"></xs:length>
+                  </xs:restriction>
+               </xs:simpleType>
             </xs:attribute>
          </xs:extension>
       </xs:complexContent>
@@ -3134,7 +3147,7 @@
                      and will cause the incorrect serialization of any class in whihc it is embedded.
                   </xs:appinfo>
                </xs:annotation>
-               <!--TODO unhandled case objectlist -->
+               <!--TODO unhandled definition: class StandardVariableSpecification attribute standardVariables objectlist -->
             </xs:attribute>
          </xs:extension>
       </xs:complexContent>
@@ -3152,11 +3165,19 @@
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="recordLength" type="xs:unsignedShort"></xs:attribute>
-            <xs:attribute name="recordSpecificFields" type="xs:string">
-               <!--TODO unhandled case primitivelist -->
+            <xs:attribute name="recordSpecificFields">
+               <!--StandardVariableRecord attribute recordSpecificFields, type primitivelist length='0' fixedlength='' countFieldName='recordLength' (TODO unhandled), couldBeString='' (ignored, ambiguous)-->
+               <xs:simpleType>
+                  <xs:restriction>
+                     <xs:simpleType>
+                        <xs:list itemType="xs:unsignedByte"></xs:list>
+                     </xs:simpleType>
+                     <xs:length value="0" fixed="false"></xs:length>
+                  </xs:restriction>
+               </xs:simpleType>
             </xs:attribute>
             <xs:attribute name="padding" type="xs:string">
-               <!--TODO unhandled case padtoboundary -->
+               <!--TODO unhandled definition: class StandardVariableRecord attribute padding padtoboundary -->
             </xs:attribute>
          </xs:extension>
       </xs:complexContent>
@@ -3459,11 +3480,10 @@
                   </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
-            <xs:attribute name="recordSpecificFields" type="xs:string">
+            <xs:attribute name="recordSpecificFields">
                <xs:annotation>
                   <xs:appinfo>120 bits</xs:appinfo>
                </xs:annotation>
-               <!--TODO unhandled case primitivelist -->
             </xs:attribute>
          </xs:extension>
       </xs:complexContent>
@@ -3737,11 +3757,9 @@
                   <xs:appinfo>Length, in bytes</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
-            <xs:attribute name="recordSpecificFields" type="xs:string">
-               <!--TODO unhandled case primitivelist -->
-            </xs:attribute>
+            <xs:attribute name="recordSpecificFields"></xs:attribute>
             <xs:attribute name="padding" type="xs:string">
-               <!--TODO unhandled case padtoboundary -->
+               <!--TODO unhandled definition: class VariableTransmitterParameters attribute padding padtoboundary -->
             </xs:attribute>
          </xs:extension>
       </xs:complexContent>
@@ -3864,11 +3882,10 @@
                   </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
-            <xs:attribute name="parameters" type="xs:string">
+            <xs:attribute name="parameters">
                <xs:annotation>
                   <xs:appinfo>Dead reckoning parameters. Contents depends on algorithm.</xs:appinfo>
                </xs:annotation>
-               <!--TODO unhandled case primitivelist -->
             </xs:attribute>
          </xs:extension>
       </xs:complexContent>
@@ -4148,7 +4165,7 @@
                   <xs:annotation>
                      <xs:appinfo>a series of bit flags</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case sisobitfield -->
+                  <!--TODO unhandled definition: class EntityStatePdu attribute capabilities sisobitfield -->
                </xs:attribute>
                <xs:attribute name="variableParameters" type="xs:string">
                   <xs:annotation>
@@ -4156,7 +4173,7 @@
                         parameters.
                      </xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class EntityStatePdu attribute variableParameters objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -4305,11 +4322,10 @@
                      <xs:appinfo>enumeration of what dead reckoning algorighm to use</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
-               <xs:attribute name="otherParameters" type="xs:string">
+               <xs:attribute name="otherParameters">
                   <xs:annotation>
                      <xs:appinfo>other parameters to use in the dead reckoning algorithm</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case primitivelist -->
                </xs:attribute>
                <xs:attribute name="xAcceleration" type="xs:float">
                   <xs:annotation>
@@ -4341,13 +4357,12 @@
                      <xs:appinfo>Z value</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
-               <xs:attribute name="marking" type="xs:string">
+               <xs:attribute name="marking">
                   <xs:annotation>
                      <xs:appinfo>characters that can be used for debugging, or to draw unique strings on the side of
                         entities in the world
                      </xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case primitivelist -->
                </xs:attribute>
                <xs:attribute name="capabilities" type="xs:unsignedShort">
                   <xs:annotation>
@@ -4360,7 +4375,7 @@
                         known as articulation parameters
                      </xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class FastEntityStatePdu attribute variableParameters objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -4625,7 +4640,7 @@
                         is included (see 6.2.93 and Annex I).
                      </xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class EntityStateUpdatePdu attribute variableParameters objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -4707,13 +4722,13 @@
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="attributeRecordSets" type="xs:string">
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class AttributePdu attribute attributeRecordSets objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
       </xs:complexType>
    </xs:element>
-   <!--TODO unhandled case class AttributeRecordSet-->
+   <!--TODO unhandled definition:   classes  class AttributeRecordSet-->
    <xs:complexType name="WarfareFamilyPdu" abstract="true">
       <xs:annotation>
          <xs:appinfo>Abstract superclass for fire and detonation pdus that have shared information. Section
@@ -4877,7 +4892,7 @@
                   <xs:annotation>
                      <xs:appinfo>specify the parameter values for each Variable Parameter record, Section 7.3.3</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class DetonationPdu attribute variableParameters objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -4944,7 +4959,7 @@
                         to process a DE, Section 7.3.4
                      </xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case sisobitfield -->
+                  <!--TODO unhandled definition: class DirectedEnergyFirePdu attribute flags sisobitfield -->
                </xs:attribute>
                <xs:attribute name="pulseShape" type="xs:string">
                   <xs:annotation>
@@ -4967,7 +4982,7 @@
                         record format (Section6.2.82), Section 7.3.4
                      </xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class DirectedEnergyFirePdu attribute dERecords objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -5003,7 +5018,7 @@
                         other Standard Variable records, Section 7.3.5
                      </xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class EntityDamageStatusPdu attribute damageDescriptionRecords objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -5055,7 +5070,7 @@
                </xs:attribute>
                <xs:attribute name="padding1" type="xs:unsignedShort"></xs:attribute>
                <xs:attribute name="supplies" type="xs:string">
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class ServiceRequestPdu attribute supplies objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -5106,7 +5121,7 @@
                         the supply types in numberOfSupplyTypes (see 6.2.85), Section 7.4.3
                      </xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class ResupplyOfferPdu attribute supplies objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -5155,7 +5170,7 @@
                         the supply types in numberOfSupplyTypes (see 6.2.85), Section 7.4.3
                      </xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class ResupplyReceivedPdu attribute supplies objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -5391,7 +5406,7 @@
                         the other participants
                      </xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case sisobitfield -->
+                  <!--TODO unhandled definition: class StopFreezePdu attribute frozenBehavior sisobitfield -->
                </xs:attribute>
                <xs:attribute name="padding1" type="xs:unsignedShort">
                   <xs:annotation>
@@ -5476,13 +5491,13 @@
                   <xs:annotation>
                      <xs:appinfo>variable length list of fixed datums</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class ActionRequestPdu attribute fixedDatums objectlist -->
                </xs:attribute>
                <xs:attribute name="variableDatums" type="xs:string">
                   <xs:annotation>
                      <xs:appinfo>variable length list of variable length datums</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class ActionRequestPdu attribute variableDatums objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -5524,13 +5539,13 @@
                   <xs:annotation>
                      <xs:appinfo>fixed length list of fixed datums</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class ActionResponsePdu attribute fixedDatums objectlist -->
                </xs:attribute>
                <xs:attribute name="variableDatums" type="xs:string">
                   <xs:annotation>
                      <xs:appinfo>variable length list of variable length datums</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class ActionResponsePdu attribute variableDatums objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -5570,13 +5585,13 @@
                   <xs:annotation>
                      <xs:appinfo>variable length list of fixed datums</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class DataQueryPdu attribute fixedDatums objectlist -->
                </xs:attribute>
                <xs:attribute name="variableDatums" type="xs:string">
                   <xs:annotation>
                      <xs:appinfo>variable length list of variable length datums</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class DataQueryPdu attribute variableDatums objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -5618,13 +5633,13 @@
                   <xs:annotation>
                      <xs:appinfo>variable length list of fixed datums</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class SetDataPdu attribute fixedDatums objectlist -->
                </xs:attribute>
                <xs:attribute name="variableDatums" type="xs:string">
                   <xs:annotation>
                      <xs:appinfo>variable length list of variable length datums</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class SetDataPdu attribute variableDatums objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -5666,13 +5681,13 @@
                   <xs:annotation>
                      <xs:appinfo>variable length list of fixed datums</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class DataPdu attribute fixedDatums objectlist -->
                </xs:attribute>
                <xs:attribute name="variableDatums" type="xs:string">
                   <xs:annotation>
                      <xs:appinfo>variable length list of variable length datums</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class DataPdu attribute variableDatums objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -5712,13 +5727,13 @@
                   <xs:annotation>
                      <xs:appinfo>variable length list of fixed datums</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class EventReportPdu attribute fixedDatums objectlist -->
                </xs:attribute>
                <xs:attribute name="variableDatums" type="xs:string">
                   <xs:annotation>
                      <xs:appinfo>variable length list of variable length datums</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class EventReportPdu attribute variableDatums objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -5748,7 +5763,7 @@
                   <xs:annotation>
                      <xs:appinfo>variable length list of variable length datums</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class CommentPdu attribute variableDatums objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -5816,14 +5831,14 @@
                   <xs:annotation>
                      <xs:appinfo>Electronic emmissions systems</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class ElectromagneticEmissionPdu attribute systems objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
       </xs:complexType>
    </xs:element>
-   <!--TODO unhandled case class ElectronicEmitter-->
-   <!--TODO unhandled case class EmitterBeam-->
+   <!--TODO unhandled definition:   classes  class ElectronicEmitter-->
+   <!--TODO unhandled definition:   classes  class EmitterBeam-->
    <xs:element name="DesignatorPdu">
       <xs:annotation>
          <xs:appinfo>7.6.3 Handles designating operations. See 5.3.7.2.</xs:appinfo>
@@ -5973,23 +5988,23 @@
                   <xs:annotation>
                      <xs:appinfo>shaft RPM values.</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class UnderwaterAcousticPdu attribute shaftRPMs objectlist -->
                </xs:attribute>
                <xs:attribute name="apaData" type="xs:string">
                   <xs:annotation>
                      <xs:appinfo>additional passive activities</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class UnderwaterAcousticPdu attribute apaData objectlist -->
                </xs:attribute>
                <xs:attribute name="emitterSystems" type="xs:string">
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class UnderwaterAcousticPdu attribute emitterSystems objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
       </xs:complexType>
    </xs:element>
-   <!--TODO unhandled case class UAEmitter-->
-   <!--TODO unhandled case class UABeam-->
+   <!--TODO unhandled definition:   classes  class UAEmitter-->
+   <!--TODO unhandled definition:   classes  class UABeam-->
    <xs:element name="IFFPdu">
       <xs:complexType>
          <xs:complexContent>
@@ -6072,7 +6087,7 @@
                   <xs:annotation>
                      <xs:appinfo>variable length list of fundamental parameters.</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class IFFLayer2Pdu attribute fundamentalIFFParameters objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -6124,13 +6139,13 @@
                   <xs:annotation>
                      <xs:appinfo>variable length list of propulsion system data</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class SEESPdu attribute propulsionSystemData objectlist -->
                </xs:attribute>
                <xs:attribute name="vectoringSystemData" type="xs:string">
                   <xs:annotation>
                      <xs:appinfo>variable length list of vectoring system data</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class SEESPdu attribute vectoringSystemData objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -6158,7 +6173,7 @@
          </xs:extension>
       </xs:complexContent>
    </xs:complexType>
-   <!--TODO unhandled case class RadioCommsHeader-->
+   <!--TODO unhandled definition:   classes  class RadioCommsHeader-->
    <xs:element name="TransmitterPdu">
       <xs:annotation>
          <xs:appinfo>5.8.3 Communicates the state of a particular radio transmitter or simple intercom.</xs:appinfo>
@@ -6256,13 +6271,13 @@
                   <xs:annotation>
                      <xs:appinfo>variable length list of modulation parameters</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class TransmitterPdu attribute modulationParametersList objectlist -->
                </xs:attribute>
                <xs:attribute name="antennaPatternList" type="xs:string">
                   <xs:annotation>
                      <xs:appinfo>variable length list of antenna pattern records</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class TransmitterPdu attribute antennaPatternList objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -6307,7 +6322,7 @@
          </xs:complexContent>
       </xs:complexType>
    </xs:element>
-   <!--TODO unhandled case class IntercomReferenceID-->
+   <!--TODO unhandled definition:   classes  class IntercomReferenceID-->
    <xs:element name="IntercomControlPdu">
       <xs:annotation>
          <xs:appinfo>5.8.7 Communicates the state of a particular intercom device, request an action of
@@ -6379,7 +6394,7 @@
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="intercomParameters" type="xs:string">
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class IntercomControlPdu attribute intercomParameters objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -6483,28 +6498,28 @@
                   <xs:annotation>
                      <xs:appinfo>aggregates list</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class AggregateStatePdu attribute aggregateIDList objectlist -->
                </xs:attribute>
                <xs:attribute name="entityIDList" type="xs:string">
                   <xs:annotation>
                      <xs:appinfo>entity ID list</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class AggregateStatePdu attribute entityIDList objectlist -->
                </xs:attribute>
                <xs:attribute name="padTo32" type="xs:string">
-                  <!--TODO unhandled case padtoboundary -->
+                  <!--TODO unhandled definition: class AggregateStatePdu attribute padTo32 padtoboundary -->
                </xs:attribute>
                <xs:attribute name="silentAggregateSystemList" type="xs:string">
                   <xs:annotation>
                      <xs:appinfo>silent entity types</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class AggregateStatePdu attribute silentAggregateSystemList objectlist -->
                </xs:attribute>
                <xs:attribute name="silentEntitySystemList" type="xs:string">
                   <xs:annotation>
                      <xs:appinfo>silent entity types</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class AggregateStatePdu attribute silentEntitySystemList objectlist -->
                </xs:attribute>
                <xs:attribute name="numberOfVariableDatumRecords" type="xs:unsignedLong">
                   <xs:annotation>
@@ -6517,7 +6532,7 @@
                   <xs:annotation>
                      <xs:appinfo>variableDatums</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class AggregateStatePdu attribute variableDatumList objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -6575,7 +6590,7 @@
                         Descriptions are not described.
                      </xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class IsGroupOfPdu attribute groupedEntityDescriptions objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -6745,19 +6760,19 @@
                   <xs:annotation>
                      <xs:appinfo>appearance bitflags</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case sisobitfield -->
+                  <!--TODO unhandled definition: class MinefieldStatePdu attribute appearance sisobitfield -->
                </xs:attribute>
                <xs:attribute name="perimeterPoints" type="xs:string">
                   <xs:annotation>
                      <xs:appinfo>perimeter points for the minefield</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class MinefieldStatePdu attribute perimeterPoints objectlist -->
                </xs:attribute>
                <xs:attribute name="mineType" type="xs:string">
                   <xs:annotation>
                      <xs:appinfo>Type of mines</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class MinefieldStatePdu attribute mineType objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -6815,13 +6830,13 @@
                   <xs:annotation>
                      <xs:appinfo>perimeter points of request</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class MinefieldQueryPdu attribute requestedPerimeterPoints objectlist -->
                </xs:attribute>
                <xs:attribute name="sensorTypes" type="xs:string">
                   <xs:annotation>
                      <xs:appinfo>Sensor types, each 16 bits long</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class MinefieldQueryPdu attribute sensorTypes objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -6898,67 +6913,94 @@
                   <xs:annotation>
                      <xs:appinfo>Sensor types, each 16 bits long</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class MinefieldDataPdu attribute sensorTypes objectlist -->
                </xs:attribute>
                <xs:attribute name="padTo32" type="xs:string">
-                  <!--TODO unhandled case padtoboundary -->
+                  <!--TODO unhandled definition: class MinefieldDataPdu attribute padTo32 padtoboundary -->
                </xs:attribute>
                <xs:attribute name="mineLocation" type="xs:string">
                   <xs:annotation>
                      <xs:appinfo>Mine locations</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class MinefieldDataPdu attribute mineLocation objectlist -->
                </xs:attribute>
-               <xs:attribute name="groundBurialDepthOffset" type="xs:string">
-                  <!--TODO unhandled case primitivelist -->
+               <xs:attribute name="groundBurialDepthOffset">
+                  <!--MinefieldDataPdu attribute groundBurialDepthOffset, type primitivelist length='' fixedlength='' countFieldName='numberOfMinesInThisPdu' (TODO unhandled), couldBeString='' (ignored, ambiguous)-->
+                  <xs:simpleType>
+                     <xs:list itemType="xs:float"></xs:list>
+                  </xs:simpleType>
                </xs:attribute>
-               <xs:attribute name="waterBurialDepthOffset" type="xs:string">
-                  <!--TODO unhandled case primitivelist -->
+               <xs:attribute name="waterBurialDepthOffset">
+                  <!--MinefieldDataPdu attribute waterBurialDepthOffset, type primitivelist length='' fixedlength='' countFieldName='numberOfMinesInThisPdu' (TODO unhandled), couldBeString='' (ignored, ambiguous)-->
+                  <xs:simpleType>
+                     <xs:list itemType="xs:float"></xs:list>
+                  </xs:simpleType>
                </xs:attribute>
-               <xs:attribute name="snowBurialDepthOffset" type="xs:string">
-                  <!--TODO unhandled case primitivelist -->
+               <xs:attribute name="snowBurialDepthOffset">
+                  <!--MinefieldDataPdu attribute snowBurialDepthOffset, type primitivelist length='' fixedlength='' countFieldName='numberOfMinesInThisPdu' (TODO unhandled), couldBeString='' (ignored, ambiguous)-->
+                  <xs:simpleType>
+                     <xs:list itemType="xs:float"></xs:list>
+                  </xs:simpleType>
                </xs:attribute>
                <xs:attribute name="mineOrientation" type="xs:string">
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class MinefieldDataPdu attribute mineOrientation objectlist -->
                </xs:attribute>
-               <xs:attribute name="thermalContrast" type="xs:string">
-                  <!--TODO unhandled case primitivelist -->
+               <xs:attribute name="thermalContrast">
+                  <!--MinefieldDataPdu attribute thermalContrast, type primitivelist length='' fixedlength='' countFieldName='numberOfMinesInThisPdu' (TODO unhandled), couldBeString='' (ignored, ambiguous)-->
+                  <xs:simpleType>
+                     <xs:list itemType="xs:float"></xs:list>
+                  </xs:simpleType>
                </xs:attribute>
-               <xs:attribute name="reflectance" type="xs:string">
-                  <!--TODO unhandled case primitivelist -->
+               <xs:attribute name="reflectance">
+                  <!--MinefieldDataPdu attribute reflectance, type primitivelist length='' fixedlength='' countFieldName='numberOfMinesInThisPdu' (TODO unhandled), couldBeString='' (ignored, ambiguous)-->
+                  <xs:simpleType>
+                     <xs:list itemType="xs:float"></xs:list>
+                  </xs:simpleType>
                </xs:attribute>
                <xs:attribute name="mineEmplacementTime" type="xs:string">
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class MinefieldDataPdu attribute mineEmplacementTime objectlist -->
                </xs:attribute>
-               <xs:attribute name="mineEntityNumber" type="xs:string">
-                  <!--TODO unhandled case primitivelist -->
+               <xs:attribute name="mineEntityNumber">
+                  <!--MinefieldDataPdu attribute mineEntityNumber, type primitivelist length='' fixedlength='' countFieldName='numberOfMinesInThisPdu' (TODO unhandled), couldBeString='' (ignored, ambiguous)-->
+                  <xs:simpleType>
+                     <xs:list itemType="xs:unsignedShort"></xs:list>
+                  </xs:simpleType>
                </xs:attribute>
                <xs:attribute name="fusing" type="xs:string">
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class MinefieldDataPdu attribute fusing objectlist -->
                </xs:attribute>
-               <xs:attribute name="scalarDetectionCoefficient" type="xs:string">
-                  <!--TODO unhandled case primitivelist -->
+               <xs:attribute name="scalarDetectionCoefficient">
+                  <!--MinefieldDataPdu attribute scalarDetectionCoefficient, type primitivelist length='' fixedlength='' countFieldName='numberOfMinesInThisPdu' (TODO unhandled), couldBeString='' (ignored, ambiguous)-->
+                  <xs:simpleType>
+                     <xs:list itemType="xs:unsignedByte"></xs:list>
+                  </xs:simpleType>
                </xs:attribute>
                <xs:attribute name="paintScheme" type="xs:string">
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class MinefieldDataPdu attribute paintScheme objectlist -->
                </xs:attribute>
                <xs:attribute name="padTo32_2" type="xs:string">
-                  <!--TODO unhandled case padtoboundary -->
+                  <!--TODO unhandled definition: class MinefieldDataPdu attribute padTo32_2 padtoboundary -->
                </xs:attribute>
-               <xs:attribute name="numberOfTripDetonationWires" type="xs:string">
-                  <!--TODO unhandled case primitivelist -->
+               <xs:attribute name="numberOfTripDetonationWires">
+                  <!--MinefieldDataPdu attribute numberOfTripDetonationWires, type primitivelist length='' fixedlength='' countFieldName='numberOfMinesInThisPdu' (TODO unhandled), couldBeString='' (ignored, ambiguous)-->
+                  <xs:simpleType>
+                     <xs:list itemType="xs:unsignedByte"></xs:list>
+                  </xs:simpleType>
                </xs:attribute>
                <xs:attribute name="padTo32_3" type="xs:string">
-                  <!--TODO unhandled case padtoboundary -->
+                  <!--TODO unhandled definition: class MinefieldDataPdu attribute padTo32_3 padtoboundary -->
                </xs:attribute>
-               <xs:attribute name="numberOfVertices" type="xs:string">
-                  <!--TODO unhandled case primitivelist -->
+               <xs:attribute name="numberOfVertices">
+                  <!--MinefieldDataPdu attribute numberOfVertices, type primitivelist length='' fixedlength='' countFieldName='numberOfMinesInThisPdu' (TODO unhandled), couldBeString='' (ignored, ambiguous)-->
+                  <xs:simpleType>
+                     <xs:list itemType="xs:unsignedByte"></xs:list>
+                  </xs:simpleType>
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
       </xs:complexType>
    </xs:element>
-   <!--TODO unhandled case class MineEmplacementTime-->
+   <!--TODO unhandled definition:   classes  class MineEmplacementTime-->
    <xs:element name="MinefieldResponseNACKPdu">
       <xs:annotation>
          <xs:appinfo>5.10.5 Contains information about the requesting entity and the PDU(s) that were not
@@ -6991,11 +7033,14 @@
                      <xs:appinfo>how many pdus were missing</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
-               <xs:attribute name="missingPduSequenceNumbers" type="xs:string">
+               <xs:attribute name="missingPduSequenceNumbers">
                   <xs:annotation>
                      <xs:appinfo>PDU sequence numbers that were missing</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case primitivelist -->
+                  <!--MinefieldResponseNACKPdu attribute missingPduSequenceNumbers, type primitivelist length='' fixedlength='' countFieldName='numberOfMissingPdus' (TODO unhandled), couldBeString='' (ignored, ambiguous)-->
+                  <xs:simpleType>
+                     <xs:list itemType="xs:unsignedByte"></xs:list>
+                  </xs:simpleType>
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -7040,7 +7085,7 @@
                   <xs:annotation>
                      <xs:appinfo>Environment status</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case sisobitfield -->
+                  <!--TODO unhandled definition: class EnvironmentalProcessPdu attribute environmentStatus sisobitfield -->
                </xs:attribute>
                <xs:attribute name="numberOfEnvironmentRecords" type="xs:unsignedShort">
                   <xs:annotation>
@@ -7056,7 +7101,7 @@
                   <xs:annotation>
                      <xs:appinfo>environmemt records</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class EnvironmentalProcessPdu attribute environmentRecords objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -7147,10 +7192,10 @@
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="gridAxisDescriptors" type="xs:string">
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class GriddedDataPdu attribute gridAxisDescriptors objectlist -->
                </xs:attribute>
                <xs:attribute name="gridDataRecords" type="xs:string">
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class GriddedDataPdu attribute gridDataRecords objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -7218,7 +7263,7 @@
                   <xs:annotation>
                      <xs:appinfo>modifications</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case sisobitfield -->
+                  <!--TODO unhandled definition: class PointObjectStatePdu attribute modifications sisobitfield -->
                </xs:attribute>
                <xs:attribute name="specificObjectAppearance" type="xs:unsignedLong">
                   <xs:annotation>
@@ -7229,7 +7274,7 @@
                   <xs:annotation>
                      <xs:appinfo>General object apperance</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case sisobitfield -->
+                  <!--TODO unhandled definition: class PointObjectStatePdu attribute generObjectAppearance sisobitfield -->
                </xs:attribute>
                <xs:attribute name="padding1" type="xs:unsignedShort"></xs:attribute>
                <xs:attribute name="pad2" type="xs:unsignedLong">
@@ -7298,7 +7343,7 @@
                   <xs:annotation>
                      <xs:appinfo>Linear segment parameters</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class LinearObjectStatePdu attribute linearSegmentParameters objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -7356,7 +7401,7 @@
                   <xs:annotation>
                      <xs:appinfo>modifications enumeration</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case sisobitfield -->
+                  <!--TODO unhandled definition: class ArealObjectStatePdu attribute modifications sisobitfield -->
                </xs:attribute>
                <xs:attribute name="specificObjectAppearance" type="xs:unsignedLong">
                   <xs:annotation>
@@ -7377,7 +7422,7 @@
                   <xs:annotation>
                      <xs:appinfo>location of object</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class ArealObjectStatePdu attribute objectLocation objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -7561,7 +7606,7 @@
                   <xs:annotation>
                      <xs:appinfo>internal behvior of the simulation while frozen</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case sisobitfield -->
+                  <!--TODO unhandled definition: class StopFreezeRPdu attribute frozenBehavior sisobitfield -->
                </xs:attribute>
                <xs:attribute name="requiredReliablityService" type="xs:string">
                   <xs:annotation>
@@ -7687,13 +7732,13 @@
                   <xs:annotation>
                      <xs:appinfo>Fixed datum records</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class ActionRequestRPdu attribute fixedDatumRecords objectlist -->
                </xs:attribute>
                <xs:attribute name="variableDatumRecords" type="xs:string">
                   <xs:annotation>
                      <xs:appinfo>Variable datum records</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class ActionRequestRPdu attribute variableDatumRecords objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -7745,13 +7790,13 @@
                   <xs:annotation>
                      <xs:appinfo>Fixed datum records</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class ActionResponseRPdu attribute fixedDatumRecords objectlist -->
                </xs:attribute>
                <xs:attribute name="variableDatumRecords" type="xs:string">
                   <xs:annotation>
                      <xs:appinfo>Variable datum records</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class ActionResponseRPdu attribute variableDatumRecords objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -7820,13 +7865,13 @@
                   <xs:annotation>
                      <xs:appinfo>Fixed datum records</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class DataQueryRPdu attribute fixedDatumRecords objectlist -->
                </xs:attribute>
                <xs:attribute name="variableDatumRecords" type="xs:string">
                   <xs:annotation>
                      <xs:appinfo>Variable datum records</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class DataQueryRPdu attribute variableDatumRecords objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -7890,13 +7935,13 @@
                   <xs:annotation>
                      <xs:appinfo>Fixed datum records</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class SetDataRPdu attribute fixedDatumRecords objectlist -->
                </xs:attribute>
                <xs:attribute name="variableDatumRecords" type="xs:string">
                   <xs:annotation>
                      <xs:appinfo>Variable datum records</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class SetDataRPdu attribute variableDatumRecords objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -7961,13 +8006,13 @@
                   <xs:annotation>
                      <xs:appinfo>Fixed datum records</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class DataRPdu attribute fixedDatumRecords objectlist -->
                </xs:attribute>
                <xs:attribute name="variableDatumRecords" type="xs:string">
                   <xs:annotation>
                      <xs:appinfo>Variable datum records</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class DataRPdu attribute variableDatumRecords objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -8017,13 +8062,13 @@
                   <xs:annotation>
                      <xs:appinfo>Fixed datum records</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class EventReportRPdu attribute fixedDatumRecords objectlist -->
                </xs:attribute>
                <xs:attribute name="variableDatumRecords" type="xs:string">
                   <xs:annotation>
                      <xs:appinfo>Variable datum records</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class EventReportRPdu attribute variableDatumRecords objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -8063,7 +8108,7 @@
                   <xs:annotation>
                      <xs:appinfo>Variable datum records</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class CommentRPdu attribute variableDatumRecords objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -8125,7 +8170,7 @@
                   <xs:annotation>
                      <xs:appinfo>record IDs</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class RecordQueryRPdu attribute recordIDs objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -8178,7 +8223,7 @@
                   <xs:annotation>
                      <xs:appinfo>record sets</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class SetRecordRPdu attribute recordSets objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -8235,7 +8280,7 @@
                   <xs:annotation>
                      <xs:appinfo>record sets</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class RecordRPdu attribute recordSets objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -8315,7 +8360,7 @@
                <xs:attribute name="padding2" type="xs:unsignedShort"></xs:attribute>
                <xs:attribute name="numberOfIORecords" type="xs:unsignedShort"></xs:attribute>
                <xs:attribute name="ioRecords" type="xs:string">
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class InformationOperationsActionPdu attribute ioRecords objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -8348,7 +8393,7 @@
                <xs:attribute name="padding3" type="xs:unsignedShort"></xs:attribute>
                <xs:attribute name="numberOfIORecords" type="xs:unsignedShort"></xs:attribute>
                <xs:attribute name="ioRecords" type="xs:string">
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class InformationOperationsReportPdu attribute ioRecords objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -8411,8 +8456,11 @@
                </xs:attribute>
                <xs:attribute name="measuredSpeed" type="xs:unsignedShort"></xs:attribute>
                <xs:attribute name="systemSpecificDataLength" type="xs:unsignedByte"></xs:attribute>
-               <xs:attribute name="systemSpecificData" type="xs:string">
-                  <!--TODO unhandled case primitivelist -->
+               <xs:attribute name="systemSpecificData">
+                  <!--TSPIPdu attribute systemSpecificData, type primitivelist length='' fixedlength='' countFieldName='systemSpecificDataLength' (TODO unhandled), couldBeString='' (ignored, ambiguous)-->
+                  <xs:simpleType>
+                     <xs:list itemType="xs:unsignedByte"></xs:list>
+                  </xs:simpleType>
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -8473,7 +8521,7 @@
                <xs:attribute name="family" fixed="LiveEntityFamilyPdu"></xs:attribute>
                <xs:attribute name="numberOfParameterRecords" type="xs:unsignedByte"></xs:attribute>
                <xs:attribute name="variableParameters" type="xs:string">
-                  <!--TODO unhandled case objectlist -->
+                  <!--TODO unhandled definition: class ArticulatedPartsPdu attribute variableParameters objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
