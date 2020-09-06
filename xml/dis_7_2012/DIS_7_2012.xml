@@ -173,14 +173,15 @@
   
     </class>
     
-    <class name="APA" comment="Additional Passive Activity">
+    <class name="APA" inheritsFrom="root" comment="Additional Passive Activity for use by Underwater Acoustic (UA) PDU. Section 7.6.4">
         
         <attribute name="parameterIndex">
             <primitive type="uint16" comment="14 bits of index, 2 bits of status"/>
         </attribute>
         
         <attribute name="value">
-            <primitive type="uint16"/>
+            <primitive type="uint16" comment="values shall be in units corresponding to the state change (such as
+dB and RPM)"/>
         </attribute>
         
     </class>
@@ -188,7 +189,7 @@
  <!-- uid 31-43: LandPlatformAppearance, AirPlatformAppearance, SurfacePlatformAppearance, SubsurfaceFlatformAppearance,
                 SpacePlatformAppearance, MunitionAppearance, LifeFormsAppearance, EnvironmentalAppearance,
                 CulturalFeatureAppearance, SupplyAppearance, RadioAppearance, ExpendableAppearance, SensorEmitterAppearance -->
-    <class name="Appearance" comment="used in AppearancePdu">
+    <class name="Appearance" inheritsFrom="root" comment="used in AppearancePdu">
         
         <attribute name="visual">
             <primitive type="uint32"/>
@@ -328,7 +329,7 @@
     
     </class>
 
-    <class name="ChangeOptions" comment="This is a bitfield . See section 6.2.13 aka B.2.41">
+    <class name="ChangeOptions" inheritsFrom="root" comment="This is a bitfield. See section 6.2.13 aka B.2.41">
         <attribute name="value">
             <primitive type="uint8"/>
         </attribute>
@@ -411,7 +412,7 @@
 
     </class>
  
-    <class name="DataFilterRecord" comment="identify which of the optional data fields are contained in the Minefield Data PDU or requested in the Minefield Query PDU. This is a 32-bit record. For each field, true denotes that the data is requested or present and false denotes that the data is neither requested nor present. Section 6.2.16">
+    <class name="DataFilterRecord" inheritsFrom="root" comment="identify which of the optional data fields are contained in the Minefield Data PDU or requested in the Minefield Query PDU. This is a 32-bit record. For each field, true denotes that the data is requested or present and false denotes that the data is neither requested nor present. Section 6.2.16">
      
         <attribute name="bitFlags" comment="Bitflags field">
             <primitive type="uint32" comment="Bit flags for fields"/>
@@ -2322,7 +2323,7 @@
 
     </class>
     
-    <class name="ShaftRPM">
+    <class name="ShaftRPM" inheritsFrom="root" comment="Current Shaft RPM, Ordered Shaft RPM for use by Underwater Acoustic (UA) PDU. Section 7.6.4">
         <attribute name="currentRPM">
             <primitive type="uint16"/>
         </attribute>

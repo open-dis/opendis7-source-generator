@@ -79,15 +79,17 @@
             -->
             
 <xsl:message>
-    <xsl:text>*** debug count(//*/*[local-name() = 'class'])=</xsl:text>
+    <xsl:text>*** Top-level DIS_7_2012.xml definitions file has count(//*/*[local-name() = 'class'])=</xsl:text>
     <xsl:value-of select="count(//*/*[local-name() = 'class'])"/>
     <xsl:text>, count(//class)=</xsl:text>
     <xsl:value-of select="count(//class)"/>
 </xsl:message>
-<!-- TODO simple types -->
+
             <!-- TODO combine the following node lists so that overall result can be alphabetized -->
+            
+<!-- this code is not working
             <xsl:variable name="allClassNodeList">
-                <xsl:for-each select="//xi:include"> <!-- now repeat for each include -->
+                <xsl:for-each select="//xi:include"> <! - - now repeat for each include - - >
                     <xsl:variable name="nodes" select="doc(concat($relativePathToFiles,@href))"/>
                     <xsl:value-of select="$nodes/classes/class"/>
 <xsl:message>
@@ -97,7 +99,7 @@
                 </xsl:for-each>
                 
             </xsl:variable>
-<!-- debug  -->
+            
 <xsl:message>
     <xsl:text>*** debug count($allClassNodeList/*)=</xsl:text>
     <xsl:value-of select="count($allClassNodeList/*)"/>
@@ -111,7 +113,7 @@
         <xsl:value-of select="@name"/>
     </xsl:for-each>
     <xsl:text>]</xsl:text>
-</xsl:message>
+</xsl:message>  -->
 
             <!-- special definitions while sorting out complete interface hierarchy -->
             <xs:complexType name="root" abstract="true"/>
@@ -134,7 +136,8 @@
 
                 <xsl:variable name="nodes" select="doc(concat($relativePathToFiles,@href))"/>
                 <xsl:message>
-                    <xsl:text> count($nodes/*/*)=</xsl:text>
+                    <xsl:value-of select="@href"/>
+                    <xsl:text> has count($nodes/*/*)=</xsl:text>
                     <xsl:value-of select="count($nodes/*/*)"/>
                     <xsl:text>, count($nodes/classes/class)=</xsl:text>
                     <xsl:value-of select="count($nodes/classes/class)"/>
@@ -501,6 +504,14 @@
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:text>base value not found</xsl:text>
+                        <xsl:call-template name="warning-comment-message">
+                            <xsl:with-param name="warning">
+                                <xsl:value-of select="local-name()"/>
+                                <xsl:text> </xsl:text>
+                                <xsl:value-of select="@name"/>
+                                <xsl:text> base value not found</xsl:text>
+                            </xsl:with-param>
+                        </xsl:call-template>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:variable>

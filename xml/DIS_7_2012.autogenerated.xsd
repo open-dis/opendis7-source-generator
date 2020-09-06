@@ -178,25 +178,25 @@
          </xs:extension>
       </xs:complexContent>
    </xs:complexType>
-   <!--abstract='false' base='base value not found'-->
+   <!--abstract='false' base='root'-->
    <xs:complexType name="APA" abstract="false">
       <xs:annotation>
-         <xs:appinfo>Additional Passive Activity</xs:appinfo>
+         <xs:appinfo>Additional Passive Activity for use by Underwater Acoustic (UA) PDU. Section 7.6.4</xs:appinfo>
       </xs:annotation>
       <xs:complexContent>
-         <xs:extension base="base value not found">
+         <xs:extension base="root">
             <xs:attribute name="parameterIndex" type="xs:unsignedShort"></xs:attribute>
             <xs:attribute name="value" type="xs:unsignedShort"></xs:attribute>
          </xs:extension>
       </xs:complexContent>
    </xs:complexType>
-   <!--abstract='false' base='base value not found'-->
+   <!--abstract='false' base='root'-->
    <xs:complexType name="Appearance" abstract="false">
       <xs:annotation>
          <xs:appinfo>used in AppearancePdu</xs:appinfo>
       </xs:annotation>
       <xs:complexContent>
-         <xs:extension base="base value not found">
+         <xs:extension base="root">
             <xs:attribute name="visual" type="xs:unsignedLong"></xs:attribute>
             <xs:attribute name="ir" type="xs:unsignedLong"></xs:attribute>
             <xs:attribute name="em" type="xs:unsignedLong"></xs:attribute>
@@ -416,13 +416,13 @@
          </xs:extension>
       </xs:complexContent>
    </xs:complexType>
-   <!--abstract='false' base='base value not found'-->
+   <!--abstract='false' base='root'-->
    <xs:complexType name="ChangeOptions" abstract="false">
       <xs:annotation>
-         <xs:appinfo>This is a bitfield . See section 6.2.13 aka B.2.41</xs:appinfo>
+         <xs:appinfo>This is a bitfield. See section 6.2.13 aka B.2.41</xs:appinfo>
       </xs:annotation>
       <xs:complexContent>
-         <xs:extension base="base value not found">
+         <xs:extension base="root">
             <xs:attribute name="value" type="xs:unsignedByte"></xs:attribute>
          </xs:extension>
       </xs:complexContent>
@@ -549,7 +549,7 @@
          </xs:extension>
       </xs:complexContent>
    </xs:complexType>
-   <!--abstract='false' base='base value not found'-->
+   <!--abstract='false' base='root'-->
    <xs:complexType name="DataFilterRecord" abstract="false">
       <xs:annotation>
          <xs:appinfo>identify which of the optional data fields are contained in the Minefield Data PDU
@@ -559,7 +559,7 @@
          </xs:appinfo>
       </xs:annotation>
       <xs:complexContent>
-         <xs:extension base="base value not found">
+         <xs:extension base="root">
             <xs:attribute name="bitFlags" type="xs:unsignedLong">
                <xs:annotation>
                   <xs:appinfo>Bitflags field</xs:appinfo>
@@ -3021,10 +3021,15 @@
          </xs:extension>
       </xs:complexContent>
    </xs:complexType>
-   <!--abstract='false' base='base value not found'-->
+   <!--abstract='false' base='root'-->
    <xs:complexType name="ShaftRPM" abstract="false">
+      <xs:annotation>
+         <xs:appinfo>Current Shaft RPM, Ordered Shaft RPM for use by Underwater Acoustic (UA) PDU. Section
+            7.6.4
+         </xs:appinfo>
+      </xs:annotation>
       <xs:complexContent>
-         <xs:extension base="base value not found">
+         <xs:extension base="root">
             <xs:attribute name="currentRPM" type="xs:unsignedShort"></xs:attribute>
             <xs:attribute name="orderedRPM" type="xs:unsignedShort"></xs:attribute>
             <xs:attribute name="RPMrateOfChange" type="xs:long"></xs:attribute>
