@@ -10,7 +10,15 @@
     license     : ../license.html
 -->
 
-<!-- TODO authors can edit this example to customize all transformation rules -->
+<!-- TODO 
+
+- several base types undefined
+- unhandled case objectlist
+- unhandled case objectlist
+- unhandled case padtoboundary
+- unhandled case primitivelist
+- unhandled case sisobitfield
+-->
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0"
                 xmlns:xs ="http://www.w3.org/2001/XMLSchema"
@@ -143,6 +151,11 @@
                     <xsl:apply-templates select="//class"/>
 
                 </xsl:for-each>
+                
+                <xsl:message>
+                    <xsl:text>finished processing </xsl:text>
+                    <xsl:value-of select="@href"/>
+                </xsl:message>
 
             </xsl:for-each><!-- PDU XML file -->
 
@@ -277,12 +290,18 @@
             <!-- ===================================== -->
             <xsl:otherwise>
                 <xsl:if test="(not(local-name() = 'initialValue') and not(@name = 'protocolFamily') and not(@name = 'EulerAngles'))">
-                    <xsl:comment>
+                    <xsl:variable name="warningMessage">
                         <xsl:text>TODO unhandled case </xsl:text>
                         <xsl:value-of select="local-name()"/>
                         <xsl:text> </xsl:text>
                         <xsl:value-of select="@name"/>
+                    </xsl:variable>
+                    <xsl:comment>
+                        <xsl:value-of select="$warningMessage"/>
                     </xsl:comment>
+                    <xsl:message>
+                        <xsl:value-of select="$warningMessage"/>
+                    </xsl:message>
                 </xsl:if>
             </xsl:otherwise>
         </xsl:choose>
