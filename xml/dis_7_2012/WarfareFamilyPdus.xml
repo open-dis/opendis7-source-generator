@@ -191,7 +191,7 @@
         <initialValue name="pduType" value="DISPDUType.ENTITY_DAMAGE_STATUS"/>
 
         <attribute name="damagedEntityID" comment="Field shall identify the damaged entity (see 6.2.28), Section 7.3.4">
-            <classref name="EntityID"/>
+            <classRef name="EntityID"/>
         </attribute>
 
         <attribute name="padding1">

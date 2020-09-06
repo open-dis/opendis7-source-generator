@@ -13,11 +13,11 @@
         <initialValue name="pduType" value="DISPDUType.SERVICE_REQUEST"/>
 
         <attribute name="requestingEntityID" comment="Entity that is requesting service (see 6.2.28), Section 7.4.2">
-            <classref name="EntityID"/>
+            <classRef name="EntityID"/>
         </attribute>
 
         <attribute name="servicingEntityID" comment="Entity that is providing the service (see 6.2.28), Section 7.4.2">
-            <classref name="EntityID"/>
+            <classRef name="EntityID"/>
         </attribute>
 
         <attribute name="serviceTypeRequested" comment="Type of service requested, Section 7.4.2">
@@ -47,12 +47,12 @@
 
         <attribute name="receivingEntityID"
                    comment="Field identifies the Entity and respective Entity Record ID that is receiving service (see 6.2.28), Section 7.4.3">
-            <classref name="EntityID"/>
+            <classRef name="EntityID"/>
         </attribute>
 
         <attribute name="supplyingEntityID"
                    comment="Identifies the Entity and respective Entity ID Record that is supplying  (see 6.2.28), Section 7.4.3">
-            <classref name="EntityID"/>
+            <classRef name="EntityID"/>
         </attribute>
 
         <attribute name="numberOfSupplyTypes" hidden="true"
@@ -83,11 +83,11 @@
         <initialValue name="pduType" value="DISPDUType.RESUPPLY_RECEIVED"/>
 
         <attribute name="receivingEntityID" comment="Entity that is receiving service.  Shall be represented by Entity Identifier record (see 6.2.28)">
-            <classref name="EntityID"/>
+            <classRef name="EntityID"/>
         </attribute>
 
         <attribute name="supplyingEntityID" comment="Entity that is supplying.  Shall be represented by Entity Identifier record (see 6.2.28)">
-            <classref name="EntityID"/>
+            <classRef name="EntityID"/>
         </attribute>
 
         <attribute name="numberOfSupplyTypes" hidden="true" comment="How many supplies are taken by receiving entity">
@@ -117,12 +117,12 @@
 
         <attribute name="receivingEntityID"
                    comment="Requesting entity, Section 7.4.5">
-            <classref name="EntityID"/>
+            <classRef name="EntityID"/>
         </attribute>
 
         <attribute name="supplyingEntityID"
                    comment="Supplying entity, Section 7.4.5">
-            <classref name="EntityID"/>
+            <classRef name="EntityID"/>
         </attribute>
         
     </class>
@@ -132,11 +132,11 @@
         <initialValue name="pduType" value="DISPDUType.REPAIR_COMPLETE"/>
 
         <attribute name="receivingEntityID" comment="Entity that is receiving service.  See 6.2.28">
-            <classref name="EntityID"/>
+            <classRef name="EntityID"/>
         </attribute>
 
         <attribute name="repairingEntityID" comment="Entity that is supplying.  See 6.2.28">
-            <classref name="EntityID"/>
+            <classRef name="EntityID"/>
         </attribute>
 
         <attribute name="repair" comment="Enumeration for type of repair.  See 6.2.74">
@@ -154,11 +154,11 @@
         <initialValue name="pduType" value="DISPDUType.REPAIR_RESPONSE"/>
 
         <attribute name="receivingEntityID" comment="Entity that requested repairs.  See 6.2.28">
-            <classref name="EntityID"/>
+            <classRef name="EntityID"/>
         </attribute>
 
         <attribute name="repairingEntityID" comment="Entity that is repairing.  See 6.2.28">
-            <classref name="EntityID"/>
+            <classRef name="EntityID"/>
         </attribute>
 
         <attribute name="repairResult" comment="Result of repair operation">

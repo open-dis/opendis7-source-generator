@@ -213,7 +213,7 @@
   
         <attribute name="shaftRPMs" comment="shaft RPM values.">
             <objectlist countFieldName="numberOfShafts">
-                <classref name="ShaftRPM"/>
+                <classRef name="ShaftRPM"/>
             </objectlist>
         </attribute>
   

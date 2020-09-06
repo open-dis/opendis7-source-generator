@@ -84,7 +84,7 @@
         </attribute>
        
         <attribute name="sampleTime" comment="valid time of the enviormental data sample, 64 bit unsigned int">
-            <classref name="ClockTime"/>
+            <classRef name="ClockTime"/>
         </attribute>
        
         <attribute name="totalValues" comment="total number of all data values for all pdus for an environmental sample">

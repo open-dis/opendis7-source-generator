@@ -47,7 +47,7 @@
         </attribute>
    
         <attribute name="protocolMode" comment="protocolMode. First two bits are the protocol mode, 14 bits reserved.">
-            <classref name="ProtocolMode"/>
+            <classRef name="ProtocolMode"/>
         </attribute>
    
         <attribute name="perimeterPoints" comment="perimeter points for the minefield">
@@ -94,7 +94,7 @@
         </attribute>
        
         <attribute name="dataFilter" comment="data filter, 32 boolean fields">
-            <classref name="DataFilterRecord"/>
+            <classRef name="DataFilterRecord"/>
         </attribute>
        
         <attribute name="requestedMineType" comment="Entity type of mine being requested">
@@ -156,7 +156,7 @@
         </attribute>
    
         <attribute name="dataFilter" comment="32 boolean field">
-            <classref name="DataFilterRecord"/>
+            <classRef name="DataFilterRecord"/>
         </attribute>
    
         <attribute name="mineType" comment="Mine type">
@@ -199,7 +199,7 @@
                
         <attribute name="mineOrientation">
             <objectlist countFieldName="numberOfMinesInThisPdu">
-                <classref name="EulerAngles"/>
+                <classRef name="EulerAngles"/>
             </objectlist>
         </attribute>
         
@@ -217,7 +217,7 @@
              
         <attribute name="mineEmplacementTime">
             <objectlist countFieldName="numberOfMinesInThisPdu">
-                <classref name="MineEmplacementTime"/>
+                <classRef name="MineEmplacementTime"/>
             </objectlist>
         </attribute> 
         

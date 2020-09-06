@@ -164,11 +164,11 @@
            comment="Location of the radiating portion of the antenna, specified in world coordinates and entity coordinates. Section 6.2.8">
 
         <attribute name="antennaLocation" comment="Location of the radiating portion of the antenna in world coordinates">
-            <classref name="Vector3Double"/>
+            <classRef name="Vector3Double"/>
         </attribute>
   
         <attribute name="relativeAntennaLocation" comment="Location of the radiating portion of the antenna in entity coordinates">
-            <classref name="Vector3Float"/>
+            <classRef name="Vector3Float"/>
         </attribute>
   
     </class>
@@ -212,7 +212,7 @@
            comment="Used when the antenna pattern type field has a value of 1. Specifies the direction, pattern, and polarization of radiation from an antenna. Section 6.2.9.2">
    
         <attribute name="beamDirection" comment="The rotation that transforms the reference coordinate sytem into the beam coordinate system. Either world coordinates or entity coordinates may be used as the reference coordinate system, as specified by the reference system field of the antenna pattern record.">
-            <classref name="EulerAngles"/>
+            <classRef name="EulerAngles"/>
         </attribute>
     
         <attribute name="azimuthBeamwidth" comment="Full width of the beam to the -3dB power density points in the x-y plane of the beam coordinnate system.  Elevation beamwidth is represented by a 32 bit floating point number in units of radians.">
@@ -374,7 +374,7 @@
         </attribute>
  
         <attribute name="damageLocation" comment="location of damage, relative to center of entity">
-            <classref name="Vector3Float"/> 
+            <classRef name="Vector3Float"/> 
         </attribute>
 
         <attribute name="damageDiameter" comment="Size of damaged area, in meters">
@@ -402,7 +402,7 @@
         </attribute>
 
         <attribute name="fireEventID" comment="For any component damage resulting this field shall be set to the fire event ID from that PDU.">
-            <classref name="EventIdentifier"/> 
+            <classRef name="EventIdentifier"/> 
         </attribute>
 
         <attribute name="padding2" comment="padding">
@@ -543,7 +543,7 @@
            comment="Explosion of a non-munition. Section 6.2.19.3">
 
         <attribute name="explodingObject" comment="Type of the object that exploded. See 6.2.30">
-            <classref name="EntityType"/> 
+            <classRef name="EntityType"/> 
         </attribute>
     
         <attribute name="explosiveMaterial" comment="Material that exploded. Can be grain dust, tnt, gasoline, etc. Enumeration">
@@ -566,7 +566,7 @@
            comment="Burst of chaff or expendible device. Section 6.2.19.4">
 
         <attribute name="expendableType" comment="Type of the object that exploded">
-            <classref name="EntityType"/> 
+            <classRef name="EntityType"/> 
         </attribute>
     
         <attribute name="padding" comment="Padding">
@@ -636,23 +636,23 @@
         </attribute>
 
         <attribute name="targetSpotLocation" comment="Position of Target Spot in World Coordinates.">
-            <classref name="Vector3Double"/>
+            <classRef name="Vector3Double"/>
         </attribute>
 
         <attribute name="targetSpotEntityLocation" comment="Position (meters) of Target Spot relative to Entity Position.">
-            <classref name="Vector3Float"/>
+            <classRef name="Vector3Float"/>
         </attribute>
 
         <attribute name="targetSpotVelocity" comment="Velocity (meters/sec) of Target Spot.">
-            <classref name="Vector3Float"/>
+            <classRef name="Vector3Float"/>
         </attribute>
 
         <attribute name="targetSpotAcceleration" comment="Acceleration (meters/sec/sec) of Target Spot.">
-            <classref name="Vector3Float"/>
+            <classRef name="Vector3Float"/>
         </attribute>
 
         <attribute name="targetEntityID" comment="Unique ID of the target entity.">
-            <classref name="EntityID"/>
+            <classRef name="EntityID"/>
         </attribute>
 
         <attribute name="targetComponentID" comment="Target Component ID ENUM, same as in DamageDescriptionRecord.">
@@ -690,7 +690,7 @@
            comment="DE energy depostion properties for a target entity. Section 6.2.20.4">
  
         <attribute name="targetEntityID" comment="Unique ID of the target entity.">
-            <classref name="EntityID"/>
+            <classRef name="EntityID"/>
         </attribute>
   
         <attribute name="padding" comment="padding">
@@ -1014,7 +1014,7 @@
            comment="Entity Identifier. Unique ID for entities in the world. Consists of an simulation address and a entity number. Section 6.2.28.">
     
         <attribute name="simulationAddress" comment="Site and application IDs">
-            <classref name="SimulationAddress"/>
+            <classRef name="SimulationAddress"/>
         </attribute>
                 
         <attribute name="entityNumber" comment="Entity number">
@@ -1061,7 +1061,7 @@
         </attribute>
     
         <attribute name="domain" comment="Domain of entity (air, surface, subsurface, space, etc)">
-            <classref name="Domain" defaultValue="Domain.inst(PlatformDomain.OTHER)" comment="can be PlatformDomain or MunitionDomain enum"/>
+            <classRef name="Domain" defaultValue="Domain.inst(PlatformDomain.OTHER)" comment="can be PlatformDomain or MunitionDomain enum"/>
         </attribute>
     
         <attribute name="country" comment="country to which the design of the entity is attributed" >
@@ -1215,7 +1215,7 @@
            comment="Identifies an event in the world. Use this format for every PDU EXCEPT the LiveEntityPdu. Section 6.2.34.">
 
         <attribute name="simulationAddress" comment="Site and application IDs">
-            <classref name="SimulationAddress"/>
+            <classRef name="SimulationAddress"/>
         </attribute>
   
         <attribute name="eventNumber">
@@ -2593,7 +2593,7 @@
     <class name="UnattachedIdentifier" inheritsFrom="root" comment="The unique designation of one or more unattached radios in an event or exercise Section 6.2.91">
 
         <attribute name="simulationAddress" comment="See 6.2.79">
-            <classref name="SimulationAddress"/>
+            <classRef name="SimulationAddress"/>
         </attribute>
   
         <attribute name="referenceNumber" comment="Reference number">
@@ -2690,7 +2690,7 @@
         </attribute>
 
         <attribute name="attachedPartType" comment="The definition of the 64 bits shall be determined based on the type of parameter specified in the Parameter Type field ">
-            <classref name="EntityType"/>
+            <classRef name="EntityType"/>
         </attribute>
 
     </class>
@@ -2787,7 +2787,7 @@
         </attribute>
 
         <attribute name="stationLocation" comment="Station separated from">
-            <classref name="NamedLocationIdentification"/>
+            <classRef name="NamedLocationIdentification"/>
         </attribute>
 
     </class>
@@ -2889,11 +2889,11 @@
         </attribute>
 
         <attribute name="entityLinearAcceleration" comment="Linear acceleration of the entity">
-            <classref name="Vector3Float"/>
+            <classRef name="Vector3Float"/>
         </attribute>
 
         <attribute name="entityAngularVelocity" comment="Angular velocity of the entity">
-            <classref name="Vector3Float"/>
+            <classRef name="Vector3Float"/>
         </attribute>
   
     </class>
@@ -3056,7 +3056,7 @@
            comment="The superclass for all PDUs except LiveEntitys. This incorporates the PduHeader record, section 7.2.2">
 
         <attribute name="pduStatus" comment="PDU Status Record. Described in 6.2.67. This field is not present in earlier DIS versions ">
-           <classref name="PduStatus"/>
+           <classRef name="PduStatus"/>
         </attribute>
 
         <attribute name="padding" comment="zero-filled array of padding">
@@ -3153,7 +3153,7 @@
            comment="DE Target Energy Deposition Record.">
     
       <attribute name="TargetEntityID" comment="Unique ID for Target Entity.">
-        <classref name="EntityType"/>
+        <classRef name="EntityType"/>
       </attribute>
     
       <attribute name="Padding">
@@ -3206,19 +3206,19 @@
            comment="This message is sent by the network or weapon module whenever a directed engery weapon is fired.">
     
       <attribute name="FiringEntityID" comment="Unique ID of the firing entity.">
-        <classref name="EntityID"/>
+        <classRef name="EntityID"/>
       </attribute>
     
       <attribute name="EventID" comment="Unique event ID for this event.">
-        <classref name="EventIdentifier"/>
+        <classRef name="EventIdentifier"/>
       </attribute>
     
       <attribute name="MunitionType" comment="Unique ID of the munition from the munition.cfg file.">
-        <classref name="EntityType"/>
+        <classRef name="EntityType"/>
       </attribute>
     
       <attribute name="ShotStartTime" comment="Time the shot started.">
-        <classref name="ClockTime"/>
+        <classRef name="ClockTime"/>
       </attribute>
     
       <attribute name="CumulativeShotTime" comment="Total amount of fire time accumulated.">
@@ -3226,7 +3226,7 @@
       </attribute>
     
       <attribute name="ApEmLocation" comment="Aperture/Emitter Position (meters) of firing entity relative to entity centroid.">
-        <classref name="Vector3Float"/>
+        <classRef name="Vector3Float"/>
       </attribute>
     
       <attribute name="ApertureDiameter" comment="Diameter of Aperture (meters).">
@@ -3299,7 +3299,7 @@
       </attribute>
     
       <attribute name="Location" comment="Position (meters) relative to body centroid.">
-        <classref name="Vector3Float"/>
+        <classRef name="Vector3Float"/>
       </attribute>
     
       <attribute name="DamageDiameter" comment="Diameter of damage (meters).">
@@ -3368,7 +3368,7 @@
       </attribute>
     
       <attribute name="FireEventID" comment="Unique event ID for this event.">
-        <classref name="EventIdentifier"/>
+        <classRef name="EventIdentifier"/>
       </attribute>
     
       <attribute name="Padding2" comment="Padding.">
