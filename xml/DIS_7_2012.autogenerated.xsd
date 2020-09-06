@@ -164,18 +164,18 @@
       </xs:annotation>
       <xs:complexContent>
          <xs:extension base="root">
-            <xs:attribute name="antennaLocation" type="xs:string">
-               <xs:annotation>
-                  <xs:appinfo>Location of the radiating portion of the antenna in world coordinates</xs:appinfo>
-               </xs:annotation>
-               <!--TODO unhandled case classref Vector3Double-->
-            </xs:attribute>
-            <xs:attribute name="relativeAntennaLocation" type="xs:string">
-               <xs:annotation>
-                  <xs:appinfo>Location of the radiating portion of the antenna in entity coordinates</xs:appinfo>
-               </xs:annotation>
-               <!--TODO unhandled case classref Vector3Float-->
-            </xs:attribute>
+            <xs:sequence>
+               <xs:element name="antennaLocation" type="Vector3Double">
+                  <xs:annotation>
+                     <xs:appinfo>Location of the radiating portion of the antenna in world coordinates</xs:appinfo>
+                  </xs:annotation>
+               </xs:element>
+               <xs:element name="relativeAntennaLocation" type="Vector3Float">
+                  <xs:annotation>
+                     <xs:appinfo>Location of the radiating portion of the antenna in entity coordinates</xs:appinfo>
+                  </xs:annotation>
+               </xs:element>
+            </xs:sequence>
          </xs:extension>
       </xs:complexContent>
    </xs:complexType>
@@ -214,16 +214,17 @@
       </xs:annotation>
       <xs:complexContent>
          <xs:extension base="root">
-            <xs:attribute name="beamDirection" type="xs:string">
-               <xs:annotation>
-                  <xs:appinfo>The rotation that transforms the reference coordinate sytem into the beam coordinate
-                     system. Either world coordinates or entity coordinates may be used as the reference
-                     coordinate system, as specified by the reference system field of the antenna pattern
-                     record.
-                  </xs:appinfo>
-               </xs:annotation>
-               <!--TODO unhandled case classref EulerAngles-->
-            </xs:attribute>
+            <xs:sequence>
+               <xs:element name="beamDirection" type="EulerAngles">
+                  <xs:annotation>
+                     <xs:appinfo>The rotation that transforms the reference coordinate sytem into the beam coordinate
+                        system. Either world coordinates or entity coordinates may be used as the reference
+                        coordinate system, as specified by the reference system field of the antenna pattern
+                        record.
+                     </xs:appinfo>
+                  </xs:annotation>
+               </xs:element>
+            </xs:sequence>
             <xs:attribute name="azimuthBeamwidth" type="xs:float">
                <xs:annotation>
                   <xs:appinfo>Full width of the beam to the -3dB power density points in the x-y plane of the beam
@@ -471,6 +472,20 @@
       </xs:annotation>
       <xs:complexContent>
          <xs:extension base="root">
+            <xs:sequence>
+               <xs:element name="damageLocation" type="Vector3Float">
+                  <xs:annotation>
+                     <xs:appinfo>location of damage, relative to center of entity</xs:appinfo>
+                  </xs:annotation>
+               </xs:element>
+               <xs:element name="fireEventID" type="EventIdentifier">
+                  <xs:annotation>
+                     <xs:appinfo>For any component damage resulting this field shall be set to the fire event ID from
+                        that PDU.
+                     </xs:appinfo>
+                  </xs:annotation>
+               </xs:element>
+            </xs:sequence>
             <xs:attribute name="recordType" type="xs:unsignedLong">
                <xs:annotation>
                   <xs:appinfo>DE Record Type.</xs:appinfo>
@@ -485,12 +500,6 @@
                <xs:annotation>
                   <xs:appinfo>padding</xs:appinfo>
                </xs:annotation>
-            </xs:attribute>
-            <xs:attribute name="damageLocation" type="xs:string">
-               <xs:annotation>
-                  <xs:appinfo>location of damage, relative to center of entity</xs:appinfo>
-               </xs:annotation>
-               <!--TODO unhandled case classref Vector3Float-->
             </xs:attribute>
             <xs:attribute name="damageDiameter" type="xs:float">
                <xs:annotation>
@@ -524,14 +533,6 @@
                <xs:annotation>
                   <xs:appinfo>enumeration (sisoenum DEDamageDescriptionComponentVisualSmokeColor uid 316)</xs:appinfo>
                </xs:annotation>
-            </xs:attribute>
-            <xs:attribute name="fireEventID" type="xs:string">
-               <xs:annotation>
-                  <xs:appinfo>For any component damage resulting this field shall be set to the fire event ID from
-                     that PDU.
-                  </xs:appinfo>
-               </xs:annotation>
-               <!--TODO unhandled case classref EventIdentifier-->
             </xs:attribute>
             <xs:attribute name="padding2" type="xs:unsignedShort">
                <xs:annotation>
@@ -716,12 +717,13 @@
       </xs:annotation>
       <xs:complexContent>
          <xs:extension base="root">
-            <xs:attribute name="explodingObject" type="xs:string">
-               <xs:annotation>
-                  <xs:appinfo>Type of the object that exploded. See 6.2.30</xs:appinfo>
-               </xs:annotation>
-               <!--TODO unhandled case classref EntityType-->
-            </xs:attribute>
+            <xs:sequence>
+               <xs:element name="explodingObject" type="EntityType">
+                  <xs:annotation>
+                     <xs:appinfo>Type of the object that exploded. See 6.2.30</xs:appinfo>
+                  </xs:annotation>
+               </xs:element>
+            </xs:sequence>
             <xs:attribute name="explosiveMaterial" type="xs:string">
                <xs:annotation>
                   <xs:appinfo>Material that exploded. Can be grain dust, tnt, gasoline, etc. Enumeration (sisoenum
@@ -749,12 +751,13 @@
       </xs:annotation>
       <xs:complexContent>
          <xs:extension base="root">
-            <xs:attribute name="expendableType" type="xs:string">
-               <xs:annotation>
-                  <xs:appinfo>Type of the object that exploded</xs:appinfo>
-               </xs:annotation>
-               <!--TODO unhandled case classref EntityType-->
-            </xs:attribute>
+            <xs:sequence>
+               <xs:element name="expendableType" type="EntityType">
+                  <xs:annotation>
+                     <xs:appinfo>Type of the object that exploded</xs:appinfo>
+                  </xs:annotation>
+               </xs:element>
+            </xs:sequence>
             <xs:attribute name="padding" type="xs:int">
                <xs:annotation>
                   <xs:appinfo>Padding</xs:appinfo>
@@ -820,6 +823,33 @@
       </xs:annotation>
       <xs:complexContent>
          <xs:extension base="root">
+            <xs:sequence>
+               <xs:element name="targetSpotLocation" type="Vector3Double">
+                  <xs:annotation>
+                     <xs:appinfo>Position of Target Spot in World Coordinates.</xs:appinfo>
+                  </xs:annotation>
+               </xs:element>
+               <xs:element name="targetSpotEntityLocation" type="Vector3Float">
+                  <xs:annotation>
+                     <xs:appinfo>Position (meters) of Target Spot relative to Entity Position.</xs:appinfo>
+                  </xs:annotation>
+               </xs:element>
+               <xs:element name="targetSpotVelocity" type="Vector3Float">
+                  <xs:annotation>
+                     <xs:appinfo>Velocity (meters/sec) of Target Spot.</xs:appinfo>
+                  </xs:annotation>
+               </xs:element>
+               <xs:element name="targetSpotAcceleration" type="Vector3Float">
+                  <xs:annotation>
+                     <xs:appinfo>Acceleration (meters/sec/sec) of Target Spot.</xs:appinfo>
+                  </xs:annotation>
+               </xs:element>
+               <xs:element name="targetEntityID" type="EntityID">
+                  <xs:annotation>
+                     <xs:appinfo>Unique ID of the target entity.</xs:appinfo>
+                  </xs:annotation>
+               </xs:element>
+            </xs:sequence>
             <xs:attribute name="recordType" type="xs:unsignedLong">
                <xs:annotation>
                   <xs:appinfo>Type of Record</xs:appinfo>
@@ -834,36 +864,6 @@
                <xs:annotation>
                   <xs:appinfo>Padding</xs:appinfo>
                </xs:annotation>
-            </xs:attribute>
-            <xs:attribute name="targetSpotLocation" type="xs:string">
-               <xs:annotation>
-                  <xs:appinfo>Position of Target Spot in World Coordinates.</xs:appinfo>
-               </xs:annotation>
-               <!--TODO unhandled case classref Vector3Double-->
-            </xs:attribute>
-            <xs:attribute name="targetSpotEntityLocation" type="xs:string">
-               <xs:annotation>
-                  <xs:appinfo>Position (meters) of Target Spot relative to Entity Position.</xs:appinfo>
-               </xs:annotation>
-               <!--TODO unhandled case classref Vector3Float-->
-            </xs:attribute>
-            <xs:attribute name="targetSpotVelocity" type="xs:string">
-               <xs:annotation>
-                  <xs:appinfo>Velocity (meters/sec) of Target Spot.</xs:appinfo>
-               </xs:annotation>
-               <!--TODO unhandled case classref Vector3Float-->
-            </xs:attribute>
-            <xs:attribute name="targetSpotAcceleration" type="xs:string">
-               <xs:annotation>
-                  <xs:appinfo>Acceleration (meters/sec/sec) of Target Spot.</xs:appinfo>
-               </xs:annotation>
-               <!--TODO unhandled case classref Vector3Float-->
-            </xs:attribute>
-            <xs:attribute name="targetEntityID" type="xs:string">
-               <xs:annotation>
-                  <xs:appinfo>Unique ID of the target entity.</xs:appinfo>
-               </xs:annotation>
-               <!--TODO unhandled case classref EntityID-->
             </xs:attribute>
             <xs:attribute name="targetComponentID" type="xs:unsignedByte">
                <xs:annotation>
@@ -910,12 +910,13 @@
       </xs:annotation>
       <xs:complexContent>
          <xs:extension base="root">
-            <xs:attribute name="targetEntityID" type="xs:string">
-               <xs:annotation>
-                  <xs:appinfo>Unique ID of the target entity.</xs:appinfo>
-               </xs:annotation>
-               <!--TODO unhandled case classref EntityID-->
-            </xs:attribute>
+            <xs:sequence>
+               <xs:element name="targetEntityID" type="EntityID">
+                  <xs:annotation>
+                     <xs:appinfo>Unique ID of the target entity.</xs:appinfo>
+                  </xs:annotation>
+               </xs:element>
+            </xs:sequence>
             <xs:attribute name="padding" type="xs:unsignedShort">
                <xs:annotation>
                   <xs:appinfo>padding</xs:appinfo>
@@ -1423,12 +1424,13 @@
       </xs:annotation>
       <xs:complexContent>
          <xs:extension base="root">
-            <xs:attribute name="simulationAddress" type="xs:string">
-               <xs:annotation>
-                  <xs:appinfo>Site and application IDs</xs:appinfo>
-               </xs:annotation>
-               <!--TODO unhandled case classref SimulationAddress-->
-            </xs:attribute>
+            <xs:sequence>
+               <xs:element name="simulationAddress" type="SimulationAddress">
+                  <xs:annotation>
+                     <xs:appinfo>Site and application IDs</xs:appinfo>
+                  </xs:annotation>
+               </xs:element>
+            </xs:sequence>
             <xs:attribute name="entityNumber" type="xs:unsignedShort">
                <xs:annotation>
                   <xs:appinfo>Entity number</xs:appinfo>
@@ -1492,16 +1494,17 @@
       </xs:annotation>
       <xs:complexContent>
          <xs:extension base="root">
+            <xs:sequence>
+               <xs:element name="domain" type="Domain">
+                  <xs:annotation>
+                     <xs:appinfo>Domain of entity (air, surface, subsurface, space, etc)</xs:appinfo>
+                  </xs:annotation>
+               </xs:element>
+            </xs:sequence>
             <xs:attribute name="entityKind" type="xs:string">
                <xs:annotation>
                   <xs:appinfo>Kind of entity (sisoenum EntityKind uid 7)</xs:appinfo>
                </xs:annotation>
-            </xs:attribute>
-            <xs:attribute name="domain" type="xs:string">
-               <xs:annotation>
-                  <xs:appinfo>Domain of entity (air, surface, subsurface, space, etc)</xs:appinfo>
-               </xs:annotation>
-               <!--TODO unhandled case classref Domain-->
             </xs:attribute>
             <xs:attribute name="country" type="xs:string">
                <xs:annotation>
@@ -1636,12 +1639,13 @@
       </xs:annotation>
       <xs:complexContent>
          <xs:extension base="root">
-            <xs:attribute name="simulationAddress" type="xs:string">
-               <xs:annotation>
-                  <xs:appinfo>Site and application IDs</xs:appinfo>
-               </xs:annotation>
-               <!--TODO unhandled case classref SimulationAddress-->
-            </xs:attribute>
+            <xs:sequence>
+               <xs:element name="simulationAddress" type="SimulationAddress">
+                  <xs:annotation>
+                     <xs:appinfo>Site and application IDs</xs:appinfo>
+                  </xs:annotation>
+               </xs:element>
+            </xs:sequence>
             <xs:attribute name="eventNumber" type="xs:unsignedShort"></xs:attribute>
          </xs:extension>
       </xs:complexContent>
@@ -3426,12 +3430,13 @@
       </xs:annotation>
       <xs:complexContent>
          <xs:extension base="root">
-            <xs:attribute name="simulationAddress" type="xs:string">
-               <xs:annotation>
-                  <xs:appinfo>See 6.2.79</xs:appinfo>
-               </xs:annotation>
-               <!--TODO unhandled case classref SimulationAddress-->
-            </xs:attribute>
+            <xs:sequence>
+               <xs:element name="simulationAddress" type="SimulationAddress">
+                  <xs:annotation>
+                     <xs:appinfo>See 6.2.79</xs:appinfo>
+                  </xs:annotation>
+               </xs:element>
+            </xs:sequence>
             <xs:attribute name="referenceNumber" type="xs:unsignedShort">
                <xs:annotation>
                   <xs:appinfo>Reference number</xs:appinfo>
@@ -3517,6 +3522,15 @@
       </xs:annotation>
       <xs:complexContent>
          <xs:extension base="root">
+            <xs:sequence>
+               <xs:element name="attachedPartType" type="EntityType">
+                  <xs:annotation>
+                     <xs:appinfo>The definition of the 64 bits shall be determined based on the type of parameter specified
+                        in the Parameter Type field
+                     </xs:appinfo>
+                  </xs:annotation>
+               </xs:element>
+            </xs:sequence>
             <xs:attribute name="recordType" type="xs:string">
                <xs:annotation>
                   <xs:appinfo>The identification of the Variable Parameter record. Enumeration from EBV (sisoenum
@@ -3545,14 +3559,6 @@
                      57)
                   </xs:appinfo>
                </xs:annotation>
-            </xs:attribute>
-            <xs:attribute name="attachedPartType" type="xs:string">
-               <xs:annotation>
-                  <xs:appinfo>The definition of the 64 bits shall be determined based on the type of parameter specified
-                     in the Parameter Type field
-                  </xs:appinfo>
-               </xs:annotation>
-               <!--TODO unhandled case classref EntityType-->
             </xs:attribute>
          </xs:extension>
       </xs:complexContent>
@@ -3676,6 +3682,11 @@
                      <xs:appinfo>ID of parent</xs:appinfo>
                   </xs:annotation>
                </xs:element>
+               <xs:element name="stationLocation" type="NamedLocationIdentification">
+                  <xs:annotation>
+                     <xs:appinfo>Station separated from</xs:appinfo>
+                  </xs:annotation>
+               </xs:element>
             </xs:sequence>
             <xs:attribute name="recordType" type="xs:string">
                <xs:annotation>
@@ -3705,12 +3716,6 @@
                <xs:annotation>
                   <xs:appinfo>padding</xs:appinfo>
                </xs:annotation>
-            </xs:attribute>
-            <xs:attribute name="stationLocation" type="xs:string">
-               <xs:annotation>
-                  <xs:appinfo>Station separated from</xs:appinfo>
-               </xs:annotation>
-               <!--TODO unhandled case classref NamedLocationIdentification-->
             </xs:attribute>
          </xs:extension>
       </xs:complexContent>
@@ -3840,6 +3845,18 @@
       </xs:annotation>
       <xs:complexContent>
          <xs:extension base="root">
+            <xs:sequence>
+               <xs:element name="entityLinearAcceleration" type="Vector3Float">
+                  <xs:annotation>
+                     <xs:appinfo>Linear acceleration of the entity</xs:appinfo>
+                  </xs:annotation>
+               </xs:element>
+               <xs:element name="entityAngularVelocity" type="Vector3Float">
+                  <xs:annotation>
+                     <xs:appinfo>Angular velocity of the entity</xs:appinfo>
+                  </xs:annotation>
+               </xs:element>
+            </xs:sequence>
             <xs:attribute name="deadReckoningAlgorithm" type="xs:string">
                <xs:annotation>
                   <xs:appinfo>Algorithm to use in computing dead reckoning. See EBV doc. (sisoenum DeadReckoningAlgorithm
@@ -3852,18 +3869,6 @@
                   <xs:appinfo>Dead reckoning parameters. Contents depends on algorithm.</xs:appinfo>
                </xs:annotation>
                <!--TODO unhandled case primitivelist -->
-            </xs:attribute>
-            <xs:attribute name="entityLinearAcceleration" type="xs:string">
-               <xs:annotation>
-                  <xs:appinfo>Linear acceleration of the entity</xs:appinfo>
-               </xs:annotation>
-               <!--TODO unhandled case classref Vector3Float-->
-            </xs:attribute>
-            <xs:attribute name="entityAngularVelocity" type="xs:string">
-               <xs:annotation>
-                  <xs:appinfo>Angular velocity of the entity</xs:appinfo>
-               </xs:annotation>
-               <!--TODO unhandled case classref Vector3Float-->
             </xs:attribute>
          </xs:extension>
       </xs:complexContent>
@@ -4043,12 +4048,13 @@
       </xs:annotation>
       <xs:complexContent>
          <xs:extension base="Pdu">
-            <xs:attribute name="pduStatus" type="xs:string">
-               <xs:annotation>
-                  <xs:appinfo>PDU Status Record. Described in 6.2.67. This field is not present in earlier DIS versions</xs:appinfo>
-               </xs:annotation>
-               <!--TODO unhandled case classref PduStatus-->
-            </xs:attribute>
+            <xs:sequence>
+               <xs:element name="pduStatus" type="PduStatus">
+                  <xs:annotation>
+                     <xs:appinfo>PDU Status Record. Described in 6.2.67. This field is not present in earlier DIS versions</xs:appinfo>
+                  </xs:annotation>
+               </xs:element>
+            </xs:sequence>
             <xs:attribute name="padding" type="xs:unsignedByte">
                <xs:annotation>
                   <xs:appinfo>zero-filled array of padding</xs:appinfo>
@@ -4076,13 +4082,47 @@
       <xs:complexType>
          <xs:complexContent>
             <xs:extension base="EntityInformationFamilyPdu">
+               <xs:sequence>
+                  <xs:element name="entityID" type="EntityID">
+                     <xs:annotation>
+                        <xs:appinfo>Unique ID for an entity that is tied to this state information</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="entityType" type="EntityType">
+                     <xs:annotation>
+                        <xs:appinfo>Describes the type of entity in the world</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="alternativeEntityType" type="EntityType"></xs:element>
+                  <xs:element name="entityLinearVelocity" type="Vector3Float">
+                     <xs:annotation>
+                        <xs:appinfo>Describes the speed of the entity in the world</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="entityLocation" type="Vector3Double">
+                     <xs:annotation>
+                        <xs:appinfo>describes the location of the entity in the world</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="entityOrientation" type="EulerAngles">
+                     <xs:annotation>
+                        <xs:appinfo>describes the orientation of the entity, in euler angles</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="deadReckoningParameters" type="DeadReckoningParameters">
+                     <xs:annotation>
+                        <xs:appinfo>parameters used for dead reckoning</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="marking" type="EntityMarking">
+                     <xs:annotation>
+                        <xs:appinfo>characters that can be used for debugging, or to draw unique strings on the side of
+                           entities in the world
+                        </xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
                <xs:attribute name="family" fixed="EntityInformationFamilyPdu"></xs:attribute>
-               <xs:attribute name="entityID" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>Unique ID for an entity that is tied to this state information</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled case classref EntityID-->
-               </xs:attribute>
                <xs:attribute name="forceId" type="xs:string">
                   <xs:annotation>
                      <xs:appinfo>What force this entity is affiliated with, eg red, blue, neutral, etc (sisoenum ForceID
@@ -4097,53 +4137,12 @@
                      </xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
-               <xs:attribute name="entityType" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>Describes the type of entity in the world</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled case classref EntityType-->
-               </xs:attribute>
-               <xs:attribute name="alternativeEntityType" type="xs:string">
-                  <!--TODO unhandled case classref EntityType-->
-               </xs:attribute>
-               <xs:attribute name="entityLinearVelocity" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>Describes the speed of the entity in the world</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled case classref Vector3Float-->
-               </xs:attribute>
-               <xs:attribute name="entityLocation" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>describes the location of the entity in the world</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled case classref Vector3Double-->
-               </xs:attribute>
-               <xs:attribute name="entityOrientation" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>describes the orientation of the entity, in euler angles</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled case classref EulerAngles-->
-               </xs:attribute>
                <xs:attribute name="entityAppearance" type="xs:unsignedLong">
                   <xs:annotation>
                      <xs:appinfo>a series of bit flags that are used to help draw the entity, such as smoking, on fire,
                         etc.
                      </xs:appinfo>
                   </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="deadReckoningParameters" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>parameters used for dead reckoning</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled case classref DeadReckoningParameters-->
-               </xs:attribute>
-               <xs:attribute name="marking" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>characters that can be used for debugging, or to draw unique strings on the side of
-                        entities in the world
-                     </xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled case classref EntityMarking-->
                </xs:attribute>
                <xs:attribute name="capabilities" type="xs:string">
                   <xs:annotation>
@@ -4376,32 +4375,47 @@
       <xs:complexType>
          <xs:complexContent>
             <xs:extension base="EntityInformationFamilyPdu">
+               <xs:sequence>
+                  <xs:element name="issuingEntityID" type="EntityID">
+                     <xs:annotation>
+                        <xs:appinfo>This field shall identify the entity that is issuing the PDU, and shall be represented
+                           by an Entity Identifier record (see 6.2.28).
+                        </xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="collidingEntityID" type="EntityID">
+                     <xs:annotation>
+                        <xs:appinfo>This field shall identify the entity that has collided with the issuing entity (see
+                           5.3.3.4). This field shall be represented by an Entity Identifier record (see 6.2.28).
+                        </xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="eventID" type="EventIdentifier">
+                     <xs:annotation>
+                        <xs:appinfo>This field shall contain an identification generated by the issuing simulation application
+                           to associate related collision events. This field shall be represented by an Event
+                           Identifier record (see 6.2.34).
+                        </xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="velocity" type="Vector3Float">
+                     <xs:annotation>
+                        <xs:appinfo>This field shall contain the velocity (at the time the collision is detected) of the
+                           issuing entity. The velocity shall be represented in world coordinates. This field
+                           shall be represented by the Linear Velocity Vector record [see 6.2.95 item c)].
+                        </xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="location" type="Vector3Float">
+                     <xs:annotation>
+                        <xs:appinfo>This field shall specify the location of the collision with respect to the entity
+                           with which the issuing entity collided. The Location field shall be represented by
+                           an Entity Coordinate Vector record [see 6.2.95 item a)].
+                        </xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
                <xs:attribute name="family" fixed="EntityInformationFamilyPdu"></xs:attribute>
-               <xs:attribute name="issuingEntityID" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>This field shall identify the entity that is issuing the PDU, and shall be represented
-                        by an Entity Identifier record (see 6.2.28).
-                     </xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled case classref EntityID-->
-               </xs:attribute>
-               <xs:attribute name="collidingEntityID" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>This field shall identify the entity that has collided with the issuing entity (see
-                        5.3.3.4). This field shall be represented by an Entity Identifier record (see 6.2.28).
-                     </xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled case classref EntityID-->
-               </xs:attribute>
-               <xs:attribute name="eventID" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>This field shall contain an identification generated by the issuing simulation application
-                        to associate related collision events. This field shall be represented by an Event
-                        Identifier record (see 6.2.34).
-                     </xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled case classref EventIdentifier-->
-               </xs:attribute>
                <xs:attribute name="collisionType" type="xs:string">
                   <xs:annotation>
                      <xs:appinfo>This field shall identify the type of collision. The Collision Type field shall be
@@ -4414,30 +4428,12 @@
                      <xs:appinfo>some padding</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
-               <xs:attribute name="velocity" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>This field shall contain the velocity (at the time the collision is detected) of the
-                        issuing entity. The velocity shall be represented in world coordinates. This field
-                        shall be represented by the Linear Velocity Vector record [see 6.2.95 item c)].
-                     </xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled case classref Vector3Float-->
-               </xs:attribute>
                <xs:attribute name="mass" type="xs:float">
                   <xs:annotation>
                      <xs:appinfo>This field shall contain the mass of the issuing entity, and shall be represented
                         by a 32-bit floating point number representing kilograms.
                      </xs:appinfo>
                   </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="location" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>This field shall specify the location of the collision with respect to the entity
-                        with which the issuing entity collided. The Location field shall be represented by
-                        an Entity Coordinate Vector record [see 6.2.95 item a)].
-                     </xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled case classref Vector3Float-->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -4452,48 +4448,62 @@
       <xs:complexType>
          <xs:complexContent>
             <xs:extension base="EntityInformationFamilyPdu">
+               <xs:sequence>
+                  <xs:element name="issuingEntityID" type="EntityID">
+                     <xs:annotation>
+                        <xs:appinfo>This field shall identify the entity that is issuing the PDU and shall be represented
+                           by an Entity Identifier record (see 6.2.28)
+                        </xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="collidingEntityID" type="EntityID">
+                     <xs:annotation>
+                        <xs:appinfo>This field shall identify the entity that has collided with the issuing entity. This
+                           field shall be a valid identifier of an entity or server capable of responding to
+                           the receipt of this Collision-Elastic PDU. This field shall be represented by an Entity
+                           Identifier record (see 6.2.28).
+                        </xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="collisionEventID" type="EventIdentifier">
+                     <xs:annotation>
+                        <xs:appinfo>This field shall contain an identification generated by the issuing simulation application
+                           to associate related collision events. This field shall be represented by an Event
+                           Identifier record (see 6.2.34).
+                        </xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="contactVelocity" type="Vector3Float">
+                     <xs:annotation>
+                        <xs:appinfo>This field shall contain the velocity at the time the collision is detected at the
+                           point the collision is detected. The velocity shall be represented in world coordinates.
+                           This field shall be represented by the Linear Velocity Vector record [see 6.2.95 item
+                           c)]
+                        </xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="locationOfImpact" type="Vector3Float">
+                     <xs:annotation>
+                        <xs:appinfo>This field shall specify the location of the collision with respect to the entity
+                           with which the issuing entity collided. This field shall be represented by an Entity
+                           Coordinate Vector record [see 6.2.95 item a)].
+                        </xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="unitSurfaceNormal" type="Vector3Float">
+                     <xs:annotation>
+                        <xs:appinfo>This record shall represent the normal vector to the surface at the point of collision
+                           detection. The surface normal shall be represented in world coordinates. This field
+                           shall be represented by an Entity Coordinate Vector record [see 6.2.95 item a)].
+                        </xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
                <xs:attribute name="family" fixed="EntityInformationFamilyPdu"></xs:attribute>
-               <xs:attribute name="issuingEntityID" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>This field shall identify the entity that is issuing the PDU and shall be represented
-                        by an Entity Identifier record (see 6.2.28)
-                     </xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled case classref EntityID-->
-               </xs:attribute>
-               <xs:attribute name="collidingEntityID" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>This field shall identify the entity that has collided with the issuing entity. This
-                        field shall be a valid identifier of an entity or server capable of responding to
-                        the receipt of this Collision-Elastic PDU. This field shall be represented by an Entity
-                        Identifier record (see 6.2.28).
-                     </xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled case classref EntityID-->
-               </xs:attribute>
-               <xs:attribute name="collisionEventID" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>This field shall contain an identification generated by the issuing simulation application
-                        to associate related collision events. This field shall be represented by an Event
-                        Identifier record (see 6.2.34).
-                     </xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled case classref EventIdentifier-->
-               </xs:attribute>
                <xs:attribute name="pad" type="xs:unsignedShort">
                   <xs:annotation>
                      <xs:appinfo>some padding</xs:appinfo>
                   </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="contactVelocity" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>This field shall contain the velocity at the time the collision is detected at the
-                        point the collision is detected. The velocity shall be represented in world coordinates.
-                        This field shall be represented by the Linear Velocity Vector record [see 6.2.95 item
-                        c)]
-                     </xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled case classref Vector3Float-->
                </xs:attribute>
                <xs:attribute name="mass" type="xs:float">
                   <xs:annotation>
@@ -4501,15 +4511,6 @@
                         a 32-bit floating point number representing kilograms
                      </xs:appinfo>
                   </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="locationOfImpact" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>This field shall specify the location of the collision with respect to the entity
-                        with which the issuing entity collided. This field shall be represented by an Entity
-                        Coordinate Vector record [see 6.2.95 item a)].
-                     </xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled case classref Vector3Float-->
                </xs:attribute>
                <xs:attribute name="collisionIntermediateResultXX" type="xs:float">
                   <xs:annotation>
@@ -4545,15 +4546,6 @@
                      <xs:appinfo>tensor values</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
-               <xs:attribute name="unitSurfaceNormal" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>This record shall represent the normal vector to the surface at the point of collision
-                        detection. The surface normal shall be represented in world coordinates. This field
-                        shall be represented by an Entity Coordinate Vector record [see 6.2.95 item a)].
-                     </xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled case classref Vector3Float-->
-               </xs:attribute>
                <xs:attribute name="coefficientOfRestitution" type="xs:float">
                   <xs:annotation>
                      <xs:appinfo>This field shall represent the degree to which energy is conserved in a collision
@@ -4576,15 +4568,38 @@
       <xs:complexType>
          <xs:complexContent>
             <xs:extension base="EntityInformationFamilyPdu">
+               <xs:sequence>
+                  <xs:element name="entityID" type="EntityID">
+                     <xs:annotation>
+                        <xs:appinfo>This field shall identify the entity issuing the PDU, and shall be represented by
+                           an Entity Identifier record (see 6.2.28).
+                        </xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="entityLinearVelocity" type="Vector3Float">
+                     <xs:annotation>
+                        <xs:appinfo>This field shall specify an entity's linear velocity. The coordinate system for an
+                           entity's linear velocity depends on the dead reckoning algorithm used. This field
+                           shall be represented by a Linear Velocity Vector record [see 6.2.95 item c)]).
+                        </xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="entityLocation" type="Vector3Double">
+                     <xs:annotation>
+                        <xs:appinfo>This field shall specify an entity's physical location in the simulated world and
+                           shall be represented by a World Coordinates record (see 6.2.97).
+                        </xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="entityOrientation" type="EulerAngles">
+                     <xs:annotation>
+                        <xs:appinfo>This field shall specify an entity's orientation and shall be represented by an Euler
+                           Angles record (see 6.2.33).
+                        </xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
                <xs:attribute name="family" fixed="EntityInformationFamilyPdu"></xs:attribute>
-               <xs:attribute name="entityID" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>This field shall identify the entity issuing the PDU, and shall be represented by
-                        an Entity Identifier record (see 6.2.28).
-                     </xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled case classref EntityID-->
-               </xs:attribute>
                <xs:attribute name="padding1" type="xs:unsignedByte">
                   <xs:annotation>
                      <xs:appinfo>Padding</xs:appinfo>
@@ -4596,31 +4611,6 @@
                         be represented by an 8-bit unsigned integer (see Annex I).
                      </xs:appinfo>
                   </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="entityLinearVelocity" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>This field shall specify an entity's linear velocity. The coordinate system for an
-                        entity's linear velocity depends on the dead reckoning algorithm used. This field
-                        shall be represented by a Linear Velocity Vector record [see 6.2.95 item c)]).
-                     </xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled case classref Vector3Float-->
-               </xs:attribute>
-               <xs:attribute name="entityLocation" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>This field shall specify an entity's physical location in the simulated world and
-                        shall be represented by a World Coordinates record (see 6.2.97).
-                     </xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled case classref Vector3Double-->
-               </xs:attribute>
-               <xs:attribute name="entityOrientation" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>This field shall specify an entity's orientation and shall be represented by an Euler
-                        Angles record (see 6.2.33).
-                     </xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled case classref EulerAngles-->
                </xs:attribute>
                <xs:attribute name="entityAppearance" type="xs:unsignedLong">
                   <xs:annotation>
@@ -4652,15 +4642,16 @@
       <xs:complexType>
          <xs:complexContent>
             <xs:extension base="EntityInformationFamilyPdu">
+               <xs:sequence>
+                  <xs:element name="originatingSimulationAddress" type="SimulationAddress">
+                     <xs:annotation>
+                        <xs:appinfo>This field shall identify the simulation issuing the Attribute PDU. It shall be represented
+                           by a Simulation Address record (see 6.2.79).
+                        </xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
                <xs:attribute name="family" fixed="EntityInformationFamilyPdu"></xs:attribute>
-               <xs:attribute name="originatingSimulationAddress" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>This field shall identify the simulation issuing the Attribute PDU. It shall be represented
-                        by a Simulation Address record (see 6.2.79).
-                     </xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled case classref SimulationAddress-->
-               </xs:attribute>
                <xs:attribute name="padding1" type="xs:long">
                   <xs:annotation>
                      <xs:appinfo>Padding</xs:appinfo>
@@ -4991,13 +4982,14 @@
       <xs:complexType>
          <xs:complexContent>
             <xs:extension base="WarfareFamilyPdu">
+               <xs:sequence>
+                  <xs:element name="damagedEntityID" type="EntityID">
+                     <xs:annotation>
+                        <xs:appinfo>Field shall identify the damaged entity (see 6.2.28), Section 7.3.4</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
                <xs:attribute name="family" fixed="WarfareFamilyPdu"></xs:attribute>
-               <xs:attribute name="damagedEntityID" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>Field shall identify the damaged entity (see 6.2.28), Section 7.3.4</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled case classref EntityID-->
-               </xs:attribute>
                <xs:attribute name="padding1" type="xs:unsignedShort"></xs:attribute>
                <xs:attribute name="padding2" type="xs:unsignedShort"></xs:attribute>
                <xs:attribute name="numberOfDamageDescription" type="xs:unsignedShort">
@@ -5036,19 +5028,19 @@
       <xs:complexType>
          <xs:complexContent>
             <xs:extension base="LogisticsFamilyPdu">
+               <xs:sequence>
+                  <xs:element name="requestingEntityID" type="EntityID">
+                     <xs:annotation>
+                        <xs:appinfo>Entity that is requesting service (see 6.2.28), Section 7.4.2</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="servicingEntityID" type="EntityID">
+                     <xs:annotation>
+                        <xs:appinfo>Entity that is providing the service (see 6.2.28), Section 7.4.2</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
                <xs:attribute name="family" fixed="LogisticsFamilyPdu"></xs:attribute>
-               <xs:attribute name="requestingEntityID" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>Entity that is requesting service (see 6.2.28), Section 7.4.2</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled case classref EntityID-->
-               </xs:attribute>
-               <xs:attribute name="servicingEntityID" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>Entity that is providing the service (see 6.2.28), Section 7.4.2</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled case classref EntityID-->
-               </xs:attribute>
                <xs:attribute name="serviceTypeRequested" type="xs:string">
                   <xs:annotation>
                      <xs:appinfo>Type of service requested, Section 7.4.2 (sisoenum ServiceRequestServiceTypeRequested
@@ -5076,23 +5068,23 @@
       <xs:complexType>
          <xs:complexContent>
             <xs:extension base="LogisticsFamilyPdu">
+               <xs:sequence>
+                  <xs:element name="receivingEntityID" type="EntityID">
+                     <xs:annotation>
+                        <xs:appinfo>Field identifies the Entity and respective Entity Record ID that is receiving service
+                           (see 6.2.28), Section 7.4.3
+                        </xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="supplyingEntityID" type="EntityID">
+                     <xs:annotation>
+                        <xs:appinfo>Identifies the Entity and respective Entity ID Record that is supplying (see 6.2.28),
+                           Section 7.4.3
+                        </xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
                <xs:attribute name="family" fixed="LogisticsFamilyPdu"></xs:attribute>
-               <xs:attribute name="receivingEntityID" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>Field identifies the Entity and respective Entity Record ID that is receiving service
-                        (see 6.2.28), Section 7.4.3
-                     </xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled case classref EntityID-->
-               </xs:attribute>
-               <xs:attribute name="supplyingEntityID" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>Identifies the Entity and respective Entity ID Record that is supplying (see 6.2.28),
-                        Section 7.4.3
-                     </xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled case classref EntityID-->
-               </xs:attribute>
                <xs:attribute name="numberOfSupplyTypes" type="xs:unsignedByte">
                   <xs:annotation>
                      <xs:appinfo>How many supplies types are being offered, Section 7.4.3</xs:appinfo>
@@ -5127,21 +5119,21 @@
       <xs:complexType>
          <xs:complexContent>
             <xs:extension base="LogisticsFamilyPdu">
+               <xs:sequence>
+                  <xs:element name="receivingEntityID" type="EntityID">
+                     <xs:annotation>
+                        <xs:appinfo>Entity that is receiving service. Shall be represented by Entity Identifier record
+                           (see 6.2.28)
+                        </xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="supplyingEntityID" type="EntityID">
+                     <xs:annotation>
+                        <xs:appinfo>Entity that is supplying. Shall be represented by Entity Identifier record (see 6.2.28)</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
                <xs:attribute name="family" fixed="LogisticsFamilyPdu"></xs:attribute>
-               <xs:attribute name="receivingEntityID" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>Entity that is receiving service. Shall be represented by Entity Identifier record
-                        (see 6.2.28)
-                     </xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled case classref EntityID-->
-               </xs:attribute>
-               <xs:attribute name="supplyingEntityID" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>Entity that is supplying. Shall be represented by Entity Identifier record (see 6.2.28)</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled case classref EntityID-->
-               </xs:attribute>
                <xs:attribute name="numberOfSupplyTypes" type="xs:unsignedByte">
                   <xs:annotation>
                      <xs:appinfo>How many supplies are taken by receiving entity</xs:appinfo>
@@ -5178,19 +5170,19 @@
       <xs:complexType>
          <xs:complexContent>
             <xs:extension base="LogisticsFamilyPdu">
+               <xs:sequence>
+                  <xs:element name="receivingEntityID" type="EntityID">
+                     <xs:annotation>
+                        <xs:appinfo>Requesting entity, Section 7.4.5</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="supplyingEntityID" type="EntityID">
+                     <xs:annotation>
+                        <xs:appinfo>Supplying entity, Section 7.4.5</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
                <xs:attribute name="family" fixed="LogisticsFamilyPdu"></xs:attribute>
-               <xs:attribute name="receivingEntityID" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>Requesting entity, Section 7.4.5</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled case classref EntityID-->
-               </xs:attribute>
-               <xs:attribute name="supplyingEntityID" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>Supplying entity, Section 7.4.5</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled case classref EntityID-->
-               </xs:attribute>
             </xs:extension>
          </xs:complexContent>
       </xs:complexType>
@@ -5204,19 +5196,19 @@
       <xs:complexType>
          <xs:complexContent>
             <xs:extension base="LogisticsFamilyPdu">
+               <xs:sequence>
+                  <xs:element name="receivingEntityID" type="EntityID">
+                     <xs:annotation>
+                        <xs:appinfo>Entity that is receiving service. See 6.2.28</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="repairingEntityID" type="EntityID">
+                     <xs:annotation>
+                        <xs:appinfo>Entity that is supplying. See 6.2.28</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
                <xs:attribute name="family" fixed="LogisticsFamilyPdu"></xs:attribute>
-               <xs:attribute name="receivingEntityID" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>Entity that is receiving service. See 6.2.28</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled case classref EntityID-->
-               </xs:attribute>
-               <xs:attribute name="repairingEntityID" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>Entity that is supplying. See 6.2.28</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled case classref EntityID-->
-               </xs:attribute>
                <xs:attribute name="repair" type="xs:string">
                   <xs:annotation>
                      <xs:appinfo>Enumeration for type of repair. See 6.2.74 (sisoenum RepairCompleteRepair uid 64)</xs:appinfo>
@@ -5240,19 +5232,19 @@
       <xs:complexType>
          <xs:complexContent>
             <xs:extension base="LogisticsFamilyPdu">
+               <xs:sequence>
+                  <xs:element name="receivingEntityID" type="EntityID">
+                     <xs:annotation>
+                        <xs:appinfo>Entity that requested repairs. See 6.2.28</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="repairingEntityID" type="EntityID">
+                     <xs:annotation>
+                        <xs:appinfo>Entity that is repairing. See 6.2.28</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
                <xs:attribute name="family" fixed="LogisticsFamilyPdu"></xs:attribute>
-               <xs:attribute name="receivingEntityID" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>Entity that requested repairs. See 6.2.28</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled case classref EntityID-->
-               </xs:attribute>
-               <xs:attribute name="repairingEntityID" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>Entity that is repairing. See 6.2.28</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled case classref EntityID-->
-               </xs:attribute>
                <xs:attribute name="repairResult" type="xs:string">
                   <xs:annotation>
                      <xs:appinfo>Result of repair operation (sisoenum RepairResponseRepairResult uid 64)</xs:appinfo>
@@ -6722,6 +6714,11 @@
                         <xs:appinfo>orientation of minefield</xs:appinfo>
                      </xs:annotation>
                   </xs:element>
+                  <xs:element name="protocolMode" type="ProtocolMode">
+                     <xs:annotation>
+                        <xs:appinfo>protocolMode. First two bits are the protocol mode, 14 bits reserved.</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
                </xs:sequence>
                <xs:attribute name="family" fixed="MinefieldFamilyPdu"></xs:attribute>
                <xs:attribute name="minefieldSequence" type="xs:unsignedShort">
@@ -6749,12 +6746,6 @@
                      <xs:appinfo>appearance bitflags</xs:appinfo>
                   </xs:annotation>
                   <!--TODO unhandled case sisobitfield -->
-               </xs:attribute>
-               <xs:attribute name="protocolMode" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>protocolMode. First two bits are the protocol mode, 14 bits reserved.</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled case classref ProtocolMode-->
                </xs:attribute>
                <xs:attribute name="perimeterPoints" type="xs:string">
                   <xs:annotation>
@@ -6792,6 +6783,11 @@
                         <xs:appinfo>EID of entity making the request</xs:appinfo>
                      </xs:annotation>
                   </xs:element>
+                  <xs:element name="dataFilter" type="DataFilterRecord">
+                     <xs:annotation>
+                        <xs:appinfo>data filter, 32 boolean fields</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
                   <xs:element name="requestedMineType" type="EntityType">
                      <xs:annotation>
                         <xs:appinfo>Entity type of mine being requested</xs:appinfo>
@@ -6814,12 +6810,6 @@
                   <xs:annotation>
                      <xs:appinfo>Number of sensor types</xs:appinfo>
                   </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="dataFilter" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>data filter, 32 boolean fields</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled case classref DataFilterRecord-->
                </xs:attribute>
                <xs:attribute name="requestedPerimeterPoints" type="xs:string">
                   <xs:annotation>
@@ -6855,6 +6845,11 @@
                   <xs:element name="requestingEntityID" type="SimulationIdentifier">
                      <xs:annotation>
                         <xs:appinfo>ID of entity making request</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="dataFilter" type="DataFilterRecord">
+                     <xs:annotation>
+                        <xs:appinfo>32 boolean field</xs:appinfo>
                      </xs:annotation>
                   </xs:element>
                   <xs:element name="mineType" type="EntityType">
@@ -6898,12 +6893,6 @@
                   <xs:annotation>
                      <xs:appinfo>padding</xs:appinfo>
                   </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="dataFilter" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>32 boolean field</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled case classref DataFilterRecord-->
                </xs:attribute>
                <xs:attribute name="sensorTypes" type="xs:string">
                   <xs:annotation>
@@ -7098,6 +7087,11 @@
                         <xs:appinfo>orientation of the data grid</xs:appinfo>
                      </xs:annotation>
                   </xs:element>
+                  <xs:element name="sampleTime" type="ClockTime">
+                     <xs:annotation>
+                        <xs:appinfo>valid time of the enviormental data sample, 64 bit unsigned int</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
                </xs:sequence>
                <xs:attribute name="family" fixed="SyntheticEnvironmentFamilyPdu"></xs:attribute>
                <xs:attribute name="fieldNumber" type="xs:unsignedShort">
@@ -7131,12 +7125,6 @@
                         GriddedDataConstantGrid uid 245)
                      </xs:appinfo>
                   </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="sampleTime" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>valid time of the enviormental data sample, 64 bit unsigned int</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled case classref ClockTime-->
                </xs:attribute>
                <xs:attribute name="totalValues" type="xs:unsignedLong">
                   <xs:annotation>
