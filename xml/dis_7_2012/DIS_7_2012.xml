@@ -64,9 +64,9 @@
         </attribute>           
     </class> -->
 
-    <class name="AcousticEmitter" inheritsFrom="root" comment=" information about a specific UA emitter. Section 6.2.2.">
+    <class name="AcousticEmitter" inheritsFrom="root" comment="Information about a specific UA emitter. Section 6.2.2.">
     
-        <attribute name="acousticSystemName" comment="the system for a particular UA emitter, and an enumeration">
+        <attribute name="acousticSystemName" comment="The system for a particular UA emitter, and an enumeration">
             <sisoenum type="UAAcousticSystemName" comment="uid 144"/>
         </attribute>
     
@@ -83,11 +83,11 @@
     <class name="AggregateIdentifier" inheritsFrom="root" 
            comment="The unique designation of each aggregate in an exercise is specified by an aggregate identifier record. The aggregate ID is not an entity and shall not be treated as such. Section 6.2.3.">
     
-        <attribute name="simulationAddress" comment="Simulation address, ie site and application, the first two fields of the entity ID">
+        <attribute name="simulationAddress" comment="Simulation address, i.e. site and application, the first two fields of the entity ID">
             <classRef name="SimulationAddress"/>
         </attribute>
   
-        <attribute name="aggregateID" comment="the aggregate ID">
+        <attribute name="aggregateID" comment="The aggregate ID">
             <primitive type="uint16"/>
         </attribute>
  
@@ -173,7 +173,7 @@
   
     </class>
     
-    <class name="APA" comment="additional passive activity">
+    <class name="APA" comment="Additional Passive Activity">
         
         <attribute name="parameterIndex">
             <primitive type="uint16" comment="14 bits of index, 2 bits of status"/>
@@ -713,7 +713,7 @@
             <primitive type="uint32" defaultValue="3500"/>
         </attribute>
     
-        <attribute name="recordLength" comment="the length of the Blanking Sector attribute record in octets.">
+        <attribute name="recordLength" comment="The length of the Blanking Sector attribute record in octets.">
             <primitive type="uint16" defaultValue="40"/>
         </attribute>
     
@@ -772,7 +772,7 @@
             <primitive type="uint32" defaultValue="3501"/>
         </attribute>
     
-        <attribute name="recordLength" comment="the length of the record in octets.">
+        <attribute name="recordLength" comment="The length of the record in octets.">
             <primitive type="uint16" defaultValue="48"/>
         </attribute>
     
@@ -842,7 +842,7 @@
             <primitive type="uint32" defaultValue="3502"/>
         </attribute>
     
-        <attribute name="recordLength" comment="the length of the record in octets.">
+        <attribute name="recordLength" comment="The length of the record in octets.">
             <primitive type="uint16" defaultValue="40"/>
         </attribute>
     
@@ -1804,7 +1804,7 @@
            inheritsFrom="root" 
            comment="The specification of an individual segment of a linear segment synthetic environment object in a Linear Object State PDU Section 6.2.52">
 
-        <attribute name="segmentNumber" comment="the individual segment of the linear segment">
+        <attribute name="segmentNumber" comment="The individual segment of the linear segment">
             <primitive type="uint8"/>
         </attribute>
      
@@ -1938,7 +1938,7 @@
             <primitive type="uint16"/>
         </attribute>
 
-        <attribute name="majorModulation" comment="the major classification of the modulation type. ">
+        <attribute name="majorModulation" comment="The major classification of the modulation type. ">
             <sisoenum type="TransmitterMajorModulation" comment="UID 155"/>
         </attribute>
 
@@ -1946,7 +1946,7 @@
             <primitive type="uint16"/>
         </attribute>
 
-        <attribute name="radioSystem" comment="the radio system associated with this Transmitter PDU and shall be used as the basis to interpret other fields whose values depend on a specific radio system.">
+        <attribute name="radioSystem" comment="The radio system associated with this Transmitter PDU and shall be used as the basis to interpret other fields whose values depend on a specific radio system.">
             <sisoenum type="TransmitterModulationTypeSystem" comment="uid =163"/>
         </attribute>
  
@@ -1959,11 +1959,11 @@
             <classRef name="EntityType"/>
         </attribute>
 
-        <attribute name="station" comment="the station or launcher to which the munition is assigned. See Annex I">
+        <attribute name="station" comment="The station or launcher to which the munition is assigned. See Annex I">
             <primitive type="uint32"/>
         </attribute>
 
-        <attribute name="quantity" comment="the quantity remaining of this munition.">
+        <attribute name="quantity" comment="The quantity remaining of this munition.">
             <primitive type="uint16"/>
         </attribute>
 
@@ -1984,15 +1984,15 @@
             <classRef name="EntityType"/>
         </attribute>
 
-        <attribute name="station" comment="the station or launcher to which the munition is assigned. See Annex I">
+        <attribute name="station" comment="The station or launcher to which the munition is assigned. See Annex I">
             <primitive type="uint32"/>
         </attribute>
 
-        <attribute name="standardQuantity" comment="the standard quantity of this munition type normally loaded at this station/launcher if a station/launcher is specified.">
+        <attribute name="standardQuantity" comment="The standard quantity of this munition type normally loaded at this station/launcher if a station/launcher is specified.">
             <primitive type="uint16"/>
         </attribute>
 
-        <attribute name="maximumQuantity" comment="the maximum quantity of this munition type that this station/launcher is capable of holding when a station/launcher is specified ">
+        <attribute name="maximumQuantity" comment="The maximum quantity of this munition type that this station/launcher is capable of holding when a station/launcher is specified ">
             <primitive type="uint16"/>
         </attribute>
 
@@ -2000,7 +2000,7 @@
             <primitive type="uint32"/>
         </attribute>
 
-        <attribute name="maximumQuantityReloadTime" comment="the number of seconds of sim time required to reload the max possible quantity">
+        <attribute name="maximumQuantityReloadTime" comment="The number of seconds of sim time required to reload the max possible quantity">
             <primitive type="uint32"/>
         </attribute>
  
@@ -2009,11 +2009,11 @@
     <class name="NamedLocationIdentification" inheritsFrom="root"
            comment="Information about the discrete positional relationship of the part entity with respect to the its host entity Section 6.2.62 ">
  
-        <attribute name="stationName" comment="the station name within the host at which the part entity is located. If the part entity is On Station, this field shall specify the representation of the part's location data fields. This field shall be specified by a 16-bit enumeration ">
+        <attribute name="stationName" comment="The station name within the host at which the part entity is located. If the part entity is On Station, this field shall specify the representation of the part's location data fields. This field shall be specified by a 16-bit enumeration ">
             <sisoenum type="IsPartOfStationName" comment="uid 212"/>
         </attribute>
  
-        <attribute name="stationNumber" comment="the number of the particular wing station, cargo hold etc., at which the part is attached. ">
+        <attribute name="stationNumber" comment="The number of the particular wing station, cargo hold etc., at which the part is attached. ">
             <primitive type="uint16"/>
         </attribute>
 
@@ -2205,11 +2205,11 @@
     <class name="RecordSpecificationElement" inheritsFrom="root"
            comment="Synthetic record, made up from section 6.2.73. This is used to achieve a repeating variable list element.&#60;p&#62;recordLength, recordCount and recordValues must be set by hand so the.">
 
-        <attribute name="recordID" comment="the data structure used to convey the parameter values of the record for each record. 32 bit enumeration.">
+        <attribute name="recordID" comment="The data structure used to convey the parameter values of the record for each record. 32 bit enumeration.">
             <sisoenum type="VariableRecordType" comment="uid = 66"/>
         </attribute>
 
-        <attribute name="recordSetSerialNumber" comment="the serial number of the first record in the block of records">
+        <attribute name="recordSetSerialNumber" comment="The serial number of the first record in the block of records">
             <primitive type= "uint32"/>
         </attribute>
         
@@ -2225,7 +2225,7 @@
             <primitive type= "uint16"/>
         </attribute>
 
-        <attribute name="recordValues" comment="the concatenated records of the format specified by the Record ID field. The length of this field is the Record Length multiplied by the Record Count, in units of bits.">
+        <attribute name="recordValues" comment="The concatenated records of the format specified by the Record ID field. The length of this field is the Record Length multiplied by the Record Count, in units of bits.">
             <primitivelist length="0">
                 <primitive type="uint8"/>
             </primitivelist>
@@ -2256,11 +2256,11 @@
     <class name="Relationship" inheritsFrom="root" 
            comment="The relationship of the part entity to its host entity. Section 6.2.74.">
 
-        <attribute name="nature" comment="the nature or purpose for joining of the part entity to the host entity and shall be represented by a 16-bit enumeration">
+        <attribute name="nature" comment="The nature or purpose for joining of the part entity to the host entity and shall be represented by a 16-bit enumeration">
             <sisoenum type="IsPartOfNature" comment="uid 210"/>
         </attribute>
 
-        <attribute name="position" comment="the position of the part entity with respect to the host entity and shall be represented by a 16-bit enumeration">
+        <attribute name="position" comment="The position of the part entity with respect to the host entity and shall be represented by a 16-bit enumeration">
             <sisoenum type="IsPartOfPosition" comment="uid 211"/>
         </attribute>
 
@@ -2286,7 +2286,7 @@
             <primitive type="uint8"/>
         </attribute>
 
-        <attribute name="numberOfIFFFundamentalParameterRecords" comment="the number of IFF Fundamental Parameter Data records that follow">
+        <attribute name="numberOfIFFFundamentalParameterRecords" comment="The number of IFF Fundamental Parameter Data records that follow">
             <primitive type="uint16"/>
         </attribute>
 
@@ -2299,7 +2299,7 @@
             <sisoenum type="SensorTypeSource" comment="uid 414"/>
         </attribute>
 
-        <attribute name="sensorOnOffStatus" comment="the on/off status of the sensor">
+        <attribute name="sensorOnOffStatus" comment="The on/off status of the sensor">
             <sisoenum type="SensorOnOffStatus" comment="uid 331"/>
         </attribute>
 
@@ -2460,19 +2460,19 @@
             <primitive type="uint32"/>
         </attribute>
 
-        <attribute name="maximumQuantity" comment="the maximum quantity of this fuel type that this sta- tion/launcher is capable of holding when a station/launcher is specified. This would be the value used when a maximum reload was desired to be set for this station/launcher. If the Station/launcher field is set to zero, then this is the maximum quantity of this fuel type that would be present on this entity at all stations/launchers that can accept this fuel type.">
+        <attribute name="maximumQuantity" comment="The maximum quantity of this fuel type that this sta- tion/launcher is capable of holding when a station/launcher is specified. This would be the value used when a maximum reload was desired to be set for this station/launcher. If the Station/launcher field is set to zero, then this is the maximum quantity of this fuel type that would be present on this entity at all stations/launchers that can accept this fuel type.">
             <primitive type="uint32"/>
         </attribute>
 
-        <attribute name="standardQuantityReloadTime" comment="the seconds normally required to reload the standard quantity of this fuel type at this specific station/launcher. When the Station/Launcher field is set to zero, this shall be the time it takes to perform a standard quantity reload of this fuel type at all applicable stations/launchers for this entity.">
+        <attribute name="standardQuantityReloadTime" comment="The seconds normally required to reload the standard quantity of this fuel type at this specific station/launcher. When the Station/Launcher field is set to zero, this shall be the time it takes to perform a standard quantity reload of this fuel type at all applicable stations/launchers for this entity.">
             <primitive type="uint32"/>
         </attribute>
 
-        <attribute name="maximumQuantityReloadTime" comment="the seconds normally required to reload the maximum possible quantity of this fuel type at this station/launcher. When the Station/Launcher field is set to zero, this shall be the time it takes to perform a maximum quantity load/reload of this fuel type at all applicable stations/launchers for this entity.">
+        <attribute name="maximumQuantityReloadTime" comment="The seconds normally required to reload the maximum possible quantity of this fuel type at this station/launcher. When the Station/Launcher field is set to zero, this shall be the time it takes to perform a maximum quantity load/reload of this fuel type at all applicable stations/launchers for this entity.">
             <primitive type="uint32"/>
         </attribute>
 
-        <attribute name="fuelMeasurementUnits" comment="the fuel measurement units. Enumeration">
+        <attribute name="fuelMeasurementUnits" comment="The fuel measurement units. Enumeration">
             <sisoenum type="FuelMeasurementUnits" comment="uid 328"/>
         </attribute>
 
@@ -2497,7 +2497,7 @@
             <classRef name="EntityType"/>
         </attribute>
 
-        <attribute name="quantity" comment="the number of units of a supply type. ">
+        <attribute name="quantity" comment="The number of units of a supply type. ">
             <primitive type="float32"/>
         </attribute>
 
@@ -2546,7 +2546,7 @@
 
     <class name="TrackJamData" inheritsFrom="root" comment=" Track-Jam data Section 6.2.89">
 
-        <attribute name="entityID" comment="the entity tracked or illumated, or an emitter beam targeted with jamming">
+        <attribute name="entityID" comment="The entity tracked or illumated, or an emitter beam targeted with jamming">
             <classRef name="EntityID"/>
         </attribute>
 
@@ -2605,7 +2605,7 @@
     <!-- This is special-cased because of the complexity of dealing with the length-in-bits field
     <class name="VariableDatum" 
            inheritsFrom="root" 
-           comment="the variable datum type, the datum length, and the value for that variable datum type. Section 6.2.93">
+           comment="The variable datum type, the datum length, and the value for that variable datum type. Section 6.2.93">
 
         <attribute name="variableDatumID" comment="Type of variable datum to be transmitted. 32 bit enumeration defined in EBV">
             <sisoenum type="VariableRecordType" comment="uid 66"/>
@@ -2630,7 +2630,7 @@
 
     <class name="VariableParameter" inheritsFrom="root" comment="used in DetonationPdu, ArticulatedPartsPdu among others">
         
-        <attribute name="recordType" comment="the identification of the Variable Parameter record. Enumeration from EBV">
+        <attribute name="recordType" comment="The identification of the Variable Parameter record. Enumeration from EBV">
             <sisoenum type="VariableParameterRecordType" comment="uid 56"/>
         </attribute>
         
@@ -2645,7 +2645,7 @@
     <class name="ArticulatedPartVP" inheritsFrom="root" 
            comment=" articulated parts for movable parts and a combination of moveable/attached parts of an entity. Section 6.2.94.2">
 
-        <attribute name="recordType" comment="the identification of the Variable Parameter record. Enumeration from EBV">
+        <attribute name="recordType" comment="The identification of the Variable Parameter record. Enumeration from EBV">
             <sisoenum type="VariableParameterRecordType" defaultValue="VariableParameterRecordType.ARTICULATED_PART" comment="uid 56"/>
         </attribute>
 
@@ -2653,11 +2653,11 @@
             <primitive type="uint8" defaultValue="0"/>
         </attribute>
 
-        <attribute name="partAttachedTo" comment="the identification of the articulated part to which this articulation parameter is attached. This field shall be specified by a 16-bit unsigned integer. This field shall contain the value zero if the articulated part is attached directly to the entity.">
+        <attribute name="partAttachedTo" comment="The identification of the articulated part to which this articulation parameter is attached. This field shall be specified by a 16-bit unsigned integer. This field shall contain the value zero if the articulated part is attached directly to the entity.">
             <primitive type="uint16" defaultValue="0"/>
         </attribute>
 
-        <attribute name="parameterType" comment="the type of parameter represented, 32 bit enumeration">
+        <attribute name="parameterType" comment="The type of parameter represented, 32 bit enumeration">
             <primitive type="uint32" comment="uid 58-59"/>
         </attribute>
   
@@ -2673,7 +2673,7 @@
 
     <class name="AttachedPartVP" inheritsFrom="root" comment="Removable parts that may be attached to an entity.  Section 6.2.93.3">
 
-        <attribute name="recordType" comment="the identification of the Variable Parameter record. Enumeration from EBV">
+        <attribute name="recordType" comment="The identification of the Variable Parameter record. Enumeration from EBV">
             <sisoenum type="VariableParameterRecordType" defaultValue="VariableParameterRecordType.ATTACHED_PART" comment="uid 56"/>
         </attribute>
 
@@ -2681,7 +2681,7 @@
             <sisoenum type="AttachedPartDetachedIndicator" comment="uid 415"/>
         </attribute>
 
-        <attribute name="partAttachedTo" comment="the identification of the articulated part to which this articulation parameter is attached. This field shall be specified by a 16-bit unsigned integer. This field shall contain the value zero if the articulated part is attached directly to the entity.">
+        <attribute name="partAttachedTo" comment="The identification of the articulated part to which this articulation parameter is attached. This field shall be specified by a 16-bit unsigned integer. This field shall contain the value zero if the articulated part is attached directly to the entity.">
             <primitive type="uint16" defaultValue="0"/>
         </attribute>
 
@@ -2697,7 +2697,7 @@
 
     <class name="EntityAssociationVP" inheritsFrom="root" comment="Association or disassociation of two entities.  Section 6.2.94.4.3">
 
-        <attribute name="recordType" comment="the identification of the Variable Parameter record. Enumeration from EBV">
+        <attribute name="recordType" comment="The identification of the Variable Parameter record. Enumeration from EBV">
             <sisoenum type="VariableParameterRecordType" defaultValue="VariableParameterRecordType.ENTITY_ASSOCIATION" comment="uid 56"/>
         </attribute>
 
@@ -2737,7 +2737,7 @@
 
     <class name="EntityTypeVP" inheritsFrom="root" comment="Association or disassociation of two entities.  Section 6.2.94.5">
 
-        <attribute name="recordType" comment="the identification of the Variable Parameter record.">
+        <attribute name="recordType" comment="The identification of the Variable Parameter record.">
             <sisoenum type="VariableParameterRecordType" defaultValue="VariableParameterRecordType.ENTITY_TYPE" comment="uid 56"/>
         </attribute>
 
@@ -2762,7 +2762,7 @@
     <class name="SeparationVP" inheritsFrom="root" 
            comment="Physical separation of an entity from another entity.  Section 6.2.94.6">
 
-        <attribute name="recordType" comment="the identification of the Variable Parameter record. Enumeration from EBV">
+        <attribute name="recordType" comment="The identification of the Variable Parameter record. Enumeration from EBV">
             <sisoenum type="VariableParameterRecordType" defaultValue="VariableParameterRecordType.SEPARATION" comment="uid 56"/>
         </attribute>
 
