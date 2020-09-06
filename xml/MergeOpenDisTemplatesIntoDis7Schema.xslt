@@ -105,6 +105,9 @@
     </xsl:for-each>
     <xsl:text>]</xsl:text>
 </xsl:message>
+
+            <!-- special definitions while sorting out complete interface hierarchy -->
+            <xs:complexType name="root" abstract="true"/>
             
             <xsl:call-template name="create-complex-types-primary-document"/> <!-- classes/class in topmost document -->          
 
@@ -248,7 +251,11 @@
                     <xsl:attribute name="type">
                         <xsl:choose>
                             <xsl:when test="(count(*[local-name() = 'primitive']) > 0) and (string-length(primitive/@type) > 0)">
-                                <xsl:value-of select="primitive/@type"/>
+                                <xsl:call-template name="simple-type-normalization">
+                                    <xsl:with-param name="originalType">
+                                        <xsl:value-of select="primitive/@type"/>
+                                    </xsl:with-param>
+                                </xsl:call-template>
                             </xsl:when>
                             <xsl:when test="*[local-name() = 'primitive']">
                                 <xsl:text>xs:string</xsl:text>
@@ -436,11 +443,56 @@
 
     <!-- ===================================================== -->
 
-    <!-- print-indent keeps track of indenting level -->
-    <xsl:template name="print-indent">
-        <xsl:for-each select="ancestor::*">
-            <xsl:text>  </xsl:text>
-        </xsl:for-each>
+    <xsl:template name="simple-type-normalization">
+        <xsl:param name="originalType"/>
+        <!-- XML Schema 3.3 Derived datatypes, https://www.w3.org/TR/xmlschema-2/#built-in-derived -->
+        
+        <!-- TODO check -->
+        <xsl:choose>
+            <xsl:when test="($originalType = 'uint8')">
+                <xsl:text>xs:unsignedByte</xsl:text>
+            </xsl:when>
+            <xsl:when test="($originalType = 'uint16')">
+                <xsl:text>xs:unsignedShort</xsl:text>
+            </xsl:when>
+            <xsl:when test="($originalType = 'uint32')">
+                <xsl:text>xs:unsignedLong</xsl:text>
+            </xsl:when>
+            <xsl:when test="($originalType = 'uint64')">
+                <xsl:text>xs:unsignedInt</xsl:text>
+            </xsl:when>
+            <xsl:when test="($originalType = 'int8')">
+                <!-- unused -->
+                <xsl:text>xs:byte</xsl:text>
+            </xsl:when>
+            <xsl:when test="($originalType = 'int16')">
+                <xsl:text>xs:short</xsl:text>
+            </xsl:when>
+            <xsl:when test="($originalType = 'int32')">
+                <xsl:text>xs:long</xsl:text>
+            </xsl:when>
+            <xsl:when test="($originalType = 'int64')">
+                <xsl:text>xs:int</xsl:text>
+            </xsl:when>
+            <xsl:when test="($originalType = 'float32')">
+                <xsl:text>xs:float</xsl:text>
+            </xsl:when>
+            <xsl:when test="($originalType = 'float64')">
+                <xsl:text>xs:double</xsl:text>
+            </xsl:when>
+            <!--
+            <xsl:when test="($originalType = '')">
+                <xsl:text></xsl:text>
+            </xsl:when>
+            -->
+            <xsl:otherwise>
+                <xsl:value-of select="$originalType"/>
+                <xsl:message>
+                    <xsl:text>*** type correspondence not found for </xsl:text>
+                    <xsl:value-of select="$originalType"/>
+                </xsl:message>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
 
