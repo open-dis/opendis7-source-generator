@@ -404,10 +404,11 @@
             
             <!-- debug -->
             <xsl:comment>
-                <xsl:text>abstract=</xsl:text>
+                <xsl:text>abstract='</xsl:text>
                 <xsl:value-of select="$abstract"/>
-                <xsl:text>, base=</xsl:text>
+                <xsl:text>' base='</xsl:text>
                 <xsl:value-of select="$base"/>
+                <xsl:text>'</xsl:text>
             </xsl:comment>
             
             <xs:complexType name="{@name}" abstract="{$abstract}">
@@ -421,9 +422,11 @@
                                 </xsl:apply-templates>
                             </xs:sequence>
                         </xsl:if>
+        <!-- debug
         <xsl:comment>
-            <xsl:text>*** debug here 1 ...</xsl:text>
+            <xsl:text>*** debug here, divider between elements and attributes ***</xsl:text>
         </xsl:comment>
+        -->
                         <xsl:apply-templates select="attribute[not(classRef)]"/>
                     </xs:extension>
                 </xs:complexContent>
