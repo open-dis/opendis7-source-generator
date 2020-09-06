@@ -20,11 +20,11 @@
 -->
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0"
-                xmlns:xs ="http://www.w3.org/2001/XMLSchema"
-	            xmlns:fn ="http://www.w3.org/2005/xpath-functions"
-                xmlns:xi ="http://www.w3.org/2001/XInclude"
+                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	             xmlns:fn="http://www.w3.org/2005/xpath-functions"
+                 xmlns:xi="http://www.w3.org/2001/XInclude"
   exclude-result-prefixes="fn xs xi">
-	<!--  extension-element-prefixes="xs" -->
+    <!-- https://stackoverflow.com/questions/5258660/saxon-transformerfactory-placing-unneceary-xmlnsxsd-http-www-w3-org-2001-xml -->
     <xsl:output method="html"/> <!-- output methods:  xml html text -->
     
     <!-- ======================================================= -->
@@ -43,9 +43,12 @@
         <xsl:text>&#10;</xsl:text>
 
         <xsl:element name="xs:schema">
+            <!--
             <xsl:attribute namespace="xmlns" name="xs">
-                <xsl:text>http://www.w3.org/2001/XMLSchema</xsl:text>
-            </xsl:attribute>
+                <xsl:text>XMLSchema.xsd</xsl:text>
+            </xsl:attribute>-->
+                <!-- http://www.w3.org/2001/XMLSchema-instance -->
+                <!-- http://www.w3.org/2009/XMLSchema/XMLSchema.xsd -->
             <xsl:attribute namespace="xmlns" name="fn">
                 <xsl:text>http://www.w3.org/2005/xpath-functions</xsl:text>
             </xsl:attribute>
@@ -290,25 +293,37 @@
                         </xsl:attribute>
                     </xsl:if>
                     <xsl:call-template name="handle-comment-documentation"/>
+                    <xsl:variable name="countFieldName" select="primitivelist/@countFieldName"/>
                     <xsl:if test="(count(*[local-name() = 'primitivelist']) > 0) and
-                                  (string-length(primitivelist/@countFieldName) > 0)">
+                                  (string-length($countFieldName) > 0)">
+                        <!-- debug
                         <xsl:call-template name="warning-comment-message">
                             <xsl:with-param name="warning">
                                 <xsl:value-of select="../@name"/>
                                 <xsl:text> attribute </xsl:text>
                                 <xsl:value-of select="@name"/>
-                                <xsl:text>, type primitivelist</xsl:text>
-                                <xsl:text> length='</xsl:text>
+                                <xsl:text>, type primitivelist, length='</xsl:text>
                                 <xsl:value-of select="primitivelist/@length"/>
                                 <xsl:text>' fixedlength='</xsl:text>
                                 <xsl:value-of select="primitivelist/@fixedlength"/>
                                 <xsl:text>' countFieldName='</xsl:text>
-                                <xsl:value-of select="primitivelist/@countFieldName"/>
+                                <xsl:value-of select="$countFieldName"/>
                                 <xsl:text>' (TODO unhandled), couldBeString='</xsl:text>
                                 <xsl:value-of select="primitivelist/@couldBeString"/>
                                 <xsl:text>' (ignored, ambiguous)</xsl:text>
                             </xsl:with-param>
-                        </xsl:call-template>
+                        </xsl:call-template> 
+                        -->
+                        <xsl:if test="not(../*[@name = $countFieldName])">
+                            <xsl:call-template name="warning-comment-message">
+                                <xsl:with-param name="warning">
+                                    <xsl:value-of select="../@name"/>
+                                    <xsl:text> has no attribute defined matching countFieldName='</xsl:text>
+                                    <xsl:value-of select="$countFieldName"/>
+                                    <xsl:text>'</xsl:text>
+                                </xsl:with-param>
+                            </xsl:call-template>
+                        </xsl:if>
                         <xsl:variable name="primitiveListType">
                             <xsl:choose>
                                 <xsl:when test="(string-length(primitivelist/primitive/@type) > 0)">
@@ -337,6 +352,14 @@
                                 <!-- https://www.w3.org/TR/xmlschema11-2/#rf-length -->
                                 <!-- https://stackoverflow.com/questions/10192943/is-it-possible-to-specify-a-list-length-on-an-anonymous-type -->
                                 <xs:simpleType><!-- anonymous primitivelist with restricted length -->
+                                    <xsl:if test="(string-length($countFieldName) > 0)">
+                                        <xsl:element name="xs:annotation">
+                                            <xsl:element name="xs:appinfo">
+                                             <xsl:text>The length of this list is determined by attribute </xsl:text>
+                                            <xsl:value-of select="$countFieldName"/>
+                                            </xsl:element>
+                                        </xsl:element>
+                                    </xsl:if>
                                     <xs:restriction>
                                         <xs:simpleType>
                                             <xs:list itemType='{$primitiveListType}'/>
@@ -357,6 +380,14 @@
                             </xsl:when>
                             <xsl:otherwise>
                                 <xs:simpleType><!-- anonymous primitivelist -->
+                                    <xsl:if test="(string-length($countFieldName) > 0)">
+                                        <xsl:element name="xs:annotation">
+                                            <xsl:element name="xs:appinfo">
+                                             <xsl:text>The length of this list is determined by attribute </xsl:text>
+                                            <xsl:value-of select="$countFieldName"/>
+                                            </xsl:element>
+                                        </xsl:element>
+                                    </xsl:if>
                                     <xs:list itemType='{$primitiveListType}'/>
                                 </xs:simpleType>
                             </xsl:otherwise>
