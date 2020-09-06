@@ -276,7 +276,7 @@
             </xsl:when>
             <!-- ===================================== -->
             <xsl:otherwise>
-                <xsl:if test="(not(local-name() = 'initialValue') and not(@name = 'protocolFamily'))">
+                <xsl:if test="(not(local-name() = 'initialValue') and not(@name = 'protocolFamily') and not(@name = 'EulerAngles'))">
                     <xsl:comment>
                         <xsl:text>TODO unhandled case </xsl:text>
                         <xsl:value-of select="local-name()"/>
