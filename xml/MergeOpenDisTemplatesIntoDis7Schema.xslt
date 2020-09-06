@@ -16,7 +16,6 @@
 - unhandled case objectlist
 - unhandled case padtoboundary
 - unhandled case sisobitfield
-- unhandled case staticivar
 -->
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0"
@@ -213,7 +212,7 @@
                 </xs:complexType>
             </xsl:when>
             <!-- ===================================================== -->
-            <xsl:when test="(local-name() = 'class') and not(contains(@name, 'Family'))"><!-- another class; TODO and contains(@name, 'Pdu') -->
+            <xsl:when test="(local-name() = 'class') and not(contains(@name, 'Family'))"><!-- another class, including Pdu types -->
                 <xsl:element name="xs:element">
                     <xsl:attribute name="name"   select="@name"/>
                     
@@ -269,6 +268,13 @@
                     <xsl:if test="not(count(*[local-name() = 'primitivelist']) > 0)"><!-- otherwise handled by contained xs:simpleType instead -->
                         <xsl:attribute name="type">
                             <xsl:choose>
+                                <xsl:when test="(count(*[local-name() = 'staticivar']) > 0) and (string-length(staticivar/@type) > 0)">
+                                    <xsl:call-template name="simple-type-normalization">
+                                        <xsl:with-param name="originalType">
+                                            <xsl:value-of select="staticivar/@type"/>
+                                        </xsl:with-param>
+                                    </xsl:call-template>
+                                </xsl:when>
                                 <xsl:when test="(count(*[local-name() = 'primitive']) > 0) and (string-length(primitive/@type) > 0)">
                                     <xsl:call-template name="simple-type-normalization">
                                         <xsl:with-param name="originalType">
@@ -292,107 +298,113 @@
                             </xsl:choose>
                         </xsl:attribute>
                     </xsl:if>
+                    <xsl:if test="(count(*[local-name() = 'staticivar']) > 0)">
+                        <xsl:attribute name="fixed" select="staticivar/@value"/>
+                    </xsl:if>
                     <xsl:call-template name="handle-comment-documentation"/>
+                    <!-- contained content -->
                     <xsl:variable name="countFieldName" select="primitivelist/@countFieldName"/>
-                    <xsl:if test="(count(*[local-name() = 'primitivelist']) > 0) and
+                    <xsl:choose>
+                        <xsl:when test="(count(*[local-name() = 'primitivelist']) > 0) and
                                   (string-length($countFieldName) > 0)">
-                        <!-- debug
-                        <xsl:call-template name="warning-comment-message">
-                            <xsl:with-param name="warning">
-                                <xsl:value-of select="../@name"/>
-                                <xsl:text> attribute </xsl:text>
-                                <xsl:value-of select="@name"/>
-                                <xsl:text>, type primitivelist, length='</xsl:text>
-                                <xsl:value-of select="primitivelist/@length"/>
-                                <xsl:text>' fixedlength='</xsl:text>
-                                <xsl:value-of select="primitivelist/@fixedlength"/>
-                                <xsl:text>' countFieldName='</xsl:text>
-                                <xsl:value-of select="$countFieldName"/>
-                                <xsl:text>' (TODO unhandled), couldBeString='</xsl:text>
-                                <xsl:value-of select="primitivelist/@couldBeString"/>
-                                <xsl:text>' (ignored, ambiguous)</xsl:text>
-                            </xsl:with-param>
-                        </xsl:call-template> 
-                        -->
-                        <xsl:if test="not(../*[@name = $countFieldName])">
+                            <!-- debug
                             <xsl:call-template name="warning-comment-message">
                                 <xsl:with-param name="warning">
                                     <xsl:value-of select="../@name"/>
-                                    <xsl:text> has no attribute defined matching countFieldName='</xsl:text>
+                                    <xsl:text> attribute </xsl:text>
+                                    <xsl:value-of select="@name"/>
+                                    <xsl:text>, type primitivelist, length='</xsl:text>
+                                    <xsl:value-of select="primitivelist/@length"/>
+                                    <xsl:text>' fixedlength='</xsl:text>
+                                    <xsl:value-of select="primitivelist/@fixedlength"/>
+                                    <xsl:text>' countFieldName='</xsl:text>
                                     <xsl:value-of select="$countFieldName"/>
-                                    <xsl:text>'</xsl:text>
+                                    <xsl:text>' (TODO unhandled), couldBeString='</xsl:text>
+                                    <xsl:value-of select="primitivelist/@couldBeString"/>
+                                    <xsl:text>' (ignored, ambiguous)</xsl:text>
                                 </xsl:with-param>
-                            </xsl:call-template>
-                        </xsl:if>
-                        <xsl:variable name="primitiveListType">
+                            </xsl:call-template> 
+                            -->
+                            <xsl:if test="not(../*[@name = $countFieldName])">
+                                <xsl:call-template name="warning-comment-message">
+                                    <xsl:with-param name="warning">
+                                        <xsl:value-of select="../@name"/>
+                                        <xsl:text> has no attribute defined matching countFieldName='</xsl:text>
+                                        <xsl:value-of select="$countFieldName"/>
+                                        <xsl:text>'</xsl:text>
+                                    </xsl:with-param>
+                                </xsl:call-template>
+                            </xsl:if>
+                            <xsl:variable name="primitiveListType">
+                                <xsl:choose>
+                                    <xsl:when test="(string-length(primitivelist/primitive/@type) > 0)">
+                                        <xsl:call-template name="simple-type-normalization">
+                                            <xsl:with-param name="originalType">
+                                                <xsl:value-of select="primitivelist/primitive/@type"/>
+                                            </xsl:with-param>
+                                        </xsl:call-template>
+                                    </xsl:when>
+                                    <xsl:when test="(primitivelist/@couldBeString = 'true')">
+                                        <xsl:text>xs:string</xsl:text>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <xsl:text>xs:string</xsl:text>
+                                        <xsl:call-template name="warning-comment-message">
+                                            <xsl:with-param name="warning">
+                                                <xsl:text>no contained primitive type found with primitiveList</xsl:text>
+                                            </xsl:with-param>
+                                        </xsl:call-template>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </xsl:variable>
                             <xsl:choose>
-                                <xsl:when test="(string-length(primitivelist/primitive/@type) > 0)">
-                                    <xsl:call-template name="simple-type-normalization">
-                                        <xsl:with-param name="originalType">
-                                            <xsl:value-of select="primitivelist/primitive/@type"/>
-                                        </xsl:with-param>
-                                    </xsl:call-template>
-                                </xsl:when>
-                                <xsl:when test="(primitivelist/@couldBeString = 'true')">
-                                    <xsl:text>xs:string</xsl:text>
+                                <xsl:when test="(string-length(primitivelist/@length) > 0)">
+                                    <!-- W3C XML Schema Definition Language (XSD) 1.1 Part 2: Datatypes, 4.3.1 length -->
+                                    <!-- https://www.w3.org/TR/xmlschema11-2/#rf-length -->
+                                    <!-- https://stackoverflow.com/questions/10192943/is-it-possible-to-specify-a-list-length-on-an-anonymous-type -->
+                                    <xs:simpleType><!-- anonymous primitivelist with restricted length -->
+                                        <xsl:if test="(string-length($countFieldName) > 0)">
+                                            <xsl:element name="xs:annotation">
+                                                <xsl:element name="xs:appinfo">
+                                                 <xsl:text>The length of this list is determined by attribute </xsl:text>
+                                                <xsl:value-of select="$countFieldName"/>
+                                                </xsl:element>
+                                            </xsl:element>
+                                        </xsl:if>
+                                        <xs:restriction>
+                                            <xs:simpleType>
+                                                <xs:list itemType='{$primitiveListType}'/>
+                                            </xs:simpleType>
+                                            <xsl:variable name="fixedValue">
+                                                <xsl:choose>
+                                                    <xsl:when test="(string-length(primitivelist/@fixedlength) > 0)">
+                                                        <xsl:value-of select="primitivelist/@fixedlength"/>
+                                                    </xsl:when>
+                                                    <xsl:otherwise>
+                                                        <xsl:text>false</xsl:text>
+                                                    </xsl:otherwise>
+                                                </xsl:choose>
+                                            </xsl:variable>
+                                            <xs:length value="{primitivelist/@length}" fixed="{$fixedValue}"/>
+                                        </xs:restriction>
+                                    </xs:simpleType>
                                 </xsl:when>
                                 <xsl:otherwise>
-                                    <xsl:text>xs:string</xsl:text>
-                                    <xsl:call-template name="warning-comment-message">
-                                        <xsl:with-param name="warning">
-                                            <xsl:text>no contained primitive type found with primitiveList</xsl:text>
-                                        </xsl:with-param>
-                                    </xsl:call-template>
+                                    <xs:simpleType><!-- anonymous primitivelist -->
+                                        <xsl:if test="(string-length($countFieldName) > 0)">
+                                            <xsl:element name="xs:annotation">
+                                                <xsl:element name="xs:appinfo">
+                                                 <xsl:text>The length of this list is determined by attribute </xsl:text>
+                                                <xsl:value-of select="$countFieldName"/>
+                                                </xsl:element>
+                                            </xsl:element>
+                                        </xsl:if>
+                                        <xs:list itemType='{$primitiveListType}'/>
+                                    </xs:simpleType>
                                 </xsl:otherwise>
                             </xsl:choose>
-                        </xsl:variable>
-                        <xsl:choose>
-                            <xsl:when test="(string-length(primitivelist/@length) > 0)">
-                                <!-- W3C XML Schema Definition Language (XSD) 1.1 Part 2: Datatypes, 4.3.1 length -->
-                                <!-- https://www.w3.org/TR/xmlschema11-2/#rf-length -->
-                                <!-- https://stackoverflow.com/questions/10192943/is-it-possible-to-specify-a-list-length-on-an-anonymous-type -->
-                                <xs:simpleType><!-- anonymous primitivelist with restricted length -->
-                                    <xsl:if test="(string-length($countFieldName) > 0)">
-                                        <xsl:element name="xs:annotation">
-                                            <xsl:element name="xs:appinfo">
-                                             <xsl:text>The length of this list is determined by attribute </xsl:text>
-                                            <xsl:value-of select="$countFieldName"/>
-                                            </xsl:element>
-                                        </xsl:element>
-                                    </xsl:if>
-                                    <xs:restriction>
-                                        <xs:simpleType>
-                                            <xs:list itemType='{$primitiveListType}'/>
-                                        </xs:simpleType>
-                                        <xsl:variable name="fixedValue">
-                                            <xsl:choose>
-                                                <xsl:when test="(string-length(primitivelist/@fixedlength) > 0)">
-                                                    <xsl:value-of select="primitivelist/@fixedlength"/>
-                                                </xsl:when>
-                                                <xsl:otherwise>
-                                                    <xsl:text>false</xsl:text>
-                                                </xsl:otherwise>
-                                            </xsl:choose>
-                                        </xsl:variable>
-                                        <xs:length value="{primitivelist/@length}" fixed="{$fixedValue}"/>
-                                    </xs:restriction>
-                                </xs:simpleType>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <xs:simpleType><!-- anonymous primitivelist -->
-                                    <xsl:if test="(string-length($countFieldName) > 0)">
-                                        <xsl:element name="xs:annotation">
-                                            <xsl:element name="xs:appinfo">
-                                             <xsl:text>The length of this list is determined by attribute </xsl:text>
-                                            <xsl:value-of select="$countFieldName"/>
-                                            </xsl:element>
-                                        </xsl:element>
-                                    </xsl:if>
-                                    <xs:list itemType='{$primitiveListType}'/>
-                                </xs:simpleType>
-                            </xsl:otherwise>
-                        </xsl:choose>
-                    </xsl:if>
+                        </xsl:when>
+                    </xsl:choose>
                     <xsl:apply-templates select="*"/>
                 </xsl:element><!-- name="xs:attribute" -->
             </xsl:when>
@@ -400,7 +412,8 @@
             <xsl:otherwise>
                 <!-- Developmental checks on completeness of support -->
                 <xsl:if test="not(local-name() = 'initialValue')  and not(@name = 'protocolFamily') and 
-                              not(local-name() = 'primitivelist') and not(@name = 'EulerAngles')">
+                              not(local-name() = 'primitivelist') and not(@name = 'EulerAngles') and 
+                              not(local-name() = 'staticivar')">
                     <xsl:call-template name="warning-comment-message">
                         <xsl:with-param name="warning">
                             <xsl:text>TODO unhandled definition: </xsl:text>

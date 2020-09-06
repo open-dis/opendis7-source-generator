@@ -567,39 +567,17 @@
                   <xs:appinfo>Bitflags field</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
-            <xs:attribute name="GROUND_BURIAL_DEPTH_OFFSET_BIT" type="xs:string">
-               <!--TODO unhandled definition: class DataFilterRecord attribute GROUND_BURIAL_DEPTH_OFFSET_BIT staticivar -->
-            </xs:attribute>
-            <xs:attribute name="WATER_BURIAL_DEPTH_OFFSET_BIT" type="xs:string">
-               <!--TODO unhandled definition: class DataFilterRecord attribute WATER_BURIAL_DEPTH_OFFSET_BIT staticivar -->
-            </xs:attribute>
-            <xs:attribute name="SNOW_BURIAL_DEPTH_OFFSET_BIT" type="xs:string">
-               <!--TODO unhandled definition: class DataFilterRecord attribute SNOW_BURIAL_DEPTH_OFFSET_BIT staticivar -->
-            </xs:attribute>
-            <xs:attribute name="MINE_ORIENTATION_BIT" type="xs:string">
-               <!--TODO unhandled definition: class DataFilterRecord attribute MINE_ORIENTATION_BIT staticivar -->
-            </xs:attribute>
-            <xs:attribute name="THERMAL_CONSTRAST_BIT" type="xs:string">
-               <!--TODO unhandled definition: class DataFilterRecord attribute THERMAL_CONSTRAST_BIT staticivar -->
-            </xs:attribute>
-            <xs:attribute name="REFLECTANCE_BIT" type="xs:string">
-               <!--TODO unhandled definition: class DataFilterRecord attribute REFLECTANCE_BIT staticivar -->
-            </xs:attribute>
-            <xs:attribute name="MINE_EMPLACEMENT_TIME_BIT" type="xs:string">
-               <!--TODO unhandled definition: class DataFilterRecord attribute MINE_EMPLACEMENT_TIME_BIT staticivar -->
-            </xs:attribute>
-            <xs:attribute name="TRIP_DETONATION_WIRE_BIT" type="xs:string">
-               <!--TODO unhandled definition: class DataFilterRecord attribute TRIP_DETONATION_WIRE_BIT staticivar -->
-            </xs:attribute>
-            <xs:attribute name="FUSING_BIT" type="xs:string">
-               <!--TODO unhandled definition: class DataFilterRecord attribute FUSING_BIT staticivar -->
-            </xs:attribute>
-            <xs:attribute name="SCALAR_DETECTION_COEFFICIENT_BIT" type="xs:string">
-               <!--TODO unhandled definition: class DataFilterRecord attribute SCALAR_DETECTION_COEFFICIENT_BIT staticivar -->
-            </xs:attribute>
-            <xs:attribute name="PAINT_SCHEME_BIT" type="xs:string">
-               <!--TODO unhandled definition: class DataFilterRecord attribute PAINT_SCHEME_BIT staticivar -->
-            </xs:attribute>
+            <xs:attribute name="GROUND_BURIAL_DEPTH_OFFSET_BIT" type="xs:unsignedLong" fixed="0"></xs:attribute>
+            <xs:attribute name="WATER_BURIAL_DEPTH_OFFSET_BIT" type="xs:unsignedLong" fixed="1"></xs:attribute>
+            <xs:attribute name="SNOW_BURIAL_DEPTH_OFFSET_BIT" type="xs:unsignedLong" fixed="2"></xs:attribute>
+            <xs:attribute name="MINE_ORIENTATION_BIT" type="xs:unsignedLong" fixed="3"></xs:attribute>
+            <xs:attribute name="THERMAL_CONSTRAST_BIT" type="xs:unsignedLong" fixed="4"></xs:attribute>
+            <xs:attribute name="REFLECTANCE_BIT" type="xs:unsignedLong" fixed="5"></xs:attribute>
+            <xs:attribute name="MINE_EMPLACEMENT_TIME_BIT" type="xs:unsignedLong" fixed="6"></xs:attribute>
+            <xs:attribute name="TRIP_DETONATION_WIRE_BIT" type="xs:unsignedLong" fixed="7"></xs:attribute>
+            <xs:attribute name="FUSING_BIT" type="xs:unsignedLong" fixed="8"></xs:attribute>
+            <xs:attribute name="SCALAR_DETECTION_COEFFICIENT_BIT" type="xs:unsignedLong" fixed="9"></xs:attribute>
+            <xs:attribute name="PAINT_SCHEME_BIT" type="xs:unsignedLong" fixed="10"></xs:attribute>
          </xs:extension>
       </xs:complexContent>
    </xs:complexType>
