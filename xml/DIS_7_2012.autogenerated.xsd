@@ -373,9 +373,7 @@
                   </xs:restriction>
                </xs:simpleType>
             </xs:attribute>
-            <xs:attribute name="padding" type="xs:string">
-               <!--TODO unhandled definition: class Attribute attribute padding padtoboundary -->
-            </xs:attribute>
+            <xs:attribute name="padding" type="xs:unsignedInt"></xs:attribute>
          </xs:extension>
       </xs:complexContent>
    </xs:complexType>
@@ -797,9 +795,7 @@
                </xs:annotation>
                <!--TODO unhandled definition: class DirectedEnergyAreaAimpoint attribute directedEnergyTargetEnergyDepositionRecordList objectlist -->
             </xs:attribute>
-            <xs:attribute name="padding2" type="xs:string">
-               <!--TODO unhandled definition: class DirectedEnergyAreaAimpoint attribute padding2 padtoboundary -->
-            </xs:attribute>
+            <xs:attribute name="padding2" type="xs:unsignedInt"></xs:attribute>
          </xs:extension>
       </xs:complexContent>
    </xs:complexType>
@@ -1594,9 +1590,7 @@
                   <xs:appinfo>Geometry or state record</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
-            <xs:attribute name="padding2" type="xs:string">
-               <!--TODO unhandled definition: class Environment attribute padding2 padtoboundary -->
-            </xs:attribute>
+            <xs:attribute name="padding2" type="xs:unsignedInt"></xs:attribute>
          </xs:extension>
       </xs:complexContent>
    </xs:complexType>
@@ -1861,9 +1855,7 @@
                   <xs:appinfo>list of coordinates</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
-            <xs:attribute name="padding" type="xs:string">
-               <!--TODO unhandled definition: class GridAxisDescriptorVariable attribute padding padtoboundary -->
-            </xs:attribute>
+            <xs:attribute name="padding" type="xs:unsignedInt"></xs:attribute>
          </xs:extension>
       </xs:complexContent>
    </xs:complexType>
@@ -1903,9 +1895,7 @@
                   <xs:list itemType="xs:unsignedByte"></xs:list>
                </xs:simpleType>
             </xs:attribute>
-            <xs:attribute name="padding" type="xs:string">
-               <!--TODO unhandled definition: class GridDataType0 attribute padding padtoboundary -->
-            </xs:attribute>
+            <xs:attribute name="padding" type="xs:unsignedShort"></xs:attribute>
          </xs:extension>
       </xs:complexContent>
    </xs:complexType>
@@ -1927,9 +1917,7 @@
                   <xs:list itemType="xs:unsignedShort"></xs:list>
                </xs:simpleType>
             </xs:attribute>
-            <xs:attribute name="padding" type="xs:string">
-               <!--TODO unhandled definition: class GridDataType1 attribute padding padtoboundary -->
-            </xs:attribute>
+            <xs:attribute name="padding" type="xs:unsignedLong"></xs:attribute>
          </xs:extension>
       </xs:complexContent>
    </xs:complexType>
@@ -2082,9 +2070,7 @@
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="recordSpecificFields"></xs:attribute>
-            <xs:attribute name="padding" type="xs:string">
-               <!--TODO unhandled definition: class IFFData attribute padding padtoboundary -->
-            </xs:attribute>
+            <xs:attribute name="padding" type="xs:unsignedLong"></xs:attribute>
          </xs:extension>
       </xs:complexContent>
    </xs:complexType>
@@ -2176,9 +2162,7 @@
                   <xs:appinfo>This is a placeholder.</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
-            <xs:attribute name="padding" type="xs:string">
-               <!--TODO unhandled definition: class IntercomCommunicationsParameters attribute padding padtoboundary -->
-            </xs:attribute>
+            <xs:attribute name="padding" type="xs:unsignedLong"></xs:attribute>
          </xs:extension>
       </xs:complexContent>
    </xs:complexType>
@@ -2447,9 +2431,7 @@
       <xs:complexContent>
          <xs:extension base="root">
             <xs:attribute name="recordSpecificFields"></xs:attribute>
-            <xs:attribute name="padding" type="xs:string">
-               <!--TODO unhandled definition: class ModulationParameters attribute padding padtoboundary -->
-            </xs:attribute>
+            <xs:attribute name="padding" type="xs:unsignedInt"></xs:attribute>
          </xs:extension>
       </xs:complexContent>
    </xs:complexType>
@@ -3171,9 +3153,7 @@
                   </xs:restriction>
                </xs:simpleType>
             </xs:attribute>
-            <xs:attribute name="padding" type="xs:string">
-               <!--TODO unhandled definition: class StandardVariableRecord attribute padding padtoboundary -->
-            </xs:attribute>
+            <xs:attribute name="padding" type="xs:unsignedInt"></xs:attribute>
          </xs:extension>
       </xs:complexContent>
    </xs:complexType>
@@ -3753,9 +3733,7 @@
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="recordSpecificFields"></xs:attribute>
-            <xs:attribute name="padding" type="xs:string">
-               <!--TODO unhandled definition: class VariableTransmitterParameters attribute padding padtoboundary -->
-            </xs:attribute>
+            <xs:attribute name="padding" type="xs:unsignedInt"></xs:attribute>
          </xs:extension>
       </xs:complexContent>
    </xs:complexType>
@@ -6679,9 +6657,7 @@
                   </xs:annotation>
                   <!--TODO unhandled definition: class AggregateStatePdu attribute entityIDList objectlist -->
                </xs:attribute>
-               <xs:attribute name="padTo32" type="xs:string">
-                  <!--TODO unhandled definition: class AggregateStatePdu attribute padTo32 padtoboundary -->
-               </xs:attribute>
+               <xs:attribute name="padTo32" type="xs:unsignedLong"></xs:attribute>
                <xs:attribute name="silentAggregateSystemList" type="xs:string">
                   <xs:annotation>
                      <xs:appinfo>silent entity types</xs:appinfo>
@@ -7088,9 +7064,7 @@
                   </xs:annotation>
                   <!--TODO unhandled definition: class MinefieldDataPdu attribute sensorTypes objectlist -->
                </xs:attribute>
-               <xs:attribute name="padTo32" type="xs:string">
-                  <!--TODO unhandled definition: class MinefieldDataPdu attribute padTo32 padtoboundary -->
-               </xs:attribute>
+               <xs:attribute name="padTo32" type="xs:unsignedLong"></xs:attribute>
                <xs:attribute name="mineLocation" type="xs:string">
                   <xs:annotation>
                      <xs:appinfo>Mine locations</xs:appinfo>
@@ -7165,9 +7139,7 @@
                <xs:attribute name="paintScheme" type="xs:string">
                   <!--TODO unhandled definition: class MinefieldDataPdu attribute paintScheme objectlist -->
                </xs:attribute>
-               <xs:attribute name="padTo32_2" type="xs:string">
-                  <!--TODO unhandled definition: class MinefieldDataPdu attribute padTo32_2 padtoboundary -->
-               </xs:attribute>
+               <xs:attribute name="padTo32_2" type="xs:unsignedLong"></xs:attribute>
                <xs:attribute name="numberOfTripDetonationWires">
                   <xs:simpleType>
                      <xs:annotation>
@@ -7176,9 +7148,7 @@
                      <xs:list itemType="xs:unsignedByte"></xs:list>
                   </xs:simpleType>
                </xs:attribute>
-               <xs:attribute name="padTo32_3" type="xs:string">
-                  <!--TODO unhandled definition: class MinefieldDataPdu attribute padTo32_3 padtoboundary -->
-               </xs:attribute>
+               <xs:attribute name="padTo32_3" type="xs:unsignedLong"></xs:attribute>
                <xs:attribute name="numberOfVertices">
                   <xs:simpleType>
                      <xs:annotation>

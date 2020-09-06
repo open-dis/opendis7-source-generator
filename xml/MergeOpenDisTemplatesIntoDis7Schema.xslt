@@ -268,6 +268,14 @@
                     <xsl:if test="not(count(*[local-name() = 'primitivelist']) > 0)"><!-- otherwise handled by contained xs:simpleType instead -->
                         <xsl:attribute name="type">
                             <xsl:choose>
+                                <xsl:when test="(count(*[local-name() = 'padtoboundary']) > 0) and (string-length(padtoboundary/@length) > 0)">
+                                    <xsl:call-template name="simple-type-normalization">
+                                        <xsl:with-param name="originalType">
+                                            <xsl:text>uint</xsl:text>
+                                            <xsl:value-of select="padtoboundary/@length"/><!-- 16, 32 or 64 -->
+                                        </xsl:with-param>
+                                    </xsl:call-template>
+                                </xsl:when>
                                 <xsl:when test="(count(*[local-name() = 'staticivar']) > 0) and (string-length(staticivar/@type) > 0)">
                                     <xsl:call-template name="simple-type-normalization">
                                         <xsl:with-param name="originalType">
@@ -413,7 +421,8 @@
                 <!-- Developmental checks on completeness of support -->
                 <xsl:if test="not(local-name() = 'initialValue')  and not(@name = 'protocolFamily') and 
                               not(local-name() = 'primitivelist') and not(@name = 'EulerAngles') and 
-                              not(local-name() = 'staticivar')">
+                              not(local-name() = 'staticivar')    and 
+                              not(local-name() = 'padtoboundary')">
                     <xsl:call-template name="warning-comment-message">
                         <xsl:with-param name="warning">
                             <xsl:text>TODO unhandled definition: </xsl:text>
