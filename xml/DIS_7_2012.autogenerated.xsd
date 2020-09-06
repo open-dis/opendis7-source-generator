@@ -4656,7 +4656,7 @@
          <xs:appinfo>7.2.6. Information about individual attributes for a particular entity, other object,
             or event may be communicated using an Attribute PDU. The Attribute PDU shall not be
             used to exchange data available in any other PDU except where explicitly mentioned
-            in the PDU issuance instructions within this standard.. See 5.3.6.
+            in the PDU issuance instructions within this standard. See 5.3.6.
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -4733,7 +4733,22 @@
          </xs:complexContent>
       </xs:complexType>
    </xs:element>
-   <!--TODO unhandled definition:   classes  class AttributeRecordSet-->
+   <xs:element name="AttributeRecordSet">
+      <xs:complexType>
+         <xs:complexContent>
+            <xs:extension base="EntityInformationFamilyPdu">
+               <xs:sequence>
+                  <xs:element name="entityId" type="EntityID"></xs:element>
+               </xs:sequence>
+               <xs:attribute name="family" fixed="EntityInformationFamilyPdu"></xs:attribute>
+               <xs:attribute name="numberOfAttributeRecords" type="xs:unsignedShort"></xs:attribute>
+               <xs:attribute name="attributeRecords" type="xs:string">
+                  <!--TODO unhandled definition: class AttributeRecordSet attribute attributeRecords objectlist -->
+               </xs:attribute>
+            </xs:extension>
+         </xs:complexContent>
+      </xs:complexType>
+   </xs:element>
    <xs:complexType name="WarfareFamilyPdu" abstract="true">
       <xs:annotation>
          <xs:appinfo>Abstract superclass for fire and detonation pdus that have shared information. Section
@@ -5842,8 +5857,83 @@
          </xs:complexContent>
       </xs:complexType>
    </xs:element>
-   <!--TODO unhandled definition:   classes  class ElectronicEmitter-->
-   <!--TODO unhandled definition:   classes  class EmitterBeam-->
+   <xs:element name="ElectronicEmitter">
+      <xs:complexType>
+         <xs:complexContent>
+            <xs:extension base="DistributedEmissionsFamilyPdu">
+               <xs:sequence>
+                  <xs:element name="emitterSystem" type="EmitterSystem">
+                     <xs:annotation>
+                        <xs:appinfo>information about a particular emitter system and shall be represented by an Emitter
+                           System record (see 6.2.23).
+                        </xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="location" type="Vector3Float">
+                     <xs:annotation>
+                        <xs:appinfo>the location of the antenna beam source with respect to the emitting entity's coordinate
+                           system. This location shall be the origin of the emitter coordinate system that shall
+                           have the same orientation as the entity coordinate system. This field shall be represented
+                           by an Entity Coordinate Vector record see 6.2.95
+                        </xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+               <xs:attribute name="family" fixed="DistributedEmissionsFamilyPdu"></xs:attribute>
+               <xs:attribute name="systemDataLength" type="xs:unsignedByte">
+                  <xs:annotation>
+                     <xs:appinfo>this field shall specify the length of this emitter system's data in 32-bit words.</xs:appinfo>
+                  </xs:annotation>
+               </xs:attribute>
+               <xs:attribute name="numberOfBeams" type="xs:unsignedByte">
+                  <xs:annotation>
+                     <xs:appinfo>the number of beams being described in the current PDU for the emitter system being
+                        described.
+                     </xs:appinfo>
+                  </xs:annotation>
+               </xs:attribute>
+               <xs:attribute name="beams" type="xs:string">
+                  <xs:annotation>
+                     <xs:appinfo>Electronic emmission beams</xs:appinfo>
+                  </xs:annotation>
+                  <!--TODO unhandled definition: class ElectronicEmitter attribute beams objectlist -->
+               </xs:attribute>
+            </xs:extension>
+         </xs:complexContent>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="EmitterBeam">
+      <xs:complexType>
+         <xs:complexContent>
+            <xs:extension base="DistributedEmissionsFamilyPdu">
+               <xs:sequence>
+                  <xs:element name="fundamentalParameterData" type="EEFundamentalParameterData"></xs:element>
+                  <xs:element name="beamData" type="BeamData"></xs:element>
+                  <xs:element name="beamStatus" type="BeamStatus"></xs:element>
+                  <xs:element name="jammingTechnique" type="JammingTechnique"></xs:element>
+               </xs:sequence>
+               <xs:attribute name="family" fixed="DistributedEmissionsFamilyPdu"></xs:attribute>
+               <xs:attribute name="beamDataLength" type="xs:unsignedByte"></xs:attribute>
+               <xs:attribute name="beamNumber" type="xs:unsignedByte"></xs:attribute>
+               <xs:attribute name="beamParameterIndex" type="xs:unsignedShort"></xs:attribute>
+               <xs:attribute name="beamFunction" type="xs:string">
+                  <xs:annotation>
+                     <xs:appinfo>(sisoenum ElectromagneticEmissionBeamFunction uid 78)</xs:appinfo>
+                  </xs:annotation>
+               </xs:attribute>
+               <xs:attribute name="numberOfTargets" type="xs:unsignedByte"></xs:attribute>
+               <xs:attribute name="highDensityTrackJam" type="xs:string">
+                  <xs:annotation>
+                     <xs:appinfo>(sisoenum HighDensityTrackJam uid 79)</xs:appinfo>
+                  </xs:annotation>
+               </xs:attribute>
+               <xs:attribute name="trackJamData" type="xs:string">
+                  <!--TODO unhandled definition: class EmitterBeam attribute trackJamData objectlist -->
+               </xs:attribute>
+            </xs:extension>
+         </xs:complexContent>
+      </xs:complexType>
+   </xs:element>
    <xs:element name="DesignatorPdu">
       <xs:annotation>
          <xs:appinfo>7.6.3 Handles designating operations. See 5.3.7.2.</xs:appinfo>
@@ -6008,8 +6098,65 @@
          </xs:complexContent>
       </xs:complexType>
    </xs:element>
-   <!--TODO unhandled definition:   classes  class UAEmitter-->
-   <!--TODO unhandled definition:   classes  class UABeam-->
+   <xs:element name="UAEmitter">
+      <xs:complexType>
+         <xs:complexContent>
+            <xs:extension base="DistributedEmissionsFamilyPdu">
+               <xs:sequence>
+                  <xs:element name="acousticEmitter" type="AcousticEmitter">
+                     <xs:annotation>
+                        <xs:appinfo>TODO</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <xs:element name="location" type="Vector3Float">
+                     <xs:annotation>
+                        <xs:appinfo>the location of the antenna beam source with respect to the emitting entity's coordinate
+                           system. This location shall be the origin of the emitter coordinate system that shall
+                           have the same orientation as the entity coordinate system. This field shall be represented
+                           by an Entity Coordinate Vector record see 6.2.95
+                        </xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+               <xs:attribute name="family" fixed="DistributedEmissionsFamilyPdu"></xs:attribute>
+               <xs:attribute name="systemDataLength" type="xs:unsignedByte">
+                  <xs:annotation>
+                     <xs:appinfo>this field shall specify the length of this emitter system's data in 32-bit words.</xs:appinfo>
+                  </xs:annotation>
+               </xs:attribute>
+               <xs:attribute name="numberOfBeams" type="xs:unsignedByte">
+                  <xs:annotation>
+                     <xs:appinfo>the number of beams being described in the current PDU for the emitter system being
+                        described.
+                     </xs:appinfo>
+                  </xs:annotation>
+               </xs:attribute>
+               <xs:attribute name="padding" type="xs:unsignedShort"></xs:attribute>
+               <xs:attribute name="beams" type="xs:string">
+                  <xs:annotation>
+                     <xs:appinfo>Electronic emission beams</xs:appinfo>
+                  </xs:annotation>
+                  <!--TODO unhandled definition: class UAEmitter attribute beams objectlist -->
+               </xs:attribute>
+            </xs:extension>
+         </xs:complexContent>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="UABeam">
+      <xs:complexType>
+         <xs:complexContent>
+            <xs:extension base="DistributedEmissionsFamilyPdu">
+               <xs:sequence>
+                  <xs:element name="fundamentalParameterData" type="UAFundamentalParameter"></xs:element>
+               </xs:sequence>
+               <xs:attribute name="family" fixed="DistributedEmissionsFamilyPdu"></xs:attribute>
+               <xs:attribute name="beamDataLength" type="xs:unsignedByte"></xs:attribute>
+               <xs:attribute name="beamNumber" type="xs:unsignedByte"></xs:attribute>
+               <xs:attribute name="padding" type="xs:unsignedShort"></xs:attribute>
+            </xs:extension>
+         </xs:complexContent>
+      </xs:complexType>
+   </xs:element>
    <xs:element name="IFFPdu">
       <xs:complexType>
          <xs:complexContent>
@@ -6178,7 +6325,27 @@
          </xs:extension>
       </xs:complexContent>
    </xs:complexType>
-   <!--TODO unhandled definition:   classes  class RadioCommsHeader-->
+   <xs:element name="RadioCommsHeader">
+      <xs:complexType>
+         <xs:complexContent>
+            <xs:extension base="RadioCommunicationsFamilyPdu">
+               <xs:sequence>
+                  <xs:element name="radioReferenceID" type="EntityID">
+                     <xs:annotation>
+                        <xs:appinfo>ID of the entitythat is the source of the communication</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+               <xs:attribute name="family" fixed="RadioCommunicationsFamilyPdu"></xs:attribute>
+               <xs:attribute name="radioNumber" type="xs:unsignedShort">
+                  <xs:annotation>
+                     <xs:appinfo>particular radio within an entity</xs:appinfo>
+                  </xs:annotation>
+               </xs:attribute>
+            </xs:extension>
+         </xs:complexContent>
+      </xs:complexType>
+   </xs:element>
    <xs:element name="TransmitterPdu">
       <xs:annotation>
          <xs:appinfo>5.8.3 Communicates the state of a particular radio transmitter or simple intercom.</xs:appinfo>
@@ -6327,7 +6494,18 @@
          </xs:complexContent>
       </xs:complexType>
    </xs:element>
-   <!--TODO unhandled definition:   classes  class IntercomReferenceID-->
+   <xs:element name="IntercomReferenceID">
+      <xs:complexType>
+         <xs:complexContent>
+            <xs:extension base="RadioCommunicationsFamilyPdu">
+               <xs:attribute name="family" fixed="RadioCommunicationsFamilyPdu"></xs:attribute>
+               <xs:attribute name="siteNumber" type="xs:unsignedShort"></xs:attribute>
+               <xs:attribute name="applicationNumber" type="xs:unsignedShort"></xs:attribute>
+               <xs:attribute name="referenceNumber" type="xs:unsignedShort"></xs:attribute>
+            </xs:extension>
+         </xs:complexContent>
+      </xs:complexType>
+   </xs:element>
    <xs:element name="IntercomControlPdu">
       <xs:annotation>
          <xs:appinfo>5.8.7 Communicates the state of a particular intercom device, request an action of
@@ -7005,7 +7183,17 @@
          </xs:complexContent>
       </xs:complexType>
    </xs:element>
-   <!--TODO unhandled definition:   classes  class MineEmplacementTime-->
+   <xs:element name="MineEmplacementTime">
+      <xs:complexType>
+         <xs:complexContent>
+            <xs:extension base="MinefieldFamilyPdu">
+               <xs:attribute name="family" fixed="MinefieldFamilyPdu"></xs:attribute>
+               <xs:attribute name="hour" type="xs:unsignedLong"></xs:attribute>
+               <xs:attribute name="timePastTheHour" type="xs:unsignedLong"></xs:attribute>
+            </xs:extension>
+         </xs:complexContent>
+      </xs:complexType>
+   </xs:element>
    <xs:element name="MinefieldResponseNACKPdu">
       <xs:annotation>
          <xs:appinfo>5.10.5 Contains information about the requesting entity and the PDU(s) that were not

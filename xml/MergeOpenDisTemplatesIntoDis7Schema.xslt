@@ -210,7 +210,7 @@
                 </xs:complexType>
             </xsl:when>
             <!-- ===================================================== -->
-            <xsl:when test="(local-name() = 'class') and contains(@name, 'Pdu') and not(contains(@name, 'Family'))"><!-- another Pdu class -->
+            <xsl:when test="(local-name() = 'class') and not(contains(@name, 'Family'))"><!-- another class; TODO and contains(@name, 'Pdu') -->
                 <xsl:element name="xs:element">
                     <xsl:attribute name="name"   select="@name"/>
                     
