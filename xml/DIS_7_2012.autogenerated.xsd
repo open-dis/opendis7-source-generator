@@ -10,15 +10,15 @@
          <xs:extension base="root">
             <xs:attribute name="acousticSystemName" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>The system for a particular UA emitter, and an enumeration (sisoenum UAAcousticSystemName
+                  <xs:appinfo>The system for a particular UA emitter, and an enumeration (SISO enumeration UAAcousticSystemName
                      uid 144)
                   </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="acousticFunction" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>The function of the acoustic system (sisoenum UAAcousticEmitterSystemFunction uid
-                     145)
+                  <xs:appinfo>The function of the acoustic system (SISO enumeration UAAcousticEmitterSystemFunction
+                     uid 145)
                   </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
@@ -68,7 +68,7 @@
          <xs:extension base="root">
             <xs:attribute name="characterSet" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>The character set (sisoenum EntityMarkingCharacterSet uid 45)</xs:appinfo>
+                  <xs:appinfo>The character set (SISO enumeration EntityMarkingCharacterSet uid 45)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="characters">
@@ -88,21 +88,23 @@
          <xs:extension base="root">
             <xs:attribute name="aggregateKind" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>Grouping criterion used to group the aggregate. Enumeration from EBV document (sisoenum
-                     AggregateStateAggregateKind uid 206)
+                  <xs:appinfo>Grouping criterion used to group the aggregate. Enumeration from EBV document (SISO
+                     enumeration AggregateStateAggregateKind uid 206)
                   </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="domain" type="xs:string">
                <xs:annotation>
                   <xs:appinfo>Domain of entity (air, surface, subsurface, space, etc) Zero means domain does not
-                     apply. (sisoenum PlatformDomain uid 8)
+                     apply. (SISO enumeration PlatformDomain uid 8)
                   </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="country" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>country to which the design of the entity is attributed (sisoenum Country uid 29)</xs:appinfo>
+                  <xs:appinfo>country to which the design of the entity is attributed (SISO enumeration Country
+                     uid 29)
+                  </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="category" type="xs:unsignedByte">
@@ -112,13 +114,13 @@
             </xs:attribute>
             <xs:attribute name="subcategory" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>subcategory of entity (sisoenum AggregateStateSubcategory uid 208)</xs:appinfo>
+                  <xs:appinfo>subcategory of entity (SISO enumeration AggregateStateSubcategory uid 208)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="specificInfo" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>specific info based on subcategory field. specific is a reserved word in sql. (sisoenum
-                     AggregateStateSpecific uid 209)
+                  <xs:appinfo>specific info based on subcategory field. specific is a reserved word in sql. (SISO
+                     enumeration AggregateStateSpecific uid 209)
                   </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
@@ -245,7 +247,7 @@
                   <xs:appinfo>The reference coordinate system wrt which beam direction is specified. This field
                      should not change over the duration of an exercise. World coordindate systemis prefered
                      for exercises. The entity coordinate system should be used only when highly directional
-                     antennas must be precisely modeled. (sisoenum TransmitterAntennaPatternReferenceSystem
+                     antennas must be precisely modeled. (SISO enumeration TransmitterAntennaPatternReferenceSystem
                      uid 168)
                   </xs:appinfo>
                </xs:annotation>
@@ -321,7 +323,7 @@
             <xs:attribute name="associationType" type="xs:string">
                <xs:annotation>
                   <xs:appinfo>This field shall indicate the type of association. It shall be represented by an 8-bit
-                     enumeration. Values for this field are found in Section 14 of SISO-REF-010 (sisoenum
+                     enumeration. Values for this field are found in Section 14 of SISO-REF-010 (SISO enumeration
                      EntityAssociationAssociationType 330)
                   </xs:appinfo>
                </xs:annotation>
@@ -440,7 +442,7 @@
             <xs:attribute name="beamState" type="xs:string">
                <xs:annotation>
                   <xs:appinfo>First bit zero means beam is active, first bit = 1 means deactivated. The rest is
-                     padding. (sisoenum BeamStatusBeamState 318)
+                     padding. (SISO enumeration BeamStatusBeamState 318)
                   </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
@@ -522,23 +524,24 @@
             </xs:attribute>
             <xs:attribute name="componentIdentification" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>enumeration (sisoenum EntityDamageStatusComponentIdentification uid 314)</xs:appinfo>
+                  <xs:appinfo>enumeration (SISO enumeration EntityDamageStatusComponentIdentification uid 314)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="componentDamageStatus" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>enumeration (sisoenum DEDamageDescriptionComponentDamageStatus uid 315)</xs:appinfo>
+                  <xs:appinfo>enumeration (SISO enumeration DEDamageDescriptionComponentDamageStatus uid 315)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="componentVisualDamageStatus" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>enumeration</xs:appinfo>
+                  <xs:appinfo>enumeration (SISO bitfield enumeration DEDamageDescriptionComponentVisualDamageStatus
+                     uid 317)
+                  </xs:appinfo>
                </xs:annotation>
-               <!--TODO unhandled definition: class DirectedEnergyDamage attribute componentVisualDamageStatus sisobitfield -->
             </xs:attribute>
             <xs:attribute name="componentVisualSmokeColor" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>enumeration (sisoenum DEDamageDescriptionComponentVisualSmokeColor uid 316)</xs:appinfo>
+                  <xs:appinfo>enumeration (SISO enumeration DEDamageDescriptionComponentVisualSmokeColor uid 316)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="padding2" type="xs:unsignedShort">
@@ -674,12 +677,12 @@
             </xs:sequence>
             <xs:attribute name="warhead" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>type of warhead enumeration (sisoenum MunitionDescriptorWarhead uid 60)</xs:appinfo>
+                  <xs:appinfo>type of warhead enumeration (SISO enumeration MunitionDescriptorWarhead uid 60)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="fuse" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>type of fuse used enumeration (sisoenum MunitionDescriptorFuse uid 61)</xs:appinfo>
+                  <xs:appinfo>type of fuse used enumeration (SISO enumeration MunitionDescriptorFuse uid 61)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="quantity" type="xs:unsignedShort">
@@ -711,7 +714,7 @@
             </xs:sequence>
             <xs:attribute name="explosiveMaterial" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>Material that exploded. Can be grain dust, tnt, gasoline, etc. Enumeration (sisoenum
+                  <xs:appinfo>Material that exploded. Can be grain dust, tnt, gasoline, etc. Enumeration (SISO enumeration
                      ExplosiveMaterialCategories uid 310)
                   </xs:appinfo>
                </xs:annotation>
@@ -855,7 +858,7 @@
             </xs:attribute>
             <xs:attribute name="beamSpotType" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>Spot Shape ENUM. (sisoenum DEPrecisionAimpointBeamSpotType uid 311)</xs:appinfo>
+                  <xs:appinfo>Spot Shape ENUM. (SISO enumeration DEPrecisionAimpointBeamSpotType uid 311)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="beamSpotCrossSectionSemiMajorAxis" type="xs:float">
@@ -952,7 +955,7 @@
                <xs:annotation>
                   <xs:appinfo>indicate if blanking sector data have changed since issuance of the last Blanking
                      Sector attribute record for this beam, if the Blanking Sector attribute record beam
-                     has ceased (sisoenum EEAttributeStateIndicator uid 300)
+                     has ceased (SISO enumeration EEAttributeStateIndicator uid 300)
                   </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
@@ -1054,7 +1057,7 @@
                   <xs:appinfo>This field shall be used to indicate if angle deception data have changed since issuance
                      of the last Angle Deception attribute record for this beam, if the Angle Deception
                      attribute record is part of a heartbeat update to meet periodic update requirements
-                     or if the angle deception data for the beam has ceased. (sisoenum EEAttributeStateIndicator
+                     or if the angle deception data for the beam has ceased. (SISO enumeration EEAttributeStateIndicator
                      uid 300)
                   </xs:appinfo>
                </xs:annotation>
@@ -1184,7 +1187,8 @@
                   <xs:appinfo>This field shall be used to indicate if false target data have changed since issuance
                      of the last False Targets attribute record for this beam, if the False Targets attribute
                      record is part of a heartbeat update to meet periodic update requirements or if false
-                     target data for the beam has ceased. (sisoenum EEAttributeStateIndicator uid 300)
+                     target data for the beam has ceased. (SISO enumeration EEAttributeStateIndicator uid
+                     300)
                   </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
@@ -1293,12 +1297,14 @@
          <xs:extension base="root">
             <xs:attribute name="emitterName" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>Name of the emitter, 16 bit enumeration (sisoenum EmitterName uid 75)</xs:appinfo>
+                  <xs:appinfo>Name of the emitter, 16 bit enumeration (SISO enumeration EmitterName uid 75)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="emitterFunction" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>function of the emitter, 8 bit enumeration (sisoenum EmitterSystemFunction uid 76)</xs:appinfo>
+                  <xs:appinfo>function of the emitter, 8 bit enumeration (SISO enumeration EmitterSystemFunction
+                     uid 76)
+                  </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="emitterIDNumber" type="xs:unsignedByte">
@@ -1323,18 +1329,18 @@
             </xs:attribute>
             <xs:attribute name="fuelMeasurementUnits" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>Units in which the fuel is measured (sisoenum FuelMeasurementUnits uid 328)</xs:appinfo>
+                  <xs:appinfo>Units in which the fuel is measured (SISO enumeration FuelMeasurementUnits uid 328)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="fuelType" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>Type of fuel (sisoenum SupplyFuelType uid 413)</xs:appinfo>
+                  <xs:appinfo>Type of fuel (SISO enumeration SupplyFuelType uid 413)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="fuelLocation" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>Location of fuel as related to entity. See section 14 of EBV document (sisoenum FuelLocation
-                     uid 329)
+                  <xs:appinfo>Location of fuel as related to entity. See section 14 of EBV document (SISO enumeration
+                     FuelLocation uid 329)
                   </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
@@ -1377,17 +1383,17 @@
             </xs:attribute>
             <xs:attribute name="fuelMeasurmentUnits" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>Units of measure (sisoenum FuelMeasurementUnits uid 328)</xs:appinfo>
+                  <xs:appinfo>Units of measure (SISO enumeration FuelMeasurementUnits uid 328)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="fuelType" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>(sisoenum SupplyFuelType uid 413)</xs:appinfo>
+                  <xs:appinfo>(SISO enumeration SupplyFuelType uid 413)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="fuelLocation" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>fuel location as related to the entity (sisoenum FuelLocation uid 329)</xs:appinfo>
+                  <xs:appinfo>fuel location as related to the entity (SISO enumeration FuelLocation uid 329)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="padding" type="xs:unsignedByte">
@@ -1458,7 +1464,7 @@
          <xs:extension base="root">
             <xs:attribute name="characterSet" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>The character set (sisoenum EntityMarkingCharacterSet uid 45)</xs:appinfo>
+                  <xs:appinfo>The character set (SISO enumeration EntityMarkingCharacterSet uid 45)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="characters">
@@ -1485,12 +1491,14 @@
             </xs:sequence>
             <xs:attribute name="entityKind" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>Kind of entity (sisoenum EntityKind uid 7)</xs:appinfo>
+                  <xs:appinfo>Kind of entity (SISO enumeration EntityKind uid 7)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="country" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>country to which the design of the entity is attributed (sisoenum Country uid 29)</xs:appinfo>
+                  <xs:appinfo>country to which the design of the entity is attributed (SISO enumeration Country
+                     uid 29)
+                  </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="category" type="xs:unsignedByte">
@@ -1521,7 +1529,7 @@
          <xs:extension base="root">
             <xs:attribute name="entityKind" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>Kind of entity (sisoenum EntityKind uid 7)</xs:appinfo>
+                  <xs:appinfo>Kind of entity (SISO enumeration EntityKind uid 7)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="domain" type="xs:unsignedByte">
@@ -1567,7 +1575,7 @@
          <xs:extension base="root">
             <xs:attribute name="environmentType" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>Record type (sisoenum EnvironmentalProcessRecordType uid 250)</xs:appinfo>
+                  <xs:appinfo>Record type (SISO enumeration EnvironmentalProcessRecordType uid 250)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="length" type="xs:unsignedShort">
@@ -1662,7 +1670,7 @@
             <xs:attribute name="quantity" type="xs:unsignedShort"></xs:attribute>
             <xs:attribute name="expendableStatus" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>(sisoenum MunitionExpendableStatus uid 327)</xs:appinfo>
+                  <xs:appinfo>(SISO enumeration MunitionExpendableStatus uid 327)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="padding" type="xs:unsignedByte"></xs:attribute>
@@ -1700,7 +1708,7 @@
          <xs:extension base="root">
             <xs:attribute name="fixedDatumID" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>ID of the fixed datum, an enumeration (sisoenum VariableRecordType uid 66)</xs:appinfo>
+                  <xs:appinfo>ID of the fixed datum, an enumeration (SISO enumeration VariableRecordType uid 66)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="fixedDatumValue" type="xs:unsignedLong">
@@ -1797,7 +1805,7 @@
             </xs:attribute>
             <xs:attribute name="axisType" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>type of grid axis (sisoenum GridAxisDescriptorAxisType uid 377)</xs:appinfo>
+                  <xs:appinfo>type of grid axis (SISO enumeration GridAxisDescriptorAxisType uid 377)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
          </xs:extension>
@@ -1868,12 +1876,12 @@
          <xs:extension base="root">
             <xs:attribute name="sampleType" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>(sisoenum GriddedDataSampleType uid 246)</xs:appinfo>
+                  <xs:appinfo>(SISO enumeration GriddedDataSampleType uid 246)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="dataRepresentation" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>(sisoenum GriddedDataDataRepresentation uid 247)</xs:appinfo>
+                  <xs:appinfo>(SISO enumeration GriddedDataDataRepresentation uid 247)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
          </xs:extension>
@@ -1986,13 +1994,13 @@
             </xs:sequence>
             <xs:attribute name="recordType" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>(sisoenum VariableRecordType uid 66)</xs:appinfo>
+                  <xs:appinfo>(SISO enumeration VariableRecordType uid 66)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="recordLength" type="xs:unsignedShort"></xs:attribute>
             <xs:attribute name="commsNodeType" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>(sisoenum IOCommsNodeRecordCommsNodeType uid 294)</xs:appinfo>
+                  <xs:appinfo>(SISO enumeration IOCommsNodeRecordCommsNodeType uid 294)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="padding" type="xs:unsignedByte"></xs:attribute>
@@ -2008,30 +2016,30 @@
          <xs:extension base="IORecord">
             <xs:attribute name="recordType" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>(sisoenum VariableRecordType uid 66)</xs:appinfo>
+                  <xs:appinfo>(SISO enumeration VariableRecordType uid 66)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="recordLength" type="xs:unsignedShort"></xs:attribute>
             <xs:attribute name="ioStatus" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>(sisoenum IOEffectsRecordIOStatus uid 290)</xs:appinfo>
+                  <xs:appinfo>(SISO enumeration IOEffectsRecordIOStatus uid 290)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="ioLinkType" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>(sisoenum IOEffectsRecordIOLinkType uid 291)</xs:appinfo>
+                  <xs:appinfo>(SISO enumeration IOEffectsRecordIOLinkType uid 291)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="ioEffect" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>(sisoenum IOEffectsRecordIOEffect uid 292)</xs:appinfo>
+                  <xs:appinfo>(SISO enumeration IOEffectsRecordIOEffect uid 292)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="ioEffectDutyCycle" type="xs:unsignedByte"></xs:attribute>
             <xs:attribute name="ioEffectDuration" type="xs:unsignedShort"></xs:attribute>
             <xs:attribute name="ioProcess" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>(sisoenum IOEffectsRecordIOProcess uid 293)</xs:appinfo>
+                  <xs:appinfo>(SISO enumeration IOEffectsRecordIOProcess uid 293)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="padding" type="xs:unsignedShort"></xs:attribute>
@@ -2061,7 +2069,7 @@
          <xs:extension base="root">
             <xs:attribute name="recordType" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>enumeration for type of record (sisoenum VariableRecordType uid 66)</xs:appinfo>
+                  <xs:appinfo>enumeration for type of record (SISO enumeration VariableRecordType uid 66)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="recordLength" type="xs:unsignedShort">
@@ -2129,7 +2137,7 @@
             </xs:attribute>
             <xs:attribute name="applicableModes" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>Applicable modes enumeration (sisoenum IFFApplicableModes uid 339)</xs:appinfo>
+                  <xs:appinfo>Applicable modes enumeration (SISO enumeration IFFApplicableModes uid 339)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="systemSpecificData">
@@ -2149,7 +2157,9 @@
          <xs:extension base="root">
             <xs:attribute name="recordType" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>Type of intercom parameters record (sisoenum IntercomControlRecordType uid 185)</xs:appinfo>
+                  <xs:appinfo>Type of intercom parameters record (SISO enumeration IntercomControlRecordType uid
+                     185)
+                  </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="recordLength" type="xs:unsignedShort">
@@ -2274,18 +2284,19 @@
             </xs:attribute>
             <xs:attribute name="segmentModification" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>whether a modification has been made to the point object's location or orientation</xs:appinfo>
+                  <xs:appinfo>whether a modification has been made to the point object's location or orientation
+                     (SISO bitfield enumeration ObjectStateModificationLinearObject UID 241)
+                  </xs:appinfo>
                </xs:annotation>
-               <!--TODO unhandled definition: class LinearSegmentParameter attribute segmentModification sisobitfield -->
             </xs:attribute>
             <xs:attribute name="generalSegmentAppearance" type="xs:string">
                <xs:annotation>
                   <xs:appinfo>general dynamic appearance attributes of the segment. This record shall be defined
                      as a 16-bit record of enumerations. The values defined for this record are included
-                     in Section 12 of SISO-REF-010.
+                     in Section 12 of SISO-REF-010. (SISO bitfield enumeration ObjectStateAppearanceGeneral
+                     UID 229)
                   </xs:appinfo>
                </xs:annotation>
-               <!--TODO unhandled definition: class LinearSegmentParameter attribute generalSegmentAppearance sisobitfield -->
             </xs:attribute>
             <xs:attribute name="specificSegmentAppearance" type="xs:unsignedLong">
                <xs:annotation>
@@ -2452,7 +2463,7 @@
             </xs:attribute>
             <xs:attribute name="majorModulation" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>The major classification of the modulation type. (sisoenum TransmitterMajorModulation
+                  <xs:appinfo>The major classification of the modulation type. (SISO enumeration TransmitterMajorModulation
                      UID 155)
                   </xs:appinfo>
                </xs:annotation>
@@ -2467,7 +2478,7 @@
             <xs:attribute name="radioSystem" type="xs:string">
                <xs:annotation>
                   <xs:appinfo>The radio system associated with this Transmitter PDU and shall be used as the basis
-                     to interpret other fields whose values depend on a specific radio system. (sisoenum
+                     to interpret other fields whose values depend on a specific radio system. (SISO enumeration
                      TransmitterModulationTypeSystem uid =163)
                   </xs:appinfo>
                </xs:annotation>
@@ -2505,8 +2516,8 @@
             </xs:attribute>
             <xs:attribute name="munitionStatus" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>the status of the munition. It shall be represented by an 8-bit enumeration. (sisoenum
-                     MunitionExpendableStatus uid 327)
+                  <xs:appinfo>the status of the munition. It shall be represented by an 8-bit enumeration. (SISO
+                     enumeration MunitionExpendableStatus uid 327)
                   </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
@@ -2579,8 +2590,8 @@
                <xs:annotation>
                   <xs:appinfo>The station name within the host at which the part entity is located. If the part
                      entity is On Station, this field shall specify the representation of the part's location
-                     data fields. This field shall be specified by a 16-bit enumeration (sisoenum IsPartOfStationName
-                     uid 212)
+                     data fields. This field shall be specified by a 16-bit enumeration (SISO enumeration
+                     IsPartOfStationName uid 212)
                   </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
@@ -2623,14 +2634,16 @@
          <xs:extension base="root">
             <xs:attribute name="domain" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>Domain of entity (air, surface, subsurface, space, etc) (sisoenum PlatformDomain uid
-                     8)
+                  <xs:appinfo>Domain of entity (air, surface, subsurface, space, etc) (SISO enumeration PlatformDomain
+                     uid 8)
                   </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="objectKind" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>country to which the design of the entity is attributed (sisoenum ObjectKind uid 225)</xs:appinfo>
+                  <xs:appinfo>country to which the design of the entity is attributed (SISO enumeration ObjectKind
+                     uid 225)
+                  </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="category" type="xs:unsignedByte">
@@ -2665,7 +2678,7 @@
             <xs:attribute name="ownershipStatus" type="xs:string">
                <xs:annotation>
                   <xs:appinfo>The ownership and/or ownership conflict status of the entity represented by the Entity
-                     ID field. (sisoenum OwnershipStatus uid 332)
+                     ID field. (SISO enumeration OwnershipStatus uid 332)
                   </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
@@ -2757,7 +2770,7 @@
          <xs:extension base="root">
             <xs:attribute name="entityKind" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>Kind of entity (sisoenum EntityKind uid 7)</xs:appinfo>
+                  <xs:appinfo>Kind of entity (SISO enumeration EntityKind uid 7)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="domain" type="xs:unsignedByte">
@@ -2767,17 +2780,19 @@
             </xs:attribute>
             <xs:attribute name="country" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>country to which the design of the entity is attributed (sisoenum Country uid 29)</xs:appinfo>
+                  <xs:appinfo>country to which the design of the entity is attributed (SISO enumeration Country
+                     uid 29)
+                  </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="category" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>category of entity (sisoenum RadioCategory uid 22)</xs:appinfo>
+                  <xs:appinfo>category of entity (SISO enumeration RadioCategory uid 22)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="subcategory" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>specific info based on subcategory field (sisoenum RadioSubcategory uid 23)</xs:appinfo>
+                  <xs:appinfo>specific info based on subcategory field (SISO enumeration RadioSubcategory uid 23)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="specific" type="xs:unsignedByte"></xs:attribute>
@@ -2815,7 +2830,7 @@
             <xs:attribute name="recordID" type="xs:string">
                <xs:annotation>
                   <xs:appinfo>The data structure used to convey the parameter values of the record for each record.
-                     32 bit enumeration. (sisoenum VariableRecordType uid = 66)
+                     32 bit enumeration. (SISO enumeration VariableRecordType uid = 66)
                   </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
@@ -2883,14 +2898,14 @@
             <xs:attribute name="nature" type="xs:string">
                <xs:annotation>
                   <xs:appinfo>The nature or purpose for joining of the part entity to the host entity and shall
-                     be represented by a 16-bit enumeration (sisoenum IsPartOfNature uid 210)
+                     be represented by a 16-bit enumeration (SISO enumeration IsPartOfNature uid 210)
                   </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="position" type="xs:string">
                <xs:annotation>
                   <xs:appinfo>The position of the part entity with respect to the host entity and shall be represented
-                     by a 16-bit enumeration (sisoenum IsPartOfPosition uid 211)
+                     by a 16-bit enumeration (SISO enumeration IsPartOfPosition uid 211)
                   </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
@@ -2954,12 +2969,12 @@
          <xs:extension base="root">
             <xs:attribute name="sensorTypeSource" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>the source of the Sensor Type field (sisoenum SensorTypeSource uid 414)</xs:appinfo>
+                  <xs:appinfo>the source of the Sensor Type field (SISO enumeration SensorTypeSource uid 414)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="sensorOnOffStatus" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>The on/off status of the sensor (sisoenum SensorOnOffStatus uid 331)</xs:appinfo>
+                  <xs:appinfo>The on/off status of the sensor (SISO enumeration SensorOnOffStatus uid 331)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="sensorType" type="xs:unsignedShort">
@@ -3136,7 +3151,7 @@
          <xs:extension base="root">
             <xs:attribute name="recordType" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>(sisoenum VariableRecordType uid 66)</xs:appinfo>
+                  <xs:appinfo>(SISO enumeration VariableRecordType uid 66)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="recordLength" type="xs:unsignedShort"></xs:attribute>
@@ -3171,18 +3186,18 @@
             </xs:attribute>
             <xs:attribute name="fuelMeasurementUnits" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>Units in which the fuel is measured (sisoenum FuelMeasurementUnits uid 328)</xs:appinfo>
+                  <xs:appinfo>Units in which the fuel is measured (SISO enumeration FuelMeasurementUnits uid 328)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="fuelType" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>Type of fuel (sisoenum SupplyFuelType uid 413)</xs:appinfo>
+                  <xs:appinfo>Type of fuel (SISO enumeration SupplyFuelType uid 413)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="fuelLocation" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>Location of fuel as related to entity. See section 14 of EBV document (sisoenum FuelLocation
-                     uid 329)
+                  <xs:appinfo>Location of fuel as related to entity. See section 14 of EBV document (SISO enumeration
+                     FuelLocation uid 329)
                   </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
@@ -3243,18 +3258,20 @@
             </xs:attribute>
             <xs:attribute name="fuelMeasurementUnits" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>The fuel measurement units. Enumeration (sisoenum FuelMeasurementUnits uid 328)</xs:appinfo>
+                  <xs:appinfo>The fuel measurement units. Enumeration (SISO enumeration FuelMeasurementUnits uid
+                     328)
+                  </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="fuelType" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>Fuel type (sisoenum SupplyFuelType uid 413)</xs:appinfo>
+                  <xs:appinfo>Fuel type (SISO enumeration SupplyFuelType uid 413)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="fuelLocation" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>Location of fuel as related to entity. See section 14 of EBV document (sisoenum FuelLocation
-                     uid 329)
+                  <xs:appinfo>Location of fuel as related to entity. See section 14 of EBV document (SISO enumeration
+                     FuelLocation uid 329)
                   </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
@@ -3304,17 +3321,21 @@
             </xs:sequence>
             <xs:attribute name="systemType" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>general type of emitting system, an enumeration (sisoenum IFFSystemType uid 82)</xs:appinfo>
+                  <xs:appinfo>general type of emitting system, an enumeration (SISO enumeration IFFSystemType uid
+                     82)
+                  </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="systemName" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>named type of system, an enumeration (sisoenum IFFSystemName uid 83)</xs:appinfo>
+                  <xs:appinfo>named type of system, an enumeration (SISO enumeration IFFSystemName uid 83)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="systemMode" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>mode of operation for the system, an enumeration (sisoenum IFFSystemMode uid 84)</xs:appinfo>
+                  <xs:appinfo>mode of operation for the system, an enumeration (SISO enumeration IFFSystemMode uid
+                     84)
+                  </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
          </xs:extension>
@@ -3380,12 +3401,14 @@
          <xs:extension base="root">
             <xs:attribute name="activeEmissionParameterIndex" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>Which database record shall be used (sisoenum UAActiveEmissionParameterIndex uid 146)</xs:appinfo>
+                  <xs:appinfo>Which database record shall be used (SISO enumeration UAActiveEmissionParameterIndex
+                     uid 146)
+                  </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="scanPattern" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>The type of scan pattern, If not used, zero (sisoenum UAScanPattern uid 147)</xs:appinfo>
+                  <xs:appinfo>The type of scan pattern, If not used, zero (SISO enumeration UAScanPattern uid 147)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="beamCenterAzimuthHorizontal" type="xs:float">
@@ -3450,7 +3473,7 @@
          <xs:extension base="root">
             <xs:attribute name="recordType" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>The identification of the Variable Parameter record. Enumeration from EBV (sisoenum
+                  <xs:appinfo>The identification of the Variable Parameter record. Enumeration from EBV (SISO enumeration
                      VariableParameterRecordType uid 56)
                   </xs:appinfo>
                </xs:annotation>
@@ -3474,7 +3497,7 @@
          <xs:extension base="root">
             <xs:attribute name="recordType" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>The identification of the Variable Parameter record. Enumeration from EBV (sisoenum
+                  <xs:appinfo>The identification of the Variable Parameter record. Enumeration from EBV (SISO enumeration
                      VariableParameterRecordType uid 56)
                   </xs:appinfo>
                </xs:annotation>
@@ -3528,15 +3551,15 @@
             </xs:sequence>
             <xs:attribute name="recordType" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>The identification of the Variable Parameter record. Enumeration from EBV (sisoenum
+                  <xs:appinfo>The identification of the Variable Parameter record. Enumeration from EBV (SISO enumeration
                      VariableParameterRecordType uid 56)
                   </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="detachedIndicator" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>0 = attached, 1 = detached. See I.2.3.1 for state transition diagram (sisoenum AttachedPartDetachedIndicator
-                     uid 415)
+                  <xs:appinfo>0 = attached, 1 = detached. See I.2.3.1 for state transition diagram (SISO enumeration
+                     AttachedPartDetachedIndicator uid 415)
                   </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
@@ -3550,8 +3573,8 @@
             </xs:attribute>
             <xs:attribute name="parameterType" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>The location or station to which the part is attached (sisoenum AttachedParts uid
-                     57)
+                  <xs:appinfo>The location or station to which the part is attached (SISO enumeration AttachedParts
+                     uid 57)
                   </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
@@ -3574,47 +3597,47 @@
             </xs:sequence>
             <xs:attribute name="recordType" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>The identification of the Variable Parameter record. Enumeration from EBV (sisoenum
+                  <xs:appinfo>The identification of the Variable Parameter record. Enumeration from EBV (SISO enumeration
                      VariableParameterRecordType uid 56)
                   </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="changeIndicator" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>Indicates if this VP has changed since last issuance (sisoenum EntityVPRecordChangeIndicator
+                  <xs:appinfo>Indicates if this VP has changed since last issuance (SISO enumeration EntityVPRecordChangeIndicator
                      uid 320)
                   </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="associationStatus" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>Indicates association status between two entities (sisoenum EntityAssociationAssociationType
+                  <xs:appinfo>Indicates association status between two entities (SISO enumeration EntityAssociationAssociationType
                      uid 319)
                   </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="associationType" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>Type of association; 8 bit enum (sisoenum EntityAssociationPhysicalAssociationType
+                  <xs:appinfo>Type of association; 8 bit enum (SISO enumeration EntityAssociationPhysicalAssociationType
                      uid 323)
                   </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="ownStationLocation" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>Station location on one's own entity (sisoenum IsPartOfStationName uid 212)</xs:appinfo>
+                  <xs:appinfo>Station location on one's own entity (SISO enumeration IsPartOfStationName uid 212)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="physicalConnectionType" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>Type of physical connection (sisoenum EntityAssociationPhysicalConnectionType uid
-                     324)
+                  <xs:appinfo>Type of physical connection (SISO enumeration EntityAssociationPhysicalConnectionType
+                     uid 324)
                   </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="groupMemberType" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>Type of member the entity is within the group (sisoenum EntityAssociationGroupMemberType
+                  <xs:appinfo>Type of member the entity is within the group (SISO enumeration EntityAssociationGroupMemberType
                      uid 321)
                   </xs:appinfo>
                </xs:annotation>
@@ -3639,14 +3662,14 @@
             </xs:sequence>
             <xs:attribute name="recordType" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>The identification of the Variable Parameter record. (sisoenum VariableParameterRecordType
+                  <xs:appinfo>The identification of the Variable Parameter record. (SISO enumeration VariableParameterRecordType
                      uid 56)
                   </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="changeIndicator" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>Indicates if this VP has changed since last issuance (sisoenum EntityVPRecordChangeIndicator
+                  <xs:appinfo>Indicates if this VP has changed since last issuance (SISO enumeration EntityVPRecordChangeIndicator
                      uid 320)
                   </xs:appinfo>
                </xs:annotation>
@@ -3685,19 +3708,19 @@
             </xs:sequence>
             <xs:attribute name="recordType" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>The identification of the Variable Parameter record. Enumeration from EBV (sisoenum
+                  <xs:appinfo>The identification of the Variable Parameter record. Enumeration from EBV (SISO enumeration
                      VariableParameterRecordType uid 56)
                   </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="reasonForSeparation" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>Reason for separation. EBV (sisoenum SeparationVPReasonforSeparation uid 282)</xs:appinfo>
+                  <xs:appinfo>Reason for separation. EBV (SISO enumeration SeparationVPReasonforSeparation uid 282)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="preEntityIndicator" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>Whether the entity existed prior to separation EBV (sisoenum SeparationVPPreEntityIndicator
+                  <xs:appinfo>Whether the entity existed prior to separation EBV (SISO enumeration SeparationVPPreEntityIndicator
                      uid 283)
                   </xs:appinfo>
                </xs:annotation>
@@ -3724,7 +3747,7 @@
          <xs:extension base="root">
             <xs:attribute name="recordType" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>Type of VTP (sisoenum VariableRecordType uid 66)</xs:appinfo>
+                  <xs:appinfo>Type of VTP (SISO enumeration VariableRecordType uid 66)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="recordLength" type="xs:unsignedShort">
@@ -3850,7 +3873,7 @@
             </xs:sequence>
             <xs:attribute name="deadReckoningAlgorithm" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>Algorithm to use in computing dead reckoning. See EBV doc. (sisoenum DeadReckoningAlgorithm
+                  <xs:appinfo>Algorithm to use in computing dead reckoning. See EBV doc. (SISO enumeration DeadReckoningAlgorithm
                      uid 44)
                   </xs:appinfo>
                </xs:annotation>
@@ -3979,7 +4002,7 @@
             </xs:sequence>
             <xs:attribute name="deadReckoningAlgorithm" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>(sisoenum DeadReckoningAlgorithm uid 44)</xs:appinfo>
+                  <xs:appinfo>(SISO enumeration DeadReckoningAlgorithm uid 44)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
          </xs:extension>
@@ -3994,8 +4017,8 @@
          <xs:extension base="root">
             <xs:attribute name="protocolVersion" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>The version of the protocol. 5=DIS-1995, 6=DIS-1998, 7=DIS-2012 (sisoenum DISProtocolVersion
-                     uid 3)
+                  <xs:appinfo>The version of the protocol. 5=DIS-1995, 6=DIS-1998, 7=DIS-2012 (SISO enumeration
+                     DISProtocolVersion uid 3)
                   </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
@@ -4006,13 +4029,13 @@
             </xs:attribute>
             <xs:attribute name="pduType" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>Type of pdu, unique for each PDU class (sisoenum DISPDUType uid 4)</xs:appinfo>
+                  <xs:appinfo>Type of pdu, unique for each PDU class (SISO enumeration DISPDUType uid 4)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="protocolFamily" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>value that refers to the protocol family, eg SimulationManagement, et (sisoenum DISProtocolFamily
-                     uid 5)
+                  <xs:appinfo>value that refers to the protocol family, eg SimulationManagement, et (SISO enumeration
+                     DISProtocolFamily uid 5)
                   </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
@@ -4115,8 +4138,8 @@
                <xs:attribute name="family" fixed="EntityInformationFamilyPdu"></xs:attribute>
                <xs:attribute name="forceId" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>What force this entity is affiliated with, eg red, blue, neutral, etc (sisoenum ForceID
-                        uid 6)
+                     <xs:appinfo>What force this entity is affiliated with, eg red, blue, neutral, etc (SISO enumeration
+                        ForceID uid 6)
                      </xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
@@ -4136,9 +4159,8 @@
                </xs:attribute>
                <xs:attribute name="capabilities" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>a series of bit flags</xs:appinfo>
+                     <xs:appinfo>a series of bit flags (SISO bitfield enumeration EntityCapabilities uid 55)</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled definition: class EntityStatePdu attribute capabilities sisobitfield -->
                </xs:attribute>
                <xs:attribute name="variableParameters" type="xs:string">
                   <xs:annotation>
@@ -4407,7 +4429,8 @@
                <xs:attribute name="collisionType" type="xs:string">
                   <xs:annotation>
                      <xs:appinfo>This field shall identify the type of collision. The Collision Type field shall be
-                        represented by an 8-bit record of enumerations (sisoenum CollisionType uid 189)
+                        represented by an 8-bit record of enumerations (SISO enumeration CollisionType uid
+                        189)
                      </xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
@@ -4653,15 +4676,15 @@
                <xs:attribute name="attributeRecordPduType" type="xs:string">
                   <xs:annotation>
                      <xs:appinfo>This field shall represent the type of the PDU that is being extended or updated,
-                        if applicable. It shall be represented by an 8-bit enumeration. (sisoenum DISPDUType
-                        uid 4)
+                        if applicable. It shall be represented by an 8-bit enumeration. (SISO enumeration
+                        DISPDUType uid 4)
                      </xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="attributeRecordProtocolVersion" type="xs:string">
                   <xs:annotation>
                      <xs:appinfo>This field shall indicate the Protocol Version associated with the Attribute Record
-                        PDU Type. It shall be represented by an 8-bit enumeration. (sisoenum DISProtocolFamily
+                        PDU Type. It shall be represented by an 8-bit enumeration. (SISO enumeration DISProtocolFamily
                         uid 5)
                      </xs:appinfo>
                   </xs:annotation>
@@ -4670,7 +4693,7 @@
                   <xs:annotation>
                      <xs:appinfo>This field shall contain the Attribute record type of the Attribute records in the
                         PDU if they all have the same Attribute record type. It shall be represented by a
-                        32-bit enumeration. (sisoenum VariableRecordType uid 66)
+                        32-bit enumeration. (SISO enumeration VariableRecordType uid 66)
                      </xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
@@ -4678,7 +4701,7 @@
                   <xs:annotation>
                      <xs:appinfo>This field shall identify the action code applicable to this Attribute PDU. The Action
                         Code shall apply to all Attribute records contained in the PDU. It shall be represented
-                        by an 8-bit enumeration. (sisoenum DISAttributeActionCode uid 295)
+                        by an 8-bit enumeration. (SISO enumeration DISAttributeActionCode uid 295)
                      </xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
@@ -4863,7 +4886,7 @@
                <xs:attribute name="family" fixed="WarfareFamilyPdu"></xs:attribute>
                <xs:attribute name="detonationResult" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>result of the detonation, Section 7.3.3 (sisoenum DetonationResult uid 62)</xs:appinfo>
+                     <xs:appinfo>result of the detonation, Section 7.3.3 (SISO enumeration DetonationResult uid 62)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="numberOfVariableParameters" type="xs:unsignedByte">
@@ -4944,15 +4967,14 @@
                <xs:attribute name="flags" type="xs:string">
                   <xs:annotation>
                      <xs:appinfo>16bit Boolean field shall contain various flags to indicate status information needed
-                        to process a DE, Section 7.3.4
+                        to process a DE, Section 7.3.4 (SISO bitfield enumeration DEFireFlags uid 313)
                      </xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled definition: class DirectedEnergyFirePdu attribute flags sisobitfield -->
                </xs:attribute>
                <xs:attribute name="pulseShape" type="xs:string">
                   <xs:annotation>
                      <xs:appinfo>Field shall identify the pulse shape and shall be represented as an 8-bit enumeration,
-                        Section 7.3.4 (sisoenum DEFirePulseShape uid 312)
+                        Section 7.3.4 (SISO enumeration DEFirePulseShape uid 312)
                      </xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
@@ -5046,7 +5068,7 @@
                <xs:attribute name="family" fixed="LogisticsFamilyPdu"></xs:attribute>
                <xs:attribute name="serviceTypeRequested" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>Type of service requested, Section 7.4.2 (sisoenum ServiceRequestServiceTypeRequested
+                     <xs:appinfo>Type of service requested, Section 7.4.2 (SISO enumeration ServiceRequestServiceTypeRequested
                         uid 63)
                      </xs:appinfo>
                   </xs:annotation>
@@ -5214,7 +5236,9 @@
                <xs:attribute name="family" fixed="LogisticsFamilyPdu"></xs:attribute>
                <xs:attribute name="repair" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>Enumeration for type of repair. See 6.2.74 (sisoenum RepairCompleteRepair uid 64)</xs:appinfo>
+                     <xs:appinfo>Enumeration for type of repair. See 6.2.74 (SISO enumeration RepairCompleteRepair
+                        uid 64)
+                     </xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="padding4" type="xs:unsignedShort">
@@ -5250,7 +5274,7 @@
                <xs:attribute name="family" fixed="LogisticsFamilyPdu"></xs:attribute>
                <xs:attribute name="repairResult" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>Result of repair operation (sisoenum RepairResponseRepairResult uid 64)</xs:appinfo>
+                     <xs:appinfo>Result of repair operation (SISO enumeration RepairResponseRepairResult uid 64)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="padding1" type="xs:unsignedByte">
@@ -5384,17 +5408,16 @@
                <xs:attribute name="reason" type="xs:string">
                   <xs:annotation>
                      <xs:appinfo>Reason the simulation was stopped or frozen (see section 7 of SISO-REF-010) represented
-                        by an 8-bit enumeration (sisoenum StopFreezeReason uid 67)
+                        by an 8-bit enumeration (SISO enumeration StopFreezeReason uid 67)
                      </xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="frozenBehavior" type="xs:string">
                   <xs:annotation>
                      <xs:appinfo>Internal behavior of the entity(or simulation) and its appearance while frozen to
-                        the other participants
+                        the other participants (SISO bitfield enumeration StopFreezeFrozenBehavior uid 68)
                      </xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled definition: class StopFreezePdu attribute frozenBehavior sisobitfield -->
                </xs:attribute>
                <xs:attribute name="padding1" type="xs:unsignedShort">
                   <xs:annotation>
@@ -5422,12 +5445,14 @@
                <xs:attribute name="family" fixed="SimulationManagementFamilyPdu"></xs:attribute>
                <xs:attribute name="acknowledgeFlag" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>type of message being acknowledged (sisoenum AcknowledgeAcknowledgeFlag uid 69)</xs:appinfo>
+                     <xs:appinfo>type of message being acknowledged (SISO enumeration AcknowledgeAcknowledgeFlag uid
+                        69)
+                     </xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="responseFlag" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>Whether or not the receiving entity was able to comply with the request (sisoenum
+                     <xs:appinfo>Whether or not the receiving entity was able to comply with the request (SISO enumeration
                         AcknowledgeResponseFlag uid 70)
                      </xs:appinfo>
                   </xs:annotation>
@@ -5458,8 +5483,8 @@
                </xs:attribute>
                <xs:attribute name="actionID" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>identifies the particular action being requested(see Section 7 of SISO-REF-010). (sisoenum
-                        ActionRequestActionID uid 71)
+                     <xs:appinfo>identifies the particular action being requested(see Section 7 of SISO-REF-010). (SISO
+                        enumeration ActionRequestActionID uid 71)
                      </xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
@@ -5508,7 +5533,7 @@
                </xs:attribute>
                <xs:attribute name="requestStatus" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>Status of response (sisoenum ActionResponseRequestStatus uid 72)</xs:appinfo>
+                     <xs:appinfo>Status of response (SISO enumeration ActionResponseRequestStatus uid 72)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="numberOfFixedDatumRecords" type="xs:unsignedLong">
@@ -5691,7 +5716,7 @@
                <xs:attribute name="family" fixed="SimulationManagementFamilyPdu"></xs:attribute>
                <xs:attribute name="eventType" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>Type of event (sisoenum EventReportEventType uid 73)</xs:appinfo>
+                     <xs:appinfo>Type of event (SISO enumeration EventReportEventType uid 73)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="padding1" type="xs:unsignedLong">
@@ -5798,8 +5823,8 @@
                   <xs:annotation>
                      <xs:appinfo>This field shall be used to indicate if the data in the PDU represents a state update
                         or just data that has changed since issuance of the last Electromagnetic Emission
-                        PDU [relative to the identified entity and emission system(s)]. (sisoenum ElectromagneticEmissionStateUpdateIndicator
-                        uid 77)
+                        PDU [relative to the identified entity and emission system(s)]. (SISO enumeration
+                        ElectromagneticEmissionStateUpdateIndicator uid 77)
                      </xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
@@ -5886,13 +5911,13 @@
                <xs:attribute name="beamParameterIndex" type="xs:unsignedShort"></xs:attribute>
                <xs:attribute name="beamFunction" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>(sisoenum ElectromagneticEmissionBeamFunction uid 78)</xs:appinfo>
+                     <xs:appinfo>(SISO enumeration ElectromagneticEmissionBeamFunction uid 78)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="numberOfTargets" type="xs:unsignedByte"></xs:attribute>
                <xs:attribute name="highDensityTrackJam" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>(sisoenum HighDensityTrackJam uid 79)</xs:appinfo>
+                     <xs:appinfo>(SISO enumeration HighDensityTrackJam uid 79)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="trackJamData" type="xs:string">
@@ -5940,15 +5965,15 @@
                <xs:attribute name="codeName" type="xs:string">
                   <xs:annotation>
                      <xs:appinfo>This field shall specify a unique emitter database number assigned to differentiate
-                        between otherwise similar or identical emitter beams within an emitter system. (sisoenum
-                        DesignatorSystemName uid 80)
+                        between otherwise similar or identical emitter beams within an emitter system. (SISO
+                        enumeration DesignatorSystemName uid 80)
                      </xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="designatorCode" type="xs:string">
                   <xs:annotation>
                      <xs:appinfo>This field shall identify the designator code being used by the designating entity
-                        (sisoenum DesignatorDesignatorCode uid 81)
+                        (SISO enumeration DesignatorDesignatorCode uid 81)
                      </xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
@@ -5964,7 +5989,7 @@
                </xs:attribute>
                <xs:attribute name="deadReckoningAlgorithm" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>Dead reckoning algorithm (sisoenum DeadReckoningAlgorithm uid 44)</xs:appinfo>
+                     <xs:appinfo>Dead reckoning algorithm (SISO enumeration DeadReckoningAlgorithm uid 44)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="padding1" type="xs:unsignedByte">
@@ -6004,8 +6029,8 @@
                <xs:attribute name="stateChangeIndicator" type="xs:string">
                   <xs:annotation>
                      <xs:appinfo>This field shall be used to indicate whether the data in the UA PDU represent a state
-                        update or data that have changed since issuance of the last UA PDU (sisoenum UAStateChangeUpdateIndicator
-                        uid 143)
+                        update or data that have changed since issuance of the last UA PDU (SISO enumeration
+                        UAStateChangeUpdateIndicator uid 143)
                      </xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
@@ -6019,7 +6044,8 @@
                      <xs:appinfo>This field indicates which database record (or file) shall be used in the definition
                         of passive signature (unintentional) emissions of the entity. The indicated database
                         record (or file) shall define all noise generated as a function of propulsion plant
-                        configurations and associated auxiliaries. (sisoenum UAPassiveParameterIndex uid 148)
+                        configurations and associated auxiliaries. (SISO enumeration UAPassiveParameterIndex
+                        uid 148)
                      </xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
@@ -6352,12 +6378,12 @@
                </xs:attribute>
                <xs:attribute name="transmitState" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>transmit state (sisoenum TransmitterTransmitState uid 164)</xs:appinfo>
+                     <xs:appinfo>transmit state (SISO enumeration TransmitterTransmitState uid 164)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="inputSource" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>input source (sisoenum TransmitterInputSource uid 165)</xs:appinfo>
+                     <xs:appinfo>input source (SISO enumeration TransmitterInputSource uid 165)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="variableTransmitterParameterCount" type="xs:unsignedShort">
@@ -6367,7 +6393,7 @@
                </xs:attribute>
                <xs:attribute name="antennaPatternType" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>antenna pattern type (sisoenum TransmitterAntennaPatternType uid 167)</xs:appinfo>
+                     <xs:appinfo>antenna pattern type (SISO enumeration TransmitterAntennaPatternType uid 167)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="antennaPatternCount" type="xs:unsignedShort">
@@ -6392,7 +6418,7 @@
                </xs:attribute>
                <xs:attribute name="cryptoSystem" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>crypto system enumeration (sisoenum TransmitterCryptoSystem uid 166)</xs:appinfo>
+                     <xs:appinfo>crypto system enumeration (SISO enumeration TransmitterCryptoSystem uid 166)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="cryptoKeyId" type="xs:unsignedShort">
@@ -6444,7 +6470,9 @@
                <xs:attribute name="family" fixed="RadioCommunicationsFamilyPdu"></xs:attribute>
                <xs:attribute name="receiverState" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>encoding scheme used, and enumeration (sisoenum ReceiverReceiverState uid 179)</xs:appinfo>
+                     <xs:appinfo>encoding scheme used, and enumeration (SISO enumeration ReceiverReceiverState uid
+                        179)
+                     </xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="padding1" type="xs:unsignedShort"></xs:attribute>
@@ -6498,7 +6526,7 @@
                <xs:attribute name="family" fixed="RadioCommunicationsFamilyPdu"></xs:attribute>
                <xs:attribute name="controlType" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>control type (sisoenum IntercomControlControlType uid 180)</xs:appinfo>
+                     <xs:appinfo>control type (SISO enumeration IntercomControlControlType uid 180)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="communicationsChannelType" type="xs:unsignedByte">
@@ -6523,14 +6551,14 @@
                </xs:attribute>
                <xs:attribute name="transmitLineState" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>current transmit state of the line (sisoenum IntercomControlTransmitLineState uid
-                        183)
+                     <xs:appinfo>current transmit state of the line (SISO enumeration IntercomControlTransmitLineState
+                        uid 183)
                      </xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="command" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>detailed type requested. (sisoenum IntercomControlCommand uid 182)</xs:appinfo>
+                     <xs:appinfo>detailed type requested. (SISO enumeration IntercomControlCommand uid 182)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="masterIntercomNumber" type="xs:unsignedShort">
@@ -6610,17 +6638,17 @@
                <xs:attribute name="family" fixed="EntityManagementFamilyPdu"></xs:attribute>
                <xs:attribute name="forceID" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>force ID (sisoenum ForceID uid 6)</xs:appinfo>
+                     <xs:appinfo>force ID (SISO enumeration ForceID uid 6)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="aggregateState" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>state of aggregate (sisoenum AggregateStateAggregateState uid 204)</xs:appinfo>
+                     <xs:appinfo>state of aggregate (SISO enumeration AggregateStateAggregateState uid 204)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="formation" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>formation of aggregated entities (sisoenum AggregateStateFormation uid 205)</xs:appinfo>
+                     <xs:appinfo>formation of aggregated entities (SISO enumeration AggregateStateFormation uid 205)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="numberOfDisAggregates" type="xs:unsignedShort">
@@ -6708,8 +6736,8 @@
                <xs:attribute name="family" fixed="EntityManagementFamilyPdu"></xs:attribute>
                <xs:attribute name="groupedEntityCategory" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>type of entities constituting the group (sisoenum IsGroupOfGroupedEntityCategory uid
-                        213)
+                     <xs:appinfo>type of entities constituting the group (SISO enumeration IsGroupOfGroupedEntityCategory
+                        uid 213)
                      </xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
@@ -6780,12 +6808,14 @@
                </xs:attribute>
                <xs:attribute name="requiredReliabilityService" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>required level of reliability service. (sisoenum RequiredReliabilityService uid 74)</xs:appinfo>
+                     <xs:appinfo>required level of reliability service. (SISO enumeration RequiredReliabilityService
+                        uid 74)
+                     </xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="transferType" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>type of transfer desired (sisoenum TransferControlTransferType uid 224)</xs:appinfo>
+                     <xs:appinfo>type of transfer desired (SISO enumeration TransferControlTransferType uid 224)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
             </xs:extension>
@@ -6892,7 +6922,7 @@
                </xs:attribute>
                <xs:attribute name="forceID" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>force ID (sisoenum ForceID uid 6)</xs:appinfo>
+                     <xs:appinfo>force ID (SISO enumeration ForceID uid 6)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="numberOfPerimeterPoints" type="xs:unsignedByte">
@@ -6907,9 +6937,10 @@
                </xs:attribute>
                <xs:attribute name="appearance" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>appearance bitflags</xs:appinfo>
+                     <xs:appinfo>appearance bitflags (SISO bitfield enumeration MinefieldStateAppearanceBitMap uid
+                        190)
+                     </xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled definition: class MinefieldStatePdu attribute appearance sisobitfield -->
                </xs:attribute>
                <xs:attribute name="perimeterPoints" type="xs:string">
                   <xs:annotation>
@@ -7251,14 +7282,15 @@
                <xs:attribute name="family" fixed="SyntheticEnvironmentFamilyPdu"></xs:attribute>
                <xs:attribute name="modelType" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>model type (sisoenum EnvironmentalProcessModelType uid 248)</xs:appinfo>
+                     <xs:appinfo>model type (SISO enumeration EnvironmentalProcessModelType uid 248)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="environmentStatus" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>Environment status</xs:appinfo>
+                     <xs:appinfo>Environment status (SISO bitfield enumeration EnvironmentalProcessEnvironmentStatus
+                        uid 249)
+                     </xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled definition: class EnvironmentalProcessPdu attribute environmentStatus sisobitfield -->
                </xs:attribute>
                <xs:attribute name="numberOfEnvironmentRecords" type="xs:unsignedShort">
                   <xs:annotation>
@@ -7329,7 +7361,7 @@
                </xs:attribute>
                <xs:attribute name="coordinateSystem" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>coordinate system of the grid (sisoenum GriddedDataCoordinateSystem uid 244)</xs:appinfo>
+                     <xs:appinfo>coordinate system of the grid (SISO enumeration GriddedDataCoordinateSystem uid 244)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="numberOfGridAxes" type="xs:unsignedByte">
@@ -7339,7 +7371,7 @@
                </xs:attribute>
                <xs:attribute name="constantGrid" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>are domain grid axes identidal to those of the priveious domain update? (sisoenum
+                     <xs:appinfo>are domain grid axes identidal to those of the priveious domain update? (SISO enumeration
                         GriddedDataConstantGrid uid 245)
                      </xs:appinfo>
                   </xs:annotation>
@@ -7429,14 +7461,13 @@
                </xs:attribute>
                <xs:attribute name="forceID" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>force ID (sisoenum ForceID uid 6)</xs:appinfo>
+                     <xs:appinfo>force ID (SISO enumeration ForceID uid 6)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="modifications" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>modifications</xs:appinfo>
+                     <xs:appinfo>modifications (SISO bitfield enumeration ObjectStateModificationPointObject uid 240)</xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled definition: class PointObjectStatePdu attribute modifications sisobitfield -->
                </xs:attribute>
                <xs:attribute name="specificObjectAppearance" type="xs:unsignedLong">
                   <xs:annotation>
@@ -7445,9 +7476,10 @@
                </xs:attribute>
                <xs:attribute name="generObjectAppearance" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>General object apperance</xs:appinfo>
+                     <xs:appinfo>General object apperance (SISO bitfield enumeration ObjectStateAppearanceGeneral uid
+                        229)
+                     </xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled definition: class PointObjectStatePdu attribute generObjectAppearance sisobitfield -->
                </xs:attribute>
                <xs:attribute name="padding1" type="xs:unsignedShort"></xs:attribute>
                <xs:attribute name="pad2" type="xs:unsignedLong">
@@ -7504,7 +7536,7 @@
                </xs:attribute>
                <xs:attribute name="forceID" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>force ID (sisoenum ForceID uid 6)</xs:appinfo>
+                     <xs:appinfo>force ID (SISO enumeration ForceID uid 6)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="numberOfLinearSegments" type="xs:unsignedByte">
@@ -7567,14 +7599,15 @@
                </xs:attribute>
                <xs:attribute name="forceID" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>force ID (sisoenum ForceID uid 6)</xs:appinfo>
+                     <xs:appinfo>force ID (SISO enumeration ForceID uid 6)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="modifications" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>modifications enumeration</xs:appinfo>
+                     <xs:appinfo>modifications enumeration (SISO bitfield enumeration ObjectStateModificationArealObject
+                        uid 242)
+                     </xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled definition: class ArealObjectStatePdu attribute modifications sisobitfield -->
                </xs:attribute>
                <xs:attribute name="specificObjectAppearance" type="xs:unsignedLong">
                   <xs:annotation>
@@ -7632,7 +7665,7 @@
                <xs:attribute name="family" fixed="SimulationManagementWithReliabilityFamilyPdu"></xs:attribute>
                <xs:attribute name="requiredReliabilityService" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>level of reliability service used for this transaction (sisoenum RequiredReliabilityService
+                     <xs:appinfo>level of reliability service used for this transaction (SISO enumeration RequiredReliabilityService
                         uid 74)
                      </xs:appinfo>
                   </xs:annotation>
@@ -7673,7 +7706,7 @@
                <xs:attribute name="family" fixed="SimulationManagementWithReliabilityFamilyPdu"></xs:attribute>
                <xs:attribute name="requiredReliabilityService" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>level of reliability service used for this transaction (sisoenum RequiredReliabilityService
+                     <xs:appinfo>level of reliability service used for this transaction (SISO enumeration RequiredReliabilityService
                         uid 74)
                      </xs:appinfo>
                   </xs:annotation>
@@ -7725,7 +7758,7 @@
                <xs:attribute name="family" fixed="SimulationManagementWithReliabilityFamilyPdu"></xs:attribute>
                <xs:attribute name="requiredReliabilityService" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>level of reliability service used for this transaction (sisoenum RequiredReliabilityService
+                     <xs:appinfo>level of reliability service used for this transaction (SISO enumeration RequiredReliabilityService
                         uid 74)
                      </xs:appinfo>
                   </xs:annotation>
@@ -7772,18 +7805,19 @@
                <xs:attribute name="family" fixed="SimulationManagementWithReliabilityFamilyPdu"></xs:attribute>
                <xs:attribute name="reason" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>Reason for stopping/freezing simulation (sisoenum StopFreezeReason uid 67)</xs:appinfo>
+                     <xs:appinfo>Reason for stopping/freezing simulation (SISO enumeration StopFreezeReason uid 67)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="frozenBehavior" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>internal behvior of the simulation while frozen</xs:appinfo>
+                     <xs:appinfo>internal behvior of the simulation while frozen (SISO bitfield enumeration StopFreezeFrozenBehavior
+                        uid 68)
+                     </xs:appinfo>
                   </xs:annotation>
-                  <!--TODO unhandled definition: class StopFreezeRPdu attribute frozenBehavior sisobitfield -->
                </xs:attribute>
                <xs:attribute name="requiredReliablityService" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>reliablity level (sisoenum RequiredReliabilityService uid 74)</xs:appinfo>
+                     <xs:appinfo>reliablity level (SISO enumeration RequiredReliabilityService uid 74)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="pad1" type="xs:unsignedByte">
@@ -7825,12 +7859,12 @@
                <xs:attribute name="family" fixed="SimulationManagementWithReliabilityFamilyPdu"></xs:attribute>
                <xs:attribute name="acknowledgeFlag" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>ack flags (sisoenum AcknowledgeAcknowledgeFlag uid 69)</xs:appinfo>
+                     <xs:appinfo>ack flags (SISO enumeration AcknowledgeAcknowledgeFlag uid 69)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="responseFlag" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>response flags (sisoenum AcknowledgeResponseFlag uid 70)</xs:appinfo>
+                     <xs:appinfo>response flags (SISO enumeration AcknowledgeResponseFlag uid 70)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="requestID" type="xs:unsignedLong">
@@ -7866,7 +7900,7 @@
                <xs:attribute name="family" fixed="SimulationManagementWithReliabilityFamilyPdu"></xs:attribute>
                <xs:attribute name="requiredReliabilityService" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>level of reliability service used for this transaction (sisoenum RequiredReliabilityService
+                     <xs:appinfo>level of reliability service used for this transaction (SISO enumeration RequiredReliabilityService
                         uid 74)
                      </xs:appinfo>
                   </xs:annotation>
@@ -7888,7 +7922,7 @@
                </xs:attribute>
                <xs:attribute name="actionID" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>request ID (sisoenum ActionRequestActionID uid 71)</xs:appinfo>
+                     <xs:appinfo>request ID (SISO enumeration ActionRequestActionID uid 71)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="numberOfFixedDatumRecords" type="xs:unsignedLong">
@@ -7946,7 +7980,7 @@
                </xs:attribute>
                <xs:attribute name="responseStatus" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>status of response (sisoenum ActionResponseRequestStatus uid 72)</xs:appinfo>
+                     <xs:appinfo>status of response (SISO enumeration ActionResponseRequestStatus uid 72)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="numberOfFixedDatumRecords" type="xs:unsignedLong">
@@ -7999,7 +8033,7 @@
                <xs:attribute name="family" fixed="SimulationManagementWithReliabilityFamilyPdu"></xs:attribute>
                <xs:attribute name="requiredReliabilityService" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>level of reliability service used for this transaction (sisoenum RequiredReliabilityService
+                     <xs:appinfo>level of reliability service used for this transaction (SISO enumeration RequiredReliabilityService
                         uid 74)
                      </xs:appinfo>
                   </xs:annotation>
@@ -8074,7 +8108,7 @@
                <xs:attribute name="family" fixed="SimulationManagementWithReliabilityFamilyPdu"></xs:attribute>
                <xs:attribute name="requiredReliabilityService" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>level of reliability service used for this transaction (sisoenum RequiredReliabilityService
+                     <xs:appinfo>level of reliability service used for this transaction (SISO enumeration RequiredReliabilityService
                         uid 74)
                      </xs:appinfo>
                   </xs:annotation>
@@ -8150,7 +8184,7 @@
                </xs:attribute>
                <xs:attribute name="requiredReliabilityService" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>level of reliability service used for this transaction (sisoenum RequiredReliabilityService
+                     <xs:appinfo>level of reliability service used for this transaction (SISO enumeration RequiredReliabilityService
                         uid 74)
                      </xs:appinfo>
                   </xs:annotation>
@@ -8213,7 +8247,7 @@
                <xs:attribute name="family" fixed="SimulationManagementWithReliabilityFamilyPdu"></xs:attribute>
                <xs:attribute name="eventType" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>Event type (sisoenum EventReportEventType uid 73)</xs:appinfo>
+                     <xs:appinfo>Event type (SISO enumeration EventReportEventType uid 73)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="pad1" type="xs:unsignedLong">
@@ -8314,7 +8348,7 @@
                </xs:attribute>
                <xs:attribute name="requiredReliabilityService" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>level of reliability service used for this transaction (sisoenum RequiredReliabilityService
+                     <xs:appinfo>level of reliability service used for this transaction (SISO enumeration RequiredReliabilityService
                         uid 74)
                      </xs:appinfo>
                   </xs:annotation>
@@ -8326,7 +8360,7 @@
                </xs:attribute>
                <xs:attribute name="eventType" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>event type (sisoenum RecordQueryREventType uid 334)</xs:appinfo>
+                     <xs:appinfo>event type (SISO enumeration RecordQueryREventType uid 334)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="time" type="xs:unsignedLong">
@@ -8379,7 +8413,7 @@
                </xs:attribute>
                <xs:attribute name="requiredReliabilityService" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>level of reliability service used for this transaction (sisoenum RequiredReliabilityService
+                     <xs:appinfo>level of reliability service used for this transaction (SISO enumeration RequiredReliabilityService
                         uid 74)
                      </xs:appinfo>
                   </xs:annotation>
@@ -8433,7 +8467,7 @@
                </xs:attribute>
                <xs:attribute name="requiredReliabilityService" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>level of reliability service used for this transaction (sisoenum RequiredReliabilityService
+                     <xs:appinfo>level of reliability service used for this transaction (SISO enumeration RequiredReliabilityService
                         uid 74)
                      </xs:appinfo>
                   </xs:annotation>
@@ -8441,7 +8475,7 @@
                <xs:attribute name="pad1" type="xs:unsignedByte"></xs:attribute>
                <xs:attribute name="eventType" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>(sisoenum RecordREventType uid 333)</xs:appinfo>
+                     <xs:appinfo>(SISO enumeration RecordREventType uid 333)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="numberOfRecordSets" type="xs:unsignedLong">
@@ -8511,22 +8545,22 @@
                </xs:attribute>
                <xs:attribute name="IOWarfareType" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>(sisoenum IOActionIOWarfareType uid 285)</xs:appinfo>
+                     <xs:appinfo>(SISO enumeration IOActionIOWarfareType uid 285)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="IOSimulationSource" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>(sisoenum IOActionIOSimulationSource uid 286)</xs:appinfo>
+                     <xs:appinfo>(SISO enumeration IOActionIOSimulationSource uid 286)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="IOActionType" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>(sisoenum IOActionIOActionType uid 287)</xs:appinfo>
+                     <xs:appinfo>(SISO enumeration IOActionIOActionType uid 287)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="IOActionPhase" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>(sisoenum IOActionIOActionPhase uid 288)</xs:appinfo>
+                     <xs:appinfo>(SISO enumeration IOActionIOActionPhase uid 288)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="padding1" type="xs:unsignedLong"></xs:attribute>
@@ -8553,12 +8587,12 @@
                <xs:attribute name="family" fixed="InformationOperationsFamilyPdu"></xs:attribute>
                <xs:attribute name="ioSimSource" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>(sisoenum IOActionIOSimulationSource uid 286)</xs:appinfo>
+                     <xs:appinfo>(SISO enumeration IOActionIOSimulationSource uid 286)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="ioReportType" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>request ID (sisoenum IOReportIOReportType uid 289)</xs:appinfo>
+                     <xs:appinfo>request ID (SISO enumeration IOReportIOReportType uid 289)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="padding1" type="xs:unsignedByte"></xs:attribute>
@@ -8582,7 +8616,7 @@
                <xs:attribute name="family" fixed="LiveEntityFamilyPdu"></xs:attribute>
                <xs:attribute name="subprotocolNumber" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>Subprotocol used to decode the PDU. Section 13 of EBV. (sisoenum DISLiveEntitySubprotocolNumber
+                     <xs:appinfo>Subprotocol used to decode the PDU. Section 13 of EBV. (SISO enumeration DISLiveEntitySubprotocolNumber
                         uid 417)
                      </xs:appinfo>
                   </xs:annotation>
@@ -8676,7 +8710,7 @@
                </xs:attribute>
                <xs:attribute name="forceId" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>(sisoenum ForceID uid 6)</xs:appinfo>
+                     <xs:appinfo>(SISO enumeration ForceID uid 6)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
             </xs:extension>

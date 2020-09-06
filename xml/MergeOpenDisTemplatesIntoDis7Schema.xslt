@@ -14,8 +14,6 @@
 
 - several base types undefined
 - unhandled case objectlist
-- unhandled case padtoboundary
-- unhandled case sisobitfield
 -->
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0"
@@ -421,8 +419,9 @@
                 <!-- Developmental checks on completeness of support -->
                 <xsl:if test="not(local-name() = 'initialValue')  and not(@name = 'protocolFamily') and 
                               not(local-name() = 'primitivelist') and not(@name = 'EulerAngles') and 
+                              not(local-name() = 'padtoboundary') and 
                               not(local-name() = 'staticivar')    and 
-                              not(local-name() = 'padtoboundary')">
+                              not(local-name() = 'sisobitfield')">
                     <xsl:call-template name="warning-comment-message">
                         <xsl:with-param name="warning">
                             <xsl:text>TODO unhandled definition: </xsl:text>
@@ -508,8 +507,13 @@
                 <xsl:value-of select="normalize-space(@comment)"/>
             </xsl:if>
             <xsl:if test="(count(sisoenum) > 0)">
-                <xsl:text> (sisoenum </xsl:text>
+                <xsl:text> (SISO enumeration </xsl:text>
                 <xsl:value-of select="normalize-space(concat(sisoenum/@type,' ',sisoenum/@comment))"/>
+                <xsl:text>)</xsl:text>
+            </xsl:if>
+            <xsl:if test="(count(sisobitfield) > 0)">
+                <xsl:text> (SISO bitfield enumeration </xsl:text>
+                <xsl:value-of select="normalize-space(concat(sisobitfield/@type,' ',sisobitfield/@comment))"/>
                 <xsl:text>)</xsl:text>
             </xsl:if>
         </xsl:variable>
