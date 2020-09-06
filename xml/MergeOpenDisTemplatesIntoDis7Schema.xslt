@@ -106,7 +106,7 @@
     <xsl:text>]</xsl:text>
 </xsl:message>
             
-            <xsl:call-template name="create-complex-types"/> <!-- classes/class in topmost document -->          
+            <xsl:call-template name="create-complex-types-primary-document"/> <!-- classes/class in topmost document -->          
 
             <xsl:for-each select="//xi:include"> <!-- now repeat for each include -->
 
@@ -141,13 +141,11 @@
 
                 </xsl:for-each>
 
-            </xsl:for-each>
+            </xsl:for-each><!-- PDU XML file -->
 
             <xsl:message>
                 <xsl:text>====================================================</xsl:text>
             </xsl:message>
-
-            <!-- process elements TODO and comments  | comment() -->
         
         </xsl:element><!-- end schema -->
         
@@ -177,13 +175,23 @@
         <!-- use names of corresponding schema elements -->
         <xsl:choose>
             <xsl:when test="(local-name() = 'class') and contains(@name, 'Family')">
-                <xs:complexType name="{@name}">
+                <xs:complexType name="{@name}" abstract="{@abstract}">
                     <xsl:call-template name="handle-comment-documentation"/>
-                    <xsl:apply-templates select="*">
-                        <xsl:sort select="classRef"/>
-                    </xsl:apply-templates>
+                    <xs:complexContent>
+                        <xs:extension base="{@inheritsFrom}">
+                            <xsl:if test="(count(attribute[   (classRef)]) > 0)">
+                                <xs:sequence>
+                                    <xsl:apply-templates select="attribute[   (classRef)]">
+                                        <xsl:sort select="classRef"/>
+                                    </xsl:apply-templates>
+                                </xs:sequence>
+                            </xsl:if>
+                            <xs:attribute name="protocolFamily" default="{initialValue[@name='protocolFamily']/@value}"/>
+                        </xs:extension>
+                    </xs:complexContent>
                 </xs:complexType>
             </xsl:when>
+            <!-- ===================================================== -->
             <xsl:when test="(local-name() = 'class') and contains(@name, 'Pdu') and not(contains(@name, 'Family'))"><!-- another Pdu class -->
                 <xsl:element name="xs:element">
                     <xsl:attribute name="name"   select="@name"/>
@@ -250,131 +258,56 @@
                                     <xsl:text> contained primitive has no type definition</xsl:text>
                                 </xsl:message>
                             </xsl:when>
-                            <!-- TODO 
-                            <xsl:when test="(local-name() = 'classRef')">
-
-                            </xsl:when> -->
                             <xsl:otherwise>
                                 <xsl:text>xs:string</xsl:text>
                             </xsl:otherwise>
                         </xsl:choose>
                     </xsl:attribute>
-<!-- TODO 
-<xsl:when test="(local-name() = 'classRef')">
-
-</xsl:when> -->
                     <xsl:call-template name="handle-comment-documentation"/>
                     <xsl:apply-templates select="*"/>
                 </xsl:element>
             </xsl:when>
             <!-- ===================================== -->
             <xsl:otherwise>
-                <xsl:comment>
-                    <xsl:text>TODO unhandled case </xsl:text>
-                    <xsl:value-of select="local-name()"/>
-                    <xsl:text> </xsl:text>
-                    <xsl:value-of select="@name"/>
-                </xsl:comment>
+                <xsl:if test="(not(local-name() = 'initialValue') and not(@name = 'protocolFamily'))">
+                    <xsl:comment>
+                        <xsl:text>TODO unhandled case </xsl:text>
+                        <xsl:value-of select="local-name()"/>
+                        <xsl:text> </xsl:text>
+                        <xsl:value-of select="@name"/>
+                    </xsl:comment>
+                </xsl:if>
             </xsl:otherwise>
         </xsl:choose>
 
-        <!-- process attributes for this element -->
-        <xsl:variable name="unhandledAttributes" select="@*[not(local-name() = 'comment')][not(local-name() = 'name')]"/>
-        <xsl:if test="(count($unhandledAttributes) > 0)">
-            <xsl:comment>
+        <!-- report unhandledAttributes for this element -->
+        <xsl:variable name="unhandledAttributes">
+            <xsl:value-of select="@*[(local-name() != 'comment')]
+                                    [(local-name() != 'name')]
+                                    [(local-name(..) != 'initialValue') and (../@name != 'protocolFamily') and (local-name() != 'value')]"/>
+        </xsl:variable>
+        <xsl:if test="(count($unhandledAttributes) > 0) and (string-length(local-name($unhandledAttributes[1])) > 0)">
+            <xsl:variable name="warningMessage">
+                <xsl:text> potentially unhandledAttributes:</xsl:text>
                 <xsl:for-each select="$unhandledAttributes">
+                    <xsl:text> </xsl:text>
+                    <xsl:value-of select="local-name()"/>
+                    <xsl:text>='</xsl:text>
                     <xsl:value-of select="."/>
+                    <xsl:text>' </xsl:text>
                 </xsl:for-each>
+            </xsl:variable>
+            <xsl:comment>
+                <xsl:value-of select="$warningMessage"/>
             </xsl:comment>
             <xsl:message>
                 <xsl:text>*** Element </xsl:text>
                 <xsl:value-of select="local-name()"/>
-                <xsl:text> has unhandled attribute definitions: </xsl:text>
-                <xsl:for-each select="$unhandledAttributes">
-                    <xsl:value-of select="."/>
-                </xsl:for-each>
+                <xsl:value-of select="$warningMessage"/>
             </xsl:message>
         </xsl:if>
-<!-- debug 
-<xsl:message>
-    <xsl:text>*** debug checking attribute for contained node: </xsl:text>
-    <xsl:value-of select="$correctedName"/>
-    <xsl:text> name='</xsl:text>
-    <xsl:value-of select="@name"/>
-    <xsl:text>'</xsl:text>
-</xsl:message>
--->
-            <xsl:choose>
-                <xsl:when test="(local-name()='attribute')">   
-<!-- debug already handled -->
-<!-- debug
-<xsl:message>
-    <xsl:text>*** debug $correctedName=</xsl:text>
-    <xsl:value-of select="$correctedName"/>
-</xsl:message>  -->
-                </xsl:when>
-                <xsl:when test="(count(*) > 0)"> <!-- element has child elements -->
-                    <xsl:choose>
-                        <xsl:when test="(count(attribute) > 0)">
-                            <xsl:element name="xs:complexType">
-                            <!--<xsl:element name="xs:complexContent"> -->
-                                    <xsl:for-each select="attribute">
-                                        <xsl:element name="xs:attribute">
-                                            <xsl:attribute name="name" select="@name"/>
-                                            <xsl:if test="(string-length(@initialValue) > 0)">
-                                                <xsl:attribute name="default" select="@initialValue"/>
-                                            </xsl:if>
-                                            <xsl:call-template name="handle-comment-documentation"/>
-                                            <xsl:if test="(count(sisoenum) > 0)">
-                                                <xsl:element name="xs:simpleType">
-                                                    <xsl:element name="xs:restriction">
-                                                        <!-- TODO
-                                                        -->
-                                                        <xs:attribute name="base">
-                                                            <xsl:text>xs:NMTOKEN</xsl:text>
-                                                        </xs:attribute>
-                                                        <xsl:element name="xs:enumeration">
-                                                            <xs:attribute name="xs:value">
-                                                                <xsl:value-of select="@type"/>
-                                                            </xs:attribute>
-                                                        <!-- TODO
-                                                        -->
-                                                            <xsl:call-template name="handle-comment-documentation"/>
-                                                        </xsl:element>
-                                                    </xsl:element>
-                                                </xsl:element>
-                                            </xsl:if>
-                                            <xsl:variable name="remainingAttributes" select="@*[local-name() != 'name'][local-name() != 'comment'][local-name() != 'initialValue']"/>
-                                            <xsl:if test="(count($remainingAttributes) > 0)">
-                                                <xsl:comment>
-                                                    <xsl:apply-templates select="@*[local-name() != 'name'][local-name() != 'comment']"/>
-                                                </xsl:comment>
-                                                <xsl:message>
-                                                    <xsl:text>*** Element </xsl:text>
-                                                    <xsl:value-of select="../@name"/>
-                                                    <xsl:text> attribute </xsl:text>
-                                                    <xsl:value-of select="@name"/>
-                                                    <xsl:text> has unhandled definitions: </xsl:text>
-                                                    <xsl:apply-templates select="@*[local-name() != 'name'][local-name() != 'comment']"/>
-                                                </xsl:message>
-                                            </xsl:if>
-                                        </xsl:element>
-                                    </xsl:for-each>
-                            <!--</xsl:element>-->
-                            </xsl:element>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:apply-templates select="*"/>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </xsl:when>
-                <xsl:otherwise>
-                </xsl:otherwise>
-            </xsl:choose>
-            
-            
+        <!-- common final processing for each original element, if any -->
         
-        <!-- common final processing for each element -->
     </xsl:template>
 
     <!-- ===================================================== -->
@@ -441,32 +374,59 @@
 
     <!-- ===================================================== -->
     
-    <xsl:template name="create-complex-types">
+    <xsl:template name="create-complex-types-primary-document">
         <xsl:for-each select="//classes/class">
-            <xs:complexType name="{@name}">
-                <xsl:call-template name="handle-comment-documentation"/>
+                        
+            <xsl:variable  name="family" select="../class[contains(@name, 'Family')]/@name"/>
+            <xsl:variable name="abstract">
                 <xsl:choose>
-                    <xsl:when test="contains(@name,'Pdu') and not(contains(@name,'Family'))">
-                        <xsl:variable  name="family" select="../class[contains(@name, 'Family')]/@name"/>
-                        <xs:complexContent>
-                            <xs:extension base="$family">
-                                <xsl:apply-templates select="attribute[   (classRef)]"/>
-                                <xsl:apply-templates select="attribute[not(classRef)]"/>
-                            </xs:extension>
-                        </xs:complexContent>
-                    </xsl:when>
-                    <xsl:when test="attribute/classRef">
-                        <xs:complexContent>
-                            <xs:extension><!-- base="{attribute/classRef/@name}" -->
-                                <xsl:apply-templates select="attribute[   (classRef)]"/>
-                                <xsl:apply-templates select="attribute[not(classRef)]"/>
-                            </xs:extension>
-                        </xs:complexContent>
+                    <xsl:when test="(string-length(@abstract) > 0)">
+                        <xsl:value-of select="@abstract"/>
                     </xsl:when>
                     <xsl:otherwise>
-                        <xsl:apply-templates select="attribute[not(classRef)]"/>
+                        <xsl:text>false</xsl:text>
                     </xsl:otherwise>
                 </xsl:choose>
+            </xsl:variable>
+            <xsl:variable name="base">
+                <xsl:choose>
+                    <xsl:when test="(string-length($family) > 0)">
+                        <xsl:value-of select="$family"/>
+                    </xsl:when>
+                    <xsl:when test="(string-length(@inheritsFrom) > 0)">
+                        <xsl:value-of select="@inheritsFrom"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text>base value not found</xsl:text>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
+            
+            <!-- debug -->
+            <xsl:comment>
+                <xsl:text>abstract=</xsl:text>
+                <xsl:value-of select="$abstract"/>
+                <xsl:text>, base=</xsl:text>
+                <xsl:value-of select="$base"/>
+            </xsl:comment>
+            
+            <xs:complexType name="{@name}" abstract="{$abstract}">
+                <xsl:call-template name="handle-comment-documentation"/>
+                <xs:complexContent>
+                    <xs:extension base="{$base}">
+                        <xsl:if test="(count(attribute[   (classRef)]) > 0)">
+                            <xs:sequence>
+                                <xsl:apply-templates select="attribute[   (classRef)]">
+                                    <xsl:sort select="classRef"/>
+                                </xsl:apply-templates>
+                            </xs:sequence>
+                        </xsl:if>
+        <xsl:comment>
+            <xsl:text>*** debug here 1 ...</xsl:text>
+        </xsl:comment>
+                        <xsl:apply-templates select="attribute[not(classRef)]"/>
+                    </xs:extension>
+                </xs:complexContent>
             </xs:complexType>
         </xsl:for-each>
     </xsl:template>
