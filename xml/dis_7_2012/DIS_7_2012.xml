@@ -1024,7 +1024,7 @@ dB and RPM)"/>
 
     </class>
 
-    <class name="EntityID" inheritsFrom="root" comment="more laconically named EntityIdentifier">
+    <class name="EntityID" inheritsFrom="root" comment="also referred to as EntityIdentifier">
 
         <attribute name="siteID" comment="Site ID">
             <primitive type= "uint16"/>
