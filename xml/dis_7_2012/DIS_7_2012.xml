@@ -114,7 +114,7 @@
             <sisoenum type="AggregateStateAggregateKind" comment="uid 206"/>
         </attribute>
     
-        <attribute name="domain" comment="Domain of entity (air, surface, subsurface, space, etc) Zero means domain does not apply.">
+        <attribute name="domain" comment="Domain of entity (air, surface, subsurface, space, etc.) where zero means domain does not apply.">
             <sisoenum type="PlatformDomain" comment="uid 8"/>
         </attribute>
     
@@ -1061,7 +1061,7 @@ dB and RPM)"/>
             <sisoenum type="EntityKind" comment="uid 7"/>
         </attribute>
     
-        <attribute name="domain" comment="Domain of entity (air, surface, subsurface, space, etc)">
+        <attribute name="domain" comment="Domain of entity (air, surface, subsurface, space, etc.)">
             <classRef name="Domain" defaultValue="Domain.inst(PlatformDomain.OTHER)" comment="can be PlatformDomain or MunitionDomain enum"/>
         </attribute>
     
@@ -1093,7 +1093,7 @@ dB and RPM)"/>
             <sisoenum type="EntityKind" comment="uid 7"/>
         </attribute>
     
-        <attribute name="domain" comment="Domain of entity (air, surface, subsurface, space, etc)">
+        <attribute name="domain" comment="Domain of entity (air, surface, subsurface, space, etc.)">
             <primitive type="uint8"/>
         </attribute>
     
@@ -1166,7 +1166,7 @@ dB and RPM)"/>
             <primitive type="unsigned byte"/>
         </attribute>
     
-        <attribute name="domain" comment="Domain of entity (air, surface, subsurface, space, etc)">
+        <attribute name="domain" comment="Domain of entity (air, surface, subsurface, space, etc.)">
             <primitive type="unsigned byte"/>
         </attribute>
     
@@ -1244,7 +1244,7 @@ dB and RPM)"/>
     </class>
 
 
-    <class name="Expendable" inheritsFrom="root" comment="An entity's expendable (chaff, flares, etc) information. Section 6.2.36">
+    <class name="Expendable" inheritsFrom="root" comment="An entity's expendable (chaff, flares, etc.) information. Section 6.2.36">
 
         <attribute name="expendable" comment="Type of expendable">
             <classRef name="EntityType"/>
@@ -1270,7 +1270,7 @@ dB and RPM)"/>
 
     <class name="ExpendableReload" 
            inheritsFrom="root" 
-           comment="An entity's expendable (chaff, flares, etc) information. Section 6.2.37">
+           comment="An entity's expendable (chaff, flares, etc.) information. Section 6.2.37">
 
         <attribute name="expendable" comment="Type of expendable">
             <classRef name="EntityType"/>
@@ -2037,7 +2037,7 @@ dB and RPM)"/>
     <class name="ObjectType" inheritsFrom="root"
            comment="The unique designation of an environmental object. Section 6.2.64">
 
-        <attribute name="domain" comment="Domain of entity (air, surface, subsurface, space, etc)">
+        <attribute name="domain" comment="Domain of entity (air, surface, subsurface, space, etc.)">
             <sisoenum type="PlatformDomain" comment="uid 8"/>
         </attribute>
 
@@ -2161,7 +2161,7 @@ dB and RPM)"/>
             <sisoenum type="EntityKind" defaultValue="EntityKind.RADIO" comment="uid 7"/>
         </attribute>
 
-        <attribute name="domain" comment="Domain of entity (air, surface, subsurface, space, etc)">
+        <attribute name="domain" comment="Domain of entity (air, surface, subsurface, space, etc.)">
             <primitive type="uint8"/>
         </attribute>
 
