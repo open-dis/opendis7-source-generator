@@ -443,6 +443,14 @@
                                 <!-- otherwise handled by contained xs:simpleType instead -->
                                 <xsl:attribute name="type">
                                     <xsl:choose>
+                                        <xsl:when test="(string-length(sisobitfield/@size) > 0)">
+                                            <xsl:call-template name="simple-type-normalization">
+                                                <xsl:with-param name="originalType">
+                                                    <xsl:text>uint</xsl:text>
+                                                    <xsl:value-of select="sisobitfield/@size"/>
+                                                </xsl:with-param>
+                                            </xsl:call-template>
+                                        </xsl:when>
                                         <xsl:when test="(string-length(primitivelist/primitive/@type) > 0)">
                                             <xsl:call-template name="simple-type-normalization">
                                                 <xsl:with-param name="originalType">
@@ -726,7 +734,9 @@
                 <xsl:text>)</xsl:text>
             </xsl:if>
             <xsl:if test="(count(sisobitfield) > 0)">
-                <xsl:text> (SISO bitfield enumeration </xsl:text>
+                <xsl:text> (SISO bitfield enumeration, size </xsl:text>
+                <xsl:value-of select="sisobitfield/@size"/>
+                <xsl:text> bits, </xsl:text>
                 <xsl:value-of select="normalize-space(concat(sisobitfield/@type,' ',sisobitfield/@comment))"/>
                 <xsl:text>)</xsl:text>
             </xsl:if>

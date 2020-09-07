@@ -55,7 +55,7 @@
         </attribute>
  
         <attribute name="capabilities" comment="a series of bit flags">
-            <sisobitfield type="EntityCapabilities" defaultValue="new LandPlatformCapabilities()" comment="uid 55"/>
+            <sisobitfield type="EntityCapabilities" defaultValue="new LandPlatformCapabilities()" size="32" comment="uid 55"/>
         </attribute>
 
         <attribute name="variableParameters" comment="variable length list of variable parameters. In earlier DIS versions this was articulation parameters.">
@@ -94,7 +94,7 @@
             <primitive type="uint8"/>
         </attribute>
     
-        <attribute name="domain" comment="Domain of entity (air, surface, subsurface, space, etc)">
+        <attribute name="domain" comment="Domain of entity (air, surface, subsurface, space, etc.)">
             <primitive type="uint8"/>
         </attribute>
     
@@ -122,7 +122,7 @@
             <primitive type="uint8"/>
         </attribute>
     
-        <attribute name="altDomain" comment="Domain of entity (air, surface, subsurface, space, etc)">
+        <attribute name="altDomain" comment="Domain of entity (air, surface, subsurface, space, etc.)">
             <primitive type="uint8"/>
         </attribute>
     

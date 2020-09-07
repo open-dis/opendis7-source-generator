@@ -43,7 +43,7 @@
         </attribute>
    
         <attribute name="appearance" comment="appearance bitflags">
-            <sisobitfield type="MinefieldStateAppearanceBitMap" comment="uid 190"/>
+            <sisobitfield type="MinefieldStateAppearanceBitMap" size="16" comment="uid 190"/>
         </attribute>
    
         <attribute name="protocolMode" comment="protocolMode. First two bits are the protocol mode, 14 bits reserved.">
@@ -107,7 +107,7 @@
             </objectlist> 
         </attribute>
         
-        <attribute name="sensorTypes" comment="Sensor types, each 16 bits long">
+        <attribute name="sensorTypes" comment="Sensor types, each 16-bits long">
             <objectlist countFieldName="numberOfSensorTypes">
                 <classRef name="MinefieldSensorType"/>
             </objectlist> 
@@ -163,7 +163,7 @@
             <classRef name="EntityType"/>
         </attribute>
    
-        <attribute name="sensorTypes" comment="Sensor types, each 16 bits long">
+        <attribute name="sensorTypes" comment="Sensor types, each 16-bits long">
             <objectlist countFieldName="numberOfSensorTypes">
                 <classRef name="MinefieldSensorType"/>
             </objectlist> 
@@ -229,7 +229,7 @@
                
         <attribute name="fusing">
             <objectlist countFieldName="numberOfMinesInThisPdu">
-                <sisobitfield type="MinefieldDataFusing" comment="uid 192"/>
+                <sisobitfield type="MinefieldDataFusing" size="16" comment="uid 192"/>
             </objectlist>
         </attribute>
         
@@ -241,7 +241,7 @@
               
         <attribute name="paintScheme">
             <objectlist countFieldName="numberOfMinesInThisPdu">
-                <sisobitfield type="MinefieldDataPaintScheme" comment="uid 202"/>
+                <sisobitfield type="MinefieldDataPaintScheme" size="8" comment="uid 202"/>
             </objectlist>
         </attribute>
         

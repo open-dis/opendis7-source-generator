@@ -23,7 +23,7 @@
         </attribute>
        
         <attribute name="environmentStatus" comment="Environment status">
-            <sisobitfield type="EnvironmentalProcessEnvironmentStatus" comment="uid 249"/>
+            <sisobitfield type="EnvironmentalProcessEnvironmentStatus" size="8" comment="uid 249"/>
         </attribute>
        
         <attribute name="numberOfEnvironmentRecords" hidden="true" comment="number of environment records ">
@@ -83,7 +83,7 @@
             <classRef name="EulerAngles"/>
         </attribute>
        
-        <attribute name="sampleTime" comment="valid time of the enviormental data sample, 64 bit unsigned int">
+        <attribute name="sampleTime" comment="valid time of the enviormental data sample, 64-bit unsigned int">
             <classRef name="ClockTime"/>
         </attribute>
        
@@ -139,7 +139,7 @@
         </attribute>
    
         <attribute name="modifications" comment="modifications">
-            <sisobitfield type="ObjectStateModificationPointObject" comment="uid 240"/>
+            <sisobitfield type="ObjectStateModificationPointObject" size="8" comment="uid 240"/>
         </attribute>
    
         <attribute name="objectType" comment="Object type">
@@ -159,7 +159,7 @@
         </attribute>
            
         <attribute name="generObjectAppearance" comment="General object apperance">
-            <sisobitfield type="ObjectStateAppearanceGeneral" comment="uid 229"/>
+            <sisobitfield type="ObjectStateAppearanceGeneral" size="16" comment="uid 229"/>
         </attribute>
    
         <attribute name="padding1">
@@ -247,7 +247,7 @@
         </attribute>
    
         <attribute name="modifications" comment="modifications enumeration">
-            <sisobitfield type="ObjectStateModificationArealObject" comment="uid 242"/>
+            <sisobitfield type="ObjectStateModificationArealObject" size="8" comment="uid 242"/>
         </attribute>
 
         <attribute name="objectType" comment="Object type">

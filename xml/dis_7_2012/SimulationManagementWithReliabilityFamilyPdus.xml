@@ -106,10 +106,10 @@
         </attribute>
    
         <attribute name="frozenBehavior" comment="internal behvior of the simulation while frozen">
-            <sisobitfield type="StopFreezeFrozenBehavior" comment="uid 68"/>
+            <sisobitfield type="StopFreezeFrozenBehavior" size="8" comment="uid 68"/>
         </attribute>
    
-        <attribute name="requiredReliablityService" comment="reliablity level">
+        <attribute name="requiredReliabilityService" comment="reliability level">
             <sisoenum type="RequiredReliabilityService" comment="uid 74"/>
         </attribute>
    

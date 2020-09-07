@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="7.0">
    <xs:complexType name="rootType" abstract="true"></xs:complexType>
+   <xs:complexType name="DomainType" abstract="false">
+      <!--abstract='false' base='rootType'-->
+      <xs:annotation>
+         <xs:appinfo>A special class to contain and act as a super class for Domain enumerations.</xs:appinfo>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:extension base="rootType">
+            <xs:attribute name="value" type="xs:unsignedByte">
+               <xs:annotation>
+                  <xs:appinfo>domain field containing enumeration value. See SISO enumerations for PlatformDomain
+                     uid 8, MunitionDomain uid 14 and SupplyDomain uid 600.
+                  </xs:appinfo>
+               </xs:annotation>
+            </xs:attribute>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
    <xs:complexType name="AcousticEmitterType" abstract="false">
       <!--abstract='false' base='rootType'-->
       <xs:annotation>
@@ -96,8 +113,8 @@
             </xs:attribute>
             <xs:attribute name="domain" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>Domain of entity (air, surface, subsurface, space, etc) Zero means domain does not
-                     apply. (SISO enumeration PlatformDomain uid 8)
+                  <xs:appinfo>Domain of entity (air, surface, subsurface, space, etc.) where zero means domain does
+                     not apply. (SISO enumeration PlatformDomain uid 8)
                   </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
@@ -232,7 +249,7 @@
             <xs:attribute name="azimuthBeamwidth" type="xs:float">
                <xs:annotation>
                   <xs:appinfo>Full width of the beam to the -3dB power density points in the x-y plane of the beam
-                     coordinnate system. Elevation beamwidth is represented by a 32 bit floating point
+                     coordinnate system. Elevation beamwidth is represented by a 32-bit floating point
                      number in units of radians.
                   </xs:appinfo>
                </xs:annotation>
@@ -537,9 +554,9 @@
                   <xs:appinfo>enumeration (SISO enumeration DEDamageDescriptionComponentDamageStatus uid 315)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
-            <xs:attribute name="componentVisualDamageStatus" type="xs:string">
+            <xs:attribute name="componentVisualDamageStatus" type="xs:unsignedByte">
                <xs:annotation>
-                  <xs:appinfo>enumeration (SISO bitfield enumeration DEDamageDescriptionComponentVisualDamageStatus
+                  <xs:appinfo>enumeration (SISO bitfield enumeration, size 8 bits, DEDamageDescriptionComponentVisualDamageStatus
                      uid 317)
                   </xs:appinfo>
                </xs:annotation>
@@ -1035,7 +1052,7 @@
             </xs:attribute>
             <xs:attribute name="padding3" type="xs:unsignedInt">
                <xs:annotation>
-                  <xs:appinfo>Padding, 32 bits</xs:appinfo>
+                  <xs:appinfo>Padding, 32-bits</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
          </xs:extension>
@@ -1323,19 +1340,19 @@
          <xs:extension base="rootType">
             <xs:attribute name="emitterName" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>Name of the emitter, 16 bit enumeration (SISO enumeration EmitterName uid 75)</xs:appinfo>
+                  <xs:appinfo>Name of the emitter, 16-bit enumeration (SISO enumeration EmitterName uid 75)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="emitterFunction" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>function of the emitter, 8 bit enumeration (SISO enumeration EmitterSystemFunction
+                  <xs:appinfo>function of the emitter, 8-bit enumeration (SISO enumeration EmitterSystemFunction
                      uid 76)
                   </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="emitterIDNumber" type="xs:unsignedByte">
                <xs:annotation>
-                  <xs:appinfo>emitter ID, 8 bit enumeration</xs:appinfo>
+                  <xs:appinfo>emitter ID, 8-bit enumeration</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
          </xs:extension>
@@ -1512,7 +1529,7 @@
             <xs:sequence>
                <xs:element name="domain" type="DomainType">
                   <xs:annotation>
-                     <xs:appinfo>Domain of entity (air, surface, subsurface, space, etc)</xs:appinfo>
+                     <xs:appinfo>Domain of entity (air, surface, subsurface, space, etc.)</xs:appinfo>
                   </xs:annotation>
                </xs:element>
             </xs:sequence>
@@ -1562,7 +1579,7 @@
             </xs:attribute>
             <xs:attribute name="domain" type="xs:unsignedByte">
                <xs:annotation>
-                  <xs:appinfo>Domain of entity (air, surface, subsurface, space, etc)</xs:appinfo>
+                  <xs:appinfo>Domain of entity (air, surface, subsurface, space, etc.)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="country" type="xs:unsignedShort">
@@ -1684,7 +1701,7 @@
    <xs:complexType name="ExpendableType" abstract="false">
       <!--abstract='false' base='rootType'-->
       <xs:annotation>
-         <xs:appinfo>An entity's expendable (chaff, flares, etc) information. Section 6.2.36</xs:appinfo>
+         <xs:appinfo>An entity's expendable (chaff, flares, etc.) information. Section 6.2.36</xs:appinfo>
       </xs:annotation>
       <xs:complexContent>
          <xs:extension base="rootType">
@@ -1710,7 +1727,7 @@
    <xs:complexType name="ExpendableReloadType" abstract="false">
       <!--abstract='false' base='rootType'-->
       <xs:annotation>
-         <xs:appinfo>An entity's expendable (chaff, flares, etc) information. Section 6.2.37</xs:appinfo>
+         <xs:appinfo>An entity's expendable (chaff, flares, etc.) information. Section 6.2.37</xs:appinfo>
       </xs:annotation>
       <xs:complexContent>
          <xs:extension base="rootType">
@@ -2333,18 +2350,18 @@
                   <xs:appinfo>The individual segment of the linear segment</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
-            <xs:attribute name="segmentModification" type="xs:string">
+            <xs:attribute name="segmentModification" type="xs:unsignedByte">
                <xs:annotation>
                   <xs:appinfo>whether a modification has been made to the point object's location or orientation
-                     (SISO bitfield enumeration ObjectStateModificationLinearObject UID 241)
+                     (SISO bitfield enumeration, size 8 bits, ObjectStateModificationLinearObject UID 241)
                   </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
-            <xs:attribute name="generalSegmentAppearance" type="xs:string">
+            <xs:attribute name="generalSegmentAppearance" type="xs:unsignedShort">
                <xs:annotation>
                   <xs:appinfo>general dynamic appearance attributes of the segment. This record shall be defined
                      as a 16-bit record of enumerations. The values defined for this record are included
-                     in Section 12 of SISO-REF-010. (SISO bitfield enumeration ObjectStateAppearanceGeneral
+                     in Section 12 of SISO-REF-010. (SISO bitfield enumeration, size 16 bits, ObjectStateAppearanceGeneral
                      UID 229)
                   </xs:appinfo>
                </xs:annotation>
@@ -2691,7 +2708,7 @@
          <xs:extension base="rootType">
             <xs:attribute name="domain" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>Domain of entity (air, surface, subsurface, space, etc) (SISO enumeration PlatformDomain
+                  <xs:appinfo>Domain of entity (air, surface, subsurface, space, etc.) (SISO enumeration PlatformDomain
                      uid 8)
                   </xs:appinfo>
                </xs:annotation>
@@ -2833,7 +2850,7 @@
             </xs:attribute>
             <xs:attribute name="domain" type="xs:unsignedByte">
                <xs:annotation>
-                  <xs:appinfo>Domain of entity (air, surface, subsurface, space, etc)</xs:appinfo>
+                  <xs:appinfo>Domain of entity (air, surface, subsurface, space, etc.)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="country" type="xs:string">
@@ -2882,7 +2899,7 @@
             <xs:attribute name="recordID" type="xs:string">
                <xs:annotation>
                   <xs:appinfo>The data structure used to convey the parameter values of the record for each record.
-                     32 bit enumeration. (SISO enumeration VariableRecordType uid = 66)
+                     32-bit enumeration. (SISO enumeration VariableRecordType uid = 66)
                   </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
@@ -3583,12 +3600,12 @@
             </xs:attribute>
             <xs:attribute name="parameterType" type="xs:unsignedLong">
                <xs:annotation>
-                  <xs:appinfo>The type of parameter represented, 32 bit enumeration</xs:appinfo>
+                  <xs:appinfo>The type of parameter represented, 32-bit enumeration</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="parameterValue" type="xs:float">
                <xs:annotation>
-                  <xs:appinfo>The definition of the 64 bits shall be determined based on the type of parameter specified
+                  <xs:appinfo>The definition of the 64-bits shall be determined based on the type of parameter specified
                      in the Parameter Type field
                   </xs:appinfo>
                </xs:annotation>
@@ -3607,7 +3624,7 @@
             <xs:sequence>
                <xs:element name="attachedPartType" type="EntityTypeType">
                   <xs:annotation>
-                     <xs:appinfo>The definition of the 64 bits shall be determined based on the type of parameter specified
+                     <xs:appinfo>The definition of the 64-bits shall be determined based on the type of parameter specified
                         in the Parameter Type field
                      </xs:appinfo>
                   </xs:annotation>
@@ -3684,7 +3701,7 @@
             </xs:attribute>
             <xs:attribute name="associationType" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>Type of association; 8 bit enum (SISO enumeration EntityAssociationPhysicalAssociationType
+                  <xs:appinfo>Type of association; 8-bit enum (SISO enumeration EntityAssociationPhysicalAssociationType
                      uid 323)
                   </xs:appinfo>
                </xs:annotation>
@@ -3958,7 +3975,7 @@
    <xs:complexType name="LiveEntityRelativeWorldCoordinatesType" abstract="false">
       <!--abstract='false' base='rootType'-->
       <xs:annotation>
-         <xs:appinfo>16 bit fixed binaries</xs:appinfo>
+         <xs:appinfo>16-bit fixed binaries</xs:appinfo>
       </xs:annotation>
       <xs:complexContent>
          <xs:extension base="rootType">
@@ -3972,7 +3989,7 @@
    <xs:complexType name="LiveEntityLinearVelocityType" abstract="false">
       <!--abstract='false' base='rootType'-->
       <xs:annotation>
-         <xs:appinfo>16 bit fixed binaries</xs:appinfo>
+         <xs:appinfo>16-bit fixed binaries</xs:appinfo>
       </xs:annotation>
       <xs:complexContent>
          <xs:extension base="rootType">
@@ -3985,7 +4002,7 @@
    <xs:complexType name="LiveEntityOrientationType" abstract="false">
       <!--abstract='false' base='rootType'-->
       <xs:annotation>
-         <xs:appinfo>8 bit fixed binaries</xs:appinfo>
+         <xs:appinfo>8-bit fixed binaries</xs:appinfo>
       </xs:annotation>
       <xs:complexContent>
          <xs:extension base="rootType">
@@ -3998,7 +4015,7 @@
    <xs:complexType name="LiveEntityOrientation16Type" abstract="false">
       <!--abstract='false' base='rootType'-->
       <xs:annotation>
-         <xs:appinfo>16 bit fixed binaries</xs:appinfo>
+         <xs:appinfo>16-bit fixed binaries</xs:appinfo>
       </xs:annotation>
       <xs:complexContent>
          <xs:extension base="rootType">
@@ -4011,7 +4028,7 @@
    <xs:complexType name="LiveEntityPositionErrorType" abstract="false">
       <!--abstract='false' base='rootType'-->
       <xs:annotation>
-         <xs:appinfo>16 bit fixed binaries</xs:appinfo>
+         <xs:appinfo>16-bit fixed binaries</xs:appinfo>
       </xs:annotation>
       <xs:complexContent>
          <xs:extension base="rootType">
@@ -4023,7 +4040,7 @@
    <xs:complexType name="LiveEntityOrientationErrorType" abstract="false">
       <!--abstract='false' base='rootType'-->
       <xs:annotation>
-         <xs:appinfo>16 bit fixed binaries</xs:appinfo>
+         <xs:appinfo>16-bit fixed binaries</xs:appinfo>
       </xs:annotation>
       <xs:complexContent>
          <xs:extension base="rootType">
@@ -4061,7 +4078,7 @@
    <xs:complexType name="LiveDeadReckoningParametersType" abstract="false">
       <!--abstract='false' base='rootType'-->
       <xs:annotation>
-         <xs:appinfo>16 bit fixed binaries</xs:appinfo>
+         <xs:appinfo>16-bit fixed binaries</xs:appinfo>
       </xs:annotation>
       <xs:complexContent>
          <xs:extension base="rootType">
@@ -4111,6 +4128,26 @@
             <xs:attribute name="length" type="xs:unsignedShort">
                <xs:annotation>
                   <xs:appinfo>Length, in bytes, of the PDU</xs:appinfo>
+               </xs:annotation>
+            </xs:attribute>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
+   <xs:complexType name="PduStatusType" abstract="true">
+      <!--abstract='true' base='rootType'-->
+      <xs:annotation>
+         <xs:appinfo>PduStatus provides a set of bit-masked indicator values, section 6.2.67. Bit fields
+            include Transferred Entity Indicator (TEI), LVC Indicator (LVC), Coupled Extension
+            Indicator (CEI), Fire Type Indicator (FTI), Detonation Type Indicator (DTI), Radio
+            Attached Indicator (RAI), Intercom Attached Indicator (IAI), IFF Simulation Mode (ISM)
+            and Active Interrogation Indicator (AII).
+         </xs:appinfo>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:extension base="rootType">
+            <xs:attribute name="value" type="xs:unsignedByte">
+               <xs:annotation>
+                  <xs:appinfo>PDU Status Record value containing bitmasked field</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
          </xs:extension>
@@ -4229,9 +4266,11 @@
                      </xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
-               <xs:attribute name="capabilities" type="xs:string">
+               <xs:attribute name="capabilities" type="xs:unsignedLong">
                   <xs:annotation>
-                     <xs:appinfo>a series of bit flags (SISO bitfield enumeration EntityCapabilities uid 55)</xs:appinfo>
+                     <xs:appinfo>a series of bit flags (SISO bitfield enumeration, size 32 bits, EntityCapabilities
+                        uid 55)
+                     </xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
             </xs:extension>
@@ -4293,7 +4332,7 @@
                </xs:attribute>
                <xs:attribute name="domain" type="xs:unsignedByte">
                   <xs:annotation>
-                     <xs:appinfo>Domain of entity (air, surface, subsurface, space, etc)</xs:appinfo>
+                     <xs:appinfo>Domain of entity (air, surface, subsurface, space, etc.)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="country" type="xs:unsignedShort">
@@ -4324,7 +4363,7 @@
                </xs:attribute>
                <xs:attribute name="altDomain" type="xs:unsignedByte">
                   <xs:annotation>
-                     <xs:appinfo>Domain of entity (air, surface, subsurface, space, etc)</xs:appinfo>
+                     <xs:appinfo>Domain of entity (air, surface, subsurface, space, etc.)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="altCountry" type="xs:unsignedShort">
@@ -5053,10 +5092,11 @@
                      <xs:appinfo>field shall identify the pulse width emissions in units of seconds, Section 7.3.4</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
-               <xs:attribute name="flags" type="xs:string">
+               <xs:attribute name="flags" type="xs:unsignedShort">
                   <xs:annotation>
                      <xs:appinfo>16bit Boolean field shall contain various flags to indicate status information needed
-                        to process a DE, Section 7.3.4 (SISO bitfield enumeration DEFireFlags uid 313)
+                        to process a DE, Section 7.3.4 (SISO bitfield enumeration, size 16 bits, DEFireFlags
+                        uid 313)
                      </xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
@@ -5514,10 +5554,11 @@
                      </xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
-               <xs:attribute name="frozenBehavior" type="xs:string">
+               <xs:attribute name="frozenBehavior" type="xs:unsignedByte">
                   <xs:annotation>
                      <xs:appinfo>Internal behavior of the entity(or simulation) and its appearance while frozen to
-                        the other participants (SISO bitfield enumeration StopFreezeFrozenBehavior uid 68)
+                        the other participants (SISO bitfield enumeration, size 8 bits, StopFreezeFrozenBehavior
+                        uid 68)
                      </xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
@@ -7108,10 +7149,10 @@
                      <xs:appinfo>how many mine types</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
-               <xs:attribute name="appearance" type="xs:string">
+               <xs:attribute name="appearance" type="xs:unsignedShort">
                   <xs:annotation>
-                     <xs:appinfo>appearance bitflags (SISO bitfield enumeration MinefieldStateAppearanceBitMap uid
-                        190)
+                     <xs:appinfo>appearance bitflags (SISO bitfield enumeration, size 16 bits, MinefieldStateAppearanceBitMap
+                        uid 190)
                      </xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
@@ -7159,7 +7200,7 @@
                   <!--Attribute (as element) MinefieldQueryPdu sensorTypes with objectlist classRef name=MinefieldSensorType, type=MinefieldSensorTypeType-->
                   <xs:element name="sensorTypes" type="MinefieldSensorTypeType">
                      <xs:annotation>
-                        <xs:appinfo>Sensor types, each 16 bits long</xs:appinfo>
+                        <xs:appinfo>Sensor types, each 16-bits long</xs:appinfo>
                      </xs:annotation>
                   </xs:element>
                </xs:sequence>
@@ -7219,7 +7260,7 @@
                   <!--Attribute (as element) MinefieldDataPdu sensorTypes with objectlist classRef name=MinefieldSensorType, type=MinefieldSensorTypeType-->
                   <xs:element name="sensorTypes" type="MinefieldSensorTypeType">
                      <xs:annotation>
-                        <xs:appinfo>Sensor types, each 16 bits long</xs:appinfo>
+                        <xs:appinfo>Sensor types, each 16-bits long</xs:appinfo>
                      </xs:annotation>
                   </xs:element>
                   <!--Attribute (as element) MinefieldDataPdu mineLocation with objectlist classRef name=Vector3Float, type=Vector3FloatType-->
@@ -7492,9 +7533,9 @@
                      <xs:appinfo>model type (SISO enumeration EnvironmentalProcessModelType uid 248)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
-               <xs:attribute name="environmentStatus" type="xs:string">
+               <xs:attribute name="environmentStatus" type="xs:unsignedByte">
                   <xs:annotation>
-                     <xs:appinfo>Environment status (SISO bitfield enumeration EnvironmentalProcessEnvironmentStatus
+                     <xs:appinfo>Environment status (SISO bitfield enumeration, size 8 bits, EnvironmentalProcessEnvironmentStatus
                         uid 249)
                      </xs:appinfo>
                   </xs:annotation>
@@ -7541,7 +7582,7 @@
                   </xs:element>
                   <xs:element name="sampleTime" type="ClockTimeType">
                      <xs:annotation>
-                        <xs:appinfo>valid time of the enviormental data sample, 64 bit unsigned int</xs:appinfo>
+                        <xs:appinfo>valid time of the enviormental data sample, 64-bit unsigned int</xs:appinfo>
                      </xs:annotation>
                   </xs:element>
                   <!--Attribute (as element) GriddedDataPdu gridAxisDescriptors with objectlist classRef name=GridAxisDescriptor, type=GridAxisDescriptorType-->
@@ -7667,9 +7708,11 @@
                      <xs:appinfo>force ID (SISO enumeration ForceID uid 6)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
-               <xs:attribute name="modifications" type="xs:string">
+               <xs:attribute name="modifications" type="xs:unsignedByte">
                   <xs:annotation>
-                     <xs:appinfo>modifications (SISO bitfield enumeration ObjectStateModificationPointObject uid 240)</xs:appinfo>
+                     <xs:appinfo>modifications (SISO bitfield enumeration, size 8 bits, ObjectStateModificationPointObject
+                        uid 240)
+                     </xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="specificObjectAppearance" type="xs:unsignedLong">
@@ -7677,10 +7720,10 @@
                      <xs:appinfo>Specific object apperance</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
-               <xs:attribute name="generObjectAppearance" type="xs:string">
+               <xs:attribute name="generObjectAppearance" type="xs:unsignedShort">
                   <xs:annotation>
-                     <xs:appinfo>General object apperance (SISO bitfield enumeration ObjectStateAppearanceGeneral uid
-                        229)
+                     <xs:appinfo>General object apperance (SISO bitfield enumeration, size 16 bits, ObjectStateAppearanceGeneral
+                        uid 229)
                      </xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
@@ -7815,9 +7858,9 @@
                      <xs:appinfo>force ID (SISO enumeration ForceID uid 6)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
-               <xs:attribute name="modifications" type="xs:string">
+               <xs:attribute name="modifications" type="xs:unsignedByte">
                   <xs:annotation>
-                     <xs:appinfo>modifications enumeration (SISO bitfield enumeration ObjectStateModificationArealObject
+                     <xs:appinfo>modifications enumeration (SISO bitfield enumeration, size 8 bits, ObjectStateModificationArealObject
                         uid 242)
                      </xs:appinfo>
                   </xs:annotation>
@@ -8025,16 +8068,16 @@
                      <xs:appinfo>Reason for stopping/freezing simulation (SISO enumeration StopFreezeReason uid 67)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
-               <xs:attribute name="frozenBehavior" type="xs:string">
+               <xs:attribute name="frozenBehavior" type="xs:unsignedByte">
                   <xs:annotation>
-                     <xs:appinfo>internal behvior of the simulation while frozen (SISO bitfield enumeration StopFreezeFrozenBehavior
-                        uid 68)
+                     <xs:appinfo>internal behvior of the simulation while frozen (SISO bitfield enumeration, size 8
+                        bits, StopFreezeFrozenBehavior uid 68)
                      </xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
-               <xs:attribute name="requiredReliablityService" type="xs:string">
+               <xs:attribute name="requiredReliabilityService" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>reliablity level (SISO enumeration RequiredReliabilityService uid 74)</xs:appinfo>
+                     <xs:appinfo>reliability level (SISO enumeration RequiredReliabilityService uid 74)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="pad1" type="xs:unsignedByte">

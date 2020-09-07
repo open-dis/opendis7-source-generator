@@ -155,7 +155,7 @@
         </attribute>
 
         <attribute name="flags" comment="16bit Boolean field shall contain various flags to indicate status information needed to process a DE, Section 7.3.4 ">
-            <sisobitfield type="DEFireFlags" comment="uid 313"/>
+            <sisobitfield type="DEFireFlags" size="16" comment="uid 313"/>
         </attribute>
 
         <attribute name="pulseShape" comment="Field shall identify the pulse shape and shall be represented as an 8-bit enumeration, Section 7.3.4 ">

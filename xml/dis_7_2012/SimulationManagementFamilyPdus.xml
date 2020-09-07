@@ -65,7 +65,7 @@
         </attribute>
 
         <attribute name="frozenBehavior" comment="Internal behavior of the entity(or simulation) and its appearance while frozen to the other participants">
-            <sisobitfield type="StopFreezeFrozenBehavior" comment="uid 68"/>
+            <sisobitfield type="StopFreezeFrozenBehavior" size="8" comment="uid 68"/>
         </attribute>
 
         <attribute name="padding1" comment="padding">

@@ -51,8 +51,15 @@
     <xi:include href="InformationOperationsFamilyPdus.xml"/>
     <xi:include href="LiveEntityFamilyPdus.xml"/>
 
-    <!-- The "domainHolder" special case is not used.  Instead, find the Domain class in the src-specialcase directory
-    <class name="Domain" inheritsFrom="root" specialCase="domainHolder" comment="A special class to contain and act as a super class for Domain enums">
+    <!-- The "domainHolder" special case is not used.  Instead, find the Domain class in the src-specialcase directory -->
+    <class name="Domain" inheritsFrom="root" specialCase="domainHolder" comment="A special class to contain and act as a super class for Domain enumerations.">
+        
+        <attribute name="value"
+                   comment="domain field containing enumeration value.
+                   See SISO enumerations for PlatformDomain uid 8, MunitionDomain uid 14 and SupplyDomain uid 600.">
+            <primitive type="uint8" defaultValue="0"/>
+        </attribute>
+        <!--
         <attribute name="domain1">
             <sisoenum type="PlatformDomain" comment="uid 8"/>
         </attribute>
@@ -61,8 +68,9 @@
         </attribute>
         <attribute name="domain3">
             <sisoenum type="SupplyDomain" comment="uid 600" /> 
-        </attribute>           
-    </class> -->
+        </attribute>
+        -->
+    </class>
 
     <class name="AcousticEmitter" inheritsFrom="root" comment="Information about a specific UA emitter. Section 6.2.2.">
     
@@ -141,7 +149,7 @@
     
     </class>
 
-    <!-- Section 6.2.6 specifies that angles will be represented as 32 bit floating points expressed in radians -->
+    <!-- Section 6.2.6 specifies that angles will be represented as 32-bit floating points expressed in radians -->
 
     <class name="AngularVelocityVector" inheritsFrom="root" 
            comment="Angular velocity measured in radians per second out each of the entity's own coordinate axes. Order of measurement is angular velocity around the x, y, and z axis of the entity. The positive direction is determined by the right hand rule. Section 6.2.7">
@@ -216,7 +224,7 @@ dB and RPM)"/>
             <classRef name="EulerAngles"/>
         </attribute>
     
-        <attribute name="azimuthBeamwidth" comment="Full width of the beam to the -3dB power density points in the x-y plane of the beam coordinnate system.  Elevation beamwidth is represented by a 32 bit floating point number in units of radians.">
+        <attribute name="azimuthBeamwidth" comment="Full width of the beam to the -3dB power density points in the x-y plane of the beam coordinnate system.  Elevation beamwidth is represented by a 32-bit floating point number in units of radians.">
             <primitive type="float32" defaultValue="0"/>
         </attribute>
     
@@ -293,7 +301,7 @@ dB and RPM)"/>
             </primitivelist>
         </attribute>
 
-        <!--<attribute name="paddingTo64Bits" comment="Padding necessary to put the end of the record on a 64 bit boundary">
+        <!--<attribute name="paddingTo64Bits" comment="Padding necessary to put the end of the record on a 64-bit boundary">
             <primitivelist length="2">
                 <primitive type="uint8"/>
             </primitivelist>
@@ -395,7 +403,7 @@ dB and RPM)"/>
         </attribute>
 
         <attribute name="componentVisualDamageStatus" comment="enumeration">
-            <sisobitfield type="DEDamageDescriptionComponentVisualDamageStatus" comment="uid 317"/>
+            <sisobitfield type="DEDamageDescriptionComponentVisualDamageStatus" size="8" comment="uid 317"/>
         </attribute>
 
         <attribute name="componentVisualSmokeColor" comment="enumeration">
@@ -758,7 +766,7 @@ dB and RPM)"/>
             <primitive type="float32"/>
         </attribute>
     
-        <attribute name="padding3" comment="Padding, 32 bits">
+        <attribute name="padding3" comment="Padding, 32-bits">
             <primitive type="uint64" defaultValue="0"/>
         </attribute>
         
@@ -931,15 +939,15 @@ dB and RPM)"/>
     <class name="EmitterSystem" inheritsFrom="root" 
            comment="This field shall specify information about a particular emitter system. Section 6.2.23.">
                   
-        <attribute name="emitterName" comment="Name of the emitter, 16 bit enumeration">
+        <attribute name="emitterName" comment="Name of the emitter, 16-bit enumeration">
             <sisoenum type="EmitterName" comment="uid 75"/>
         </attribute>
   
-        <attribute name="emitterFunction" comment="function of the emitter, 8 bit enumeration">
+        <attribute name="emitterFunction" comment="function of the emitter, 8-bit enumeration">
             <sisoenum type="EmitterSystemFunction" comment="uid 76"/>
         </attribute>
   
-        <attribute name="emitterIDNumber" comment="emitter ID, 8 bit enumeration">
+        <attribute name="emitterIDNumber" comment="emitter ID, 8-bit enumeration">
             <primitive type= "uint8"/>
         </attribute>
          
@@ -1144,7 +1152,7 @@ dB and RPM)"/>
             </primitivelist>
         </attribute>
     
-        <!--<attribute name="padding2" comment="padding to bring the total size up to a 64 bit boundry">
+        <!--<attribute name="padding2" comment="padding to bring the total size up to a 64-bit boundary">
             <primitivelist length="0">
                 <primitive type="uint8"/>
             </primitivelist>
@@ -1810,11 +1818,11 @@ dB and RPM)"/>
         </attribute>
      
         <attribute name="segmentModification" comment=" whether a modification has been made to the point object's location or orientation">
-            <sisobitfield type="ObjectStateModificationLinearObject" comment="UID 241"/>
+            <sisobitfield type="ObjectStateModificationLinearObject" size="8" comment="UID 241"/>
         </attribute>
 
         <attribute name="generalSegmentAppearance" comment="general dynamic appearance attributes of the segment. This record shall be defined as a 16-bit record of enumerations. The values defined for this record are included in Section 12 of SISO-REF-010.">
-            <sisobitfield type="ObjectStateAppearanceGeneral" comment="UID 229"/>
+            <sisobitfield type="ObjectStateAppearanceGeneral" size="16" comment="UID 229"/>
         </attribute>
 
         <attribute name="specificSegmentAppearance" comment="This field shall specify specific dynamic appearance attributes of the segment. This record shall be defined as a 32-bit record of enumerations.">
@@ -2194,7 +2202,7 @@ dB and RPM)"/>
             <primitive type="uint32"/>
         </attribute>
 
-        <attribute name="recordIDs" comment="variable length list of 32 bit record types">
+        <attribute name="recordIDs" comment="variable length list of 32-bit record types">
             <objectlist countFieldName="numberOfRecords">
                 <sisoenum type="VariableRecordType" comment="uid = 66"/>
                 <!--<classRef name="VariableRecordType"/>-->
@@ -2206,7 +2214,7 @@ dB and RPM)"/>
     <class name="RecordSpecificationElement" inheritsFrom="root"
            comment="Synthetic record, made up from section 6.2.73. This is used to achieve a repeating variable list element.&#60;p&#62;recordLength, recordCount and recordValues must be set by hand so the.">
 
-        <attribute name="recordID" comment="The data structure used to convey the parameter values of the record for each record. 32 bit enumeration.">
+        <attribute name="recordID" comment="The data structure used to convey the parameter values of the record for each record. 32-bit enumeration.">
             <sisoenum type="VariableRecordType" comment="uid = 66"/>
         </attribute>
 
@@ -2608,7 +2616,7 @@ dB and RPM)"/>
            inheritsFrom="root" 
            comment="The variable datum type, the datum length, and the value for that variable datum type. Section 6.2.93">
 
-        <attribute name="variableDatumID" comment="Type of variable datum to be transmitted. 32 bit enumeration defined in EBV">
+        <attribute name="variableDatumID" comment="Type of variable datum to be transmitted. 32-bit enumeration defined in EBV">
             <sisoenum type="VariableRecordType" comment="uid 66"/>
         </attribute>
 
@@ -2658,11 +2666,11 @@ dB and RPM)"/>
             <primitive type="uint16" defaultValue="0"/>
         </attribute>
 
-        <attribute name="parameterType" comment="The type of parameter represented, 32 bit enumeration">
+        <attribute name="parameterType" comment="The type of parameter represented, 32-bit enumeration">
             <primitive type="uint32" comment="uid 58-59"/>
         </attribute>
   
-        <attribute name="parameterValue" comment="The definition of the 64 bits shall be determined based on the type of parameter specified in the Parameter Type field ">
+        <attribute name="parameterValue" comment="The definition of the 64-bits shall be determined based on the type of parameter specified in the Parameter Type field ">
             <primitive type="float32" />
         </attribute>
         
@@ -2690,7 +2698,7 @@ dB and RPM)"/>
             <sisoenum type="AttachedParts" comment="uid 57"/>
         </attribute>
 
-        <attribute name="attachedPartType" comment="The definition of the 64 bits shall be determined based on the type of parameter specified in the Parameter Type field ">
+        <attribute name="attachedPartType" comment="The definition of the 64-bits shall be determined based on the type of parameter specified in the Parameter Type field ">
             <classRef name="EntityType"/>
         </attribute>
 
@@ -2710,7 +2718,7 @@ dB and RPM)"/>
             <sisoenum type="EntityAssociationAssociationType" comment="uid 319"/>
         </attribute>
 
-        <attribute name="associationType" comment="Type of association; 8 bit enum">
+        <attribute name="associationType" comment="Type of association; 8-bit enum">
             <sisoenum type="EntityAssociationPhysicalAssociationType" comment="uid 323"/>
         </attribute>
 
@@ -2899,7 +2907,7 @@ dB and RPM)"/>
   
     </class>
 
-    <class name="LiveEntityRelativeWorldCoordinates" inheritsFrom="root" comment="16 bit fixed binaries">
+    <class name="LiveEntityRelativeWorldCoordinates" inheritsFrom="root" comment="16-bit fixed binaries">
         
         <attribute name="referencePoint">
             <primitive type="uint16"/>
@@ -2919,7 +2927,7 @@ dB and RPM)"/>
         
     </class>
     
-    <class name="LiveEntityLinearVelocity" inheritsFrom="root" comment="16 bit fixed binaries">
+    <class name="LiveEntityLinearVelocity" inheritsFrom="root" comment="16-bit fixed binaries">
 
         <attribute name="xComponent">
             <primitive type="uint16"/>
@@ -2935,7 +2943,7 @@ dB and RPM)"/>
         
     </class>
    
-    <class name="LiveEntityOrientation" inheritsFrom="root" comment="8 bit fixed binaries">
+    <class name="LiveEntityOrientation" inheritsFrom="root" comment="8-bit fixed binaries">
 
         <attribute name="psi">
             <primitive type="uint8"/>
@@ -2951,7 +2959,7 @@ dB and RPM)"/>
         
     </class>
     
-    <class name="LiveEntityOrientation16" inheritsFrom="root" comment="16 bit fixed binaries">
+    <class name="LiveEntityOrientation16" inheritsFrom="root" comment="16-bit fixed binaries">
 
         <attribute name="psi">
             <primitive type="uint16"/>
@@ -2967,7 +2975,7 @@ dB and RPM)"/>
         
     </class>
     
-    <class name="LiveEntityPositionError" inheritsFrom="root" comment="16 bit fixed binaries">
+    <class name="LiveEntityPositionError" inheritsFrom="root" comment="16-bit fixed binaries">
 
         <attribute name="horizontalError">
             <primitive type="uint16"/>
@@ -2978,7 +2986,7 @@ dB and RPM)"/>
         </attribute>
     </class>
     
-    <class name="LiveEntityOrientationError" inheritsFrom="root" comment="16 bit fixed binaries">
+    <class name="LiveEntityOrientationError" inheritsFrom="root" comment="16-bit fixed binaries">
 
         <attribute name="azimuthError">
             <primitive type="uint16"/>
@@ -3008,7 +3016,7 @@ dB and RPM)"/>
         </attribute>
   
     </class>
-    <class name="LiveDeadReckoningParameters" inheritsFrom="root" comment="16 bit fixed binaries">
+    <class name="LiveDeadReckoningParameters" inheritsFrom="root" comment="16-bit fixed binaries">
 
         <attribute name="deadReckoningAlgorithm">
             <sisoenum type="DeadReckoningAlgorithm" comment="uid 44"/>
@@ -3050,6 +3058,18 @@ dB and RPM)"/>
         <attribute name="length" comment="Length, in bytes, of the PDU">
             <primitive type="uint16"/>
         </attribute>    
+        
+    </class>
+
+    <class name="PduStatus" abstract="true" inheritsFrom="root"
+           comment="PduStatus provides a set of bit-masked indicator values, section 6.2.67.  
+                    Bit fields include Transferred Entity Indicator (TEI), LVC Indicator (LVC), Coupled Extension Indicator (CEI),
+                    Fire Type Indicator (FTI), Detonation Type Indicator (DTI), Radio Attached Indicator (RAI),
+                    Intercom Attached Indicator (IAI), IFF Simulation Mode (ISM) and Active Interrogation Indicator (AII).">
+
+        <attribute name="value" comment="PDU Status Record value containing bitmasked field">
+            <primitive type="uint8" defaultValue="0"/>
+        </attribute>
         
     </class>
 

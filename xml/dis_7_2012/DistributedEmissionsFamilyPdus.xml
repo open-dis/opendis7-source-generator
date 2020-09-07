@@ -195,7 +195,7 @@
         </attribute>
 
         <attribute name="propulsionPlantConfiguration" comment="This field shall specify the entity propulsion plant configuration. This field is used to determine the passive signature characteristics of an entity.">
-            <!-- SISO says 16bit, IEEE says 8<sisoenum type = "UA-Propulsion Plant Configuration"/> -->
+            <!-- SISO says 16-bit, IEEE says 8<sisoenum type = "UA-Propulsion Plant Configuration"/> -->
             <primitive type="uint8"/> <!-- go with IEEE -->
         </attribute>
   
