@@ -49,6 +49,7 @@
                   </xs:annotation>
                </xs:element>
             </xs:sequence>
+            <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="aggregateID" type="xs:unsignedShort">
                <xs:annotation>
                   <xs:appinfo>The aggregate ID</xs:appinfo>
@@ -177,6 +178,7 @@
                   </xs:annotation>
                </xs:element>
             </xs:sequence>
+            <!-- ========== debug: divider between elements and attributes ========== -->
          </xs:extension>
       </xs:complexContent>
    </xs:complexType>
@@ -226,6 +228,7 @@
                   </xs:annotation>
                </xs:element>
             </xs:sequence>
+            <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="azimuthBeamwidth" type="xs:float">
                <xs:annotation>
                   <xs:appinfo>Full width of the beam to the -3dB power density points in the x-y plane of the beam
@@ -320,6 +323,7 @@
                   </xs:annotation>
                </xs:element>
             </xs:sequence>
+            <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="associationType" type="xs:string">
                <xs:annotation>
                   <xs:appinfo>This field shall indicate the type of association. It shall be represented by an 8-bit
@@ -365,7 +369,7 @@
                </xs:annotation>
                <xs:simpleType>
                   <xs:annotation>
-                     <xs:appinfo>The length of this list is determined by attribute recordLength</xs:appinfo>
+                     <xs:appinfo>Attribute recordLength determines the length of this list.</xs:appinfo>
                   </xs:annotation>
                   <xs:restriction>
                      <xs:simpleType>
@@ -495,6 +499,7 @@
                   </xs:annotation>
                </xs:element>
             </xs:sequence>
+            <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="recordType" type="xs:unsignedLong">
                <xs:annotation>
                   <xs:appinfo>DE Record Type.</xs:appinfo>
@@ -614,17 +619,27 @@
                   <xs:appinfo>Number of variable datums</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
-            <xs:attribute name="fixedDatumIDList" type="xs:string">
+            <xs:attribute name="fixedDatumIDList">
                <xs:annotation>
                   <xs:appinfo>variable length list fixed datum IDs</xs:appinfo>
                </xs:annotation>
-               <!--TODO unhandled definition: class DataQueryDatumSpecification attribute fixedDatumIDList objectlist -->
+               <xs:simpleType>
+                  <xs:annotation>
+                     <xs:appinfo>Attribute numberOfFixedDatums determines the length of this list.</xs:appinfo>
+                  </xs:annotation>
+                  <xs:list itemType="xs:unsignedInt"></xs:list>
+               </xs:simpleType>
             </xs:attribute>
-            <xs:attribute name="variableDatumIDList" type="xs:string">
+            <xs:attribute name="variableDatumIDList">
                <xs:annotation>
                   <xs:appinfo>variable length list variable datum IDs</xs:appinfo>
                </xs:annotation>
-               <!--TODO unhandled definition: class DataQueryDatumSpecification attribute variableDatumIDList objectlist -->
+               <xs:simpleType>
+                  <xs:annotation>
+                     <xs:appinfo>Attribute numberOfVariableDatums determines the length of this list.</xs:appinfo>
+                  </xs:annotation>
+                  <xs:list itemType="xs:unsignedInt"></xs:list>
+               </xs:simpleType>
             </xs:attribute>
          </xs:extension>
       </xs:complexContent>
@@ -636,6 +651,21 @@
       </xs:annotation>
       <xs:complexContent>
          <xs:extension base="root">
+            <xs:sequence>
+               <!--Attribute (as element) DatumSpecification fixedDatumIDList with objectlist classRef name=FixedDatum=FixedDatum-->
+               <xs:element name="fixedDatumIDList" type="FixedDatum">
+                  <xs:annotation>
+                     <xs:appinfo>variable length list fixed datums</xs:appinfo>
+                  </xs:annotation>
+               </xs:element>
+               <!--Attribute (as element) DatumSpecification variableDatumIDList with objectlist classRef name=VariableDatum=VariableDatum-->
+               <xs:element name="variableDatumIDList" type="VariableDatum">
+                  <xs:annotation>
+                     <xs:appinfo>variable length list variable datums</xs:appinfo>
+                  </xs:annotation>
+               </xs:element>
+            </xs:sequence>
+            <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="numberOfFixedDatums" type="xs:unsignedLong">
                <xs:annotation>
                   <xs:appinfo>Number of fixed datums</xs:appinfo>
@@ -645,18 +675,6 @@
                <xs:annotation>
                   <xs:appinfo>Number of variable datums</xs:appinfo>
                </xs:annotation>
-            </xs:attribute>
-            <xs:attribute name="fixedDatumIDList" type="xs:string">
-               <xs:annotation>
-                  <xs:appinfo>variable length list fixed datums</xs:appinfo>
-               </xs:annotation>
-               <!--TODO unhandled definition: class DatumSpecification attribute fixedDatumIDList objectlist -->
-            </xs:attribute>
-            <xs:attribute name="variableDatumIDList" type="xs:string">
-               <xs:annotation>
-                  <xs:appinfo>variable length list variable datums</xs:appinfo>
-               </xs:annotation>
-               <!--TODO unhandled definition: class DatumSpecification attribute variableDatumIDList objectlist -->
             </xs:attribute>
          </xs:extension>
       </xs:complexContent>
@@ -675,6 +693,7 @@
                   </xs:annotation>
                </xs:element>
             </xs:sequence>
+            <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="warhead" type="xs:string">
                <xs:annotation>
                   <xs:appinfo>type of warhead enumeration (SISO enumeration MunitionDescriptorWarhead uid 60)</xs:appinfo>
@@ -712,6 +731,7 @@
                   </xs:annotation>
                </xs:element>
             </xs:sequence>
+            <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="explosiveMaterial" type="xs:string">
                <xs:annotation>
                   <xs:appinfo>Material that exploded. Can be grain dust, tnt, gasoline, etc. Enumeration (SISO enumeration
@@ -746,6 +766,7 @@
                   </xs:annotation>
                </xs:element>
             </xs:sequence>
+            <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="padding" type="xs:int">
                <xs:annotation>
                   <xs:appinfo>Padding</xs:appinfo>
@@ -761,6 +782,21 @@
       </xs:annotation>
       <xs:complexContent>
          <xs:extension base="root">
+            <xs:sequence>
+               <!--Attribute (as element) DirectedEnergyAreaAimpoint beamAntennaParameterList with objectlist classRef name=BeamAntennaPattern=BeamAntennaPattern-->
+               <xs:element name="beamAntennaParameterList" type="BeamAntennaPattern">
+                  <xs:annotation>
+                     <xs:appinfo>list of beam antenna records. See 6.2.9.2</xs:appinfo>
+                  </xs:annotation>
+               </xs:element>
+               <!--Attribute (as element) DirectedEnergyAreaAimpoint directedEnergyTargetEnergyDepositionRecordList with objectlist classRef name=DirectedEnergyTargetEnergyDeposition=DirectedEnergyTargetEnergyDeposition-->
+               <xs:element name="directedEnergyTargetEnergyDepositionRecordList" type="DirectedEnergyTargetEnergyDeposition">
+                  <xs:annotation>
+                     <xs:appinfo>list of DE target deposition records. See 6.2.21.4</xs:appinfo>
+                  </xs:annotation>
+               </xs:element>
+            </xs:sequence>
+            <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="recordType" type="xs:unsignedLong">
                <xs:annotation>
                   <xs:appinfo>Type of Record enumeration</xs:appinfo>
@@ -785,18 +821,6 @@
                <xs:annotation>
                   <xs:appinfo>Number of DE target energy depositon records</xs:appinfo>
                </xs:annotation>
-            </xs:attribute>
-            <xs:attribute name="beamAntennaParameterList" type="xs:string">
-               <xs:annotation>
-                  <xs:appinfo>list of beam antenna records. See 6.2.9.2</xs:appinfo>
-               </xs:annotation>
-               <!--TODO unhandled definition: class DirectedEnergyAreaAimpoint attribute beamAntennaParameterList objectlist -->
-            </xs:attribute>
-            <xs:attribute name="directedEnergyTargetEnergyDepositionRecordList" type="xs:string">
-               <xs:annotation>
-                  <xs:appinfo>list of DE target deposition records. See 6.2.21.4</xs:appinfo>
-               </xs:annotation>
-               <!--TODO unhandled definition: class DirectedEnergyAreaAimpoint attribute directedEnergyTargetEnergyDepositionRecordList objectlist -->
             </xs:attribute>
             <xs:attribute name="padding2" type="xs:unsignedInt"></xs:attribute>
          </xs:extension>
@@ -836,6 +860,7 @@
                   </xs:annotation>
                </xs:element>
             </xs:sequence>
+            <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="recordType" type="xs:unsignedLong">
                <xs:annotation>
                   <xs:appinfo>Type of Record</xs:appinfo>
@@ -903,6 +928,7 @@
                   </xs:annotation>
                </xs:element>
             </xs:sequence>
+            <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="padding" type="xs:unsignedShort">
                <xs:annotation>
                   <xs:appinfo>padding</xs:appinfo>
@@ -1420,6 +1446,7 @@
                   </xs:annotation>
                </xs:element>
             </xs:sequence>
+            <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="entityNumber" type="xs:unsignedShort">
                <xs:annotation>
                   <xs:appinfo>Entity number</xs:appinfo>
@@ -1431,7 +1458,7 @@
    <!--abstract='false' base='root'-->
    <xs:complexType name="EntityID" abstract="false">
       <xs:annotation>
-         <xs:appinfo>more laconically named EntityIdentifier</xs:appinfo>
+         <xs:appinfo>also referred to as EntityIdentifier</xs:appinfo>
       </xs:annotation>
       <xs:complexContent>
          <xs:extension base="root">
@@ -1489,6 +1516,7 @@
                   </xs:annotation>
                </xs:element>
             </xs:sequence>
+            <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="entityKind" type="xs:string">
                <xs:annotation>
                   <xs:appinfo>Kind of entity (SISO enumeration EntityKind uid 7)</xs:appinfo>
@@ -1633,6 +1661,7 @@
                   </xs:annotation>
                </xs:element>
             </xs:sequence>
+            <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="eventNumber" type="xs:unsignedShort"></xs:attribute>
          </xs:extension>
       </xs:complexContent>
@@ -1666,6 +1695,7 @@
                   </xs:annotation>
                </xs:element>
             </xs:sequence>
+            <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="station" type="xs:unsignedLong"></xs:attribute>
             <xs:attribute name="quantity" type="xs:unsignedShort"></xs:attribute>
             <xs:attribute name="expendableStatus" type="xs:string">
@@ -1691,6 +1721,7 @@
                   </xs:annotation>
                </xs:element>
             </xs:sequence>
+            <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="station" type="xs:unsignedLong"></xs:attribute>
             <xs:attribute name="standardQuantity" type="xs:unsignedShort"></xs:attribute>
             <xs:attribute name="maximumQuantity" type="xs:unsignedShort"></xs:attribute>
@@ -1898,9 +1929,13 @@
             <xs:attribute name="dataValues">
                <xs:simpleType>
                   <xs:annotation>
-                     <xs:appinfo>The length of this list is determined by attribute numberOfBytes</xs:appinfo>
+                     <xs:appinfo>Attribute numberOfBytes determines the length of this list.</xs:appinfo>
                   </xs:annotation>
-                  <xs:list itemType="xs:unsignedByte"></xs:list>
+                  <xs:restriction>
+                     <xs:simpleType>
+                        <xs:list itemType="xs:unsignedByte"></xs:list>
+                     </xs:simpleType>
+                  </xs:restriction>
                </xs:simpleType>
             </xs:attribute>
             <xs:attribute name="padding" type="xs:unsignedShort"></xs:attribute>
@@ -1920,9 +1955,13 @@
             <xs:attribute name="dataValues">
                <xs:simpleType>
                   <xs:annotation>
-                     <xs:appinfo>The length of this list is determined by attribute numberOfValues</xs:appinfo>
+                     <xs:appinfo>Attribute numberOfValues determines the length of this list.</xs:appinfo>
                   </xs:annotation>
-                  <xs:list itemType="xs:unsignedShort"></xs:list>
+                  <xs:restriction>
+                     <xs:simpleType>
+                        <xs:list itemType="xs:unsignedShort"></xs:list>
+                     </xs:simpleType>
+                  </xs:restriction>
                </xs:simpleType>
             </xs:attribute>
             <xs:attribute name="padding" type="xs:unsignedLong"></xs:attribute>
@@ -1941,9 +1980,13 @@
             <xs:attribute name="dataValues">
                <xs:simpleType>
                   <xs:annotation>
-                     <xs:appinfo>The length of this list is determined by attribute numberOfValues</xs:appinfo>
+                     <xs:appinfo>Attribute numberOfValues determines the length of this list.</xs:appinfo>
                   </xs:annotation>
-                  <xs:list itemType="xs:float"></xs:list>
+                  <xs:restriction>
+                     <xs:simpleType>
+                        <xs:list itemType="xs:float"></xs:list>
+                     </xs:simpleType>
+                  </xs:restriction>
                </xs:simpleType>
             </xs:attribute>
          </xs:extension>
@@ -1965,6 +2008,7 @@
                   </xs:annotation>
                </xs:element>
             </xs:sequence>
+            <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="groupNumber" type="xs:unsignedShort">
                <xs:annotation>
                   <xs:appinfo>group number</xs:appinfo>
@@ -1992,6 +2036,7 @@
             <xs:sequence>
                <xs:element name="commsNodeId" type="CommunicationsNodeID"></xs:element>
             </xs:sequence>
+            <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="recordType" type="xs:string">
                <xs:annotation>
                   <xs:appinfo>(SISO enumeration VariableRecordType uid 66)</xs:appinfo>
@@ -2056,6 +2101,7 @@
             <xs:sequence>
                <xs:element name="entityID" type="EntityID"></xs:element>
             </xs:sequence>
+            <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="elementID" type="xs:unsignedShort"></xs:attribute>
          </xs:extension>
       </xs:complexContent>
@@ -2089,16 +2135,19 @@
       </xs:annotation>
       <xs:complexContent>
          <xs:extension base="root">
+            <xs:sequence>
+               <!--Attribute (as element) IffDataSpecification iffDataRecords with objectlist classRef name=IFFData=IFFData-->
+               <xs:element name="iffDataRecords" type="IFFData">
+                  <xs:annotation>
+                     <xs:appinfo>IFF data records</xs:appinfo>
+                  </xs:annotation>
+               </xs:element>
+            </xs:sequence>
+            <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="numberOfIffDataRecords" type="xs:unsignedShort">
                <xs:annotation>
                   <xs:appinfo>Number of iff records</xs:appinfo>
                </xs:annotation>
-            </xs:attribute>
-            <xs:attribute name="iffDataRecords" type="xs:string">
-               <xs:annotation>
-                  <xs:appinfo>IFF data records</xs:appinfo>
-               </xs:annotation>
-               <!--TODO unhandled definition: class IffDataSpecification attribute iffDataRecords objectlist -->
             </xs:attribute>
          </xs:extension>
       </xs:complexContent>
@@ -2219,6 +2268,7 @@
                <xs:element name="targetEntityID" type="EntityID"></xs:element>
                <xs:element name="targetLocation" type="Vector3Double"></xs:element>
             </xs:sequence>
+            <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="padding" type="xs:unsignedShort"></xs:attribute>
             <xs:attribute name="padding2" type="xs:unsignedShort"></xs:attribute>
             <xs:attribute name="padding3" type="xs:unsignedShort"></xs:attribute>
@@ -2277,6 +2327,7 @@
                   </xs:annotation>
                </xs:element>
             </xs:sequence>
+            <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="segmentNumber" type="xs:unsignedByte">
                <xs:annotation>
                   <xs:appinfo>The individual segment of the linear segment</xs:appinfo>
@@ -2354,6 +2405,7 @@
                   </xs:annotation>
                </xs:element>
             </xs:sequence>
+            <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="entityNumber" type="xs:unsignedShort">
                <xs:annotation>
                   <xs:appinfo>Live entity number</xs:appinfo>
@@ -2401,6 +2453,7 @@
             <xs:sequence>
                <xs:element name="simulationAddress" type="SimulationAddress"></xs:element>
             </xs:sequence>
+            <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="mineEntityNumber" type="xs:unsignedShort"></xs:attribute>
          </xs:extension>
       </xs:complexContent>
@@ -2415,6 +2468,7 @@
             <xs:sequence>
                <xs:element name="simulationAddress" type="SimulationAddress"></xs:element>
             </xs:sequence>
+            <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="minefieldNumber" type="xs:unsignedShort"></xs:attribute>
          </xs:extension>
       </xs:complexContent>
@@ -2504,6 +2558,7 @@
                   </xs:annotation>
                </xs:element>
             </xs:sequence>
+            <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="station" type="xs:unsignedLong">
                <xs:annotation>
                   <xs:appinfo>The station or launcher to which the munition is assigned. See Annex I</xs:appinfo>
@@ -2545,6 +2600,7 @@
                   </xs:annotation>
                </xs:element>
             </xs:sequence>
+            <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="station" type="xs:unsignedLong">
                <xs:annotation>
                   <xs:appinfo>The station or launcher to which the munition is assigned. See Annex I</xs:appinfo>
@@ -2617,6 +2673,7 @@
                   </xs:annotation>
                </xs:element>
             </xs:sequence>
+            <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="objectNumber" type="xs:unsignedShort">
                <xs:annotation>
                   <xs:appinfo>object number</xs:appinfo>
@@ -2675,6 +2732,7 @@
                   </xs:annotation>
                </xs:element>
             </xs:sequence>
+            <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="ownershipStatus" type="xs:string">
                <xs:annotation>
                   <xs:appinfo>The ownership and/or ownership conflict status of the entity represented by the Entity
@@ -2808,12 +2866,6 @@
       <xs:complexContent>
          <xs:extension base="root">
             <xs:attribute name="numberOfRecords" type="xs:unsignedLong"></xs:attribute>
-            <xs:attribute name="recordIDs" type="xs:string">
-               <xs:annotation>
-                  <xs:appinfo>variable length list of 32 bit record types</xs:appinfo>
-               </xs:annotation>
-               <!--TODO unhandled definition: class RecordQuerySpecification attribute recordIDs objectlist -->
-            </xs:attribute>
          </xs:extension>
       </xs:complexContent>
    </xs:complexType>
@@ -2874,16 +2926,19 @@
       </xs:annotation>
       <xs:complexContent>
          <xs:extension base="root">
+            <xs:sequence>
+               <!--Attribute (as element) RecordSpecification recordSets with objectlist classRef name=RecordSpecificationElement=RecordSpecificationElement-->
+               <xs:element name="recordSets" type="RecordSpecificationElement">
+                  <xs:annotation>
+                     <xs:appinfo>variable length list record specifications.</xs:appinfo>
+                  </xs:annotation>
+               </xs:element>
+            </xs:sequence>
+            <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="numberOfRecordSets" type="xs:unsignedLong">
                <xs:annotation>
                   <xs:appinfo>The number of record sets</xs:appinfo>
                </xs:annotation>
-            </xs:attribute>
-            <xs:attribute name="recordSets" type="xs:string">
-               <xs:annotation>
-                  <xs:appinfo>variable length list record specifications.</xs:appinfo>
-               </xs:annotation>
-               <!--TODO unhandled definition: class RecordSpecification attribute recordSets objectlist -->
             </xs:attribute>
          </xs:extension>
       </xs:complexContent>
@@ -3033,6 +3088,7 @@
                   </xs:annotation>
                </xs:element>
             </xs:sequence>
+            <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="numberOfEntities" type="xs:unsignedShort">
                <xs:annotation>
                   <xs:appinfo>number of the type specified by the entity type field</xs:appinfo>
@@ -3049,7 +3105,7 @@
                </xs:annotation>
                <xs:simpleType>
                   <xs:annotation>
-                     <xs:appinfo>The length of this list is determined by attribute numberOfAppearanceRecords</xs:appinfo>
+                     <xs:appinfo>Attribute numberOfAppearanceRecords determines the length of this list.</xs:appinfo>
                   </xs:annotation>
                   <xs:restriction>
                      <xs:simpleType>
@@ -3109,6 +3165,7 @@
                   </xs:annotation>
                </xs:element>
             </xs:sequence>
+            <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="referenceNumber" type="xs:unsignedShort">
                <xs:annotation>
                   <xs:appinfo>This field shall be set to zero as there is no reference number associated with a
@@ -3126,18 +3183,21 @@
       </xs:annotation>
       <xs:complexContent>
          <xs:extension base="root">
+            <xs:sequence>
+               <!--Attribute (as element) StandardVariableSpecification standardVariables with objectlist classRef name=StandardVariableRecord=StandardVariableRecord-->
+               <xs:element name="standardVariables" type="StandardVariableRecord">
+                  <xs:annotation>
+                     <xs:appinfo>variable length list of standard variables, The class type and length here are WRONG
+                        and will cause the incorrect serialization of any class in whihc it is embedded.
+                     </xs:appinfo>
+                  </xs:annotation>
+               </xs:element>
+            </xs:sequence>
+            <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="numberOfStandardVariableRecords" type="xs:unsignedShort">
                <xs:annotation>
                   <xs:appinfo>Number of static variable records</xs:appinfo>
                </xs:annotation>
-            </xs:attribute>
-            <xs:attribute name="standardVariables" type="xs:string">
-               <xs:annotation>
-                  <xs:appinfo>variable length list of standard variables, The class type and length here are WRONG
-                     and will cause the incorrect serialization of any class in whihc it is embedded.
-                  </xs:appinfo>
-               </xs:annotation>
-               <!--TODO unhandled definition: class StandardVariableSpecification attribute standardVariables objectlist -->
             </xs:attribute>
          </xs:extension>
       </xs:complexContent>
@@ -3158,7 +3218,7 @@
             <xs:attribute name="recordSpecificFields">
                <xs:simpleType>
                   <xs:annotation>
-                     <xs:appinfo>The length of this list is determined by attribute recordLength</xs:appinfo>
+                     <xs:appinfo>Attribute recordLength determines the length of this list.</xs:appinfo>
                   </xs:annotation>
                   <xs:restriction>
                      <xs:simpleType>
@@ -3297,6 +3357,7 @@
                   </xs:annotation>
                </xs:element>
             </xs:sequence>
+            <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="quantity" type="xs:float">
                <xs:annotation>
                   <xs:appinfo>The number of units of a supply type.</xs:appinfo>
@@ -3319,6 +3380,7 @@
                   </xs:annotation>
                </xs:element>
             </xs:sequence>
+            <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="systemType" type="xs:string">
                <xs:annotation>
                   <xs:appinfo>general type of emitting system, an enumeration (SISO enumeration IFFSystemType uid
@@ -3377,6 +3439,7 @@
                   </xs:annotation>
                </xs:element>
             </xs:sequence>
+            <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="emitterNumber" type="xs:unsignedByte">
                <xs:annotation>
                   <xs:appinfo>Emitter system associated with the entity</xs:appinfo>
@@ -3456,6 +3519,7 @@
                   </xs:annotation>
                </xs:element>
             </xs:sequence>
+            <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="referenceNumber" type="xs:unsignedShort">
                <xs:annotation>
                   <xs:appinfo>Reference number</xs:appinfo>
@@ -3549,6 +3613,7 @@
                   </xs:annotation>
                </xs:element>
             </xs:sequence>
+            <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="recordType" type="xs:string">
                <xs:annotation>
                   <xs:appinfo>The identification of the Variable Parameter record. Enumeration from EBV (SISO enumeration
@@ -3595,6 +3660,7 @@
                   </xs:annotation>
                </xs:element>
             </xs:sequence>
+            <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="recordType" type="xs:string">
                <xs:annotation>
                   <xs:appinfo>The identification of the Variable Parameter record. Enumeration from EBV (SISO enumeration
@@ -3660,6 +3726,7 @@
             <xs:sequence>
                <xs:element name="entityType" type="EntityType"></xs:element>
             </xs:sequence>
+            <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="recordType" type="xs:string">
                <xs:annotation>
                   <xs:appinfo>The identification of the Variable Parameter record. (SISO enumeration VariableParameterRecordType
@@ -3706,6 +3773,7 @@
                   </xs:annotation>
                </xs:element>
             </xs:sequence>
+            <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="recordType" type="xs:string">
                <xs:annotation>
                   <xs:appinfo>The identification of the Variable Parameter record. Enumeration from EBV (SISO enumeration
@@ -3871,6 +3939,7 @@
                   </xs:annotation>
                </xs:element>
             </xs:sequence>
+            <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="deadReckoningAlgorithm" type="xs:string">
                <xs:annotation>
                   <xs:appinfo>Algorithm to use in computing dead reckoning. See EBV doc. (SISO enumeration DeadReckoningAlgorithm
@@ -4000,6 +4069,7 @@
                <xs:element name="entityLinearAcceleration" type="LEVector3FixedByte"></xs:element>
                <xs:element name="entityAngularVelocity" type="LEVector3FixedByte"></xs:element>
             </xs:sequence>
+            <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="deadReckoningAlgorithm" type="xs:string">
                <xs:annotation>
                   <xs:appinfo>(SISO enumeration DeadReckoningAlgorithm uid 44)</xs:appinfo>
@@ -4068,6 +4138,7 @@
                   </xs:annotation>
                </xs:element>
             </xs:sequence>
+            <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="padding" type="xs:unsignedByte">
                <xs:annotation>
                   <xs:appinfo>zero-filled array of padding</xs:appinfo>
@@ -4134,7 +4205,16 @@
                         </xs:appinfo>
                      </xs:annotation>
                   </xs:element>
+                  <!--Attribute (as element) EntityStatePdu variableParameters with objectlist classRef name=VariableParameter=VariableParameter-->
+                  <xs:element name="variableParameters" type="VariableParameter">
+                     <xs:annotation>
+                        <xs:appinfo>variable length list of variable parameters. In earlier DIS versions this was articulation
+                           parameters.
+                        </xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="EntityInformationFamilyPdu"></xs:attribute>
                <xs:attribute name="forceId" type="xs:string">
                   <xs:annotation>
@@ -4162,14 +4242,6 @@
                      <xs:appinfo>a series of bit flags (SISO bitfield enumeration EntityCapabilities uid 55)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
-               <xs:attribute name="variableParameters" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>variable length list of variable parameters. In earlier DIS versions this was articulation
-                        parameters.
-                     </xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class EntityStatePdu attribute variableParameters objectlist -->
-               </xs:attribute>
             </xs:extension>
          </xs:complexContent>
       </xs:complexType>
@@ -4184,6 +4256,17 @@
       <xs:complexType>
          <xs:complexContent>
             <xs:extension base="EntityInformationFamilyPdu">
+               <xs:sequence>
+                  <!--Attribute (as element) FastEntityStatePdu variableParameters with objectlist classRef name=VariableParameter=VariableParameter-->
+                  <xs:element name="variableParameters" type="VariableParameter">
+                     <xs:annotation>
+                        <xs:appinfo>variable length list of variable parameters. In earlier versions of DIS these were
+                           known as articulation parameters
+                        </xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="EntityInformationFamilyPdu"></xs:attribute>
                <xs:attribute name="site" type="xs:unsignedShort">
                   <xs:annotation>
@@ -4364,14 +4447,6 @@
                      <xs:appinfo>a series of bit flags</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
-               <xs:attribute name="variableParameters" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>variable length list of variable parameters. In earlier versions of DIS these were
-                        known as articulation parameters
-                     </xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class FastEntityStatePdu attribute variableParameters objectlist -->
-               </xs:attribute>
             </xs:extension>
          </xs:complexContent>
       </xs:complexType>
@@ -4425,6 +4500,7 @@
                      </xs:annotation>
                   </xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="EntityInformationFamilyPdu"></xs:attribute>
                <xs:attribute name="collisionType" type="xs:string">
                   <xs:annotation>
@@ -4510,6 +4586,7 @@
                      </xs:annotation>
                   </xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="EntityInformationFamilyPdu"></xs:attribute>
                <xs:attribute name="pad" type="xs:unsignedShort">
                   <xs:annotation>
@@ -4609,7 +4686,16 @@
                         </xs:appinfo>
                      </xs:annotation>
                   </xs:element>
+                  <!--Attribute (as element) EntityStateUpdatePdu variableParameters with objectlist classRef name=VariableParameter=VariableParameter-->
+                  <xs:element name="variableParameters" type="VariableParameter">
+                     <xs:annotation>
+                        <xs:appinfo>This field shall specify the parameter values for each Variable Parameter record that
+                           is included (see 6.2.93 and Annex I).
+                        </xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="EntityInformationFamilyPdu"></xs:attribute>
                <xs:attribute name="padding1" type="xs:unsignedByte">
                   <xs:annotation>
@@ -4629,14 +4715,6 @@
                         This field shall be represented by an Entity Appearance record (see 6.2.26).
                      </xs:appinfo>
                   </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="variableParameters" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>This field shall specify the parameter values for each Variable Parameter record that
-                        is included (see 6.2.93 and Annex I).
-                     </xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class EntityStateUpdatePdu attribute variableParameters objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -4661,7 +4739,10 @@
                         </xs:appinfo>
                      </xs:annotation>
                   </xs:element>
+                  <!--Attribute (as element) AttributePdu attributeRecordSets with objectlist classRef name=AttributeRecordSet=AttributeRecordSet-->
+                  <xs:element name="attributeRecordSets" type="AttributeRecordSet"></xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="EntityInformationFamilyPdu"></xs:attribute>
                <xs:attribute name="padding1" type="xs:long">
                   <xs:annotation>
@@ -4717,9 +4798,6 @@
                      </xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
-               <xs:attribute name="attributeRecordSets" type="xs:string">
-                  <!--TODO unhandled definition: class AttributePdu attribute attributeRecordSets objectlist -->
-               </xs:attribute>
             </xs:extension>
          </xs:complexContent>
       </xs:complexType>
@@ -4730,12 +4808,12 @@
             <xs:extension base="EntityInformationFamilyPdu">
                <xs:sequence>
                   <xs:element name="entityId" type="EntityID"></xs:element>
+                  <!--Attribute (as element) AttributeRecordSet attributeRecords with objectlist classRef name=Attribute=Attribute-->
+                  <xs:element name="attributeRecords" type="Attribute"></xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="EntityInformationFamilyPdu"></xs:attribute>
                <xs:attribute name="numberOfAttributeRecords" type="xs:unsignedShort"></xs:attribute>
-               <xs:attribute name="attributeRecords" type="xs:string">
-                  <!--TODO unhandled definition: class AttributeRecordSet attribute attributeRecords objectlist -->
-               </xs:attribute>
             </xs:extension>
          </xs:complexContent>
       </xs:complexType>
@@ -4811,6 +4889,7 @@
                      </xs:annotation>
                   </xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="WarfareFamilyPdu"></xs:attribute>
                <xs:attribute name="fireMissionIndex" type="xs:unsignedLong">
                   <xs:annotation>
@@ -4882,7 +4961,14 @@
                         <xs:appinfo>Velocity of the ammunition, Section 7.3.3</xs:appinfo>
                      </xs:annotation>
                   </xs:element>
+                  <!--Attribute (as element) DetonationPdu variableParameters with objectlist classRef name=VariableParameter=VariableParameter-->
+                  <xs:element name="variableParameters" type="VariableParameter">
+                     <xs:annotation>
+                        <xs:appinfo>specify the parameter values for each Variable Parameter record, Section 7.3.3</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="WarfareFamilyPdu"></xs:attribute>
                <xs:attribute name="detonationResult" type="xs:string">
                   <xs:annotation>
@@ -4898,12 +4984,6 @@
                   <xs:annotation>
                      <xs:appinfo>padding</xs:appinfo>
                   </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="variableParameters" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>specify the parameter values for each Variable Parameter record, Section 7.3.3</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class DetonationPdu attribute variableParameters objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -4940,7 +5020,16 @@
                         <xs:appinfo>Field shall identify the location of the DE weapon aperture/emitter, Section 7.3.4</xs:appinfo>
                      </xs:annotation>
                   </xs:element>
+                  <!--Attribute (as element) DirectedEnergyFirePdu dERecords with objectlist classRef name=StandardVariableSpecification=StandardVariableSpecification-->
+                  <xs:element name="dERecords" type="StandardVariableSpecification">
+                     <xs:annotation>
+                        <xs:appinfo>Fields shall contain one or more DE records, records shall conform to the variable
+                           record format (Section6.2.82), Section 7.3.4
+                        </xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="WarfareFamilyPdu"></xs:attribute>
                <xs:attribute name="commulativeShotTime" type="xs:float">
                   <xs:annotation>
@@ -4986,14 +5075,6 @@
                      <xs:appinfo>Field shall specify the number of DE records, Section 7.3.4</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
-               <xs:attribute name="dERecords" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>Fields shall contain one or more DE records, records shall conform to the variable
-                        record format (Section6.2.82), Section 7.3.4
-                     </xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class DirectedEnergyFirePdu attribute dERecords objectlist -->
-               </xs:attribute>
             </xs:extension>
          </xs:complexContent>
       </xs:complexType>
@@ -5013,7 +5094,16 @@
                         <xs:appinfo>Field shall identify the damaged entity (see 6.2.28), Section 7.3.4</xs:appinfo>
                      </xs:annotation>
                   </xs:element>
+                  <!--Attribute (as element) EntityDamageStatusPdu damageDescriptionRecords with objectlist classRef name=DirectedEnergyDamage=DirectedEnergyDamage-->
+                  <xs:element name="damageDescriptionRecords" type="DirectedEnergyDamage">
+                     <xs:annotation>
+                        <xs:appinfo>Fields shall contain one or more Damage Description records (see 6.2.17) and may contain
+                           other Standard Variable records, Section 7.3.5
+                        </xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="WarfareFamilyPdu"></xs:attribute>
                <xs:attribute name="padding1" type="xs:unsignedShort"></xs:attribute>
                <xs:attribute name="padding2" type="xs:unsignedShort"></xs:attribute>
@@ -5021,14 +5111,6 @@
                   <xs:annotation>
                      <xs:appinfo>field shall specify the number of Damage Description records, Section 7.3.5</xs:appinfo>
                   </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="damageDescriptionRecords" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>Fields shall contain one or more Damage Description records (see 6.2.17) and may contain
-                        other Standard Variable records, Section 7.3.5
-                     </xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class EntityDamageStatusPdu attribute damageDescriptionRecords objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -5064,7 +5146,10 @@
                         <xs:appinfo>Entity that is providing the service (see 6.2.28), Section 7.4.2</xs:appinfo>
                      </xs:annotation>
                   </xs:element>
+                  <!--Attribute (as element) ServiceRequestPdu supplies with objectlist classRef name=SupplyQuantity=SupplyQuantity-->
+                  <xs:element name="supplies" type="SupplyQuantity"></xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="LogisticsFamilyPdu"></xs:attribute>
                <xs:attribute name="serviceTypeRequested" type="xs:string">
                   <xs:annotation>
@@ -5079,9 +5164,6 @@
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="padding1" type="xs:unsignedShort"></xs:attribute>
-               <xs:attribute name="supplies" type="xs:string">
-                  <!--TODO unhandled definition: class ServiceRequestPdu attribute supplies objectlist -->
-               </xs:attribute>
             </xs:extension>
          </xs:complexContent>
       </xs:complexType>
@@ -5108,7 +5190,16 @@
                         </xs:appinfo>
                      </xs:annotation>
                   </xs:element>
+                  <!--Attribute (as element) ResupplyOfferPdu supplies with objectlist classRef name=SupplyQuantity=SupplyQuantity-->
+                  <xs:element name="supplies" type="SupplyQuantity">
+                     <xs:annotation>
+                        <xs:appinfo>A Reord that Specifies the type of supply and the amount of that supply for each of
+                           the supply types in numberOfSupplyTypes (see 6.2.85), Section 7.4.3
+                        </xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="LogisticsFamilyPdu"></xs:attribute>
                <xs:attribute name="numberOfSupplyTypes" type="xs:unsignedByte">
                   <xs:annotation>
@@ -5124,14 +5215,6 @@
                   <xs:annotation>
                      <xs:appinfo>padding</xs:appinfo>
                   </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="supplies" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>A Reord that Specifies the type of supply and the amount of that supply for each of
-                        the supply types in numberOfSupplyTypes (see 6.2.85), Section 7.4.3
-                     </xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class ResupplyOfferPdu attribute supplies objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -5157,7 +5240,16 @@
                         <xs:appinfo>Entity that is supplying. Shall be represented by Entity Identifier record (see 6.2.28)</xs:appinfo>
                      </xs:annotation>
                   </xs:element>
+                  <!--Attribute (as element) ResupplyReceivedPdu supplies with objectlist classRef name=SupplyQuantity=SupplyQuantity-->
+                  <xs:element name="supplies" type="SupplyQuantity">
+                     <xs:annotation>
+                        <xs:appinfo>A Reord that Specifies the type of supply and the amount of that supply for each of
+                           the supply types in numberOfSupplyTypes (see 6.2.85), Section 7.4.3
+                        </xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="LogisticsFamilyPdu"></xs:attribute>
                <xs:attribute name="numberOfSupplyTypes" type="xs:unsignedByte">
                   <xs:annotation>
@@ -5173,14 +5265,6 @@
                   <xs:annotation>
                      <xs:appinfo>padding</xs:appinfo>
                   </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="supplies" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>A Reord that Specifies the type of supply and the amount of that supply for each of
-                        the supply types in numberOfSupplyTypes (see 6.2.85), Section 7.4.3
-                     </xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class ResupplyReceivedPdu attribute supplies objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -5207,6 +5291,7 @@
                      </xs:annotation>
                   </xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="LogisticsFamilyPdu"></xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -5233,6 +5318,7 @@
                      </xs:annotation>
                   </xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="LogisticsFamilyPdu"></xs:attribute>
                <xs:attribute name="repair" type="xs:string">
                   <xs:annotation>
@@ -5271,6 +5357,7 @@
                      </xs:annotation>
                   </xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="LogisticsFamilyPdu"></xs:attribute>
                <xs:attribute name="repairResult" type="xs:string">
                   <xs:annotation>
@@ -5380,6 +5467,7 @@
                      </xs:annotation>
                   </xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="SimulationManagementFamilyPdu"></xs:attribute>
                <xs:attribute name="requestID" type="xs:unsignedLong">
                   <xs:annotation>
@@ -5404,6 +5492,7 @@
                      </xs:annotation>
                   </xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="SimulationManagementFamilyPdu"></xs:attribute>
                <xs:attribute name="reason" type="xs:string">
                   <xs:annotation>
@@ -5475,6 +5564,21 @@
       <xs:complexType>
          <xs:complexContent>
             <xs:extension base="SimulationManagementFamilyPdu">
+               <xs:sequence>
+                  <!--Attribute (as element) ActionRequestPdu fixedDatums with objectlist classRef name=FixedDatum=FixedDatum-->
+                  <xs:element name="fixedDatums" type="FixedDatum">
+                     <xs:annotation>
+                        <xs:appinfo>variable length list of fixed datums</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <!--Attribute (as element) ActionRequestPdu variableDatums with objectlist classRef name=VariableDatum=VariableDatum-->
+                  <xs:element name="variableDatums" type="VariableDatum">
+                     <xs:annotation>
+                        <xs:appinfo>variable length list of variable length datums</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="SimulationManagementFamilyPdu"></xs:attribute>
                <xs:attribute name="requestID" type="xs:unsignedLong">
                   <xs:annotation>
@@ -5500,18 +5604,6 @@
                      </xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
-               <xs:attribute name="fixedDatums" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>variable length list of fixed datums</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class ActionRequestPdu attribute fixedDatums objectlist -->
-               </xs:attribute>
-               <xs:attribute name="variableDatums" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>variable length list of variable length datums</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class ActionRequestPdu attribute variableDatums objectlist -->
-               </xs:attribute>
             </xs:extension>
          </xs:complexContent>
       </xs:complexType>
@@ -5525,6 +5617,21 @@
       <xs:complexType>
          <xs:complexContent>
             <xs:extension base="SimulationManagementFamilyPdu">
+               <xs:sequence>
+                  <!--Attribute (as element) ActionResponsePdu fixedDatums with objectlist classRef name=FixedDatum=FixedDatum-->
+                  <xs:element name="fixedDatums" type="FixedDatum">
+                     <xs:annotation>
+                        <xs:appinfo>fixed length list of fixed datums</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <!--Attribute (as element) ActionResponsePdu variableDatums with objectlist classRef name=VariableDatum=VariableDatum-->
+                  <xs:element name="variableDatums" type="VariableDatum">
+                     <xs:annotation>
+                        <xs:appinfo>variable length list of variable length datums</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="SimulationManagementFamilyPdu"></xs:attribute>
                <xs:attribute name="requestID" type="xs:unsignedLong">
                   <xs:annotation>
@@ -5548,18 +5655,6 @@
                      </xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
-               <xs:attribute name="fixedDatums" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>fixed length list of fixed datums</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class ActionResponsePdu attribute fixedDatums objectlist -->
-               </xs:attribute>
-               <xs:attribute name="variableDatums" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>variable length list of variable length datums</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class ActionResponsePdu attribute variableDatums objectlist -->
-               </xs:attribute>
             </xs:extension>
          </xs:complexContent>
       </xs:complexType>
@@ -5571,6 +5666,21 @@
       <xs:complexType>
          <xs:complexContent>
             <xs:extension base="SimulationManagementFamilyPdu">
+               <xs:sequence>
+                  <!--Attribute (as element) DataQueryPdu fixedDatums with objectlist classRef name=FixedDatum=FixedDatum-->
+                  <xs:element name="fixedDatums" type="FixedDatum">
+                     <xs:annotation>
+                        <xs:appinfo>variable length list of fixed datums</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <!--Attribute (as element) DataQueryPdu variableDatums with objectlist classRef name=VariableDatum=VariableDatum-->
+                  <xs:element name="variableDatums" type="VariableDatum">
+                     <xs:annotation>
+                        <xs:appinfo>variable length list of variable length datums</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="SimulationManagementFamilyPdu"></xs:attribute>
                <xs:attribute name="requestID" type="xs:unsignedLong">
                   <xs:annotation>
@@ -5594,18 +5704,6 @@
                      </xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
-               <xs:attribute name="fixedDatums" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>variable length list of fixed datums</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class DataQueryPdu attribute fixedDatums objectlist -->
-               </xs:attribute>
-               <xs:attribute name="variableDatums" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>variable length list of variable length datums</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class DataQueryPdu attribute variableDatums objectlist -->
-               </xs:attribute>
             </xs:extension>
          </xs:complexContent>
       </xs:complexType>
@@ -5619,6 +5717,21 @@
       <xs:complexType>
          <xs:complexContent>
             <xs:extension base="SimulationManagementFamilyPdu">
+               <xs:sequence>
+                  <!--Attribute (as element) SetDataPdu fixedDatums with objectlist classRef name=FixedDatum=FixedDatum-->
+                  <xs:element name="fixedDatums" type="FixedDatum">
+                     <xs:annotation>
+                        <xs:appinfo>variable length list of fixed datums</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <!--Attribute (as element) SetDataPdu variableDatums with objectlist classRef name=VariableDatum=VariableDatum-->
+                  <xs:element name="variableDatums" type="VariableDatum">
+                     <xs:annotation>
+                        <xs:appinfo>variable length list of variable length datums</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="SimulationManagementFamilyPdu"></xs:attribute>
                <xs:attribute name="requestID" type="xs:unsignedLong">
                   <xs:annotation>
@@ -5641,18 +5754,6 @@
                         (and not modifiable by end-user programmers)
                      </xs:appinfo>
                   </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="fixedDatums" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>variable length list of fixed datums</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class SetDataPdu attribute fixedDatums objectlist -->
-               </xs:attribute>
-               <xs:attribute name="variableDatums" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>variable length list of variable length datums</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class SetDataPdu attribute variableDatums objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -5667,6 +5768,21 @@
       <xs:complexType>
          <xs:complexContent>
             <xs:extension base="SimulationManagementFamilyPdu">
+               <xs:sequence>
+                  <!--Attribute (as element) DataPdu fixedDatums with objectlist classRef name=FixedDatum=FixedDatum-->
+                  <xs:element name="fixedDatums" type="FixedDatum">
+                     <xs:annotation>
+                        <xs:appinfo>variable length list of fixed datums</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <!--Attribute (as element) DataPdu variableDatums with objectlist classRef name=VariableDatum=VariableDatum-->
+                  <xs:element name="variableDatums" type="VariableDatum">
+                     <xs:annotation>
+                        <xs:appinfo>variable length list of variable length datums</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="SimulationManagementFamilyPdu"></xs:attribute>
                <xs:attribute name="requestID" type="xs:unsignedLong">
                   <xs:annotation>
@@ -5690,18 +5806,6 @@
                      </xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
-               <xs:attribute name="fixedDatums" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>variable length list of fixed datums</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class DataPdu attribute fixedDatums objectlist -->
-               </xs:attribute>
-               <xs:attribute name="variableDatums" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>variable length list of variable length datums</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class DataPdu attribute variableDatums objectlist -->
-               </xs:attribute>
             </xs:extension>
          </xs:complexContent>
       </xs:complexType>
@@ -5713,6 +5817,21 @@
       <xs:complexType>
          <xs:complexContent>
             <xs:extension base="SimulationManagementFamilyPdu">
+               <xs:sequence>
+                  <!--Attribute (as element) EventReportPdu fixedDatums with objectlist classRef name=FixedDatum=FixedDatum-->
+                  <xs:element name="fixedDatums" type="FixedDatum">
+                     <xs:annotation>
+                        <xs:appinfo>variable length list of fixed datums</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <!--Attribute (as element) EventReportPdu variableDatums with objectlist classRef name=VariableDatum=VariableDatum-->
+                  <xs:element name="variableDatums" type="VariableDatum">
+                     <xs:annotation>
+                        <xs:appinfo>variable length list of variable length datums</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="SimulationManagementFamilyPdu"></xs:attribute>
                <xs:attribute name="eventType" type="xs:string">
                   <xs:annotation>
@@ -5736,18 +5855,6 @@
                      </xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
-               <xs:attribute name="fixedDatums" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>variable length list of fixed datums</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class EventReportPdu attribute fixedDatums objectlist -->
-               </xs:attribute>
-               <xs:attribute name="variableDatums" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>variable length list of variable length datums</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class EventReportPdu attribute variableDatums objectlist -->
-               </xs:attribute>
             </xs:extension>
          </xs:complexContent>
       </xs:complexType>
@@ -5759,6 +5866,15 @@
       <xs:complexType>
          <xs:complexContent>
             <xs:extension base="SimulationManagementFamilyPdu">
+               <xs:sequence>
+                  <!--Attribute (as element) CommentPdu variableDatums with objectlist classRef name=VariableDatum=VariableDatum-->
+                  <xs:element name="variableDatums" type="VariableDatum">
+                     <xs:annotation>
+                        <xs:appinfo>variable length list of variable length datums</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="SimulationManagementFamilyPdu"></xs:attribute>
                <xs:attribute name="numberOfFixedDatumRecords" type="xs:unsignedLong">
                   <xs:annotation>
@@ -5771,12 +5887,6 @@
                         (and not modifiable by end-user programmers)
                      </xs:appinfo>
                   </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="variableDatums" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>variable length list of variable length datums</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class CommentPdu attribute variableDatums objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -5817,7 +5927,14 @@
                         <xs:appinfo>ID of event</xs:appinfo>
                      </xs:annotation>
                   </xs:element>
+                  <!--Attribute (as element) ElectromagneticEmissionPdu systems with objectlist classRef name=ElectronicEmitter=ElectronicEmitter-->
+                  <xs:element name="systems" type="ElectronicEmitter">
+                     <xs:annotation>
+                        <xs:appinfo>Electronic emmissions systems</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="DistributedEmissionsFamilyPdu"></xs:attribute>
                <xs:attribute name="stateUpdateIndicator" type="xs:string">
                   <xs:annotation>
@@ -5839,12 +5956,6 @@
                   <xs:annotation>
                      <xs:appinfo>padding</xs:appinfo>
                   </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="systems" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>Electronic emmissions systems</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class ElectromagneticEmissionPdu attribute systems objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -5871,7 +5982,14 @@
                         </xs:appinfo>
                      </xs:annotation>
                   </xs:element>
+                  <!--Attribute (as element) ElectronicEmitter beams with objectlist classRef name=EmitterBeam=EmitterBeam-->
+                  <xs:element name="beams" type="EmitterBeam">
+                     <xs:annotation>
+                        <xs:appinfo>Electronic emmission beams</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="DistributedEmissionsFamilyPdu"></xs:attribute>
                <xs:attribute name="systemDataLength" type="xs:unsignedByte">
                   <xs:annotation>
@@ -5884,12 +6002,6 @@
                         described.
                      </xs:appinfo>
                   </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="beams" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>Electronic emmission beams</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class ElectronicEmitter attribute beams objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -5904,7 +6016,10 @@
                   <xs:element name="beamData" type="BeamData"></xs:element>
                   <xs:element name="beamStatus" type="BeamStatus"></xs:element>
                   <xs:element name="jammingTechnique" type="JammingTechnique"></xs:element>
+                  <!--Attribute (as element) EmitterBeam trackJamData with objectlist classRef name=TrackJamData=TrackJamData-->
+                  <xs:element name="trackJamData" type="TrackJamData"></xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="DistributedEmissionsFamilyPdu"></xs:attribute>
                <xs:attribute name="beamDataLength" type="xs:unsignedByte"></xs:attribute>
                <xs:attribute name="beamNumber" type="xs:unsignedByte"></xs:attribute>
@@ -5919,9 +6034,6 @@
                   <xs:annotation>
                      <xs:appinfo>(SISO enumeration HighDensityTrackJam uid 79)</xs:appinfo>
                   </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="trackJamData" type="xs:string">
-                  <!--TODO unhandled definition: class EmitterBeam attribute trackJamData objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -5961,6 +6073,7 @@
                      </xs:annotation>
                   </xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="DistributedEmissionsFamilyPdu"></xs:attribute>
                <xs:attribute name="codeName" type="xs:string">
                   <xs:annotation>
@@ -6024,7 +6137,22 @@
                         <xs:appinfo>ID of event</xs:appinfo>
                      </xs:annotation>
                   </xs:element>
+                  <!--Attribute (as element) UnderwaterAcousticPdu shaftRPMs with objectlist classRef name=ShaftRPM=ShaftRPM-->
+                  <xs:element name="shaftRPMs" type="ShaftRPM">
+                     <xs:annotation>
+                        <xs:appinfo>shaft RPM values.</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <!--Attribute (as element) UnderwaterAcousticPdu apaData with objectlist classRef name=APA=APA-->
+                  <xs:element name="apaData" type="APA">
+                     <xs:annotation>
+                        <xs:appinfo>additional passive activities</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <!--Attribute (as element) UnderwaterAcousticPdu emitterSystems with objectlist classRef name=UAEmitter=UAEmitter-->
+                  <xs:element name="emitterSystems" type="UAEmitter"></xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="DistributedEmissionsFamilyPdu"></xs:attribute>
                <xs:attribute name="stateChangeIndicator" type="xs:string">
                   <xs:annotation>
@@ -6073,21 +6201,6 @@
                      </xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
-               <xs:attribute name="shaftRPMs" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>shaft RPM values.</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class UnderwaterAcousticPdu attribute shaftRPMs objectlist -->
-               </xs:attribute>
-               <xs:attribute name="apaData" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>additional passive activities</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class UnderwaterAcousticPdu attribute apaData objectlist -->
-               </xs:attribute>
-               <xs:attribute name="emitterSystems" type="xs:string">
-                  <!--TODO unhandled definition: class UnderwaterAcousticPdu attribute emitterSystems objectlist -->
-               </xs:attribute>
             </xs:extension>
          </xs:complexContent>
       </xs:complexType>
@@ -6111,7 +6224,14 @@
                         </xs:appinfo>
                      </xs:annotation>
                   </xs:element>
+                  <!--Attribute (as element) UAEmitter beams with objectlist classRef name=UABeam=UABeam-->
+                  <xs:element name="beams" type="UABeam">
+                     <xs:annotation>
+                        <xs:appinfo>Electronic emission beams</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="DistributedEmissionsFamilyPdu"></xs:attribute>
                <xs:attribute name="systemDataLength" type="xs:unsignedByte">
                   <xs:annotation>
@@ -6126,12 +6246,6 @@
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="padding" type="xs:unsignedShort"></xs:attribute>
-               <xs:attribute name="beams" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>Electronic emission beams</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class UAEmitter attribute beams objectlist -->
-               </xs:attribute>
             </xs:extension>
          </xs:complexContent>
       </xs:complexType>
@@ -6143,6 +6257,7 @@
                <xs:sequence>
                   <xs:element name="fundamentalParameterData" type="UAFundamentalParameter"></xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="DistributedEmissionsFamilyPdu"></xs:attribute>
                <xs:attribute name="beamDataLength" type="xs:unsignedByte"></xs:attribute>
                <xs:attribute name="beamNumber" type="xs:unsignedByte"></xs:attribute>
@@ -6184,6 +6299,7 @@
                      </xs:annotation>
                   </xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="DistributedEmissionsFamilyPdu"></xs:attribute>
                <xs:attribute name="systemDesignator" type="xs:unsignedByte"></xs:attribute>
                <xs:attribute name="systemSpecificData" type="xs:unsignedByte"></xs:attribute>
@@ -6224,17 +6340,18 @@
                         <xs:appinfo>beam data</xs:appinfo>
                      </xs:annotation>
                   </xs:element>
+                  <!--Attribute (as element) IFFLayer2Pdu fundamentalIFFParameters with objectlist classRef name=IFFFundamentalParameterData=IFFFundamentalParameterData-->
+                  <xs:element name="fundamentalIFFParameters" type="IFFFundamentalParameterData">
+                     <xs:annotation>
+                        <xs:appinfo>variable length list of fundamental parameters.</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="DistributedEmissionsFamilyPdu"></xs:attribute>
                <xs:attribute name="secondaryOpParameter1" type="xs:unsignedByte"></xs:attribute>
                <xs:attribute name="secondaryOpParameter2" type="xs:unsignedByte"></xs:attribute>
                <xs:attribute name="numberOfParameters" type="xs:unsignedShort"></xs:attribute>
-               <xs:attribute name="fundamentalIFFParameters" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>variable length list of fundamental parameters.</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class IFFLayer2Pdu attribute fundamentalIFFParameters objectlist -->
-               </xs:attribute>
             </xs:extension>
          </xs:complexContent>
       </xs:complexType>
@@ -6254,7 +6371,20 @@
                         <xs:appinfo>Originating entity ID</xs:appinfo>
                      </xs:annotation>
                   </xs:element>
+                  <!--Attribute (as element) SEESPdu propulsionSystemData with objectlist classRef name=PropulsionSystemData=PropulsionSystemData-->
+                  <xs:element name="propulsionSystemData" type="PropulsionSystemData">
+                     <xs:annotation>
+                        <xs:appinfo>variable length list of propulsion system data</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <!--Attribute (as element) SEESPdu vectoringSystemData with objectlist classRef name=VectoringNozzleSystem=VectoringNozzleSystem-->
+                  <xs:element name="vectoringSystemData" type="VectoringNozzleSystem">
+                     <xs:annotation>
+                        <xs:appinfo>variable length list of vectoring system data</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="DistributedEmissionsFamilyPdu"></xs:attribute>
                <xs:attribute name="infraredSignatureRepresentationIndex" type="xs:unsignedShort">
                   <xs:annotation>
@@ -6280,18 +6410,6 @@
                   <xs:annotation>
                      <xs:appinfo>how many vectoring nozzle systems</xs:appinfo>
                   </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="propulsionSystemData" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>variable length list of propulsion system data</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class SEESPdu attribute propulsionSystemData objectlist -->
-               </xs:attribute>
-               <xs:attribute name="vectoringSystemData" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>variable length list of vectoring system data</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class SEESPdu attribute vectoringSystemData objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -6330,6 +6448,7 @@
                      </xs:annotation>
                   </xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="RadioCommunicationsFamilyPdu"></xs:attribute>
                <xs:attribute name="radioNumber" type="xs:unsignedShort">
                   <xs:annotation>
@@ -6369,7 +6488,20 @@
                         <xs:appinfo>modulation</xs:appinfo>
                      </xs:annotation>
                   </xs:element>
+                  <!--Attribute (as element) TransmitterPdu modulationParametersList with objectlist classRef name=ModulationParameters=ModulationParameters-->
+                  <xs:element name="modulationParametersList" type="ModulationParameters">
+                     <xs:annotation>
+                        <xs:appinfo>variable length list of modulation parameters</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <!--Attribute (as element) TransmitterPdu antennaPatternList with objectlist classRef name=VariableTransmitterParameters=VariableTransmitterParameters-->
+                  <xs:element name="antennaPatternList" type="VariableTransmitterParameters">
+                     <xs:annotation>
+                        <xs:appinfo>variable length list of antenna pattern records</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="RadioCommunicationsFamilyPdu"></xs:attribute>
                <xs:attribute name="radioNumber" type="xs:unsignedShort">
                   <xs:annotation>
@@ -6433,18 +6565,6 @@
                </xs:attribute>
                <xs:attribute name="padding1" type="xs:unsignedByte"></xs:attribute>
                <xs:attribute name="padding2" type="xs:unsignedShort"></xs:attribute>
-               <xs:attribute name="modulationParametersList" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>variable length list of modulation parameters</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class TransmitterPdu attribute modulationParametersList objectlist -->
-               </xs:attribute>
-               <xs:attribute name="antennaPatternList" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>variable length list of antenna pattern records</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class TransmitterPdu attribute antennaPatternList objectlist -->
-               </xs:attribute>
             </xs:extension>
          </xs:complexContent>
       </xs:complexType>
@@ -6467,6 +6587,7 @@
                      </xs:annotation>
                   </xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="RadioCommunicationsFamilyPdu"></xs:attribute>
                <xs:attribute name="receiverState" type="xs:string">
                   <xs:annotation>
@@ -6522,7 +6643,10 @@
                         <xs:appinfo>eid of the entity that has created this intercom channel, same comments as sourceEntityId</xs:appinfo>
                      </xs:annotation>
                   </xs:element>
+                  <!--Attribute (as element) IntercomControlPdu intercomParameters with objectlist classRef name=IntercomCommunicationsParameters=IntercomCommunicationsParameters-->
+                  <xs:element name="intercomParameters" type="IntercomCommunicationsParameters"></xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="RadioCommunicationsFamilyPdu"></xs:attribute>
                <xs:attribute name="controlType" type="xs:string">
                   <xs:annotation>
@@ -6571,9 +6695,6 @@
                   <xs:annotation>
                      <xs:appinfo>number of intercom parameters</xs:appinfo>
                   </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="intercomParameters" type="xs:string">
-                  <!--TODO unhandled definition: class IntercomControlPdu attribute intercomParameters objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -6634,7 +6755,38 @@
                         <xs:appinfo>velocity of aggregation</xs:appinfo>
                      </xs:annotation>
                   </xs:element>
+                  <!--Attribute (as element) AggregateStatePdu aggregateIDList with objectlist classRef name=AggregateIdentifier=AggregateIdentifier-->
+                  <xs:element name="aggregateIDList" type="AggregateIdentifier">
+                     <xs:annotation>
+                        <xs:appinfo>aggregates list</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <!--Attribute (as element) AggregateStatePdu entityIDList with objectlist classRef name=EntityID=EntityID-->
+                  <xs:element name="entityIDList" type="EntityID">
+                     <xs:annotation>
+                        <xs:appinfo>entity ID list</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <!--Attribute (as element) AggregateStatePdu silentAggregateSystemList with objectlist classRef name=EntityType=EntityType-->
+                  <xs:element name="silentAggregateSystemList" type="EntityType">
+                     <xs:annotation>
+                        <xs:appinfo>silent entity types</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <!--Attribute (as element) AggregateStatePdu silentEntitySystemList with objectlist classRef name=EntityType=EntityType-->
+                  <xs:element name="silentEntitySystemList" type="EntityType">
+                     <xs:annotation>
+                        <xs:appinfo>silent entity types</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <!--Attribute (as element) AggregateStatePdu variableDatumList with objectlist classRef name=VariableDatum=VariableDatum-->
+                  <xs:element name="variableDatumList" type="VariableDatum">
+                     <xs:annotation>
+                        <xs:appinfo>variableDatums</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="EntityManagementFamilyPdu"></xs:attribute>
                <xs:attribute name="forceID" type="xs:string">
                   <xs:annotation>
@@ -6673,43 +6825,13 @@
                      </xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
-               <xs:attribute name="aggregateIDList" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>aggregates list</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class AggregateStatePdu attribute aggregateIDList objectlist -->
-               </xs:attribute>
-               <xs:attribute name="entityIDList" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>entity ID list</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class AggregateStatePdu attribute entityIDList objectlist -->
-               </xs:attribute>
                <xs:attribute name="padTo32" type="xs:unsignedLong"></xs:attribute>
-               <xs:attribute name="silentAggregateSystemList" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>silent entity types</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class AggregateStatePdu attribute silentAggregateSystemList objectlist -->
-               </xs:attribute>
-               <xs:attribute name="silentEntitySystemList" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>silent entity types</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class AggregateStatePdu attribute silentEntitySystemList objectlist -->
-               </xs:attribute>
                <xs:attribute name="numberOfVariableDatumRecords" type="xs:unsignedLong">
                   <xs:annotation>
                      <xs:appinfo>Number of variable datum records, handled automatically by marshaller at run time
                         (and not modifiable by end-user programmers)
                      </xs:appinfo>
                   </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="variableDatumList" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>variableDatums</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class AggregateStatePdu attribute variableDatumList objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -6732,7 +6854,16 @@
                         <xs:appinfo>ID of aggregated entities</xs:appinfo>
                      </xs:annotation>
                   </xs:element>
+                  <!--Attribute (as element) IsGroupOfPdu groupedEntityDescriptions with objectlist classRef name=VariableDatum=VariableDatum-->
+                  <xs:element name="groupedEntityDescriptions" type="VariableDatum">
+                     <xs:annotation>
+                        <xs:appinfo>GED records about each individual entity in the group. Bad specing--the Group Entity
+                           Descriptions are not described.
+                        </xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="EntityManagementFamilyPdu"></xs:attribute>
                <xs:attribute name="groupedEntityCategory" type="xs:string">
                   <xs:annotation>
@@ -6760,14 +6891,6 @@
                   <xs:annotation>
                      <xs:appinfo>longitude</xs:appinfo>
                   </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="groupedEntityDescriptions" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>GED records about each individual entity in the group. Bad specing--the Group Entity
-                        Descriptions are not described.
-                     </xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class IsGroupOfPdu attribute groupedEntityDescriptions objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -6800,6 +6923,7 @@
                   </xs:element>
                   <xs:element name="recordSets" type="RecordSpecification"></xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="EntityManagementFamilyPdu"></xs:attribute>
                <xs:attribute name="requestID" type="xs:unsignedLong">
                   <xs:annotation>
@@ -6863,6 +6987,7 @@
                      </xs:annotation>
                   </xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="EntityManagementFamilyPdu"></xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -6913,7 +7038,20 @@
                         <xs:appinfo>protocolMode. First two bits are the protocol mode, 14 bits reserved.</xs:appinfo>
                      </xs:annotation>
                   </xs:element>
+                  <!--Attribute (as element) MinefieldStatePdu perimeterPoints with objectlist classRef name=Vector2Float=Vector2Float-->
+                  <xs:element name="perimeterPoints" type="Vector2Float">
+                     <xs:annotation>
+                        <xs:appinfo>perimeter points for the minefield</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <!--Attribute (as element) MinefieldStatePdu mineType with objectlist classRef name=EntityType=EntityType-->
+                  <xs:element name="mineType" type="EntityType">
+                     <xs:annotation>
+                        <xs:appinfo>Type of mines</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="MinefieldFamilyPdu"></xs:attribute>
                <xs:attribute name="minefieldSequence" type="xs:unsignedShort">
                   <xs:annotation>
@@ -6941,18 +7079,6 @@
                         190)
                      </xs:appinfo>
                   </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="perimeterPoints" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>perimeter points for the minefield</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class MinefieldStatePdu attribute perimeterPoints objectlist -->
-               </xs:attribute>
-               <xs:attribute name="mineType" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>Type of mines</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class MinefieldStatePdu attribute mineType objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -6988,7 +7114,20 @@
                         <xs:appinfo>Entity type of mine being requested</xs:appinfo>
                      </xs:annotation>
                   </xs:element>
+                  <!--Attribute (as element) MinefieldQueryPdu requestedPerimeterPoints with objectlist classRef name=Vector2Float=Vector2Float-->
+                  <xs:element name="requestedPerimeterPoints" type="Vector2Float">
+                     <xs:annotation>
+                        <xs:appinfo>perimeter points of request</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <!--Attribute (as element) MinefieldQueryPdu sensorTypes with objectlist classRef name=MinefieldSensorType=MinefieldSensorType-->
+                  <xs:element name="sensorTypes" type="MinefieldSensorType">
+                     <xs:annotation>
+                        <xs:appinfo>Sensor types, each 16 bits long</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="MinefieldFamilyPdu"></xs:attribute>
                <xs:attribute name="requestID" type="xs:unsignedByte">
                   <xs:annotation>
@@ -7005,18 +7144,6 @@
                   <xs:annotation>
                      <xs:appinfo>Number of sensor types</xs:appinfo>
                   </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="requestedPerimeterPoints" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>perimeter points of request</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class MinefieldQueryPdu attribute requestedPerimeterPoints objectlist -->
-               </xs:attribute>
-               <xs:attribute name="sensorTypes" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>Sensor types, each 16 bits long</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class MinefieldQueryPdu attribute sensorTypes objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -7052,7 +7179,24 @@
                         <xs:appinfo>Mine type</xs:appinfo>
                      </xs:annotation>
                   </xs:element>
+                  <!--Attribute (as element) MinefieldDataPdu sensorTypes with objectlist classRef name=MinefieldSensorType=MinefieldSensorType-->
+                  <xs:element name="sensorTypes" type="MinefieldSensorType">
+                     <xs:annotation>
+                        <xs:appinfo>Sensor types, each 16 bits long</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <!--Attribute (as element) MinefieldDataPdu mineLocation with objectlist classRef name=Vector3Float=Vector3Float-->
+                  <xs:element name="mineLocation" type="Vector3Float">
+                     <xs:annotation>
+                        <xs:appinfo>Mine locations</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <!--Attribute (as element) MinefieldDataPdu mineOrientation with objectlist classRef name=EulerAngles=EulerAngles-->
+                  <xs:element name="mineOrientation" type="EulerAngles"></xs:element>
+                  <!--Attribute (as element) MinefieldDataPdu mineEmplacementTime with objectlist classRef name=MineEmplacementTime=MineEmplacementTime-->
+                  <xs:element name="mineEmplacementTime" type="MineEmplacementTime"></xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="MinefieldFamilyPdu"></xs:attribute>
                <xs:attribute name="minefieldSequenceNumbeer" type="xs:unsignedShort">
                   <xs:annotation>
@@ -7089,103 +7233,115 @@
                      <xs:appinfo>padding</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
-               <xs:attribute name="sensorTypes" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>Sensor types, each 16 bits long</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class MinefieldDataPdu attribute sensorTypes objectlist -->
-               </xs:attribute>
                <xs:attribute name="padTo32" type="xs:unsignedLong"></xs:attribute>
-               <xs:attribute name="mineLocation" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>Mine locations</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class MinefieldDataPdu attribute mineLocation objectlist -->
-               </xs:attribute>
                <xs:attribute name="groundBurialDepthOffset">
                   <xs:simpleType>
                      <xs:annotation>
-                        <xs:appinfo>The length of this list is determined by attribute numberOfMinesInThisPdu</xs:appinfo>
+                        <xs:appinfo>Attribute numberOfMinesInThisPdu determines the length of this list.</xs:appinfo>
                      </xs:annotation>
-                     <xs:list itemType="xs:float"></xs:list>
+                     <xs:restriction>
+                        <xs:simpleType>
+                           <xs:list itemType="xs:float"></xs:list>
+                        </xs:simpleType>
+                     </xs:restriction>
                   </xs:simpleType>
                </xs:attribute>
                <xs:attribute name="waterBurialDepthOffset">
                   <xs:simpleType>
                      <xs:annotation>
-                        <xs:appinfo>The length of this list is determined by attribute numberOfMinesInThisPdu</xs:appinfo>
+                        <xs:appinfo>Attribute numberOfMinesInThisPdu determines the length of this list.</xs:appinfo>
                      </xs:annotation>
-                     <xs:list itemType="xs:float"></xs:list>
+                     <xs:restriction>
+                        <xs:simpleType>
+                           <xs:list itemType="xs:float"></xs:list>
+                        </xs:simpleType>
+                     </xs:restriction>
                   </xs:simpleType>
                </xs:attribute>
                <xs:attribute name="snowBurialDepthOffset">
                   <xs:simpleType>
                      <xs:annotation>
-                        <xs:appinfo>The length of this list is determined by attribute numberOfMinesInThisPdu</xs:appinfo>
+                        <xs:appinfo>Attribute numberOfMinesInThisPdu determines the length of this list.</xs:appinfo>
                      </xs:annotation>
-                     <xs:list itemType="xs:float"></xs:list>
+                     <xs:restriction>
+                        <xs:simpleType>
+                           <xs:list itemType="xs:float"></xs:list>
+                        </xs:simpleType>
+                     </xs:restriction>
                   </xs:simpleType>
-               </xs:attribute>
-               <xs:attribute name="mineOrientation" type="xs:string">
-                  <!--TODO unhandled definition: class MinefieldDataPdu attribute mineOrientation objectlist -->
                </xs:attribute>
                <xs:attribute name="thermalContrast">
                   <xs:simpleType>
                      <xs:annotation>
-                        <xs:appinfo>The length of this list is determined by attribute numberOfMinesInThisPdu</xs:appinfo>
+                        <xs:appinfo>Attribute numberOfMinesInThisPdu determines the length of this list.</xs:appinfo>
                      </xs:annotation>
-                     <xs:list itemType="xs:float"></xs:list>
+                     <xs:restriction>
+                        <xs:simpleType>
+                           <xs:list itemType="xs:float"></xs:list>
+                        </xs:simpleType>
+                     </xs:restriction>
                   </xs:simpleType>
                </xs:attribute>
                <xs:attribute name="reflectance">
                   <xs:simpleType>
                      <xs:annotation>
-                        <xs:appinfo>The length of this list is determined by attribute numberOfMinesInThisPdu</xs:appinfo>
+                        <xs:appinfo>Attribute numberOfMinesInThisPdu determines the length of this list.</xs:appinfo>
                      </xs:annotation>
-                     <xs:list itemType="xs:float"></xs:list>
+                     <xs:restriction>
+                        <xs:simpleType>
+                           <xs:list itemType="xs:float"></xs:list>
+                        </xs:simpleType>
+                     </xs:restriction>
                   </xs:simpleType>
-               </xs:attribute>
-               <xs:attribute name="mineEmplacementTime" type="xs:string">
-                  <!--TODO unhandled definition: class MinefieldDataPdu attribute mineEmplacementTime objectlist -->
                </xs:attribute>
                <xs:attribute name="mineEntityNumber">
                   <xs:simpleType>
                      <xs:annotation>
-                        <xs:appinfo>The length of this list is determined by attribute numberOfMinesInThisPdu</xs:appinfo>
+                        <xs:appinfo>Attribute numberOfMinesInThisPdu determines the length of this list.</xs:appinfo>
                      </xs:annotation>
-                     <xs:list itemType="xs:unsignedShort"></xs:list>
+                     <xs:restriction>
+                        <xs:simpleType>
+                           <xs:list itemType="xs:unsignedShort"></xs:list>
+                        </xs:simpleType>
+                     </xs:restriction>
                   </xs:simpleType>
-               </xs:attribute>
-               <xs:attribute name="fusing" type="xs:string">
-                  <!--TODO unhandled definition: class MinefieldDataPdu attribute fusing objectlist -->
                </xs:attribute>
                <xs:attribute name="scalarDetectionCoefficient">
                   <xs:simpleType>
                      <xs:annotation>
-                        <xs:appinfo>The length of this list is determined by attribute numberOfMinesInThisPdu</xs:appinfo>
+                        <xs:appinfo>Attribute numberOfMinesInThisPdu determines the length of this list.</xs:appinfo>
                      </xs:annotation>
-                     <xs:list itemType="xs:unsignedByte"></xs:list>
+                     <xs:restriction>
+                        <xs:simpleType>
+                           <xs:list itemType="xs:unsignedByte"></xs:list>
+                        </xs:simpleType>
+                     </xs:restriction>
                   </xs:simpleType>
-               </xs:attribute>
-               <xs:attribute name="paintScheme" type="xs:string">
-                  <!--TODO unhandled definition: class MinefieldDataPdu attribute paintScheme objectlist -->
                </xs:attribute>
                <xs:attribute name="padTo32_2" type="xs:unsignedLong"></xs:attribute>
                <xs:attribute name="numberOfTripDetonationWires">
                   <xs:simpleType>
                      <xs:annotation>
-                        <xs:appinfo>The length of this list is determined by attribute numberOfMinesInThisPdu</xs:appinfo>
+                        <xs:appinfo>Attribute numberOfMinesInThisPdu determines the length of this list.</xs:appinfo>
                      </xs:annotation>
-                     <xs:list itemType="xs:unsignedByte"></xs:list>
+                     <xs:restriction>
+                        <xs:simpleType>
+                           <xs:list itemType="xs:unsignedByte"></xs:list>
+                        </xs:simpleType>
+                     </xs:restriction>
                   </xs:simpleType>
                </xs:attribute>
                <xs:attribute name="padTo32_3" type="xs:unsignedLong"></xs:attribute>
                <xs:attribute name="numberOfVertices">
                   <xs:simpleType>
                      <xs:annotation>
-                        <xs:appinfo>The length of this list is determined by attribute numberOfMinesInThisPdu</xs:appinfo>
+                        <xs:appinfo>Attribute numberOfMinesInThisPdu determines the length of this list.</xs:appinfo>
                      </xs:annotation>
-                     <xs:list itemType="xs:unsignedByte"></xs:list>
+                     <xs:restriction>
+                        <xs:simpleType>
+                           <xs:list itemType="xs:unsignedByte"></xs:list>
+                        </xs:simpleType>
+                     </xs:restriction>
                   </xs:simpleType>
                </xs:attribute>
             </xs:extension>
@@ -7224,6 +7380,7 @@
                      </xs:annotation>
                   </xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="MinefieldFamilyPdu"></xs:attribute>
                <xs:attribute name="requestID" type="xs:unsignedByte">
                   <xs:annotation>
@@ -7241,9 +7398,13 @@
                   </xs:annotation>
                   <xs:simpleType>
                      <xs:annotation>
-                        <xs:appinfo>The length of this list is determined by attribute numberOfMissingPdus</xs:appinfo>
+                        <xs:appinfo>Attribute numberOfMissingPdus determines the length of this list.</xs:appinfo>
                      </xs:annotation>
-                     <xs:list itemType="xs:unsignedByte"></xs:list>
+                     <xs:restriction>
+                        <xs:simpleType>
+                           <xs:list itemType="xs:unsignedByte"></xs:list>
+                        </xs:simpleType>
+                     </xs:restriction>
                   </xs:simpleType>
                </xs:attribute>
             </xs:extension>
@@ -7278,7 +7439,14 @@
                         <xs:appinfo>Environment type</xs:appinfo>
                      </xs:annotation>
                   </xs:element>
+                  <!--Attribute (as element) EnvironmentalProcessPdu environmentRecords with objectlist classRef name=Environment=Environment-->
+                  <xs:element name="environmentRecords" type="Environment">
+                     <xs:annotation>
+                        <xs:appinfo>environmemt records</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="SyntheticEnvironmentFamilyPdu"></xs:attribute>
                <xs:attribute name="modelType" type="xs:string">
                   <xs:annotation>
@@ -7301,12 +7469,6 @@
                   <xs:annotation>
                      <xs:appinfo>PDU sequence number for the environmental process if pdu sequencing required</xs:appinfo>
                   </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="environmentRecords" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>environmemt records</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class EnvironmentalProcessPdu attribute environmentRecords objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -7342,7 +7504,12 @@
                         <xs:appinfo>valid time of the enviormental data sample, 64 bit unsigned int</xs:appinfo>
                      </xs:annotation>
                   </xs:element>
+                  <!--Attribute (as element) GriddedDataPdu gridAxisDescriptors with objectlist classRef name=GridAxisDescriptor=GridAxisDescriptor-->
+                  <xs:element name="gridAxisDescriptors" type="GridAxisDescriptor"></xs:element>
+                  <!--Attribute (as element) GriddedDataPdu gridDataRecords with objectlist classRef name=GridData=GridData-->
+                  <xs:element name="gridDataRecords" type="GridData"></xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="SyntheticEnvironmentFamilyPdu"></xs:attribute>
                <xs:attribute name="fieldNumber" type="xs:unsignedShort">
                   <xs:annotation>
@@ -7396,12 +7563,6 @@
                      <xs:appinfo>padding</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
-               <xs:attribute name="gridAxisDescriptors" type="xs:string">
-                  <!--TODO unhandled definition: class GriddedDataPdu attribute gridAxisDescriptors objectlist -->
-               </xs:attribute>
-               <xs:attribute name="gridDataRecords" type="xs:string">
-                  <!--TODO unhandled definition: class GriddedDataPdu attribute gridDataRecords objectlist -->
-               </xs:attribute>
             </xs:extension>
          </xs:complexContent>
       </xs:complexType>
@@ -7453,6 +7614,7 @@
                      </xs:annotation>
                   </xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="SyntheticEnvironmentFamilyPdu"></xs:attribute>
                <xs:attribute name="updateNumber" type="xs:unsignedLong">
                   <xs:annotation>
@@ -7527,7 +7689,14 @@
                         <xs:appinfo>Object type</xs:appinfo>
                      </xs:annotation>
                   </xs:element>
+                  <!--Attribute (as element) LinearObjectStatePdu linearSegmentParameters with objectlist classRef name=LinearSegmentParameter=LinearSegmentParameter-->
+                  <xs:element name="linearSegmentParameters" type="LinearSegmentParameter">
+                     <xs:annotation>
+                        <xs:appinfo>Linear segment parameters</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="SyntheticEnvironmentFamilyPdu"></xs:attribute>
                <xs:attribute name="updateNumber" type="xs:unsignedShort">
                   <xs:annotation>
@@ -7543,12 +7712,6 @@
                   <xs:annotation>
                      <xs:appinfo>number of linear segment parameters</xs:appinfo>
                   </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="linearSegmentParameters" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>Linear segment parameters</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class LinearObjectStatePdu attribute linearSegmentParameters objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -7590,7 +7753,14 @@
                         <xs:appinfo>receiver ID</xs:appinfo>
                      </xs:annotation>
                   </xs:element>
+                  <!--Attribute (as element) ArealObjectStatePdu objectLocation with objectlist classRef name=Vector3Double=Vector3Double-->
+                  <xs:element name="objectLocation" type="Vector3Double">
+                     <xs:annotation>
+                        <xs:appinfo>location of object</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="SyntheticEnvironmentFamilyPdu"></xs:attribute>
                <xs:attribute name="updateNumber" type="xs:unsignedShort">
                   <xs:annotation>
@@ -7623,12 +7793,6 @@
                   <xs:annotation>
                      <xs:appinfo>Number of points</xs:appinfo>
                   </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="objectLocation" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>location of object</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class ArealObjectStatePdu attribute objectLocation objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -7755,6 +7919,7 @@
                      </xs:annotation>
                   </xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="SimulationManagementWithReliabilityFamilyPdu"></xs:attribute>
                <xs:attribute name="requiredReliabilityService" type="xs:string">
                   <xs:annotation>
@@ -7802,6 +7967,7 @@
                      </xs:annotation>
                   </xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="SimulationManagementWithReliabilityFamilyPdu"></xs:attribute>
                <xs:attribute name="reason" type="xs:string">
                   <xs:annotation>
@@ -7897,6 +8063,21 @@
       <xs:complexType>
          <xs:complexContent>
             <xs:extension base="SimulationManagementWithReliabilityFamilyPdu">
+               <xs:sequence>
+                  <!--Attribute (as element) ActionRequestRPdu fixedDatumRecords with objectlist classRef name=FixedDatum=FixedDatum-->
+                  <xs:element name="fixedDatumRecords" type="FixedDatum">
+                     <xs:annotation>
+                        <xs:appinfo>Fixed datum records</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <!--Attribute (as element) ActionRequestRPdu variableDatumRecords with objectlist classRef name=VariableDatum=VariableDatum-->
+                  <xs:element name="variableDatumRecords" type="VariableDatum">
+                     <xs:annotation>
+                        <xs:appinfo>Variable datum records</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="SimulationManagementWithReliabilityFamilyPdu"></xs:attribute>
                <xs:attribute name="requiredReliabilityService" type="xs:string">
                   <xs:annotation>
@@ -7935,18 +8116,6 @@
                      <xs:appinfo>variable datum record count</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
-               <xs:attribute name="fixedDatumRecords" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>Fixed datum records</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class ActionRequestRPdu attribute fixedDatumRecords objectlist -->
-               </xs:attribute>
-               <xs:attribute name="variableDatumRecords" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>Variable datum records</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class ActionRequestRPdu attribute variableDatumRecords objectlist -->
-               </xs:attribute>
             </xs:extension>
          </xs:complexContent>
       </xs:complexType>
@@ -7972,6 +8141,21 @@
       <xs:complexType>
          <xs:complexContent>
             <xs:extension base="SimulationManagementWithReliabilityFamilyPdu">
+               <xs:sequence>
+                  <!--Attribute (as element) ActionResponseRPdu fixedDatumRecords with objectlist classRef name=FixedDatum=FixedDatum-->
+                  <xs:element name="fixedDatumRecords" type="FixedDatum">
+                     <xs:annotation>
+                        <xs:appinfo>Fixed datum records</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <!--Attribute (as element) ActionResponseRPdu variableDatumRecords with objectlist classRef name=VariableDatum=VariableDatum-->
+                  <xs:element name="variableDatumRecords" type="VariableDatum">
+                     <xs:annotation>
+                        <xs:appinfo>Variable datum records</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="SimulationManagementWithReliabilityFamilyPdu"></xs:attribute>
                <xs:attribute name="requestID" type="xs:unsignedLong">
                   <xs:annotation>
@@ -7992,18 +8176,6 @@
                   <xs:annotation>
                      <xs:appinfo>variable datum record count</xs:appinfo>
                   </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="fixedDatumRecords" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>Fixed datum records</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class ActionResponseRPdu attribute fixedDatumRecords objectlist -->
-               </xs:attribute>
-               <xs:attribute name="variableDatumRecords" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>Variable datum records</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class ActionResponseRPdu attribute variableDatumRecords objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -8030,6 +8202,21 @@
       <xs:complexType>
          <xs:complexContent>
             <xs:extension base="SimulationManagementWithReliabilityFamilyPdu">
+               <xs:sequence>
+                  <!--Attribute (as element) DataQueryRPdu fixedDatumRecords with objectlist classRef name=FixedDatum=FixedDatum-->
+                  <xs:element name="fixedDatumRecords" type="FixedDatum">
+                     <xs:annotation>
+                        <xs:appinfo>Fixed datum records</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <!--Attribute (as element) DataQueryRPdu variableDatumRecords with objectlist classRef name=VariableDatum=VariableDatum-->
+                  <xs:element name="variableDatumRecords" type="VariableDatum">
+                     <xs:annotation>
+                        <xs:appinfo>Variable datum records</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="SimulationManagementWithReliabilityFamilyPdu"></xs:attribute>
                <xs:attribute name="requiredReliabilityService" type="xs:string">
                   <xs:annotation>
@@ -8068,18 +8255,6 @@
                      <xs:appinfo>variable datum record count</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
-               <xs:attribute name="fixedDatumRecords" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>Fixed datum records</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class DataQueryRPdu attribute fixedDatumRecords objectlist -->
-               </xs:attribute>
-               <xs:attribute name="variableDatumRecords" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>Variable datum records</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class DataQueryRPdu attribute variableDatumRecords objectlist -->
-               </xs:attribute>
             </xs:extension>
          </xs:complexContent>
       </xs:complexType>
@@ -8105,6 +8280,21 @@
       <xs:complexType>
          <xs:complexContent>
             <xs:extension base="SimulationManagementWithReliabilityFamilyPdu">
+               <xs:sequence>
+                  <!--Attribute (as element) SetDataRPdu fixedDatumRecords with objectlist classRef name=FixedDatum=FixedDatum-->
+                  <xs:element name="fixedDatumRecords" type="FixedDatum">
+                     <xs:annotation>
+                        <xs:appinfo>Fixed datum records</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <!--Attribute (as element) SetDataRPdu variableDatumRecords with objectlist classRef name=VariableDatum=VariableDatum-->
+                  <xs:element name="variableDatumRecords" type="VariableDatum">
+                     <xs:annotation>
+                        <xs:appinfo>Variable datum records</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="SimulationManagementWithReliabilityFamilyPdu"></xs:attribute>
                <xs:attribute name="requiredReliabilityService" type="xs:string">
                   <xs:annotation>
@@ -8138,18 +8328,6 @@
                      <xs:appinfo>variable datum record count</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
-               <xs:attribute name="fixedDatumRecords" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>Fixed datum records</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class SetDataRPdu attribute fixedDatumRecords objectlist -->
-               </xs:attribute>
-               <xs:attribute name="variableDatumRecords" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>Variable datum records</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class SetDataRPdu attribute variableDatumRecords objectlist -->
-               </xs:attribute>
             </xs:extension>
          </xs:complexContent>
       </xs:complexType>
@@ -8176,6 +8354,21 @@
       <xs:complexType>
          <xs:complexContent>
             <xs:extension base="SimulationManagementWithReliabilityFamilyPdu">
+               <xs:sequence>
+                  <!--Attribute (as element) DataRPdu fixedDatumRecords with objectlist classRef name=FixedDatum=FixedDatum-->
+                  <xs:element name="fixedDatumRecords" type="FixedDatum">
+                     <xs:annotation>
+                        <xs:appinfo>Fixed datum records</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <!--Attribute (as element) DataRPdu variableDatumRecords with objectlist classRef name=VariableDatum=VariableDatum-->
+                  <xs:element name="variableDatumRecords" type="VariableDatum">
+                     <xs:annotation>
+                        <xs:appinfo>Variable datum records</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="SimulationManagementWithReliabilityFamilyPdu"></xs:attribute>
                <xs:attribute name="requestID" type="xs:unsignedLong">
                   <xs:annotation>
@@ -8209,18 +8402,6 @@
                      <xs:appinfo>variable datum record count</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
-               <xs:attribute name="fixedDatumRecords" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>Fixed datum records</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class DataRPdu attribute fixedDatumRecords objectlist -->
-               </xs:attribute>
-               <xs:attribute name="variableDatumRecords" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>Variable datum records</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class DataRPdu attribute variableDatumRecords objectlist -->
-               </xs:attribute>
             </xs:extension>
          </xs:complexContent>
       </xs:complexType>
@@ -8244,6 +8425,21 @@
       <xs:complexType>
          <xs:complexContent>
             <xs:extension base="SimulationManagementWithReliabilityFamilyPdu">
+               <xs:sequence>
+                  <!--Attribute (as element) EventReportRPdu fixedDatumRecords with objectlist classRef name=FixedDatum=FixedDatum-->
+                  <xs:element name="fixedDatumRecords" type="FixedDatum">
+                     <xs:annotation>
+                        <xs:appinfo>Fixed datum records</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+                  <!--Attribute (as element) EventReportRPdu variableDatumRecords with objectlist classRef name=VariableDatum=VariableDatum-->
+                  <xs:element name="variableDatumRecords" type="VariableDatum">
+                     <xs:annotation>
+                        <xs:appinfo>Variable datum records</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="SimulationManagementWithReliabilityFamilyPdu"></xs:attribute>
                <xs:attribute name="eventType" type="xs:string">
                   <xs:annotation>
@@ -8264,18 +8460,6 @@
                   <xs:annotation>
                      <xs:appinfo>variable datum record count</xs:appinfo>
                   </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="fixedDatumRecords" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>Fixed datum records</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class EventReportRPdu attribute fixedDatumRecords objectlist -->
-               </xs:attribute>
-               <xs:attribute name="variableDatumRecords" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>Variable datum records</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class EventReportRPdu attribute variableDatumRecords objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -8300,6 +8484,15 @@
       <xs:complexType>
          <xs:complexContent>
             <xs:extension base="SimulationManagementWithReliabilityFamilyPdu">
+               <xs:sequence>
+                  <!--Attribute (as element) CommentRPdu variableDatumRecords with objectlist classRef name=VariableDatum=VariableDatum-->
+                  <xs:element name="variableDatumRecords" type="VariableDatum">
+                     <xs:annotation>
+                        <xs:appinfo>Variable datum records</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="SimulationManagementWithReliabilityFamilyPdu"></xs:attribute>
                <xs:attribute name="numberOfFixedDatumRecords" type="xs:unsignedLong">
                   <xs:annotation>
@@ -8310,12 +8503,6 @@
                   <xs:annotation>
                      <xs:appinfo>variable datum record count</xs:appinfo>
                   </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="variableDatumRecords" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>Variable datum records</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class CommentRPdu attribute variableDatumRecords objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -8340,6 +8527,15 @@
       <xs:complexType>
          <xs:complexContent>
             <xs:extension base="SimulationManagementWithReliabilityFamilyPdu">
+               <xs:sequence>
+                  <!--Attribute (as element) RecordQueryRPdu recordIDs with objectlist classRef name=RecordQuerySpecification=RecordQuerySpecification-->
+                  <xs:element name="recordIDs" type="RecordQuerySpecification">
+                     <xs:annotation>
+                        <xs:appinfo>record IDs</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="SimulationManagementWithReliabilityFamilyPdu"></xs:attribute>
                <xs:attribute name="requestID" type="xs:unsignedLong">
                   <xs:annotation>
@@ -8373,12 +8569,6 @@
                      <xs:appinfo>numberOfRecords</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
-               <xs:attribute name="recordIDs" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>record IDs</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class RecordQueryRPdu attribute recordIDs objectlist -->
-               </xs:attribute>
             </xs:extension>
          </xs:complexContent>
       </xs:complexType>
@@ -8405,6 +8595,15 @@
       <xs:complexType>
          <xs:complexContent>
             <xs:extension base="SimulationManagementWithReliabilityFamilyPdu">
+               <xs:sequence>
+                  <!--Attribute (as element) SetRecordRPdu recordSets with objectlist classRef name=RecordSpecification=RecordSpecification-->
+                  <xs:element name="recordSets" type="RecordSpecification">
+                     <xs:annotation>
+                        <xs:appinfo>record sets</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="SimulationManagementWithReliabilityFamilyPdu"></xs:attribute>
                <xs:attribute name="requestID" type="xs:unsignedLong">
                   <xs:annotation>
@@ -8425,12 +8624,6 @@
                   <xs:annotation>
                      <xs:appinfo>Number of record sets in list</xs:appinfo>
                   </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="recordSets" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>record sets</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class SetRecordRPdu attribute recordSets objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -8459,6 +8652,15 @@
       <xs:complexType>
          <xs:complexContent>
             <xs:extension base="SimulationManagementWithReliabilityFamilyPdu">
+               <xs:sequence>
+                  <!--Attribute (as element) RecordRPdu recordSets with objectlist classRef name=RecordSpecification=RecordSpecification-->
+                  <xs:element name="recordSets" type="RecordSpecification">
+                     <xs:annotation>
+                        <xs:appinfo>record sets</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="SimulationManagementWithReliabilityFamilyPdu"></xs:attribute>
                <xs:attribute name="requestID" type="xs:unsignedLong">
                   <xs:annotation>
@@ -8482,12 +8684,6 @@
                   <xs:annotation>
                      <xs:appinfo>Number of record sets in list</xs:appinfo>
                   </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="recordSets" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>record sets</xs:appinfo>
-                  </xs:annotation>
-                  <!--TODO unhandled definition: class RecordRPdu attribute recordSets objectlist -->
                </xs:attribute>
             </xs:extension>
          </xs:complexContent>
@@ -8536,7 +8732,10 @@
                   </xs:element>
                   <xs:element name="ioAttackerID" type="EntityID"></xs:element>
                   <xs:element name="ioPrimaryTargetID" type="EntityID"></xs:element>
+                  <!--Attribute (as element) InformationOperationsActionPdu ioRecords with objectlist classRef name=IORecord=IORecord-->
+                  <xs:element name="ioRecords" type="IORecord"></xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="InformationOperationsFamilyPdu"></xs:attribute>
                <xs:attribute name="requestID" type="xs:unsignedLong">
                   <xs:annotation>
@@ -8566,9 +8765,6 @@
                <xs:attribute name="padding1" type="xs:unsignedLong"></xs:attribute>
                <xs:attribute name="padding2" type="xs:unsignedShort"></xs:attribute>
                <xs:attribute name="numberOfIORecords" type="xs:unsignedShort"></xs:attribute>
-               <xs:attribute name="ioRecords" type="xs:string">
-                  <!--TODO unhandled definition: class InformationOperationsActionPdu attribute ioRecords objectlist -->
-               </xs:attribute>
             </xs:extension>
          </xs:complexContent>
       </xs:complexType>
@@ -8583,7 +8779,10 @@
                <xs:sequence>
                   <xs:element name="ioAttackerID" type="EntityID"></xs:element>
                   <xs:element name="ioPrimaryTargetID" type="EntityID"></xs:element>
+                  <!--Attribute (as element) InformationOperationsReportPdu ioRecords with objectlist classRef name=IORecord=IORecord-->
+                  <xs:element name="ioRecords" type="IORecord"></xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="InformationOperationsFamilyPdu"></xs:attribute>
                <xs:attribute name="ioSimSource" type="xs:string">
                   <xs:annotation>
@@ -8599,9 +8798,6 @@
                <xs:attribute name="padding2" type="xs:unsignedShort"></xs:attribute>
                <xs:attribute name="padding3" type="xs:unsignedShort"></xs:attribute>
                <xs:attribute name="numberOfIORecords" type="xs:unsignedShort"></xs:attribute>
-               <xs:attribute name="ioRecords" type="xs:string">
-                  <!--TODO unhandled definition: class InformationOperationsReportPdu attribute ioRecords objectlist -->
-               </xs:attribute>
             </xs:extension>
          </xs:complexContent>
       </xs:complexType>
@@ -8655,6 +8851,7 @@
                   <xs:element name="orientationError" type="LiveEntityOrientationError"></xs:element>
                   <xs:element name="deadReckoningParameters" type="LiveDeadReckoningParameters"></xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="LiveEntityFamilyPdu"></xs:attribute>
                <xs:attribute name="TSPIFlag" type="xs:unsignedByte">
                   <xs:annotation>
@@ -8666,9 +8863,13 @@
                <xs:attribute name="systemSpecificData">
                   <xs:simpleType>
                      <xs:annotation>
-                        <xs:appinfo>The length of this list is determined by attribute systemSpecificDataLength</xs:appinfo>
+                        <xs:appinfo>Attribute systemSpecificDataLength determines the length of this list.</xs:appinfo>
                      </xs:annotation>
-                     <xs:list itemType="xs:unsignedByte"></xs:list>
+                     <xs:restriction>
+                        <xs:simpleType>
+                           <xs:list itemType="xs:unsignedByte"></xs:list>
+                        </xs:simpleType>
+                     </xs:restriction>
                   </xs:simpleType>
                </xs:attribute>
             </xs:extension>
@@ -8702,6 +8903,7 @@
                   <xs:element name="capabilities" type="EntityCapabilities"></xs:element>
                   <xs:element name="appearanceFields" type="Appearance"></xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="LiveEntityFamilyPdu"></xs:attribute>
                <xs:attribute name="appearanceFlags" type="xs:unsignedShort">
                   <xs:annotation>
@@ -8726,12 +8928,12 @@
             <xs:extension base="LiveEntityFamilyPdu">
                <xs:sequence>
                   <xs:element name="liveEntityId" type="EntityID"></xs:element>
+                  <!--Attribute (as element) ArticulatedPartsPdu variableParameters with objectlist classRef name=VariableParameter=VariableParameter-->
+                  <xs:element name="variableParameters" type="VariableParameter"></xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="LiveEntityFamilyPdu"></xs:attribute>
                <xs:attribute name="numberOfParameterRecords" type="xs:unsignedByte"></xs:attribute>
-               <xs:attribute name="variableParameters" type="xs:string">
-                  <!--TODO unhandled definition: class ArticulatedPartsPdu attribute variableParameters objectlist -->
-               </xs:attribute>
             </xs:extension>
          </xs:complexContent>
       </xs:complexType>
@@ -8752,6 +8954,7 @@
                   <xs:element name="munitionDescriptor" type="MunitionDescriptor"></xs:element>
                   <xs:element name="velocity" type="LiveEntityLinearVelocity"></xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="LiveEntityFamilyPdu"></xs:attribute>
                <xs:attribute name="flags" type="xs:unsignedByte">
                   <xs:annotation>
@@ -8797,6 +9000,7 @@
                   <xs:element name="munitionDescriptor" type="MunitionDescriptor"></xs:element>
                   <xs:element name="entityLocation" type="LiveEntityLinearVelocity"></xs:element>
                </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="LiveEntityFamilyPdu"></xs:attribute>
                <xs:attribute name="detonationFlag1" type="xs:unsignedByte"></xs:attribute>
                <xs:attribute name="detonationFlag2" type="xs:unsignedByte"></xs:attribute>
