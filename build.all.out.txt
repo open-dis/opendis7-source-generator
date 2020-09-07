@@ -1,7 +1,11 @@
 ant -f C:\\x3d-github\\open-dis7-source-generator all
 all:
-timestamp 1 September 2020 23:23:06
+timestamp 7 September 2020 11:07:20
 clean-all-generated-jars-javadoc:
+Deleting C:\x3d-github\open-dis7-source-generator\dist\open-dis7-enumerations-classes.jar
+Deleting C:\x3d-github\open-dis7-source-generator\dist\open-dis7-enumerations-javadoc.jar
+Deleting C:\x3d-github\open-dis7-source-generator\dist\open-dis7-enumerations-source.jar
+Deleting directory C:\x3d-github\open-dis7-source-generator\javadoc
 clean-generated-source:
 ensure src-generated/java directory exists and is empty
 clean:
@@ -14,9 +18,7 @@ init:
 Deleting: C:\x3d-github\open-dis7-source-generator\build\built-jar.properties
 deps-jar:
 Updating property file: C:\x3d-github\open-dis7-source-generator\build\built-jar.properties
-Compiling 1 source file to C:\x3d-github\open-dis7-source-generator\build\classes
-warning: [options] bootstrap class path not set in conjunction with -source 8
-1 warning
+Copying 4 files to C:\x3d-github\open-dis7-source-generator\build\classes
 compile:
 generate-source-code:
 ==================================================================================
@@ -83,7 +85,7 @@ init:
 Deleting: C:\x3d-github\open-dis7-source-generator\build\built-jar.properties
 deps-jar:
 Updating property file: C:\x3d-github\open-dis7-source-generator\build\built-jar.properties
-Copying 1 file to C:\x3d-github\open-dis7-source-generator\build\classes
+Copying 3 files to C:\x3d-github\open-dis7-source-generator\build\classes
 compile:
 javadoc:
 Generating Javadoc
@@ -21890,7 +21892,7 @@ C:\x3d-github\open-dis7-source-generator\src-specialcase\java\edu\nps\moves\dis7
      * @param d
 C:\x3d-github\open-dis7-source-generator\src-specialcase\java\edu\nps\moves\dis7\pdus\Domain.java:60: warning: no description for @return
      * @return
-C:\x3d-github\open-dis7-source-generator\src-autogenerate\edu\nps\moves\dis7\source\generator\pdus\Generator.java:128: warning: no description for @param
+C:\x3d-github\open-dis7-source-generator\src-autogenerate\edu\nps\moves\dis7\source\generator\pdus\Generator.java:133: warning: no description for @param
      * @param mask
 Building index for all the packages and classes...
 Building index for all classes...
@@ -21903,7 +21905,7 @@ Specification-Title    = SISO Reference for Enumerations for Simulation Interope
 Specification-Version  = 28
 Specification-Vendor   = Simulation Interoperability Standards Organization (SISO)
 Implementation-Title   = edu.nps.moves.dis7
-Implementation-Version = 1 September 2020 23:23:06
+Implementation-Version = 7 September 2020 11:07:20
 Implementation-Vendor  = Naval Postgraduate School (NPS)
 jar.classes:
 Packaging .class binaries for all generated OpenDIS7 entity enumerations into a single JAR
@@ -21926,7 +21928,7 @@ Specification-Title    = SISO Reference for Enumerations for Simulation Interope
 Specification-Version  = 28
 Specification-Vendor   = Simulation Interoperability Standards Organization (SISO)
 Implementation-Title   = edu.nps.moves.dis7
-Implementation-Version = 1 September 2020 23:23:06
+Implementation-Version = 7 September 2020 11:07:20
 Implementation-Vendor  = Naval Postgraduate School (NPS)
 jar.classes:
 Packaging .class binaries for all generated OpenDIS7 entity enumerations into a single JAR
@@ -21944,4 +21946,4 @@ Copying C:\x3d-github\open-dis7-source-generator\dist\open-dis7-enumerations-cla
 Copying C:\x3d-github\open-dis7-source-generator\dist\open-dis7-enumerations-javadoc.jar to C:\x3d-github\open-dis7-java\dist\open-dis7-enumerations-javadoc.jar
 Copying C:\x3d-github\open-dis7-source-generator\dist\open-dis7-enumerations-source.jar to C:\x3d-github\open-dis7-java\dist\open-dis7-enumerations-source.jar
 build all complete
-BUILD SUCCESSFUL (total time: 9 minutes 4 seconds)
+BUILD SUCCESSFUL (total time: 8 minutes 24 seconds)
