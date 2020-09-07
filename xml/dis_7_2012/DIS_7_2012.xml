@@ -512,7 +512,7 @@ dB and RPM)"/>
             </objectlist> 
         </attribute>
   
-        <attribute name="variableDatumIDList" comment="variable length list variable datums">
+        <attribute name="variableDatumIDList" comment="variable length list of variable datums">
             <objectlist countFieldName="numberOfVariableDatums">
                 <classRef name="VariableDatum"/>
             </objectlist> 
@@ -1306,7 +1306,7 @@ dB and RPM)"/>
 
     </class>
 
-    <class name="FixedDatum" inheritsFrom="root" comment="Fixed Datum Record. Section 6.2.38">
+    <class name="FixedDatum" inheritsFrom="root" comment="Fixed Datum Record. Section 6.2.37">
    
         <attribute name="fixedDatumID" comment="ID of the fixed datum, an enumeration">
             <sisoenum type="VariableRecordType" comment="uid 66"/>
@@ -2611,7 +2611,8 @@ dB and RPM)"/>
 
     </class>
 
-    <!-- This is special-cased because of the complexity of dealing with the length-in-bits field
+    <!-- VariableDatum was a special case because of complexity in dealing with the length-in-bits field -->
+    
     <class name="VariableDatum" 
            inheritsFrom="root" 
            comment="The variable datum type, the datum length, and the value for that variable datum type. Section 6.2.93">
@@ -2630,12 +2631,11 @@ dB and RPM)"/>
             </primitivelist>
         </attribute>
         
-       <attribute name="padding">
+       <attribute name="padding" comment="data structure to selectively provide padding of correct length, see DIS specification for computation algorithm.">
             <padtoboundary length="64"/>
         </attribute>
 
     </class>
-    -->
 
     <class name="VariableParameter" inheritsFrom="root" comment="used in DetonationPdu, ArticulatedPartsPdu among others">
         
