@@ -292,7 +292,12 @@
                 </xs:complexType>
             </xsl:when>
             <!-- ===================================================== -->
-            <xsl:when test="(local-name() = 'class') and not(contains(@name, 'Family'))"><!-- another class, including Pdu types -->
+            <!-- Pdu elements (not Pdu and PduBase) -->
+            <xsl:when test="(local-name() = 'class') and not(contains(@name, 'Family')) and 
+                             ends-with(@name, 'Pdu') and not(starts-with(@name, 'Pdu'))">
+                <xsl:comment>
+                    <xsl:text>debug: Pdu elements (not Pdu and PduBase)</xsl:text>
+                </xsl:comment>
             
                 <xsl:element name="xs:element">
                     <xsl:attribute name="name"   select="@name"/>
@@ -329,11 +334,49 @@
                             </xs:extension>
                         </xs:complexContent>
                     </xs:complexType>
+                </xsl:element>
+            </xsl:when>
+            <!-- ===================================================== -->
+            <!-- another class, providing Pdu types -->
+            <xsl:when test="(local-name() = 'class') and not(contains(@name, 'Family'))">
+                <xsl:comment>
+                    <xsl:text>debug: another class, providing Pdu types</xsl:text>
+                </xsl:comment>
+                <xsl:element name="xs:complexType">
+                    <xsl:attribute name="name"   select="concat(@name,'Type')"/><!-- nameSuffix -->
                     
-                    <!-- create attributes and content
-                    <xsl:apply-templates select="*">
-                        <xsl:sort select="classRef"/>
-                    </xsl:apply-templates> -->
+                    <xsl:call-template name="handle-comment-documentation"/>
+                    
+                    <xsl:variable name="family" select="concat(../class[contains(@name, 'Family')]/@name,'Type')"/><!-- nameSuffix -->
+                <!--<xs:complexType> anonymous -->
+                        <xs:complexContent>
+                            <xs:extension base="{$family}">
+                                <!-- contained classes/elements first -->
+                        <xsl:if test="                (count(attribute[(classRef)]) > 0) or
+                                                      (count(attribute[objectlist/classRef][objectlist/classRef/@name != 'UnsignedDISInteger']) > 0)">
+                            <xs:sequence>
+                                <xsl:apply-templates select="attribute[   (classRef)] | 
+                                                             attribute[objectlist/classRef][objectlist/classRef/@name != 'UnsignedDISInteger']"/>
+                            </xs:sequence>
+        <xsl:comment>
+            <xsl:text> ========== debug: divider between elements and attributes ========== </xsl:text>
+        </xsl:comment>
+                        </xsl:if>
+                                <xsl:element name="xs:attribute">
+                                    <xsl:variable  name="familyLiteral"><xsl:text>family</xsl:text></xsl:variable>
+                                    <xsl:attribute name="name" select="$familyLiteral"/>
+                                    <xsl:attribute name="fixed"  select="$family"/>
+                                </xsl:element>
+                                <xsl:apply-templates select="attribute[not(classRef)][not(objectlist)]"/>
+<!--
+        <xsl:comment>
+            <xsl:text> ========== debug: schema attribute divider before UnsignedDISInteger only ========== </xsl:text>
+        </xsl:comment>
+-->
+                                <xsl:apply-templates select="attribute[objectlist/classRef][objectlist/classRef/@name  = 'UnsignedDISInteger']"/>
+                            </xs:extension>
+                        </xs:complexContent>
+                <!--</xs:complexType>-->
                 </xsl:element>
             </xsl:when>
             <!-- ===================================== -->
