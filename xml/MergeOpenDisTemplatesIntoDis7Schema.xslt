@@ -128,6 +128,7 @@
             <xsl:call-template name="create-complex-types-primary-document"/> <!-- classes/class in topmost document -->          
 
             <xsl:for-each select="//xi:include"> <!-- now repeat for each include -->
+                <xsl:sort select="@href" order="ascending"/>
 
                 <xsl:variable name="pduFamilyDocument" select="@href"/>
                 <xsl:message>
@@ -156,18 +157,21 @@
                     </xsl:message>
                 </xsl:if>
 
+                <!-- now process all class definitions in thie document -->
                 <xsl:for-each select="$nodes/*">
 
                     <!-- debug -->
                     <xsl:comment>
-                        <xsl:text>processing next </xsl:text>
-                        <xsl:value-of select="count(//class)"/>
-                        <xsl:text> classes in </xsl:text>
                         <xsl:value-of select="$pduFamilyDocument"/>
-                        <xsl:text> document</xsl:text>
+                        <xsl:text> contains </xsl:text>
+                        <xsl:value-of select="count(//class)"/>
+                        <xsl:text> classes</xsl:text>
                         
                     </xsl:comment>
-                    <xsl:apply-templates select="//class"/>
+                    <xsl:apply-templates select="//class">
+                        <xsl:sort select="@name[not(contains(.,'Family'))]" order="ascending"/>
+                        <xsl:sort select="@name[    contains(.,'Family') ]"/>
+                    </xsl:apply-templates>
 
                 </xsl:for-each>
                 
@@ -295,12 +299,13 @@
             <!-- Pdu elements (not Pdu and PduBase) -->
             <xsl:when test="(local-name() = 'class') and not(contains(@name, 'Family')) and 
                              ends-with(@name, 'Pdu') and not(starts-with(@name, 'Pdu'))">
-                <xsl:comment>
-                    <xsl:text>debug: Pdu elements (not Pdu and PduBase)</xsl:text>
-                </xsl:comment>
             
                 <xsl:element name="xs:element">
                     <xsl:attribute name="name"   select="@name"/>
+                    
+                    <xsl:comment>
+                        <xsl:text>debug: handle Pdu elements (not Pdu and PduBase)</xsl:text>
+                    </xsl:comment>
                     
                     <xsl:call-template name="handle-comment-documentation"/>
                     
@@ -339,11 +344,12 @@
             <!-- ===================================================== -->
             <!-- another class, providing Pdu types -->
             <xsl:when test="(local-name() = 'class') and not(contains(@name, 'Family'))">
-                <xsl:comment>
-                    <xsl:text>debug: another class, providing Pdu types</xsl:text>
-                </xsl:comment>
                 <xsl:element name="xs:complexType">
                     <xsl:attribute name="name"   select="concat(@name,'Type')"/><!-- nameSuffix -->
+                    
+                    <xsl:comment>
+                        <xsl:text>debug: another class, providing Pdu types</xsl:text>
+                    </xsl:comment>
                     
                     <xsl:call-template name="handle-comment-documentation"/>
                     
@@ -763,6 +769,7 @@
     
     <xsl:template name="create-complex-types-primary-document">
         <xsl:for-each select="//classes/class">
+            <xsl:sort select="@name" order="ascending"/>
                         
             <xsl:variable name="family">
                 <xsl:if test="(string-length(../class[contains(@name, 'Family')]/@name) > 0)">
