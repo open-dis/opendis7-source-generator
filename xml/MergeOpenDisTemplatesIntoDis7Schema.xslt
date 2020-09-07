@@ -303,9 +303,10 @@
                 <xsl:element name="xs:element">
                     <xsl:attribute name="name"   select="@name"/>
                     
+                    <!-- debug
                     <xsl:comment>
                         <xsl:text>debug: handle Pdu elements (not Pdu and PduBase)</xsl:text>
-                    </xsl:comment>
+                    </xsl:comment> -->
                     
                     <xsl:call-template name="handle-comment-documentation"/>
                     
@@ -320,9 +321,13 @@
                                 <xsl:apply-templates select="attribute[   (classRef)] | 
                                                              attribute[objectlist/classRef][objectlist/classRef/@name != 'UnsignedDISInteger']"/>
                             </xs:sequence>
+                            
+                            <xsl:if test="(count(attribute[not(classRef)][not(objectlist)]) +
+                                           count(attribute[objectlist/classRef][objectlist/classRef/@name  = 'UnsignedDISInteger']) > 0)">
         <xsl:comment>
             <xsl:text> ========== debug: divider between elements and attributes ========== </xsl:text>
         </xsl:comment>
+                            </xsl:if>
                         </xsl:if>
                                 <xsl:element name="xs:attribute">
                                     <xsl:variable  name="familyLiteral"><xsl:text>family</xsl:text></xsl:variable>
@@ -364,9 +369,12 @@
                                 <xsl:apply-templates select="attribute[   (classRef)] | 
                                                              attribute[objectlist/classRef][objectlist/classRef/@name != 'UnsignedDISInteger']"/>
                             </xs:sequence>
+                            
+                            <xsl:if test="(count(attribute[not(classRef)][not(objectlist)]) > 0)">
         <xsl:comment>
             <xsl:text> ========== debug: divider between elements and attributes ========== </xsl:text>
         </xsl:comment>
+                            </xsl:if>
                         </xsl:if>
                                 <xsl:element name="xs:attribute">
                                     <xsl:variable  name="familyLiteral"><xsl:text>family</xsl:text></xsl:variable>
@@ -439,7 +447,7 @@
                             <xsl:value-of select="@name"/>
                             <xsl:text> is defined in subclasses for </xsl:text>
                             <xsl:value-of select="../@name"/>
-                            <xsl:text> rather than here, in order to avoid inheritance errors.</xsl:text>
+                            <xsl:text> rather than here, in order to avoid inheritance collisions.</xsl:text>
                         </xsl:comment>
                     </xsl:when>
                     <xsl:otherwise>
@@ -746,6 +754,11 @@
                 <xsl:value-of select="normalize-space(concat(sisobitfield/@type,' ',sisobitfield/@comment))"/>
                 <xsl:text>)</xsl:text>
             </xsl:if>
+            <xsl:if test="(.//*[string-length(@countFieldName) > 0])">
+                <xsl:text> (length of list found in field </xsl:text>
+                <xsl:value-of select=".//*[string-length(@countFieldName) > 0]/@countFieldName"/>
+                <xsl:text>)</xsl:text>
+            </xsl:if>
         </xsl:variable>
         <xsl:if test="(string-length(normalize-space($combinedAppinfo)) > 0)">
             <xsl:element name="xs:annotation">
@@ -837,9 +850,13 @@
                                 <xsl:apply-templates select="attribute[   (classRef)] | 
                                                              attribute[objectlist/classRef][objectlist/classRef/@name != 'UnsignedDISInteger']"/>
                             </xs:sequence>
+                            
+                            <xsl:if test="(count(attribute[not(classRef)][not(objectlist)]) +
+                                           count(attribute[objectlist/classRef][objectlist/classRef/@name  = 'UnsignedDISInteger']) > 0)">
         <xsl:comment>
             <xsl:text> ========== debug: divider between elements and attributes ========== </xsl:text>
         </xsl:comment>
+                            </xsl:if>
                         </xsl:if>
                         <!-- now 'attribute' entries that are schema attributes -->
                         <xsl:apply-templates         select="attribute[not(classRef)][not(objectlist)]"/>
