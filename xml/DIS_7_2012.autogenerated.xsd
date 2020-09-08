@@ -900,17 +900,33 @@
          <xs:extension base="rootType">
             <xs:sequence>
                <!--Attribute (as element) DatumSpecification fixedDatumIDList with objectlist classRef name=FixedDatum, type=FixedDatumType-->
-               <xs:element name="fixedDatumIDList" type="FixedDatumType">
+               <xs:sequence minOccurs="0" maxOccurs="unbounded">
                   <xs:annotation>
-                     <xs:appinfo>variable length list fixed datums (length of list found in field numberOfFixedDatums)</xs:appinfo>
+                     <xs:appinfo>Number of elements is determined by size fieldnumberOfFixedDatums and can be 0 or greater.
+                        Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                     </xs:appinfo>
+                     <xs:documentation>numberOfFixedDatums</xs:documentation>
                   </xs:annotation>
-               </xs:element>
+                  <xs:element name="FixedDatum" type="FixedDatumType">
+                     <xs:annotation>
+                        <xs:appinfo>variable length list fixed datums (length of list found in field numberOfFixedDatums)</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
                <!--Attribute (as element) DatumSpecification variableDatumIDList with objectlist classRef name=VariableDatum, type=VariableDatumType-->
-               <xs:element name="variableDatumIDList" type="VariableDatumType">
+               <xs:sequence minOccurs="0" maxOccurs="unbounded">
                   <xs:annotation>
-                     <xs:appinfo>variable length list variable datums (length of list found in field numberOfVariableDatums)</xs:appinfo>
+                     <xs:appinfo>Number of elements is determined by size fieldnumberOfVariableDatums and can be 0 or greater.
+                        Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                     </xs:appinfo>
+                     <xs:documentation>numberOfVariableDatums</xs:documentation>
                   </xs:annotation>
-               </xs:element>
+                  <xs:element name="VariableDatum" type="VariableDatumType">
+                     <xs:annotation>
+                        <xs:appinfo>variable length list of variable datums (length of list found in field numberOfVariableDatums)</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
             </xs:sequence>
             <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="numberOfFixedDatums" type="xs:unsignedLong">
@@ -972,19 +988,35 @@
          <xs:extension base="rootType">
             <xs:sequence>
                <!--Attribute (as element) DirectedEnergyAreaAimpoint beamAntennaParameterList with objectlist classRef name=BeamAntennaPattern, type=BeamAntennaPatternType-->
-               <xs:element name="beamAntennaParameterList" type="BeamAntennaPatternType">
+               <xs:sequence minOccurs="0" maxOccurs="unbounded">
                   <xs:annotation>
-                     <xs:appinfo>list of beam antenna records. See 6.2.9.2 (length of list found in field beamAntennaPatternRecordCount)</xs:appinfo>
-                  </xs:annotation>
-               </xs:element>
-               <!--Attribute (as element) DirectedEnergyAreaAimpoint directedEnergyTargetEnergyDepositionRecordList with objectlist classRef name=DirectedEnergyTargetEnergyDeposition, type=DirectedEnergyTargetEnergyDepositionType-->
-               <xs:element name="directedEnergyTargetEnergyDepositionRecordList" type="DirectedEnergyTargetEnergyDepositionType">
-                  <xs:annotation>
-                     <xs:appinfo>list of DE target deposition records. See 6.2.21.4 (length of list found in field
-                        directedEnergyTargetEnergyDepositionRecordCount)
+                     <xs:appinfo>Number of elements is determined by size fieldbeamAntennaPatternRecordCount and can be 0 or greater.
+                        Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
                      </xs:appinfo>
+                     <xs:documentation>beamAntennaPatternRecordCount</xs:documentation>
                   </xs:annotation>
-               </xs:element>
+                  <xs:element name="BeamAntennaPattern" type="BeamAntennaPatternType">
+                     <xs:annotation>
+                        <xs:appinfo>list of beam antenna records. See 6.2.9.2 (length of list found in field beamAntennaPatternRecordCount)</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
+               <!--Attribute (as element) DirectedEnergyAreaAimpoint directedEnergyTargetEnergyDepositionRecordList with objectlist classRef name=DirectedEnergyTargetEnergyDeposition, type=DirectedEnergyTargetEnergyDepositionType-->
+               <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                  <xs:annotation>
+                     <xs:appinfo>Number of elements is determined by size fielddirectedEnergyTargetEnergyDepositionRecordCount and can be 0 or greater.
+                        Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                     </xs:appinfo>
+                     <xs:documentation>directedEnergyTargetEnergyDepositionRecordCount</xs:documentation>
+                  </xs:annotation>
+                  <xs:element name="DirectedEnergyTargetEnergyDeposition" type="DirectedEnergyTargetEnergyDepositionType">
+                     <xs:annotation>
+                        <xs:appinfo>list of DE target deposition records. See 6.2.21.4 (length of list found in field
+                           directedEnergyTargetEnergyDepositionRecordCount)
+                        </xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
             </xs:sequence>
             <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="recordType" type="xs:unsignedLong">
@@ -2401,11 +2433,19 @@
          <xs:extension base="rootType">
             <xs:sequence>
                <!--Attribute (as element) IffDataSpecification iffDataRecords with objectlist classRef name=IFFData, type=IFFDataType-->
-               <xs:element name="iffDataRecords" type="IFFDataType">
+               <xs:sequence minOccurs="0" maxOccurs="unbounded">
                   <xs:annotation>
-                     <xs:appinfo>IFF data records (length of list found in field numberOfIffDataRecords)</xs:appinfo>
+                     <xs:appinfo>Number of elements is determined by size fieldnumberOfIffDataRecords and can be 0 or greater.
+                        Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                     </xs:appinfo>
+                     <xs:documentation>numberOfIffDataRecords</xs:documentation>
                   </xs:annotation>
-               </xs:element>
+                  <xs:element name="IFFData" type="IFFDataType">
+                     <xs:annotation>
+                        <xs:appinfo>IFF data records (length of list found in field numberOfIffDataRecords)</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
             </xs:sequence>
             <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="numberOfIffDataRecords" type="xs:unsignedShort">
@@ -3341,11 +3381,19 @@
          <xs:extension base="rootType">
             <xs:sequence>
                <!--Attribute (as element) RecordSpecification recordSets with objectlist classRef name=RecordSpecificationElement, type=RecordSpecificationElementType-->
-               <xs:element name="recordSets" type="RecordSpecificationElementType">
+               <xs:sequence minOccurs="0" maxOccurs="unbounded">
                   <xs:annotation>
-                     <xs:appinfo>variable length list record specifications. (length of list found in field numberOfRecordSets)</xs:appinfo>
+                     <xs:appinfo>Number of elements is determined by size fieldnumberOfRecordSets and can be 0 or greater.
+                        Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                     </xs:appinfo>
+                     <xs:documentation>numberOfRecordSets</xs:documentation>
                   </xs:annotation>
-               </xs:element>
+                  <xs:element name="RecordSpecificationElement" type="RecordSpecificationElementType">
+                     <xs:annotation>
+                        <xs:appinfo>variable length list record specifications. (length of list found in field numberOfRecordSets)</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
             </xs:sequence>
             <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="numberOfRecordSets" type="xs:unsignedLong">
@@ -3735,14 +3783,22 @@
          <xs:extension base="rootType">
             <xs:sequence>
                <!--Attribute (as element) StandardVariableSpecification standardVariables with objectlist classRef name=StandardVariableRecord, type=StandardVariableRecordType-->
-               <xs:element name="standardVariables" type="StandardVariableRecordType">
+               <xs:sequence minOccurs="0" maxOccurs="unbounded">
                   <xs:annotation>
-                     <xs:appinfo>variable length list of standard variables, The class type and length here are WRONG
-                        and will cause the incorrect serialization of any class in whihc it is embedded. (length
-                        of list found in field numberOfStandardVariableRecords)
+                     <xs:appinfo>Number of elements is determined by size fieldnumberOfStandardVariableRecords and can be 0 or greater.
+                        Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
                      </xs:appinfo>
+                     <xs:documentation>numberOfStandardVariableRecords</xs:documentation>
                   </xs:annotation>
-               </xs:element>
+                  <xs:element name="StandardVariableRecord" type="StandardVariableRecordType">
+                     <xs:annotation>
+                        <xs:appinfo>variable length list of standard variables, The class type and length here are WRONG
+                           and will cause the incorrect serialization of any class in whihc it is embedded. (length
+                           of list found in field numberOfStandardVariableRecords)
+                        </xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
             </xs:sequence>
             <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="numberOfStandardVariableRecords" type="xs:unsignedShort">
@@ -4068,7 +4124,7 @@
       <!--abstract='false' base='rootType'-->
       <xs:annotation>
          <xs:appinfo>The variable datum type, the datum length, and the value for that variable datum type.
-            Section 6.2.93 etc.
+            Section 6.2.93
          </xs:appinfo>
       </xs:annotation>
       <xs:complexContent>
@@ -4353,11 +4409,19 @@
                      </xs:annotation>
                   </xs:element>
                   <!--Attribute (as element) ElectromagneticEmissionPdu systems with objectlist classRef name=ElectronicEmitter, type=ElectronicEmitterType-->
-                  <xs:element name="systems" type="ElectronicEmitterType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>Electronic emmissions systems (length of list found in field numberOfSystems)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfSystems and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfSystems</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="ElectronicEmitter" type="ElectronicEmitterType">
+                        <xs:annotation>
+                           <xs:appinfo>Electronic emmissions systems (length of list found in field numberOfSystems)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="DistributedEmissionsFamilyPduType"></xs:attribute>
@@ -4411,11 +4475,19 @@
                   </xs:annotation>
                </xs:element>
                <!--Attribute (as element) ElectronicEmitter beams with objectlist classRef name=EmitterBeam, type=EmitterBeamType-->
-               <xs:element name="beams" type="EmitterBeamType">
+               <xs:sequence minOccurs="0" maxOccurs="unbounded">
                   <xs:annotation>
-                     <xs:appinfo>Electronic emmission beams (length of list found in field numberOfBeams)</xs:appinfo>
+                     <xs:appinfo>Number of elements is determined by size fieldnumberOfBeams and can be 0 or greater.
+                        Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                     </xs:appinfo>
+                     <xs:documentation>numberOfBeams</xs:documentation>
                   </xs:annotation>
-               </xs:element>
+                  <xs:element name="EmitterBeam" type="EmitterBeamType">
+                     <xs:annotation>
+                        <xs:appinfo>Electronic emmission beams (length of list found in field numberOfBeams)</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
             </xs:sequence>
             <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="family" fixed="DistributedEmissionsFamilyPduType"></xs:attribute>
@@ -4447,11 +4519,19 @@
                <xs:element name="beamStatus" type="BeamStatusType"></xs:element>
                <xs:element name="jammingTechnique" type="JammingTechniqueType"></xs:element>
                <!--Attribute (as element) EmitterBeam trackJamData with objectlist classRef name=TrackJamData, type=TrackJamDataType-->
-               <xs:element name="trackJamData" type="TrackJamDataType">
+               <xs:sequence minOccurs="0" maxOccurs="unbounded">
                   <xs:annotation>
-                     <xs:appinfo>(length of list found in field numberOfTargets)</xs:appinfo>
+                     <xs:appinfo>Number of elements is determined by size fieldnumberOfTargets and can be 0 or greater.
+                        Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                     </xs:appinfo>
+                     <xs:documentation>numberOfTargets</xs:documentation>
                   </xs:annotation>
-               </xs:element>
+                  <xs:element name="TrackJamData" type="TrackJamDataType">
+                     <xs:annotation>
+                        <xs:appinfo>(length of list found in field numberOfTargets)</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
             </xs:sequence>
             <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="family" fixed="DistributedEmissionsFamilyPduType"></xs:attribute>
@@ -4494,11 +4574,19 @@
                      </xs:annotation>
                   </xs:element>
                   <!--Attribute (as element) IFFLayer2Pdu fundamentalIFFParameters with objectlist classRef name=IFFFundamentalParameterData, type=IFFFundamentalParameterDataType-->
-                  <xs:element name="fundamentalIFFParameters" type="IFFFundamentalParameterDataType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>variable length list of fundamental parameters. (length of list found in field numberOfParameters)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfParameters and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfParameters</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="IFFFundamentalParameterData" type="IFFFundamentalParameterDataType">
+                        <xs:annotation>
+                           <xs:appinfo>variable length list of fundamental parameters. (length of list found in field numberOfParameters)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="DistributedEmissionsFamilyPduType"></xs:attribute>
@@ -4578,17 +4666,33 @@
                      </xs:annotation>
                   </xs:element>
                   <!--Attribute (as element) SEESPdu propulsionSystemData with objectlist classRef name=PropulsionSystemData, type=PropulsionSystemDataType-->
-                  <xs:element name="propulsionSystemData" type="PropulsionSystemDataType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>variable length list of propulsion system data (length of list found in field numberOfPropulsionSystems)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfPropulsionSystems and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfPropulsionSystems</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="PropulsionSystemData" type="PropulsionSystemDataType">
+                        <xs:annotation>
+                           <xs:appinfo>variable length list of propulsion system data (length of list found in field numberOfPropulsionSystems)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                   <!--Attribute (as element) SEESPdu vectoringSystemData with objectlist classRef name=VectoringNozzleSystem, type=VectoringNozzleSystemType-->
-                  <xs:element name="vectoringSystemData" type="VectoringNozzleSystemType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>variable length list of vectoring system data (length of list found in field numberOfVectoringNozzleSystems)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfVectoringNozzleSystems and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfVectoringNozzleSystems</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="VectoringNozzleSystem" type="VectoringNozzleSystemType">
+                        <xs:annotation>
+                           <xs:appinfo>variable length list of vectoring system data (length of list found in field numberOfVectoringNozzleSystems)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="DistributedEmissionsFamilyPduType"></xs:attribute>
@@ -4671,11 +4775,19 @@
                   </xs:annotation>
                </xs:element>
                <!--Attribute (as element) UAEmitter beams with objectlist classRef name=UABeam, type=UABeamType-->
-               <xs:element name="beams" type="UABeamType">
+               <xs:sequence minOccurs="0" maxOccurs="unbounded">
                   <xs:annotation>
-                     <xs:appinfo>Electronic emission beams (length of list found in field numberOfBeams)</xs:appinfo>
+                     <xs:appinfo>Number of elements is determined by size fieldnumberOfBeams and can be 0 or greater.
+                        Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                     </xs:appinfo>
+                     <xs:documentation>numberOfBeams</xs:documentation>
                   </xs:annotation>
-               </xs:element>
+                  <xs:element name="UABeam" type="UABeamType">
+                     <xs:annotation>
+                        <xs:appinfo>Electronic emission beams (length of list found in field numberOfBeams)</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
             </xs:sequence>
             <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="family" fixed="DistributedEmissionsFamilyPduType"></xs:attribute>
@@ -4716,23 +4828,47 @@
                      </xs:annotation>
                   </xs:element>
                   <!--Attribute (as element) UnderwaterAcousticPdu shaftRPMs with objectlist classRef name=ShaftRPM, type=ShaftRPMType-->
-                  <xs:element name="shaftRPMs" type="ShaftRPMType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>shaft RPM values. (length of list found in field numberOfShafts)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfShafts and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfShafts</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="ShaftRPM" type="ShaftRPMType">
+                        <xs:annotation>
+                           <xs:appinfo>shaft RPM values. (length of list found in field numberOfShafts)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                   <!--Attribute (as element) UnderwaterAcousticPdu apaData with objectlist classRef name=APA, type=APAType-->
-                  <xs:element name="apaData" type="APAType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>additional passive activities (length of list found in field numberOfAPAs)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfAPAs and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfAPAs</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="APA" type="APAType">
+                        <xs:annotation>
+                           <xs:appinfo>additional passive activities (length of list found in field numberOfAPAs)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                   <!--Attribute (as element) UnderwaterAcousticPdu emitterSystems with objectlist classRef name=UAEmitter, type=UAEmitterType-->
-                  <xs:element name="emitterSystems" type="UAEmitterType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>(length of list found in field numberOfUAEmitterSystems)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfUAEmitterSystems and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfUAEmitterSystems</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="UAEmitter" type="UAEmitterType">
+                        <xs:annotation>
+                           <xs:appinfo>(length of list found in field numberOfUAEmitterSystems)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="DistributedEmissionsFamilyPduType"></xs:attribute>
@@ -4821,11 +4957,19 @@
                      </xs:annotation>
                   </xs:element>
                   <!--Attribute (as element) AttributePdu attributeRecordSets with objectlist classRef name=AttributeRecordSet, type=AttributeRecordSetType-->
-                  <xs:element name="attributeRecordSets" type="AttributeRecordSetType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>(length of list found in field numberAttributeRecordSet)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberAttributeRecordSet and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberAttributeRecordSet</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="AttributeRecordSet" type="AttributeRecordSetType">
+                        <xs:annotation>
+                           <xs:appinfo>(length of list found in field numberAttributeRecordSet)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="EntityInformationFamilyPduType"></xs:attribute>
@@ -4897,11 +5041,19 @@
             <xs:sequence>
                <xs:element name="entityId" type="EntityIDType"></xs:element>
                <!--Attribute (as element) AttributeRecordSet attributeRecords with objectlist classRef name=Attribute, type=AttributeType-->
-               <xs:element name="attributeRecords" type="AttributeType">
+               <xs:sequence minOccurs="0" maxOccurs="unbounded">
                   <xs:annotation>
-                     <xs:appinfo>(length of list found in field numberOfAttributeRecords)</xs:appinfo>
+                     <xs:appinfo>Number of elements is determined by size fieldnumberOfAttributeRecords and can be 0 or greater.
+                        Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                     </xs:appinfo>
+                     <xs:documentation>numberOfAttributeRecords</xs:documentation>
                   </xs:annotation>
-               </xs:element>
+                  <xs:element name="Attribute" type="AttributeType">
+                     <xs:annotation>
+                        <xs:appinfo>(length of list found in field numberOfAttributeRecords)</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
+               </xs:sequence>
             </xs:sequence>
             <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="family" fixed="EntityInformationFamilyPduType"></xs:attribute>
@@ -5154,13 +5306,21 @@
                      </xs:annotation>
                   </xs:element>
                   <!--Attribute (as element) EntityStatePdu variableParameters with objectlist classRef name=VariableParameter, type=VariableParameterType-->
-                  <xs:element name="variableParameters" type="VariableParameterType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>variable length list of variable parameters. In earlier DIS versions this was articulation
-                           parameters. (length of list found in field numberOfVariableParameters)
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfVariableParameters and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
                         </xs:appinfo>
+                        <xs:documentation>numberOfVariableParameters</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="VariableParameter" type="VariableParameterType">
+                        <xs:annotation>
+                           <xs:appinfo>variable length list of variable parameters. In earlier DIS versions this was articulation
+                              parameters. (length of list found in field numberOfVariableParameters)
+                           </xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="EntityInformationFamilyPduType"></xs:attribute>
@@ -5236,13 +5396,21 @@
                      </xs:annotation>
                   </xs:element>
                   <!--Attribute (as element) EntityStateUpdatePdu variableParameters with objectlist classRef name=VariableParameter, type=VariableParameterType-->
-                  <xs:element name="variableParameters" type="VariableParameterType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>This field shall specify the parameter values for each Variable Parameter record that
-                           is included (see 6.2.93 and Annex I). (length of list found in field numberOfVariableParameters)
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfVariableParameters and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
                         </xs:appinfo>
+                        <xs:documentation>numberOfVariableParameters</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="VariableParameter" type="VariableParameterType">
+                        <xs:annotation>
+                           <xs:appinfo>This field shall specify the parameter values for each Variable Parameter record that
+                              is included (see 6.2.93 and Annex I). (length of list found in field numberOfVariableParameters)
+                           </xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="EntityInformationFamilyPduType"></xs:attribute>
@@ -5281,13 +5449,21 @@
             <xs:extension base="EntityInformationFamilyPduType">
                <xs:sequence>
                   <!--Attribute (as element) FastEntityStatePdu variableParameters with objectlist classRef name=VariableParameter, type=VariableParameterType-->
-                  <xs:element name="variableParameters" type="VariableParameterType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>variable length list of variable parameters. In earlier versions of DIS these were
-                           known as articulation parameters (length of list found in field numberOfVariableParameters)
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfVariableParameters and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
                         </xs:appinfo>
+                        <xs:documentation>numberOfVariableParameters</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="VariableParameter" type="VariableParameterType">
+                        <xs:annotation>
+                           <xs:appinfo>variable length list of variable parameters. In earlier versions of DIS these were
+                              known as articulation parameters (length of list found in field numberOfVariableParameters)
+                           </xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="EntityInformationFamilyPduType"></xs:attribute>
@@ -5532,35 +5708,49 @@
                      </xs:annotation>
                   </xs:element>
                   <!--Attribute (as element) AggregateStatePdu aggregateIDList with objectlist classRef name=AggregateIdentifier, type=AggregateIdentifierType-->
-                  <xs:element name="aggregateIDList" type="AggregateIdentifierType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>aggregates list (length of list found in field numberOfDisAggregates)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfDisAggregates and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfDisAggregates</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="AggregateIdentifier" type="AggregateIdentifierType">
+                        <xs:annotation>
+                           <xs:appinfo>aggregates list (length of list found in field numberOfDisAggregates)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                   <!--Attribute (as element) AggregateStatePdu entityIDList with objectlist classRef name=EntityID, type=EntityIDType-->
-                  <xs:element name="entityIDList" type="EntityIDType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>entity ID list (length of list found in field numberOfDisEntities)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfDisEntities + numberOfSilentAggregateTypes + numberOfSilentEntityTypes and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfDisEntities + numberOfSilentAggregateTypes + numberOfSilentEntityTypes</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="EntityID" type="EntityIDType">
+                        <xs:annotation>
+                           <xs:appinfo>entity ID list (length of list found in field numberOfDisEntities)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                   <!--Attribute (as element) AggregateStatePdu silentAggregateSystemList with objectlist classRef name=EntityType, type=EntityTypeType-->
-                  <xs:element name="silentAggregateSystemList" type="EntityTypeType">
-                     <xs:annotation>
-                        <xs:appinfo>silent entity types (length of list found in field numberOfSilentAggregateTypes)</xs:appinfo>
-                     </xs:annotation>
-                  </xs:element>
                   <!--Attribute (as element) AggregateStatePdu silentEntitySystemList with objectlist classRef name=EntityType, type=EntityTypeType-->
-                  <xs:element name="silentEntitySystemList" type="EntityTypeType">
-                     <xs:annotation>
-                        <xs:appinfo>silent entity types (length of list found in field numberOfSilentEntityTypes)</xs:appinfo>
-                     </xs:annotation>
-                  </xs:element>
                   <!--Attribute (as element) AggregateStatePdu variableDatumList with objectlist classRef name=VariableDatum, type=VariableDatumType-->
-                  <xs:element name="variableDatumList" type="VariableDatumType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>variableDatums (length of list found in field numberOfVariableDatumRecords)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfVariableDatumRecords and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfVariableDatumRecords</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="VariableDatum" type="VariableDatumType">
+                        <xs:annotation>
+                           <xs:appinfo>variableDatums (length of list found in field numberOfVariableDatumRecords)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="EntityManagementFamilyPduType"></xs:attribute>
@@ -5631,13 +5821,21 @@
                      </xs:annotation>
                   </xs:element>
                   <!--Attribute (as element) IsGroupOfPdu groupedEntityDescriptions with objectlist classRef name=VariableDatum, type=VariableDatumType-->
-                  <xs:element name="groupedEntityDescriptions" type="VariableDatumType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>GED records about each individual entity in the group. Bad specing--the Group Entity
-                           Descriptions are not described. (length of list found in field numberOfGroupedEntities)
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfGroupedEntities and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
                         </xs:appinfo>
+                        <xs:documentation>numberOfGroupedEntities</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="VariableDatum" type="VariableDatumType">
+                        <xs:annotation>
+                           <xs:appinfo>GED records about each individual entity in the group. Bad specing--the Group Entity
+                              Descriptions are not described. (length of list found in field numberOfGroupedEntities)
+                           </xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="EntityManagementFamilyPduType"></xs:attribute>
@@ -5801,11 +5999,19 @@
                   <xs:element name="ioAttackerID" type="EntityIDType"></xs:element>
                   <xs:element name="ioPrimaryTargetID" type="EntityIDType"></xs:element>
                   <!--Attribute (as element) InformationOperationsActionPdu ioRecords with objectlist classRef name=IORecord, type=IORecordType-->
-                  <xs:element name="ioRecords" type="IORecordType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>(length of list found in field numberOfIORecords)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfIORecords and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfIORecords</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="IORecord" type="IORecordType">
+                        <xs:annotation>
+                           <xs:appinfo>(length of list found in field numberOfIORecords)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="InformationOperationsFamilyPduType"></xs:attribute>
@@ -5854,11 +6060,19 @@
                   <xs:element name="ioAttackerID" type="EntityIDType"></xs:element>
                   <xs:element name="ioPrimaryTargetID" type="EntityIDType"></xs:element>
                   <!--Attribute (as element) InformationOperationsReportPdu ioRecords with objectlist classRef name=IORecord, type=IORecordType-->
-                  <xs:element name="ioRecords" type="IORecordType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>(length of list found in field numberOfIORecords)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfIORecords and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfIORecords</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="IORecord" type="IORecordType">
+                        <xs:annotation>
+                           <xs:appinfo>(length of list found in field numberOfIORecords)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="InformationOperationsFamilyPduType"></xs:attribute>
@@ -5938,11 +6152,19 @@
                <xs:sequence>
                   <xs:element name="liveEntityId" type="EntityIDType"></xs:element>
                   <!--Attribute (as element) ArticulatedPartsPdu variableParameters with objectlist classRef name=VariableParameter, type=VariableParameterType-->
-                  <xs:element name="variableParameters" type="VariableParameterType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>(length of list found in field numberOfParameterRecords)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfParameterRecords and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfParameterRecords</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="VariableParameter" type="VariableParameterType">
+                        <xs:annotation>
+                           <xs:appinfo>(length of list found in field numberOfParameterRecords)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="LiveEntityFamilyPduType"></xs:attribute>
@@ -6259,14 +6481,22 @@
                      </xs:annotation>
                   </xs:element>
                   <!--Attribute (as element) ResupplyOfferPdu supplies with objectlist classRef name=SupplyQuantity, type=SupplyQuantityType-->
-                  <xs:element name="supplies" type="SupplyQuantityType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>A Reord that Specifies the type of supply and the amount of that supply for each of
-                           the supply types in numberOfSupplyTypes (see 6.2.85), Section 7.4.3 (length of list
-                           found in field numberOfSupplyTypes)
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfSupplyTypes and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
                         </xs:appinfo>
+                        <xs:documentation>numberOfSupplyTypes</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="SupplyQuantity" type="SupplyQuantityType">
+                        <xs:annotation>
+                           <xs:appinfo>A Reord that Specifies the type of supply and the amount of that supply for each of
+                              the supply types in numberOfSupplyTypes (see 6.2.85), Section 7.4.3 (length of list
+                              found in field numberOfSupplyTypes)
+                           </xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="LogisticsFamilyPduType"></xs:attribute>
@@ -6312,14 +6542,22 @@
                      </xs:annotation>
                   </xs:element>
                   <!--Attribute (as element) ResupplyReceivedPdu supplies with objectlist classRef name=SupplyQuantity, type=SupplyQuantityType-->
-                  <xs:element name="supplies" type="SupplyQuantityType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>A Reord that Specifies the type of supply and the amount of that supply for each of
-                           the supply types in numberOfSupplyTypes (see 6.2.85), Section 7.4.3 (length of list
-                           found in field numberOfSupplyTypes)
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfSupplyTypes and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
                         </xs:appinfo>
+                        <xs:documentation>numberOfSupplyTypes</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="SupplyQuantity" type="SupplyQuantityType">
+                        <xs:annotation>
+                           <xs:appinfo>A Reord that Specifies the type of supply and the amount of that supply for each of
+                              the supply types in numberOfSupplyTypes (see 6.2.85), Section 7.4.3 (length of list
+                              found in field numberOfSupplyTypes)
+                           </xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="LogisticsFamilyPduType"></xs:attribute>
@@ -6363,11 +6601,19 @@
                      </xs:annotation>
                   </xs:element>
                   <!--Attribute (as element) ServiceRequestPdu supplies with objectlist classRef name=SupplyQuantity, type=SupplyQuantityType-->
-                  <xs:element name="supplies" type="SupplyQuantityType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>(length of list found in field numberOfSupplyTypes)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfSupplyTypes and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfSupplyTypes</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="SupplyQuantity" type="SupplyQuantityType">
+                        <xs:annotation>
+                           <xs:appinfo>(length of list found in field numberOfSupplyTypes)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="LogisticsFamilyPduType"></xs:attribute>
@@ -6444,29 +6690,61 @@
                      </xs:annotation>
                   </xs:element>
                   <!--Attribute (as element) MinefieldDataPdu sensorTypes with objectlist classRef name=MinefieldSensorType, type=MinefieldSensorTypeType-->
-                  <xs:element name="sensorTypes" type="MinefieldSensorTypeType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>Sensor types, each 16-bits long (length of list found in field numberOfSensorTypes)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfSensorTypes and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfSensorTypes</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="MinefieldSensorType" type="MinefieldSensorTypeType">
+                        <xs:annotation>
+                           <xs:appinfo>Sensor types, each 16-bits long (length of list found in field numberOfSensorTypes)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                   <!--Attribute (as element) MinefieldDataPdu mineLocation with objectlist classRef name=Vector3Float, type=Vector3FloatType-->
-                  <xs:element name="mineLocation" type="Vector3FloatType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>Mine locations (length of list found in field numberOfMinesInThisPdu)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfMinesInThisPdu and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfMinesInThisPdu</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="Vector3Float" type="Vector3FloatType">
+                        <xs:annotation>
+                           <xs:appinfo>Mine locations (length of list found in field numberOfMinesInThisPdu)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                   <!--Attribute (as element) MinefieldDataPdu mineOrientation with objectlist classRef name=EulerAngles, type=EulerAnglesType-->
-                  <xs:element name="mineOrientation" type="EulerAnglesType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>(length of list found in field numberOfMinesInThisPdu)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfMinesInThisPdu and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfMinesInThisPdu</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="EulerAngles" type="EulerAnglesType">
+                        <xs:annotation>
+                           <xs:appinfo>(length of list found in field numberOfMinesInThisPdu)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                   <!--Attribute (as element) MinefieldDataPdu mineEmplacementTime with objectlist classRef name=MineEmplacementTime, type=MineEmplacementTimeType-->
-                  <xs:element name="mineEmplacementTime" type="MineEmplacementTimeType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>(length of list found in field numberOfMinesInThisPdu)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfMinesInThisPdu and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfMinesInThisPdu</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="MineEmplacementTime" type="MineEmplacementTimeType">
+                        <xs:annotation>
+                           <xs:appinfo>(length of list found in field numberOfMinesInThisPdu)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="MinefieldFamilyPduType"></xs:attribute>
@@ -6679,17 +6957,33 @@
                      </xs:annotation>
                   </xs:element>
                   <!--Attribute (as element) MinefieldQueryPdu requestedPerimeterPoints with objectlist classRef name=Vector2Float, type=Vector2FloatType-->
-                  <xs:element name="requestedPerimeterPoints" type="Vector2FloatType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>perimeter points of request (length of list found in field numberOfPerimeterPoints)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfPerimeterPoints and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfPerimeterPoints</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="Vector2Float" type="Vector2FloatType">
+                        <xs:annotation>
+                           <xs:appinfo>perimeter points of request (length of list found in field numberOfPerimeterPoints)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                   <!--Attribute (as element) MinefieldQueryPdu sensorTypes with objectlist classRef name=MinefieldSensorType, type=MinefieldSensorTypeType-->
-                  <xs:element name="sensorTypes" type="MinefieldSensorTypeType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>Sensor types, each 16-bits long (length of list found in field numberOfSensorTypes)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfSensorTypes and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfSensorTypes</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="MinefieldSensorType" type="MinefieldSensorTypeType">
+                        <xs:annotation>
+                           <xs:appinfo>Sensor types, each 16-bits long (length of list found in field numberOfSensorTypes)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="MinefieldFamilyPduType"></xs:attribute>
@@ -6802,17 +7096,33 @@
                      </xs:annotation>
                   </xs:element>
                   <!--Attribute (as element) MinefieldStatePdu perimeterPoints with objectlist classRef name=Vector2Float, type=Vector2FloatType-->
-                  <xs:element name="perimeterPoints" type="Vector2FloatType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>perimeter points for the minefield (length of list found in field numberOfPerimeterPoints)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfPerimeterPoints and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfPerimeterPoints</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="Vector2Float" type="Vector2FloatType">
+                        <xs:annotation>
+                           <xs:appinfo>perimeter points for the minefield (length of list found in field numberOfPerimeterPoints)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                   <!--Attribute (as element) MinefieldStatePdu mineType with objectlist classRef name=EntityType, type=EntityTypeType-->
-                  <xs:element name="mineType" type="EntityTypeType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>Type of mines (length of list found in field numberOfMineTypes)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfMineTypes and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfMineTypes</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="EntityType" type="EntityTypeType">
+                        <xs:annotation>
+                           <xs:appinfo>Type of mines (length of list found in field numberOfMineTypes)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="MinefieldFamilyPduType"></xs:attribute>
@@ -6880,11 +7190,19 @@
                      </xs:annotation>
                   </xs:element>
                   <!--Attribute (as element) IntercomControlPdu intercomParameters with objectlist classRef name=IntercomCommunicationsParameters, type=IntercomCommunicationsParametersType-->
-                  <xs:element name="intercomParameters" type="IntercomCommunicationsParametersType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>(length of list found in field intercomParametersLength)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldintercomParametersLength and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>intercomParametersLength</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="IntercomCommunicationsParameters" type="IntercomCommunicationsParametersType">
+                        <xs:annotation>
+                           <xs:appinfo>(length of list found in field intercomParametersLength)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="RadioCommunicationsFamilyPduType"></xs:attribute>
@@ -7046,17 +7364,33 @@
                      </xs:annotation>
                   </xs:element>
                   <!--Attribute (as element) TransmitterPdu modulationParametersList with objectlist classRef name=ModulationParameters, type=ModulationParametersType-->
-                  <xs:element name="modulationParametersList" type="ModulationParametersType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>variable length list of modulation parameters (length of list found in field modulationParameterCount)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldmodulationParameterCount and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>modulationParameterCount</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="ModulationParameters" type="ModulationParametersType">
+                        <xs:annotation>
+                           <xs:appinfo>variable length list of modulation parameters (length of list found in field modulationParameterCount)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                   <!--Attribute (as element) TransmitterPdu antennaPatternList with objectlist classRef name=VariableTransmitterParameters, type=VariableTransmitterParametersType-->
-                  <xs:element name="antennaPatternList" type="VariableTransmitterParametersType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>variable length list of antenna pattern records (length of list found in field antennaPatternCount)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldantennaPatternCount and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>antennaPatternCount</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="VariableTransmitterParameters" type="VariableTransmitterParametersType">
+                        <xs:annotation>
+                           <xs:appinfo>variable length list of antenna pattern records (length of list found in field antennaPatternCount)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="RadioCommunicationsFamilyPduType"></xs:attribute>
@@ -7195,17 +7529,33 @@
             <xs:extension base="SimulationManagementFamilyPduType">
                <xs:sequence>
                   <!--Attribute (as element) ActionRequestPdu fixedDatums with objectlist classRef name=FixedDatum, type=FixedDatumType-->
-                  <xs:element name="fixedDatums" type="FixedDatumType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>variable length list of fixed datums (length of list found in field numberOfFixedDatumRecords)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfFixedDatumRecords and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfFixedDatumRecords</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="FixedDatum" type="FixedDatumType">
+                        <xs:annotation>
+                           <xs:appinfo>variable length list of fixed datums (length of list found in field numberOfFixedDatumRecords)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                   <!--Attribute (as element) ActionRequestPdu variableDatums with objectlist classRef name=VariableDatum, type=VariableDatumType-->
-                  <xs:element name="variableDatums" type="VariableDatumType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>variable length list of variable length datums (length of list found in field numberOfVariableDatumRecords)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfVariableDatumRecords and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfVariableDatumRecords</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="VariableDatum" type="VariableDatumType">
+                        <xs:annotation>
+                           <xs:appinfo>variable length list of variable length datums (length of list found in field numberOfVariableDatumRecords)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="SimulationManagementFamilyPduType"></xs:attribute>
@@ -7249,17 +7599,33 @@
             <xs:extension base="SimulationManagementFamilyPduType">
                <xs:sequence>
                   <!--Attribute (as element) ActionResponsePdu fixedDatums with objectlist classRef name=FixedDatum, type=FixedDatumType-->
-                  <xs:element name="fixedDatums" type="FixedDatumType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>fixed length list of fixed datums (length of list found in field numberOfFixedDatumRecords)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfFixedDatumRecords and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfFixedDatumRecords</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="FixedDatum" type="FixedDatumType">
+                        <xs:annotation>
+                           <xs:appinfo>fixed length list of fixed datums (length of list found in field numberOfFixedDatumRecords)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                   <!--Attribute (as element) ActionResponsePdu variableDatums with objectlist classRef name=VariableDatum, type=VariableDatumType-->
-                  <xs:element name="variableDatums" type="VariableDatumType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>variable length list of variable length datums (length of list found in field numberOfVariableDatumRecords)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfVariableDatumRecords and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfVariableDatumRecords</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="VariableDatum" type="VariableDatumType">
+                        <xs:annotation>
+                           <xs:appinfo>variable length list of variable length datums (length of list found in field numberOfVariableDatumRecords)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="SimulationManagementFamilyPduType"></xs:attribute>
@@ -7300,11 +7666,19 @@
             <xs:extension base="SimulationManagementFamilyPduType">
                <xs:sequence>
                   <!--Attribute (as element) CommentPdu variableDatums with objectlist classRef name=VariableDatum, type=VariableDatumType-->
-                  <xs:element name="variableDatums" type="VariableDatumType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>variable length list of variable length datums (length of list found in field numberOfVariableDatumRecords)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfVariableDatumRecords and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfVariableDatumRecords</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="VariableDatum" type="VariableDatumType">
+                        <xs:annotation>
+                           <xs:appinfo>variable length list of variable length datums (length of list found in field numberOfVariableDatumRecords)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="SimulationManagementFamilyPduType"></xs:attribute>
@@ -7352,17 +7726,33 @@
             <xs:extension base="SimulationManagementFamilyPduType">
                <xs:sequence>
                   <!--Attribute (as element) DataPdu fixedDatums with objectlist classRef name=FixedDatum, type=FixedDatumType-->
-                  <xs:element name="fixedDatums" type="FixedDatumType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>variable length list of fixed datums (length of list found in field numberOfFixedDatumRecords)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfFixedDatumRecords and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfFixedDatumRecords</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="FixedDatum" type="FixedDatumType">
+                        <xs:annotation>
+                           <xs:appinfo>variable length list of fixed datums (length of list found in field numberOfFixedDatumRecords)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                   <!--Attribute (as element) DataPdu variableDatums with objectlist classRef name=VariableDatum, type=VariableDatumType-->
-                  <xs:element name="variableDatums" type="VariableDatumType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>variable length list of variable length datums (length of list found in field numberOfVariableDatumRecords)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfVariableDatumRecords and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfVariableDatumRecords</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="VariableDatum" type="VariableDatumType">
+                        <xs:annotation>
+                           <xs:appinfo>variable length list of variable length datums (length of list found in field numberOfVariableDatumRecords)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="SimulationManagementFamilyPduType"></xs:attribute>
@@ -7403,17 +7793,33 @@
             <xs:extension base="SimulationManagementFamilyPduType">
                <xs:sequence>
                   <!--Attribute (as element) DataQueryPdu fixedDatums with objectlist classRef name=FixedDatum, type=FixedDatumType-->
-                  <xs:element name="fixedDatums" type="FixedDatumType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>variable length list of fixed datums (length of list found in field numberOfFixedDatumRecords)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfFixedDatumRecords and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfFixedDatumRecords</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="FixedDatum" type="FixedDatumType">
+                        <xs:annotation>
+                           <xs:appinfo>variable length list of fixed datums (length of list found in field numberOfFixedDatumRecords)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                   <!--Attribute (as element) DataQueryPdu variableDatums with objectlist classRef name=VariableDatum, type=VariableDatumType-->
-                  <xs:element name="variableDatums" type="VariableDatumType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>variable length list of variable length datums (length of list found in field numberOfVariableDatumRecords)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfVariableDatumRecords and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfVariableDatumRecords</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="VariableDatum" type="VariableDatumType">
+                        <xs:annotation>
+                           <xs:appinfo>variable length list of variable length datums (length of list found in field numberOfVariableDatumRecords)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="SimulationManagementFamilyPduType"></xs:attribute>
@@ -7454,17 +7860,33 @@
             <xs:extension base="SimulationManagementFamilyPduType">
                <xs:sequence>
                   <!--Attribute (as element) EventReportPdu fixedDatums with objectlist classRef name=FixedDatum, type=FixedDatumType-->
-                  <xs:element name="fixedDatums" type="FixedDatumType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>variable length list of fixed datums (length of list found in field numberOfFixedDatumRecords)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfFixedDatumRecords and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfFixedDatumRecords</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="FixedDatum" type="FixedDatumType">
+                        <xs:annotation>
+                           <xs:appinfo>variable length list of fixed datums (length of list found in field numberOfFixedDatumRecords)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                   <!--Attribute (as element) EventReportPdu variableDatums with objectlist classRef name=VariableDatum, type=VariableDatumType-->
-                  <xs:element name="variableDatums" type="VariableDatumType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>variable length list of variable length datums (length of list found in field numberOfVariableDatumRecords)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfVariableDatumRecords and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfVariableDatumRecords</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="VariableDatum" type="VariableDatumType">
+                        <xs:annotation>
+                           <xs:appinfo>variable length list of variable length datums (length of list found in field numberOfVariableDatumRecords)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="SimulationManagementFamilyPduType"></xs:attribute>
@@ -7527,17 +7949,33 @@
             <xs:extension base="SimulationManagementFamilyPduType">
                <xs:sequence>
                   <!--Attribute (as element) SetDataPdu fixedDatums with objectlist classRef name=FixedDatum, type=FixedDatumType-->
-                  <xs:element name="fixedDatums" type="FixedDatumType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>variable length list of fixed datums (length of list found in field numberOfFixedDatumRecords)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfFixedDatumRecords and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfFixedDatumRecords</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="FixedDatum" type="FixedDatumType">
+                        <xs:annotation>
+                           <xs:appinfo>variable length list of fixed datums (length of list found in field numberOfFixedDatumRecords)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                   <!--Attribute (as element) SetDataPdu variableDatums with objectlist classRef name=VariableDatum, type=VariableDatumType-->
-                  <xs:element name="variableDatums" type="VariableDatumType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>variable length list of variable length datums (length of list found in field numberOfVariableDatumRecords)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfVariableDatumRecords and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfVariableDatumRecords</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="VariableDatum" type="VariableDatumType">
+                        <xs:annotation>
+                           <xs:appinfo>variable length list of variable length datums (length of list found in field numberOfVariableDatumRecords)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="SimulationManagementFamilyPduType"></xs:attribute>
@@ -7724,17 +8162,33 @@
             <xs:extension base="SimulationManagementWithReliabilityFamilyPduType">
                <xs:sequence>
                   <!--Attribute (as element) ActionRequestRPdu fixedDatumRecords with objectlist classRef name=FixedDatum, type=FixedDatumType-->
-                  <xs:element name="fixedDatumRecords" type="FixedDatumType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>Fixed datum records (length of list found in field numberOfFixedDatumRecords)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfFixedDatumRecords and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfFixedDatumRecords</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="FixedDatum" type="FixedDatumType">
+                        <xs:annotation>
+                           <xs:appinfo>Fixed datum records (length of list found in field numberOfFixedDatumRecords)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                   <!--Attribute (as element) ActionRequestRPdu variableDatumRecords with objectlist classRef name=VariableDatum, type=VariableDatumType-->
-                  <xs:element name="variableDatumRecords" type="VariableDatumType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>Variable datum records (length of list found in field numberOfVariableDatumRecords)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfVariableDatumRecords and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfVariableDatumRecords</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="VariableDatum" type="VariableDatumType">
+                        <xs:annotation>
+                           <xs:appinfo>Variable datum records (length of list found in field numberOfVariableDatumRecords)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="SimulationManagementWithReliabilityFamilyPduType"></xs:attribute>
@@ -7803,17 +8257,33 @@
             <xs:extension base="SimulationManagementWithReliabilityFamilyPduType">
                <xs:sequence>
                   <!--Attribute (as element) ActionResponseRPdu fixedDatumRecords with objectlist classRef name=FixedDatum, type=FixedDatumType-->
-                  <xs:element name="fixedDatumRecords" type="FixedDatumType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>Fixed datum records (length of list found in field numberOfFixedDatumRecords)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfFixedDatumRecords and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfFixedDatumRecords</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="FixedDatum" type="FixedDatumType">
+                        <xs:annotation>
+                           <xs:appinfo>Fixed datum records (length of list found in field numberOfFixedDatumRecords)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                   <!--Attribute (as element) ActionResponseRPdu variableDatumRecords with objectlist classRef name=VariableDatum, type=VariableDatumType-->
-                  <xs:element name="variableDatumRecords" type="VariableDatumType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>Variable datum records (length of list found in field numberOfVariableDatumRecords)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfVariableDatumRecords and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfVariableDatumRecords</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="VariableDatum" type="VariableDatumType">
+                        <xs:annotation>
+                           <xs:appinfo>Variable datum records (length of list found in field numberOfVariableDatumRecords)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="SimulationManagementWithReliabilityFamilyPduType"></xs:attribute>
@@ -7864,11 +8334,19 @@
             <xs:extension base="SimulationManagementWithReliabilityFamilyPduType">
                <xs:sequence>
                   <!--Attribute (as element) CommentRPdu variableDatumRecords with objectlist classRef name=VariableDatum, type=VariableDatumType-->
-                  <xs:element name="variableDatumRecords" type="VariableDatumType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>Variable datum records (length of list found in field numberOfVariableDatumRecords)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfVariableDatumRecords and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfVariableDatumRecords</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="VariableDatum" type="VariableDatumType">
+                        <xs:annotation>
+                           <xs:appinfo>Variable datum records (length of list found in field numberOfVariableDatumRecords)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="SimulationManagementWithReliabilityFamilyPduType"></xs:attribute>
@@ -7949,17 +8427,33 @@
             <xs:extension base="SimulationManagementWithReliabilityFamilyPduType">
                <xs:sequence>
                   <!--Attribute (as element) DataQueryRPdu fixedDatumRecords with objectlist classRef name=FixedDatum, type=FixedDatumType-->
-                  <xs:element name="fixedDatumRecords" type="FixedDatumType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>Fixed datum records (length of list found in field numberOfFixedDatumRecords)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfFixedDatumRecords and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfFixedDatumRecords</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="FixedDatum" type="FixedDatumType">
+                        <xs:annotation>
+                           <xs:appinfo>Fixed datum records (length of list found in field numberOfFixedDatumRecords)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                   <!--Attribute (as element) DataQueryRPdu variableDatumRecords with objectlist classRef name=VariableDatum, type=VariableDatumType-->
-                  <xs:element name="variableDatumRecords" type="VariableDatumType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>Variable datum records (length of list found in field numberOfVariableDatumRecords)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfVariableDatumRecords and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfVariableDatumRecords</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="VariableDatum" type="VariableDatumType">
+                        <xs:annotation>
+                           <xs:appinfo>Variable datum records (length of list found in field numberOfVariableDatumRecords)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="SimulationManagementWithReliabilityFamilyPduType"></xs:attribute>
@@ -8028,17 +8522,33 @@
             <xs:extension base="SimulationManagementWithReliabilityFamilyPduType">
                <xs:sequence>
                   <!--Attribute (as element) DataRPdu fixedDatumRecords with objectlist classRef name=FixedDatum, type=FixedDatumType-->
-                  <xs:element name="fixedDatumRecords" type="FixedDatumType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>Fixed datum records (length of list found in field numberOfFixedDatumRecords)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfFixedDatumRecords and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfFixedDatumRecords</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="FixedDatum" type="FixedDatumType">
+                        <xs:annotation>
+                           <xs:appinfo>Fixed datum records (length of list found in field numberOfFixedDatumRecords)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                   <!--Attribute (as element) DataRPdu variableDatumRecords with objectlist classRef name=VariableDatum, type=VariableDatumType-->
-                  <xs:element name="variableDatumRecords" type="VariableDatumType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>Variable datum records (length of list found in field numberOfVariableDatumRecords)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfVariableDatumRecords and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfVariableDatumRecords</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="VariableDatum" type="VariableDatumType">
+                        <xs:annotation>
+                           <xs:appinfo>Variable datum records (length of list found in field numberOfVariableDatumRecords)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="SimulationManagementWithReliabilityFamilyPduType"></xs:attribute>
@@ -8101,17 +8611,33 @@
             <xs:extension base="SimulationManagementWithReliabilityFamilyPduType">
                <xs:sequence>
                   <!--Attribute (as element) EventReportRPdu fixedDatumRecords with objectlist classRef name=FixedDatum, type=FixedDatumType-->
-                  <xs:element name="fixedDatumRecords" type="FixedDatumType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>Fixed datum records (length of list found in field numberOfFixedDatumRecords)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfFixedDatumRecords and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfFixedDatumRecords</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="FixedDatum" type="FixedDatumType">
+                        <xs:annotation>
+                           <xs:appinfo>Fixed datum records (length of list found in field numberOfFixedDatumRecords)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                   <!--Attribute (as element) EventReportRPdu variableDatumRecords with objectlist classRef name=VariableDatum, type=VariableDatumType-->
-                  <xs:element name="variableDatumRecords" type="VariableDatumType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>Variable datum records (length of list found in field numberOfVariableDatumRecords)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfVariableDatumRecords and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfVariableDatumRecords</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="VariableDatum" type="VariableDatumType">
+                        <xs:annotation>
+                           <xs:appinfo>Variable datum records (length of list found in field numberOfVariableDatumRecords)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="SimulationManagementWithReliabilityFamilyPduType"></xs:attribute>
@@ -8162,11 +8688,19 @@
             <xs:extension base="SimulationManagementWithReliabilityFamilyPduType">
                <xs:sequence>
                   <!--Attribute (as element) RecordQueryRPdu recordIDs with objectlist classRef name=RecordQuerySpecification, type=RecordQuerySpecificationType-->
-                  <xs:element name="recordIDs" type="RecordQuerySpecificationType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>record IDs (length of list found in field numberOfRecords)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfRecords and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfRecords</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="RecordQuerySpecification" type="RecordQuerySpecificationType">
+                        <xs:annotation>
+                           <xs:appinfo>record IDs (length of list found in field numberOfRecords)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="SimulationManagementWithReliabilityFamilyPduType"></xs:attribute>
@@ -8232,11 +8766,19 @@
             <xs:extension base="SimulationManagementWithReliabilityFamilyPduType">
                <xs:sequence>
                   <!--Attribute (as element) RecordRPdu recordSets with objectlist classRef name=RecordSpecification, type=RecordSpecificationType-->
-                  <xs:element name="recordSets" type="RecordSpecificationType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>record sets (length of list found in field numberOfRecordSets)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfRecordSets and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfRecordSets</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="RecordSpecification" type="RecordSpecificationType">
+                        <xs:annotation>
+                           <xs:appinfo>record sets (length of list found in field numberOfRecordSets)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="SimulationManagementWithReliabilityFamilyPduType"></xs:attribute>
@@ -8331,17 +8873,33 @@
             <xs:extension base="SimulationManagementWithReliabilityFamilyPduType">
                <xs:sequence>
                   <!--Attribute (as element) SetDataRPdu fixedDatumRecords with objectlist classRef name=FixedDatum, type=FixedDatumType-->
-                  <xs:element name="fixedDatumRecords" type="FixedDatumType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>Fixed datum records (length of list found in field numberOfFixedDatumRecords)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfFixedDatumRecords and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfFixedDatumRecords</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="FixedDatum" type="FixedDatumType">
+                        <xs:annotation>
+                           <xs:appinfo>Fixed datum records (length of list found in field numberOfFixedDatumRecords)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                   <!--Attribute (as element) SetDataRPdu variableDatumRecords with objectlist classRef name=VariableDatum, type=VariableDatumType-->
-                  <xs:element name="variableDatumRecords" type="VariableDatumType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>Variable datum records (length of list found in field numberOfVariableDatumRecords)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfVariableDatumRecords and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfVariableDatumRecords</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="VariableDatum" type="VariableDatumType">
+                        <xs:annotation>
+                           <xs:appinfo>Variable datum records (length of list found in field numberOfVariableDatumRecords)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="SimulationManagementWithReliabilityFamilyPduType"></xs:attribute>
@@ -8405,11 +8963,19 @@
             <xs:extension base="SimulationManagementWithReliabilityFamilyPduType">
                <xs:sequence>
                   <!--Attribute (as element) SetRecordRPdu recordSets with objectlist classRef name=RecordSpecification, type=RecordSpecificationType-->
-                  <xs:element name="recordSets" type="RecordSpecificationType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>record sets (length of list found in field numberOfRecordSets)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfRecordSets and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfRecordSets</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="RecordSpecification" type="RecordSpecificationType">
+                        <xs:annotation>
+                           <xs:appinfo>record sets (length of list found in field numberOfRecordSets)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="SimulationManagementWithReliabilityFamilyPduType"></xs:attribute>
@@ -8612,11 +9178,19 @@
                      </xs:annotation>
                   </xs:element>
                   <!--Attribute (as element) ArealObjectStatePdu objectLocation with objectlist classRef name=Vector3Double, type=Vector3DoubleType-->
-                  <xs:element name="objectLocation" type="Vector3DoubleType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>location of object (length of list found in field numberOfPoints)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfPoints and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfPoints</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="Vector3Double" type="Vector3DoubleType">
+                        <xs:annotation>
+                           <xs:appinfo>location of object (length of list found in field numberOfPoints)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="SyntheticEnvironmentFamilyPduType"></xs:attribute>
@@ -8677,11 +9251,19 @@
                      </xs:annotation>
                   </xs:element>
                   <!--Attribute (as element) EnvironmentalProcessPdu environmentRecords with objectlist classRef name=Environment, type=EnvironmentType-->
-                  <xs:element name="environmentRecords" type="EnvironmentType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>environmemt records (length of list found in field numberOfEnvironmentRecords)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfEnvironmentRecords and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfEnvironmentRecords</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="Environment" type="EnvironmentType">
+                        <xs:annotation>
+                           <xs:appinfo>environmemt records (length of list found in field numberOfEnvironmentRecords)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="SyntheticEnvironmentFamilyPduType"></xs:attribute>
@@ -8742,17 +9324,33 @@
                      </xs:annotation>
                   </xs:element>
                   <!--Attribute (as element) GriddedDataPdu gridAxisDescriptors with objectlist classRef name=GridAxisDescriptor, type=GridAxisDescriptorType-->
-                  <xs:element name="gridAxisDescriptors" type="GridAxisDescriptorType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>(length of list found in field numberOfGridAxes)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfGridAxes and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfGridAxes</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="GridAxisDescriptor" type="GridAxisDescriptorType">
+                        <xs:annotation>
+                           <xs:appinfo>(length of list found in field numberOfGridAxes)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                   <!--Attribute (as element) GriddedDataPdu gridDataRecords with objectlist classRef name=GridData, type=GridDataType-->
-                  <xs:element name="gridDataRecords" type="GridDataType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>(length of list found in field numberOfGridAxes)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfGridAxes and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfGridAxes</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="GridData" type="GridDataType">
+                        <xs:annotation>
+                           <xs:appinfo>(length of list found in field numberOfGridAxes)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="SyntheticEnvironmentFamilyPduType"></xs:attribute>
@@ -8849,11 +9447,19 @@
                      </xs:annotation>
                   </xs:element>
                   <!--Attribute (as element) LinearObjectStatePdu linearSegmentParameters with objectlist classRef name=LinearSegmentParameter, type=LinearSegmentParameterType-->
-                  <xs:element name="linearSegmentParameters" type="LinearSegmentParameterType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>Linear segment parameters (length of list found in field numberOfLinearSegments)</xs:appinfo>
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfLinearSegments and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+                        <xs:documentation>numberOfLinearSegments</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="LinearSegmentParameter" type="LinearSegmentParameterType">
+                        <xs:annotation>
+                           <xs:appinfo>Linear segment parameters (length of list found in field numberOfLinearSegments)</xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="SyntheticEnvironmentFamilyPduType"></xs:attribute>
@@ -9029,13 +9635,21 @@
                      </xs:annotation>
                   </xs:element>
                   <!--Attribute (as element) DetonationPdu variableParameters with objectlist classRef name=VariableParameter, type=VariableParameterType-->
-                  <xs:element name="variableParameters" type="VariableParameterType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>specify the parameter values for each Variable Parameter record, Section 7.3.3 (length
-                           of list found in field numberOfVariableParameters)
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfVariableParameters and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
                         </xs:appinfo>
+                        <xs:documentation>numberOfVariableParameters</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="VariableParameter" type="VariableParameterType">
+                        <xs:annotation>
+                           <xs:appinfo>specify the parameter values for each Variable Parameter record, Section 7.3.3 (length
+                              of list found in field numberOfVariableParameters)
+                           </xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="WarfareFamilyPduType"></xs:attribute>
@@ -9092,13 +9706,21 @@
                      </xs:annotation>
                   </xs:element>
                   <!--Attribute (as element) DirectedEnergyFirePdu dERecords with objectlist classRef name=StandardVariableSpecification, type=StandardVariableSpecificationType-->
-                  <xs:element name="dERecords" type="StandardVariableSpecificationType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>Fields shall contain one or more DE records, records shall conform to the variable
-                           record format (Section6.2.82), Section 7.3.4 (length of list found in field numberOfDERecords)
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfDERecords and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
                         </xs:appinfo>
+                        <xs:documentation>numberOfDERecords</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="StandardVariableSpecification" type="StandardVariableSpecificationType">
+                        <xs:annotation>
+                           <xs:appinfo>Fields shall contain one or more DE records, records shall conform to the variable
+                              record format (Section6.2.82), Section 7.3.4 (length of list found in field numberOfDERecords)
+                           </xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="WarfareFamilyPduType"></xs:attribute>
@@ -9167,13 +9789,21 @@
                      </xs:annotation>
                   </xs:element>
                   <!--Attribute (as element) EntityDamageStatusPdu damageDescriptionRecords with objectlist classRef name=DirectedEnergyDamage, type=DirectedEnergyDamageType-->
-                  <xs:element name="damageDescriptionRecords" type="DirectedEnergyDamageType">
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
                      <xs:annotation>
-                        <xs:appinfo>Fields shall contain one or more Damage Description records (see 6.2.17) and may contain
-                           other Standard Variable records, Section 7.3.5 (length of list found in field numberOfDamageDescription)
+                        <xs:appinfo>Number of elements is determined by size fieldnumberOfDamageDescription and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
                         </xs:appinfo>
+                        <xs:documentation>numberOfDamageDescription</xs:documentation>
                      </xs:annotation>
-                  </xs:element>
+                     <xs:element name="DirectedEnergyDamage" type="DirectedEnergyDamageType">
+                        <xs:annotation>
+                           <xs:appinfo>Fields shall contain one or more Damage Description records (see 6.2.17) and may contain
+                              other Standard Variable records, Section 7.3.5 (length of list found in field numberOfDamageDescription)
+                           </xs:appinfo>
+                        </xs:annotation>
+                     </xs:element>
+                  </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="WarfareFamilyPduType"></xs:attribute>

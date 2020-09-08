@@ -430,10 +430,32 @@
                     <xsl:text>, type=</xsl:text>
                     <xsl:value-of select="$thisType"/>
                 </xsl:comment>
-                <!-- TODO combine sibling elements within single sequence -->
-                <xs:element name="{@name}" type="{$thisType}">
-                    <xsl:call-template name="handle-comment-documentation"/>
-                </xs:element>
+                <xsl:variable name="combinedCountFieldName">
+                    <xsl:value-of select="objectlist/@countFieldName"/>
+                    <!-- handle special case of AggregateStatePdu containing three EntityID fields in a row, merge them -->
+                    <xsl:if test="(../@name = 'AggregateStatePdu') and (@name = 'entityIDList')">
+                        <xsl:text> + </xsl:text>
+                        <xsl:value-of select="../attribute[@name = 'silentAggregateSystemList']/objectlist/@countFieldName"/>
+                        <xsl:text> + </xsl:text>
+                        <xsl:value-of select="../attribute[@name = 'silentEntitySystemList'   ]/objectlist/@countFieldName"/>
+                    </xsl:if>
+                </xsl:variable>
+                <!-- handle special case of AggregateStatePdu containing three EntityID fields in a row, merge them -->
+                <xsl:if test="not((../@name = 'AggregateStatePdu') and ((@name = 'silentAggregateSystemList') or (@name = 'silentEntitySystemList')))">
+                    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:appinfo>
+    <xsl:text>Number of elements is determined by size field</xsl:text><xsl:value-of select="$combinedCountFieldName"/><xsl:text> and can be 0 or greater.
+    Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.</xsl:text>
+                            </xs:appinfo>
+                            <!-- TODO consider further guidance on maximum values -->
+                            <xs:documentation><xsl:value-of select="$combinedCountFieldName"/></xs:documentation>
+                        </xs:annotation>
+                        <xs:element name="{objectlist/classRef/@name}" type="{$thisType}">
+                            <xsl:call-template name="handle-comment-documentation"/>
+                        </xs:element>
+                    </xs:sequence>
+                </xsl:if>
             </xsl:when>
             <!-- ===================================== -->
             <xsl:when test="(local-name() = 'attribute') and not(classRef)">
