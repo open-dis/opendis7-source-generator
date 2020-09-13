@@ -178,25 +178,25 @@ public class GenerateEnumerations
     private void loadEnumTemplates()
     {
         try {
-            enumTemplate1 = loadOneTemplate("disenumpart1.txt");
-            enumTemplate1WithFootnote = loadOneTemplate("disenumpart1withfootnote.txt");
-            enumCommentTemplate = loadOneTemplate("disenumcomment.txt");
+            enumTemplate1               = loadOneTemplate("disenumpart1.txt");
+            enumTemplate1WithFootnote   = loadOneTemplate("disenumpart1withfootnote.txt");
+            enumCommentTemplate         = loadOneTemplate("disenumcomment.txt");
             enumFootnoteCommentTemplate = loadOneTemplate("disenumfootnotecomment.txt");
-            enumTemplate2 = loadOneTemplate("disenumpart2.txt");
-            enumTemplate21 = loadOneTemplate("disenumpart21.txt");
-            enumTemplate25 = loadOneTemplate("disenumpart25.txt");
-            enumTemplate3_32 = loadOneTemplate("disenumpart3_32.txt");
-            enumTemplate3_16 = loadOneTemplate("disenumpart3_16.txt");
-            enumTemplate3_8 = loadOneTemplate("disenumpart3_8.txt");
-            dictEnumTemplate1 = loadOneTemplate("disdictenumpart1.txt");
-            dictEnumTemplate2 = loadOneTemplate("disdictenumpart2.txt");
-            dictEnumTemplate3 = loadOneTemplate("disdictenumpart3.txt");
-            bitsetTemplate1 = loadOneTemplate("disbitset1.txt");
-            bitsetTemplate15 = loadOneTemplate("disbitset15.txt");
-            bitsetTemplate16 = loadOneTemplate("disbitset16.txt");
-            bitsetTemplate2 = loadOneTemplate("disbitset2.txt");
-            bitsetXrefCommentTemplate = loadOneTemplate("disbitsetcommentxref.txt");
-            bitsetCommentTemplate = loadOneTemplate("disbitsetcomment.txt");
+            enumTemplate2               = loadOneTemplate("disenumpart2.txt");
+            enumTemplate21              = loadOneTemplate("disenumpart21.txt");
+            enumTemplate25              = loadOneTemplate("disenumpart25.txt");
+            enumTemplate3_32            = loadOneTemplate("disenumpart3_32.txt");
+            enumTemplate3_16            = loadOneTemplate("disenumpart3_16.txt");
+            enumTemplate3_8             = loadOneTemplate("disenumpart3_8.txt");
+            dictEnumTemplate1           = loadOneTemplate("disdictenumpart1.txt");
+            dictEnumTemplate2           = loadOneTemplate("disdictenumpart2.txt");
+            dictEnumTemplate3           = loadOneTemplate("disdictenumpart3.txt");
+            bitsetTemplate1             = loadOneTemplate("disbitset1.txt");
+            bitsetTemplate15            = loadOneTemplate("disbitset15.txt");
+            bitsetTemplate16            = loadOneTemplate("disbitset16.txt");
+            bitsetTemplate2             = loadOneTemplate("disbitset2.txt");
+            bitsetXrefCommentTemplate   = loadOneTemplate("disbitsetcommentxref.txt");
+            bitsetCommentTemplate       = loadOneTemplate("disbitsetcomment.txt");
         }
         catch (Exception ex) {
             throw new RuntimeException(ex);
