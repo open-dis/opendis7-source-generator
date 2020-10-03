@@ -645,7 +645,7 @@
         <echo message="Packaging javadoc documentation for all generated OpenDIS7 entity enumerations into a single JAR"/>
         <jar destfile="dist/open-dis7-enumerations-javadoc.jar"
                update="true"
-              basedir="javadoc">
+              basedir="dist/javadoc">
             
             <!-- https://docs.oracle.com/javase/tutorial/deployment/jar/manifestindex.html -->
             <manifest>
@@ -700,7 +700,7 @@
         </copy>
     </target>
     
-    <target name="copy-generated-jars-to-open-dis7-java" depends="jar">
+    <target name="copy-generated-jars-to-open-dis7-java">
         <echo message="Both enumerations and PDUs are created by open-dis7-source-generator, with"/>
         <echo message="   PDU classes  packaged into open-dis7-*.jar              archives by open-dis7-java project and"/>
         <echo message="   enumerations packaged into open-dis7-enumerations-*.jar archives by open-dis7-source-generator."/>
