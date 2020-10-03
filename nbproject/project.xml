@@ -4,11 +4,11 @@
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/j2se-project/3">
             <name>open-dis7-source-generator</name>
-            <explicit-platform explicit-source-supported="true"/>
             <source-roots>
-                <root id="src.src-autogenerate.dir"/>
-                <root id="src.java.dir"/>
-                <root id="src.java2.dir"/>
+                <root id="src-autogenerate.dir"/>
+                <root id="src-generated.java.dir"/>
+                <root id="src-specialcase.java.dir"/>
+                <root id="src-supporting.java.dir"/>
                 <root id="src.stringTemplates.dir"/>
                 <root id="src.xml.dir"/>
             </source-roots>
