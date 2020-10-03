@@ -2,7 +2,6 @@
  * Copyright (c) 2008-2020, MOVES Institute, Naval Postgraduate School (NPS). All rights reserved.
  * This work is provided under a BSD open-source license, see project license.html and license.txt
  */
-
 package edu.nps.moves.dis7.source.generator.enumerations;
 
 import java.io.File;
@@ -20,7 +19,6 @@ import java.util.Properties;
 import java.util.Set;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
-import org.apache.commons.io.FileUtils;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -77,9 +75,9 @@ public class GenerateEnumerations
         if (!outputDir.isEmpty())
             outputDirectoryPath = outputDir;
         if (!packageName.isEmpty())
-             this.packageName = packageName;
+             GenerateEnumerations.packageName = packageName;
         System.out.println ("              xmlFile=" + sisoXmlFile);
-        System.out.println ("          packageName=" + this.packageName);
+        System.out.println ("          packageName=" + GenerateEnumerations.packageName);
         System.out.println ("  outputDirectoryPath=" + outputDirectoryPath);
         
         outputDirectory  = new File(outputDirectoryPath);
@@ -158,7 +156,7 @@ public class GenerateEnumerations
             // https://stackoverflow.com/questions/2932392/java-how-to-replace-2-or-more-spaces-with-single-space-in-string-and-delete-lead
             String newName = name.trim().replaceAll(",", " ").replaceAll("—"," ").replaceAll("-", " ").replaceAll("\\."," ").replaceAll("&"," ")
                                         .replaceAll("/"," ").replaceAll("\"", " ").replaceAll("\'", " ").replaceAll("( )+"," ").replaceAll(" ", "_");
-            newName.replaceAll("_",""); // no underscore divider
+            newName = newName.replaceAll("_",""); // no underscore divider
             if (newName.contains("__"))
             {
                 System.err.println("fixname: " + newName);
@@ -320,7 +318,7 @@ public class GenerateEnumerations
                     currentEnum.size = attributes.getValue("size");
                     currentEnum.footnote = attributes.getValue("footnote");
                     if (currentEnum.footnote != null)
-                        currentEnum.footnote.replaceAll("—","-").replaceAll("–","-").replaceAll("\"", "").replaceAll("\'", ""); // mdash
+                        currentEnum.footnote = currentEnum.footnote.replaceAll("—","-").replaceAll("–","-").replaceAll("\"", "").replaceAll("\'", ""); // mdash
                     enums.add(currentEnum);
                     //maybeSysOut(attributes.getValue("xref"), "enum uid " + currentEnum.uid + " " + currentEnum.name);
                     break;
