@@ -2,7 +2,6 @@
  * Copyright (c) 2008-2020, MOVES Institute, Naval Postgraduate School (NPS). All rights reserved.
  * This work is provided under a BSD open-source license, see project license.html and license.txt
  */
-
 package edu.nps.moves.dis7.source.generator.entityTypes;
 
 import java.io.BufferedWriter;
@@ -23,7 +22,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.apache.commons.io.FileUtils;
 
 /**
  * GenerateEntityTypes.java created on Jul 22, 2019
@@ -71,10 +69,10 @@ public class GenerateEntityTypes
         if (!outputDir.isEmpty())
             outputDirectoryPath = outputDir;
         if (!packageName.isEmpty())
-           this.packageName = packageName;
+           GenerateEntityTypes.packageName = packageName;
         System.out.println (GenerateEntityTypes.class.getName());
         System.out.println ("              xmlFile=" + sisoXmlFile);
-        System.out.println ("          packageName=" + this.packageName);
+        System.out.println ("          packageName=" + GenerateEntityTypes.packageName);
         System.out.println ("  outputDirectoryPath=" + outputDirectoryPath);
         
         outputDirectory  = new File(outputDirectoryPath);
