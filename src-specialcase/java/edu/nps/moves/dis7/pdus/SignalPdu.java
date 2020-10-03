@@ -4,7 +4,6 @@
  */
 package edu.nps.moves.dis7.pdus;
 
-import edu.nps.moves.dis7.pdus.Align;
 import java.io.*;
 import edu.nps.moves.dis7.enumerations.*;
 
