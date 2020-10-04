@@ -6097,7 +6097,7 @@
    <!--LiveEntityFamilyPdus.xml contains 10 classes-->
    <xs:complexType name="LiveEntityFamilyPduType" abstract="true">
       <xs:annotation>
-         <xs:appinfo>Does not inherite from PduBase. See section 9.</xs:appinfo>
+         <xs:appinfo>Does not inherit from PduBase. See section 9.</xs:appinfo>
       </xs:annotation>
       <xs:complexContent>
          <xs:extension base="PduType">
