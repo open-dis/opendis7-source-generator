@@ -112,7 +112,6 @@
         <echo message="compile complete"/>
         
         <antcall target="copy-generated-source-to-open-dis7-java" description="useful for debugging, accepted updates in version control there"/>
-        <antcall target="copy-generated-jars-to-open-dis7-java"/>
         <echo message="build all complete"/>
     </target>
     
@@ -164,6 +163,7 @@
         <antcall target="jar.classes"/>
         <antcall target="jar.source"/>
         <antcall target="jar.javadoc"/>
+        <antcall target="copy-generated-jars-to-open-dis7-java"/>
     </target>
    
     <target name="package-dis7-enumerations-prior-jars" 
