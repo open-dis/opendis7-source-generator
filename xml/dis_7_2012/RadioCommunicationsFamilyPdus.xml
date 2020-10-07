@@ -111,7 +111,7 @@
         </attribute>       
     </class>
 
-    <!-- Special cased because of the dataLength fieldS which are a bit length 
+    <!-- Special cased because of the dataLength fields which are a bit length 
     <class name="SignalPdu" inheritsFrom="RadioCommunicationsFamilyPdu"
            comment="5.8.4 Conveys the audio or digital data carried by the simulated radio or intercom transmission.">
     

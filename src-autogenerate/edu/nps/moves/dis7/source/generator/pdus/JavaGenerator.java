@@ -21,7 +21,6 @@ import edu.nps.moves.dis7.source.generator.pdus.ClassAttribute.ClassAttributeTyp
  */
 public class JavaGenerator extends Generator
 {
-
     /**
      * Some Java (or Java-like) distributions don't have the full Java JDK 1.6 stack, such as Android. That means no JAXB, and no Hibernate/JPA. These booleans flip on or off the generation of the
      * annotations that use these features in the generated Java code.

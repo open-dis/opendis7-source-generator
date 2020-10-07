@@ -12,7 +12,7 @@
 
     </class>
     
-    <class name="LiveEntityFamilyPdu" abstract="true" inheritsFrom="Pdu" comment='Does not inherite from PduBase.  See section 9.'>
+    <class name="LiveEntityFamilyPdu" abstract="true" inheritsFrom="Pdu" comment='Does not inherit from PduBase.  See section 9.'>
      
         <initialValue name="protocolFamily" value="DISProtocolFamily.LIVE_ENTITY_LE_INFORMATION_INTERACTION"/>
  

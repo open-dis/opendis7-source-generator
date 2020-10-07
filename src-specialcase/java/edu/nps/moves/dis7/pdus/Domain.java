@@ -36,8 +36,8 @@ public class Domain
 
     /**
      *
-     * @param d
-     * @return
+     * @param d a PlatformDomain
+     * @return an Domain instance based on a PlatformDomain enum
      */
   public static Domain inst(PlatformDomain d)
   {
@@ -46,8 +46,8 @@ public class Domain
 
     /**
      *
-     * @param d
-     * @return
+     * @param d a MunitionDomain
+     * @return an Domain instance based on a MunitionDomain enum
      */
     public static Domain inst(MunitionDomain d)
   {
@@ -56,8 +56,8 @@ public class Domain
 
     /**
      *
-     * @param d
-     * @return
+     * @param d a SupplyDomain
+     * @return an Domain instance based on a SupplyDomain enum
      */
     public static Domain inst(SupplyDomain d)
   {

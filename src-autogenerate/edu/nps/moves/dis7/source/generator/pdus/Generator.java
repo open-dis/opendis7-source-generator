@@ -130,7 +130,7 @@ public abstract class Generator
      * Given a mask (like 0xf0) we want to know how many bits to shift an
      * integer when masking in a new value. 
      * @param anAttribute of interest
-     * @param mask
+     * @param mask a character set for the mask value
      * @return number of bits to shift
      */
     protected int getBitsToShift(ClassAttribute anAttribute, String mask)

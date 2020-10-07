@@ -4,9 +4,10 @@
  */
 package edu.nps.moves.dis7.pdus;
 
-import edu.nps.moves.dis7.pdus.Align;
-import java.io.*;
 import edu.nps.moves.dis7.enumerations.*;
+
+import java.io.*;
+import java.util.Arrays;
 
 /**
  * the variable datum type, the datum length, and the value for that variable datum type. Section 6.2.93
@@ -197,7 +198,7 @@ public class VariableDatum extends Object implements Serializable
       //uPosition += padding.length;
     }
     catch (Exception e) {
-      System.out.println(e);
+      System.err.println(e);
     }
     return getMarshalledSize();
   }
@@ -298,4 +299,19 @@ public class VariableDatum extends Object implements Serializable
     }
     return ivarsEqual;
   }
+
+@Override
+ public String toString()
+ {
+    StringBuilder sb = new StringBuilder();
+    sb.append(getClass().getSimpleName()).append(":\n");
+
+    sb.append(" variableDatumID: ").append(variableDatumID).append("\n");
+    sb.append(" variableDatumLength: ").append(variableDatumLength).append("\n");
+    sb.append(" variableDatumValue: ").append("\n");
+    sb.append(Arrays.toString(variableDatumValue)).append("\n");
+    sb.append(" padding: ").append(padding).append("\n");
+
+   return sb.toString();
+ }
 }
