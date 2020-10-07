@@ -5259,7 +5259,7 @@
    </xs:element>
    <xs:element name="EntityStatePdu">
       <xs:annotation>
-         <xs:appinfo>7.2.2. Represents the postion and state of one entity in the world. See 5.3.2. (length
+         <xs:appinfo>7.2.2. Represents the position and state of one entity in the world. See 5.3.2. (length
             of list found in field numberOfVariableParameters)
          </xs:appinfo>
       </xs:annotation>
@@ -5439,7 +5439,7 @@
    </xs:element>
    <xs:element name="FastEntityStatePdu">
       <xs:annotation>
-         <xs:appinfo>Represents the postion and state of one entity in the world. This is identical in
+         <xs:appinfo>Represents the position and state of one entity in the world. This is identical in
             function to entity state pdu, but generates less garbage to collect in the Java world.
             Section 7.2.2. (length of list found in field numberOfVariableParameters)
          </xs:appinfo>
