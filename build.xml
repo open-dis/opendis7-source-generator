@@ -89,7 +89,8 @@
             <fileset dir="stringTemplates"/>
         </copy>
         <javac destdir="build/classes"
-                 debug="on"
+                 debug="true"
+            debuglevel="lines,vars,source"
                 source="1.8"
                 target="1.8"
      includeantruntime="false">
