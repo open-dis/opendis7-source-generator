@@ -1,6 +1,7 @@
 package edu.nps.moves.dis7.entities;
 
 import edu.nps.moves.dis7.pdus.EntityType;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
@@ -31,7 +32,7 @@ public class EntityTypeFactory
       return null;
     
     try {
-      Class cls = Class.forName(name);
+      Class<?> cls = Class.forName(name);
       Constructor<EntityType> constr = (Constructor<EntityType>) cls.getConstructors()[0];
       return constr.newInstance();
     }
