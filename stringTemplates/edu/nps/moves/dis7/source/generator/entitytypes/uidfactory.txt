@@ -29,9 +29,10 @@ public class EntityTypeFactory
     String name = uid2ClassNameMap.get(uid);
     if(name==null)
       return null;
-    
+
+    @SuppressWarnings("unchecked") // TODO apparently unavoidable?
     try {
-      Class cls = Class.forName(name);
+      Class<?> cls = Class.forName(name);
       Constructor<EntityType> constr = (Constructor<EntityType>) cls.getConstructors()[0];
       return constr.newInstance();
     }
