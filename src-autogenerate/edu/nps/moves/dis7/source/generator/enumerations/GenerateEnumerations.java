@@ -607,10 +607,10 @@ public class GenerateEnumerations
                 return;
             }
             String classNameCorrected = clsName;
-            if (classNameCorrected.contains("Link11/11"))
+            if (classNameCorrected.contains("Link 11/11")) // special case
             {
                 System.err.print  ( "original classNameCorrected=" + classNameCorrected);
-                classNameCorrected = classNameCorrected.replace("Link11/11B", "Link11_11B"); // Fix slash in entry
+                classNameCorrected = classNameCorrected.replace("Link 11/11B", "Link11_11B"); // Fix slash in entry
                 System.err.println(", revised classNameCorrected=" + classNameCorrected);
             }
             
@@ -665,19 +665,19 @@ public class GenerateEnumerations
                 sb.append(String.format(enumTemplate2, "SELF", "0", elementName + " details not found in SISO spec"));
                 System.err.println(elementName + " error while generating enumerations: SELF details not found in SISO spec");
             }
-            else
+            else // here we go
             {
                 // https://stackoverflow.com/questions/11883043/does-an-enum-class-containing-20001-enum-constants-hit-any-limit
                 int MAX_ENUMERATIONS = 2100;
                 Properties aliases = aliasNames;
                 if (el.elems.size() > MAX_ENUMERATIONS)
                 {
-                    System.err.println ("Enumerations class " + packageName + "." + classNameCorrected + " " + el.name + " uid=" + el.uid + " has " + el.elems.size() + " enumerations, possibly too large?");
-                    System.err.println ("   dropping enumerations above MAX_ENUMERATIONS=" + MAX_ENUMERATIONS + "... TODO create auxiliary class with remainder");
+                    System.err.println ("Enumerations class " + packageName + "." + classNameCorrected + " <enum name=\"" + el.name + "\" uid=\"" + el.uid + "\" etc.> has " + el.elems.size() + " enumerations, possibly too large?");
+                    System.err.println ("*** dropping enumerations above MAX_ENUMERATIONS=" + MAX_ENUMERATIONS + "... TODO create auxiliary class with remainder");
                     // https://stackoverflow.com/questions/1184636/shrinking-an-arraylist-to-a-new-size
                     // TODO figure out how to save the rest
-                    System.err.println ("   last element=" + el.elems.get(MAX_ENUMERATIONS).value + ", " + el.elems.get(MAX_ENUMERATIONS).description);
-                    additionalRowElements = el.elems.subList(MAX_ENUMERATIONS, el.elems.size());
+                    System.err.println ("   last element=" + el.elems.get(MAX_ENUMERATIONS - 1).value + ", " + el.elems.get(MAX_ENUMERATIONS - 1).description);
+                    additionalRowElements = el.elems.subList(MAX_ENUMERATIONS, el.elems.size()); // available  for further processing, still TODO
                     el.elems.subList(MAX_ENUMERATIONS, el.elems.size()).clear();
                 }
                 el.elems.forEach((row) -> {                    
@@ -759,6 +759,8 @@ public class GenerateEnumerations
                       + ", classNameCorrected=" + classNameCorrected);
                 ex.printStackTrace(System.err);
             }
+            // TODO now handle additionalRowElements similarly, creating another file...
+            // OR possibly do this at the beginning, and put all the workhorse code of writeOutEnum as a repeatable method.
         }
         
       private void writeOneEnum(StringBuilder sb, EnumRowElem row, String enumName)
