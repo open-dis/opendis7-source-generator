@@ -663,7 +663,7 @@ public class GenerateEnumerations
                 if (el.name != null)
                        elementName = el.name;
                 sb.append(String.format(enumTemplate2, "SELF", "0", elementName + " details not found in SISO spec"));
-                System.err.println(elementName + " error while generating enumerations: SELF details not found in SISO spec");
+                System.err.println("*** " + elementName + " uid='" + el.uid + "' has no child element (further SELF details not found in SISO reference)");
             }
             else // here we go
             {
