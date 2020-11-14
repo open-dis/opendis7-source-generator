@@ -21,7 +21,7 @@
 		<File FilePath="dis_7_2012\WarfareFamilyPdus.xml" HomeFolder="Yes"/>
 	</Folder>
 	<Folder FolderName="SISO REF-010 enumerations" ExtStr="xsl;xslt;xml;xsd">
-		<File FilePath="SISO\SISO-REF-010.xml" HomeFolder="Yes"/>
+		<File FilePath="SISO\SISO-REF-010-v28\SISO-REF-010.xml" HomeFolder="Yes"/>
 		<File FilePath="SISO\SISO-REF-010.xsd" HomeFolder="Yes"/>
 	</Folder>
 </Project>
