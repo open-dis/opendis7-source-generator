@@ -25,11 +25,13 @@
       System.err.println("Can't find methods in "+c.getSimpleName());
     } 
   }
+  /** Provide value */
   public int getValue()
   {
     return (Integer) invoke(getValue, (Object[]) null);
   }
 
+  /** Provide description */
   public String getDescription()
   {
     return (String) invoke(getDescription, (Object[]) null);

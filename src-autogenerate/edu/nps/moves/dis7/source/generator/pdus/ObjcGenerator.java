@@ -19,6 +19,7 @@ import java.util.*;
  * @author DMcG
  */
 
+/** PDU autogeneration supporting class. */
 public class ObjcGenerator extends Generator
 {
     /**

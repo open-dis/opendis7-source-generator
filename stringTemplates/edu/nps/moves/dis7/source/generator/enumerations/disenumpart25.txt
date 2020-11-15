@@ -2,27 +2,31 @@
     private int value;
     private final String description;
 
+    /** Constructor */
     %s(int value, String description)
     {
         this.value = value;
         this.description = description;
     }
-
+    /** Provide enumeration value */
     public int getValue()
     {
         return value;
     }
 
+    /** Provide enumeration description */
     public String getDescription()
     {
         return description;
     }
-    
+
+    /** bit width for this enumeration */
     public static int getEnumBitWidth()
     {
       return %s;
     }
 
+    /** provide enumeration for a given value */
     public static %s getEnumForValue(int i)
     {
        for(%s val: %s.values()) {

@@ -5,15 +5,16 @@ import edu.nps.moves.dis7.enumerations.*;
 
 /**
  * %s
- * name: %s
- * Country: %s
- * Entity kind: %s
- * Domain: %s
+ * name: %s;
+ * Country: %s;
+ * Entity kind: %s;
+ * Domain: %s;
  *
  * Entity type uid: %s
  */
 public class %s extends EntityType
 {
+    /** Default constructor */
     public %s()
     {
         setCountry(Country.%s);

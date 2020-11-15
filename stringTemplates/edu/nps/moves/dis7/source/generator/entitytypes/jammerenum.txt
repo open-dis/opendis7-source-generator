@@ -7,7 +7,7 @@ import java.io.IOException;
 
 import edu.nps.moves.dis7.pdus.*;
 
-/* marshal size 8 bits*/
+/** DIS Jammer Enumerations, marshal size 8 bits*/
 public enum %s implements edu.nps.moves.dis7.%s
 {
 %s;
@@ -15,17 +15,20 @@ public enum %s implements edu.nps.moves.dis7.%s
     private byte value;
     private final String description;
 
+    /** Enumeration constructor */
     %s(int value, String description)
     {
         this.value = (byte)value;
         this.description = description;
     }
 
+    /** Provide enumeration value */
     public byte getValue()
     {
         return value;
     }
 
+    /** Provide enumeration description */
     public String getDescription()
     {
         return description;

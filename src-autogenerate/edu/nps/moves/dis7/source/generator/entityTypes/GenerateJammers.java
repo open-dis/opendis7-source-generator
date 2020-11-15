@@ -54,10 +54,10 @@ public class GenerateJammers
         if (!outputDir.isEmpty())
             outputDirectoryPath = outputDir;
         if (!packageName.isEmpty())
-           this.packageName = packageName;
+           GenerateJammers.packageName = packageName;
         System.out.println (GenerateJammers.class.getName());
         System.out.println ("              xmlFile=" + sisoXmlFile);
-        System.out.println ("          packageName=" + this.packageName);
+        System.out.println ("          packageName=" + GenerateJammers.packageName);
         System.out.println ("  outputDirectoryPath=" + outputDirectoryPath);
         
         outputDirectory  = new File(outputDirectoryPath);
@@ -127,6 +127,11 @@ public class GenerateJammers
     JammerSubCategoryElem parent;
   }
 
+  /** XML handler for recursively reading information and autogenerating code, namely an
+     * inner class that handles the SAX parsing of the XML file. This is relatively simple, if
+     * a little verbose. Basically we just create the appropriate objects as we come across the
+     * XML elements in the file.
+     */
   public class MyHandler extends DefaultHandler
   {
     JammerKindElem currentKind;
@@ -602,6 +607,8 @@ public class GenerateJammers
     return r;
   }
 
+  /** Command-line invocation (CLI)
+    * @param args command-line arguments */
   public static void main(String[] args)
   {
     try {

@@ -4,6 +4,7 @@
  */
 package edu.nps.moves.dis7.source.generator.pdus;
 
+/** PDU autogeneration supporting class. */
 public class BitField 
 {
     String mask = "0";

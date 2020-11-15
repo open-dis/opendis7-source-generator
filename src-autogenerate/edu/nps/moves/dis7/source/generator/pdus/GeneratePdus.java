@@ -383,9 +383,9 @@ public class GeneratePdus
 
         return true;
     } // end of astIsPlausible
-    
-    /*
-     * inner class that handles the SAX parsing of the XML file. This is relatively simnple, if
+
+  /** XML handler for recursively reading information and autogenerating code, namely an
+     * inner class that handles the SAX parsing of the XML file. This is relatively simple, if
      * a little verbose. Basically we just create the appropriate objects as we come across the
      * XML elements in the file.
      */

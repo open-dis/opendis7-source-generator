@@ -427,6 +427,7 @@ public class JavaGenerator extends Generator
                     //if (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.STATIC_IVAR) {
                     attributeType = types.getProperty(anAttribute.getType());
                     String value = anAttribute.getDefaultValue();
+                    pw.print("   /** Default static instance variable */");
                     pw.print("   public static " + attributeType + "  " + anAttribute.getName());
                     pw.print(" = " + value + ";\n");
                     break;

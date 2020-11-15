@@ -11,9 +11,13 @@ import java.nio.ByteBuffer;
  * @version $Id$
  */
 public enum Category implements edu.nps.moves.dis7.JammerCategory
+
 public enum JammerKind implements edu.nps.moves.dis7.JammerKind
+
 public enum SubCategory implements edu.nps.moves.dis7.SubCategory
+
 public enum Specific implements edu.nps.moves.dis7.Specific
+
 public enum %s implements edu.nps.moves.dis7.%s
 {
     AGCandGateStealer,

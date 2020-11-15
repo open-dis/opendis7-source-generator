@@ -1,4 +1,5 @@
 
+  /** Internal class */
   public static class Bits
   {
     private int position;
@@ -26,11 +27,13 @@
     }
   }
 
+  /** Default constructor */
   public %s()
   {
     super(%s); // length from bitfield element
   }
 
+  /** Default constructor with parameters */
   public %s(Bits wh, int i)
   {
     this();

@@ -18,6 +18,7 @@ import java.util.*;
  * @author DMcG
  */
 
+/** PDU autogeneration supporting class. */
 public class CppGenerator extends Generator
 {
     /**

@@ -2,6 +2,7 @@ package %s;
 
 public class %s extends Base
 {
+    /** Default constructor */
     public %s()
     {
         set%s(%s.%s);
