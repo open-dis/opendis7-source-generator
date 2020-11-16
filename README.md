@@ -1,9 +1,15 @@
 # open-dis7-source-generator
 This is a project to generate a type-safe java implementation of the DIS Protocol v. 7, IEEE Standard 1278.1-2012 from SISO and IEEE specifications.  This project is written in Java.
 
-**IMPORTANT!**  This project is not complete and is in a testing phase.  Until this notice is removed, use the DIS libraries under the **open-dis-java** and **Enumerations** projects.
+This project provides a complete implementation of the IEEE DIS Protocol and
+associated enumerations that are used in the
+[open-dis7-java](https://github.com/open-dis/open-dis7-java) project.
 
-**PROGRESS.** All build tasks are now performable using Ant, documented dependencies on Netbeans that follow on this page will be revised.
+Recent project products include full Java support for all 72 DIS7 Protocol Data Units (PDUs)
+and all 27,000 SISO enumerations.
+
+Additional testing and experimentation is performed in the NPS MOVES
+[Networked Graphics MV3500](https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500) course.
 
 <h3>Background</h3>
 
