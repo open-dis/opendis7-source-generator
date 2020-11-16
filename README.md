@@ -33,170 +33,73 @@ A **`SAX`** ("Simple API for XML") Java implementation is used to process the XM
 
 <h3>Development Environment</h3>
 
+The Ant build.xml is greatly improved and build tasks are now simply performed.
+
 The Java language is inherently cross-platform and any OS on any hardware for which a Java run-time is available should *theoretically* support running of this project.  However, the configuration used by the initial developer is the following:
 
-1. Apache **Netbeans 11** Integrated Development Environment ("IDE")
-2. Apache **Ant** Java build tool (integrated in Netbeans)
+1. Apache **Netbeans 12.1** Integrated Development Environment ("IDE")
+2. Apache **Ant** Java build tool version 1.10.9
 3. **Git** version control system (for downloading project; supported in Netbeans)
-4. OpenJdk Java version 14.0.2
+4. OpenJdk Java version 15.0.1
+
+Please see [Savage Developers Guide](https://savage.nps.edu/Savage/developers.html) for our recommended development settings.
 
 The project is hosted on **github.com** and the support files which are used to define the project structure are also included.  Following the procedure below, a simple download, then a small number of additional steps are all that are required to build the source files for a DIS distribution.
 
 The project does not automatically download run-time dependencies like a **Maven**-based project.  Only one external dependency is used, and that is the Apache **Commons-IO** library.  The jar for that is found in the `libs/` directory of the project.
 
-<h3>Generation Procedure</h3>
-
-(The following steps are ripe for automation using a custom Ant/Netbeans task.)
-
-There are five separate class groups that are generated separately.  Some need prior groups to be built and compiled before they can be compiled with no errors.  There are several defined source folders in the project.  One is `./src-specialcase`. This small group of class files requires the presence of the generated pdus before properly compiling.  Similarly the pdus require the presence of the enumerations before they can be built.
-
-To handle this complexity, 5 separate run configurations have been defined and numbered:
-
-* 1 make enums
-* 2 make pdus
-* 3 make jammers
-* 4 make object types
-* 5 make entities
-
-The instructions below reference them in order. 
-** Of note, avoid a NetBeans (Clean/Build) unless it is desired to re-generate source from scratch.
-
-1. **Clone project**
-	(You may alternatively use the built-in Git support in Netbeans.)  The command-line execution is:
-	
-	`git clone https://github.com/open-dis/open-dis7-source-generator.git`
-
-2. **Open Netbeans 12, navigate to clone directory**
-
-	`File->Open Project->open-dis7-source-generator`<hr/>
-
-3. **Choose "1 make enums"** from the run configurations list
-4. **Run Project** from the `Run` menu
-5. **Build Project** from the `Run` menu (not needed if "compile on save")<hr/>
-6. **Choose "2 make pdus"** from the run configurations list
-7. **Run Project** from the `Run` menu
-8. **In Project Properties/Sources** add the `src-specialcase/java` folder to the "Source Package Folders"
-
-	(Note: The step above changes Netbeans project configuration files, but those changes should not be committed to the Git repository.)
-
-9. **Build Project** from the `Run` menu (not needed if "compile on save")<hr/>
-10. **Choose "3 make jammers"** from the run configurations list
-11. **Run Project** from the `Run` menu
-12. **Choose "4 make object types"** from the run configurations list
-13. **Run Project** from the `Run` menu
-14. **Choose "5 make entities"** from the run configurations list
-15. **Run Project** from the `Run` menu
-
-	This step takes a while since there are over 20000 entity classes.
-
-16. **Build Project** from the `Run` menu
-
-	This step takes a while since there are over 20000 entity classes.
-
-	A jar file named `open-dis7-source-generator.jar` is created, but it is not used.<hr/>
-
-17. **From the File window, right-click** `build.xml`
-
-18. **Select** `Run Target->Other Targets->package-all-jars`
-
-19. **Select** `Run Target->Other Targets->javadoc entities`
-
-	These steps take a while and produce the products below.
-	
-<h3>Deploying Products</h3>
-
-Once a proper build has been achieved in the open-dis7-source-generator project, 
-it becomes time to update the deployed version maintained in the open-dis7-java project.
-
-Some care has to be taken to ensure that any changes in that tree are accounted for
-by the source generator beforehand, so that code changes and improvements aren't lost.
-
 1. The generated source         resides in the `src-generated` directory.
 2. The generated entity jars    reside  in the `dist` directory.
 3. The generated entity javadoc resides in the `dist` directory.
-
-If you desire to update the `open-dis7-java` project with any or all of the products from this project, clone that project locally, then follow this procedure:
-
-1. Copy the following files **from**<br/>`open-dis7-source-generator/dist` **to**<br/>`open-dis7-java/entityjars`:
-  * open-dis7-entities-all.jar
-  * open-dis7-entities-chn.jar
-  * open-dis7-entities-deu.jar
-  * open-dis7-entities-nato.jar
-  * open-dis7-entities-rus.jar
-  * open-dis7-entities-usa-air.jar
-  * open-dis7-entities-usa-all.jar
-  * open-dis7-entities-usa-land.jar
-  * open-dis7-entities-usa-munitions.jar
-  * open-dis7-entities-usa-surface.jar
-  * **open-dis7-entities-javadoc.jar**
-<br/>
-<pre> **Or, the above can more easily be accomplished by the following Ant target:
-      **Select** `Run Target->Other Targets->copy-jars`
-</pre>
-
-2. Developers need to be sure to perform a diff with files already in the open-dis7-java repository so that any changes there are reflected in the source-generation algorithms.
-
-3. Do three separate source-file copy operations to the open-dis7-java project:
-	* **Omitting the `entities` directory**, copy the tree of java source files (\*.java) 
-<br/>**from**<br/>`open-dis7-source-generator/`**`src-generated`**`/java/edu/nps/moves/dis7` 
-<br/>**to**<br/>`open-dis7-java/src-generated/edu/nps/moves/dis7`.
-	* Copy the files 
-<br/>**from**<br/> `open-dis7-source-generator/`**`src-specialcase`**`/java/edu/nps/moves/dis7`
-<br/>**to**<br/> `open-dis7-java/src-generated/edu/nps/moves/dis7`.
-	* Copy the files 
-<br/>**from**<br/> `open-dis7-source-generator/`**`src-supporting/`**`java/edu/nps/moves/dis7`
-<br/>**to**<br/> `open-dis7-java/src-generated/edu/nps/moves/dis7`.
-<br/>
-<pre> **Or, the above can more easily be accomplished by the following Ant target:
-      **Select** `Run Target->Other Targets->copy-files`
-</pre>
 
 <h3>Project Directory Structure</h3>
 
 The initial project directory looks like:
 
 ```
-|-- ./libs
-|-- ./nbproject
-|-- ./stringTemplates
-|   `-- ./edu
-|       `-- ./nps
-|           `-- ./moves
-|               `-- ./dis7
-|                   `-- ./source
-|                       `-- ./generator
-|                           |-- ./entitytypes
-|                           |-- ./enumerations
-|                           |-- ./pdus
-|-- ./src
-|   `-- ./edu
-|       `-- ./nps
-|           `-- ./moves
-|               `-- ./dis7
-|                   `-- ./source
-|                       `-- ./generator
-|                           |-- ./entitytypes
-|                           |-- ./enumerations
-|                           |-- ./generator/pdus
-|-- ./src-generated
-|-- ./src-specialcase
-|-- ./src-supporting
-`-- ./xml
-    |-- ./xml/SISO
-    `-- ./xml/dis_7_2012
+|-- images
+|-- lib
+|-- nbproject
+|-- src-autogenerate
+|   `-- edu
+|       `-- nps
+|           `-- moves
+|               `-- dis7
+|                   `-- source
+|                       `-- generator
+|                           |-- entitytypes
+|                           |-- enumerations
+|                           |-- generator/pdus
+|-- src-generated
+|-- src-specialcase
+|-- src-supporting
+|-- stringTemplates
+|   `-- edu
+|       `-- nps
+|           `-- moves
+|               `-- dis7
+|                   `-- source
+|                       `-- generator
+|                           |-- entitytypes
+|                           |-- enumerations
+|                           |-- pdus
+`-- xml
+    |-- xml/SISO
+    `-- xml/dis_7_2012
 ```
 After project execution, the directory tree will also contain:
 
 ```
-|-- ./build
-|-- ./dist
-|-- ./test
+|-- build
+|-- dist
+|   |-- javadoc
+|-- test
 ```
 
 1. **libs** -- third-party Java libraries used by this project
 2. **nbproject** -- files supporting the Netbeans project structure
 3. **stringTemplates** -- supporting files, such as string templates
-4. **src** -- generator Java source files
+4. **src-autogenerate** -- generator Java source files
 5. **src-generated** -- Java source file output from the source generator
 6. **src-specialcase** -- required DIS class files which could not be described by XML
 7. **src-supporting** -- class files satisfying generated source dependencies
@@ -204,7 +107,6 @@ After project execution, the directory tree will also contain:
 9. **build** -- products of the Java compiler
 10. **dist** -- jar files which are the final products of the project
 11. **test** -- an empty directory created by Netbeans
-
 
 <h3>Project Internals</h3>
 
@@ -225,8 +127,6 @@ When the project is "run", as described above, the class which serves as the ent
 3. `edu.nps.moves.dis7.source.generator.entitytypes.GenerateJammers` -- produces radio jammer classes from the SISO specification
 4. `edu.nps.moves.dis7.source.generator.entitytypes.GenerateObjectTypes` -- produces miscellaneous object classes from the SISO specification
 5. `edu.nps.moves.dis7.source.generator.entitytypes.GenerateEntityTypes` -- produces entity type classes from the SISO specification
-
-The Ant build.xml is greatly improved and build tasks are simply performed.
 
 <h4>Source Generation Method -- Pdus</h4>
 
