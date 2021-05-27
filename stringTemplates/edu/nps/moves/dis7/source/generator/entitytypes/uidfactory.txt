@@ -14,8 +14,7 @@ public class EntityTypeFactory
 {
   private static Map<Integer,String> uid2ClassNameMap = new HashMap<>();
   static {
-    try {
-      InputStream ins = EntityTypeFactory.class.getResourceAsStream("uid2EntityClass.properties");
+    try (InputStream ins = EntityTypeFactory.class.getResourceAsStream("uid2EntityClass.properties")) {
       Properties prop = new Properties();
       prop.load(ins);
       prop.entrySet().stream().forEach(e->uid2ClassNameMap.put(Integer.parseInt(e.getKey().toString()), e.getValue().toString()));
@@ -25,6 +24,7 @@ public class EntityTypeFactory
     }
   }
   
+  @SuppressWarnings("unchecked")
   public static EntityType makeEntity(int uid)
   {
     String name = uid2ClassNameMap.get(uid);
@@ -37,7 +37,7 @@ public class EntityTypeFactory
       return constr.newInstance();
     }
     catch(ClassNotFoundException | InstantiationException | IllegalAccessException | InvocationTargetException ex) {
-      System.err.println(name+"(uid "+uid+") could not be instantiated.  Check for proper entity jar(s) on classpath.");
+      System.err.println(name+"(uid "+uid+") could not be instantiated. Check for proper entity jar(s) on classpath.");
       return null;
     }
   }
