@@ -25,6 +25,10 @@ public class EntityTypeFactory
     }
   }
 
+  /** Entity creation
+   * @param uid unique identifier
+   * @return EntityType of interest
+   */
   @SuppressWarnings("unchecked") // TODO apparently unavoidable?
   public static EntityType makeEntity(int uid)
   {

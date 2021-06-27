@@ -47,31 +47,46 @@
   {
     return (Integer) invoke(mSize, (Object[]) null);
   }
-
+  /** Marshal value to DataOutputStream
+     * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
+     * @param dos DataOutputStream for output */
   public void marshal(DataOutputStream dos)
   {
     invoke(marshalDos, new Object[]{dos});
   }
 
+  /** Marshal value to ByteBuffer
+   * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
+   * @param byteBuffer ByteBuffer for output */
   public void marshal(ByteBuffer byteBuffer)
   {
     invoke(marshalBuff, new Object[]{byteBuffer});
   }
 
+  /** Unmarshal value from DataInputStream
+     * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
+     * @param dis DataInputStream for input
+     * @return getMarshalledSize(); // TODO this seems incorrect */
+  @Override
   public int unmarshal(DataInputStream dis)
   {
     Object o = invoke(unmarshalDis, new Object[]{dis});
     enumInst = o;
     init();
-    return getMarshalledSize();
+    return getMarshalledSize(); // TODO this seems incorrect
   }
 
+  /** Unmarshal value from ByteBuffer
+     * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
+     * @param byteBuffer ByteBuffer for input
+     * @return getMarshalledSize(); // TODO this seems incorrect */
+  @Override
   public int unmarshal(ByteBuffer byteBuffer)
   {
     Object o = invoke(unmarshalBuff, new Object[]{byteBuffer});
     enumInst = o;
     init();
-    return getMarshalledSize();
+    return getMarshalledSize(); // TODO this seems incorrect
   }
 
   private Object invoke(Method m, Object[] oa)

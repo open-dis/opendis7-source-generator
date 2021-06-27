@@ -8,25 +8,33 @@
         this.value = value;
         this.description = description;
     }
-    /** Provide enumeration value */
+    /** Provide enumeration value
+      * @return integer value */
     public int getValue()
     {
         return value;
     }
 
-    /** Provide enumeration description */
+    /** Provide enumeration description
+     * @return description
+     */
     public String getDescription()
     {
         return description;
     }
 
-    /** bit width for this enumeration */
+    /** bit width for this enumeration
+     * @return number of bits wide
+     */
     public static int getEnumBitWidth()
     {
       return %s;
     }
 
-    /** provide enumeration for a given value */
+    /** provide enumeration for a given value
+     * @param i integer value of interest
+     * @return enumeration corresponding to numeric value
+     */
     public static %s getEnumForValue(int i)
     {
        for(%s val: %s.values()) {

@@ -1,9 +1,14 @@
- 
-   public void marshal(DataOutputStream dos) throws IOException
+    /** Marshal value to DataOutputStream
+     * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
+     * @param dos DataOutputStream for output */
+    public void marshal(DataOutputStream dos) throws IOException
     {
         dos.writeShort(getValue());
     }
 
+    /** Marshal value to ByteBuffer
+     * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
+     * @param byteBuffer ByteBuffer for output */
     public void marshal(ByteBuffer byteBuffer) throws Exception
     {
         byteBuffer.putShort((short)getValue());
