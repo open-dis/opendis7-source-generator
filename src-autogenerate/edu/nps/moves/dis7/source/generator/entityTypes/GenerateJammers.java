@@ -47,6 +47,10 @@ public class GenerateJammers
     String clsNm;
   }
 
+  /** Constructor for GenerateJammers
+     * @param xmlFile sisoXmlFile
+     * @param outputDir outputDirectoryPath
+     * @param packageName key to package name for jammer */
   public GenerateJammers(String xmlFile, String outputDir, String packageName)
   {
         if (!xmlFile.isEmpty())

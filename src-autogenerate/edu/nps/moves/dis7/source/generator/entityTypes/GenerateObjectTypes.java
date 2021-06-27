@@ -45,6 +45,10 @@ public class GenerateObjectTypes
     String clsNm;
   }
 
+  /** Constructor for GenerateEntityTypes
+     * @param xmlFile sisoXmlFile
+     * @param outputDir outputDirectoryPath
+     * @param packageName key to package name for object types */
   public GenerateObjectTypes(String xmlFile, String outputDir, String packageName)
   {
         if (!xmlFile.isEmpty())
@@ -645,6 +649,9 @@ public class GenerateObjectTypes
     return r;
   }
 
+  /** GenerateObjectTypes invocation, passing run-time arguments (if any)
+     * @param args three configuration arguments, if defaults not used
+     */
   public static void main(String[] args)
   {
     try {

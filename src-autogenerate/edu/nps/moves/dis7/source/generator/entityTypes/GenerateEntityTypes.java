@@ -62,6 +62,10 @@ public class GenerateEntityTypes
     private String entityUid;
   }
 
+  /** Constructor for GenerateEntityTypes
+     * @param xmlFile sisoXmlFile
+     * @param outputDir outputDirectoryPath
+     * @param packageName key to package name for entity types */
   public GenerateEntityTypes(String xmlFile, String outputDir, String packageName)
   {
         if (!xmlFile.isEmpty())
@@ -1014,6 +1018,9 @@ public class GenerateEntityTypes
     return r;
   }
 
+  /** GenerateEntityTypes invocation, passing run-time arguments (if any)
+     * @param args three configuration arguments, if defaults not used
+     */
   public static void main(String[] args)
   {
     try 
