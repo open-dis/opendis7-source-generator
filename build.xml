@@ -79,12 +79,14 @@
 
     <property environment="env"/>
     
-    <target name="all" description="Build enumeration and PDU source code.">
+    <target name="all" depends="clean.build,clean" description="Build enumeration and PDU source code.">
         <echo message="timestamp ${timestamp}"/>
         <fail message="Please build using Ant 1.9.0 or higher.">
             <condition>
                 <not>
                     <antversion atleast="1.9.0"/><!-- recommend latest 1.10.+ -->
+                    <!-- required to support release="8" switch
+                         https://stackoverflow.com/questions/59097317/warning-options-bootstrap-class-path-not-set-in-conjunction-with-source-8 -->
                 </not>
             </condition>
         </fail>
@@ -101,7 +103,8 @@
                 source="1.8"
                 target="1.8"
      includeantruntime="false">
-            <!-- release="8" causes problems immediately after clean -->
+            <!-- release="8" causes problems immediately after clean; to silence warning:
+                 https://stackoverflow.com/questions/59097317/warning-options-bootstrap-class-path-not-set-in-conjunction-with-source-8 -->
             <src>
                 <pathelement path="src-autogenerate"/>
                 <pathelement path="src-supporting/java"/>
@@ -123,6 +126,7 @@
         <antcall target="javadoc" description="create javadoc for all compiled code"/>
         <echo message="javadoc complete"/>
         
+        <antcall target="jar" description="create jar files, includes copy-generated-jars-to-open-dis7-java"/>
         <antcall target="copy-generated-source-to-open-dis7-java" description="useful for debugging, accepted updates in version control there"/>
         <echo message="build all complete"/>
     </target>
@@ -164,7 +168,7 @@
         <echo message="make clean complete"/>
     </target>
    
-    <target name="jar" depends="all">
+    <target name="jar">
         <!-- javadoc manifest properties -->
         <echo message="manifest.name          = ${manifest.name}"/>
         <echo message="Built-By               = ${Built-By}"/>
@@ -204,7 +208,7 @@
         <echo message="Packaging .class binaries for all generated OpenDIS7 entity enumerations into a single JAR"/>
         <jar destfile="dist/open-dis7-enumerations-classes.jar"
               basedir="."
-             includes="edu/nps/moves/dis7/**"
+             includes="edu/nps/moves/dis7/**/*.class"
              excludes=".keep"
                update="true"
             zip64Mode="always">
@@ -245,14 +249,22 @@
         <echo message="Packaging .java source for all generated OpenDIS7 entity enumerations into a single JAR"/>
         <jar destfile="dist/open-dis7-enumerations-source.jar"
               basedir="."
-             includes="edu/nps/moves/dis7/**"
+             includes="edu/nps/moves/dis7/**/*"
              excludes=".keep"
                update="true"
             zip64Mode="always">
-            <fileset dir="src-autogenerate"/>
-            <fileset dir="src-generated/java"/>
-            <fileset dir="src-specialcase/java"/>
-            <fileset dir="src-supporting/java"/>
+            <fileset dir="src-autogenerate">
+                <include name="**/*.java"/>
+            </fileset>
+            <fileset dir="src-generated/java">
+                <include name="**/*.java"/>
+            </fileset>
+            <fileset dir="src-specialcase/java">
+                <include name="**/*.java"/>
+            </fileset>
+            <fileset dir="src-supporting/java">
+                <include name="**/*.java"/>
+            </fileset>
             <!-- https://docs.oracle.com/javase/tutorial/deployment/jar/manifestindex.html -->
             <manifest>
                 <attribute name="description"            value="Java source files for ${manifest.name}"/>
@@ -721,11 +733,12 @@
     </target>
     
     <target name="copy-generated-jars-to-open-dis7-java">
+        <echo message="Copy copy generated jars to open-dis7-java project"/>
         <echo message="Both enumerations and PDUs are created by open-dis7-source-generator, with"/>
         <echo message="   PDU classes  packaged into open-dis7-*.jar              archives by open-dis7-java project and"/>
         <echo message="   enumerations packaged into open-dis7-enumerations-*.jar archives by open-dis7-source-generator."/>
         
-        <delete includeemptydirs="true" failonerror="false"><!-- verbose="true" -->
+        <delete includeemptydirs="true" failonerror="false" verbose="false"><!-- verbose="true" false -->
             <fileset dir="../open-dis7-java/dist">
                 <include name="open-dis7-enumerations-classes.jar"/>
                 <include name="open-dis7-enumerations-source.jar"/>
