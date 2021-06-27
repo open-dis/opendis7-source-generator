@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2008-2020, MOVES Institute, Naval Postgraduate School (NPS). All rights reserved.
+ * Copyright (c) 2008-2021, MOVES Institute, Naval Postgraduate School (NPS). All rights reserved.
  * This work is provided under a BSD open-source license, see project license.html and license.txt
  */
 package edu.nps.moves.dis7.source.generator.enumerations;
@@ -139,7 +139,7 @@ public class GenerateEnumerations
         System.out.println("Begin uid preprocess...");
         factory.newSAXParser().parse(xmlFile,new UidCollector());
 
-        System.out.println("Begin enum generation...");
+        System.out.println("Begin enum enumeration generation...");
         MyHandler handler = new MyHandler();
         factory.newSAXParser().parse(xmlFile, handler); // apparently can't reuse xmlFile
 
@@ -480,7 +480,7 @@ public class GenerateEnumerations
             if (clsName == null)
             {
                 System.out.flush();
-                System.err.println("Didn't find a class name for uid = " + el.uid);
+                System.err.println("*** Didn't find a class name for uid = " + el.uid + ", ignored");
                 return;
             }
             String classNameCorrected = clsName;
@@ -501,11 +501,11 @@ public class GenerateEnumerations
 
             sb.append(String.format(dictEnumTemplate1, specTitleDate, packageName, "UID " + el.uid, classNameCorrected, additionalInterface));
 
+            // enumerations section
             dictNames.clear();
-            // enum section
             if (el.elems.size() > MAX_ENUMERATIONS)
             {
-                System.out.println ("Enumerations class " + packageName + classNameCorrected + " has " + el.elems.size() +
+                System.out.println ("*** Enumerations class " + packageName + classNameCorrected + " has " + el.elems.size() +
                     ", possibly too large?");
             }
             el.elems.forEach((row) -> {
@@ -515,7 +515,7 @@ public class GenerateEnumerations
                     dictNames.add(name);
                 }
                 else
-                    System.out.println("Duplicate dictionary entry for " + name + " in " + clsName);
+                    System.out.println("   Duplicate dictionary entry for " + name + " in " + clsName);
             });
 
             if (el.elems.size() > 0)
@@ -626,7 +626,7 @@ public class GenerateEnumerations
             if (clsName == null)
             {
                 System.out.flush();
-                System.err.println("Didn't find a class name for uid = " + el.uid);
+                System.err.println("*** Didn't find a class name for uid = " + el.uid);
                 return;
             }
             String classNameCorrected = clsName;
