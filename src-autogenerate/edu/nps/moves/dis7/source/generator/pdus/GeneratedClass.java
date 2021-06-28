@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2008-2020, MOVES Institute, Naval Postgraduate School (NPS). All rights reserved.
+ * Copyright (c) 2008-2021, MOVES Institute, Naval Postgraduate School (NPS). All rights reserved.
  * This work is provided under a BSD open-source license, see project license.html and license.txt
  */
 package edu.nps.moves.dis7.source.generator.pdus;
@@ -52,31 +52,55 @@ public class GeneratedClass
         
     }
     
+    /**
+     * setter for parent class
+     * @param pParentClass parent class
+     */
     public void setParentClass(String pParentClass)
     {
         parentClass = pParentClass;
     }
-    
-    public void setInterfaces(String iFaces)
-    {
-        interfaces = iFaces;
-    }
-    
+
+    /**
+     * get parent class
+     * @return parent class
+     */
     public String getParentClass()
     {
         return parentClass;
     }
-    
+
+    /**
+     * get interfaces
+     * @return interfaces
+     */
     public String getInterfaces()
     {
         return interfaces;
     }
     
+    /**
+     * set interfaces
+     * @param pInterfaces interfaces
+     */
+    public void setInterfaces(String pInterfaces)
+    {
+        interfaces = pInterfaces;
+    }
+    
+    /**
+     * get name
+     * @return name
+     */
     public String getName()
     {
         return name;
     }
     
+    /**
+     * set name
+     * @param pName new name
+     */
     public void setName(String pName)
     {
         name = pName;
@@ -126,6 +150,10 @@ public class GeneratedClass
         return comment;
     }
     
+    /**
+     * String representation for this object
+     * @return  representation for this object
+     */
     @Override
     public String toString()
     {
@@ -141,41 +169,73 @@ public class GeneratedClass
         return result;
     }
 
+    /**
+     * whether class is XML root element
+     * @return whether class is XML root element
+     */
     public boolean isXmlRootElement()
     {
         return xmlRootElement;
     }
 
+    /**
+     * set whether class is XML root element
+     * @param isXmlRootElement whether class is XML root element
+     */
     public void setXmlRootElement(boolean isXmlRootElement)
     {
         this.xmlRootElement = isXmlRootElement;
     }
     
-    public void setSpecialCase(String specCase)
+    /**
+     * whether object is special case
+     * @param flag whether object is special case
+     */
+    public void setSpecialCase(String flag)
     {
-        this.specialCase = specCase;
+        this.specialCase = flag;
     }
     
+    /**
+      whether object is special case
+     * @return whether object is special case
+     */
     public String getSpecialCase()
     {
         return specialCase;
     }
 
-    void setAbstract(String tf)
+    /**
+     * set whether object is abstract
+     * @param flag true or false
+     */
+    public void setAbstract(String flag)
     {
-        this.abstractClass = Boolean.parseBoolean(tf);
+        this.abstractClass = Boolean.parseBoolean(flag);
     }
     
+    /**
+     * whether object is abstract
+     * @return whether object is abstract
+     */
     public boolean isAbstract()
     {
       return abstractClass;
     }
 
+    /**
+     * set alias name
+     * @param aliasFor alias name for this class
+     */
     public void setAliasFor(String aliasFor)
     {
       this.aliasFor = aliasFor;
     }
     
+    /**
+     * get alias name
+     * @return alias name
+     */
     public String getAliasFor()
     {
       return aliasFor;

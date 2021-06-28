@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2008-2020, MOVES Institute, Naval Postgraduate School (NPS). All rights reserved.
+ * Copyright (c) 2008-2021, MOVES Institute, Naval Postgraduate School (NPS). All rights reserved.
  * This work is provided under a BSD open-source license, see project license.html and license.txt
  */
 package edu.nps.moves.dis7.source.generator.pdus;
@@ -14,16 +14,24 @@ import java.util.ArrayList;
 import java.util.Map;
 /* not thouroughly examined, global change: VARIABLE_LIST to OBJECT_LIST and FIXED_LIST to PRIMITIVE_LIST */
 /**
- *
+ * Constructor, not fully implemented.
  * @author DMcG
  */
 public class PythonGenerator extends Generator
 {
-    // Standard python indent is four spaces
+    /** Standard python indent is four spaces */
     public String INDENT="    ";
-    public Properties marshalTypes = new Properties();
+    /** Properties of interest */
+    public Properties   marshalTypes = new Properties();
+    /** Properties of interest */
     public Properties unmarshalTypes = new Properties();
-    
+
+/**
+ * Given the input object, something of an abstract syntax tree, this generates a source code file in the Python language.It has ivars, getters, setters, and serialization/deserialization methods.Warning: only partially implemented.
+ * @author DMcG
+     * @param pClassDescriptions String Map of class descriptions
+     * @param pythonProperties special language properties
+ */
     public PythonGenerator(Map<String, GeneratedClass> pClassDescriptions, Properties pythonProperties)
     {
         super(pClassDescriptions, pythonProperties);
@@ -31,7 +39,7 @@ public class PythonGenerator extends Generator
         marshalTypes.setProperty("unsigned short", "unsigned_short");
         marshalTypes.setProperty("unsigned byte", "unsigned_byte");
         marshalTypes.setProperty("unsigned int", "unsigned_int");
-	marshalTypes.setProperty("unsigned long", "long"); // This is wrong; no unsigned long type in java. Fix with a BigInt or similar
+	    marshalTypes.setProperty("unsigned long", "long"); // This is wrong; no unsigned long type in java. Fix with a BigInt or similar
         
         marshalTypes.setProperty("byte", "byte");
         marshalTypes.setProperty("short", "short");
@@ -107,23 +115,28 @@ public class PythonGenerator extends Generator
  
    } // end of writeClasses
     
-    public void writeClass(PrintWriter pw, GeneratedClass aClass)
+    /**
+     * Create custom output
+     * @param printWriter output
+     * @param aClass class of interest
+     */
+    public void writeClass(PrintWriter printWriter, GeneratedClass aClass)
     {
-        pw.println();
+        printWriter.println();
 
         String parentClassName = aClass.getParentClass();
         if(parentClassName.equalsIgnoreCase("root"))
             parentClassName = "object";
         
-        pw.println("class " + aClass.getName() + "( " + parentClassName + " ):");
-        this.writeClassComments(pw, aClass);
+        printWriter.println("class " + aClass.getName() + "( " + parentClassName + " ):");
+        this.writeClassComments(printWriter, aClass);
                 
-        pw.println(INDENT + "def __init__(self):");
-        pw.println(INDENT + INDENT + "\"\"\" Initializer for " + aClass.getName() + "\"\"\"");
+        printWriter.println(INDENT + "def __init__(self):");
+        printWriter.println(INDENT + INDENT + "\"\"\" Initializer for " + aClass.getName() + "\"\"\"");
         
         // If this is a subclass, call the superclass intializer
         if(!aClass.getParentClass().equalsIgnoreCase("root"))
-            pw.println(INDENT + INDENT  + "super(" + aClass.getName() + ", self).__init__()");
+            printWriter.println(INDENT + INDENT  + "super(" + aClass.getName() + ", self).__init__()");
         
         // Write class attributes
         List ivars = aClass.getClassAttributes();
@@ -141,10 +154,10 @@ public class PythonGenerator extends Generator
                 
                 boolean hasComment = anAttribute.getComment() != null;
      
-                pw.println(INDENT + INDENT  + "self." + anAttribute.getName() + " = " + defaultValue);
+                printWriter.println(INDENT + INDENT  + "self." + anAttribute.getName() + " = " + defaultValue);
                 if(hasComment)
                 {
-                    pw.println(INDENT + INDENT  + "\"\"\" " + anAttribute.getComment() + "\"\"\"");
+                    printWriter.println(INDENT + INDENT  + "\"\"\" " + anAttribute.getComment() + "\"\"\"");
                 }
             } // end of primitive attribute type
             
@@ -153,10 +166,10 @@ public class PythonGenerator extends Generator
             {
                 String attributeType = anAttribute.getType();
                 
-                pw.println(INDENT + INDENT  + "self." + anAttribute.getName() + " = " + attributeType + "();");
+                printWriter.println(INDENT + INDENT  + "self." + anAttribute.getName() + " = " + attributeType + "();");
                 if(anAttribute.getComment() != null)
                 {
-                    pw.println(INDENT + INDENT  + "\"\"\" " + anAttribute.getComment() + "\"\"\"");
+                    printWriter.println(INDENT + INDENT  + "\"\"\" " + anAttribute.getComment() + "\"\"\"");
                 }
             }
             
@@ -171,32 +184,32 @@ public class PythonGenerator extends Generator
                 
                 if(anAttribute.getUnderlyingTypeIsPrimitive() == true)
                 {
-                    pw.print(INDENT + INDENT + "self." + anAttribute.getName() + " =  " + 
+                    printWriter.print(INDENT + INDENT + "self." + anAttribute.getName() + " =  " +
                                  "[");
                     for(int arrayLength = 0; arrayLength < anAttribute.getListLength(); arrayLength++)
                     {
-                        pw.print(" 0");
+                        printWriter.print(" 0");
                         if(arrayLength < anAttribute.getListLength() - 1)
-                            pw.print(",");
+                            printWriter.print(",");
                     }
-                    pw.println("]");
+                    printWriter.println("]");
                 }
                 else
                 {                    
-                    pw.print(INDENT + INDENT + "self." + anAttribute.getName() + " =  " + 
+                    printWriter.print(INDENT + INDENT + "self." + anAttribute.getName() + " =  " +
                                  "[");
                     for(int arrayLength = 0; arrayLength < anAttribute.getListLength(); arrayLength++)
                     {
-                        pw.print(" " + attributeType + "()");
+                        printWriter.print(" " + attributeType + "()");
                         if(arrayLength < anAttribute.getListLength() - 1)
-                            pw.print(",");
+                            printWriter.print(",");
                     }
-                    pw.println("]");
+                    printWriter.println("]");
                 }
                 
                 if(anAttribute.getComment() != null)
                 {
-                    pw.println(INDENT + INDENT + "\"\"\" " + anAttribute.getComment() + "\"\"\"");
+                    printWriter.println(INDENT + INDENT + "\"\"\" " + anAttribute.getComment() + "\"\"\"");
                 }
             }
             
@@ -207,11 +220,11 @@ public class PythonGenerator extends Generator
                 int listLength = anAttribute.getListLength();
                 String listLengthString = "" + listLength;
                 
-                pw.println(INDENT + INDENT + "self." + anAttribute.getName() + " = []");
+                printWriter.println(INDENT + INDENT + "self." + anAttribute.getName() + " = []");
                 
                 if(anAttribute.getComment() != null)
                 {
-                    pw.println(INDENT + INDENT +"\"\"\" " + anAttribute.getComment() + "\"\"\"");
+                    printWriter.println(INDENT + INDENT +"\"\"\" " + anAttribute.getComment() + "\"\"\"");
                 }
             }
              
@@ -246,19 +259,19 @@ public class PythonGenerator extends Generator
                 }
                 else
                 {
-                    pw.println(INDENT + INDENT  +"self." + anInit.getVariable() + " = " + anInit.getVariableValue() );
-                    pw.println(INDENT + INDENT + "\"\"\" initialize value \"\"\"");
+                    printWriter.println(INDENT + INDENT  +"self." + anInit.getVariable() + " = " + anInit.getVariableValue() );
+                    printWriter.println(INDENT + INDENT + "\"\"\" initialize value \"\"\"");
                 }
         } // End initialize initial values
     
     
-        this.writeMarshal(pw, aClass);
-        this.writeUnmarshal(pw, aClass);
-        this.writeFlagMethods(pw, aClass);
-        pw.println();
-        pw.println();
+        this.writeMarshal(printWriter, aClass);
+        this.writeUnmarshal(printWriter, aClass);
+        this.writeFlagMethods(printWriter, aClass);
+        printWriter.println();
+        printWriter.println();
         
-        pw.flush();
+        printWriter.flush();
     }
     
     /** The method that writes out the python marshalling code
@@ -361,18 +374,23 @@ public class PythonGenerator extends Generator
         
     }
     
-    public void writeUnmarshal(PrintWriter pw, GeneratedClass aClass)
+    /**
+     * Create custom method
+     * @param printWriter output
+     * @param aClass class of interest
+     */
+    public void writeUnmarshal(PrintWriter printWriter, GeneratedClass aClass)
     {
-        pw.println();
-        pw.println(INDENT + "def parse(self, inputStream):");
-        pw.println(INDENT + INDENT + "\"\"\"\"Parse a message. This may recursively call embedded objects.\"\"\"");
-        pw.println();
+        printWriter.println();
+        printWriter.println(INDENT + "def parse(self, inputStream):");
+        printWriter.println(INDENT + INDENT + "\"\"\"\"Parse a message. This may recursively call embedded objects.\"\"\"");
+        printWriter.println();
         
         // If this is not a top-level class, call the superclass
         String parentClassName = aClass.getParentClass();
         if(!parentClassName.equalsIgnoreCase("root"))
         {
-            pw.println(INDENT + INDENT + "super( " + aClass.getName() + ", self).parse(inputStream)");
+            printWriter.println(INDENT + INDENT + "super( " + aClass.getName() + ", self).parse(inputStream)");
         }
         
         List attributes = aClass.getClassAttributes();
@@ -384,7 +402,7 @@ public class PythonGenerator extends Generator
             // unserialized
             if(anAttribute.shouldSerialize == false)
             {
-                pw.println(INDENT + INDENT + "# attribute " + anAttribute.getName() + " marked as do not serialize");
+                printWriter.println(INDENT + INDENT + "# attribute " + anAttribute.getName() + " marked as do not serialize");
                 continue;
             }
             
@@ -392,25 +410,25 @@ public class PythonGenerator extends Generator
             {
                 case PRIMITIVE:
                     String marshalType = marshalTypes.getProperty(anAttribute.getType());
-                    pw.println(INDENT + INDENT + "self." + anAttribute.getName() + " = inputStream.read_" + marshalType + "();");
+                    printWriter.println(INDENT + INDENT + "self." + anAttribute.getName() + " = inputStream.read_" + marshalType + "();");
                     break;
                     
                 case CLASSREF:
-                    pw.println(INDENT + INDENT + "self." + anAttribute.getName() + ".parse(inputStream)");
+                    printWriter.println(INDENT + INDENT + "self." + anAttribute.getName() + ".parse(inputStream)");
                     break;
                     
                 case PRIMITIVE_LIST:
                     // Write out the method call to parse a fixed length list, aka an array.
                 
-                    pw.println(INDENT + INDENT + "self." + anAttribute.getName() + " = [0]*" + anAttribute.getListLength());
+                    printWriter.println(INDENT + INDENT + "self." + anAttribute.getName() + " = [0]*" + anAttribute.getListLength());
                     
-                    pw.println(INDENT + INDENT + "for idx in range(0, " + anAttribute.getListLength() + "):");
+                    printWriter.println(INDENT + INDENT + "for idx in range(0, " + anAttribute.getListLength() + "):");
 
                     if(anAttribute.getUnderlyingTypeIsPrimitive() == true)
                     {
                          marshalType = unmarshalTypes.getProperty(anAttribute.getType());
-                        pw.println(INDENT + INDENT + INDENT + "val = inputStream.read_" + marshalType);
-                        pw.println(INDENT + INDENT + INDENT + "self." + anAttribute.getName() + "[  idx  ] = val");
+                        printWriter.println(INDENT + INDENT + INDENT + "val = inputStream.read_" + marshalType);
+                        printWriter.println(INDENT + INDENT + INDENT + "self." + anAttribute.getName() + "[  idx  ] = val");
                         //pw.println(INDENT + INDENT + INDENT +"inputStream.read_" + marshalType + "( self." + anAttribute.getName() + "[ idx ] );");
                     }
                     //else if(anAttribute.listIsClass() == true) 
@@ -418,11 +436,11 @@ public class PythonGenerator extends Generator
                     //    pw.println(INDENT + INDENT + INDENT+ "self." + anAttribute.getName() + "[ idx ].serialize(outputStream);");
                     //}
 
-                    pw.println();
+                    printWriter.println();
                     break;
                     
                 case OBJECT_LIST:
-                    pw.println(INDENT + INDENT + "for idx in range(0, self." + anAttribute.getCountFieldName() + "):");
+                    printWriter.println(INDENT + INDENT + "for idx in range(0, self." + anAttribute.getCountFieldName() + "):");
 
                     // This is some sleaze. We're an array, but an array of what? We could be either a
                     // primitive or a class. We need to figure out which. This is done via the expedient
@@ -433,15 +451,15 @@ public class PythonGenerator extends Generator
 
                     if(marshalType == null) // It's a class
                     {
-                        pw.println(INDENT + INDENT + INDENT + "element = " + anAttribute.dynamicListClassAttribute + "()");
-                        pw.println(INDENT + INDENT + INDENT + "element.parse(inputStream)");
-                        pw.println(INDENT + INDENT + INDENT+ "self." + anAttribute.getName() + ".append(element)");
+                        printWriter.println(INDENT + INDENT + INDENT + "element = " + anAttribute.dynamicListClassAttribute + "()");
+                        printWriter.println(INDENT + INDENT + INDENT + "element.parse(inputStream)");
+                        printWriter.println(INDENT + INDENT + INDENT+ "self." + anAttribute.getName() + ".append(element)");
                     }
                     else // It's a primitive
                     {
-                        pw.println(INDENT + INDENT + INDENT + "self." + anAttribute.getName() + ".add( inputStream.read_" + marshalType + "(  )");
+                        printWriter.println(INDENT + INDENT + INDENT + "self." + anAttribute.getName() + ".add( inputStream.read_" + marshalType + "(  )");
                     }
-                    pw.println();
+                    printWriter.println();
                     
                     break;
             } // end switch  
@@ -449,10 +467,15 @@ public class PythonGenerator extends Generator
         } // End loop through attributes
     }
     
-    public void writeClassComments(PrintWriter pw, GeneratedClass aClass)
+    /**
+     * Create custom output
+     * @param printWriter output
+     * @param aClass class of interest
+     */
+    public void writeClassComments(PrintWriter printWriter, GeneratedClass aClass)
     {
-        pw.println(INDENT + "\"\"\"" + aClass.getClassComments() + "\"\"\"");
-        pw.println();
+        printWriter.println(INDENT + "\"\"\"" + aClass.getClassComments() + "\"\"\"");
+        printWriter.println();
     }
     
     /**
@@ -489,9 +512,9 @@ public class PythonGenerator extends Generator
                         // write getter
                         pw.println();
                         pw.println(INDENT + "def get" + capped + "(self):");
-                        if(bitfield.comment != null)
+                        if(bitfield.description != null)
                         {
-                            pw.println(INDENT + INDENT + "\"\"\"" + bitfield.comment + " \"\"\"");
+                            pw.println(INDENT + INDENT + "\"\"\"" + bitfield.description + " \"\"\"");
                         }
                         
                         pw.println(INDENT + INDENT + "val = self." + bitfield.parentAttribute.getName() + " & " + bitfield.mask);
@@ -502,9 +525,9 @@ public class PythonGenerator extends Generator
                         
                         pw.println();
                         pw.println(INDENT + "def set" + capped + "(self, val):");
-                        if(bitfield.comment != null)
+                        if(bitfield.description != null)
                         {
-                            pw.println(INDENT + INDENT + "\"\"\"" + bitfield.comment + " \"\"\"");
+                            pw.println(INDENT + INDENT + "\"\"\"" + bitfield.description + " \"\"\"");
                         }
                         pw.println(INDENT + INDENT + "aVal = 0");
                         pw.println(INDENT + INDENT + "self." + bitfield.parentAttribute.getName() + " &= ~" + bitfield.mask);
@@ -528,13 +551,17 @@ public class PythonGenerator extends Generator
         }
     }
     
-    public void writeLicense(PrintWriter pw)
+    /**
+     * Create output
+     * @param printWriter output
+     */
+    public void writeLicense(PrintWriter printWriter)
     {
-        pw.println("#");
-        pw.println("#This code is licensed under the BSD software license");
-        pw.println("# Copyright 2009-2015, MOVES Institute");
-        pw.println("# Author: DMcG");
-        pw.println("#");
+        printWriter.println("#");
+        printWriter.println("#This code is licensed under the BSD software license");
+        printWriter.println("# Copyright 2009-2021, MOVES Institute");
+        printWriter.println("# Author: DMcG");
+        printWriter.println("#");
     }
     
     

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2008-2020, MOVES Institute, Naval Postgraduate School (NPS). All rights reserved.
+ * Copyright (c) 2008-2021, MOVES Institute, Naval Postgraduate School (NPS). All rights reserved.
  * This work is provided under a BSD open-source license, see project license.html and license.txt
  */
 package edu.nps.moves.dis7.source.generator.pdus;
@@ -15,11 +15,18 @@ public class TreeNode
     GeneratedClass aClass = null;
     List<TreeNode> children = new ArrayList<>();
 
+    /** Constructor
+     * @param aClass GeneratedClass of interest */
     public TreeNode(GeneratedClass aClass)
     {
         this.aClass = aClass;
     }
     
+    /**
+     * Find appropriate TreeNode object using class name
+     * @param name of interest
+     * @return appropriate TreeNode object
+     */
     public TreeNode findClass(String name)
     {
         if(aClass != null && aClass.getName().equalsIgnoreCase(name))
@@ -35,11 +42,19 @@ public class TreeNode
         return null; 
     }
     
+    /**
+     * Add class to tree
+     * @param aClass class of interest
+     */
     public void addClass(GeneratedClass aClass)
     {
         children.add(new TreeNode(aClass));
     }
     
+    /**
+     * Get list of classes
+     * @param aList TreeNode list
+     */
     public void getList(List<TreeNode> aList)
     {
         aList.addAll(children);

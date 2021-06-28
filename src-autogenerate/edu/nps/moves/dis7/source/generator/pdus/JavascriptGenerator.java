@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2008-2020, MOVES Institute, Naval Postgraduate School (NPS). All rights reserved.
+ * Copyright (c) 2008-2021, MOVES Institute, Naval Postgraduate School (NPS). All rights reserved.
  * This work is provided under a BSD open-source license, see project license.html and license.txt
  */
 
@@ -45,8 +45,12 @@ public class JavascriptGenerator extends Generator
     
     /** sizes of various primitive types */
     Properties primitiveSizes = new Properties();
-    
-    
+/**
+ * Given the input object, something of an abstract syntax tree, this generates a source code file in the JavaScript language.It has ivars, getters, setters, and serialization/deserialization methods.Warning: only partially implemented.
+ * @author DMcG
+     * @param pClassDescriptions String Map of classes
+     * @param pJavascriptProperties special language properties
+ */
     public JavascriptGenerator(Map<String, GeneratedClass> pClassDescriptions, Properties pJavascriptProperties)
     {
         super(pClassDescriptions, pJavascriptProperties);
@@ -614,9 +618,9 @@ public class JavascriptGenerator extends Generator
                         
                         // write getter
                         pw.println();
-                        if(bitfield.comment != null)
+                        if(bitfield.description != null)
                         {
-                            pw.println("/** " + bitfield.comment + " */");
+                            pw.println("/** " + bitfield.description + " */");
                         }
                         pw.println("" + namespace + "." + aClass.getName() + ".prototype.get" + methodBase + " = function()");
                         pw.println("{");
@@ -630,9 +634,9 @@ public class JavascriptGenerator extends Generator
                         // Write the setter/mutator
                         
                         pw.println();
-                        if(bitfield.comment != null)
+                        if(bitfield.description != null)
                         {
-                            pw.println("/** " + bitfield.comment +  " */");
+                            pw.println("/** " + bitfield.description +  " */");
                         }
                         pw.println("" + namespace + "." + aClass.getName() + ".prototype.set" + methodBase + "= function(val)");
                         pw.println("{");
@@ -716,7 +720,7 @@ public class JavascriptGenerator extends Generator
             
             // this attribute is a reference to another class defined in the XML document, The output should look like
             //
-            // /** This is a comment */
+            // /** This is a description */
             // protected AClass foo = new AClass();
             //
             if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF)

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2008-2020, MOVES Institute, Naval Postgraduate School (NPS). All rights reserved.
+ * Copyright (c) 2008-2021, MOVES Institute, Naval Postgraduate School (NPS). All rights reserved.
  * This work is provided under a BSD open-source license, see project license.html and license.txt
  */
 package edu.nps.moves.dis7.source.generator.pdus;
@@ -36,54 +36,65 @@ public class GeneratePdus
     private static String         sisoXmlFile = edu.nps.moves.dis7.source.generator.GenerateOpenDis7JavaPackages.DEFAULT_SISO_XML_FILE;
         
     // Elements and attributes we look for in our XML pdu description files:
-    public static final String INHERITSFROM = "inheritsFrom";
-    public static final String ALIASFOR = "aliasFor";
-    public static final String IMPLEMENTS = "implements";
-    public static final String XMLROOTELEMENT = "xmlRootElement";
-    public static final String SISOENUM = "sisoenum";
-    public static final String SISOBITFIELD = "sisobitfield";
-    public static final String CLASS = "class";
-    public static final String ATTRIBUTE = "attribute";
-    public static final String COMMENT = "comment";
-    public static final String INITIALVALUE = "initialvalue";
-    public static final String NAME = "name";
-    public static final String CLASSREF = "classref";
-    public static final String COUNTFIELDNAME = "countfieldname";
-    public static final String TYPE = "type";
-    public static final String DEFAULTVALUE = "defaultvalue";
-    public static final String PRIMITIVE = "primitive";
-    public static final String PRIMITIVELIST = "primitivelist";
-    public static final String OBJECTLIST = "objectlist";
-    public static final String LENGTH = "length";
-    public static final String FIXEDLENGTH = "fixedlength";
-    public static final String COULDBESTRING = "couldbestring";
-    public static final String TRUE = "true";
-    public static final String FALSE = "false";
-    public static final String VALUE = "value";
-    public static final String SERIALIZE = "serialize";
-    public static final String HIDDEN = "hidden";
-    public static final String SPECIALCASE = "specialCase";
-    //public static final String DOMAINHOLDER = "domainHolder";
-    public static final String PADTOBOUNDARY = "padtoboundary";
-    public static final String ABSTRACT = "abstract";
-    
-    public static final String JAVA = "java";
-    public static final String CPP = "cpp";
-    public static final String OBJC = "objc"; 
-    public static final String CSHARP = "csharp";
-    public static final String JAVASCRIPT = "javascript";
-    public static final String PYTHON = "python";
-    
+
+    /** String constant */ public static final String INHERITSFROM = "inheritsFrom";
+    /** String constant */ public static final String ALIASFOR = "aliasFor";
+    /** String constant */ public static final String IMPLEMENTS = "implements";
+    /** String constant */ public static final String XMLROOTELEMENT = "xmlRootElement";
+    /** String constant */ public static final String SISOENUM = "sisoenum";
+    /** String constant */ public static final String SISOBITFIELD = "sisobitfield";
+    /** String constant */ public static final String CLASS = "class";
+    /** String constant */ public static final String ATTRIBUTE = "attribute";
+    /** String constant */ public static final String COMMENT = "comment";
+    /** String constant */ public static final String INITIALVALUE = "initialvalue";
+    /** String constant */ public static final String NAME = "name";
+    /** String constant */ public static final String CLASSREF = "classref";
+    /** String constant */ public static final String COUNTFIELDNAME = "countfieldname";
+    /** String constant */ public static final String TYPE = "type";
+    /** String constant */ public static final String DEFAULTVALUE = "defaultvalue";
+    /** String constant */ public static final String PRIMITIVE = "primitive";
+    /** String constant */ public static final String PRIMITIVELIST = "primitivelist";
+    /** String constant */ public static final String OBJECTLIST = "objectlist";
+    /** String constant */ public static final String LENGTH = "length";
+    /** String constant */ public static final String FIXEDLENGTH = "fixedlength";
+    /** String constant */ public static final String COULDBESTRING = "couldbestring";
+    /** String constant */ public static final String TRUE = "true";
+    /** String constant */ public static final String FALSE = "false";
+    /** String constant */ public static final String VALUE = "value";
+    /** String constant */ public static final String SERIALIZE = "serialize";
+    /** String constant */ public static final String HIDDEN = "hidden";
+    /** String constant */ public static final String SPECIALCASE = "specialCase";
+    /** String constant */ //public static final String DOMAINHOLDER = "domainHolder";
+    /** String constant */ public static final String PADTOBOUNDARY = "padtoboundary";
+    /** String constant */ public static final String ABSTRACT = "abstract";
+    /** String constant */ public static final String JAVA = "java";
+    /** String constant */ public static final String CPP = "cpp";
+    /** String constant */ public static final String OBJC = "objc";
+    /** String constant */ public static final String CSHARP = "csharp";
+    /** String constant */ public static final String JAVASCRIPT = "javascript";
+    /** String constant */ public static final String PYTHON = "python";
     // Pending to investigate:
-    public static final String FLAG = "flag";
-    public static final String MASK = "mask";
-    public static final String STATICIVAR = "staticivar";
+    /** String constant */ public static final String FLAG = "flag";
+    /** String constant */ public static final String MASK = "mask";
+    /** String constant */ public static final String STATICIVAR = "staticivar";
     
     /** Contains the database of all the classes described by the XML document */
     protected Map<String, GeneratedClass> generatedClassNames = new HashMap<>();
     
-    /** The language types we generate */
-    public enum LanguageType {CPP, JAVA, CSHARP, OBJECTIVEC, JAVASCRIPT, PYTHON }
+    /** The language types we might generate, currently only supporting Java */
+    public enum LanguageType {
+        /** C++ */
+        CPP,
+        /** Java */
+        JAVA,
+        /** C# */
+        CSHARP,
+        /** ObjectiveC */
+        OBJECTIVEC,
+        /** JavaScript (ECMAScript) */
+        JAVASCRIPT,
+        /** Python */
+        PYTHON }
     
     /** As we parse the XML document, this is the class we are currently working on */
     private GeneratedClass currentGeneratedClass = null;
@@ -133,10 +144,12 @@ public class GeneratePdus
     
     private int classCount = 0;
    
-    /*
+    /**
      * Create a new collection of Java objects by reading an XML file; these
      * java objects can be used to generate code templates of any language,
      * once you write the translator.
+     * @param xmlDescriptionFileName file name
+     * @param languageToGenerate programming language (e.g. Java)
      */
     public GeneratePdus(String xmlDescriptionFileName, String languageToGenerate)
     {       
@@ -203,9 +216,10 @@ public class GeneratePdus
         }
     }
 
-    /*
-     * entry point. Pass in two arguments, the language you want to generate for and the XML file
+    /**
+     * entry point.Pass in two arguments, the language you want to generate for and the XML file
      * that describes the classes
+     * @param args arguments (xmlfile, language)
      */
     public static void main(String args[])
     {
@@ -236,9 +250,11 @@ public class GeneratePdus
         System.out.println (GeneratePdus.class.getName() + " complete.");
     }
     
-    /*
+    /**
      * Does a sanity check on the args passed in: does the XML file exist, and is
      * the language valid.
+     * @param xmlFile output file name
+     * @param language programming language
      */
     public static void checkArguments(String xmlFile, String language)
     {

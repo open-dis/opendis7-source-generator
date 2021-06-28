@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2008-2020, MOVES Institute, Naval Postgraduate School (NPS). All rights reserved.
+ * Copyright (c) 2008-2021, MOVES Institute, Naval Postgraduate School (NPS). All rights reserved.
  * This work is provided under a BSD open-source license, see project license.html and license.txt
  */
 package edu.nps.moves.dis7.source.generator.pdus;
@@ -45,6 +45,14 @@ public class ObjcGenerator extends Generator
         */
     Properties objcProperties;
 
+/**
+ * Given the input object, something of an abstract syntax tree, this generates a source code file in the ObjectiveC language.
+ * It has ivars, getters, setters, and serialization/deserialization methods.
+ * Warning: only partially implemented.
+ * @author DMcG
+     * @param pClassDescriptions String Map of classes
+     * @param pObjcProperties special language properties
+ */
     public ObjcGenerator(Map<String, GeneratedClass> pClassDescriptions, Properties pObjcProperties)
     {
         super(pClassDescriptions, pObjcProperties);
@@ -317,7 +325,11 @@ public void writeHeaderFile(GeneratedClass aClass)
 
 } // End write header file
 
-public void writeObjcFile(GeneratedClass aClass)
+    /**
+     * Write custom object file
+     * @param aClass class of interest
+     */
+    public void writeObjcFile(GeneratedClass aClass)
 {
     try
    {
@@ -384,31 +396,33 @@ public void writeObjcFile(GeneratedClass aClass)
     }
 }
 
-/*
+/**
  * Write the code for an equality operator. This allows you to compare
  * two objects for equality.
  * The code should look like
  *
- * bool operator ==(const ClassName& rhs)
- * return (_ivar1==rhs._ivar1 && _var2 == rhs._ivar2 ...)
+ * bool operator ==(const ClassName&amp; rhs)
+     * @param printWriter output
+     * @param aClass GeneratedClass of interest
+ * return (_ivar1==rhs._ivar1 &amp;&amp; _var2 == rhs._ivar2 ...)
  *
  */
-public void writeEqualityOperator(PrintWriter pw, GeneratedClass aClass)
+public void writeEqualityOperator(PrintWriter printWriter, GeneratedClass aClass)
 {
     try
     {
-        pw.println();
-        pw.println("bool " + aClass.getName() + "::operator ==(const " + aClass.getName() + "& rhs) const");
-        pw.println(" {");
-        pw.println("     bool ivarsEqual = true;");
-        pw.println();
+        printWriter.println();
+        printWriter.println("bool " + aClass.getName() + "::operator ==(const " + aClass.getName() + "& rhs) const");
+        printWriter.println(" {");
+        printWriter.println("     bool ivarsEqual = true;");
+        printWriter.println();
 
         // Handle the superclass, if any
         String parentClass = aClass.getParentClass();
         if(!(parentClass.equalsIgnoreCase("root")) )
         {
-            pw.println("     ivarsEqual = " + parentClass + "::operator==(rhs);");
-            pw.println();
+            printWriter.println("     ivarsEqual = " + parentClass + "::operator==(rhs);");
+            printWriter.println();
         }
 
         for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
@@ -419,7 +433,7 @@ public void writeEqualityOperator(PrintWriter pw, GeneratedClass aClass)
             {
                 if(anAttribute.getIsDynamicListLengthField() == false)
                 {
-                    pw.println("     if( ! ("  + anAttribute.getName() + " == rhs." + anAttribute.getName() + ") ) ivarsEqual = false;");
+                    printWriter.println("     if( ! ("  + anAttribute.getName() + " == rhs." + anAttribute.getName() + ") ) ivarsEqual = false;");
                 }
                 /*
                 else
@@ -434,31 +448,31 @@ public void writeEqualityOperator(PrintWriter pw, GeneratedClass aClass)
             {
                 String indexType = (String)types.get(anAttribute.getType());
 
-                pw.println();
-                pw.println("     for(" + indexType + " idx = 0; idx < " + anAttribute.getListLength() + "; idx++)");
-                pw.println("     {");
-                pw.println("          if(!("  + anAttribute.getName() + "[idx] == rhs." + anAttribute.getName() + "[idx]) ) ivarsEqual = false;");
-                pw.println("     }");
-                pw.println();
+                printWriter.println();
+                printWriter.println("     for(" + indexType + " idx = 0; idx < " + anAttribute.getListLength() + "; idx++)");
+                printWriter.println("     {");
+                printWriter.println("          if(!("  + anAttribute.getName() + "[idx] == rhs." + anAttribute.getName() + "[idx]) ) ivarsEqual = false;");
+                printWriter.println("     }");
+                printWriter.println();
             }
 
             if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST)
             {
-                pw.println();
-                pw.println("     for(int idx = 0; idx < "  + anAttribute.getName() + ".size(); idx++)");
-                pw.println("     {");
+                printWriter.println();
+                printWriter.println("     for(int idx = 0; idx < "  + anAttribute.getName() + ".size(); idx++)");
+                printWriter.println("     {");
                // pw.println("        " + aClass.getName() + " x = " + IVAR_PREFIX + anAttribute.getName() + "[idx];");
-                pw.println("        if( ! ( " + anAttribute.getName() + "[idx] == rhs."  + anAttribute.getName() + "[idx]) ) ivarsEqual = false;");
-                pw.println("     }");
-                pw.println();
+                printWriter.println("        if( ! ( " + anAttribute.getName() + "[idx] == rhs."  + anAttribute.getName() + "[idx]) ) ivarsEqual = false;");
+                printWriter.println("     }");
+                printWriter.println();
             }
 
         }
 
 
-        pw.println();
-        pw.println("    return ivarsEqual;");
-        pw.println(" }");
+        printWriter.println();
+        printWriter.println("    return ivarsEqual;");
+        printWriter.println(" }");
     }
     catch(Exception e)
     {
@@ -588,18 +602,23 @@ public void writeMarshalMethod(PrintWriter pw, GeneratedClass aClass)
   }
 }
 
-public void writeUnmarshalMethod(PrintWriter pw, GeneratedClass aClass)
+    /**
+     * Produce custom output method
+     * @param printWriter output
+     * @param aClass GeneratedClass of interest
+     */
+    public void writeUnmarshalMethod(PrintWriter printWriter, GeneratedClass aClass)
 {
   try
   {
-    pw.println("-(void) " + "unmarshalUsingStream:(DataInput*)dataStream;");
-    pw.println("{");
+    printWriter.println("-(void) " + "unmarshalUsingStream:(DataInput*)dataStream;");
+    printWriter.println("{");
 
     // If it's not already a root class
     if(!(aClass.getParentClass().equalsIgnoreCase("root")))
     {
         String superclassName = aClass.getParentClass();
-        pw.println("    [super unmarshalUsingStream:dataStream]; // unmarshal information in superclass first");
+        printWriter.println("    [super unmarshalUsingStream:dataStream]; // unmarshal information in superclass first");
     }
 
     for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
@@ -608,7 +627,7 @@ public void writeUnmarshalMethod(PrintWriter pw, GeneratedClass aClass)
 
         if(anAttribute.shouldSerialize == false)
         {
-             pw.println("     // attribute " + anAttribute.getName() + " marked as do not serialize");
+             printWriter.println("     // attribute " + anAttribute.getName() + " marked as do not serialize");
              continue;
         }
         
@@ -618,32 +637,32 @@ public void writeUnmarshalMethod(PrintWriter pw, GeneratedClass aClass)
         {
             String t = marshalTypes.getProperty(anAttribute.getType());
             t = this.initialCap(t);
-            pw.println("    " + anAttribute.getName() + " = " + "[dataStream read"  + t + "];");
+            printWriter.println("    " + anAttribute.getName() + " = " + "[dataStream read"  + t + "];");
         }
 
         if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF)
         {
-            pw.println("    [" + anAttribute.getName() + " unmarshalUsingStream:dataStream];");
+            printWriter.println("    [" + anAttribute.getName() + " unmarshalUsingStream:dataStream];");
         }
 
         if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
         {
             String t = marshalTypes.getProperty(anAttribute.getType());
             t = this.initialCap(t);
-            pw.println();
-            pw.println("     for(int idx = 0; idx < " + anAttribute.getListLength() + "; idx++)");
-            pw.println("     {");
-            pw.println("          " + anAttribute.getName() + "[idx] = [dataStream read" + t + "];");
-            pw.println("     }");
-            pw.println();
+            printWriter.println();
+            printWriter.println("     for(int idx = 0; idx < " + anAttribute.getListLength() + "; idx++)");
+            printWriter.println("     {");
+            printWriter.println("          " + anAttribute.getName() + "[idx] = [dataStream read" + t + "];");
+            printWriter.println("     }");
+            printWriter.println();
         }
 
         if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST)
         {
-            pw.println();
-            pw.println("     [" + anAttribute.getName() + " removeAllObjects];"); // Clear out any existing objects in the list
-            pw.println("     for(int idx = 0; idx < " + anAttribute.getCountFieldName() + "; idx++)");
-            pw.println("     {");
+            printWriter.println();
+            printWriter.println("     [" + anAttribute.getName() + " removeAllObjects];"); // Clear out any existing objects in the list
+            printWriter.println("     for(int idx = 0; idx < " + anAttribute.getCountFieldName() + "; idx++)");
+            printWriter.println("     {");
 
             // This is some sleaze. We're an list, but an list of what? We could be either a
             // primitive or a class. We need to figure out which. This is done via the expedient
@@ -654,21 +673,21 @@ public void writeUnmarshalMethod(PrintWriter pw, GeneratedClass aClass)
 
             if(marshalType == null) // It's a class
             {
-                pw.println("        " + anAttribute.getType() + "* x;");
-                pw.println("        [x unmarshalUsingStream:dataStream];" );
-                pw.println("        ["  + anAttribute.getName() + " addObject:x];");
+                printWriter.println("        " + anAttribute.getType() + "* x;");
+                printWriter.println("        [x unmarshalUsingStream:dataStream];" );
+                printWriter.println("        ["  + anAttribute.getName() + " addObject:x];");
             }
             else // It's a primitive; not supported
             {
                 // pw.println("       "  + anAttribute.getName() + "[idx] << dataStream");
             }
 
-            pw.println("     }");
+            printWriter.println("     }");
         }
     }
 
-    pw.println("}");
-    pw.println();
+    printWriter.println("}");
+    printWriter.println();
 
 }
 catch(Exception e)
@@ -781,21 +800,26 @@ private void writeInitializer(PrintWriter pw, GeneratedClass aClass)
     pw.println("}\n");
 }
 
-public void writeGetMarshalledSizeMethod(PrintWriter pw, GeneratedClass aClass)
+    /**
+     * Produce custom output method
+     * @param printWriter output
+     * @param aClass GeneratedClass of interest
+     */
+    public void writeGetMarshalledSizeMethod(PrintWriter printWriter, GeneratedClass aClass)
 {
     List ivars = aClass.getClassAttributes();
 
     // Generate a getMarshalledLength() method header
-    pw.println();
-    pw.println("-(int)getMarshalledSize");
-    pw.println("{");
-    pw.println("   int marshalSize = 0;");
-    pw.println();
+    printWriter.println();
+    printWriter.println("-(int)getMarshalledSize");
+    printWriter.println("{");
+    printWriter.println("   int marshalSize = 0;");
+    printWriter.println();
 
     // Size of superclass is the starting point
     if(!aClass.getParentClass().equalsIgnoreCase("root"))
     {
-        pw.println("   marshalSize = [super getMarshalledSize];");
+        printWriter.println("   marshalSize = [super getMarshalledSize];");
     }
 
     for(int idx = 0; idx < ivars.size(); idx++)
@@ -804,28 +828,28 @@ public void writeGetMarshalledSizeMethod(PrintWriter pw, GeneratedClass aClass)
 
         if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE)
         {
-            pw.print("   marshalSize = marshalSize + ");
-            pw.println(primitiveSizes.get(anAttribute.getType()) + ";  // "  + anAttribute.getName());
+            printWriter.print("   marshalSize = marshalSize + ");
+            printWriter.println(primitiveSizes.get(anAttribute.getType()) + ";  // "  + anAttribute.getName());
         }
 
         if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF)
         {
-            pw.print("   marshalSize = marshalSize + ");
-            pw.println("[" + anAttribute.getName() + " getMarshalledSize];");
+            printWriter.print("   marshalSize = marshalSize + ");
+            printWriter.println("[" + anAttribute.getName() + " getMarshalledSize];");
         }
 
         if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
         {
-            pw.print("   marshalSize = marshalSize + ");
+            printWriter.print("   marshalSize = marshalSize + ");
             // If this is a fixed list of primitives, it's the list size times the size of the primitive.
             if(anAttribute.getUnderlyingTypeIsPrimitive() == true)
             {
-                pw.println( anAttribute.getListLength() + " * " + primitiveSizes.get(anAttribute.getType()) + ";  // "  + anAttribute.getName());
+                printWriter.println( anAttribute.getListLength() + " * " + primitiveSizes.get(anAttribute.getType()) + ";  // "  + anAttribute.getName());
             }
             else
             {
                 //pw.println( anAttribute.getListLength() + " * " +  " new " + anAttribute.getType() + "().getMarshalledSize()"  + ";  // " + anAttribute.getName());
-                pw.println(" THIS IS A CONDITION NOT HANDLED BY XMLPG: a fixed list array of objects. That's  why you got the compile error.");
+                printWriter.println(" THIS IS A CONDITION NOT HANDLED BY XMLPG: a fixed list array of objects. That's  why you got the compile error.");
             }
         }
 
@@ -834,32 +858,37 @@ public void writeGetMarshalledSizeMethod(PrintWriter pw, GeneratedClass aClass)
             // If this is a dynamic list of primitives, it's the list size times the size of the primitive.
             if(anAttribute.getUnderlyingTypeIsPrimitive() == true)
             {
-                pw.println( anAttribute.getName() + ".size() " + " * " + primitiveSizes.get(anAttribute.getType()) + ";  // " + anAttribute.getName());
+                printWriter.println( anAttribute.getName() + ".size() " + " * " + primitiveSizes.get(anAttribute.getType()) + ";  // " + anAttribute.getName());
             }
             else
             {
-                pw.println();
-                pw.println("   for(int idx=0; idx < ["  + anAttribute.getName() + " count]; idx++)");
-                pw.println("   {");
+                printWriter.println();
+                printWriter.println("   for(int idx=0; idx < ["  + anAttribute.getName() + " count]; idx++)");
+                printWriter.println("   {");
                 //pw.println( anAttribute.getName() + ".size() " + " * " +  " new " + anAttribute.getType() + "().getMarshalledSize()"  + ";  // " + anAttribute.getName());
-                pw.println("        " + anAttribute.getType() + "* listElement = [" + anAttribute.getName() + " objectAtIndex:idx];");
-                pw.println("        marshalSize = marshalSize + [listElement getMarshalledSize];");
-                pw.println("    }");
-                pw.println();
+                printWriter.println("        " + anAttribute.getType() + "* listElement = [" + anAttribute.getName() + " objectAtIndex:idx];");
+                printWriter.println("        marshalSize = marshalSize + [listElement getMarshalledSize];");
+                printWriter.println("    }");
+                printWriter.println();
             }
         }
 
     }
-    pw.println("    return marshalSize;");
-    pw.println("}");
-    pw.println();
+    printWriter.println("    return marshalSize;");
+    printWriter.println("}");
+    printWriter.println();
 }
 
-public void writeDeallocMethod(PrintWriter pw, GeneratedClass aClass)
+    /**
+     * Produce custom output method
+     * @param printWriter output
+     * @param aClass GeneratedClass of interest
+     */
+    public void writeDeallocMethod(PrintWriter printWriter, GeneratedClass aClass)
 {
-    pw.println();
-    pw.println("-(void)dealloc");
-    pw.println("{");
+    printWriter.println();
+    printWriter.println("-(void)dealloc");
+    printWriter.println("{");
     for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
     {
         ClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
@@ -869,12 +898,12 @@ public void writeDeallocMethod(PrintWriter pw, GeneratedClass aClass)
         if( (kind == ClassAttribute.ClassAttributeType.CLASSREF) ||
             (kind == ClassAttribute.ClassAttributeType.OBJECT_LIST))
         {
-             pw.println("  [" + anAttribute.getName() + " release];" );
+             printWriter.println("  [" + anAttribute.getName() + " release];" );
         }
     }
-    pw.println("  [super dealloc];");
-    pw.println("}");
-    pw.println();
+    printWriter.println("  [super dealloc];");
+    printWriter.println("}");
+    printWriter.println();
 }
 
 /**
@@ -936,7 +965,7 @@ private String getArrayType(String xmlType)
 
 private void writeLicenseNotice(PrintWriter pw)
 {
-        pw.println("// Copyright (c) 1995-2009 held by the author(s).  All rights reserved.");
+        pw.println("// Copyright (c) 1995-2021 held by the author(s).  All rights reserved.");
 
         pw.println("// Redistribution and use in source and binary forms, with or without");
         pw.println("// modification, are permitted provided that the following conditions");

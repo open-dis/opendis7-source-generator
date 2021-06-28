@@ -72,6 +72,11 @@ public class GenerateEnumerations
 
     private int additionalEnumClassesCreated = 0;
 
+    /** Constructor
+     * @param xmlFile input sisoXmlFile
+     * @param outputDir output directory path
+     * @param packageName package name for this set of enumerations
+     */
     public GenerateEnumerations(String xmlFile, String outputDir, String packageName)
     {
         System.out.println (GenerateEnumerations.class.getName());
@@ -171,6 +176,9 @@ public class GenerateEnumerations
             }
             return newName;
         }
+        /** cleanup special characters in string
+         *  @param s input string
+         *  @return output string */
         public final static String htmlize(String s)
         {
             return s.replace("&","and").replace("&","and");
@@ -260,6 +268,7 @@ public class GenerateEnumerations
         String xrefclassuid;
     }
 
+    /** Utility class */
     public class UidCollector extends DefaultHandler
     {
         @Override
@@ -510,12 +519,13 @@ public class GenerateEnumerations
             }
             el.elems.forEach((row) -> {
                 String name = row.value.replaceAll("[^a-zA-Z0-9]", ""); // only chars and numbers
-                if (!dictNames.contains(name)) {
-                    sb.append(String.format(dictEnumTemplate2, name, row.description.replaceAll("\"", "").replaceAll("\'", "")));
-                    dictNames.add(name);
+                if (!dictNames.contains(name))
+                {
+                     String fullName = row.description.replaceAll("\"", "").replaceAll("\'", "").replaceAll("&", "&amp;");
+                     sb.append(String.format(dictEnumTemplate2, name, fullName, name, fullName)); // first Javadoc then enumeration pair
+                     dictNames.add(name);
                 }
-                else
-                    System.out.println("   Duplicate dictionary entry for " + name + " in " + clsName);
+                else System.out.println("   Duplicate dictionary entry for " + name + " in " + clsName);
             });
 
             if (el.elems.size() > 0)
@@ -687,6 +697,7 @@ public class GenerateEnumerations
                 String elementName = "(undefined element)";
                 if (el.name != null)
                        elementName = el.name;
+                sb.append("   /** Constructor initialization */");
                 sb.append(String.format(enumTemplate2, "SELF", "0", elementName + " details not found in SISO spec"));
                 // TODO resolve
                 System.err.println("*** " + elementName + " uid='" + el.uid + "' has no child element (further SELF details not found in SISO reference)");
@@ -944,6 +955,9 @@ public class GenerateEnumerations
         }
     }
 
+    /** Command-line or solo invocation to run this object
+     * @param args three configuration arguments, if defaults not used
+     */
     public static void main(String[] args)
     {
         try {
