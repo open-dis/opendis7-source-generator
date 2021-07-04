@@ -181,9 +181,9 @@
         <echo message="Implementation-Version = ${timestamp}"/>
         <echo message="Implementation-Vendor  = ${Implementation-Vendor}"/>
 
-        <antcall target="jar.classes"/>
-        <antcall target="jar.source"/>
-        <antcall target="jar.javadoc"/>
+        <antcall target="jar.enumerations.classes"/>
+        <antcall target="jar.enumerations.source"/>
+        <antcall target="jar.enumerations.javadoc"/>
         <antcall target="copy-generated-jars-to-open-dis7-java"/>
     </target>
    
@@ -204,17 +204,27 @@
         <echo message=" package-dis7-enumerations-prior-jars complete"/>
     </target>
 
-    <target name="jar.classes">
+    <target name="jar.enumerations.classes">
         <mkdir dir="dist"/>
         
         <echo message="Packaging .class binaries for all generated OpenDIS7 entity enumerations into a single JAR"/>
+        <delete  file="dist/open-dis7-enumerations-classes.jar"/>
         <jar destfile="dist/open-dis7-enumerations-classes.jar"
               basedir="."
-             includes="edu/nps/moves/dis7/**/*.class"
-             excludes=".keep"
+             includes=""
+             excludes="**/*"
                update="true"
             zip64Mode="always">
-            <fileset dir="build/classes"/>
+            <fileset dir="build/classes" defaultexcludes="yes">
+                <include name="edu/nps/moves/dis7/entities/**/*.class"/>
+                <include name="edu/nps/moves/dis7/enumerations/**/*.class"/>
+                <include name="edu/nps/moves/dis7/jammers/**/*.class"/>
+                <include name="edu/nps/moves/dis7/objectTypes/**/*.class"/>
+                <exclude name="edu/nps/moves/dis7/pdus/**/*.class"/>
+                <exclude name="edu/nps/moves/dis7/utilities/**/*.class"/>
+                <exclude name="edu/nps/moves/dis7/source/generator/**/*.class"/>
+                <exclude name="edu/nps/moves/spatial/**/*.class"/>
+            </fileset>
             <!-- https://docs.oracle.com/javase/tutorial/deployment/jar/manifestindex.html -->
             <manifest>
                 <attribute name="description"            value="Java class files for ${manifest.name}"/>
@@ -238,28 +248,39 @@
                 <section name="edu/nps/moves/dis7/objectTypes">
                     <attribute name="Sealed" value="true"/>
                 </section>
+                <!--
                 <section name="edu/nps/moves/dis7/source/generator">
                     <attribute name="Sealed" value="true"/>
                 </section>
+                -->
             </manifest>
         </jar>
     </target>
     
-    <target name="jar.source">
+    <target name="jar.enumerations.source">
         <mkdir dir="dist"/>
         
         <echo message="Packaging .java source for all generated OpenDIS7 entity enumerations into a single JAR"/>
+        <delete  file="dist/open-dis7-enumerations-source.jar"/>
         <jar destfile="dist/open-dis7-enumerations-source.jar"
               basedir="."
-             includes="edu/nps/moves/dis7/**/*"
-             excludes=".keep"
+             includes=""
+             excludes="**/*"
                update="true"
             zip64Mode="always">
+            <!-- omit
+             excludes="build/,dist/,images/,lib/,nbproject/,stringTemplates/,test/,xml/,build.xml,src-autogenerate/,src-generated/,src-specialcase/,src-supporting/,src-generated/**/pdus/,**/open-dis7-enumerations-source.jar"
+             includes="src-generated/**/*.java,src-specialcase/**/*.java,src-supporting/**/*.java"
+             includes="edu/nps/moves/dis7/**/*"
+             excludes="edu/nps/moves/dis7/pdus/**/*,edu/nps/moves/dis7/source/generator/**/*"
             <fileset dir="src-autogenerate">
                 <include name="**/*.java"/>
             </fileset>
+            -->
             <fileset dir="src-generated/java">
                 <include name="**/*.java"/>
+                <!-- TODO not excluding pdus directory correctly -->
+                <exclude name="edu/nps/moves/dis7/pdus/*.java"/>
             </fileset>
             <fileset dir="src-specialcase/java">
                 <include name="**/*.java"/>
@@ -281,6 +302,7 @@
                 <section name="edu/nps/moves/dis7">
                     <attribute name="Sealed" value="true"/>
                 </section>
+                <!--
                 <section name="edu/nps/moves/dis7/entities">
                     <attribute name="Sealed" value="true"/>
                 </section>
@@ -293,6 +315,7 @@
                 <section name="edu/nps/moves/dis7/source/generator">
                     <attribute name="Sealed" value="true"/>
                 </section>
+                -->
             </manifest>
         </jar>
     </target>
@@ -669,14 +692,20 @@
         <echo message="=================================================================================="/>
     </target>
     
-    <target name="jar.javadoc" depends="javadoc">
+    <target name="jar.enumerations.javadoc"> <!-- TODO restore depends="javadoc"> -->
         <mkdir dir="dist"/>
         
         <echo message="Packaging javadoc documentation for all generated OpenDIS7 entity enumerations into a single JAR"/>
         <echo message="(note that generated javadoc subdirectory is found within dist subdirectory)"/>
+        <delete  file="dist/open-dis7-enumerations-javadoc.jar"/>
         <jar destfile="dist/open-dis7-enumerations-javadoc.jar"
                update="true"
-              basedir="dist/javadoc">
+             includes=""
+             excludes="**/*"
+              basedir=".">
+            <fileset dir="dist/javadoc">
+                <include name="**/*"/>
+            </fileset>
             
             <!-- https://docs.oracle.com/javase/tutorial/deployment/jar/manifestindex.html -->
             <manifest>
