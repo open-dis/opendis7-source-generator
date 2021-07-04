@@ -827,7 +827,7 @@ public class GenerateEnumerations
             // but figure out the smallest primitive size needed to hold it.
             sz = Integer.parseInt(el.size);
             if(sz <= 8)
-               additionalRowStringBuilder.append(String.format(enumTemplate3_8, classNameCorrected, classNameCorrected, classNameCorrected));
+               additionalRowStringBuilder.append(String.format(enumTemplate3_8,  classNameCorrected, classNameCorrected, classNameCorrected));
             else if(sz <= 16)
                additionalRowStringBuilder.append(String.format(enumTemplate3_16, classNameCorrected, classNameCorrected, classNameCorrected));
             else
