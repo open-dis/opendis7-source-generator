@@ -68,6 +68,9 @@
     @Override
     public String toString()
     {
-        return "%s " + getValue() + " " + name(); 
+        String padding = new String();
+        if (name().equalsIgnoreCase("DISPDUType") && getValue() < 10)
+            padding = "0"; // leading zero for column spacing
+        return "%s " + padding + getValue() + " " + name();
     }
 }
