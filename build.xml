@@ -692,7 +692,7 @@
         <echo message="=================================================================================="/>
     </target>
     
-    <target name="jar.enumerations.javadoc"> <!-- TODO restore depends="javadoc"> -->
+    <target name="jar.enumerations.javadoc" depends="javadoc">
         <mkdir dir="dist"/>
         
         <echo message="Packaging javadoc documentation for all generated OpenDIS7 entity enumerations into a single JAR"/>
