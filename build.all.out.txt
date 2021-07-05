@@ -14,7 +14,7 @@ clean.generated-source:
 ensure src-generated/java directory exists and is empty
 clean.build:
 all:
-timestamp 27 June 2021 18:23:32
+timestamp 3 July 2021 17:50:36
 ==================================================================================
 generate enumerations classes (given limited path entries in project classpath)
 init:
@@ -99,7 +99,7 @@ init:
 Deleting: C:\x3d-github\open-dis7-source-generator\build\built-jar.properties
 deps-jar:
 Updating property file: C:\x3d-github\open-dis7-source-generator\build\built-jar.properties
-Deleted 26 out of date files in 6 seconds
+Deleted 26 out of date files in 8 seconds
 Created dir: C:\x3d-github\open-dis7-source-generator\build\empty
 Created dir: C:\x3d-github\open-dis7-source-generator\build\generated-sources\ap-source-output
 Compiling 20720 source files to C:\x3d-github\open-dis7-source-generator\build\classes
@@ -115,7 +115,7 @@ Specification-Title    = SISO Reference for Enumerations for Simulation Interope
 Specification-Version  = 28
 Specification-Vendor   = Simulation Interoperability Standards Organization (SISO)
 Implementation-Title   = edu.nps.moves.dis7
-Implementation-Version = 27 June 2021 18:23:32
+Implementation-Version = 3 July 2021 17:50:36
 Implementation-Vendor  = Naval Postgraduate School (NPS)
 jar.classes:
 Packaging .class binaries for all generated OpenDIS7 entity enumerations into a single JAR
@@ -21947,4 +21947,4 @@ Both enumerations and PDUs are created by open-dis7-source-generator, with
 Copying 21766 files to C:\x3d-github\open-dis7-java\src-generated
 Copying 4 files to C:\x3d-github\open-dis7-java\src-generated
 build all complete
-BUILD SUCCESSFUL (total time: 10 minutes 25 seconds)
+BUILD SUCCESSFUL (total time: 10 minutes 3 seconds)
