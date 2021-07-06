@@ -14,7 +14,7 @@ clean.generated-source:
 ensure src-generated/java directory exists and is empty
 clean.build:
 all:
-timestamp 3 July 2021 17:50:36
+timestamp 5 July 2021 17:01:09
 ==================================================================================
 generate enumerations classes (given limited path entries in project classpath)
 init:
@@ -99,7 +99,7 @@ init:
 Deleting: C:\x3d-github\open-dis7-source-generator\build\built-jar.properties
 deps-jar:
 Updating property file: C:\x3d-github\open-dis7-source-generator\build\built-jar.properties
-Deleted 26 out of date files in 8 seconds
+Deleted 26 out of date files in 7 seconds
 Created dir: C:\x3d-github\open-dis7-source-generator\build\empty
 Created dir: C:\x3d-github\open-dis7-source-generator\build\generated-sources\ap-source-output
 Compiling 20720 source files to C:\x3d-github\open-dis7-source-generator\build\classes
@@ -115,12 +115,12 @@ Specification-Title    = SISO Reference for Enumerations for Simulation Interope
 Specification-Version  = 28
 Specification-Vendor   = Simulation Interoperability Standards Organization (SISO)
 Implementation-Title   = edu.nps.moves.dis7
-Implementation-Version = 3 July 2021 17:50:36
+Implementation-Version = 5 July 2021 17:01:09
 Implementation-Vendor  = Naval Postgraduate School (NPS)
-jar.classes:
+jar.enumerations.classes:
 Packaging .class binaries for all generated OpenDIS7 entity enumerations into a single JAR
 Building jar: C:\x3d-github\open-dis7-source-generator\dist\open-dis7-enumerations-classes.jar
-jar.source:
+jar.enumerations.source:
 Packaging .java source for all generated OpenDIS7 entity enumerations into a single JAR
 Building jar: C:\x3d-github\open-dis7-source-generator\dist\open-dis7-enumerations-source.jar
 init:
@@ -21926,7 +21926,7 @@ Building tree for all the packages and classes...
 Building index for all classes...
 Browsing: file:/C:/x3d-github/open-dis7-source-generator/dist/javadoc/index.html
 javadoc:
-jar.javadoc:
+jar.enumerations.javadoc:
 Packaging javadoc documentation for all generated OpenDIS7 entity enumerations into a single JAR
 (note that generated javadoc subdirectory is found within dist subdirectory)
 Building jar: C:\x3d-github\open-dis7-source-generator\dist\open-dis7-enumerations-javadoc.jar
@@ -21942,9 +21942,9 @@ Copying C:\x3d-github\open-dis7-source-generator\dist\open-dis7-enumerations-jav
 Copying C:\x3d-github\open-dis7-source-generator\dist\open-dis7-enumerations-source.jar to C:\x3d-github\open-dis7-java\dist\open-dis7-enumerations-source.jar
 copy-generated-source-to-open-dis7-java:
 Both enumerations and PDUs are created by open-dis7-source-generator, with
-   PDU classes  packaged into open-dis7-*.jar              archives by open-dis7-java project and
+   PDU classes  packaged into open-dis7-pdus-*.jar         archives by open-dis7-java project and
    enumerations packaged into open-dis7-enumerations-*.jar archives by open-dis7-source-generator.
 Copying 21766 files to C:\x3d-github\open-dis7-java\src-generated
 Copying 4 files to C:\x3d-github\open-dis7-java\src-generated
 build all complete
-BUILD SUCCESSFUL (total time: 10 minutes 3 seconds)
+BUILD SUCCESSFUL (total time: 10 minutes 10 seconds)
