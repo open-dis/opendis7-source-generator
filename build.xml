@@ -740,7 +740,7 @@
     <!-- Invoke this in lieu of step #3 under "If you desire to update the open-dis7-java" project in ./README.md -->
     <target name="copy-generated-source-to-open-dis7-java">
         <echo message="Both enumerations and PDUs are created by open-dis7-source-generator, with"/>
-        <echo message="   PDU classes  packaged into open-dis7-*.jar              archives by open-dis7-java project and"/>
+        <echo message="   PDU classes  packaged into open-dis7-pdus-*.jar         archives by open-dis7-java project and"/>
         <echo message="   enumerations packaged into open-dis7-enumerations-*.jar archives by open-dis7-source-generator."/>
         
         <delete includeemptydirs="true" failonerror="false"><!-- verbose="true" -->
