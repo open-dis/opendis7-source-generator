@@ -14,7 +14,7 @@ clean.generated-source:
 ensure src-generated/java directory exists and is empty
 clean.build:
 all:
-timestamp 5 July 2021 17:01:09
+timestamp 11 July 2021 10:25:19
 ==================================================================================
 generate enumerations classes (given limited path entries in project classpath)
 init:
@@ -39,6 +39,7 @@ edu.nps.moves.dis7.source.generator.enumerations.GenerateEnumerations
           packageName=edu.nps.moves.dis7.enumerations
   outputDirectoryPath=src-generated/java/edu/nps/moves/dis7/enumerations
 actual directory path=C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations
+Created src-generated/java/edu/nps/moves/dis7/enumerations/package-info.java
 Begin uid preprocess...
 Begin enum enumeration generation...
 =================================
@@ -71,6 +72,7 @@ edu.nps.moves.dis7.source.generator.entityTypes.GenerateJammers
           packageName=edu.nps.moves.dis7.jammers
   outputDirectoryPath=src-generated/java/edu/nps/moves/dis7/jammers
 actual directory path=C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\jammers
+Created src-generated/java/edu/nps/moves/dis7/jammers/package-info.java
 edu.nps.moves.dis7.source.generator.entityTypes.GenerateJammers complete.
 ==================================================================================
 generate-source-code 4 make object types, edu.nps.moves.dis7.source.generator.entityTypes.GenerateObjectTypes
@@ -79,8 +81,12 @@ edu.nps.moves.dis7.source.generator.entityTypes.GenerateObjectTypes
           packageName=edu.nps.moves.dis7.objectTypes
   outputDirectoryPath=src-generated/java/edu/nps/moves/dis7/objectTypes
 actual directory path=C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\objectTypes
+Created src-generated/java/edu/nps/moves/dis7/objectTypes/package-info.java
 edu.nps.moves.dis7.source.generator.entityTypes.GenerateObjectTypes complete.
-Compiling 1044 source files to C:\x3d-github\open-dis7-source-generator\build\classes
+Compiling 1047 source files to C:\x3d-github\open-dis7-source-generator\build\classes
+Creating empty C:\x3d-github\open-dis7-source-generator\build\classes\edu\nps\moves\dis7\jammers\package-info.class
+Creating empty C:\x3d-github\open-dis7-source-generator\build\classes\edu\nps\moves\dis7\enumerations\package-info.class
+Creating empty C:\x3d-github\open-dis7-source-generator\build\classes\edu\nps\moves\dis7\objectTypes\package-info.class
 ==================================================================================
 generate-source-code 5 make entities,     edu.nps.moves.dis7.source.generator.entityTypes.GenerateEntityTypes
 edu.nps.moves.dis7.source.generator.entityTypes.GenerateEntityTypes
@@ -88,6 +94,7 @@ edu.nps.moves.dis7.source.generator.entityTypes.GenerateEntityTypes
           packageName=edu.nps.moves.dis7.entities
   outputDirectoryPath=src-generated/java/edu/nps/moves/dis7/entities
 actual directory path=C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities
+Created src-generated/java/edu/nps/moves/dis7/entities/package-info.java
 Generating entities:
 contained XML element subcategory_xref (Size in Powder Spill/4/1/0) not supported
 contained XML element subcategory_xref (Size in Biologics/4/4/0) not supported
@@ -99,13 +106,13 @@ init:
 Deleting: C:\x3d-github\open-dis7-source-generator\build\built-jar.properties
 deps-jar:
 Updating property file: C:\x3d-github\open-dis7-source-generator\build\built-jar.properties
-Deleted 26 out of date files in 7 seconds
 Created dir: C:\x3d-github\open-dis7-source-generator\build\empty
 Created dir: C:\x3d-github\open-dis7-source-generator\build\generated-sources\ap-source-output
-Compiling 20720 source files to C:\x3d-github\open-dis7-source-generator\build\classes
+Compiling 20717 source files to C:\x3d-github\open-dis7-source-generator\build\classes
 warning: [options] bootstrap class path not set in conjunction with -source 8
 1 warning
-Copying 861 files to C:\x3d-github\open-dis7-source-generator\build\classes
+Creating empty C:\x3d-github\open-dis7-source-generator\build\classes\edu\nps\moves\dis7\entities\package-info.class
+Copying 849 files to C:\x3d-github\open-dis7-source-generator\build\classes
 compile:
 compile complete
 jar:
@@ -115,7 +122,7 @@ Specification-Title    = SISO Reference for Enumerations for Simulation Interope
 Specification-Version  = 28
 Specification-Vendor   = Simulation Interoperability Standards Organization (SISO)
 Implementation-Title   = edu.nps.moves.dis7
-Implementation-Version = 5 July 2021 17:01:09
+Implementation-Version = 11 July 2021 10:25:19
 Implementation-Vendor  = Naval Postgraduate School (NPS)
 jar.enumerations.classes:
 Packaging .class binaries for all generated OpenDIS7 entity enumerations into a single JAR
@@ -10737,6 +10744,7 @@ Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\
 Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\oth\supply\class9repairpartsandcomponents\MineRoller.java...
 Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\oth\supply\class9repairpartsandcomponents\Other.java...
 Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\oth\supply\notused\Other.java...
+Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\package-info.java...
 Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\pak\munition\battlefieldsupport\Ballistic.java...
 Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\pak\munition\battlefieldsupport\Guided.java...
 Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\entities\pak\munition\battlefieldsupport\Hatf1.java...
@@ -21325,6 +21333,7 @@ Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\
 Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\VariantsforAirCategory200Bird.java...
 Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\VariantsforLandCategoriesReptilesAmphibiansInsectsandArachnids.java...
 Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\VariantsforSubsurfaceCategory201Mammal.java...
+Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\package-info.java...
 Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\jammers\Deception\AGCandGateStealer\AGCandGateStealer.java...
 Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\jammers\Deception\AGCandGateStealer\AGCandRGPO\AGCandRGPO.java...
 Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\jammers\Deception\AGCandGateStealer\AGCandRGPOandVGPO\AGCandRGPOandVGPO.java...
@@ -21459,6 +21468,7 @@ Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\
 Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\jammers\Noise\VelocityBinMaskingVBM\VelocityBinMaskingVBM.java...
 Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\jammers\Special\Special.java...
 Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\jammers\Special\SuperJam\SuperJam.java...
+Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\jammers\package-info.java...
 Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\objectTypes\ArealObject\ArealObject.java...
 Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\objectTypes\ArealObject\Obstacle\Minefield\Hasty.java...
 Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\objectTypes\ArealObject\Obstacle\Minefield\Minefield.java...
@@ -21665,6 +21675,7 @@ Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\
 Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\objectTypes\PointObject\Tacticalsmoke\TacticalSmokeCanister\M83White.java...
 Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\objectTypes\PointObject\Tacticalsmoke\TacticalSmokeCanister\TacticalSmokeCanister.java...
 Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\objectTypes\PointObject\Tacticalsmoke\Tacticalsmoke.java...
+Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\objectTypes\package-info.java...
 Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\pdus\APA.java...
 Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\pdus\AcknowledgePdu.java...
 Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\pdus\AcknowledgeRPdu.java...
@@ -21944,7 +21955,7 @@ copy-generated-source-to-open-dis7-java:
 Both enumerations and PDUs are created by open-dis7-source-generator, with
    PDU classes  packaged into open-dis7-pdus-*.jar         archives by open-dis7-java project and
    enumerations packaged into open-dis7-enumerations-*.jar archives by open-dis7-source-generator.
-Copying 21766 files to C:\x3d-github\open-dis7-java\src-generated
+Copying 21770 files to C:\x3d-github\open-dis7-java\src-generated
 Copying 4 files to C:\x3d-github\open-dis7-java\src-generated
 build all complete
-BUILD SUCCESSFUL (total time: 10 minutes 10 seconds)
+BUILD SUCCESSFUL (total time: 12 minutes 33 seconds)
