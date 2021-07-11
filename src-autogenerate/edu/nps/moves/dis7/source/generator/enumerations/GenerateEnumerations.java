@@ -71,6 +71,10 @@ public class GenerateEnumerations
     final int MAX_ENUMERATIONS = 2000;
 
     private int additionalEnumClassesCreated = 0;
+    
+    private String        packageInfoPath;
+    private File          packageInfoFile;
+    private StringBuilder packageInfoBuilder;
 
     /** Constructor
      * @param xmlFile input sisoXmlFile
@@ -91,13 +95,44 @@ public class GenerateEnumerations
         System.out.println ("  outputDirectoryPath=" + outputDirectoryPath);
         
         outputDirectory  = new File(outputDirectoryPath);
+        outputDirectory.mkdirs();
+    //  FileUtils.cleanDirectory(outputDirectory); // do NOT clean directory, results can co-exist with other classes
         System.out.println ("actual directory path=" + outputDirectory.getAbsolutePath());
+        
+        String packageInfoPath = outputDirectoryPath + "/" + "package-info.java";
+        File packageInfoFile = new File(packageInfoPath);
+        
+        FileWriter packageInfoFileWriter;
+        try {
+            packageInfoFile.createNewFile();
+            packageInfoFileWriter = new FileWriter(packageInfoFile, StandardCharsets.UTF_8);
+            packageInfoBuilder = new StringBuilder();
+            packageInfoBuilder.append("/**\n");
+            packageInfoBuilder.append(" * Infrastructure interfaces and classes supporting edu.nps.moves.dis7.enumerations library.\n");
+            packageInfoBuilder.append(" *\n");
+            packageInfoBuilder.append(" * @see java.lang.Package\n");
+            packageInfoBuilder.append(" * @see <a href=\"https://stackoverflow.com/questions/22095487/why-is-package-info-java-useful\">https://stackoverflow.com/questions/22095487/why-is-package-info-java-useful</a>\n");
+            packageInfoBuilder.append(" * @see <a href=\"https://stackoverflow.com/questions/624422/how-do-i-document-packages-in-java\">https://stackoverflow.com/questions/624422/how-do-i-document-packages-in-java</a>\n");
+            packageInfoBuilder.append(" */\n");
+            packageInfoBuilder.append("\n");
+            packageInfoBuilder.append("package edu.nps.moves.dis7.enumerations;\n");
+
+            packageInfoFileWriter.write(packageInfoBuilder.toString());
+            packageInfoFileWriter.flush();
+            packageInfoFileWriter.close();
+            System.out.println("Created " + packageInfoPath);
+        }
+        catch (IOException ex) {
+            System.out.flush(); // avoid intermingled output
+            System.err.println (ex.getMessage()
+               + packageInfoFile.getAbsolutePath()
+            );
+            ex.printStackTrace(System.err);
+        }
     }
 
     private void run() throws SAXException, IOException, ParserConfigurationException
     {
-        outputDirectory.mkdirs();
-    //  FileUtils.cleanDirectory(outputDirectory); // do NOT clean directory, results can co-exist with other classes
         // Manual:
         uid2ClassName = new Properties();
         uid2ClassName.load(getClass().getResourceAsStream("Uid2ClassName.properties"));

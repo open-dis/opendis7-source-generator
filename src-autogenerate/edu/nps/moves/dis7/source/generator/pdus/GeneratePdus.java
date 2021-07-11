@@ -142,7 +142,7 @@ public class GeneratePdus
     /** Director in which the objc classes are created */
     private String objcDirectory = null;
     
-    private int classCount = 0;
+    private int classCount = 0;   
    
     /**
      * Create a new collection of Java objects by reading an XML file; these
