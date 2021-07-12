@@ -30,10 +30,11 @@ public class GenerateObjectTypes
 {
     // set defaults to allow direct run
     private        File   outputDirectory;
-    private static String outputDirectoryPath = "src-generated/java/edu/nps/moves/dis7/entityTypes";
-    private static String         packageName =                    "edu.nps.moves.dis7.entityTypes";
+    private static String outputDirectoryPath = "src-generated/java/edu/nps/moves/dis7/objectTypes"; // default
+    private static String         packageName =                    "edu.nps.moves.dis7.objectTypes"; // default
     private static String            language = edu.nps.moves.dis7.source.generator.GenerateOpenDis7JavaPackages.DEFAULT_LANGUAGE;
     private static String         sisoXmlFile = edu.nps.moves.dis7.source.generator.GenerateOpenDis7JavaPackages.DEFAULT_SISO_XML_FILE;
+    private String sisoSpecificationTitleDate = "";
 
     String objectTypeTemplate;
 
@@ -72,8 +73,8 @@ public class GenerateObjectTypes
 
         System.out.println ("actual directory path=" + outputDirectory.getAbsolutePath());
         
-        String packageInfoPath = outputDirectoryPath + "/" + "package-info.java";
-        File packageInfoFile = new File(packageInfoPath);
+        packageInfoPath = outputDirectoryPath + "/" + "package-info.java";
+        packageInfoFile = new File(packageInfoPath);
         
         FileWriter packageInfoFileWriter;
         try {
@@ -81,7 +82,10 @@ public class GenerateObjectTypes
             packageInfoFileWriter = new FileWriter(packageInfoFile, StandardCharsets.UTF_8);
             packageInfoBuilder = new StringBuilder();
             packageInfoBuilder.append("/**\n");
-            packageInfoBuilder.append(" * Infrastructure interfaces and classes supporting edu.nps.moves.dis7.objectTypes library.\n");
+            packageInfoBuilder.append(" * Infrastructure classes derived from ").append(sisoSpecificationTitleDate).append(" enumerations supporting <a href=\"https://github.com/open-dis/open-dis7-java\" target=\"open-dis7-java\">open-dis7-java</a> library.\n");
+            packageInfoBuilder.append(" *\n");
+            packageInfoBuilder.append(" * Online: NPS <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500\" target=\"MV3500\">MV3500 Networked Simulation course</a> ");
+            packageInfoBuilder.append(" * links to <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/tree/master/specifications\" target=\"MV3500\">IEEE and SISO specification references</a> of interest.");
             packageInfoBuilder.append(" *\n");
             packageInfoBuilder.append(" * @see java.lang.Package\n");
             packageInfoBuilder.append(" * @see <a href=\"https://stackoverflow.com/questions/22095487/why-is-package-info-java-useful\">https://stackoverflow.com/questions/22095487/why-is-package-info-java-useful</a>\n");
@@ -180,15 +184,14 @@ public class GenerateObjectTypes
     ObjectElem currentObject;
     CategoryElem currentCategory;
     SubCategoryElem currentSubCategory;
-    String specTitleDate = "";
     int filesWrittenCount = 0;
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes)
     {
       if (qName.equalsIgnoreCase("revision")) {
-        if (specTitleDate.length() <= 0) // only want the first/latest
-          specTitleDate = legalJavaDoc(attributes.getValue("title") + ", " + attributes.getValue("date"));
+        if (sisoSpecificationTitleDate.length() <= 0) // only want the first/latest
+            sisoSpecificationTitleDate = legalJavaDoc(attributes.getValue("title") + " (" + attributes.getValue("date") + ")");
         return;
       }
 
@@ -313,14 +316,51 @@ public class GenerateObjectTypes
     
     private void saveFile(DataPkt data)
     {
-      data.sb.append("    }\n}\n");
-      GenerateObjectTypes.this.saveFile(data.directory, data.clsNm + ".java", data.sb.toString());
+        data.sb.append("    }\n}\n");
+        GenerateObjectTypes.this.saveFile(data.directory, data.clsNm + ".java", data.sb.toString());
+
+        packageInfoPath = data.directory + "/" + "package-info.java";
+        File   packageInfoFile = new File(packageInfoPath);
+      
+        if (!packageInfoFile.exists()) // write package-info.java during first time through
+        {
+            FileWriter packageInfoFileWriter;
+            try {
+                packageInfoFile.createNewFile();
+                packageInfoFileWriter = new FileWriter(packageInfoFile, StandardCharsets.UTF_8);
+                packageInfoBuilder = new StringBuilder();
+                packageInfoBuilder.append("/**\n");
+                packageInfoBuilder.append(" * Infrastructure classes derived from ").append(sisoSpecificationTitleDate).append(" enumerations supporting <a href=\"https://github.com/open-dis/open-dis7-java\" target=\"open-dis7-java\">open-dis7-java</a> library.\n");
+                packageInfoBuilder.append(" *\n");
+                packageInfoBuilder.append(" * Online: NPS <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500\" target=\"MV3500\">MV3500 Networked Simulation course</a> ");
+                packageInfoBuilder.append(" * links to <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/tree/master/specifications\" target=\"MV3500\">IEEE and SISO specification references</a> of interest.");
+                packageInfoBuilder.append(" *\n");
+                packageInfoBuilder.append(" * @see java.lang.Package\n");
+                packageInfoBuilder.append(" * @see <a href=\"https://stackoverflow.com/questions/22095487/why-is-package-info-java-useful\">https://stackoverflow.com/questions/22095487/why-is-package-info-java-useful</a>\n");
+                packageInfoBuilder.append(" * @see <a href=\"https://stackoverflow.com/questions/624422/how-do-i-document-packages-in-java\">https://stackoverflow.com/questions/624422/how-do-i-document-packages-in-java</a>\n");
+                packageInfoBuilder.append(" */\n");
+                packageInfoBuilder.append("\n");
+                packageInfoBuilder.append("package ").append(data.pkg).append(";\n");
+
+                packageInfoFileWriter.write(packageInfoBuilder.toString());
+                packageInfoFileWriter.flush();
+                packageInfoFileWriter.close();
+                System.out.println("Created " + packageInfoPath);
+            }
+            catch (IOException ex) {
+                System.out.flush(); // avoid intermingled output
+                System.err.println (ex.getMessage()
+                   + packageInfoFile.getAbsolutePath()
+                );
+                ex.printStackTrace(System.err);
+            }
+        }
     }
 
     private void appendCommonStatements(DataPkt data)
     {
       String contents = String.format(objectTypeTemplate, data.pkg,
-        specTitleDate, currentCot.uid,data.clsNm,data.clsNm);
+        sisoSpecificationTitleDate, currentCot.uid,data.clsNm,data.clsNm);
       data.sb.append(contents);
     }
 

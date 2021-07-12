@@ -34,10 +34,11 @@ public class GenerateEntityTypes
 {
     // set defaults to allow direct run
     private        File   outputDirectory;
-    private static String outputDirectoryPath = "src-generated/java/edu/nps/moves/dis7/entityTypes";
-    private static String         packageName =                    "edu.nps.moves.dis7.entityTypes";
+    private static String outputDirectoryPath = "src-generated/java/edu/nps/moves/dis7/entityTypes"; // default
+    private static String         packageName =                    "edu.nps.moves.dis7.entityTypes"; // default
     private static String            language = edu.nps.moves.dis7.source.generator.GenerateOpenDis7JavaPackages.DEFAULT_LANGUAGE;
     private static String         sisoXmlFile = edu.nps.moves.dis7.source.generator.GenerateOpenDis7JavaPackages.DEFAULT_SISO_XML_FILE;
+    private static String       sisoSpecificationTitleDate = "";
 
   private BufferedWriter uid2ClassWriter = null;
     
@@ -88,8 +89,8 @@ public class GenerateEntityTypes
 //      FileUtils.cleanDirectory(outputDirectory); // do NOT clean directory, results can co-exist with other classes
         System.out.println ("actual directory path=" + outputDirectory.getAbsolutePath());
         
-        String packageInfoPath = outputDirectoryPath + "/" + "package-info.java";
-        File packageInfoFile = new File(packageInfoPath);
+        packageInfoPath = outputDirectoryPath + "/" + "package-info.java";
+        packageInfoFile = new File(packageInfoPath);
         
         FileWriter packageInfoFileWriter;
         try {
@@ -97,7 +98,10 @@ public class GenerateEntityTypes
             packageInfoFileWriter = new FileWriter(packageInfoFile, StandardCharsets.UTF_8);
             packageInfoBuilder = new StringBuilder();
             packageInfoBuilder.append("/**\n");
-            packageInfoBuilder.append(" * Infrastructure interfaces and classes supporting edu.nps.moves.dis7.entities library.\n");
+            packageInfoBuilder.append(" * Infrastructure classes derived from ").append(sisoSpecificationTitleDate).append(" enumerations supporting <a href=\"https://github.com/open-dis/open-dis7-java\" target=\"open-dis7-java\">open-dis7-java</a> library.\n");
+            packageInfoBuilder.append(" *\n");
+            packageInfoBuilder.append(" * Online: NPS <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500\" target=\"MV3500\">MV3500 Networked Simulation course</a> ");
+            packageInfoBuilder.append(" * links to <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/tree/master/specifications\" target=\"MV3500\">IEEE and SISO specification references</a> of interest.");
             packageInfoBuilder.append(" *\n");
             packageInfoBuilder.append(" * @see java.lang.Package\n");
             packageInfoBuilder.append(" * @see <a href=\"https://stackoverflow.com/questions/22095487/why-is-package-info-java-useful\">https://stackoverflow.com/questions/22095487/why-is-package-info-java-useful</a>\n");
@@ -322,7 +326,6 @@ public class GenerateEntityTypes
     SubCategoryElem       currentSubCategory;
     SpecificElem          currentSpecific;
     ExtraElem             currentExtra;
-    String                specTitleDate = "";
     boolean               inCot  = false;   // we don't want categories, subcategories, etc. from this group
     boolean               inCetUid30 = false;
     int                   filesWrittenCount = 0;
@@ -337,8 +340,8 @@ public class GenerateEntityTypes
         return;
       
       if(qName.equalsIgnoreCase("revision")) {
-        if(specTitleDate.isEmpty()) // only want the first/latest
-           specTitleDate = legalJavaDoc(attributes.getValue("title") + ", " + attributes.getValue("date"));
+        if(sisoSpecificationTitleDate.isEmpty()) // only want the first/latest
+           sisoSpecificationTitleDate = legalJavaDoc(attributes.getValue("title") + " (" + attributes.getValue("date") + ")");
         return;
       }
       if (qName.equalsIgnoreCase("cet")) {
@@ -554,15 +557,52 @@ public class GenerateEntityTypes
     
     private void saveEntityFile(DataPkt data, String uid)
     {
-      data.sb.append("    }\n}\n");
-      saveFile(data.directory, data.clsNm + ".java", data.sb.toString());
-      addToPropertiesFile(data.pkg, data.clsNm, uid);
+        data.sb.append("    }\n}\n");
+        saveFile(data.directory, data.clsNm + ".java", data.sb.toString());
+        addToPropertiesFile(data.pkg, data.clsNm, uid);
+        
+        packageInfoPath = data.directory + "/" + "package-info.java";
+        File   packageInfoFile = new File(packageInfoPath);
+      
+        if (!packageInfoFile.exists()) // write package-info.java during first time through
+        {
+            FileWriter packageInfoFileWriter;
+            try {
+                packageInfoFile.createNewFile();
+                packageInfoFileWriter = new FileWriter(packageInfoFile, StandardCharsets.UTF_8);
+                packageInfoBuilder = new StringBuilder();
+                packageInfoBuilder.append("/**\n");
+                packageInfoBuilder.append(" * Infrastructure classes derived from ").append(sisoSpecificationTitleDate).append(" enumerations supporting <a href=\"https://github.com/open-dis/open-dis7-java\" target=\"open-dis7-java\">open-dis7-java</a> library.\n");
+                packageInfoBuilder.append(" *\n");
+                packageInfoBuilder.append(" * Online: NPS <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500\" target=\"MV3500\">MV3500 Networked Simulation course</a> ");
+                packageInfoBuilder.append(" * links to <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/tree/master/specifications\" target=\"MV3500\">IEEE and SISO specification references</a> of interest.");
+                packageInfoBuilder.append(" *\n");
+                packageInfoBuilder.append(" * @see java.lang.Package\n");
+                packageInfoBuilder.append(" * @see <a href=\"https://stackoverflow.com/questions/22095487/why-is-package-info-java-useful\">https://stackoverflow.com/questions/22095487/why-is-package-info-java-useful</a>\n");
+                packageInfoBuilder.append(" * @see <a href=\"https://stackoverflow.com/questions/624422/how-do-i-document-packages-in-java\">https://stackoverflow.com/questions/624422/how-do-i-document-packages-in-java</a>\n");
+                packageInfoBuilder.append(" */\n");
+                packageInfoBuilder.append("\n");
+                packageInfoBuilder.append("package ").append(data.pkg).append(";\n");
+
+                packageInfoFileWriter.write(packageInfoBuilder.toString());
+                packageInfoFileWriter.flush();
+                packageInfoFileWriter.close();
+                System.out.println("Created " + packageInfoPath);
+            }
+            catch (IOException ex) {
+                System.out.flush(); // avoid intermingled output
+                System.err.println (ex.getMessage()
+                   + packageInfoFile.getAbsolutePath()
+                );
+                ex.printStackTrace(System.err);
+            }
+        }
     }
   
     private void appendCommonStatements(DataPkt data)
     {
       String contents = String.format(entityCommonTemplate, data.pkg, 
-                                      specTitleDate, data.fullName, 
+                                      sisoSpecificationTitleDate, data.fullName, 
                                       data.countryNamePretty, data.entKindNmDescription, data.domainValue, data.entityUid,
                                       data.clsNm, data.clsNm, data.countryNm, data.entKindNm, data.domainName, data.domainValue);
       data.sb.append(contents);

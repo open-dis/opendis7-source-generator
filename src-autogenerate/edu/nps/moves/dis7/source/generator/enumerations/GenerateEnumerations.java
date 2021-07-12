@@ -33,8 +33,8 @@ public class GenerateEnumerations
 {
     // set defaults to allow direct run
     private        File   outputDirectory;
-    private static String outputDirectoryPath = "src-generated/java/edu/nps/moves/dis7/enumerations";
-    private static String         packageName =                    "edu.nps.moves.dis7.enumerations";
+    private static String outputDirectoryPath = "src-generated/java/edu/nps/moves/dis7/enumerations"; // default
+    private static String         packageName =                    "edu.nps.moves.dis7.enumerations"; // default
     private static String            language = edu.nps.moves.dis7.source.generator.GenerateOpenDis7JavaPackages.DEFAULT_LANGUAGE;
     private static String         sisoXmlFile = edu.nps.moves.dis7.source.generator.GenerateOpenDis7JavaPackages.DEFAULT_SISO_XML_FILE;
     
@@ -65,7 +65,7 @@ public class GenerateEnumerations
     private String bitsetXrefCommentTemplate;
     private String bitsetCommentTemplate;
 
-    private String specTitleDate = null;
+    private static String       sisoSpecificationTitleDate = "";
 
     // https://stackoverflow.com/questions/11883043/does-an-enum-class-containing-20001-enum-constants-hit-any-limit
     final int MAX_ENUMERATIONS = 2000;
@@ -99,8 +99,8 @@ public class GenerateEnumerations
     //  FileUtils.cleanDirectory(outputDirectory); // do NOT clean directory, results can co-exist with other classes
         System.out.println ("actual directory path=" + outputDirectory.getAbsolutePath());
         
-        String packageInfoPath = outputDirectoryPath + "/" + "package-info.java";
-        File packageInfoFile = new File(packageInfoPath);
+        packageInfoPath = outputDirectoryPath + "/" + "package-info.java";
+        packageInfoFile = new File(packageInfoPath);
         
         FileWriter packageInfoFileWriter;
         try {
@@ -108,7 +108,12 @@ public class GenerateEnumerations
             packageInfoFileWriter = new FileWriter(packageInfoFile, StandardCharsets.UTF_8);
             packageInfoBuilder = new StringBuilder();
             packageInfoBuilder.append("/**\n");
-            packageInfoBuilder.append(" * Infrastructure interfaces and classes supporting edu.nps.moves.dis7.enumerations library.\n");
+            packageInfoBuilder.append(" * Infrastructure classes derived from ").append(sisoSpecificationTitleDate).append(" enumerations supporting <a href=\"https://github.com/open-dis/open-dis7-java\" target=\"open-dis7-java\">open-dis7-java</a> library.\n");
+            packageInfoBuilder.append(" *\n");
+            packageInfoBuilder.append(" * Online: NPS <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500\" target=\"MV3500\">MV3500 Networked Simulation course</a> ");
+            packageInfoBuilder.append(" * links to <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/tree/master/specifications\" target=\"MV3500\">IEEE and SISO specification references</a> of interest.");
+            packageInfoBuilder.append(" *\n");
+            packageInfoBuilder.append(" * Online: links to <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/tree/master/specifications\">IEEE and SISO specification references</a> of interest.");
             packageInfoBuilder.append(" *\n");
             packageInfoBuilder.append(" * @see java.lang.Package\n");
             packageInfoBuilder.append(" * @see <a href=\"https://stackoverflow.com/questions/22095487/why-is-package-info-java-useful\">https://stackoverflow.com/questions/22095487/why-is-package-info-java-useful</a>\n");
@@ -460,8 +465,8 @@ public class GenerateEnumerations
                     break;
 
                case "revision":
-                    if (specTitleDate == null) // assume first encountered is latest
-                        specTitleDate = attributes.getValue("title") + ", " + attributes.getValue("date");
+                    if (sisoSpecificationTitleDate == null) // assume first encountered is latest
+                        sisoSpecificationTitleDate = attributes.getValue("title") + ", " + attributes.getValue("date");
                     break;
 
                 // fall throughs
@@ -543,7 +548,7 @@ public class GenerateEnumerations
             if (otherIf != null)
                 additionalInterface = ", " + otherIf;
 
-            sb.append(String.format(dictEnumTemplate1, specTitleDate, packageName, "UID " + el.uid, classNameCorrected, additionalInterface));
+            sb.append(String.format(dictEnumTemplate1, sisoSpecificationTitleDate, packageName, "UID " + el.uid, classNameCorrected, additionalInterface));
 
             // enumerations section
             dictNames.clear();
@@ -613,7 +618,7 @@ public class GenerateEnumerations
       
             String otherInf = uid2ExtraInterface.get(el.uid);
 
-            sb.append(String.format(bitsetTemplate1, packageName, specTitleDate, "UID " + el.uid, el.size, el.name, classNameCorrected, (otherInf==null?"":"implements "+otherInf)));
+            sb.append(String.format(bitsetTemplate1, packageName, sisoSpecificationTitleDate, "UID " + el.uid, el.size, el.name, classNameCorrected, (otherInf==null?"":"implements "+otherInf)));
             enumNames.clear();
             if (el.elems.size() > MAX_ENUMERATIONS)
             {
@@ -721,9 +726,9 @@ public class GenerateEnumerations
             */
             /* enumeration initial template, de-spacify name */
             if(el.footnote == null)
-              sb.append(String.format(enumTemplate1,             packageName, specTitleDate,  "UID " + el.uid, el.size, el.name, classNameCorrected, additionalInterface));
+              sb.append(String.format(enumTemplate1,             packageName, sisoSpecificationTitleDate,  "UID " + el.uid, el.size, el.name, classNameCorrected, additionalInterface));
             else
-              sb.append(String.format(enumTemplate1WithFootnote, packageName, specTitleDate,  "UID " + el.uid, el.size, el.name, el.footnote, classNameCorrected, additionalInterface));
+              sb.append(String.format(enumTemplate1WithFootnote, packageName, sisoSpecificationTitleDate,  "UID " + el.uid, el.size, el.name, el.footnote, classNameCorrected, additionalInterface));
 
             enumNames.clear();
             // enum section
