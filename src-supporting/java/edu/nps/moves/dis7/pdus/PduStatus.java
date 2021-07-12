@@ -127,7 +127,7 @@ public class PduStatus
 
   /**
    * Returns size of this serialized (marshalled) object in bytes
-   * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
+   * @see <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
    * @return serialized size in bytes
    */
   public int getMarshalledSize()
@@ -136,7 +136,7 @@ public class PduStatus
   }
 
     /** Marshal value to DataOutputStream
-     * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
+     * @see <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
      * @param dos DataOutputStream for output
      * @throws java.io.IOException input-output error */
     public void marshal(DataOutputStream dos) throws IOException
@@ -148,7 +148,7 @@ public class PduStatus
      * Deserializes an object from a DataInputStream.
      * @param dis DataInputStream
      * @see java.io.DataInputStream
-     * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
+     * @see <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
      * @return marshalled serialized size in bytes
      * @throws IOException in case something goes wrong
      */
@@ -159,8 +159,8 @@ public class PduStatus
   }
 
     /** Marshal value to ByteBuffer
-     * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
-     * See <a href="https://en.wikipedia.org/wiki/Endianness" target="_blank">https://en.wikipedia.org/wiki/Endianness</a>
+     * @see <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
+     * @see <a href="https://en.wikipedia.org/wiki/Endianness" target="_blank">https://en.wikipedia.org/wiki/Endianness</a>
      * @param byteBuffer to receive result */
     public void marshal(ByteBuffer byteBuffer)
     {
@@ -171,7 +171,7 @@ public class PduStatus
      * Unpacks a Pdu from the underlying data.
      *
      * @see java.nio.ByteBuffer
-     * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
+     * @see <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
      * @param byteBuffer The ByteBuffer at the position to begin writing
      * @return marshalled serialized size in bytes
      */

@@ -12,8 +12,8 @@ import java.nio.ByteBuffer;
 import java.util.Arrays;
 
 /**
- * Align.java created on Jul 15, 2019
- * A class with methods to marshal and unmarshal variable length padding
+ * Align.java created on Jul 15, 2019.
+ * A class with methods to marshal and unmarshal variable length padding.
  *
  * @author Mike Bailey, jmbailey@nps.edu
  * @version $Id$

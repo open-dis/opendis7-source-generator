@@ -85,7 +85,7 @@ public abstract class DisBitSet extends BitSet implements Marshaller
 
   /**
    * Returns size of this serialized (marshalled) object in bytes
-   * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
+   * @see <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
    * @return serialized size in bytes
    */
     @Override
@@ -95,7 +95,7 @@ public abstract class DisBitSet extends BitSet implements Marshaller
     }
 
     /** Marshal value to DataOutputStream
-     * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
+     * @see <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
      * @param dos DataOutputStream for output */
     @Override
     public void marshal(DataOutputStream dos)
@@ -109,7 +109,7 @@ public abstract class DisBitSet extends BitSet implements Marshaller
     }
 
     /** Marshal value to ByteBuffer
-     * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
+     * @see <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
      * @param byteBuffer ByteBuffer for output */
     @Override
     public void marshal(ByteBuffer byteBuffer)
@@ -118,8 +118,8 @@ public abstract class DisBitSet extends BitSet implements Marshaller
     }
 
     /** Marshal value to ByteBuffer
-     * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
-     * See <a href="https://en.wikipedia.org/wiki/Endianness" target="_blank">https://en.wikipedia.org/wiki/Endianness</a>
+     * @see <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
+     * @see <a href="https://en.wikipedia.org/wiki/Endianness" target="_blank">https://en.wikipedia.org/wiki/Endianness</a>
      * @return Little-Endian byte array, network byte order requires reverse */
     public byte[] marshallCommon()
     {
@@ -136,7 +136,7 @@ public abstract class DisBitSet extends BitSet implements Marshaller
      * Deserializes an object from a DataInputStream.
      * @param dis DataInputStream
      * @see java.io.DataInputStream
-     * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
+     * @see <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
      * @return marshalled serialized size in bytes
      */
     @Override
@@ -156,7 +156,7 @@ public abstract class DisBitSet extends BitSet implements Marshaller
     /**
      * Deserializes an object from a ByteBuffer.
      * @param byteBuffer input
-     * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
+     * @see <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
      * @return marshalled serialized size in bytes
      */
     @Override
@@ -170,8 +170,8 @@ public abstract class DisBitSet extends BitSet implements Marshaller
     }
 
     /** Deserializes an object from a byte array
-     * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
-     * See <a href="https://en.wikipedia.org/wiki/Endianness" target="_blank">https://en.wikipedia.org/wiki/Endianness</a>
+     * @see <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
+     * @see <a href="https://en.wikipedia.org/wiki/Endianness" target="_blank">https://en.wikipedia.org/wiki/Endianness</a>
      * @param ba byte array of interest */
     private void unmarshalCommon(byte[] ba)
     {

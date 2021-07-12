@@ -6,8 +6,8 @@
 package edu.nps.moves.dis7.pdus;
 
 /**
- * EntityCapabilities.java created on May 7, 2019
- * Marker interface to polymorphize Entity Capabilities (uid 55) 
+ * EntityCapabilities.java created on May 7, 2019.
+ * Marker interface to polymorphize Entity Capabilities (uid 55).
  */
 public interface EntityCapabilities extends Marshaller
 {}

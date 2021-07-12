@@ -183,7 +183,7 @@ public class DisTime
      *
      * Unix time (in seconds) rolls over in 2038. 
      *
-     * See the Wikipedia page on Unix time for gory details. 
+     * @see the Wikipedia page on Unix time for gory details. 
      * @return seconds since 1970
      */
     public long getUnixTimestamp() {
