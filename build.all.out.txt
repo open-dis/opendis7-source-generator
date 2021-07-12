@@ -18,7 +18,7 @@ clean.generated-source:
 ensure src-generated/java directory exists and is empty
 clean.build:
 all:
-timestamp 11 July 2021 19:50:05
+timestamp 11 July 2021 21:42:54
 ==================================================================================
 generate enumerations classes (given limited path entries in project classpath)
 init:
@@ -66,6 +66,7 @@ edu.nps.moves.dis7.source.generator.pdus.GeneratePdus
 Source code directory set to src-generated/java
 creating directory
 directory=src-generated/java
+Created src-generated/java/edu/nps/moves/dis7/pdus/package-info.java
 edu.nps.moves.dis7.source.generator.pdus.JavaGenerator complete, 240 classes written.
 edu.nps.moves.dis7.source.generator.pdus.GeneratePdus complete.
 ==================================================================================
@@ -288,7 +289,7 @@ Created src-generated\java\edu\nps\moves\dis7\objectTypes\ArealObject\Obstacle\M
 Created src-generated\java\edu\nps\moves\dis7\objectTypes\ArealObject\Obstacle/package-info.java
 Created src-generated\java\edu\nps\moves\dis7\objectTypes\ArealObject/package-info.java
 edu.nps.moves.dis7.source.generator.entityTypes.GenerateObjectTypes complete.
-Compiling 1249 source files to C:\x3d-github\open-dis7-source-generator\build\classes
+Compiling 1250 source files to C:\x3d-github\open-dis7-source-generator\build\classes
 Creating empty C:\x3d-github\open-dis7-source-generator\build\classes\edu\nps\moves\dis7\objectTypes\PointObject\Culturalfeature\BuildingRubble\package-info.class
 Creating empty C:\x3d-github\open-dis7-source-generator\build\classes\edu\nps\moves\dis7\jammers\Noise\BarrageNoise\package-info.class
 Creating empty C:\x3d-github\open-dis7-source-generator\build\classes\edu\nps\moves\dis7\jammers\Deception\FalseTarget\MultipleFalseTargets\package-info.class
@@ -347,6 +348,7 @@ Creating empty C:\x3d-github\open-dis7-source-generator\build\classes\edu\nps\mo
 Creating empty C:\x3d-github\open-dis7-source-generator\build\classes\edu\nps\moves\dis7\objectTypes\PointObject\Passageway\RibbonBridge\package-info.class
 Creating empty C:\x3d-github\open-dis7-source-generator\build\classes\edu\nps\moves\dis7\objectTypes\LinearObject\Culturalfeature\Wire\package-info.class
 Creating empty C:\x3d-github\open-dis7-source-generator\build\classes\edu\nps\moves\dis7\jammers\DeceptionandNoise\AngleandSpot\SpotandSSW\package-info.class
+Creating empty C:\x3d-github\open-dis7-source-generator\build\classes\edu\nps\moves\dis7\pdus\package-info.class
 Creating empty C:\x3d-github\open-dis7-source-generator\build\classes\edu\nps\moves\dis7\jammers\Noise\RepeaterNoise\NarrowbandRepeaterNoise\package-info.class
 Creating empty C:\x3d-github\open-dis7-source-generator\build\classes\edu\nps\moves\dis7\jammers\Noise\QuasiNoiseakaPseudorandom\package-info.class
 Creating empty C:\x3d-github\open-dis7-source-generator\build\classes\edu\nps\moves\dis7\jammers\Noise\SweptNoiseakaSweptSpotNoiseSweep\FrequencySwept\package-info.class
@@ -1369,7 +1371,7 @@ Specification-Title    = SISO Reference for Enumerations for Simulation Interope
 Specification-Version  = 28
 Specification-Vendor   = Simulation Interoperability Standards Organization (SISO)
 Implementation-Title   = edu.nps.moves.dis7
-Implementation-Version = 11 July 2021 19:50:05
+Implementation-Version = 11 July 2021 21:42:54
 Implementation-Vendor  = Naval Postgraduate School (NPS)
 jar.enumerations.classes:
 Packaging .class binaries for all generated OpenDIS7 entity enumerations into a single JAR
@@ -23784,6 +23786,7 @@ Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\
 Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\pdus\Vector3Float.java...
 Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\pdus\VectoringNozzleSystem.java...
 Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\pdus\WarfareFamilyPdu.java...
+Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\pdus\package-info.java...
 Loading source file C:\x3d-github\open-dis7-source-generator\src-specialcase\java\edu\nps\moves\dis7\pdus\Domain.java...
 Loading source file C:\x3d-github\open-dis7-source-generator\src-specialcase\java\edu\nps\moves\dis7\pdus\IntercomSignalPdu.java...
 Loading source file C:\x3d-github\open-dis7-source-generator\src-specialcase\java\edu\nps\moves\dis7\pdus\SignalPdu.java...
@@ -23822,7 +23825,7 @@ copy-generated-source-to-open-dis7-java:
 Both enumerations and PDUs are created by open-dis7-source-generator, with
    PDU classes  packaged into open-dis7-pdus-*.jar         archives by open-dis7-java project and
    enumerations packaged into open-dis7-enumerations-*.jar archives by open-dis7-source-generator.
-Copying 22391 files to C:\x3d-github\open-dis7-java\src-generated
+Copying 22392 files to C:\x3d-github\open-dis7-java\src-generated
 Copying 4 files to C:\x3d-github\open-dis7-java\src-generated
 build all complete
-BUILD SUCCESSFUL (total time: 14 minutes 3 seconds)
+BUILD SUCCESSFUL (total time: 16 minutes 34 seconds)
