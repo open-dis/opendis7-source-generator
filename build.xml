@@ -145,13 +145,14 @@
     </target>
 
     <target name="clean.generated-jars-javadoc">
-        <mkdir dir="dist" description="ensure necessary directory present"/>
+        <mkdir dir="dist/javadoc" description="ensure necessary directory present"/>
         <delete verbose="true">
             <fileset dir="dist" includes="*.jar"/>
         </delete>
-        <delete dir="javadoc"/>
+        <delete dir="dist/javadoc" description="get rid of all prior files"/>
+        <mkdir  dir="dist/javadoc" description="restore directory"/>
     </target>
-    
+
     <target name="clean.generated-source">
         <echo message="ensure src-generated/java directory exists and is empty"/>
         <mkdir dir="src-generated/java" description="ensure necessary directory present"/>
