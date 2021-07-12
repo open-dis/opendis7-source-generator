@@ -227,10 +227,10 @@ public class JavaGenerator extends Generator
             packageInfoBuilder = new StringBuilder();
             packageInfoBuilder.append("/**\n");
             packageInfoBuilder.append(" * Infrastructure classes derived from PDU packet definitions supporting <a href=\"https://github.com/open-dis/open-dis7-java\" target=\"open-dis7-java\">open-dis7-java</a> library.\n");
-            packageInfoBuilder.append(" *\n");
-            packageInfoBuilder.append(" * Online: NPS <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500\" target=\"MV3500\">MV3500 Networked Simulation course</a> ");
-            packageInfoBuilder.append(" * links to <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/tree/master/specifications\" target=\"MV3500\">IEEE and SISO specification references</a> of interest.");
-            packageInfoBuilder.append(" *\n");
+            packageInfoBuilder.append("\n");
+            packageInfoBuilder.append(" * Online: NPS <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500\" target=\"MV3500\">MV3500 Networked Simulation course</a>\n");
+            packageInfoBuilder.append(" * links to <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/tree/master/specifications/README.md\" target=\"README.MV3500\">IEEE and SISO specification references</a> of interest.");
+            packageInfoBuilder.append("\n");
             packageInfoBuilder.append(" * @see java.lang.Package\n");
             packageInfoBuilder.append(" * @see <a href=\"https://stackoverflow.com/questions/22095487/why-is-package-info-java-useful\">https://stackoverflow.com/questions/22095487/why-is-package-info-java-useful</a>\n");
             packageInfoBuilder.append(" * @see <a href=\"https://stackoverflow.com/questions/624422/how-do-i-document-packages-in-java\">https://stackoverflow.com/questions/624422/how-do-i-document-packages-in-java</a>\n");
@@ -666,7 +666,7 @@ public class JavaGenerator extends Generator
         printWriter.println(
 "  /**\n" +
 "   * Returns size of this serialized (marshalled) object in bytes\n" +
-"   * See <a href=\"https://en.wikipedia.org/wiki/Marshalling_(computer_science)\" target=\"_blank\">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>\n" +
+"   * @see <a href=\"https://en.wikipedia.org/wiki/Marshalling_(computer_science)\" target=\"_blank\">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>\n" +
 "   * @return serialized size in bytes\n" +
 "   */");
         printWriter.println("public int getMarshalledSize()");
@@ -1116,7 +1116,7 @@ public class JavaGenerator extends Generator
         pw.println(" * Deserializes an object from a DataInputStream.");
         pw.println(" * @throws java.lang.Exception if something goes wrong");
         pw.println(" * @see java.io.DataInputStream");
-        pw.println(" * See <a href=\"https://en.wikipedia.org/wiki/Marshalling_(computer_science)\" target=\"_blank\">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>");
+        pw.println(" * @see <a href=\"https://en.wikipedia.org/wiki/Marshalling_(computer_science)\" target=\"_blank\">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>");
         pw.println(" * @param dis the InputStream");
         pw.println(" * @return marshalled serialized size in bytes");
         pw.println(" */");
@@ -1379,7 +1379,7 @@ public class JavaGenerator extends Generator
         pw.println(" * Unpacks a Pdu from the underlying data.");
         pw.println(" * @throws java.nio.BufferUnderflowException if byteBuffer is too small");
         pw.println(" * @see java.nio.ByteBuffer");
-        pw.println(" * See <a href=\"https://en.wikipedia.org/wiki/Marshalling_(computer_science)\" target=\"_blank\">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>");
+        pw.println(" * @see <a href=\"https://en.wikipedia.org/wiki/Marshalling_(computer_science)\" target=\"_blank\">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>");
         pw.println(" * @param byteBuffer The ByteBuffer at the position to begin reading");
         pw.println(" * @return marshalled serialized size in bytes");
         pw.println(" * @throws Exception ByteBuffer-generated exception");
