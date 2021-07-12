@@ -13,6 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import edu.nps.moves.dis7.source.generator.pdus.ClassAttribute.ClassAttributeType;
+import java.io.FileWriter;
 
 /**
  * Given the input object, something of an abstract syntax tree, this generates a source code file in the Java language.
@@ -154,6 +155,10 @@ public class JavaGenerator extends Generator
         primitiveSizesMap.put("float32", 4);
         primitiveSizesMap.put("float64", 8); 
     }
+    
+    private String        packageInfoPath;
+    private File          packageInfoFile;
+    private StringBuilder packageInfoBuilder;
 
     /**
      * Generate the classes and write them to a directory
@@ -211,6 +216,40 @@ public class JavaGenerator extends Generator
             }
 
         } // End while
+        
+        packageInfoPath = getDirectory() + "/edu/nps/moves/dis7/pdus/" + "package-info.java";
+        packageInfoFile = new File(packageInfoPath);
+        
+        FileWriter packageInfoFileWriter;
+        try {
+            packageInfoFile.createNewFile();
+            packageInfoFileWriter = new FileWriter(packageInfoFile, StandardCharsets.UTF_8);
+            packageInfoBuilder = new StringBuilder();
+            packageInfoBuilder.append("/**\n");
+            packageInfoBuilder.append(" * Infrastructure classes derived from PDU packet definitions supporting <a href=\"https://github.com/open-dis/open-dis7-java\" target=\"open-dis7-java\">open-dis7-java</a> library.\n");
+            packageInfoBuilder.append(" *\n");
+            packageInfoBuilder.append(" * Online: NPS <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500\" target=\"MV3500\">MV3500 Networked Simulation course</a> ");
+            packageInfoBuilder.append(" * links to <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/tree/master/specifications\" target=\"MV3500\">IEEE and SISO specification references</a> of interest.");
+            packageInfoBuilder.append(" *\n");
+            packageInfoBuilder.append(" * @see java.lang.Package\n");
+            packageInfoBuilder.append(" * @see <a href=\"https://stackoverflow.com/questions/22095487/why-is-package-info-java-useful\">https://stackoverflow.com/questions/22095487/why-is-package-info-java-useful</a>\n");
+            packageInfoBuilder.append(" * @see <a href=\"https://stackoverflow.com/questions/624422/how-do-i-document-packages-in-java\">https://stackoverflow.com/questions/624422/how-do-i-document-packages-in-java</a>\n");
+            packageInfoBuilder.append(" */\n");
+            packageInfoBuilder.append("\n");
+            packageInfoBuilder.append("package edu.nps.moves.dis7.pdus;\n");
+
+            packageInfoFileWriter.write(packageInfoBuilder.toString());
+            packageInfoFileWriter.flush();
+            packageInfoFileWriter.close();
+            System.out.println("Created " + packageInfoPath);
+        }
+        catch (IOException ex) {
+            System.out.flush(); // avoid intermingled output
+            System.err.println (ex.getMessage()
+               + packageInfoFile.getAbsolutePath()
+            );
+            ex.printStackTrace(System.err);
+        }
         
         System.out.println (JavaGenerator.class.getName() + " complete, " + classCount + " classes written.");
 
