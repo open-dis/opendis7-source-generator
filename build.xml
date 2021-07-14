@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="open-dis7-source-generator" default="default" basedir=".">
+<project name="open-dis7-source-generator" default="all" basedir=".">
     <description>Builds, tests, and runs the project open-dis7-source-generator.</description>
     
     <import file="nbproject/build-impl.xml"/>
