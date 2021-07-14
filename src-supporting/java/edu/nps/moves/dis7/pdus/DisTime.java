@@ -183,12 +183,12 @@ public class DisTime
      *
      * Unix time (in seconds) rolls over in 2038. 
      *
-     * @see the Wikipedia page on Unix time for gory details. 
+     * Consult <a href="https://en.wikipedia.org/wiki/Unix_time">The Wikipedia page on Unix time for the gory details</a>
      * @return seconds since 1970
      */
     public long getUnixTimestamp() {
         long t = System.currentTimeMillis();
-        t = t / 1000l;   // NB: integer division, convert milliseconds to seconds
+        t /= 1000l;   // NB: integer division, convert milliseconds to seconds
         return t;
     }
     /**
