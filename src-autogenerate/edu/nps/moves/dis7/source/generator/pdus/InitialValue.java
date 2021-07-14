@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2008-2020, MOVES Institute, Naval Postgraduate School (NPS). All rights reserved.
+ * Copyright (c) 2008-2021, MOVES Institute, Naval Postgraduate School (NPS). All rights reserved.
  * This work is provided under a BSD open-source license, see project license.html and license.txt
  */
 package edu.nps.moves.dis7.source.generator.pdus;
@@ -19,30 +19,51 @@ public class InitialValue
     /** the value that it will be set to. */
     private String variableValue;
     
+    /**
+     * Set initial value of variable
+     * @param pVariable name of variable
+     * @param pValue initial value
+     */
     public InitialValue(String pVariable, String pValue)
     {
         variable = pVariable;
         variableValue = pValue;
     }
     
+    /**
+     * get variable name
+     * @return variable name
+     */
     public String getVariable()
     {
         return variable;
     }
     
+    /**
+     * set variable name
+     * @param pVariable new variable name
+     */
     public void setVariable(String pVariable)
     {
         variable = pVariable;
     }
     
+    /**
+     * get variable value
+     * @return variable value
+     */
     public String getVariableValue()
     {
         return variableValue;
     }
     
-    public void setVariableValue(String pVal)
+    /**
+     * set variable value
+     * @param pValue new variable value
+     */
+    public void setVariableValue(String pValue)
     {
-        variableValue = pVal;
+        variableValue = pValue;
     }
     
     /** 

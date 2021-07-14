@@ -1,6 +1,6 @@
 /* Generated from the XML, %s */
 package %s;
 
-/* %s */
+/** DIS Dictionary Enumerations %s */
 public enum %s
 {

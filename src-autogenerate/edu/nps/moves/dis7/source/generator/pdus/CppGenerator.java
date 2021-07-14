@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2008-2020, MOVES Institute, Naval Postgraduate School (NPS). All rights reserved.
+ * Copyright (c) 2008-2021, MOVES Institute, Naval Postgraduate School (NPS). All rights reserved.
  * This work is provided under a BSD open-source license, see project license.html and license.txt
  */
 package edu.nps.moves.dis7.source.generator.pdus;
@@ -12,12 +12,13 @@ import java.util.*;
  * by an XML file. This is a counterpart to the JavaGenerator. This should generate .h and
  * .cpp files with ivars, getters, setters, marshaller, unmarshaler, constructors, and
  * destructors.
- *
+ * Warning: only partially implemented.
  * John Grant specified the desired features of the C++ files.
  *
  * @author DMcG
  */
 
+/** PDU autogeneration supporting class. */
 public class CppGenerator extends Generator
 {
     /**
@@ -43,6 +44,11 @@ public class CppGenerator extends Generator
         */
     Properties cppProperties;
     
+    /**
+     * Constructor
+     * @param pClassDescriptions String Map of GeneratedClass
+     * @param pCppProperties C++ properties
+     */
     public CppGenerator(Map<String, GeneratedClass> pClassDescriptions, Properties pCppProperties)
     {
         super(pClassDescriptions, pCppProperties);
@@ -444,7 +450,8 @@ public void writeHeaderFile(GeneratedClass aClass)
     }
                 
 } // End write header file
-
+   /** output file for this class
+     * @param aClass GeneratedClass to write file for */
 public void writeCppFile(GeneratedClass aClass)
 {
     try
@@ -506,14 +513,15 @@ public void writeCppFile(GeneratedClass aClass)
     }
 }
 
-/*
- * Write the code for an equality operator. This allows you to compare
- * two objects for equality.
- * The code should look like
- * 
- * bool operator ==(const ClassName& rhs)
- * return (_ivar1==rhs._ivar1 && _var2 == rhs._ivar2 ...)
+/**
+ * Write the code for an equality operator.This allows you to compare
+ two objects for equality.The code should look like
+ 
+ bool operator ==(const ClassName&amp; rhs)
+ return (_ivar1==rhs._ivar1 &amp;&amp; _var2 == rhs._ivar2 ...)
  *
+     * @param pw output
+     * @param aClass class of interest
  */
 public void writeEqualityOperator(PrintWriter pw, GeneratedClass aClass)
 {
@@ -703,6 +711,11 @@ public void writeMarshalMethod(PrintWriter pw, GeneratedClass aClass)
   }
 }
 
+    /**
+     * write out unmarshal method
+     * @param pw PrintWriter
+     * @param aClass a GeneratedClass
+     */
 public void writeUnmarshalMethod(PrintWriter pw, GeneratedClass aClass)
 {
   try
@@ -1007,7 +1020,13 @@ private void writeGetterMethod(PrintWriter pw, GeneratedClass aClass, ClassAttri
     
 }
 
-public void writeSetterMethod(PrintWriter pw, GeneratedClass aClass, ClassAttribute anAttribute)
+    /**
+     * write out setter method
+     * @param pw PrintWriter
+     * @param aClass GeneratedClass
+     * @param anAttribute a ClassAttribute
+     */
+    public void writeSetterMethod(PrintWriter pw, GeneratedClass aClass, ClassAttribute anAttribute)
 {
     if((anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE) && (anAttribute.getIsDynamicListLengthField() == false))
     { 
@@ -1064,7 +1083,9 @@ public void writeSetterMethod(PrintWriter pw, GeneratedClass aClass, ClassAttrib
         pw.println("}\n");
     }
 }
-
+/** output marshalled size
+ * @param pw PrintWriter to use
+ * @param aClass a GeneratedClass */
 public void writeGetMarshalledSizeMethod(PrintWriter pw, GeneratedClass aClass)
 {
     List ivars = aClass.getClassAttributes();
@@ -1198,7 +1219,7 @@ private String getArrayType(String xmlType)
                        
 private void writeLicenseNotice(PrintWriter pw)
 {
-        pw.println("// Copyright (c) 1995-2009 held by the author(s).  All rights reserved.");
+        pw.println("// Copyright (c) 1995-2021 held by the author(s).  All rights reserved.");
        
         pw.println("// Redistribution and use in source and binary forms, with or without");
         pw.println("// modification, are permitted provided that the following conditions");

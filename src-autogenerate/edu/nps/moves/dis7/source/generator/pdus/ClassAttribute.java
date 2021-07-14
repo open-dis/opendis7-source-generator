@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2008-2020, MOVES Institute, Naval Postgraduate School (NPS). All rights reserved.
+ * Copyright (c) 2008-2021, MOVES Institute, Naval Postgraduate School (NPS). All rights reserved.
  * This work is provided under a BSD open-source license, see project license.html and license.txt
  */
 package edu.nps.moves.dis7.source.generator.pdus;
@@ -22,7 +22,29 @@ public class ClassAttribute
      * an array, or a list of objects of variable length.  An array could hold objects,
      * but we'll enforce this distinction for easy understanding.
      */
-    public enum ClassAttributeType { UNSET, PRIMITIVE, CLASSREF, PRIMITIVE_LIST, OBJECT_LIST, SISO_ENUM, SISO_BITFIELD, PADTO16, PADTO32, PADTO64, STATIC_IVAR };
+    public enum ClassAttributeType { 
+        /** attribute property */
+        UNSET,
+        /** attribute property */
+        PRIMITIVE,
+        /** attribute property */
+        CLASSREF,
+        /** attribute property */
+        PRIMITIVE_LIST,
+        /** attribute property */
+        OBJECT_LIST,
+        /** attribute property */
+        SISO_ENUM,
+        /** attribute property */
+        SISO_BITFIELD,
+        /** attribute property */
+        PADTO16,
+        /** attribute property */
+        PADTO32,
+        /** attribute property */
+        PADTO64,
+        /** attribute property */
+        STATIC_IVAR };
     
     /** Name of this attribute, winds up as the ivar name */
     protected String name;
@@ -42,9 +64,10 @@ public class ClassAttribute
     /** if it specifies a field which we want to have no getter or setter */
     protected boolean hidden = false;
     
-    /** Used only if this is a list attibute */
+    /** Used only if this is a list attribute */
     protected int listLength = 0;
-    
+
+    /** Whether or not attribute has fixed bit length */
     protected boolean fixedLength = false;
     
     /** If this is a variable list length field, when unmarshalling we need to know how many list items
@@ -56,6 +79,7 @@ public class ClassAttribute
      * Which of list or array is it
      */
     protected boolean isPrimitiveListLengthField = false;
+    /** Whether or not list length is dynamic */
     protected boolean isDynamicListLengthField = false;
     
     /** If this is a dynamic length list field or primitive list, we also need the field that this tells the 
@@ -94,14 +118,16 @@ public class ClassAttribute
     
     /** Some fields are really bit fields, with flags that constitute subranges. */
     protected boolean isBitField = false;
-    
+
+    /** List of bit fields. */
     protected List<BitField> bitFieldList = new ArrayList<>();
     
     /** Should we serialize this attribute to the message or not? By default yes, but
      * this can be overridden by the attribute serialize="false" in the xml
      */
     protected boolean shouldSerialize = true;
-    
+
+    /** Default enumeration size 9 */
     protected String enumMarshalSize = "8";
     
     /** Get the name of the class attribute/iname
@@ -112,6 +138,10 @@ public class ClassAttribute
         return name;
     }
     
+    /**
+     * Set the name of the class attribute/iname
+     * @param pName new name
+     */
     public void setName(String pName)
     {
         name = pName;
@@ -124,6 +154,10 @@ public class ClassAttribute
         return attributeKind;
     }
     
+    /**
+     * Set the kind of the class attribute/iname
+     * @param pKind new kind
+     */
     public void setAttributeKind(ClassAttributeType pKind)
     {
         attributeKind = pKind;
@@ -136,70 +170,117 @@ public class ClassAttribute
     {
         return type;
     }
-    
+
+    /**
+     * Set the type of the class attribute/iname
+     * @param pType new type
+     */
     public void setType(String pType)
     {
         type = pType;
     }
     
+    /**
+     * Accessor method
+     * @return initialClass name
+     */
     public String getInitialClass()
     {
         return initialClass;
     }
     
-    public void setInitialClass(String s)
+    /**
+     * Accessor method
+     * @param initialClassName name
+     */
+    public void setInitialClass(String initialClassName)
     {
-        initialClass = s;
+        initialClass = initialClassName;
     }
     
-    /** Comment value
+    /** get comment value (description)
      * @return comment value 
      */
     public String getComment()
     {
         return comment;
     }
-    
+
+    /** set comment value (description)
+     * @param pComment comment value
+     */
     public void setComment(String pComment)
     {
         comment = pComment;
     }
     
-    public void setHidden(boolean tf)
+    /**
+     * set whether attribute is hidden
+     * @param flag whether attribute is hidden
+     */
+    public void setHidden(boolean flag)
     {
-        hidden = tf;
+        hidden = flag;
     }
     
+    /**
+     * get whether attribute is hidden
+     * @return whether attribute is hidden
+     */
     public boolean isHidden()
     {
         return hidden;
     }
     
+    /**
+     * Set list length
+     * @param pListLength  list length
+     */
     public void setListLength(int pListLength)
     {
         listLength = pListLength;
     }
     
+    /**
+     * Get list length
+     * @return list length
+     */
     public int getListLength()
     {
         return listLength;
     }
  
+    /**
+     * get whether attribute has fixed length in bits
+     * @return whether attribute has fixed length in bits
+     */
     public boolean isFixedLength()
     {
         return fixedLength;
     }
     
-    public void setFixedLength(boolean tf)
+    /**
+     * Set whether attribute has fixed length in bits
+     * @param flag whether attribute has fixed length in bits
+     */
+    public void setFixedLength(boolean flag)
     {
-        fixedLength = tf;
+        fixedLength = flag;
     }
     
+    /**
+     * TODO
+     * @return TODO
+     */
     public String getCountFieldName()
     {
         return countFieldName;
     }
     
+    /**
+     * TODO
+     * @param pFieldName TODO
+     */
     public void setCountFieldName(String pFieldName)
     {
         countFieldName = pFieldName;
@@ -271,65 +352,117 @@ public class ClassAttribute
         return underlyingTypeIsEnum;
     }
     
+    /**
+     * whether attribute could be string
+     * @return whether attribute could be string
+     */
     public boolean getCouldBeString()
     {
         return couldBeString;
     }
-    
+
+    /**
+     * set whether attribute could be string
+     * @param couldBeString whether attribute could be string
+     */
     public void setCouldBeString(boolean couldBeString)
     {
         this.couldBeString = couldBeString;
     }
     
+    /**
+     * whether attribute has dynamic list length
+     * @param flag whether attribute has dynamic list length
+     */
     public void setIsDynamicListLengthField(boolean flag)
     {
         isDynamicListLengthField = flag;
     }
     
+    /**
+     * whether attribute has dynamic list length
+     * @return whether attribute has dynamic list length
+     */
     public boolean getIsDynamicListLengthField()
     {
         return isDynamicListLengthField;
     }
     
-    public void setIsPrimitiveListLengthField(boolean b)
+    /**
+     * set whether attribute has primitive list length
+     * @param flag whether attribute has primitive list length
+     */
+    public void setIsPrimitiveListLengthField(boolean flag)
     {
-        isPrimitiveListLengthField = b;
+        isPrimitiveListLengthField = flag;
     }
+    /**
+     * whether attribute has primitive list length
+     * @return whether attribute has primitive list length
+     */
     public boolean getIsPrimitiveListLengthField()
     {
         return isPrimitiveListLengthField;
     }
 
+    /**
+     * set special attribute
+     * @param attr special attribute
+     */
     public void setDynamicListClassAttribute(ClassAttribute attr)
     {
         dynamicListClassAttribute = attr;
     }
-    
+
+    /**
+     * get special attribute
+     * @return special attribute
+     */
     public ClassAttribute getDynamicListClassAttribute()
     {
         return dynamicListClassAttribute;
     }
-    
+
+    /**
+     * set whether attribute is a bit field
+     * @param isBitField whether attribute is a bit field
+     */
     public void setIsBitField(boolean isBitField)
     {
         this.isBitField = isBitField;
     }
-    
+
+    /**
+     * whether attribute is a bit field
+     * @return whether attribute is a bit field
+     */
     public boolean getIsBitField()
     {
         return this.isBitField;
     }
     
+    /**
+     * Add a bit field
+     * @param aBitField BitField to add
+     */
     public void addBitField(BitField aBitField)
     {
         bitFieldList.add(aBitField);
     }
 
+    /**
+     * get enumeration marshal size
+     * @return enumeration marshal size value (note String type)
+     */
     public String getEnumMarshalSize()
     {
         return enumMarshalSize;
     }
 
+    /**
+     * set enumeration marshal size
+     * @param enumMarshalSize size value (note String type)
+     */
     public void setEnumMarshalSize(String enumMarshalSize)
     {
         this.enumMarshalSize = enumMarshalSize;

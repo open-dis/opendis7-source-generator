@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2008-2020, MOVES Institute, Naval Postgraduate School (NPS). All rights reserved.
+ * Copyright (c) 2008-2021, MOVES Institute, Naval Postgraduate School (NPS). All rights reserved.
  * This work is provided under a BSD open-source license, see project license.html and license.txt
  */
 package edu.nps.moves.dis7.source.generator.pdus;
@@ -14,18 +14,19 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.StringTokenizer;
 
-/* not thouroughly examined, global change: OBJECT_LIST to OBJECT_LIST and FIXED_LIST to PRIMITIVE_LIST */
+/* not thoroughly examined, global change: OBJECT_LIST to OBJECT_LIST and FIXED_LIST to PRIMITIVE_LIST */
 /**
  * Given the input object, something of an abstract syntax tree, this generates
  * a source code file in the C# language. It has ivars, getters,  setters,
  * and serialization/deserialization methods.
- *
+ * Warning: only partially implemented.
  * @author DMcG
  * modified by Peter Smith (Naval Air Warfare Center - Training Systems Division
  * modified by Zvonko Bostjancic (Blubit d.o.o.)
  */
 public class CsharpGenerator extends Generator {
 
+    /** whether using dot net */
     protected boolean useDotNet = true;
     
     /** Maps the primitive types listed in the XML file to the C# types */
@@ -62,6 +63,11 @@ public class CsharpGenerator extends Generator {
      */
     Map<String, String> classesInstantiated = new HashMap<>();
 
+    /**
+     * Create a generator
+     * @param pClassDescriptions String map of GeneratedClass
+     * @param pCsharpProperties C# properties
+     */
     public CsharpGenerator(Map<String, GeneratedClass> pClassDescriptions, Properties pCsharpProperties) {
         super(pClassDescriptions, pCsharpProperties);
 
@@ -431,7 +437,7 @@ public class CsharpGenerator extends Generator {
                 // The primitive type--we need to do a lookup from the abstract type in the
                 // xml to the C#-specific type. The output should look something like
                 //
-                // /** This is a comment */
+                // /** This is a description */
                 // protected int foo;
                 //
                 String attributeType = types.getProperty(anAttribute.getType());
@@ -457,7 +463,7 @@ public class CsharpGenerator extends Generator {
 
             // this attribute is a reference to another class defined in the XML document, The output should look like
             //
-            // /** This is a comment */
+            // /** This is a description */
             // protected AClass foo = new AClass();
             //
             if (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF)
@@ -594,6 +600,12 @@ public class CsharpGenerator extends Generator {
         pw.println(indent, "}");
     }
 
+    /**
+     * Write out method to get marshalled size
+     * @param pw output
+     * @param aClass input
+     * @param indent indentation
+     */
     public void writeGetMarshalledSizeMethod(PrintStringBuffer pw, GeneratedClass aClass, int indent) {
         List ivars = aClass.getClassAttributes();
 
@@ -754,9 +766,9 @@ public class CsharpGenerator extends Generator {
                         
                         // write getter
                         pw.println();
-                        if(bitfield.comment != null)
+                        if(bitfield.description != null)
                         {
-                            pw.println( "// " + bitfield.comment );
+                            pw.println( "// " + bitfield.description );
                         }
                         
                         pw.println("public virtual int get" + capped + "()");
@@ -771,9 +783,9 @@ public class CsharpGenerator extends Generator {
                         // Write the setter/mutator
                         
                         pw.println();
-                        if(bitfield.comment != null)
+                        if(bitfield.description != null)
                         {
-                            pw.println( "// " + bitfield.comment);
+                            pw.println( "// " + bitfield.description);
                         }
                         pw.println("public void set" + capped + "(int val)");
                         pw.println("{");
@@ -1877,6 +1889,9 @@ public class CsharpGenerator extends Generator {
         return new String(stb);
     }
 
+    /** String utility
+     * @param aString input
+     * @return modified string */
     public String camelCaseCapIgnoreSpaces(String aString) {
         StringBuffer stb = new StringBuffer();
 
@@ -1907,20 +1922,29 @@ public class CsharpGenerator extends Generator {
         return newString;
     }
 
-    public void postProcessData(PrintStringBuffer pw, GeneratedClass aClass) {
+    /**
+     * postprocess data as needed
+     * @param printStringBuffer output
+     * @param aClass GeneratedClass of interest
+     */
+    public void postProcessData(PrintStringBuffer printStringBuffer, GeneratedClass aClass) {
         //aClass.getName()
 
         if (aClass.getName().equalsIgnoreCase("VariableDatum")) {
 
-            postProcessVariableDatum(pw);
+            postProcessVariableDatum(printStringBuffer);
         }
 
         if (aClass.getName().equalsIgnoreCase("SignalPdu")) {
-            postProcessSignalPdu(pw);
+            postProcessSignalPdu(printStringBuffer);
         }
     }
 
-    public void postProcessSignalPdu(PrintStringBuffer pw) {
+    /**
+     * postprocess SignalPdu as needed
+     * @param printStringBuffer output
+     */
+    public void postProcessSignalPdu(PrintStringBuffer printStringBuffer) {
         int startfind, endfind;
         String findString;
         String newString;
@@ -1930,20 +1954,20 @@ public class CsharpGenerator extends Generator {
             findString = "this._data = dis.ReadByteArray(this._dataLength);";
             newString = "this._data = dis.ReadByteArray((this._dataLength / 8) + (this._dataLength % 8 > 0 ? 1 : 0));  //09062009 Post processed. Needed to convert from bits to bytes";  //PES changed to reflex that the datalength should hold bits
 
-            startfind = pw.sb.indexOf(findString);
-            pw.sb.replace(startfind, startfind + findString.length(), newString);
+            startfind = printStringBuffer.sb.indexOf(findString);
+            printStringBuffer.sb.replace(startfind, startfind + findString.length(), newString);
 
             findString = "dos.WriteShort((short)this._data.Length);";
             newString = "dos.WriteShort((short)((this._dataLength == 0 && this._data.Length > 0) ? this._data.Length * 8 : this._dataLength)); //09062009 Post processed.  If value is zero then default to every byte will use all 8 bits";  //09062009 PES changed to reflex that the datalength should be set by user and not automatically as this value is the number of bits in the data field that should be used
 
-            startfind = pw.sb.indexOf(findString);
-            pw.sb.replace(startfind, startfind + findString.length(), newString);
+            startfind = printStringBuffer.sb.indexOf(findString);
+            printStringBuffer.sb.replace(startfind, startfind + findString.length(), newString);
 
             findString = "/// Note that setting this value will not change the marshalled value. The list whose length this describes is used for that purpose.";
-            newString = "/// This value must be set to the number of bits that will be used from the Data field.  Normally this value would be in increments of 8.  If this is the case then multiply the number of bytes used in the Data field by 8 and store that number here.";
+            newString  = "/// This value must be set to the number of bits that will be used from the Data field.  Normally this value would be in increments of 8.  If this is the case then multiply the number of bytes used in the Data field by 8 and store that number here.";
 
-            startfind = pw.sb.indexOf(findString);
-            pw.sb.replace(startfind, startfind + 326, newString);
+            startfind = printStringBuffer.sb.indexOf(findString);
+            printStringBuffer.sb.replace(startfind, startfind + 326, newString);
 
 //          ///Do this twice as there are two occurences
 //          startfind = pw.sb.indexOf(findString);
@@ -1951,7 +1975,11 @@ public class CsharpGenerator extends Generator {
         }
     }
 
-    public void postProcessVariableDatum(PrintStringBuffer pw) {
+    /**
+     * postprocess SignalPdu as needed
+     * @param printStringBuffer output
+     */
+    public void postProcessVariableDatum(PrintStringBuffer printStringBuffer) {
         ///String findString1 = "/// Note that setting this value will not change the marshalled value. The list whose length this describes is used for that purpose.
 /// The getvariableDatumLength method will also be based on the actual list length rather than this value.
 /// The method is simply here for completeness and should not be used for any computations.
@@ -1963,69 +1991,69 @@ public class CsharpGenerator extends Generator {
         if ("1998".equals(this.disVersion))
         {
             //for (int i = 0; i < 2; i++) {
-                startfind = pw.sb.indexOf("Note that");
-                endfind = pw.sb.indexOf("for any computations.");
-                pw.sb.replace(startfind, endfind + 21, "This value must be set for any PDU using it to work!" + PrintStringBuffer.newline + "/// This value should be the number of bits used.");
+                startfind = printStringBuffer.sb.indexOf("Note that");
+                endfind   = printStringBuffer.sb.indexOf("for any computations.");
+                printStringBuffer.sb.replace(startfind, endfind + 21, "This value must be set for any PDU using it to work!" + PrintStringBuffer.newline + "/// This value should be the number of bits used.");
             //}
 
-            startfind = pw.sb.indexOf("dos.WriteUnsignedInt((uint)this._variableDatums.Count);");
-            pw.sb.replace(startfind, startfind + 43, "dos.WriteUnsignedInt((uint)this._variableDatumLength); //Post processed");
+            startfind = printStringBuffer.sb.indexOf("dos.WriteUnsignedInt((uint)this._variableDatums.Count);");
+            printStringBuffer.sb.replace(startfind, startfind + 43, "dos.WriteUnsignedInt((uint)this._variableDatumLength); //Post processed");
 
             findString = "_variableDatumLength = dis.ReadUnsignedInt();";
             newString = PrintStringBuffer.newline + "        int variableCount = (int)(this._variableDatumLength / 64) + (this._variableDatumLength % 64 > 0 ? 1 : 0);  //Post processed";
-            startfind = pw.sb.indexOf(findString);
-            pw.sb.insert(startfind + findString.length() + 1, newString);
+            startfind = printStringBuffer.sb.indexOf(findString);
+            printStringBuffer.sb.insert(startfind + findString.length() + 1, newString);
 
             findString = "for (int idx = 0; idx < this.VariableDatumLength; idx++)";
             newString = "for (int idx = 0; idx < variableCount; idx++)";
-            startfind = pw.sb.indexOf(findString);
-            pw.sb.replace(startfind, startfind + findString.length(), newString);
+            startfind = printStringBuffer.sb.indexOf(findString);
+            printStringBuffer.sb.replace(startfind, startfind + findString.length(), newString);
         }
     }
 
-    private void writeCopyrightNotice(PrintStringBuffer pw) {
-        pw.println("//");
-        pw.println("// Copyright (c) 2008, MOVES Institute, Naval Postgraduate School. All ");
-        pw.println("// rights reserved. This work is licensed under the BSD open source license,");
-        pw.println("// available at https://www.movesinstitute.org/licenses/bsd.html");
-        pw.println("//");
-        pw.println("// Author: DMcG");
-        pw.println("// Modified for use with C#:");
-        pw.println("//  - Peter Smith (Naval Air Warfare Center - Training Systems Division)");
-        pw.println("//  - Zvonko Bostjancic (Blubit d.o.o. - zvonko.bostjancic@blubit.si)");
-        pw.println();
+    private void writeCopyrightNotice(PrintStringBuffer printStringBuffer) {
+        printStringBuffer.println("//");
+        printStringBuffer.println("// Copyright (c) 2008, MOVES Institute, Naval Postgraduate School. All ");
+        printStringBuffer.println("// rights reserved. This work is licensed under the BSD open source license,");
+        printStringBuffer.println("// available at https://www.movesinstitute.org/licenses/bsd.html");
+        printStringBuffer.println("//");
+        printStringBuffer.println("// Author: DMcG");
+        printStringBuffer.println("// Modified for use with C#:");
+        printStringBuffer.println("//  - Peter Smith (Naval Air Warfare Center - Training Systems Division)");
+        printStringBuffer.println("//  - Zvonko Bostjancic (Blubit d.o.o. - zvonko.bostjancic@blubit.si)");
+        printStringBuffer.println();
     }
 
-    private void writeLicenseNotice(PrintStringBuffer pw) {
-        pw.println("// Copyright (c) 1995-2020 held by the author(s).  All rights reserved.");
-        pw.println("// Redistribution and use in source and binary forms, with or without");
-        pw.println("// modification, are permitted provided that the following conditions");
-        pw.println("// are met:");
-        pw.println("// * Redistributions of source code must retain the above copyright");
-        pw.println("//    notice, this list of conditions and the following disclaimer.");
-        pw.println("// * Redistributions in binary form must reproduce the above copyright");
-        pw.println("//   notice, this list of conditions and the following disclaimer");
-        pw.println("//   in the documentation and/or other materials provided with the");
-        pw.println("//   distribution.");
-        pw.println("// * Neither the names of the Naval Postgraduate School (NPS)");
-        pw.println("//   Modeling Virtual Environments and Simulation (MOVES) Institute");
-        pw.println("//   (http://www.nps.edu and http://www.MovesInstitute.org)");
-        pw.println("//   nor the names of its contributors may be used to endorse or");
-        pw.println("//   promote products derived from this software without specific");
-        pw.println("//   prior written permission.");
-        pw.println("// ");
-        pw.println("// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS");
-        pw.println("// AS IS AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT");
-        pw.println("// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS");
-        pw.println("// FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE");
-        pw.println("// COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,");
-        pw.println("// INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,");
-        pw.println("// BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;");
-        pw.println("// LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER");
-        pw.println("// CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT");
-        pw.println("// LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN");
-        pw.println("// ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE");
-        pw.println("// POSSIBILITY OF SUCH DAMAGE.");
+    private void writeLicenseNotice(PrintStringBuffer printStringBuffer) {
+        printStringBuffer.println("// Copyright (c) 1995-2021 held by the author(s).  All rights reserved.");
+        printStringBuffer.println("// Redistribution and use in source and binary forms, with or without");
+        printStringBuffer.println("// modification, are permitted provided that the following conditions");
+        printStringBuffer.println("// are met:");
+        printStringBuffer.println("// * Redistributions of source code must retain the above copyright");
+        printStringBuffer.println("//    notice, this list of conditions and the following disclaimer.");
+        printStringBuffer.println("// * Redistributions in binary form must reproduce the above copyright");
+        printStringBuffer.println("//   notice, this list of conditions and the following disclaimer");
+        printStringBuffer.println("//   in the documentation and/or other materials provided with the");
+        printStringBuffer.println("//   distribution.");
+        printStringBuffer.println("// * Neither the names of the Naval Postgraduate School (NPS)");
+        printStringBuffer.println("//   Modeling Virtual Environments and Simulation (MOVES) Institute");
+        printStringBuffer.println("//   (http://www.nps.edu and http://www.MovesInstitute.org)");
+        printStringBuffer.println("//   nor the names of its contributors may be used to endorse or");
+        printStringBuffer.println("//   promote products derived from this software without specific");
+        printStringBuffer.println("//   prior written permission.");
+        printStringBuffer.println("// ");
+        printStringBuffer.println("// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS");
+        printStringBuffer.println("// AS IS AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT");
+        printStringBuffer.println("// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS");
+        printStringBuffer.println("// FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE");
+        printStringBuffer.println("// COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,");
+        printStringBuffer.println("// INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,");
+        printStringBuffer.println("// BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;");
+        printStringBuffer.println("// LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER");
+        printStringBuffer.println("// CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT");
+        printStringBuffer.println("// LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN");
+        printStringBuffer.println("// ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE");
+        printStringBuffer.println("// POSSIBILITY OF SUCH DAMAGE.");
     }
 }
 

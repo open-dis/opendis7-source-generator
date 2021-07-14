@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2008-2020, MOVES Institute, Naval Postgraduate School (NPS). All rights reserved.
+ * Copyright (c) 2008-2021, MOVES Institute, Naval Postgraduate School (NPS). All rights reserved.
  * This work is provided under a BSD open-source license, see project license.html and license.txt
  */
 
@@ -32,21 +32,30 @@ public class GenerateJammers
 {
     // set defaults to allow direct run
     private        File   outputDirectory;
-    private static String outputDirectoryPath = "src-generated/java/edu/nps/moves/dis7/entityTypes";
-    private static String         packageName =                    "edu.nps.moves.dis7.entityTypes";
+    private static String outputDirectoryPath = "src-generated/java/edu/nps/moves/dis7/jammers"; // default
+    private static String         packageName =                    "edu.nps.moves.dis7.jammers";
     private static String            language = edu.nps.moves.dis7.source.generator.GenerateOpenDis7JavaPackages.DEFAULT_LANGUAGE;
     private static String         sisoXmlFile = edu.nps.moves.dis7.source.generator.GenerateOpenDis7JavaPackages.DEFAULT_SISO_XML_FILE;
+    private static String       sisoSpecificationTitleDate = "";
 
     String jammerTechniqueTemplate;
 
-  class DataPkt
-  {
-    String pkg;
-    File directory;
-    StringBuilder sb;
-    String clsNm;
-  }
+    class DataPkt
+    {
+      String pkg;
+      File directory;
+      StringBuilder sb;
+      String clsNm;
+    }
+    
+    private String        packageInfoPath;
+    private File          packageInfoFile;
+    private StringBuilder packageInfoBuilder;
 
+  /** Constructor for GenerateJammers
+     * @param xmlFile sisoXmlFile
+     * @param outputDir outputDirectoryPath
+     * @param packageName key to package name for jammer */
   public GenerateJammers(String xmlFile, String outputDir, String packageName)
   {
         if (!xmlFile.isEmpty())
@@ -54,21 +63,54 @@ public class GenerateJammers
         if (!outputDir.isEmpty())
             outputDirectoryPath = outputDir;
         if (!packageName.isEmpty())
-           this.packageName = packageName;
+           GenerateJammers.packageName = packageName;
         System.out.println (GenerateJammers.class.getName());
         System.out.println ("              xmlFile=" + sisoXmlFile);
-        System.out.println ("          packageName=" + this.packageName);
+        System.out.println ("          packageName=" + GenerateJammers.packageName);
         System.out.println ("  outputDirectoryPath=" + outputDirectoryPath);
         
         outputDirectory  = new File(outputDirectoryPath);
+        outputDirectory.mkdirs();
+//      FileUtils.cleanDirectory(outputDirectory); // do NOT clean directory, results can co-exist with other classes
         System.out.println ("actual directory path=" + outputDirectory.getAbsolutePath());
+
+        packageInfoPath = outputDirectoryPath + "/" + "package-info.java";
+        packageInfoFile = new File(packageInfoPath);
+        
+        FileWriter packageInfoFileWriter;
+        try {
+            packageInfoFile.createNewFile();
+            packageInfoFileWriter = new FileWriter(packageInfoFile, StandardCharsets.UTF_8);
+            packageInfoBuilder = new StringBuilder();
+            packageInfoBuilder.append("/**\n");
+            packageInfoBuilder.append(" * Infrastructure classes derived from ").append(sisoSpecificationTitleDate).append(" enumerations supporting <a href=\"https://github.com/open-dis/open-dis7-java\" target=\"open-dis7-java\">open-dis7-java</a> library.\n");
+            packageInfoBuilder.append("\n");
+            packageInfoBuilder.append(" * Online: NPS <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500\" target=\"MV3500\">MV3500 Networked Simulation course</a>\n");
+            packageInfoBuilder.append(" * links to <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/tree/master/specifications/README.md\" target=\"README.MV3500\">IEEE and SISO specification references</a> of interest.");
+            packageInfoBuilder.append("\n");
+            packageInfoBuilder.append(" * @see java.lang.Package\n");
+            packageInfoBuilder.append(" * @see <a href=\"https://stackoverflow.com/questions/22095487/why-is-package-info-java-useful\">https://stackoverflow.com/questions/22095487/why-is-package-info-java-useful</a>\n");
+            packageInfoBuilder.append(" * @see <a href=\"https://stackoverflow.com/questions/624422/how-do-i-document-packages-in-java\">https://stackoverflow.com/questions/624422/how-do-i-document-packages-in-java</a>\n");
+            packageInfoBuilder.append(" *").append("/\n");
+            packageInfoBuilder.append("\n");
+            packageInfoBuilder.append("package edu.nps.moves.dis7.jammers;\n");
+
+            packageInfoFileWriter.write(packageInfoBuilder.toString());
+            packageInfoFileWriter.flush();
+            packageInfoFileWriter.close();
+            System.out.println("Created " + packageInfoPath);
+        }
+        catch (IOException ex) {
+            System.out.flush(); // avoid intermingled output
+            System.err.println (ex.getMessage()
+               + packageInfoFile.getAbsolutePath()
+            );
+            ex.printStackTrace(System.err);
+        }
   }
 
   private void run() throws SAXException, IOException, ParserConfigurationException
   {
-    outputDirectory.mkdirs();
-//  FileUtils.cleanDirectory(outputDirectory); // do NOT clean directory, results can co-exist with other classes
-
     SAXParserFactory factory = SAXParserFactory.newInstance();
     factory.setValidating(false);
     factory.setNamespaceAware(true);
@@ -127,21 +169,25 @@ public class GenerateJammers
     JammerSubCategoryElem parent;
   }
 
+  /** XML handler for recursively reading information and autogenerating code, namely an
+     * inner class that handles the SAX parsing of the XML file. This is relatively simple, if
+     * a little verbose. Basically we just create the appropriate objects as we come across the
+     * XML elements in the file.
+     */
   public class MyHandler extends DefaultHandler
   {
     JammerKindElem currentKind;
     JammerCategoryElem currentCategory;
     JammerSubCategoryElem currentSubCategory;
     JammerSpecificElem currentSpecific;
-    String specTitleDate = "";
     int filesWrittenCount = 0;
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes)
     {
       if (qName.equalsIgnoreCase("revision")) {
-        if (specTitleDate.length() <= 0) // only want the first/latest
-          specTitleDate = legalJavaDoc(attributes.getValue("title") + ", " + attributes.getValue("date"));
+        if (sisoSpecificationTitleDate.length() <= 0) // only want the first/latest
+            sisoSpecificationTitleDate = legalJavaDoc(attributes.getValue("title") + " (" + attributes.getValue("date") + ")");
         return;
       }
 
@@ -247,14 +293,51 @@ public class GenerateJammers
 
     private void saveJammerFile(DataPkt data)
     {
-      data.sb.append("    }\n}\n");
-      saveFile(data.directory, data.clsNm + ".java", data.sb.toString());
+        data.sb.append("    }\n}\n");
+        saveFile(data.directory, data.clsNm + ".java", data.sb.toString());
+      
+        packageInfoPath = data.directory + "/" + "package-info.java";
+        packageInfoFile = new File(packageInfoPath);
+
+        if (!packageInfoFile.exists()) // write package-info.java during first time through
+        {
+            FileWriter packageInfoFileWriter;
+            try {
+                packageInfoFile.createNewFile();
+                packageInfoFileWriter = new FileWriter(packageInfoFile, StandardCharsets.UTF_8);
+                packageInfoBuilder = new StringBuilder();
+                packageInfoBuilder.append("/**\n");
+                packageInfoBuilder.append(" * Infrastructure classes derived from ").append(sisoSpecificationTitleDate).append(" enumerations supporting <a href=\"https://github.com/open-dis/open-dis7-java\" target=\"open-dis7-java\">open-dis7-java</a> library.\n");
+                packageInfoBuilder.append("\n");
+                packageInfoBuilder.append(" * Online: NPS <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500\" target=\"MV3500\">MV3500 Networked Simulation course</a>\n");
+                packageInfoBuilder.append(" * links to <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/tree/master/specifications/README.md\" target=\"README.MV3500\">IEEE and SISO specification references</a> of interest.");
+                packageInfoBuilder.append("\n");
+                packageInfoBuilder.append(" * @see java.lang.Package\n");
+                packageInfoBuilder.append(" * @see <a href=\"https://stackoverflow.com/questions/22095487/why-is-package-info-java-useful\">https://stackoverflow.com/questions/22095487/why-is-package-info-java-useful</a>\n");
+                packageInfoBuilder.append(" * @see <a href=\"https://stackoverflow.com/questions/624422/how-do-i-document-packages-in-java\">https://stackoverflow.com/questions/624422/how-do-i-document-packages-in-java</a>\n");
+                packageInfoBuilder.append(" */\n");
+                packageInfoBuilder.append("\n");
+                packageInfoBuilder.append("package ").append(data.pkg).append(";\n");
+
+                packageInfoFileWriter.write(packageInfoBuilder.toString());
+                packageInfoFileWriter.flush();
+                packageInfoFileWriter.close();
+                System.out.println("Created " + packageInfoPath);
+            }
+            catch (IOException ex) {
+                System.out.flush(); // avoid intermingled output
+                System.err.println (ex.getMessage()
+                   + packageInfoFile.getAbsolutePath()
+                );
+                ex.printStackTrace(System.err);
+            }
+        }
     }
 
     private void appendCommonStatements(DataPkt data)
     {
       String contents = String.format(jammerTechniqueTemplate, data.pkg,
-        specTitleDate, "284",data.clsNm,data.clsNm);
+        sisoSpecificationTitleDate, "284",data.clsNm,data.clsNm);
       data.sb.append(contents);
     }
 
@@ -602,6 +685,8 @@ public class GenerateJammers
     return r;
   }
 
+  /** Command-line invocation (CLI)
+    * @param args command-line arguments */
   public static void main(String[] args)
   {
     try {

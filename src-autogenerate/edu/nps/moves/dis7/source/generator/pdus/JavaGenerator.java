@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2008-2020, MOVES Institute, Naval Postgraduate School (NPS). All rights reserved.
+ * Copyright (c) 2008-2021, MOVES Institute, Naval Postgraduate School (NPS). All rights reserved.
  * This work is provided under a BSD open-source license, see project license.html and license.txt
  */
 package edu.nps.moves.dis7.source.generator.pdus;
@@ -13,15 +13,16 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import edu.nps.moves.dis7.source.generator.pdus.ClassAttribute.ClassAttributeType;
+import java.io.FileWriter;
 
 /**
- * Given the input object, something of an abstract syntax tree, this generates a source code file in the java language. It has ivars, getters, setters, and serialization/deserialization methods.
- *
+ * Given the input object, something of an abstract syntax tree, this generates a source code file in the Java language.
+ * It has ivars, getters, setters, and serialization/deserialization methods.
+ * Fully implemented.
  * @author DMcG
  */
 public class JavaGenerator extends Generator
 {
-
     /**
      * Some Java (or Java-like) distributions don't have the full Java JDK 1.6 stack, such as Android. That means no JAXB, and no Hibernate/JPA. These booleans flip on or off the generation of the
      * annotations that use these features in the generated Java code.
@@ -53,6 +54,11 @@ public class JavaGenerator extends Generator
      */
     Properties javaProperties;
 
+    /**
+     * Constructor
+     * @param pClassDescriptions String map of generated classes
+     * @param pJavaProperties language properties
+     */
     public JavaGenerator(Map<String, GeneratedClass> pClassDescriptions, Properties pJavaProperties)
     {
         super(pClassDescriptions, pJavaProperties);
@@ -149,6 +155,10 @@ public class JavaGenerator extends Generator
         primitiveSizesMap.put("float32", 4);
         primitiveSizesMap.put("float64", 8); 
     }
+    
+    private String        packageInfoPath;
+    private File          packageInfoFile;
+    private StringBuilder packageInfoBuilder;
 
     /**
      * Generate the classes and write them to a directory
@@ -206,6 +216,40 @@ public class JavaGenerator extends Generator
             }
 
         } // End while
+        
+        packageInfoPath = getDirectory() + "/edu/nps/moves/dis7/pdus/" + "package-info.java";
+        packageInfoFile = new File(packageInfoPath);
+        
+        FileWriter packageInfoFileWriter;
+        try {
+            packageInfoFile.createNewFile();
+            packageInfoFileWriter = new FileWriter(packageInfoFile, StandardCharsets.UTF_8);
+            packageInfoBuilder = new StringBuilder();
+            packageInfoBuilder.append("/**\n");
+            packageInfoBuilder.append(" * Infrastructure classes derived from PDU packet definitions supporting <a href=\"https://github.com/open-dis/open-dis7-java\" target=\"open-dis7-java\">open-dis7-java</a> library.\n");
+            packageInfoBuilder.append("\n");
+            packageInfoBuilder.append(" * Online: NPS <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500\" target=\"MV3500\">MV3500 Networked Simulation course</a>\n");
+            packageInfoBuilder.append(" * links to <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/tree/master/specifications/README.md\" target=\"README.MV3500\">IEEE and SISO specification references</a> of interest.");
+            packageInfoBuilder.append("\n");
+            packageInfoBuilder.append(" * @see java.lang.Package\n");
+            packageInfoBuilder.append(" * @see <a href=\"https://stackoverflow.com/questions/22095487/why-is-package-info-java-useful\">https://stackoverflow.com/questions/22095487/why-is-package-info-java-useful</a>\n");
+            packageInfoBuilder.append(" * @see <a href=\"https://stackoverflow.com/questions/624422/how-do-i-document-packages-in-java\">https://stackoverflow.com/questions/624422/how-do-i-document-packages-in-java</a>\n");
+            packageInfoBuilder.append(" */\n");
+            packageInfoBuilder.append("\n");
+            packageInfoBuilder.append("package edu.nps.moves.dis7.pdus;\n");
+
+            packageInfoFileWriter.write(packageInfoBuilder.toString());
+            packageInfoFileWriter.flush();
+            packageInfoFileWriter.close();
+            System.out.println("Created " + packageInfoPath);
+        }
+        catch (IOException ex) {
+            System.out.flush(); // avoid intermingled output
+            System.err.println (ex.getMessage()
+               + packageInfoFile.getAbsolutePath()
+            );
+            ex.printStackTrace(System.err);
+        }
         
         System.out.println (JavaGenerator.class.getName() + " complete, " + classCount + " classes written.");
 
@@ -318,15 +362,15 @@ public class JavaGenerator extends Generator
     }
     
     /**
-     * Write the license text as a java comment at the top of the file.
+     * Write the license text as a java description at the top of the file.
      */
     
-    private void writeLicense(PrintWriter pw, GeneratedClass aClass)
+    private void writeLicense(PrintWriter printWriter, GeneratedClass aClass)
     {
       if(license == null)
         System.out.println("bp");
-      pw.println(license);
-      pw.println();
+      printWriter.println(license);
+      printWriter.println();
     }
     /**
      * Writes the package and package import code at the top of the Java source file
@@ -428,6 +472,7 @@ public class JavaGenerator extends Generator
                     //if (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.STATIC_IVAR) {
                     attributeType = types.getProperty(anAttribute.getType());
                     String value = anAttribute.getDefaultValue();
+                    pw.print("   /** Default static instance variable */\n");
                     pw.print("   public static " + attributeType + "  " + anAttribute.getName());
                     pw.print(" = " + value + ";\n");
                     break;
@@ -437,13 +482,15 @@ public class JavaGenerator extends Generator
                     // The primitive type--we need to do a lookup from the abstract type in the
                     // xml to the java-specific type. The output should look something like
                     //
-                    // /** This is a comment */
+                    // /** This is a description */
                     // protected int foo;
                     //
                     attributeType = types.getProperty(anAttribute.getType());
-                    if (anAttribute.getComment() != null) {
-                        pw.println("   /** " + anAttribute.getComment() + " */");
+                    if ((anAttribute.getComment() != null) && !anAttribute.getComment().trim().isEmpty())
+                    {
+                         pw.println("   /** " + anAttribute.getComment() + " */");
                     }
+                    else pw.println("   /** " + anAttribute.getName() + " is an undescribed parameter... */");
 
                     String defaultValue = anAttribute.getDefaultValue();
 
@@ -455,16 +502,19 @@ public class JavaGenerator extends Generator
 
                 // this attribute is a reference to another class defined in the XML document, The output should look like
                 //
-                // /** This is a comment */
+                // /** This is a description */
                 // protected AClass foo = new AClass();
                 //
                 case CLASSREF:
                     attributeType = anAttribute.getType();
                     String initialClass = anAttribute.getInitialClass(); // most often null
 
-                    if (anAttribute.getComment() != null) {
+                    if ((anAttribute.getComment() != null) && !anAttribute.getComment().trim().isEmpty())
+                    {
                         pw.println("   /** " + anAttribute.getComment() + " */");
                     }
+                    else pw.println("   /** " + anAttribute.getName() + " is an undescribed parameter... */");
+
                     if(anAttribute.getDefaultValue() == null)
                         pw.println("   " + fieldaccess + " " + attributeType + "  " + anAttribute.getName() + " = new " + (initialClass == null ? attributeType : initialClass) + "(); \n");
                     else
@@ -476,9 +526,11 @@ public class JavaGenerator extends Generator
                     attributeType = anAttribute.getType();
                     listLength = anAttribute.getListLength();
 
-                    if (anAttribute.getComment() != null) {
+                    if ((anAttribute.getComment() != null) && !anAttribute.getComment().trim().isEmpty())
+                    {
                         pw.println("   /** " + anAttribute.getComment() + " */");
                     }
+                    else pw.println("   /** " + anAttribute.getName() + " is an undescribed parameter... */");
 
                     pw.println("   " + fieldaccess + " " + types.getProperty(attributeType) + "[]  " + anAttribute.getName() + " = new "
                         + types.getProperty(attributeType) + "[" + listLength + "]" + "; \n");
@@ -489,8 +541,11 @@ public class JavaGenerator extends Generator
                     attributeType = anAttribute.getType();
                     listLength = anAttribute.getListLength();
 
-                    if (anAttribute.getComment() != null)
+                    if ((anAttribute.getComment() != null) && !anAttribute.getComment().trim().isEmpty())
+                    {
                         pw.println("   /** " + anAttribute.getComment() + " */");
+                    }
+                    else pw.println("   /** " + anAttribute.getName() + " is an undescribed parameter... */");
 
                     pw.println("   " + fieldaccess + " List< " + attributeType + " > " + anAttribute.getName() + " = new ArrayList< " + attributeType + " >();\n ");
                     break;
@@ -507,8 +562,12 @@ public class JavaGenerator extends Generator
 //            }
                 case SISO_ENUM:
                     clsnm = anAttribute.getType();
-                    if (anAttribute.getComment() != null)
+                    if ((anAttribute.getComment() != null) && !anAttribute.getComment().trim().isEmpty())
+                    {
                         pw.println("   /** " + anAttribute.getComment() + " */");
+                    }
+                    else pw.println("   /** " + anAttribute.getName() + " is an undescribed parameter... */");
+
                     if (anAttribute.getDefaultValue() == null)
                         pw.println("   " + fieldaccess + " " + clsnm + " " + anAttribute.getName() + " = " + clsnm + ".values()[0];\n");
                     else
@@ -517,22 +576,29 @@ public class JavaGenerator extends Generator
 
                 case SISO_BITFIELD:
                     clsnm = anAttribute.getType();
-                    if (anAttribute.getComment() != null)
+                    if ((anAttribute.getComment() != null) && !anAttribute.getComment().trim().isEmpty())
+                    {
                         pw.println("   /** " + anAttribute.getComment() + " */");
+                    }
+                    else pw.println("   /** " + anAttribute.getName() + " is an undescribed parameter... */");
+
                     if (anAttribute.getDefaultValue() == null)
                         pw.println("   " + fieldaccess + " " + clsnm + " " + anAttribute.getName() + " = new " + clsnm + "();\n");
                     else
                         pw.println("   " + fieldaccess + " " + clsnm + " " + anAttribute.getName() + " = " + anAttribute.getDefaultValue() + ";\n");
                     break;
                     
-                case PADTO16:                
-                    pw.println("   private byte[] "+anAttribute.getName()+" = new byte[0]; // pad to 16-bit boundary\n");
+                case PADTO16:
+                    pw.println("   /** pad to 16-bit boundary */\n");
+                    pw.println("   private byte[] "+anAttribute.getName()+" = new byte[0];\n");
                     break;
                 case PADTO32:
-                    pw.println("   private byte[] "+anAttribute.getName()+" = new byte[0]; // pad to 32-bit boundary\n");
+                    pw.println("   /** pad to 32-bit boundary */\n");
+                    pw.println("   private byte[] "+anAttribute.getName()+" = new byte[0];\n");
                     break;
                 case PADTO64:
-                    pw.println("   private byte[] "+anAttribute.getName()+" = new byte[0]; // pad to 64-bit boundary\n");
+                    pw.println("   /** pad to 64-bit boundary */\n");
+                    pw.println("   private byte[] "+anAttribute.getName()+" = new byte[0];\n");
                     break;
                     
             }
@@ -587,67 +653,71 @@ public class JavaGenerator extends Generator
         pw.println(" }");    
     }
     
-    public void writeGetMarshalledSizeMethod(PrintWriter pw, GeneratedClass aClass)
+    /**
+     * Produce custom getMarshalledSize() method
+     * @param printWriter output
+     * @param aClass input class
+     */
+    public void writeGetMarshalledSizeMethod(PrintWriter printWriter, GeneratedClass aClass)
     {
-        // Create a getMarshalledSize() method
-        pw.println();
-        // Not all object are setup to implement Marshaller; should be done
-        //pw.println("@Override");
-        pw.println(
+        printWriter.println();
+        // TODO not all object are setup to implement Marshaller; should be done
+        // pw.println("@Override");
+        printWriter.println(
 "  /**\n" +
 "   * Returns size of this serialized (marshalled) object in bytes\n" +
-"   * See <a href=\"https://en.wikipedia.org/wiki/Marshalling_(computer_science)\" target=\"_blank\">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>\n" +
+"   * @see <a href=\"https://en.wikipedia.org/wiki/Marshalling_(computer_science)\" target=\"_blank\">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>\n" +
 "   * @return serialized size in bytes\n" +
 "   */");
-        pw.println("public int getMarshalledSize()");
-        pw.println("{");
-        pw.println("   int marshalSize = 0; ");
-        pw.println();
+        printWriter.println("public int getMarshalledSize()");
+        printWriter.println("{");
+        printWriter.println("   int marshalSize = 0; ");
+        printWriter.println();
 
         // Size of superclass is the starting point
         if (!aClass.getParentClass().equalsIgnoreCase("root")) {
-            pw.println("   marshalSize = super.getMarshalledSize();");
+            printWriter.println("   marshalSize = super.getMarshalledSize();");
         }
 
         for (ClassAttribute anAttribute : aClass.getClassAttributes()) {
             switch (anAttribute.getAttributeKind()) {
                 case PRIMITIVE:
-                    pw.print("   marshalSize += ");
-                    pw.println(primitiveSizes.get(anAttribute.getType()) + ";  // " + anAttribute.getName());
+                    printWriter.print("   marshalSize += ");
+                    printWriter.println(primitiveSizes.get(anAttribute.getType()) + ";  // " + anAttribute.getName());
                     break;
                 case CLASSREF:
                 case SISO_ENUM:
                 case SISO_BITFIELD:
-                    pw.print("   marshalSize += ");
-                    pw.println(anAttribute.getName() + ".getMarshalledSize();");
+                    printWriter.print("   marshalSize += ");
+                    printWriter.println(anAttribute.getName() + ".getMarshalledSize();");
                     break;
                 case PRIMITIVE_LIST:
                     //System.out.println("Generating fixed list for " + anAttribute.getName() + " listIsClass:" + anAttribute.listIsClass());
                     // If this is a fixed list of primitives, it's the list size times the size of the primitive.
                     //pw.println("   marshalSize = marshalSize + " +  anAttribute.getListLength() + " * " + primitiveSizes.get(anAttribute.getType()) + ";  // " + anAttribute.getName());
-                    pw.println("   marshalSize += " + anAttribute.getName()+".length * "  + primitiveSizes.get(anAttribute.getType()) + ";");
+                    printWriter.println("   marshalSize += " + anAttribute.getName()+".length * "  + primitiveSizes.get(anAttribute.getType()) + ";");
                     break;
                 case OBJECT_LIST:
                     // If this is a dynamic list of primitives, it's the list size times the size of the primitive.
-                    pw.println("   for(int idx=0; idx < " + anAttribute.getName() + ".size(); idx++)");
-                    pw.println("   {");
+                    printWriter.println("   for(int idx=0; idx < " + anAttribute.getName() + ".size(); idx++)");
+                    printWriter.println("   {");
                     //pw.println( anAttribute.getName() + ".size() " + " * " +  " new " + anAttribute.getType() + "().getMarshalledSize()"  + ";  // " + anAttribute.getName());
-                    pw.println("        " + anAttribute.getType() + " listElement = " + anAttribute.getName() + ".get(idx);");
-                    pw.println("        marshalSize += listElement.getMarshalledSize();");
-                    pw.println("   }");
+                    printWriter.println("        " + anAttribute.getType() + " listElement = " + anAttribute.getName() + ".get(idx);");
+                    printWriter.println("        marshalSize += listElement.getMarshalledSize();");
+                    printWriter.println("   }");
                     break;
                 case PADTO16:
                 case PADTO32:
                 case PADTO64:
-                    pw.println("   marshalSize += "+anAttribute.getName()+".length;");
+                    printWriter.println("   marshalSize += "+anAttribute.getName()+".length;");
                     break;
             }          
         }
 
-        pw.println();
-        pw.println("   return marshalSize;");
-        pw.println("}");
-        pw.println();
+        printWriter.println();
+        printWriter.println("   return marshalSize;");
+        printWriter.println("}");
+        printWriter.println();
     }
  
     private void writeGettersAndSetters(PrintWriter pw, GeneratedClass aClass)
@@ -709,14 +779,18 @@ public class JavaGenerator extends Generator
                         String beanType = types.getProperty(anAttribute.getType());
                         ClassAttribute listAttribute = anAttribute.getDynamicListClassAttribute();
 
+                        pw.println("/** Utility method to get size of field");
+                        pw.println(" * @return size of field */");
                         pw.println("public " + beanType + " get" + this.initialCap(anAttribute.getName()) + "()");
                         pw.println("{\n    return (" + beanType + ")" + listAttribute.getName() + ".size(); \n}");
 
                         pw.println();
 
-                        pw.println("/* Note that setting this value will not change the marshalled value. The list whose length this describes is used for that purpose.");
+                        pw.println("/** Note that setting this value will not change the marshalled value. The list whose length this describes is used for that purpose.");
                         pw.println(" * The get" + anAttribute.getName() + " method will also be based on the actual list length rather than this value. ");
                         pw.println(" * The method is simply here for java bean completeness.");
+                        pw.println(" * @param p" + this.initialCap(anAttribute.getName()) + " passed parameter");
+                        pw.println(" * @return this object");
                         pw.println(" */");
                         pw.print("public ");
                         pw.print(aClass.getName());
@@ -868,8 +942,8 @@ public class JavaGenerator extends Generator
 
                         // write getter
                         pw.println();
-                        if (bitfield.comment != null) {
-                            pw.println("/**\n * " + bitfield.comment + "\n */");
+                        if (bitfield.description != null) {
+                            pw.println("/**\n * " + bitfield.description + "\n */");
                         }
 
                         pw.println("public int get" + cappedIvar + "_" + bitfield.name + "()");
@@ -881,8 +955,8 @@ public class JavaGenerator extends Generator
 
                         // Write the setter/mutator
                         pw.println();
-                        if (bitfield.comment != null) {
-                            pw.println("/** \n * " + bitfield.comment + "\n */");
+                        if (bitfield.description != null) {
+                            pw.println("/** \n * " + bitfield.description + "\n */");
                         }
                         pw.println("public void set" + cappedIvar + "_" + bitfield.name + "(int val)");
                         pw.println("{");
@@ -1042,7 +1116,7 @@ public class JavaGenerator extends Generator
         pw.println(" * Deserializes an object from a DataInputStream.");
         pw.println(" * @throws java.lang.Exception if something goes wrong");
         pw.println(" * @see java.io.DataInputStream");
-        pw.println(" * See <a href=\"https://en.wikipedia.org/wiki/Marshalling_(computer_science)\" target=\"_blank\">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>");
+        pw.println(" * @see <a href=\"https://en.wikipedia.org/wiki/Marshalling_(computer_science)\" target=\"_blank\">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>");
         pw.println(" * @param dis the InputStream");
         pw.println(" * @return marshalled serialized size in bytes");
         pw.println(" */");
@@ -1305,7 +1379,7 @@ public class JavaGenerator extends Generator
         pw.println(" * Unpacks a Pdu from the underlying data.");
         pw.println(" * @throws java.nio.BufferUnderflowException if byteBuffer is too small");
         pw.println(" * @see java.nio.ByteBuffer");
-        pw.println(" * See <a href=\"https://en.wikipedia.org/wiki/Marshalling_(computer_science)\" target=\"_blank\">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>");
+        pw.println(" * @see <a href=\"https://en.wikipedia.org/wiki/Marshalling_(computer_science)\" target=\"_blank\">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>");
         pw.println(" * @param byteBuffer The ByteBuffer at the position to begin reading");
         pw.println(" * @return marshalled serialized size in bytes");
         pw.println(" * @throws Exception ByteBuffer-generated exception");

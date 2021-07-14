@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2008-2020, MOVES Institute, Naval Postgraduate School (NPS). All rights reserved.
+ * Copyright (c) 2008-2021, MOVES Institute, Naval Postgraduate School (NPS). All rights reserved.
  * This work is provided under a BSD open-source license, see project license.html and license.txt
  */
 package edu.nps.moves.dis7.source.generator.enumerations;
@@ -33,8 +33,8 @@ public class GenerateEnumerations
 {
     // set defaults to allow direct run
     private        File   outputDirectory;
-    private static String outputDirectoryPath = "src-generated/java/edu/nps/moves/dis7/enumerations";
-    private static String         packageName =                    "edu.nps.moves.dis7.enumerations";
+    private static String outputDirectoryPath = "src-generated/java/edu/nps/moves/dis7/enumerations"; // default
+    private static String         packageName =                    "edu.nps.moves.dis7.enumerations"; // default
     private static String            language = edu.nps.moves.dis7.source.generator.GenerateOpenDis7JavaPackages.DEFAULT_LANGUAGE;
     private static String         sisoXmlFile = edu.nps.moves.dis7.source.generator.GenerateOpenDis7JavaPackages.DEFAULT_SISO_XML_FILE;
     
@@ -65,8 +65,22 @@ public class GenerateEnumerations
     private String bitsetXrefCommentTemplate;
     private String bitsetCommentTemplate;
 
-    private String specTitleDate = null;
+    private static String       sisoSpecificationTitleDate = "";
 
+    // https://stackoverflow.com/questions/11883043/does-an-enum-class-containing-20001-enum-constants-hit-any-limit
+    final int MAX_ENUMERATIONS = 2000;
+
+    private int additionalEnumClassesCreated = 0;
+    
+    private String        packageInfoPath;
+    private File          packageInfoFile;
+    private StringBuilder packageInfoBuilder;
+
+    /** Constructor
+     * @param xmlFile input sisoXmlFile
+     * @param outputDir output directory path
+     * @param packageName package name for this set of enumerations
+     */
     public GenerateEnumerations(String xmlFile, String outputDir, String packageName)
     {
         System.out.println (GenerateEnumerations.class.getName());
@@ -81,13 +95,49 @@ public class GenerateEnumerations
         System.out.println ("  outputDirectoryPath=" + outputDirectoryPath);
         
         outputDirectory  = new File(outputDirectoryPath);
+        outputDirectory.mkdirs();
+    //  FileUtils.cleanDirectory(outputDirectory); // do NOT clean directory, results can co-exist with other classes
         System.out.println ("actual directory path=" + outputDirectory.getAbsolutePath());
+        
+        packageInfoPath = outputDirectoryPath + "/" + "package-info.java";
+        packageInfoFile = new File(packageInfoPath);
+        
+        FileWriter packageInfoFileWriter;
+        try {
+            packageInfoFile.createNewFile();
+            packageInfoFileWriter = new FileWriter(packageInfoFile, StandardCharsets.UTF_8);
+            packageInfoBuilder = new StringBuilder();
+            packageInfoBuilder.append("/**\n");
+            packageInfoBuilder.append(" * Infrastructure classes derived from ").append(sisoSpecificationTitleDate).append(" enumerations supporting <a href=\"https://github.com/open-dis/open-dis7-java\" target=\"open-dis7-java\">open-dis7-java</a> library.\n");
+            packageInfoBuilder.append("\n");
+            packageInfoBuilder.append(" * Online: NPS <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500\" target=\"MV3500\">MV3500 Networked Simulation course</a>\n");
+            packageInfoBuilder.append(" * links to <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/tree/master/specifications/README.md\" target=\"README.MV3500\">IEEE and SISO specification references</a> of interest.");
+            packageInfoBuilder.append("\n");
+            packageInfoBuilder.append(" * Online: links to <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/tree/master/specifications/README.md\">IEEE and SISO specification references</a> of interest.");
+            packageInfoBuilder.append("\n");
+            packageInfoBuilder.append(" * @see java.lang.Package\n");
+            packageInfoBuilder.append(" * @see <a href=\"https://stackoverflow.com/questions/22095487/why-is-package-info-java-useful\">https://stackoverflow.com/questions/22095487/why-is-package-info-java-useful</a>\n");
+            packageInfoBuilder.append(" * @see <a href=\"https://stackoverflow.com/questions/624422/how-do-i-document-packages-in-java\">https://stackoverflow.com/questions/624422/how-do-i-document-packages-in-java</a>\n");
+            packageInfoBuilder.append(" */\n");
+            packageInfoBuilder.append("\n");
+            packageInfoBuilder.append("package edu.nps.moves.dis7.enumerations;\n");
+
+            packageInfoFileWriter.write(packageInfoBuilder.toString());
+            packageInfoFileWriter.flush();
+            packageInfoFileWriter.close();
+            System.out.println("Created " + packageInfoPath);
+        }
+        catch (IOException ex) {
+            System.out.flush(); // avoid intermingled output
+            System.err.println (ex.getMessage()
+               + packageInfoFile.getAbsolutePath()
+            );
+            ex.printStackTrace(System.err);
+        }
     }
 
     private void run() throws SAXException, IOException, ParserConfigurationException
     {
-        outputDirectory.mkdirs();
-    //  FileUtils.cleanDirectory(outputDirectory); // do NOT clean directory, results can co-exist with other classes
         // Manual:
         uid2ClassName = new Properties();
         uid2ClassName.load(getClass().getResourceAsStream("Uid2ClassName.properties"));
@@ -134,11 +184,11 @@ public class GenerateEnumerations
         System.out.println("Begin uid preprocess...");
         factory.newSAXParser().parse(xmlFile,new UidCollector());
 
-        System.out.println("Begin enum generation ...");
+        System.out.println("Begin enum enumeration generation...");
         MyHandler handler = new MyHandler();
         factory.newSAXParser().parse(xmlFile, handler); // apparently can't reuse xmlFile
 
-        System.out.println (GenerateEnumerations.class.getName() + " complete, " + handler.enums.size() + " enums created.");
+        System.out.println (GenerateEnumerations.class.getName() + " complete, " + (handler.enums.size() + additionalEnumClassesCreated) + " enum classes created.");
     }
         /**
          * Replace special characters in name with underscore _ character
@@ -149,6 +199,7 @@ public class GenerateEnumerations
         {
             if ((name==null) || name.trim().isEmpty())
             {
+                System.out.flush();
                 System.err.println("fixName() found empty name... replaced with \"undefinedName\"");
                 return "undefinedName";
             }
@@ -159,11 +210,15 @@ public class GenerateEnumerations
             newName = newName.replaceAll("_",""); // no underscore divider
             if (newName.contains("__"))
             {
+                System.out.flush();
                 System.err.println("fixname: " + newName);
                 newName = newName.replaceAll("__", "_");
             }
             return newName;
         }
+        /** cleanup special characters in string
+         *  @param s input string
+         *  @return output string */
         public final static String htmlize(String s)
         {
             return s.replace("&","and").replace("&","and");
@@ -176,25 +231,25 @@ public class GenerateEnumerations
     private void loadEnumTemplates()
     {
         try {
-            enumTemplate1 = loadOneTemplate("disenumpart1.txt");
-            enumTemplate1WithFootnote = loadOneTemplate("disenumpart1withfootnote.txt");
-            enumCommentTemplate = loadOneTemplate("disenumcomment.txt");
+            enumTemplate1               = loadOneTemplate("disenumpart1.txt");
+            enumTemplate1WithFootnote   = loadOneTemplate("disenumpart1withfootnote.txt");
+            enumCommentTemplate         = loadOneTemplate("disenumcomment.txt");
             enumFootnoteCommentTemplate = loadOneTemplate("disenumfootnotecomment.txt");
-            enumTemplate2 = loadOneTemplate("disenumpart2.txt");
-            enumTemplate21 = loadOneTemplate("disenumpart21.txt");
-            enumTemplate25 = loadOneTemplate("disenumpart25.txt");
-            enumTemplate3_32 = loadOneTemplate("disenumpart3_32.txt");
-            enumTemplate3_16 = loadOneTemplate("disenumpart3_16.txt");
-            enumTemplate3_8 = loadOneTemplate("disenumpart3_8.txt");
-            dictEnumTemplate1 = loadOneTemplate("disdictenumpart1.txt");
-            dictEnumTemplate2 = loadOneTemplate("disdictenumpart2.txt");
-            dictEnumTemplate3 = loadOneTemplate("disdictenumpart3.txt");
-            bitsetTemplate1 = loadOneTemplate("disbitset1.txt");
-            bitsetTemplate15 = loadOneTemplate("disbitset15.txt");
-            bitsetTemplate16 = loadOneTemplate("disbitset16.txt");
-            bitsetTemplate2 = loadOneTemplate("disbitset2.txt");
-            bitsetXrefCommentTemplate = loadOneTemplate("disbitsetcommentxref.txt");
-            bitsetCommentTemplate = loadOneTemplate("disbitsetcomment.txt");
+            enumTemplate2               = loadOneTemplate("disenumpart2.txt");
+            enumTemplate21              = loadOneTemplate("disenumpart21.txt");
+            enumTemplate25              = loadOneTemplate("disenumpart25.txt");
+            enumTemplate3_32            = loadOneTemplate("disenumpart3_32.txt");
+            enumTemplate3_16            = loadOneTemplate("disenumpart3_16.txt");
+            enumTemplate3_8             = loadOneTemplate("disenumpart3_8.txt");
+            dictEnumTemplate1           = loadOneTemplate("disdictenumpart1.txt");
+            dictEnumTemplate2           = loadOneTemplate("disdictenumpart2.txt");
+            dictEnumTemplate3           = loadOneTemplate("disdictenumpart3.txt");
+            bitsetTemplate1             = loadOneTemplate("disbitset1.txt");
+            bitsetTemplate15            = loadOneTemplate("disbitset15.txt");
+            bitsetTemplate16            = loadOneTemplate("disbitset16.txt");
+            bitsetTemplate2             = loadOneTemplate("disbitset2.txt");
+            bitsetXrefCommentTemplate   = loadOneTemplate("disbitsetcommentxref.txt");
+            bitsetCommentTemplate       = loadOneTemplate("disbitsetcomment.txt");
         }
         catch (Exception ex) {
             throw new RuntimeException(ex);
@@ -253,6 +308,7 @@ public class GenerateEnumerations
         String xrefclassuid;
     }
 
+    /** Utility class */
     public class UidCollector extends DefaultHandler
     {
         @Override
@@ -282,6 +338,11 @@ public class GenerateEnumerations
         }
     }
 
+  /** XML handler for recursively reading information and autogenerating code, namely an
+     * inner class that handles the SAX parsing of the XML file. This is relatively simple, if
+     * a little verbose. Basically we just create the appropriate objects as we come across the
+     * XML elements in the file.
+     */
     public class MyHandler extends DefaultHandler
     {
         List<EnumElem> enums = new ArrayList<>();
@@ -336,7 +397,7 @@ public class GenerateEnumerations
                             currentEnumRow.description += value;
                         if (currentEnumRow.description != null)
                             currentEnumRow.description = currentEnumRow.description.replaceAll("—","-").replaceAll("–","-").replaceAll("\"", "").replaceAll("\'", "")
-                                                                                   .replaceAll(" ","").replaceAll("/","");
+                                                                                   .replaceAll(" "," ").replaceAll("/","");
                     }
                     break;
 
@@ -404,8 +465,8 @@ public class GenerateEnumerations
                     break;
 
                case "revision":
-                    if (specTitleDate == null) // assume first encountered is latest
-                        specTitleDate = attributes.getValue("title") + ", " + attributes.getValue("date");
+                    if (sisoSpecificationTitleDate == null) // assume first encountered is latest
+                        sisoSpecificationTitleDate = attributes.getValue("title") + ", " + attributes.getValue("date");
                     break;
 
                 // fall throughs
@@ -467,12 +528,14 @@ public class GenerateEnumerations
             String clsName = uidClassNames.get(el.uid); //Main.this.uid2ClassName.getProperty(el.uid);
             if (clsName == null)
             {
-                System.err.println("Didn't find a class name for uid = " + el.uid);
+                System.out.flush();
+                System.err.println("*** Didn't find a class name for uid = " + el.uid + ", ignored");
                 return;
             }
             String classNameCorrected = clsName;
             if (classNameCorrected.contains("Link11/11"))
             {
+                System.out.flush();
                 System.err.print  ( "original classNameCorrected=" + classNameCorrected);
                 classNameCorrected = classNameCorrected.replace("Link11/11B", "Link11_11B"); // Fix slash in entry
                 System.err.println(", revised classNameCorrected=" + classNameCorrected);
@@ -485,23 +548,24 @@ public class GenerateEnumerations
             if (otherIf != null)
                 additionalInterface = ", " + otherIf;
 
-            sb.append(String.format(dictEnumTemplate1, specTitleDate, packageName, "UID " + el.uid, classNameCorrected, additionalInterface));
+            sb.append(String.format(dictEnumTemplate1, sisoSpecificationTitleDate, packageName, "UID " + el.uid, classNameCorrected, additionalInterface));
 
+            // enumerations section
             dictNames.clear();
-            // enum section
-            if (el.elems.size() > 2000)
+            if (el.elems.size() > MAX_ENUMERATIONS)
             {
-                System.out.println ("Enumerations class " + packageName + classNameCorrected + " has " + el.elems.size() +
+                System.out.println ("*** Enumerations class " + packageName + classNameCorrected + " has " + el.elems.size() +
                     ", possibly too large?");
             }
             el.elems.forEach((row) -> {
                 String name = row.value.replaceAll("[^a-zA-Z0-9]", ""); // only chars and numbers
-                if (!dictNames.contains(name)) {
-                    sb.append(String.format(dictEnumTemplate2, name, row.description.replaceAll("\"", "").replaceAll("\'", "")));
-                    dictNames.add(name);
+                if (!dictNames.contains(name))
+                {
+                     String fullName = row.description.replaceAll("\"", "").replaceAll("\'", "").replaceAll("&", "&amp;");
+                     sb.append(String.format(dictEnumTemplate2, name, fullName, name, fullName)); // first Javadoc then enumeration pair
+                     dictNames.add(name);
                 }
-                else
-                    System.out.println("Duplicate dictionary entry for " + name + " in " + clsName);
+                else System.out.println("   Duplicate dictionary entry for " + name + " in " + clsName);
             });
 
             if (el.elems.size() > 0)
@@ -512,20 +576,23 @@ public class GenerateEnumerations
             sb.append(String.format(dictEnumTemplate3, classNameCorrected, classNameCorrected));
 
             // save file
-            File target = new File(outputDirectory, classNameCorrected + ".java");
-            target.getParentFile().mkdirs();
-            FileWriter fw;
+            File targetFile = new File(outputDirectory, classNameCorrected + ".java");
+            targetFile.getParentFile().mkdirs();
+            FileWriter targetFileWriter;
             try {
-                target.createNewFile();
-                fw = new FileWriter(target, StandardCharsets.UTF_8);
-                fw.write(sb.toString());
-                fw.flush();
-                fw.close();
+                targetFile.createNewFile();
+                targetFileWriter = new FileWriter(targetFile, StandardCharsets.UTF_8);
+                targetFileWriter.write(sb.toString());
+                targetFileWriter.flush();
+                targetFileWriter.close();
             }
             catch (IOException ex) {
                 System.out.flush();
-                System.err.println (ex.getMessage() + " target.getAbsolutePath()=" + target.getAbsolutePath() 
-                      + ", classNameCorrected=" + classNameCorrected);
+                System.err.println (ex.getMessage()
+                // + " targetFile.getAbsolutePath()=" 
+                   + targetFile.getAbsolutePath()
+                // + ", classNameCorrected=" + classNameCorrected
+                );
                 ex.printStackTrace(System.err);
             }
         }
@@ -535,12 +602,14 @@ public class GenerateEnumerations
             String clsName = uidClassNames.get(el.uid); //Main.this.uid2ClassName.getProperty(el.uid);
             if (clsName == null)
             {
+                System.out.flush();
                 System.err.println("Didn't find a class name for uid = " + el.uid);
                 return;
             }
             String classNameCorrected = clsName;
             if (classNameCorrected.contains("Link11/11"))
             {
+                System.out.flush();
                 System.err.print  ( "original classNameCorrected=" + classNameCorrected);
                 classNameCorrected = classNameCorrected.replace("Link11/11B", "Link11_11B"); // Fix slash in entry
                 System.err.println(", revised classNameCorrected=" + classNameCorrected);
@@ -549,12 +618,12 @@ public class GenerateEnumerations
       
             String otherInf = uid2ExtraInterface.get(el.uid);
 
-            sb.append(String.format(bitsetTemplate1, packageName, specTitleDate, "UID " + el.uid, el.size, el.name, classNameCorrected, (otherInf==null?"":"implements "+otherInf)));
+            sb.append(String.format(bitsetTemplate1, packageName, sisoSpecificationTitleDate, "UID " + el.uid, el.size, el.name, classNameCorrected, (otherInf==null?"":"implements "+otherInf)));
             enumNames.clear();
-            if (el.elems.size() > 2000)
+            if (el.elems.size() > MAX_ENUMERATIONS)
             {
                 System.out.println ("Enumerations class " + packageName + classNameCorrected + " has " + el.elems.size() +
-                    ", possibly too large?");
+                    ", possibly too large, limiting size to " + MAX_ENUMERATIONS);
             }
             el.elems.forEach((row) -> {
                 String xrefName = null;
@@ -577,40 +646,45 @@ public class GenerateEnumerations
             sb.append(String.format(bitsetTemplate2, classNameCorrected, el.size, classNameCorrected, classNameCorrected, classNameCorrected, classNameCorrected, classNameCorrected));
 
             // save file
-            File target = new File(outputDirectory, classNameCorrected + ".java");
-            FileWriter fw;
+            File targetFile = new File(outputDirectory, classNameCorrected + ".java");
+            FileWriter targetFileWriter;
             try {
-                target.createNewFile();
-                fw = new FileWriter(target, StandardCharsets.UTF_8);
-                fw.write(sb.toString());
-                fw.flush();
-                fw.close();
+                targetFile.createNewFile();
+                targetFileWriter = new FileWriter(targetFile, StandardCharsets.UTF_8);
+                targetFileWriter.write(sb.toString());
+                targetFileWriter.flush();
+                targetFileWriter.close();
             }
             catch (IOException ex) {
                 System.out.flush();
-                System.err.println (ex.getMessage() + " target.getAbsolutePath()=" + target.getAbsolutePath() 
+                System.err.println (ex.getMessage() + " targetFile.getAbsolutePath()=" + targetFile.getAbsolutePath()
                       + ", classNameCorrected=" + classNameCorrected);
                 ex.printStackTrace(System.err);
             }
         }
 
         Set<String> enumNames = new HashSet<>();
-        
-        List<EnumRowElem> additionalRowElements = new ArrayList<>(); // overflow to avoid dreaded "code too large" error
+        Properties aliases = null; // previously aliasNames
 
         private void writeOutEnum(EnumElem el)
         {
+            // be careful here, concurrency scoping
+            // overflow buffer matching el.elems to later avoid dreaded "code too large" error
+            List<EnumRowElem> additionalRowElements = new ArrayList<>();
+
             String clsName = uidClassNames.get(el.uid); //Main.this.uid2ClassName.getProperty(el.uid);
             if (clsName == null)
             {
-                System.err.println("Didn't find a class name for uid = " + el.uid);
+                System.out.flush();
+                System.err.println("*** Didn't find a class name for uid = " + el.uid);
                 return;
             }
             String classNameCorrected = clsName;
-            if (classNameCorrected.contains("Link11/11"))
+            if (!classNameCorrected.isEmpty() && classNameCorrected.contains("Link 11/11")) // special case
             {
+                System.out.flush();
                 System.err.print  ( "original classNameCorrected=" + classNameCorrected);
-                classNameCorrected = classNameCorrected.replace("Link11/11B", "Link11_11B"); // Fix slash in entry
+                classNameCorrected = classNameCorrected.replace("Link 11/11B", "Link11_11B"); // Fix slash in entry
                 System.err.println(", revised classNameCorrected=" + classNameCorrected);
             }
             
@@ -619,12 +693,13 @@ public class GenerateEnumerations
                 return;
             }
         */
-            Properties aliasNames = null;
             if(el.uid.equals("4"))
-              aliasNames = uid4aliases;
+              aliases = uid4aliases;
             
             StringBuilder sb = new StringBuilder();
-            StringBuilder sb_additional = new StringBuilder(); // handle overflow
+            StringBuilder additionalRowStringBuilder = new StringBuilder();
+            // change additional class name to match similarly
+            final String ADDITIONAL_ENUMERATION_FILE_SUFFIX = "Additional";
 
             // Header section
             String additionalInterface = "";
@@ -651,9 +726,9 @@ public class GenerateEnumerations
             */
             /* enumeration initial template, de-spacify name */
             if(el.footnote == null)
-              sb.append(String.format(enumTemplate1,             packageName, specTitleDate,  "UID " + el.uid, el.size, el.name, classNameCorrected, additionalInterface));
+              sb.append(String.format(enumTemplate1,             packageName, sisoSpecificationTitleDate,  "UID " + el.uid, el.size, el.name, classNameCorrected, additionalInterface));
             else
-              sb.append(String.format(enumTemplate1WithFootnote, packageName, specTitleDate,  "UID " + el.uid, el.size, el.name, el.footnote, classNameCorrected, additionalInterface));
+              sb.append(String.format(enumTemplate1WithFootnote, packageName, sisoSpecificationTitleDate,  "UID " + el.uid, el.size, el.name, el.footnote, classNameCorrected, additionalInterface));
 
             enumNames.clear();
             // enum section
@@ -662,20 +737,32 @@ public class GenerateEnumerations
                 String elementName = "(undefined element)";
                 if (el.name != null)
                        elementName = el.name;
+                sb.append("   /** Constructor initialization */");
                 sb.append(String.format(enumTemplate2, "SELF", "0", elementName + " details not found in SISO spec"));
-                System.err.println(elementName + " error while generating enumerations: SELF details not found in SISO spec");
+                // TODO resolve
+                System.err.println("*** " + elementName + " uid='" + el.uid + "' has no child element (further SELF details not found in SISO reference)");
             }
-            else
+            else // here we go
             {
-                Properties aliases = aliasNames;
-                if (el.elems.size() > 2000)
+                if (el.elems.size() > MAX_ENUMERATIONS)
                 {
-                    System.err.println ("Enumerations class " + packageName + "." + classNameCorrected + " has " + el.elems.size() + ", possibly too large?");
-                    System.err.println ("   dropping enumerations above 2000... TODO create auxiliary class with remainder");
+                    System.out.flush();
+                    System.err.println ("=================================");
+                    System.err.println ("*** Enumerations class " + packageName + "." + classNameCorrected + " <enum name=\"" + el.name + "\" uid=\"" + el.uid + "\" etc.>" +
+                                        " has " + el.elems.size() + " enumerations, possibly too large to compile.");
+                    System.err.println ("*** Dropping enumerations above MAX_ENUMERATIONS=" + MAX_ENUMERATIONS + " for this class..." +
+                                        " next, create auxiliary class with remainder.");
                     // https://stackoverflow.com/questions/1184636/shrinking-an-arraylist-to-a-new-size
-                    additionalRowElements = el.elems.subList(2000, el.elems.size());
-                    el.elems.subList(2000, el.elems.size()).clear();
+                    // save the rest
+                    System.err.println ("    last element=" + el.elems.get(MAX_ENUMERATIONS - 1).value + ", " + el.elems.get(MAX_ENUMERATIONS - 1).description);
+                    // make copy (not reference) available  for further processing
+                    additionalRowElements = new ArrayList<>(el.elems.subList(MAX_ENUMERATIONS, el.elems.size()));
+                    // save what was created so far for later reuse
+                    additionalRowStringBuilder.append(sb.toString().replace("public enum " + classNameCorrected,
+                                                                            "public enum " + classNameCorrected + ADDITIONAL_ENUMERATION_FILE_SUFFIX));
+                    el.elems.subList(MAX_ENUMERATIONS, el.elems.size()).clear(); // clear elements after this
                 }
+                // continue with original or reduced list
                 el.elems.forEach((row) -> {                    
                     // Check for aliases
                     if(aliases != null && aliases.getProperty(row.value)!=null)
@@ -716,7 +803,6 @@ public class GenerateEnumerations
 //                    sb_additional.setLength(sb.length() - 2);
 //                    sb_additional.append(";\n");
 //                    additionalRowElements.clear();
-                    // TODO finish
 //                }
             }
             if (el.elems.size() > 0)
@@ -740,22 +826,83 @@ public class GenerateEnumerations
                sb.append(String.format(enumTemplate3_32, classNameCorrected, classNameCorrected, classNameCorrected));
 
             // save file
-            File target = new File(outputDirectory, classNameCorrected + ".java");
-            FileWriter fw;
+            File targetFile = new File(outputDirectory, classNameCorrected + ".java");
+            FileWriter targetFileWriter;
             try {
-                target.createNewFile();
-                fw = new FileWriter(target, StandardCharsets.UTF_8);
-                fw.write(sb.toString());
-                fw.flush();
-                fw.close();
+                targetFile.createNewFile();
+                targetFileWriter = new FileWriter(targetFile, StandardCharsets.UTF_8);
+                targetFileWriter.write(sb.toString());
+                targetFileWriter.flush();
+                targetFileWriter.close();
             }
             catch (IOException ex) {
                 System.out.flush();
-                System.err.println (ex.getMessage() + " target.getAbsolutePath()=" + target.getAbsolutePath() 
+                System.err.println (ex.getMessage() + " targetFile.getAbsolutePath()=" + targetFile.getAbsolutePath()
+                      + ", classNameCorrected=" + classNameCorrected);
+                ex.printStackTrace(System.err);
+            }
+        //  now handle additionalRowElements similarly, if any, creating another file...
+        if ((additionalRowElements.size() > 0) && !additionalRowStringBuilder.toString().isEmpty())
+        {
+            classNameCorrected = classNameCorrected + ADDITIONAL_ENUMERATION_FILE_SUFFIX;
+            for (EnumRowElem row : additionalRowElements)
+            {
+//            additionalRowElements.elems.forEach((row) -> {
+
+                // Check for aliases
+                if(aliases != null && aliases.getProperty(row.value)!=null)
+                  writeOneEnum(additionalRowStringBuilder,row,aliases.getProperty(row.value));
+                else {
+                  String enumName = createEnumName(row.description.replaceAll("\"", "").replaceAll("\'", ""));
+                  writeOneEnum(additionalRowStringBuilder, row, enumName);
+                }
+            } /* ); */
+            additionalRowStringBuilder.setLength(additionalRowStringBuilder.length() - 2);
+            additionalRowStringBuilder.append("; /*here*/\n");
+
+            additionalRowStringBuilder.append(String.format(enumTemplate25, classNameCorrected, el.size, classNameCorrected, classNameCorrected, classNameCorrected, classNameCorrected));
+
+            // footer section
+            // Many enums come in with smaller bit widths or in-between bitwidths;  Leave handling the odd balls up to the user
+            // but figure out the smallest primitive size needed to hold it.
+            sz = Integer.parseInt(el.size);
+            if(sz <= 8)
+               additionalRowStringBuilder.append(String.format(enumTemplate3_8,  classNameCorrected, classNameCorrected, classNameCorrected));
+            else if(sz <= 16)
+               additionalRowStringBuilder.append(String.format(enumTemplate3_16, classNameCorrected, classNameCorrected, classNameCorrected));
+            else
+               additionalRowStringBuilder.append(String.format(enumTemplate3_32, classNameCorrected, classNameCorrected, classNameCorrected));
+
+            // save file
+            targetFile = new File(outputDirectory, classNameCorrected + ".java"); // already appended ADDITIONAL_ENUMERATION_FILE_SUFFIX
+            try {
+                targetFile.createNewFile();
+                targetFileWriter = new FileWriter(targetFile, StandardCharsets.UTF_8);
+                targetFileWriter.write(additionalRowStringBuilder.toString());
+                targetFileWriter.flush();
+                targetFileWriter.close();
+                System.out.flush();
+                System.err.println ("*** Created additional-enumerations file, "
+                                    + "classNameCorrected=" + classNameCorrected
+                                    + ",\n    "
+                            //      + "targetFile.getAbsolutePath()="
+                                    + targetFile.getAbsolutePath()
+                );
+                System.err.println ("    first element=" + additionalRowElements.get(0).value + ", " + additionalRowElements.get(0).description);
+                System.err.println ("=================================");
+                // reset this special case
+                additionalRowElements.clear();
+                additionalRowStringBuilder.setLength(0);
+                additionalEnumClassesCreated++;
+            }
+            catch (IOException ex) {
+                System.out.flush();
+                System.err.println (ex.getMessage() + " targetFile.getAbsolutePath()=" + targetFile.getAbsolutePath()
                       + ", classNameCorrected=" + classNameCorrected);
                 ex.printStackTrace(System.err);
             }
         }
+    }
         
       private void writeOneEnum(StringBuilder sb, EnumRowElem row, String enumName)
       {
@@ -766,7 +913,6 @@ public class GenerateEnumerations
         if (xrefName == null) {
           sb.append(String.format(enumFootnoteCommentTemplate, htmlize(row.description.replaceAll("\"", "").replaceAll("\'", "")) + (row.footnote == null ? "" : ", " + htmlize(row.footnote))));
           sb.append(String.format(enumTemplate2, enumName, row.value, row.description.replaceAll("\"", "").replaceAll("\'", "")));
-
         }
         else {
           sb.append(String.format(enumCommentTemplate, xrefName));
@@ -849,6 +995,9 @@ public class GenerateEnumerations
         }
     }
 
+    /** Command-line or solo invocation to run this object
+     * @param args three configuration arguments, if defaults not used
+     */
     public static void main(String[] args)
     {
         try {

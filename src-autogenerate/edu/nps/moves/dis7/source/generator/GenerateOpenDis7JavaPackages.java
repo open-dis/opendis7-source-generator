@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2008-2020, MOVES Institute, Naval Postgraduate School (NPS). All rights reserved.
+ * Copyright (c) 2008-2021, MOVES Institute, Naval Postgraduate School (NPS). All rights reserved.
  * This work is provided under a BSD open-source license, see project license.html and license.txt
  */
 
@@ -17,6 +17,7 @@ public class GenerateOpenDis7JavaPackages
   // @formatter:off
     
   // shared static defaults
+  /** Java is programming language for this generator */
   public static final String      DEFAULT_LANGUAGE = "java";
   /** xml/SISO/SISO-REF-010.xml */
   public static final String DEFAULT_SISO_XML_FILE = "xml/SISO/SISO-REF-010.xml";
@@ -36,6 +37,9 @@ public class GenerateOpenDis7JavaPackages
   static String entitiesPackage   = "edu.nps.moves.dis7.entities";
   // @formatter:on
 
+    /** Command-line or solo invocation to run this object
+     * @param args not used
+     */
   public static void main(String[] args)
   {
     System.out.println (GenerateOpenDis7JavaPackages.class.getName());

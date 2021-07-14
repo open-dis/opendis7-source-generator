@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+/** Utility class */
 public class EntityTypeFactory
 {
   private static Map<Integer,String> uid2ClassNameMap = new HashMap<>();
@@ -23,14 +24,18 @@ public class EntityTypeFactory
       throw new RuntimeException (ex);
     }
   }
-  
-  @SuppressWarnings("unchecked")
+
+  /** Entity creation
+   * @param uid unique identifier
+   * @return EntityType of interest
+   */
+  @SuppressWarnings("unchecked") // TODO apparently unavoidable?
   public static EntityType makeEntity(int uid)
   {
     String name = uid2ClassNameMap.get(uid);
     if(name==null)
       return null;
-    
+
     try {
       Class<?> cls = Class.forName(name);
       Constructor<EntityType> constr = (Constructor<EntityType>) cls.getConstructors()[0];

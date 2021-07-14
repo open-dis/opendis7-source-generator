@@ -2,7 +2,7 @@ package %s;
 
 public class %s extends edu.nps.moves.dis7.ObjectType
 {
-    /* uid %s */
+    /** Default constructor, uid %s */
     public %s()
     {
     }

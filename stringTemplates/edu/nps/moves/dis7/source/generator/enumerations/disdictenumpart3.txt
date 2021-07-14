@@ -6,14 +6,18 @@
         this.description = description;
     }
 
+    /** Get acronym description
+     * @return description */
     public String getDescription()
     {
         return description;
     }
-    
+
+    /** Get String representation of full acronym
+     * @return description */
     @Override
     public String toString()
     {
-        return "%s: " + name();
+        return "%s: " + name() + " " + description;
     }
 }

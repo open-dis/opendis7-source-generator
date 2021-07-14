@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2008-2020, MOVES Institute, Naval Postgraduate School (NPS). All rights reserved.
+ * Copyright (c) 2008-2021, MOVES Institute, Naval Postgraduate School (NPS). All rights reserved.
  * This work is provided under a BSD open-source license, see project license.html and license.txt
  */
 
@@ -30,10 +30,11 @@ public class GenerateObjectTypes
 {
     // set defaults to allow direct run
     private        File   outputDirectory;
-    private static String outputDirectoryPath = "src-generated/java/edu/nps/moves/dis7/entityTypes";
-    private static String         packageName =                    "edu.nps.moves.dis7.entityTypes";
+    private static String outputDirectoryPath = "src-generated/java/edu/nps/moves/dis7/objectTypes"; // default
+    private static String         packageName =                    "edu.nps.moves.dis7.objectTypes"; // default
     private static String            language = edu.nps.moves.dis7.source.generator.GenerateOpenDis7JavaPackages.DEFAULT_LANGUAGE;
     private static String         sisoXmlFile = edu.nps.moves.dis7.source.generator.GenerateOpenDis7JavaPackages.DEFAULT_SISO_XML_FILE;
+    private String sisoSpecificationTitleDate = "";
 
     String objectTypeTemplate;
 
@@ -44,7 +45,15 @@ public class GenerateObjectTypes
     StringBuilder sb;
     String clsNm;
   }
+    
+    private String        packageInfoPath;
+    private File          packageInfoFile;
+    private StringBuilder packageInfoBuilder;
 
+  /** Constructor for GenerateEntityTypes
+     * @param xmlFile sisoXmlFile
+     * @param outputDir outputDirectoryPath
+     * @param packageName key to package name for object types */
   public GenerateObjectTypes(String xmlFile, String outputDir, String packageName)
   {
         if (!xmlFile.isEmpty())
@@ -59,14 +68,48 @@ public class GenerateObjectTypes
         System.out.println ("  outputDirectoryPath=" + outputDirectoryPath);
         
         outputDirectory  = new File(outputDirectoryPath);
+        outputDirectory.mkdirs();
+//      FileUtils.cleanDirectory(outputDirectory); // do NOT clean directory, results can co-exist with other classes
+
         System.out.println ("actual directory path=" + outputDirectory.getAbsolutePath());
+        
+        packageInfoPath = outputDirectoryPath + "/" + "package-info.java";
+        packageInfoFile = new File(packageInfoPath);
+        
+        FileWriter packageInfoFileWriter;
+        try {
+            packageInfoFile.createNewFile();
+            packageInfoFileWriter = new FileWriter(packageInfoFile, StandardCharsets.UTF_8);
+            packageInfoBuilder = new StringBuilder();
+            packageInfoBuilder.append("/**\n");
+            packageInfoBuilder.append(" * Infrastructure classes derived from ").append(sisoSpecificationTitleDate).append(" enumerations supporting <a href=\"https://github.com/open-dis/open-dis7-java\" target=\"open-dis7-java\">open-dis7-java</a> library.\n");
+            packageInfoBuilder.append("\n");
+            packageInfoBuilder.append(" * Online: NPS <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500\" target=\"MV3500\">MV3500 Networked Simulation course</a>\n");
+            packageInfoBuilder.append(" * links to <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/tree/master/specifications/README.md\" target=\"README.MV3500\">IEEE and SISO specification references</a> of interest.");
+            packageInfoBuilder.append("\n");
+            packageInfoBuilder.append(" * @see java.lang.Package\n");
+            packageInfoBuilder.append(" * @see <a href=\"https://stackoverflow.com/questions/22095487/why-is-package-info-java-useful\">https://stackoverflow.com/questions/22095487/why-is-package-info-java-useful</a>\n");
+            packageInfoBuilder.append(" * @see <a href=\"https://stackoverflow.com/questions/624422/how-do-i-document-packages-in-java\">https://stackoverflow.com/questions/624422/how-do-i-document-packages-in-java</a>\n");
+            packageInfoBuilder.append(" */\n");
+            packageInfoBuilder.append("\n");
+            packageInfoBuilder.append("package edu.nps.moves.dis7.objectTypes;\n");
+
+            packageInfoFileWriter.write(packageInfoBuilder.toString());
+            packageInfoFileWriter.flush();
+            packageInfoFileWriter.close();
+            System.out.println("Created " + packageInfoPath);
+        }
+        catch (IOException ex) {
+            System.out.flush(); // avoid intermingled output
+            System.err.println (ex.getMessage()
+               + packageInfoFile.getAbsolutePath()
+            );
+            ex.printStackTrace(System.err);
+        }
   }
 
   private void run() throws SAXException, IOException, ParserConfigurationException
   {
-    outputDirectory.mkdirs();
-//  FileUtils.cleanDirectory(outputDirectory); // do NOT clean directory, results can co-exist with other classes
-
     SAXParserFactory factory = SAXParserFactory.newInstance();
     factory.setValidating(false);
     factory.setNamespaceAware(true);
@@ -130,21 +173,25 @@ public class GenerateObjectTypes
     String value;
   }
 
+  /** XML handler for recursively reading information and autogenerating code, namely an
+     * inner class that handles the SAX parsing of the XML file. This is relatively simple, if
+     * a little verbose. Basically we just create the appropriate objects as we come across the
+     * XML elements in the file.
+     */
   public class MyHandler extends DefaultHandler
   {
     CotElem currentCot;
     ObjectElem currentObject;
     CategoryElem currentCategory;
     SubCategoryElem currentSubCategory;
-    String specTitleDate = "";
     int filesWrittenCount = 0;
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes)
     {
       if (qName.equalsIgnoreCase("revision")) {
-        if (specTitleDate.length() <= 0) // only want the first/latest
-          specTitleDate = legalJavaDoc(attributes.getValue("title") + ", " + attributes.getValue("date"));
+        if (sisoSpecificationTitleDate.length() <= 0) // only want the first/latest
+            sisoSpecificationTitleDate = legalJavaDoc(attributes.getValue("title") + " (" + attributes.getValue("date") + ")");
         return;
       }
 
@@ -269,14 +316,51 @@ public class GenerateObjectTypes
     
     private void saveFile(DataPkt data)
     {
-      data.sb.append("    }\n}\n");
-      GenerateObjectTypes.this.saveFile(data.directory, data.clsNm + ".java", data.sb.toString());
+        data.sb.append("    }\n}\n");
+        GenerateObjectTypes.this.saveFile(data.directory, data.clsNm + ".java", data.sb.toString());
+
+        packageInfoPath = data.directory + "/" + "package-info.java";
+        File   packageInfoFile = new File(packageInfoPath);
+      
+        if (!packageInfoFile.exists()) // write package-info.java during first time through
+        {
+            FileWriter packageInfoFileWriter;
+            try {
+                packageInfoFile.createNewFile();
+                packageInfoFileWriter = new FileWriter(packageInfoFile, StandardCharsets.UTF_8);
+                packageInfoBuilder = new StringBuilder();
+                packageInfoBuilder.append("/**\n");
+                packageInfoBuilder.append(" * Infrastructure classes derived from ").append(sisoSpecificationTitleDate).append(" enumerations supporting <a href=\"https://github.com/open-dis/open-dis7-java\" target=\"open-dis7-java\">open-dis7-java</a> library.\n");
+                packageInfoBuilder.append("\n");
+                packageInfoBuilder.append(" * Online: NPS <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500\" target=\"MV3500\">MV3500 Networked Simulation course</a>\n");
+                packageInfoBuilder.append(" * links to <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/tree/master/specifications/README.md\" target=\"README.MV3500\">IEEE and SISO specification references</a> of interest.");
+                packageInfoBuilder.append("\n");
+                packageInfoBuilder.append(" * @see java.lang.Package\n");
+                packageInfoBuilder.append(" * @see <a href=\"https://stackoverflow.com/questions/22095487/why-is-package-info-java-useful\">https://stackoverflow.com/questions/22095487/why-is-package-info-java-useful</a>\n");
+                packageInfoBuilder.append(" * @see <a href=\"https://stackoverflow.com/questions/624422/how-do-i-document-packages-in-java\">https://stackoverflow.com/questions/624422/how-do-i-document-packages-in-java</a>\n");
+                packageInfoBuilder.append(" */\n");
+                packageInfoBuilder.append("\n");
+                packageInfoBuilder.append("package ").append(data.pkg).append(";\n");
+
+                packageInfoFileWriter.write(packageInfoBuilder.toString());
+                packageInfoFileWriter.flush();
+                packageInfoFileWriter.close();
+                System.out.println("Created " + packageInfoPath);
+            }
+            catch (IOException ex) {
+                System.out.flush(); // avoid intermingled output
+                System.err.println (ex.getMessage()
+                   + packageInfoFile.getAbsolutePath()
+                );
+                ex.printStackTrace(System.err);
+            }
+        }
     }
 
     private void appendCommonStatements(DataPkt data)
     {
       String contents = String.format(objectTypeTemplate, data.pkg,
-        specTitleDate, currentCot.uid,data.clsNm,data.clsNm);
+        sisoSpecificationTitleDate, currentCot.uid,data.clsNm,data.clsNm);
       data.sb.append(contents);
     }
 
@@ -640,6 +724,9 @@ public class GenerateObjectTypes
     return r;
   }
 
+  /** GenerateObjectTypes invocation, passing run-time arguments (if any)
+     * @param args three configuration arguments, if defaults not used
+     */
   public static void main(String[] args)
   {
     try {

@@ -7,30 +7,40 @@ import java.io.IOException;
 
 import edu.nps.moves.dis7.pdus.*;
 
-/* marshal size 8 bits*/
+/** DIS Jammer Enumerations, marshal size 8 bits*/
 public enum %s implements edu.nps.moves.dis7.%s
 {
-%s;
+    %s;
 
     private byte value;
     private final String description;
 
+    /** Enumeration constructor */
     %s(int value, String description)
     {
         this.value = (byte)value;
         this.description = description;
     }
 
+    /** Provide enumeration value
+      * @return byte value */
     public byte getValue()
     {
         return value;
     }
 
+    /** Provide enumeration description
+     * @return description
+     */
     public String getDescription()
     {
         return description;
     }
-    
+
+    /** Provide enumeration description
+     * @param numeric value
+     * @return enumeration corresponding to numeric value
+     */
     public static %s getEnumerationForValue(int i)
     {
        for(%s val: values()) {
@@ -41,6 +51,9 @@ public enum %s implements edu.nps.moves.dis7.%s
        return null;
     }
 
+    /** Marshal value to DataOutputStream
+     * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
+     * @param dos DataOutputStream for output */
     @Override
     public void marshal(DataOutputStream dos)
     {
@@ -51,7 +64,11 @@ public enum %s implements edu.nps.moves.dis7.%s
             System.err.println(ex.getClass().getSimpleName()+": "+ex.getMessage());
         }
     }
-    
+
+    /** Unmarshal value from DataInputStream
+     * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
+     * @param dis DataInputStream for input
+     * @return value if provided, otherwise 1 */
     @Override
     public int unmarshal(DataInputStream dis)
     {
@@ -64,6 +81,9 @@ public enum %s implements edu.nps.moves.dis7.%s
         return 1;
     } 
 
+    /** Marshal value to ByteBuffer
+     * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
+     * @param byteBuffer ByteBuffer for output */
     @Override
     public void marshal(ByteBuffer byteBuffer)
     {
@@ -75,6 +95,10 @@ public enum %s implements edu.nps.moves.dis7.%s
         }
     }
 
+    /** Unmarshal value from ByteBuffer
+     * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
+     * @param byteBuffer ByteBuffer for input
+     * @return value if provided, otherwise 1 */
     @Override
     public int unmarshal(ByteBuffer byteBuffer)
     {
@@ -86,11 +110,11 @@ public enum %s implements edu.nps.moves.dis7.%s
         }
         return 1;
     }
-  /**
-   * Returns size of this serialized (marshalled) object in bytes
-   * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
-   * @return serialized size in bytes
-   */
+    /**
+     * Returns size of this serialized (marshalled) object in bytes
+     * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
+     * @return serialized size in bytes
+     */
     @Override
     public int getMarshalledSize()
     {

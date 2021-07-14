@@ -5,6 +5,7 @@ import %s.%s;
 
 abstract public class Base extends %s
 {
+    /** Default constructor for Base */
     public Base()
     {
     	setDomain(PlatformDomain.%s);

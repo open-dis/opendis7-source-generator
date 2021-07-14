@@ -10,5 +10,6 @@ import edu.nps.moves.dis7.enumerations.*;
  */
 public class %s extends JammingTechnique
 {
+    /** Default constructor */
     public %s()
     {
