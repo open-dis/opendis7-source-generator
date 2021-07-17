@@ -52,7 +52,7 @@ public enum %s implements edu.nps.moves.dis7.%s
 
   /**
    * Returns size of this serialized (marshalled) object in bytes
-   * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
+   * @see <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
    * @return serialized size in bytes
    */  
     @Override
@@ -62,7 +62,7 @@ public enum %s implements edu.nps.moves.dis7.%s
     }
 
     /** Marshal value to DataOutputStream
-     * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
+     * @see <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
      * @param dos DataOutputStream for output */
     @Override
     public void marshal(DataOutputStream dos)
@@ -77,7 +77,7 @@ public enum %s implements edu.nps.moves.dis7.%s
     }
 
     /** Marshal value to ByteBuffer
-     * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
+     * @see <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
      * @param byteBuffer ByteBuffer for output */
     @Override
     public void marshal(ByteBuffer byteBuffer)

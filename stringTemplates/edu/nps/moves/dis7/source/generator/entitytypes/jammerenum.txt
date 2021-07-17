@@ -47,12 +47,14 @@ public enum %s implements edu.nps.moves.dis7.%s
           if(val.getValue()==i)
               return val;
        }
+       System.out.flush(); // ensure contiguous console outputs
        System.err.println("No enumeration found for value " + i + " of enumeration %s");
+       System.err.flush(); // ensure contiguous console outputs
        return null;
     }
 
     /** Marshal value to DataOutputStream
-     * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
+     * @see <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
      * @param dos DataOutputStream for output */
     @Override
     public void marshal(DataOutputStream dos)
@@ -60,13 +62,16 @@ public enum %s implements edu.nps.moves.dis7.%s
         try {
             dos.writeByte(getValue());
         }
-        catch(IOException ex) {
+        catch(IOException ex) 
+        {
+            System.out.flush(); // ensure contiguous console outputs
             System.err.println(ex.getClass().getSimpleName()+": "+ex.getMessage());
+            System.err.flush(); // ensure contiguous console outputs
         }
     }
 
     /** Unmarshal value from DataInputStream
-     * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
+     * @see <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
      * @param dis DataInputStream for input
      * @return value if provided, otherwise 1 */
     @Override
@@ -82,7 +87,7 @@ public enum %s implements edu.nps.moves.dis7.%s
     } 
 
     /** Marshal value to ByteBuffer
-     * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
+     * @see <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
      * @param byteBuffer ByteBuffer for output */
     @Override
     public void marshal(ByteBuffer byteBuffer)
@@ -96,7 +101,7 @@ public enum %s implements edu.nps.moves.dis7.%s
     }
 
     /** Unmarshal value from ByteBuffer
-     * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
+     * @see <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
      * @param byteBuffer ByteBuffer for input
      * @return value if provided, otherwise 1 */
     @Override
@@ -112,7 +117,7 @@ public enum %s implements edu.nps.moves.dis7.%s
     }
     /**
      * Returns size of this serialized (marshalled) object in bytes
-     * See <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
+     * @see <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
      * @return serialized size in bytes
      */
     @Override
@@ -123,6 +128,8 @@ public enum %s implements edu.nps.moves.dis7.%s
 
     private void showError(Exception ex)
     {
+        System.out.flush(); // ensure contiguous console outputs
         System.err.println(ex.getClass().getSimpleName()+": "+ex.getMessage());
+        System.err.flush(); // ensure contiguous console outputs
     }
 }

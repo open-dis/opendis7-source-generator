@@ -41,7 +41,9 @@
           if(val.getValue()==i)
               return val;
        }
+       System.out.flush(); // ensure contiguous console outputs
        System.err.println("No enumeration found for value " + i + " of enumeration %s");
+       System.err.flush(); // ensure contiguous console outputs
        return null;
     }
 
