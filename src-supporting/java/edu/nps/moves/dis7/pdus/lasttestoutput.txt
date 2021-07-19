@@ -64,7 +64,7 @@ Marking: EntityMarking:
 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 Pdu Status: PduStatus: 00101000
-Pdu Type: DISPDUType: ENTITY_STATE: 1
+Pdu Type: DisPduType: ENTITY_STATE: 1
 Protocol Family: DISProtocolFamily: ENTITY_INFORMATION_INTERACTION: 1
 Protocol Version: DISProtocolVersion: IEEE_12781_2012: 7
 Timestamp: -1352736935
@@ -135,7 +135,7 @@ Marking: EntityMarking:
 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 Pdu Status: PduStatus: 00101000
-Pdu Type: DISPDUType: ENTITY_STATE: 1
+Pdu Type: DisPduType: ENTITY_STATE: 1
 Protocol Family: DISProtocolFamily: ENTITY_INFORMATION_INTERACTION: 1
 Protocol Version: DISProtocolVersion: IEEE_12781_2012: 7
 Timestamp: -1352736935
