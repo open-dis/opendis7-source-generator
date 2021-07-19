@@ -18,7 +18,7 @@ clean.generated-source:
 ensure src-generated/java directory exists and is empty
 clean.build:
 all:
-timestamp 17 July 2021 14:01:53
+timestamp 18 July 2021 20:12:52
 ==================================================================================
 generate enumerations classes (given limited path entries in project classpath)
 init:
@@ -1361,7 +1361,7 @@ Creating empty C:\x3d-github\open-dis7-source-generator\build\classes\edu\nps\mo
 Creating empty C:\x3d-github\open-dis7-source-generator\build\classes\edu\nps\moves\dis7\entities\oth\platform\surface\package-info.class
 Creating empty C:\x3d-github\open-dis7-source-generator\build\classes\edu\nps\moves\dis7\entities\syr\platform\surface\package-info.class
 Creating empty C:\x3d-github\open-dis7-source-generator\build\classes\edu\nps\moves\dis7\entities\ita\munition\antiair\package-info.class
-Copying 849 files to C:\x3d-github\open-dis7-source-generator\build\classes
+Copying 851 files to C:\x3d-github\open-dis7-source-generator\build\classes
 compile:
 compile complete
 jar:
@@ -1371,7 +1371,7 @@ Specification-Title    = SISO Reference for Enumerations for Simulation Interope
 Specification-Version  = 28
 Specification-Vendor   = Simulation Interoperability Standards Organization (SISO)
 Implementation-Title   = edu.nps.moves.dis7
-Implementation-Version = 17 July 2021 14:01:53
+Implementation-Version = 18 July 2021 20:12:52
 Implementation-Vendor  = Naval Postgraduate School (NPS)
 jar.enumerations.classes:
 Packaging .class binaries for all generated OpenDIS7 entity enumerations into a single JAR
@@ -22642,7 +22642,6 @@ Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\
 Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\DISPDUStatusLVCIndicatorLVC.java...
 Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\DISPDUStatusRadioAttachedIndicatorRAI.java...
 Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\DISPDUStatusTransferredEntityIndicatorTEI.java...
-Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\DISPDUType.java...
 Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\DISProtocolFamily.java...
 Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\DISProtocolVersion.java...
 Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\DRParametersType.java...
@@ -22652,6 +22651,7 @@ Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\
 Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\DesignatorDesignatorCode.java...
 Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\DesignatorSystemName.java...
 Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\DetonationResult.java...
+Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\DisPduType.java...
 Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\EEAttributeStateIndicator.java...
 Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\ElectromagneticEmissionBeamFunction.java...
 Loading source file C:\x3d-github\open-dis7-source-generator\src-generated\java\edu\nps\moves\dis7\enumerations\ElectromagneticEmissionStateUpdateIndicator.java...
@@ -23828,4 +23828,4 @@ Both enumerations and PDUs are created by open-dis7-source-generator, with
 Copying 22392 files to C:\x3d-github\open-dis7-java\src-generated
 Copying 4 files to C:\x3d-github\open-dis7-java\src-generated
 build all complete
-BUILD SUCCESSFUL (total time: 20 minutes 38 seconds)
+BUILD SUCCESSFUL (total time: 25 minutes 31 seconds)
