@@ -8,7 +8,7 @@
     <class name="EnvironmentalProcessPdu" inheritsFrom="SyntheticEnvironmentFamilyPdu"
            comment="7.10.2 Used to communicate information about environmental effects and processes.">
            
-        <initialValue name="pduType" value="DISPDUType.ENVIRONMENTAL_PROCESS"/>
+        <initialValue name="pduType" value="DisPduType.ENVIRONMENTAL_PROCESS"/>
     
         <attribute name="environementalProcessID" comment="Environmental process ID">
             <classRef name="ObjectIdentifier"/>
@@ -45,7 +45,7 @@
     <class name="GriddedDataPdu" inheritsFrom="SyntheticEnvironmentFamilyPdu"
                comment="7.10.3 Used to communicate information about global, spatially varying environmental effects.">
            
-        <initialValue name="pduType" value="DISPDUType.GRIDDED_DATA"/>
+        <initialValue name="pduType" value="DisPduType.GRIDDED_DATA"/>
     
         <attribute name="environmentalSimulationApplicationID" comment="environmental simulation application ID">
             <classRef name="SimulationIdentifier"/>
@@ -120,7 +120,7 @@
     <class name="PointObjectStatePdu" inheritsFrom="SyntheticEnvironmentFamilyPdu"
            comment="7.10.4 Used to communicate detailed information about the addition/modification of a synthetic environment object that is geometrically anchored to the terrain with a single point.">
     
-        <initialValue name="pduType" value="DISPDUType.POINT_OBJECT_STATE"/>
+        <initialValue name="pduType" value="DisPduType.POINT_OBJECT_STATE"/>
        
         <attribute name="objectID" comment="Object in synthetic environment">
             <classRef name="EntityID"/>
@@ -183,7 +183,7 @@
     <class name="LinearObjectStatePdu" inheritsFrom="SyntheticEnvironmentFamilyPdu"
            comment="7.10.5 Used to communicate detailed information about the addition/modification of a synthetic environment object that is geometrically anchored to the terrain with one point and has size and orientation.">
       
-        <initialValue name="pduType" value="DISPDUType.LINEAR_OBJECT_STATE"/>
+        <initialValue name="pduType" value="DisPduType.LINEAR_OBJECT_STATE"/>
        
         <attribute name="objectID" comment="Object in synthetic environment">
             <classRef name="ObjectIdentifier"/>
@@ -228,7 +228,7 @@
     <class name="ArealObjectStatePdu" inheritsFrom="SyntheticEnvironmentFamilyPdu"
            comment="7.10.6 Used to communicate detailed information about the addition/modification of a synthetic environment object that is geometrically anchored to the terrain with a set of three or more points that come to a closure.">
       
-        <initialValue name="pduType" value="DISPDUType.AREAL_OBJECT_STATE"/>
+        <initialValue name="pduType" value="DisPduType.AREAL_OBJECT_STATE"/>
    
         <attribute name="objectID" comment="Object in synthetic environment">
             <classRef name="ObjectIdentifier"/>

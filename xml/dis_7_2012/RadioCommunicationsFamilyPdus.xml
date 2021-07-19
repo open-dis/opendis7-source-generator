@@ -20,7 +20,7 @@
     <class name="TransmitterPdu" inheritsFrom="RadioCommunicationsFamilyPdu"
            comment="5.8.3 Communicates the state of a particular radio transmitter or simple intercom.">
   
-        <initialValue name="pduType" value="DISPDUType.TRANSMITTER"/>
+        <initialValue name="pduType" value="DisPduType.TRANSMITTER"/>
   
         <attribute name="header">
             <classRef name="RadioCommsHeader"/>
@@ -115,7 +115,7 @@
     <class name="SignalPdu" inheritsFrom="RadioCommunicationsFamilyPdu"
            comment="5.8.4 Conveys the audio or digital data carried by the simulated radio or intercom transmission.">
     
-        <initialValue name="pduType" value="DISPDUType.SIGNAL"/>
+        <initialValue name="pduType" value="DisPduType.SIGNAL"/>
     
         <attribute name="header">
             <classRef name="RadioCommsHeader"/>
@@ -155,7 +155,7 @@
     
       <class name="IntercomSignalPdu" inheritsFrom="RadioCommunicationsFamilyPdu" comment="5.8.6 Conveys the audio or digital data that is used to communicate between simulated intercom devices">
    
-        <initialValue name="pduType" value="DISPDUType.INTERCOM_SIGNAL"/>
+        <initialValue name="pduType" value="DisPduType.INTERCOM_SIGNAL"/>
   
         <attribute name="intercomReferenceID">
             <classRef name= "IntercomReferenceID"/>
@@ -201,7 +201,7 @@
     <class name="ReceiverPdu" inheritsFrom="RadioCommunicationsFamilyPdu"
            comment="5.8.5 Communicates the state of a particular radio receiver. Its primary application is in communicating state information to radio network monitors, data loggers, and similar applications for use in debugging, supervision, and after-action review.">
     
-        <initialValue name="pduType" value="DISPDUType.RECEIVER"/>
+        <initialValue name="pduType" value="DisPduType.RECEIVER"/>
         
         <attribute name="header">
             <classRef name="RadioCommsHeader"/>
@@ -248,7 +248,7 @@
     <class name="IntercomControlPdu" inheritsFrom="RadioCommunicationsFamilyPdu"
            comment="5.8.7 Communicates the state of a particular intercom device, request an action of another intercom device, or respond to an action request.">
    
-        <initialValue name="pduType" value="DISPDUType.INTERCOM_CONTROL"/>
+        <initialValue name="pduType" value="DisPduType.INTERCOM_CONTROL"/>
    
         <attribute name="controlType" comment="control type">
             <sisoenum type="IntercomControlControlType" comment="uid 180"/>

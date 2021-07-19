@@ -8,7 +8,7 @@
  
     <class name="EntityStatePdu" inheritsFrom="EntityInformationFamilyPdu" comment=" 7.2.2. Represents the position and state of one entity in the world. See 5.3.2.">
  
-        <initialValue name="pduType" value="DISPDUType.ENTITY_STATE"/>
+        <initialValue name="pduType" value="DisPduType.ENTITY_STATE"/>
   
         <attribute name="entityID" comment="Unique ID for an entity that is tied to this state information">
             <classRef name="EntityID"/> 
@@ -68,7 +68,7 @@
 
     <class name="FastEntityStatePdu" inheritsFrom="EntityInformationFamilyPdu" comment="Represents the position and state of one entity in the world. This is identical in function to entity state pdu, but generates less garbage to collect in the Java world. Section 7.2.2.">
  
-        <initialValue name="pduType" value="DISPDUType.ENTITY_STATE"/>
+        <initialValue name="pduType" value="DisPduType.ENTITY_STATE"/>
         
         <attribute name="site" comment="The site ID">
             <primitive type="uint16"/>
@@ -240,7 +240,7 @@
 
     <class name="CollisionPdu" inheritsFrom="EntityInformationFamilyPdu" comment="7.2.3 Collisions between entities shall be communicated by issuing a Collision PDU. See 5.3.3.">
 
-        <initialValue name="pduType" value="DISPDUType.COLLISION"/>
+        <initialValue name="pduType" value="DisPduType.COLLISION"/>
 
         <attribute name="issuingEntityID" comment="This field shall identify the entity that is issuing the PDU, and shall be represented by an Entity Identifier record (see 6.2.28).">
             <classRef name="EntityID"/>
@@ -278,7 +278,7 @@
 
     <class name="CollisionElasticPdu" inheritsFrom="EntityInformationFamilyPdu" comment="7.2.4 Information about elastic collisions in a DIS exercise shall be communicated using a Collision-Elastic PDU. See 5.3.4.">
 
-        <initialValue name="pduType" value="DISPDUType.COLLISION_ELASTIC"/>
+        <initialValue name="pduType" value="DisPduType.COLLISION_ELASTIC"/>
         
         <attribute name="issuingEntityID" comment="This field shall identify the entity that is issuing the PDU and shall be represented by an Entity Identifier record (see 6.2.28)">
             <classRef name="EntityID"/>
@@ -344,7 +344,7 @@
 
     <class name="EntityStateUpdatePdu" inheritsFrom="EntityInformationFamilyPdu" comment="7.2.5. Nonstatic information about a particular entity may be communicated by issuing an Entity State Update PDU. 5.3.5.">
 
-        <initialValue name="pduType" value="DISPDUType.ENTITY_STATE_UPDATE"/>
+        <initialValue name="pduType" value="DisPduType.ENTITY_STATE_UPDATE"/>
 
         <attribute name="entityID" comment="This field shall identify the entity issuing the PDU, and shall be represented by an Entity Identifier record (see 6.2.28).">
             <classRef name="EntityID"/>
@@ -384,7 +384,7 @@
 
     <class name="AttributePdu" inheritsFrom="EntityInformationFamilyPdu" comment="7.2.6. Information about individual attributes for a particular entity, other object, or event may be communicated using an Attribute PDU. The Attribute PDU shall not be used to exchange data available in any other PDU except where explicitly mentioned in the PDU issuance instructions within this standard. See 5.3.6.">
 
-        <initialValue name="pduType" value="DISPDUType.ATTRIBUTE"/>
+        <initialValue name="pduType" value="DisPduType.ATTRIBUTE"/>
 
         <attribute name="originatingSimulationAddress" comment="This field shall identify the simulation issuing the Attribute PDU. It shall be represented by a Simulation Address record (see 6.2.79).">
             <classRef name="SimulationAddress"/>
@@ -399,7 +399,7 @@
         </attribute>
 
         <attribute name="attributeRecordPduType" comment="This field shall represent the type of the PDU that is being extended or updated, if applicable. It shall be represented by an 8-bit enumeration.">
-            <sisoenum type="DISPDUType" comment="uid 4"/>
+            <sisoenum type="DisPduType" comment="uid 4"/>
         </attribute>
 
         <attribute name="attributeRecordProtocolVersion" comment="This field shall indicate the Protocol Version associated with the Attribute Record PDU Type. It shall be represented by an 8-bit enumeration.">

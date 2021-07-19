@@ -3189,7 +3189,7 @@
             </xs:attribute>
             <xs:attribute name="pduType" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>Type of pdu, unique for each PDU class (SISO enumeration DISPDUType uid 4)</xs:appinfo>
+                  <xs:appinfo>Type of pdu, unique for each PDU class (SISO enumeration DisPduType uid 4)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <!--xs:attribute protocolFamily is defined in subclasses for Pdu rather than here, in order to avoid inheritance collisions.-->
@@ -4120,42 +4120,6 @@
          </xs:extension>
       </xs:complexContent>
    </xs:complexType>
-   <xs:complexType name="VariableDatumType" abstract="false">
-      <!--abstract='false' base='rootType'-->
-      <xs:annotation>
-         <xs:appinfo>The variable datum type, the datum length, and the value for that variable datum type.
-            Section 6.2.93
-         </xs:appinfo>
-      </xs:annotation>
-      <xs:complexContent>
-         <xs:extension base="rootType">
-            <xs:attribute name="variableDatumID" type="xs:string">
-               <xs:annotation>
-                  <xs:appinfo>Type of variable datum to be transmitted. 32-bit enumeration defined in EBV (SISO
-                     enumeration VariableRecordType uid 66)
-                  </xs:appinfo>
-               </xs:annotation>
-            </xs:attribute>
-            <xs:attribute name="variableDatumLength" type="xs:unsignedLong">
-               <xs:annotation>
-                  <xs:appinfo>Length, IN BITS, of the variable datum.</xs:appinfo>
-               </xs:annotation>
-            </xs:attribute>
-            <xs:attribute name="variableDatumValue">
-               <xs:annotation>
-                  <xs:appinfo>This can be any number of bits long, depending on the datum.</xs:appinfo>
-               </xs:annotation>
-            </xs:attribute>
-            <xs:attribute name="padding" type="xs:unsignedInt">
-               <xs:annotation>
-                  <xs:appinfo>data structure to selectively provide padding of correct length, see DIS specification
-                     for computation algorithm.
-                  </xs:appinfo>
-               </xs:annotation>
-            </xs:attribute>
-         </xs:extension>
-      </xs:complexContent>
-   </xs:complexType>
    <xs:complexType name="VariableParameterType" abstract="false">
       <!--abstract='false' base='rootType'-->
       <xs:annotation>
@@ -4987,7 +4951,7 @@
                   <xs:annotation>
                      <xs:appinfo>This field shall represent the type of the PDU that is being extended or updated,
                         if applicable. It shall be represented by an 8-bit enumeration. (SISO enumeration
-                        DISPDUType uid 4)
+                        DisPduType uid 4)
                      </xs:appinfo>
                   </xs:annotation>
                </xs:attribute>

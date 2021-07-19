@@ -10,7 +10,7 @@
     <class name="ServiceRequestPdu" inheritsFrom="LogisticsFamilyPdu"
            comment="5.5.5 Communicate information associated with one entity requesting a service from another.">
         
-        <initialValue name="pduType" value="DISPDUType.SERVICE_REQUEST"/>
+        <initialValue name="pduType" value="DisPduType.SERVICE_REQUEST"/>
 
         <attribute name="requestingEntityID" comment="Entity that is requesting service (see 6.2.28), Section 7.4.2">
             <classRef name="EntityID"/>
@@ -43,7 +43,7 @@
 
     <class name="ResupplyOfferPdu" inheritsFrom="LogisticsFamilyPdu" comment="5.5.6 Communicate the offer of supplies by a supplying entity to a receiving entity.">
 
-        <initialValue name="pduType" value="DISPDUType.RESUPPLY_OFFER"/>
+        <initialValue name="pduType" value="DisPduType.RESUPPLY_OFFER"/>
 
         <attribute name="receivingEntityID"
                    comment="Field identifies the Entity and respective Entity Record ID that is receiving service (see 6.2.28), Section 7.4.3">
@@ -80,7 +80,7 @@
 
     <class name="ResupplyReceivedPdu" inheritsFrom="LogisticsFamilyPdu" comment="5.5.7 Used to acknowledge the receipt of supplies by the receiving entity.">
 
-        <initialValue name="pduType" value="DISPDUType.RESUPPLY_RECEIVED"/>
+        <initialValue name="pduType" value="DisPduType.RESUPPLY_RECEIVED"/>
 
         <attribute name="receivingEntityID" comment="Entity that is receiving service.  Shall be represented by Entity Identifier record (see 6.2.28)">
             <classRef name="EntityID"/>
@@ -113,7 +113,7 @@
 
     <class name="ResupplyCancelPdu" inheritsFrom="LogisticsFamilyPdu" comment="5.5.8 Used to communicate the canceling of a resupply service provided through logistics support.">
 
-        <initialValue name="pduType" value="DISPDUType.RESUPPLY_CANCEL"/>
+        <initialValue name="pduType" value="DisPduType.RESUPPLY_CANCEL"/>
 
         <attribute name="receivingEntityID"
                    comment="Requesting entity, Section 7.4.5">
@@ -129,7 +129,7 @@
     
     <class name="RepairCompletePdu" inheritsFrom="LogisticsFamilyPdu" comment="5.5.10 Used by the repairing entity to communicate the repair that has been performed for the entity that requested repair service.">
 
-        <initialValue name="pduType" value="DISPDUType.REPAIR_COMPLETE"/>
+        <initialValue name="pduType" value="DisPduType.REPAIR_COMPLETE"/>
 
         <attribute name="receivingEntityID" comment="Entity that is receiving service.  See 6.2.28">
             <classRef name="EntityID"/>
@@ -151,7 +151,7 @@
 
     <class name="RepairResponsePdu" inheritsFrom="LogisticsFamilyPdu" comment="5.5.11 used by the receiving entity to acknowledge the receipt of a Repair Complete PDU">
 
-        <initialValue name="pduType" value="DISPDUType.REPAIR_RESPONSE"/>
+        <initialValue name="pduType" value="DisPduType.REPAIR_RESPONSE"/>
 
         <attribute name="receivingEntityID" comment="Entity that requested repairs.  See 6.2.28">
             <classRef name="EntityID"/>

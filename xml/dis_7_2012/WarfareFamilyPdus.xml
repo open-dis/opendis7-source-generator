@@ -8,7 +8,7 @@
 
     <class name="FirePdu" inheritsFrom="WarfareFamilyPdu" comment="7.3.2 Used to communicate the firing of a weapon or expendable.">
 
-        <initialValue name="pduType" value="DISPDUType.FIRE"/>
+        <initialValue name="pduType" value="DisPduType.FIRE"/>
 
         <attribute name="firingEntityID" comment="ID of the entity that shot">
             <classRef name="EntityID"/>
@@ -51,7 +51,7 @@
     <class name="DetonationPdu" inheritsFrom="WarfareFamilyPdu"
            comment="7.3.3 Used to communicate the detonation or impact of munitions, as well as non-munition explosions, the burst or initial bloom of chaff, and the ignition of a flare.">
 
-        <initialValue name="pduType" value="DISPDUType.DETONATION"/>
+        <initialValue name="pduType" value="DisPduType.DETONATION"/>
 
         <attribute name="sourceEntityID" comment="ID of the entity that shot">
             <classRef name="EntityID"/>
@@ -108,7 +108,7 @@
     <class name="DirectedEnergyFirePdu" inheritsFrom="WarfareFamilyPdu"
            comment="7.3.4 Used to communicate the firing of a directed energy weapon.">
 
-        <initialValue name="pduType" value="DISPDUType.DIRECTED_ENERGY_FIRE"/>
+        <initialValue name="pduType" value="DisPduType.DIRECTED_ENERGY_FIRE"/>
 
         <attribute name="firingEntityID" comment="ID of the entity that shot">
             <classRef name="EntityID"/>
@@ -188,7 +188,7 @@
     <class name="EntityDamageStatusPdu" inheritsFrom="WarfareFamilyPdu"
            comment="7.3.5 Used to communicate detailed damage information sustained by an entity regardless of the source of the damage.">
                 
-        <initialValue name="pduType" value="DISPDUType.ENTITY_DAMAGE_STATUS"/>
+        <initialValue name="pduType" value="DisPduType.ENTITY_DAMAGE_STATUS"/>
 
         <attribute name="damagedEntityID" comment="Field shall identify the damaged entity (see 6.2.28), Section 7.3.4">
             <classRef name="EntityID"/>

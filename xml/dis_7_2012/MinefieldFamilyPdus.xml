@@ -8,7 +8,7 @@
     <class name="MinefieldStatePdu" inheritsFrom="MinefieldFamilyPdu"
            comment="5.10.2 Communicate information about the minefield, including the location, perimeter, and types of mines contained within it.">
 
-        <initialValue name="pduType" value="DISPDUType.MINEFIELD_STATE"/>
+        <initialValue name="pduType" value="DisPduType.MINEFIELD_STATE"/>
      
         <attribute name="minefieldID" comment="Minefield ID">
             <classRef name= "MinefieldIdentifier"/>
@@ -67,7 +67,7 @@
     <class name="MinefieldQueryPdu" inheritsFrom="MinefieldFamilyPdu"
              comment="5.10.3 Contains information about the requesting entity and the region and mine types of interest to the requesting entity.">
     
-        <initialValue name="pduType" value="DISPDUType.MINEFIELD_QUERY"/>
+        <initialValue name="pduType" value="DisPduType.MINEFIELD_QUERY"/>
          
         <attribute name="minefieldID" comment="Minefield ID">
             <classRef name= "MinefieldIdentifier"/>
@@ -117,7 +117,7 @@
     <class name="MinefieldDataPdu" inheritsFrom="MinefieldFamilyPdu"
            comment="5.10.4 Information about the location and status of a collection of mines in a minefield is conveyed through the Minefield Data PDU on an individual mine basis.">
 
-        <initialValue name="pduType" value="DISPDUType.MINEFIELD_DATA"/>
+        <initialValue name="pduType" value="DisPduType.MINEFIELD_DATA"/>
      
         <attribute name="minefieldID" comment="Minefield ID">
             <classRef name= "MinefieldIdentifier"/>
@@ -282,7 +282,7 @@
     <class name="MinefieldResponseNACKPdu" inheritsFrom="MinefieldFamilyPdu"
            comment="5.10.5 Contains information about the requesting entity and the PDU(s) that were not received in response to a query.">
 
-        <initialValue name="pduType" value="DISPDUType.MINEFIELD_RESPONSE_NACK"/>
+        <initialValue name="pduType" value="DisPduType.MINEFIELD_RESPONSE_NACK"/>
      
         <attribute name="minefieldID" comment="Minefield ID">
             <classRef name= "MinefieldIdentifier"/>

@@ -20,7 +20,7 @@
 
     <class name="TSPIPdu" inheritsFrom="LiveEntityFamilyPdu" comment="9.4.2 The Time Space Position Information (TSPI) PDU shall communicate information about the LE’s state vector.">
         
-        <initialValue name="pduType" value="DISPDUType.TIME_SPACE_POSITION_INFORMATION"/>
+        <initialValue name="pduType" value="DisPduType.TIME_SPACE_POSITION_INFORMATION"/>
                
         <attribute name="liveEntityId">
             <classRef name="EntityID"/>
@@ -74,7 +74,7 @@
     
     <class name="AppearancePdu" inheritsFrom="LiveEntityFamilyPdu" comment="9.4.3 Communicate information about the appearance of a live entity.">
         
-        <initialValue name="pduType" value="DISPDUType.APPEARANCE"/>
+        <initialValue name="pduType" value="DisPduType.APPEARANCE"/>
         
         <attribute name="liveEntityId">
             <classRef name="EntityID"/>
@@ -117,7 +117,7 @@
     
     <class name="ArticulatedPartsPdu" inheritsFrom="LiveEntityFamilyPdu" comment="9.4.4 Communicate information about an entity’s articulated and attached parts.">
         
-        <initialValue name="pduType" value="DISPDUType.ARTICULATED_PARTS"/>
+        <initialValue name="pduType" value="DisPduType.ARTICULATED_PARTS"/>
 
         <attribute name="liveEntityId">
             <classRef name="EntityID"/>
@@ -137,7 +137,7 @@
  
     <class name="LEFirePdu" inheritsFrom="LiveEntityFamilyPdu" comment="9.4.5 Representation of weapons fire in a DIS exercise involving LEs.">
         
-        <initialValue name="pduType" value="DISPDUType.LIVE_ENTITY_FIRE"/>
+        <initialValue name="pduType" value="DisPduType.LIVE_ENTITY_FIRE"/>
 
         <attribute name="firingLiveEntityId">
             <classRef name="EntityID"/>
@@ -181,7 +181,7 @@
 
     <class name="LEDetonationPdu" inheritsFrom="LiveEntityFamilyPdu" comment="9.4.6 Communicate information associated with the impact or detonation of a munition.">
         
-        <initialValue name="pduType" value="DISPDUType.LIVE_ENTITY_DETONATION"/>
+        <initialValue name="pduType" value="DisPduType.LIVE_ENTITY_DETONATION"/>
         
         <attribute name="firingLiveEntityId">
             <classRef name="EntityID"/>

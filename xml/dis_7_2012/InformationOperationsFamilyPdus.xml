@@ -12,7 +12,7 @@
     <class name="InformationOperationsActionPdu" inheritsFrom="InformationOperationsFamilyPdu"
            comment="5.13.3.1 Used to communicate an IO attack or the effects of an IO attack on one or more target entities.">
           
-        <initialValue name="pduType" value="DISPDUType.INFORMATION_OPERATIONS_ACTION"/>
+        <initialValue name="pduType" value="DisPduType.INFORMATION_OPERATIONS_ACTION"/>
        
         <attribute name="receivingSimID" comment="the simulation to which this PDU is addressed">
             <classRef name= "EntityID"/>
@@ -69,7 +69,7 @@
     <class name="InformationOperationsReportPdu" inheritsFrom="InformationOperationsFamilyPdu"
            comment="5.13.4.1 Used to communicate the effects of an IO attack on one or more target entities.">
           
-        <initialValue name="pduType" value="DISPDUType.INFORMATION_OPERATIONS_REPORT"/>
+        <initialValue name="pduType" value="DisPduType.INFORMATION_OPERATIONS_REPORT"/>
        
         <attribute name = "ioSimSource">         
             <sisoenum type="IOActionIOSimulationSource" comment="uid 286"/>

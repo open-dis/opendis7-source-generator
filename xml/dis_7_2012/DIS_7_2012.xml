@@ -2093,7 +2093,7 @@ dB and RPM)"/>
         </attribute>
   
         <attribute name="pduType" comment="Type of pdu, unique for each PDU class">
-            <sisoenum type="DISPDUType" comment="uid 4"/>
+            <sisoenum type="DisPduType" comment="uid 4"/>
         </attribute>
   
         <attribute name="protocolFamily" comment="value that refers to the protocol family, eg SimulationManagement, etc">
@@ -3044,7 +3044,7 @@ dB and RPM)"/>
         </attribute>
   
         <attribute name="pduType" comment="Type of pdu, unique for each PDU class">
-            <sisoenum type="DISPDUType" comment="uid 4"/> 
+            <sisoenum type="DisPduType" comment="uid 4"/> 
         </attribute>
   
         <attribute name="protocolFamily" comment="value that refers to the protocol family, eg SimulationManagement, et">

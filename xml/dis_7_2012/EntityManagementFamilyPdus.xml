@@ -8,7 +8,7 @@
     <class name="AggregateStatePdu" inheritsFrom="EntityManagementFamilyPdu"
            comment="5.9.2.2 The Aggregate State PDU shall be used to communicate the state and other pertinent information about an aggregated unit.">
     
-        <initialValue name="pduType" value="DISPDUType.AGGREGATE_STATE"/>
+        <initialValue name="pduType" value="DisPduType.AGGREGATE_STATE"/>
      
         <attribute name="aggregateID" comment="ID of aggregated entities">
             <classRef name= "AggregateIdentifier"/>
@@ -109,7 +109,7 @@
     <class name="IsGroupOfPdu" inheritsFrom="EntityManagementFamilyPdu"
            comment="5.9.3.1 The IsGroupOf PDU shall communicate information about the individual states of a group of entities, including state information that is necessary for the receiving simulation applications to represent the issuing group of entities in the simulation applications’ own simulation.">
     
-        <initialValue name="pduType" value="DISPDUType.ISGROUPOF"/>
+        <initialValue name="pduType" value="DisPduType.ISGROUPOF"/>
      
         <attribute name="groupEntityID" comment="ID of aggregated entities">
             <classRef name= "EntityID"/>
@@ -146,7 +146,7 @@
     <class name="TransferOwnershipPdu" inheritsFrom="EntityManagementFamilyPdu"
            comment=" Information initiating the dyanic allocation and control of simulation entities between two simulation applications.">
     
-        <initialValue name="pduType" value="DISPDUType.TRANSFER_OWNERSHIP"/>
+        <initialValue name="pduType" value="DisPduType.TRANSFER_OWNERSHIP"/>
      
         <attribute name="originatingEntityID" comment="ID of entity originating request">
             <classRef name= "EntityID"/>
@@ -182,7 +182,7 @@
     <class name="IsPartOfPdu" inheritsFrom="EntityManagementFamilyPdu"
            comment="5.9.5 Used to request hierarchical linkage of separately hosted simulation entities">
 
-        <initialValue name="pduType" value="DISPDUType.ISPARTOF"/>
+        <initialValue name="pduType" value="DisPduType.ISPARTOF"/>
  
         <attribute name="orginatingEntityID" comment="ID of entity originating PDU">
             <classRef name= "EntityID"/>

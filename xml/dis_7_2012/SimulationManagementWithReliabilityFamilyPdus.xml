@@ -15,7 +15,7 @@
 
     <class name="CreateEntityRPdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu" comment="5.12.4.2 Serves the same function as the Create Entity PDU but with the addition of reliability service levels.">
       
-        <initialValue name="pduType" value="DISPDUType.CREATE_ENTITY_RELIABLE"/>
+        <initialValue name="pduType" value="DisPduType.CREATE_ENTITY_RELIABLE"/>
 
         <attribute name="requiredReliabilityService" comment="level of reliability service used for this transaction">
             <sisoenum type="RequiredReliabilityService" comment="uid 74"/>
@@ -39,7 +39,7 @@
     
     <class name="RemoveEntityRPdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu" comment="5.12.4.3 Contains the same information as found in the Remove Entity PDU with the addition of the level of reliability service to be used for the removal action being requested.">
       
-        <initialValue name="pduType" value="DISPDUType.REMOVE_ENTITY_RELIABLE"/>
+        <initialValue name="pduType" value="DisPduType.REMOVE_ENTITY_RELIABLE"/>
 
         <attribute name="requiredReliabilityService" comment="level of reliability service used for this transaction">
             <sisoenum type="RequiredReliabilityService" comment="uid 74"/>
@@ -63,7 +63,7 @@
     
     <class name="StartResumeRPdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu" comment="5.12.4.4 Serves the same function as the Start/Resume PDU but with the addition of reliability service levels">
       
-        <initialValue name="pduType" value="DISPDUType.START_RESUME_RELIABLE"/>
+        <initialValue name="pduType" value="DisPduType.START_RESUME_RELIABLE"/>
 
         <attribute name="realWorldTime" comment="time in real world for this operation to happen">
             <classRef name= "ClockTime"/>
@@ -95,7 +95,7 @@
     
     <class name="StopFreezeRPdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu" comment="5.12.4.5 Serves the same function as the Stop/Freeze PDU (see 5.6.5.5.1) but with the addition of reliability service levels.">
       
-        <initialValue name="pduType" value="DISPDUType.STOP_FREEZE_RELIABLE"/>
+        <initialValue name="pduType" value="DisPduType.STOP_FREEZE_RELIABLE"/>
    
         <attribute name="realWorldTime" comment="time in real world for this operation to happen">
             <classRef name= "ClockTime"/>
@@ -128,7 +128,7 @@
     <class name="AcknowledgeRPdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
            comment="5.12.4.6 Serves the same function as the Acknowledge PDU but is used to acknowledge the receipt of a Create Entity-R PDU, a Remove Entity-R PDU, a Start/Resume-R PDU, or a Stop/Freeze-R PDU.">
       
-        <initialValue name="pduType" value="DISPDUType.ACKNOWLEDGE_RELIABLE"/>
+        <initialValue name="pduType" value="DisPduType.ACKNOWLEDGE_RELIABLE"/>
    
         <attribute name="acknowledgeFlag" comment="ack flags">
             <sisoenum type="AcknowledgeAcknowledgeFlag" comment="uid 69"/>
@@ -149,7 +149,7 @@
     <class name="ActionRequestRPdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
            comment="5.12.4.7 Serves the same function as the Action Request PDU but with the addition of reliability service levels.">
       
-        <initialValue name="pduType" value="DISPDUType.ACTION_REQUEST_RELIABLE"/>
+        <initialValue name="pduType" value="DisPduType.ACTION_REQUEST_RELIABLE"/>
    
         <attribute name="requiredReliabilityService" comment="level of reliability service used for this transaction">
             <sisoenum type="RequiredReliabilityService" comment="uid 74"/>
@@ -198,7 +198,7 @@
 
     <class name="ActionResponseRPdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu" comment="5.12.4.8 Serves the same function as the Action Response PDU (see 5.6.5.8.1) but is used to acknowledge the receipt of an Action Request-R PDU.">
       
-        <initialValue name="pduType" value="DISPDUType.ACTION_RESPONSE_RELIABLE"/>
+        <initialValue name="pduType" value="DisPduType.ACTION_RESPONSE_RELIABLE"/>
    
         <attribute name="requestID" comment="request ID">
             <primitive type="uint32"/>
@@ -234,7 +234,7 @@
 
      <class name="DataQueryRPdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu" comment="5.12.4.9 Serves the same function as the Data Query PDU but with the addition of reliability service levels">
       
-        <initialValue name="pduType" value="DISPDUType.DATA_QUERY_RELIABLE"/>
+        <initialValue name="pduType" value="DisPduType.DATA_QUERY_RELIABLE"/>
    
         <attribute name="requiredReliabilityService" comment="level of reliability service used for this transaction">
             <sisoenum type="RequiredReliabilityService" comment="uid 74"/>
@@ -283,7 +283,7 @@
     <class name="SetDataRPdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
            comment="5.12.4.10 Serves the same function as the Set Data PDU but with the addition of reliability service levels.">
       
-        <initialValue name="pduType" value="DISPDUType.SET_DATA_RELIABLE"/>
+        <initialValue name="pduType" value="DisPduType.SET_DATA_RELIABLE"/>
    
         <attribute name="requiredReliabilityService" comment="level of reliability service used for this transaction">
             <sisoenum type="RequiredReliabilityService" comment="uid 74"/>
@@ -327,7 +327,7 @@
     <class name="DataRPdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
            comment="5.12.4.11 Serves the same function as the Data PDU but with the addition of reliability service levels and is used in response to a Data Query-R PDU, a Data-R PDU, or a Set Data-R PDU.">
       
-        <initialValue name="pduType" value="DISPDUType.DATA_RELIABLE"/>
+        <initialValue name="pduType" value="DisPduType.DATA_RELIABLE"/>
    
         <attribute name="requestID" comment="Request ID">
             <primitive type="uint32"/>
@@ -372,7 +372,7 @@
     <class name="EventReportRPdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
            comment="5.12.4.12 Contains the same information as found in the Event Report PDU.">
       
-        <initialValue name="pduType" value="DISPDUType.EVENT_REPORT_RELIABLE"/>
+        <initialValue name="pduType" value="DisPduType.EVENT_REPORT_RELIABLE"/>
    
         <attribute name="eventType" comment="Event type">
             <sisoenum type="EventReportEventType" comment="uid 73"/>
@@ -409,7 +409,7 @@
     <class name="CommentRPdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
            comment="5.12.4.13 Serves the same function as the Comment PDU.">
       
-        <initialValue name="pduType" value="DISPDUType.COMMENT_RELIABLE"/>
+        <initialValue name="pduType" value="DisPduType.COMMENT_RELIABLE"/>
    
         <attribute name="numberOfFixedDatumRecords" hidden="true" comment="Fixed datum record count, not used in this Pdu">
             <primitive type="uint32"/>
@@ -431,7 +431,7 @@
     <class name="RecordQueryRPdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
            comment="5.12.4.14 Used to communicate a request for data in record format.">
       
-        <initialValue name="pduType" value="DISPDUType.RECORD_QUERY_RELIABLE"/>
+        <initialValue name="pduType" value="DisPduType.RECORD_QUERY_RELIABLE"/>
   
         <attribute name="requestID" comment="request ID">
             <primitive type="uint32"/>
@@ -470,7 +470,7 @@
     <class name="SetRecordRPdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
             comment="5.12.4.15 Used to set or change certain parameter values. These parameter values are contained within a record format as compared to the datum format used in the Set Data-R PDU.">
           
-        <initialValue name="pduType" value="DISPDUType.SET_RECORD_RELIABLE"/>
+        <initialValue name="pduType" value="DisPduType.SET_RECORD_RELIABLE"/>
        
         <attribute name="requestID" comment="request ID">
             <primitive type="uint32"/>
@@ -508,7 +508,7 @@
     <class name="RecordRPdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
            comment="5.12.4.16 Used to respond to a Record Query-R PDU or a Set Record-R PDU. It is used to provide information requested in a Record Query-R PDU, to confirm the information received in a Set Record-R PDU, and to confirm the receipt of a periodic or unsolicited Record-R PDU when the acknowledged service level is used.">
         
-        <initialValue name="pduType" value="DISPDUType.RECORD_RELIABLE"/>
+        <initialValue name="pduType" value="DisPduType.RECORD_RELIABLE"/>
 
         <attribute name="requestID" comment="request ID">
             <primitive type="uint32"/>

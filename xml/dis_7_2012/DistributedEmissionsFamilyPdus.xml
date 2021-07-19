@@ -8,7 +8,7 @@
     <class name="ElectromagneticEmissionPdu" inheritsFrom="DistributedEmissionsFamilyPdu"
            comment="7.6.2 Communicate active electromagnetic emissions, including radar and radar-related electronic warfare (e.g., jamming). Exceptions include IFF interrogations and replies, navigation aids, voice, beacon and data radio communications, directed energy weapons, and laser ranging and designation systems, which are handled by other PDUs. Section 5.3.7.1.">
     
-        <initialValue name="pduType" value="DISPDUType.ELECTROMAGNETIC_EMISSION"/>
+        <initialValue name="pduType" value="DisPduType.ELECTROMAGNETIC_EMISSION"/>
 
         <initialValue name="paddingForEmissionsPdu" value="0"/>
   
@@ -118,7 +118,7 @@
     <class name="DesignatorPdu" inheritsFrom="DistributedEmissionsFamilyPdu"
            comment="7.6.3 Handles designating operations. See 5.3.7.2.">
 
-        <initialValue name="pduType" value="DISPDUType.DESIGNATOR"/>
+        <initialValue name="pduType" value="DisPduType.DESIGNATOR"/>
   
         <attribute name="designatingEntityID" comment="ID of the entity designating">
             <classRef name="EntityID"/>
@@ -172,7 +172,7 @@
     
 <class name="UnderwaterAcousticPdu" inheritsFrom="DistributedEmissionsFamilyPdu" comment="7.6.4 Information about underwater acoustic emmissions. See 5.7.5.">
     
-        <initialValue name="pduType" value="DISPDUType.UNDERWATER_ACOUSTIC"/>
+        <initialValue name="pduType" value="DisPduType.UNDERWATER_ACOUSTIC"/>
     
         <attribute name="emittingEntityID" comment="ID of the entity that is the source of the emission">
             <classRef name="EntityID"/>
@@ -282,7 +282,7 @@
     
     <class name="IFFPdu" inheritsFrom="DistributedEmissionsFamilyPdu" Comment="7.6.5.1 Information about military and civilian interrogators, transponders, and specific other electronic systems. See 5.7.6">
         
-        <initialValue name="pduType" value="DISPDUType.IDENTIFICATION_FRIEND_OR_FOE"/>
+        <initialValue name="pduType" value="DisPduType.IDENTIFICATION_FRIEND_OR_FOE"/>
     
         <attribute name="emittingEntityId" comment="ID of the entity that is the source of the emissions">
             <classRef name="EntityID"/>
@@ -351,7 +351,7 @@
     
     <class name="SEESPdu" inheritsFrom="DistributedEmissionsFamilyPdu" comment="7.6.6 Certain supplemental information on an entity’s physical state and emissions. See 5.7.7">
  
-        <initialValue name="pduType" value="DISPDUType.SUPPLEMENTAL_EMISSION_ENTITY_STATE"/>
+        <initialValue name="pduType" value="DisPduType.SUPPLEMENTAL_EMISSION_ENTITY_STATE"/>
    
         <attribute name="orginatingEntityID" comment="Originating entity ID">
             <classRef name="EntityID"/>
