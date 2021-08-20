@@ -36,7 +36,7 @@ public class GenerateObjectTypes
     private static String         sisoXmlFile = edu.nps.moves.dis7.source.generator.GenerateOpenDis7JavaPackages.DEFAULT_SISO_XML_FILE;
     private String sisoSpecificationTitleDate = "";
 
-    String objectTypeTemplate;
+    String objecttypeTemplate;
 
   class DataPkt
   {
@@ -128,7 +128,7 @@ public class GenerateObjectTypes
   private void loadTemplates()
   {
     try {
-      objectTypeTemplate = loadOneTemplate("objecttype.txt");
+      objecttypeTemplate = loadOneTemplate("objecttype.txt");
     }
     catch (Exception ex) {
       throw new RuntimeException(ex);
@@ -363,7 +363,7 @@ public class GenerateObjectTypes
 
     private void appendCommonStatements(DataPkt data)
     {
-      String contents = String.format(objectTypeTemplate, data.pkg,
+      String contents = String.format(objecttypeTemplate, data.pkg,
         sisoSpecificationTitleDate, currentCot.uid,data.clsNm,data.clsNm);
       data.sb.append(contents);
     }

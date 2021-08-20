@@ -347,9 +347,9 @@ public class JavaGenerator extends Generator
     private void readTemplates()
     {
         try {
-         //   domainTemplate1 = loadOneTemplate("domainpart1.txt");
-         //   domainTemplate2 = loadOneTemplate("domainpart2.txt");
-         //   domainTemplate3 = loadOneTemplate("domainpart3.txt");
+         // domainTemplate1 = loadOneTemplate("domainpart1.txt");
+         // domainTemplate2 = loadOneTemplate("domainpart2.txt");
+         // domainTemplate3 = loadOneTemplate("domainpart3.txt");
             specSource      = loadOneTemplate("dis7spec.txt");
             license         = loadOneTemplate("dis7javalicense.txt");
         }

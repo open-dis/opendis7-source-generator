@@ -38,7 +38,7 @@ public class GenerateJammers
     private static String         sisoXmlFile = edu.nps.moves.dis7.source.generator.GenerateOpenDis7JavaPackages.DEFAULT_SISO_XML_FILE;
     private static String       sisoSpecificationTitleDate = "";
 
-    String jammerTechniqueTemplate;
+    String jammertechniqueTemplate;
 
     class DataPkt
     {
@@ -129,7 +129,7 @@ public class GenerateJammers
   private void loadTemplates()
   {
     try {
-      jammerTechniqueTemplate = loadOneTemplate("jammertechnique.txt");
+      jammertechniqueTemplate = loadOneTemplate("jammertechnique.txt");
     }
     catch (Exception ex) {
       throw new RuntimeException(ex);
@@ -340,7 +340,7 @@ public class GenerateJammers
 
     private void appendCommonStatements(DataPkt data)
     {
-      String contents = String.format(jammerTechniqueTemplate, data.pkg,
+      String contents = String.format(jammertechniqueTemplate, data.pkg,
         sisoSpecificationTitleDate, "284",data.clsNm,data.clsNm);
       data.sb.append(contents);
     }

@@ -45,25 +45,25 @@ public class GenerateEnumerations
     private Set<String> uidDoNotGenerate;
     private Map<String,String> uid2ExtraInterface;
 
-    private String enumTemplate1;
-    private String enumTemplate1WithFootnote;
-    private String enumCommentTemplate;
-    private String enumFootnoteCommentTemplate;
-    private String enumTemplate2;
-    private String enumTemplate21;
-    private String enumTemplate25;
-    private String enumTemplate3_8;
-    private String enumTemplate3_16;
-    private String enumTemplate3_32;
-    private String dictEnumTemplate1;
-    private String dictEnumTemplate2;
-    private String dictEnumTemplate3;
-    private String bitsetTemplate1;
-    private String bitsetTemplate15;
-    private String bitsetTemplate16;
-    private String bitsetTemplate2;
-    private String bitsetXrefCommentTemplate;
-    private String bitsetCommentTemplate;
+    private String disenumpart1Template;
+    private String disenumpart1withfootnoteTemplate;
+    private String disenumcommentTemplate;
+    private String disenumfootnotecommentTemplate;
+    private String disenumpart2Template;
+    private String disenumpart21Template;
+    private String disenumpart25Template;
+    private String disenumpart3_8Template;
+    private String disenumpart3_16Template;
+    private String disenumpart3_32Template;
+    private String disdictenumpart1Template;
+    private String disdictenumpart2Template;
+    private String disdictenumpart3Template;
+    private String disbitset1Template;
+    private String disbitset15Template;
+    private String disbitset16Template;
+    private String disbitset2Template;
+    private String disbitsetcommentxrefTemplate;
+    private String disbitsetcommentTemplate;
 
     private static String       sisoSpecificationTitleDate = "";
 
@@ -229,29 +229,31 @@ public class GenerateEnumerations
     /**
      * https://docs.oracle.com/javase/8/docs/api/java/lang/String.html#format-java.lang.String-java.lang.Object...-
      * https://docs.oracle.com/javase/8/docs/api/java/util/Formatter.html#syntax
+     * @see java.util.Formatter
+     * @see java.util.logging.Formatter
      */
     private void loadEnumTemplates()
     {
         try {
-            enumTemplate1               = loadOneTemplate("disenumpart1.txt");
-            enumTemplate1WithFootnote   = loadOneTemplate("disenumpart1withfootnote.txt");
-            enumCommentTemplate         = loadOneTemplate("disenumcomment.txt");
-            enumFootnoteCommentTemplate = loadOneTemplate("disenumfootnotecomment.txt");
-            enumTemplate2               = loadOneTemplate("disenumpart2.txt");
-            enumTemplate21              = loadOneTemplate("disenumpart21.txt");
-            enumTemplate25              = loadOneTemplate("disenumpart25.txt");
-            enumTemplate3_32            = loadOneTemplate("disenumpart3_32.txt");
-            enumTemplate3_16            = loadOneTemplate("disenumpart3_16.txt");
-            enumTemplate3_8             = loadOneTemplate("disenumpart3_8.txt");
-            dictEnumTemplate1           = loadOneTemplate("disdictenumpart1.txt");
-            dictEnumTemplate2           = loadOneTemplate("disdictenumpart2.txt");
-            dictEnumTemplate3           = loadOneTemplate("disdictenumpart3.txt");
-            bitsetTemplate1             = loadOneTemplate("disbitset1.txt");
-            bitsetTemplate15            = loadOneTemplate("disbitset15.txt");
-            bitsetTemplate16            = loadOneTemplate("disbitset16.txt");
-            bitsetTemplate2             = loadOneTemplate("disbitset2.txt");
-            bitsetXrefCommentTemplate   = loadOneTemplate("disbitsetcommentxref.txt");
-            bitsetCommentTemplate       = loadOneTemplate("disbitsetcomment.txt");
+            disenumpart1Template               = loadOneTemplate("disenumpart1.txt");
+            disenumpart1withfootnoteTemplate   = loadOneTemplate("disenumpart1withfootnote.txt");
+            disenumcommentTemplate             = loadOneTemplate("disenumcomment.txt");
+            disenumfootnotecommentTemplate     = loadOneTemplate("disenumfootnotecomment.txt");
+            disenumpart2Template               = loadOneTemplate("disenumpart2.txt");
+            disenumpart21Template              = loadOneTemplate("disenumpart21.txt");
+            disenumpart25Template              = loadOneTemplate("disenumpart25.txt");
+            disenumpart3_32Template            = loadOneTemplate("disenumpart3_32.txt");
+            disenumpart3_16Template            = loadOneTemplate("disenumpart3_16.txt");
+            disenumpart3_8Template             = loadOneTemplate("disenumpart3_8.txt");
+            disdictenumpart1Template           = loadOneTemplate("disdictenumpart1.txt");
+            disdictenumpart2Template           = loadOneTemplate("disdictenumpart2.txt");
+            disdictenumpart3Template           = loadOneTemplate("disdictenumpart3.txt");
+            disbitset1Template                 = loadOneTemplate("disbitset1.txt");
+            disbitset15Template                = loadOneTemplate("disbitset15.txt");
+            disbitset16Template                = loadOneTemplate("disbitset16.txt");
+            disbitset2Template                 = loadOneTemplate("disbitset2.txt");
+            disbitsetcommentxrefTemplate       = loadOneTemplate("disbitsetcommentxref.txt");
+            disbitsetcommentTemplate           = loadOneTemplate("disbitsetcomment.txt");
         }
         catch (Exception ex) {
             throw new RuntimeException(ex);
@@ -550,7 +552,7 @@ public class GenerateEnumerations
             if (otherIf != null)
                 additionalInterface = ", " + otherIf;
 
-            sb.append(String.format(dictEnumTemplate1, sisoSpecificationTitleDate, packageName, "UID " + el.uid, classNameCorrected, additionalInterface));
+            sb.append(String.format(disdictenumpart1Template, sisoSpecificationTitleDate, packageName, "UID " + el.uid, classNameCorrected, additionalInterface));
 
             // enumerations section
             dictNames.clear();
@@ -564,7 +566,7 @@ public class GenerateEnumerations
                 if (!dictNames.contains(name))
                 {
                      String fullName = row.description.replaceAll("\"", "").replaceAll("\'", "").replaceAll("&", "&amp;");
-                     sb.append(String.format(dictEnumTemplate2, name, fullName, name, fullName)); // first Javadoc then enumeration pair
+                     sb.append(String.format(disdictenumpart2Template, name, fullName, name, fullName)); // first Javadoc then enumeration pair
                      dictNames.add(name);
                 }
                 else System.out.println("   Duplicate dictionary entry for " + name + " in " + clsName);
@@ -575,7 +577,7 @@ public class GenerateEnumerations
             sb.append(";\n");
 
             // footer section
-            sb.append(String.format(dictEnumTemplate3, classNameCorrected, classNameCorrected));
+            sb.append(String.format(disdictenumpart3Template, classNameCorrected, classNameCorrected));
 
             // save file
             File targetFile = new File(outputDirectory, classNameCorrected + ".java");
@@ -620,7 +622,7 @@ public class GenerateEnumerations
       
             String otherInf = uid2ExtraInterface.get(el.uid);
 
-            sb.append(String.format(bitsetTemplate1, packageName, sisoSpecificationTitleDate, "UID " + el.uid, el.size, el.name, classNameCorrected, (otherInf==null?"":"implements "+otherInf)));
+            sb.append(String.format(disbitset1Template, packageName, sisoSpecificationTitleDate, "UID " + el.uid, el.size, el.name, classNameCorrected, (otherInf==null?"":"implements "+otherInf)));
             enumNames.clear();
             if (el.elems.size() > MAX_ENUMERATIONS)
             {
@@ -632,20 +634,20 @@ public class GenerateEnumerations
                 if (row.xrefclassuid != null)
                     xrefName = uidClassNames.get(row.xrefclassuid); //Main.this.uid2ClassName.getProperty(row.xrefclassuid);
                 if (xrefName != null) {
-                    sb.append(String.format(bitsetXrefCommentTemplate, htmlize((row.description==null?"":row.description.replaceAll("\"", "").replaceAll("\'", "")+", ")),xrefName));
-                    sb.append(String.format(bitsetTemplate16, createEnumName(row.name), row.bitposition, row.length, xrefName));
+                    sb.append(String.format(disbitsetcommentxrefTemplate, htmlize((row.description==null?"":row.description.replaceAll("\"", "").replaceAll("\'", "")+", ")),xrefName));
+                    sb.append(String.format(disbitset16Template, createEnumName(row.name), row.bitposition, row.length, xrefName));
                 }
                 else {
                     if(row.description != null)
-                        sb.append(String.format(bitsetCommentTemplate, (htmlize(row.description.replaceAll("\"", "").replaceAll("\'", "")))));
-                    sb.append(String.format(bitsetTemplate15, createEnumName(row.name), row.bitposition, row.length));
+                        sb.append(String.format(disbitsetcommentTemplate, (htmlize(row.description.replaceAll("\"", "").replaceAll("\'", "")))));
+                    sb.append(String.format(disbitset15Template, createEnumName(row.name), row.bitposition, row.length));
                 }
             });
             if (el.elems.size() > 0)
                 sb.setLength(sb.length() - 2);
             sb.append(";\n");
 
-            sb.append(String.format(bitsetTemplate2, classNameCorrected, el.size, classNameCorrected, classNameCorrected, classNameCorrected, classNameCorrected, classNameCorrected));
+            sb.append(String.format(disbitset2Template, classNameCorrected, el.size, classNameCorrected, classNameCorrected, classNameCorrected, classNameCorrected, classNameCorrected));
 
             // save file
             File targetFile = new File(outputDirectory, classNameCorrected + ".java");
@@ -728,9 +730,9 @@ public class GenerateEnumerations
             */
             /* enumeration initial template, de-spacify name */
             if(el.footnote == null)
-              sb.append(String.format(enumTemplate1,             packageName, sisoSpecificationTitleDate,  "UID " + el.uid, el.size, el.name, classNameCorrected, additionalInterface));
+              sb.append(String.format(disenumpart1Template,             packageName, sisoSpecificationTitleDate,  "UID " + el.uid, el.size, el.name,                  classNameCorrected, additionalInterface));
             else
-              sb.append(String.format(enumTemplate1WithFootnote, packageName, sisoSpecificationTitleDate,  "UID " + el.uid, el.size, el.name, el.footnote, classNameCorrected, additionalInterface));
+              sb.append(String.format(disenumpart1withfootnoteTemplate, packageName, sisoSpecificationTitleDate,  "UID " + el.uid, el.size, el.name, el.footnote, classNameCorrected, additionalInterface));
 
             enumNames.clear();
             // enum section
@@ -740,7 +742,7 @@ public class GenerateEnumerations
                 if (el.name != null)
                        elementName = el.name;
                 sb.append("   /** Constructor initialization */");
-                sb.append(String.format(enumTemplate2, "SELF", "0", elementName + " details not found in SISO spec"));
+                sb.append(String.format(disenumpart2Template, "SELF", "0", elementName + " details not found in SISO spec"));
                 // TODO resolve
                 System.err.println("*** " + elementName + " uid='" + el.uid + "' has no child element (further SELF details not found in SISO reference)");
             }
@@ -814,18 +816,18 @@ public class GenerateEnumerations
             if (el.size == null)
                 el.size = "8";
 
-            sb.append(String.format(enumTemplate25, classNameCorrected, el.size, classNameCorrected, classNameCorrected, classNameCorrected, classNameCorrected));
+            sb.append(String.format(disenumpart25Template, classNameCorrected, el.size, classNameCorrected, classNameCorrected, classNameCorrected, classNameCorrected));
 
             // footer section
             // Many enums come in with smaller bit widths or in-between bitwidths;  Leave handling the odd balls up to the user 
             // but figure out the smallest primitive size needed to hold it.
             int sz = Integer.parseInt(el.size);
             if(sz <= 8)
-               sb.append(String.format(enumTemplate3_8, classNameCorrected, classNameCorrected, classNameCorrected));
+               sb.append(String.format(disenumpart3_8Template, classNameCorrected, classNameCorrected, classNameCorrected));
             else if(sz <= 16)
-               sb.append(String.format(enumTemplate3_16, classNameCorrected, classNameCorrected, classNameCorrected));
+               sb.append(String.format(disenumpart3_16Template, classNameCorrected, classNameCorrected, classNameCorrected));
             else
-               sb.append(String.format(enumTemplate3_32, classNameCorrected, classNameCorrected, classNameCorrected));
+               sb.append(String.format(disenumpart3_32Template, classNameCorrected, classNameCorrected, classNameCorrected));
 
             // save file
             File targetFile = new File(outputDirectory, classNameCorrected + ".java");
@@ -862,18 +864,18 @@ public class GenerateEnumerations
             additionalRowStringBuilder.setLength(additionalRowStringBuilder.length() - 2);
             additionalRowStringBuilder.append("; /*here*/\n");
 
-            additionalRowStringBuilder.append(String.format(enumTemplate25, classNameCorrected, el.size, classNameCorrected, classNameCorrected, classNameCorrected, classNameCorrected));
+            additionalRowStringBuilder.append(String.format(disenumpart25Template, classNameCorrected, el.size, classNameCorrected, classNameCorrected, classNameCorrected, classNameCorrected));
 
             // footer section
             // Many enums come in with smaller bit widths or in-between bitwidths;  Leave handling the odd balls up to the user
             // but figure out the smallest primitive size needed to hold it.
             sz = Integer.parseInt(el.size);
             if(sz <= 8)
-               additionalRowStringBuilder.append(String.format(enumTemplate3_8,  classNameCorrected, classNameCorrected, classNameCorrected));
+               additionalRowStringBuilder.append(String.format(disenumpart3_8Template,  classNameCorrected, classNameCorrected, classNameCorrected));
             else if(sz <= 16)
-               additionalRowStringBuilder.append(String.format(enumTemplate3_16, classNameCorrected, classNameCorrected, classNameCorrected));
+               additionalRowStringBuilder.append(String.format(disenumpart3_16Template, classNameCorrected, classNameCorrected, classNameCorrected));
             else
-               additionalRowStringBuilder.append(String.format(enumTemplate3_32, classNameCorrected, classNameCorrected, classNameCorrected));
+               additionalRowStringBuilder.append(String.format(disenumpart3_32Template, classNameCorrected, classNameCorrected, classNameCorrected));
 
             // save file
             targetFile = new File(outputDirectory, classNameCorrected + ".java"); // already appended ADDITIONAL_ENUMERATION_FILE_SUFFIX
@@ -913,12 +915,12 @@ public class GenerateEnumerations
           xrefName = uidClassNames.get(row.xrefclassuid);
 
         if (xrefName == null) {
-          sb.append(String.format(enumFootnoteCommentTemplate, htmlize(row.description.replaceAll("\"", "").replaceAll("\'", "")) + (row.footnote == null ? "" : ", " + htmlize(row.footnote))));
-          sb.append(String.format(enumTemplate2, enumName, row.value, row.description.replaceAll("\"", "").replaceAll("\'", "")));
+          sb.append(String.format(disenumfootnotecommentTemplate, htmlize(row.description.replaceAll("\"", "").replaceAll("\'", "")) + (row.footnote == null ? "" : ", " + htmlize(row.footnote))));
+          sb.append(String.format(disenumpart2Template, enumName, row.value, row.description.replaceAll("\"", "").replaceAll("\'", "")));
         }
         else {
-          sb.append(String.format(enumCommentTemplate, xrefName));
-          sb.append(String.format(enumTemplate21, createEnumName(row.description.replaceAll("\"", "").replaceAll("\'", "")), row.value, row.description.replaceAll("\"", "").replaceAll("\'", ""), xrefName));
+          sb.append(String.format(disenumcommentTemplate, xrefName));
+          sb.append(String.format(disenumpart21Template, createEnumName(row.description.replaceAll("\"", "").replaceAll("\'", "")), row.value, row.description.replaceAll("\"", "").replaceAll("\'", ""), xrefName));
         }
       }
         /**

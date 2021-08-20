@@ -42,8 +42,8 @@ public class GenerateEntityTypes
 
   private BufferedWriter uid2ClassWriter = null;
     
-  String entityCommonTemplate;
-  String uidFactoryTemplate;
+  String entitytypecommonTemplate;
+  String uidfactoryTemplate;
 
   class DataPkt
   {
@@ -106,8 +106,8 @@ public class GenerateEntityTypes
             packageInfoBuilder.append(" *      <li> <a href=\"https://www.sisostds.org/DigitalLibrary.aspx?Command=Core_Download&EntryId=47284\" target=\"SISO-REF-10.1\">SISO-REF-10.1-2019 Reference for Enumerations for Simulation, Operations Manual</a></li> </ul>\n");
             packageInfoBuilder.append("\n");
             packageInfoBuilder.append(" * @see java.lang.Package\n");
-            packageInfoBuilder.append(" * @see <a href=\"https://stackoverflow.com/questions/22095487/why-is-package-info-java-useful\">https://stackoverflow.com/questions/22095487/why-is-package-info-java-useful</a>\n");
-            packageInfoBuilder.append(" * @see <a href=\"https://stackoverflow.com/questions/624422/how-do-i-document-packages-in-java\">https://stackoverflow.com/questions/624422/how-do-i-document-packages-in-java</a>\n");
+            packageInfoBuilder.append(" * @see <a href=\"https://stackoverflow.com/questions/22095487/why-is-package-info-java-useful\">Stack Overflow: why-is-package-info-java-useful</a>\n");
+            packageInfoBuilder.append(" * @see <a href=\"https://stackoverflow.com/questions/624422/how-do-i-document-packages-in-java\">Stack Overflow: how-do-i-document-packages-in-java</a>\n");
             packageInfoBuilder.append(" */\n");
             packageInfoBuilder.append("\n");
             packageInfoBuilder.append("package edu.nps.moves.dis7.entities;\n");
@@ -258,8 +258,8 @@ public class GenerateEntityTypes
   private void loadTemplates()
   {
     try {
-      entityCommonTemplate = loadOneTemplate("entitytypecommon.txt");
-      uidFactoryTemplate   = loadOneTemplate("uidfactory.txt");
+      entitytypecommonTemplate = loadOneTemplate("entitytypecommon.txt");
+      uidfactoryTemplate       = loadOneTemplate("uidfactory.txt");
     }
     catch (Exception ex) {
       throw new RuntimeException(ex);
@@ -273,7 +273,7 @@ public class GenerateEntityTypes
   
   private void saveUidFactory()
   {
-    saveFile(outputDirectory, "EntityTypeFactory.java",uidFactoryTemplate);
+    saveFile(outputDirectory, "EntityTypeFactory.java",uidfactoryTemplate);
   }
   
   class DescriptionElem
@@ -577,13 +577,13 @@ public class GenerateEntityTypes
                 packageInfoBuilder.append(" * Infrastructure classes for ").append(sisoSpecificationTitleDate).append(" enumerations supporting <a href=\"https://github.com/open-dis/open-dis7-java\" target=\"open-dis7-java\">open-dis7-java</a> library.\n");
                 packageInfoBuilder.append("\n");
                 packageInfoBuilder.append(" * <p> Online: NPS <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500\" target=\"MV3500\">MV3500 Networked Simulation course</a> \n");
-            packageInfoBuilder.append(" * links to <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/tree/master/specifications/README.md\" target=\"README.MV3500\">IEEE and SISO specification references</a> of interest. </p>\n");
-            packageInfoBuilder.append(" * <ul> <li> <a href=\"https://www.sisostds.org/DigitalLibrary.aspx?Command=Core_Download&EntryId=46172\" target=\"SISO-REF-010\" >SISO-REF-010-2020 Reference for Enumerations for Simulation Interoperability</a> </li> \n");
-            packageInfoBuilder.append(" *      <li> <a href=\"https://www.sisostds.org/DigitalLibrary.aspx?Command=Core_Download&EntryId=47284\" target=\"SISO-REF-10.1\">SISO-REF-10.1-2019 Reference for Enumerations for Simulation, Operations Manual</a></li> </ul>\n");
+                packageInfoBuilder.append(" * links to <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/tree/master/specifications/README.md\" target=\"README.MV3500\">IEEE and SISO specification references</a> of interest. </p>\n");
+                packageInfoBuilder.append(" * <ul> <li> <a href=\"https://www.sisostds.org/DigitalLibrary.aspx?Command=Core_Download&EntryId=46172\" target=\"SISO-REF-010\" >SISO-REF-010-2020 Reference for Enumerations for Simulation Interoperability</a> </li> \n");
+                packageInfoBuilder.append(" *      <li> <a href=\"https://www.sisostds.org/DigitalLibrary.aspx?Command=Core_Download&EntryId=47284\" target=\"SISO-REF-10.1\">SISO-REF-10.1-2019 Reference for Enumerations for Simulation, Operations Manual</a></li> </ul>\n");
                 packageInfoBuilder.append("\n");
                 packageInfoBuilder.append(" * @see java.lang.Package\n");
-                packageInfoBuilder.append(" * @see <a href=\"https://stackoverflow.com/questions/22095487/why-is-package-info-java-useful\">https://stackoverflow.com/questions/22095487/why-is-package-info-java-useful</a>\n");
-                packageInfoBuilder.append(" * @see <a href=\"https://stackoverflow.com/questions/624422/how-do-i-document-packages-in-java\">https://stackoverflow.com/questions/624422/how-do-i-document-packages-in-java</a>\n");
+                packageInfoBuilder.append(" * @see <a href=\"https://stackoverflow.com/questions/22095487/why-is-package-info-java-useful\">Stack Overflow: why-is-package-info-java-useful</a>\n");
+                packageInfoBuilder.append(" * @see <a href=\"https://stackoverflow.com/questions/624422/how-do-i-document-packages-in-java\">Stack Overflow: how-do-i-document-packages-in-java</a>\n");
                 packageInfoBuilder.append(" */\n");
                 packageInfoBuilder.append("\n");
                 packageInfoBuilder.append("package ").append(data.pkg).append(";\n");
@@ -605,7 +605,7 @@ public class GenerateEntityTypes
   
     private void appendCommonStatements(DataPkt data)
     {
-      String contents = String.format(entityCommonTemplate, data.pkg, 
+      String contents = String.format(entitytypecommonTemplate, data.pkg, 
                                       sisoSpecificationTitleDate, data.fullName, 
                                       data.countryNamePretty, data.entKindNmDescription, data.domainValue, data.entityUid,
                                       data.clsNm, data.clsNm, data.countryNm, data.entKindNm, data.domainName, data.domainValue);
