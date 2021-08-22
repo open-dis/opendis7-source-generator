@@ -47,7 +47,8 @@
             <xsl:text>&#10;</xsl:text>
         </xsl:variable>
         <xsl:variable name="tableHeader">
-            <xsl:text>| PDU familes and PDUs | Relevant? | /*JavaDoc*/ | SchemaDoc | IEEE Spec |</xsl:text>
+                  <!--| PDU familes and PDUs | Assess    | Javadoc   | Schemadoc | IEEE Spec |-->
+            <xsl:text>| PDU familes and PDUs | Assess    |           |           | IEEE Spec |</xsl:text>
             <xsl:text>&#10;</xsl:text>
             <xsl:value-of select="$tableFooter"/>
         </xsl:variable>
@@ -88,16 +89,21 @@
                 <xsl:text>. </xsl:text>
                 <xsl:value-of select="$pduName"/>
                 <xsl:text> |</xsl:text>
-                <xsl:text disable-output-escaping="yes"> &lt;ul&gt;&lt;li&gt;</xsl:text>
-                <xsl:text> - [ ]</xsl:text><!-- empty checkbox -->
-                <xsl:text disable-output-escaping="yes"> &lt;/li&gt;&lt;/ul&gt;</xsl:text>
+                <xsl:text disable-output-escaping="yes"> &lt;ul&gt;</xsl:text>
+                <xsl:text disable-output-escaping="yes"> &lt;li&gt;</xsl:text>
+                <xsl:text> - [ ] relevant?</xsl:text><!-- empty checkbox -->
+                <xsl:text disable-output-escaping="yes"> &lt;/li&gt;</xsl:text>
+                <xsl:text disable-output-escaping="yes"> &lt;li&gt;</xsl:text>
+                <xsl:text> - [ ] in use?</xsl:text><!-- empty checkbox -->
+                <xsl:text disable-output-escaping="yes"> &lt;/li&gt;</xsl:text>
+                <xsl:text disable-output-escaping="yes"> &lt;/ul&gt;</xsl:text>
                 <xsl:text> |</xsl:text>
-                <xsl:text> [javadoc](</xsl:text>
+                <xsl:text> [Javadoc](</xsl:text>
                 <xsl:value-of select="$javadocPdusUrl"/>
                 <xsl:value-of select="$pduName"/>
                 <xsl:text>.html)</xsl:text>
                 <xsl:text> |</xsl:text>
-                <xsl:text> [schemadoc](</xsl:text>
+                <xsl:text> [Schemadoc](</xsl:text>
                 <xsl:value-of select="$schemadocPdusUrl"/>
                 <xsl:value-of select="$pduName"/>
                 <xsl:text>.html)</xsl:text>
