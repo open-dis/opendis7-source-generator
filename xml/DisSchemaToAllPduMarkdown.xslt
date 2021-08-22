@@ -43,11 +43,11 @@
         </xsl:variable>
         
         <xsl:variable name="tableFooter">
-            <xsl:text>|----------------------|-----------|-----------|-----------|-----------|</xsl:text>
+            <xsl:text>|----------------------|:---------:|-----------|-----------|-----------|</xsl:text>
             <xsl:text>&#10;</xsl:text>
         </xsl:variable>
         <xsl:variable name="tableHeader">
-            <xsl:text>| PDU familes and PDUs | Relevant? | SchemaDoc | JavaDoc   | IEEE Spec |</xsl:text>
+            <xsl:text>| PDU familes and PDUs | Relevant? | /*JavaDoc*/ | SchemaDoc | IEEE Spec |</xsl:text>
             <xsl:text>&#10;</xsl:text>
             <xsl:value-of select="$tableFooter"/>
         </xsl:variable>
@@ -62,9 +62,9 @@
             
             <xsl:value-of select="$tableHeader"/>
             <xsl:text>| </xsl:text>
-            <xsl:text>## </xsl:text>
+            <xsl:text>'</xsl:text>
             <xsl:value-of select="$complexTypeName"/>
-            <xsl:text> |</xsl:text>
+            <xsl:text>' |</xsl:text>
             <!--
             <xsl:value-of select="count($pdusWithMatchingComplexType)"/>
             <xsl:text> PDUs</xsl:text>
@@ -88,7 +88,10 @@
                 <xsl:text>. </xsl:text>
                 <xsl:value-of select="$pduName"/>
                 <xsl:text> |</xsl:text>
-                <xsl:text> [ ] |</xsl:text><!-- empty checkbox -->
+                <xsl:text disable-output-escaping="yes"> &lt;ul&gt;&lt;li&gt;</xsl:text>
+                <xsl:text> - [ ]</xsl:text><!-- empty checkbox -->
+                <xsl:text disable-output-escaping="yes"> &lt;/li&gt;&lt;/ul&gt;</xsl:text>
+                <xsl:text> |</xsl:text>
                 <xsl:text> [javadoc](</xsl:text>
                 <xsl:value-of select="$javadocPdusUrl"/>
                 <xsl:value-of select="$pduName"/>
@@ -99,7 +102,7 @@
                 <xsl:value-of select="$pduName"/>
                 <xsl:text>.html)</xsl:text>
                 <xsl:text> |</xsl:text>
-                <xsl:text> TODO spec paragraph</xsl:text>
+                <xsl:text> TODO</xsl:text><!-- spec paragraph -->
                 <xsl:text> |</xsl:text>
                 <xsl:text>&#10;</xsl:text>
             </xsl:for-each><!-- PDU -->
