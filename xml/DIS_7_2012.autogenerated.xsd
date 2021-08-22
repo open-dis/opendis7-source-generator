@@ -4942,7 +4942,7 @@
          </xs:complexContent>
       </xs:complexType>
    </xs:element>
-   <!--EntityInformationFamilyPdus.xml contains 8 classes-->
+   <!--EntityInformationFamilyPdus.xml contains 7 classes-->
    <xs:complexType name="EntityInformationInteractionFamilyPduType" abstract="true">
       <xs:annotation>
          <xs:appinfo>Section 5.3.3. Common superclass for EntityState, Collision, collision-elastic, and
@@ -5456,219 +5456,6 @@
                      <xs:appinfo>This field shall specify the dynamic changes to the entity's appearance attributes.
                         This field shall be represented by an Entity Appearance record (see 6.2.26).
                      </xs:appinfo>
-                  </xs:annotation>
-               </xs:attribute>
-            </xs:extension>
-         </xs:complexContent>
-      </xs:complexType>
-   </xs:element>
-   <xs:element name="FastEntityStatePdu">
-      <xs:annotation>
-         <xs:appinfo>Represents the position and state of one entity in the world. This is identical in
-            function to entity state pdu, but generates less garbage to collect in the Java world.
-            Section 7.2.2. (length of list found in field numberOfVariableParameters)
-         </xs:appinfo>
-      </xs:annotation>
-      <xs:complexType>
-         <xs:complexContent>
-            <xs:extension base="EntityInformationInteractionFamilyPduType">
-               <xs:sequence>
-                  <!--Attribute (as element) FastEntityStatePdu variableParameters with objectlist classRef name=VariableParameter, type=VariableParameterType-->
-                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
-                     <xs:annotation>
-                        <xs:appinfo>Number of elements is determined by size fieldnumberOfVariableParameters and can be 0 or greater.
-                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
-                        </xs:appinfo>
-                        <xs:documentation>numberOfVariableParameters</xs:documentation>
-                     </xs:annotation>
-                     <xs:element name="VariableParameter" type="VariableParameterType">
-                        <xs:annotation>
-                           <xs:appinfo>variable length list of variable parameters. In earlier versions of DIS these were
-                              known as articulation parameters (length of list found in field numberOfVariableParameters)
-                           </xs:appinfo>
-                        </xs:annotation>
-                     </xs:element>
-                  </xs:sequence>
-               </xs:sequence>
-               <!-- ========== debug: divider between elements and attributes ========== -->
-               <xs:attribute name="family" fixed="EntityInformationInteractionFamilyPduType"></xs:attribute>
-               <xs:attribute name="site" type="xs:unsignedShort">
-                  <xs:annotation>
-                     <xs:appinfo>The site ID</xs:appinfo>
-                  </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="application" type="xs:unsignedShort">
-                  <xs:annotation>
-                     <xs:appinfo>The application ID</xs:appinfo>
-                  </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="entity" type="xs:unsignedShort">
-                  <xs:annotation>
-                     <xs:appinfo>the entity ID</xs:appinfo>
-                  </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="forceId" type="xs:unsignedByte">
-                  <xs:annotation>
-                     <xs:appinfo>what force this entity is affiliated with, eg red, blue, neutral, etc</xs:appinfo>
-                  </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="numberOfVariableParameters" type="xs:unsignedByte">
-                  <xs:annotation>
-                     <xs:appinfo>How many variable (nee articulation) parameters are in the variable length list</xs:appinfo>
-                  </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="entityKind" type="xs:unsignedByte">
-                  <xs:annotation>
-                     <xs:appinfo>Kind of entity</xs:appinfo>
-                  </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="domain" type="xs:unsignedByte">
-                  <xs:annotation>
-                     <xs:appinfo>Domain of entity (air, surface, subsurface, space, etc.)</xs:appinfo>
-                  </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="country" type="xs:unsignedShort">
-                  <xs:annotation>
-                     <xs:appinfo>country to which the design of the entity is attributed</xs:appinfo>
-                  </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="category" type="xs:unsignedByte">
-                  <xs:annotation>
-                     <xs:appinfo>category of entity</xs:appinfo>
-                  </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="subcategory" type="xs:unsignedByte">
-                  <xs:annotation>
-                     <xs:appinfo>subcategory of entity</xs:appinfo>
-                  </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="specific" type="xs:unsignedByte">
-                  <xs:annotation>
-                     <xs:appinfo>specific info based on subcategory field</xs:appinfo>
-                  </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="extra" type="xs:unsignedByte"></xs:attribute>
-               <xs:attribute name="altEntityKind" type="xs:unsignedByte">
-                  <xs:annotation>
-                     <xs:appinfo>Kind of entity</xs:appinfo>
-                  </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="altDomain" type="xs:unsignedByte">
-                  <xs:annotation>
-                     <xs:appinfo>Domain of entity (air, surface, subsurface, space, etc.)</xs:appinfo>
-                  </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="altCountry" type="xs:unsignedShort">
-                  <xs:annotation>
-                     <xs:appinfo>country to which the design of the entity is attributed</xs:appinfo>
-                  </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="altCategory" type="xs:unsignedByte">
-                  <xs:annotation>
-                     <xs:appinfo>category of entity</xs:appinfo>
-                  </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="altSubcategory" type="xs:unsignedByte">
-                  <xs:annotation>
-                     <xs:appinfo>subcategory of entity</xs:appinfo>
-                  </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="altSpecific" type="xs:unsignedByte">
-                  <xs:annotation>
-                     <xs:appinfo>specific info based on subcategory field</xs:appinfo>
-                  </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="altExtra" type="xs:unsignedByte"></xs:attribute>
-               <xs:attribute name="xVelocity" type="xs:float">
-                  <xs:annotation>
-                     <xs:appinfo>X velo</xs:appinfo>
-                  </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="yVelocity" type="xs:float">
-                  <xs:annotation>
-                     <xs:appinfo>y Value</xs:appinfo>
-                  </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="zVelocity" type="xs:float">
-                  <xs:annotation>
-                     <xs:appinfo>Z value</xs:appinfo>
-                  </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="xLocation" type="xs:double">
-                  <xs:annotation>
-                     <xs:appinfo>X value</xs:appinfo>
-                  </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="yLocation" type="xs:double">
-                  <xs:annotation>
-                     <xs:appinfo>y Value</xs:appinfo>
-                  </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="zLocation" type="xs:double">
-                  <xs:annotation>
-                     <xs:appinfo>Z value</xs:appinfo>
-                  </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="psi" type="xs:float"></xs:attribute>
-               <xs:attribute name="theta" type="xs:float"></xs:attribute>
-               <xs:attribute name="phi" type="xs:float"></xs:attribute>
-               <xs:attribute name="entityAppearance" type="xs:unsignedLong">
-                  <xs:annotation>
-                     <xs:appinfo>a series of bit flags that are used to help draw the entity, such as smoking, on fire,
-                        etc.
-                     </xs:appinfo>
-                  </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="deadReckoningAlgorithm" type="xs:unsignedByte">
-                  <xs:annotation>
-                     <xs:appinfo>enumeration of what dead reckoning algorighm to use</xs:appinfo>
-                  </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="otherParameters">
-                  <xs:annotation>
-                     <xs:appinfo>other parameters to use in the dead reckoning algorithm</xs:appinfo>
-                  </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="xAcceleration" type="xs:float">
-                  <xs:annotation>
-                     <xs:appinfo>X value</xs:appinfo>
-                  </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="yAcceleration" type="xs:float">
-                  <xs:annotation>
-                     <xs:appinfo>y Value</xs:appinfo>
-                  </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="zAcceleration" type="xs:float">
-                  <xs:annotation>
-                     <xs:appinfo>Z value</xs:appinfo>
-                  </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="xAngularVelocity" type="xs:float">
-                  <xs:annotation>
-                     <xs:appinfo>X value</xs:appinfo>
-                  </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="yAngularVelocity" type="xs:float">
-                  <xs:annotation>
-                     <xs:appinfo>y Value</xs:appinfo>
-                  </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="zAngularVelocity" type="xs:float">
-                  <xs:annotation>
-                     <xs:appinfo>Z value</xs:appinfo>
-                  </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="marking">
-                  <xs:annotation>
-                     <xs:appinfo>characters that can be used for debugging, or to draw unique strings on the side of
-                        entities in the world
-                     </xs:appinfo>
-                  </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="capabilities" type="xs:unsignedShort">
-                  <xs:annotation>
-                     <xs:appinfo>a series of bit flags</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
             </xs:extension>
@@ -7236,7 +7023,7 @@
          </xs:complexContent>
       </xs:complexType>
    </xs:element>
-   <!--RadioCommunicationsFamilyPdus.xml contains 6 classes-->
+   <!--RadioCommunicationsFamilyPdus.xml contains 8 classes-->
    <xs:complexType name="RadioCommunicationsFamilyPduType" abstract="true">
       <xs:annotation>
          <xs:appinfo>Abstract superclass for radio communications PDUs. Section 7.7
@@ -7351,6 +7138,78 @@
          </xs:extension>
       </xs:complexContent>
    </xs:complexType>
+   <xs:element name="IntercomSignalPdu">
+      <xs:annotation>
+         <xs:appinfo>5.8.6 Conveys the audio or digital data that is used to communicate between simulated
+            intercom devices (length of list found in field dataLength)
+            <xs:attribute name="id" type="xs:integer" fixed="31"></xs:attribute>
+         </xs:appinfo>
+      </xs:annotation>
+      <xs:complexType>
+         <xs:complexContent>
+            <xs:extension base="RadioCommunicationsFamilyPduType">
+               <xs:sequence>
+                  <xs:element name="intercomReferenceID" type="IntercomReferenceIDType"></xs:element>
+               </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
+               <xs:attribute name="family" fixed="RadioCommunicationsFamilyPduType"></xs:attribute>
+               <xs:attribute name="intercomNumber" type="xs:unsignedShort">
+                  <xs:annotation>
+                     <xs:appinfo>ID of communications device</xs:appinfo>
+                  </xs:annotation>
+               </xs:attribute>
+               <xs:attribute name="encodingScheme" type="xs:unsignedShort">
+                  <xs:annotation>
+                     <xs:appinfo>encoding scheme</xs:appinfo>
+                  </xs:annotation>
+               </xs:attribute>
+               <xs:attribute name="tdlType" type="xs:string">
+                  <xs:annotation>
+                     <xs:appinfo>tactical data link type (SISO enumeration SignalTDLType uid 178)</xs:appinfo>
+                  </xs:annotation>
+               </xs:attribute>
+               <xs:attribute name="sampleRate" type="xs:unsignedLong">
+                  <xs:annotation>
+                     <xs:appinfo>sample rate</xs:appinfo>
+                  </xs:annotation>
+               </xs:attribute>
+               <xs:attribute name="dataLength" type="xs:unsignedShort">
+                  <xs:annotation>
+                     <xs:appinfo>data length</xs:appinfo>
+                  </xs:annotation>
+               </xs:attribute>
+               <xs:attribute name="samples" type="xs:unsignedShort">
+                  <xs:annotation>
+                     <xs:appinfo>samples</xs:appinfo>
+                  </xs:annotation>
+               </xs:attribute>
+               <xs:attribute name="data">
+                  <xs:annotation>
+                     <xs:appinfo>data bytes (length of list found in field dataLength)</xs:appinfo>
+                  </xs:annotation>
+                  <xs:simpleType>
+                     <xs:annotation>
+                        <xs:appinfo>Attribute dataLength determines the length of this list.</xs:appinfo>
+                     </xs:annotation>
+                     <xs:restriction>
+                        <xs:simpleType>
+                           <xs:list itemType="xs:unsignedByte"></xs:list>
+                        </xs:simpleType>
+                        <xs:length value="0" fixed="false"></xs:length>
+                     </xs:restriction>
+                  </xs:simpleType>
+               </xs:attribute>
+               <xs:attribute name="padTo32" type="xs:unsignedLong">
+                  <xs:annotation>
+                     <xs:appinfo>Wireshark (incorrectly) reports malformed packet unless the whole datagram is aligned
+                        to 32-bit boundary; spec says only the pdu
+                     </xs:appinfo>
+                  </xs:annotation>
+               </xs:attribute>
+            </xs:extension>
+         </xs:complexContent>
+      </xs:complexType>
+   </xs:element>
    <xs:complexType name="RadioCommsHeaderType">
       <!--debug: another class, providing Pdu types-->
       <xs:complexContent>
@@ -7409,6 +7268,62 @@
                <xs:attribute name="transmitterRadioId" type="xs:unsignedShort">
                   <xs:annotation>
                      <xs:appinfo>ID of transmitting radio</xs:appinfo>
+                  </xs:annotation>
+               </xs:attribute>
+            </xs:extension>
+         </xs:complexContent>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="SignalPdu">
+      <xs:annotation>
+         <xs:appinfo>5.8.4 Conveys the audio or digital data carried by the simulated radio or intercom
+            transmission.
+            <xs:attribute name="id" type="xs:integer" fixed="26"></xs:attribute>
+         </xs:appinfo>
+      </xs:annotation>
+      <xs:complexType>
+         <xs:complexContent>
+            <xs:extension base="RadioCommunicationsFamilyPduType">
+               <xs:sequence>
+                  <xs:element name="header" type="RadioCommsHeaderType"></xs:element>
+               </xs:sequence>
+               <!-- ========== debug: divider between elements and attributes ========== -->
+               <xs:attribute name="family" fixed="RadioCommunicationsFamilyPduType"></xs:attribute>
+               <xs:attribute name="encodingScheme" type="xs:unsignedShort">
+                  <xs:annotation>
+                     <xs:appinfo>encoding scheme used, and enumeration</xs:appinfo>
+                  </xs:annotation>
+               </xs:attribute>
+               <xs:attribute name="tdlType" type="xs:string">
+                  <xs:annotation>
+                     <xs:appinfo>tdl type (SISO enumeration SignalTDLType uid 178)</xs:appinfo>
+                  </xs:annotation>
+               </xs:attribute>
+               <xs:attribute name="sampleRate" type="xs:unsignedLong">
+                  <xs:annotation>
+                     <xs:appinfo>sample rate</xs:appinfo>
+                  </xs:annotation>
+               </xs:attribute>
+               <xs:attribute name="dataLength" type="xs:unsignedShort">
+                  <xs:annotation>
+                     <xs:appinfo>length of data in bits</xs:appinfo>
+                  </xs:annotation>
+               </xs:attribute>
+               <xs:attribute name="samples" type="xs:unsignedShort">
+                  <xs:annotation>
+                     <xs:appinfo>number of samples</xs:appinfo>
+                  </xs:annotation>
+               </xs:attribute>
+               <xs:attribute name="data">
+                  <xs:annotation>
+                     <xs:appinfo>list of eight bit values</xs:appinfo>
+                  </xs:annotation>
+               </xs:attribute>
+               <xs:attribute name="padTo32" type="xs:unsignedLong">
+                  <xs:annotation>
+                     <xs:appinfo>Wireshark (incorrectly) reports malformed packet unless the whole datagram is aligned
+                        to 32-bit boundary; spec says only the pdu
+                     </xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
             </xs:extension>
