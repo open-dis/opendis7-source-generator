@@ -31,6 +31,9 @@
         <xsl:apply-templates select="/xs:schema/xs:element[ends-with(@name,'Pdu')]">
             <xsl:sort select="@name" order="ascending"/>
         </xsl:apply-templates> -->
+        <xsl:text># OpenDIS version 7 PDU Families</xsl:text>
+        <xsl:text>&#10;</xsl:text>
+        <xsl:text>&#10;</xsl:text>
         
         <xsl:for-each select="/xs:schema/xs:complexType[ends-with(@name,'PduType')][not(@name = 'PduType')]">
             <xsl:sort select="@name" order="ascending"/>
@@ -40,7 +43,7 @@
                         select="/xs:schema/xs:element[ends-with(@name,'Pdu')][not(ends-with(@name,'RPdu'))][not(@name = 'SEESPdu')][not(@name = 'IFFPdu')][not(@name = 'TSPIPdu')]
                                 //xs:extension[@base = $complexTypeName]"/>
             
-            <xsl:text># </xsl:text>
+            <xsl:text>## </xsl:text>
             <xsl:value-of select="$complexTypeName"/>
             <xsl:text> includes </xsl:text>
             <xsl:value-of select="count($pdusWithMatchingComplexType)"/>
@@ -51,7 +54,8 @@
                 <xsl:sort select="ancestor::xs:element/@name" order="ascending"/>
 
                 <xsl:variable name="ancestorElement" select="ancestor::xs:element"/>
-                <xsl:text>## </xsl:text>
+                <xsl:value-of select="position()"/>
+                <xsl:text>. </xsl:text>
                 <xsl:value-of select="$ancestorElement/@name"/>
                 <xsl:text>&#10;</xsl:text>
             </xsl:for-each>
