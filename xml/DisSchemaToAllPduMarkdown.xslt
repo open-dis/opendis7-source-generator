@@ -65,13 +65,17 @@
             <xsl:text>| </xsl:text>
             <xsl:text>## </xsl:text>
             <xsl:value-of select="$complexTypeName"/>
-            <xsl:text> | </xsl:text>
+            <xsl:text> |</xsl:text>
             <!--
             <xsl:value-of select="count($pdusWithMatchingComplexType)"/>
             <xsl:text> PDUs</xsl:text>
             -->
+            <xsl:text> </xsl:text>
             <xsl:value-of select="count($pdusWithMatchingComplexType)"/>
             <xsl:text> PDUs</xsl:text>
+            <xsl:text> |</xsl:text>
+            <xsl:text> |</xsl:text>
+            <xsl:text> |</xsl:text>
             <xsl:text> |</xsl:text>
             <xsl:text>&#10;</xsl:text>
             
@@ -95,6 +99,8 @@
                 <xsl:value-of select="$schemadocPdusUrl"/>
                 <xsl:value-of select="$pduName"/>
                 <xsl:text>.html)</xsl:text>
+                <xsl:text> |</xsl:text>
+                <xsl:text> TODO spec paragraph</xsl:text>
                 <xsl:text> |</xsl:text>
                 <xsl:text>&#10;</xsl:text>
             </xsl:for-each><!-- PDU -->
