@@ -50,7 +50,6 @@
             <xsl:text>| PDU familes and PDUs | Relevant? | SchemaDoc | JavaDoc   | IEEE Spec |</xsl:text>
             <xsl:text>&#10;</xsl:text>
             <xsl:value-of select="$tableFooter"/>
-            <xsl:text>&#10;</xsl:text>
         </xsl:variable>
         
         <xsl:for-each select="/xs:schema/xs:complexType[ends-with(@name,'PduType')][not(@name = 'PduType')]">
