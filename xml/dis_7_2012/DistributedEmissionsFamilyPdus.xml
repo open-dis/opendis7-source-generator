@@ -280,7 +280,7 @@
  
     </class> 
     
-    <class name="IFFPdu" inheritsFrom="DistributedEmissionsFamilyPdu" Comment="7.6.5.1 Information about military and civilian interrogators, transponders, and specific other electronic systems. See 5.7.6">
+    <class name="IFFPdu" inheritsFrom="DistributedEmissionsFamilyPdu" comment="7.6.5.1 Information about military and civilian interrogators, transponders, and specific other electronic systems. See 5.7.6">
         
         <initialValue name="pduType" value="DisPduType.IDENTIFICATION_FRIEND_OR_FOE"/>
     
@@ -314,7 +314,7 @@
    
     </class>
     
-    <class name="IdentificationFriendOrFoePdu" comment="more descriptive name for an IFFPdu" aliasFor="IFFPdu"/>
+    <class name="IdentificationFriendOrFoePdu" comment="alias, more descriptive name for an IFFPdu." aliasFor="IFFPdu"/>
 
     <!-- basic IFF spec needs work, is incomplete, since it is impossible to unmarshall an IFFPdu and know what further layers are present, we can only go this far -->
     <class name="IFFLayer2Pdu" inheritsFrom="IFFPdu"
@@ -391,6 +391,6 @@
        
     </class>
     
-    <class name="SupplementalEmissionEntityStatePdu" comment="more descriptive name for a SEESPdu" aliasFor="SEESPdu"/>
+    <class name="SupplementalEmissionEntityStatePdu" comment="alias, more descriptive name for a SEESPdu." aliasFor="SEESPdu"/>
 
 </classes>
