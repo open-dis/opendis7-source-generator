@@ -43,12 +43,12 @@
         </xsl:variable>
         
         <xsl:variable name="tableRowDivider">
-            <xsl:text>|-------------------|:-----:|:------------------|:----------------:|:-------------------|</xsl:text>
+            <xsl:text>|-------------------|:-----:|:-------------------------|:----------------:|:-------------------|</xsl:text>
             <xsl:text>&#10;</xsl:text>
         </xsl:variable>
         <xsl:variable name="tableHeader">
-                  <!--| PDU type and PDUs | ID    |            Assess |Javadoc Schemadoc | IEEE Standard |-->
-            <xsl:text>| PDU type and PDUs | ID    | &amp;nbsp; Assess |                  | IEEE Standard 1278.1-2012 |</xsl:text>
+                  <!--| PDU type and PDUs | ID    |                   Assess |Javadoc Schemadoc | IEEE Standard |-->
+            <xsl:text>| PDU type and PDUs | ID    | &amp;nbsp; &nbsp; Assess |                  | IEEE Standard 1278.1-2012 |</xsl:text>
             <xsl:text>&#10;</xsl:text>
             <xsl:value-of select="$tableRowDivider"/>
         </xsl:variable>
