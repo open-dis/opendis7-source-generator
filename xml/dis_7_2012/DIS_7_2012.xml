@@ -2613,7 +2613,7 @@ dB and RPM)"/>
 
     <!-- VariableDatum is a special case because of complexity in dealing with the length-in-bits field -->
     
-<!--    <class name="VariableDatum" 
+   <class name="VariableDatum" 
            inheritsFrom="root" 
            comment="The variable datum type, the datum length, and the value for that variable datum type. Section 6.2.93">
 
@@ -2635,7 +2635,7 @@ dB and RPM)"/>
             <padtoboundary length="64"/>
         </attribute>
 
-    </class>-->
+    </class>
 
     <class name="VariableParameter" inheritsFrom="root" comment="used in DetonationPdu, ArticulatedPartsPdu among others">
         
