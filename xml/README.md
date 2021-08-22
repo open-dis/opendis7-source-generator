@@ -1,4 +1,4 @@
-# DIS XML
+# XML for DIS
 
 Manually prepared [XML resources](dis_7_2012) are used for autogenerating classes and enumerations.
 Note that the simple XML provided in the data-structures directory is transformed 
