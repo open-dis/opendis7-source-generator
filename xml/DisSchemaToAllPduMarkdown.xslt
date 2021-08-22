@@ -43,7 +43,7 @@
         </xsl:variable>
         
         <xsl:variable name="tableFooter">
-            <xsl:text>|----------------------|:---------:|-----------|-----------|-----------|</xsl:text>
+            <xsl:text>|----------------------|:----------|:---------:|:---------:|:---------|</xsl:text>
             <xsl:text>&#10;</xsl:text>
         </xsl:variable>
         <xsl:variable name="tableHeader">
