@@ -63,9 +63,9 @@
             
             <xsl:value-of select="$tableHeader"/>
             <xsl:text>| </xsl:text>
-            <xsl:text>`</xsl:text>
+            <xsl:text>_</xsl:text>
             <xsl:value-of select="$complexTypeName"/>
-            <xsl:text>` |</xsl:text>
+            <xsl:text>_ |</xsl:text>
             <!--
             <xsl:value-of select="count($pdusWithMatchingComplexType)"/>
             <xsl:text> PDUs</xsl:text>
