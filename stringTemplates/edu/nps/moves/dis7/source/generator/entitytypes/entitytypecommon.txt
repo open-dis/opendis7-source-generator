@@ -6,13 +6,20 @@ import edu.nps.moves.dis7.pdus.*;
 import edu.nps.moves.dis7.enumerations.*;
 
 /**
- * %s
- * name: %s;
- * Country: %s;
- * Entity kind: %s;
- * Domain: %s;
- *
- * Entity type uid: %s
+ * <ul>
+ *     <li> Country: %s = <code>%s</code> </li>
+ *     <li> Entity kind: %s = <code>%s</code> </li>
+ *     <li> Domain: %s = <code>%s</code> </li>
+ *     <li> Category: %s = <code>%s</code> </li>
+ *     <li> Subcategory: %s %s </li>
+ *     <li> Specific: %s %s </li>
+ *     <li> Entity type uid: %s </li>
+ *     <li> Full name: %s </li>
+ *     <li> Reference: %s </li>
+ * </ul>
+ * @see Country
+ * @see Domain
+ * @see EntityKind
  */
 public class %s extends EntityType
 {

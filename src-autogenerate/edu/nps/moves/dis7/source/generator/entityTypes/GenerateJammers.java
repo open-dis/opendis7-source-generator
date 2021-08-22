@@ -40,10 +40,11 @@ public class GenerateJammers
 
     String jammertechniqueTemplate;
 
-    class DataPkt
+    class TypeClassData
     {
       String pkg;
       File directory;
+      // TODO kind, category
       StringBuilder sb;
       String clsNm;
     }
@@ -83,11 +84,12 @@ public class GenerateJammers
             packageInfoFileWriter = new FileWriter(packageInfoFile, StandardCharsets.UTF_8);
             packageInfoBuilder = new StringBuilder();
             packageInfoBuilder.append("/**\n");
-            packageInfoBuilder.append(" * Infrastructure classes for ").append(sisoSpecificationTitleDate).append(" enumerations supporting <a href=\"https://github.com/open-dis/open-dis7-java\" target=\"open-dis7-java\">open-dis7-java</a> library.\n");
+            packageInfoBuilder.append(" * Jammers type infrastructure classes for ").append(sisoSpecificationTitleDate).append(" enumerations supporting <a href=\"https://github.com/open-dis/open-dis7-java\" target=\"open-dis7-java\">open-dis7-java</a> library.\n");
             packageInfoBuilder.append("\n");
-            packageInfoBuilder.append(" * <p> Online: NPS <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500\" target=\"MV3500\">MV3500 Networked Simulation course</a> \n");
-            packageInfoBuilder.append(" * links to <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/tree/master/specifications/README.md\" target=\"README.MV3500\">IEEE and SISO specification references</a> of interest. </p>\n");
-            packageInfoBuilder.append(" * <ul> <li> <a href=\"https://www.sisostds.org/DigitalLibrary.aspx?Command=Core_Download&EntryId=46172\" target=\"SISO-REF-010\" >SISO-REF-010-2020 Reference for Enumerations for Simulation Interoperability</a> </li> \n");
+            packageInfoBuilder.append(" * <p> Online: NPS <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/tree/master/examples/src/OpenDis7Examples\" target=\"MV3500\">MV3500 Networked Simulation course examples</a> \n");
+            packageInfoBuilder.append(" * which includes links to <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/tree/master/specifications/README.md\" target=\"README.MV3500\">IEEE and SISO specification references</a> of interest. </p>\n");
+            packageInfoBuilder.append(" * <ul>\n");
+            packageInfoBuilder.append(" *      <li> <a href=\"https://www.sisostds.org/DigitalLibrary.aspx?Command=Core_Download&EntryId=46172\" target=\"SISO-REF-010\" >SISO-REF-010-2020 Reference for Enumerations for Simulation Interoperability</a> </li> \n");
             packageInfoBuilder.append(" *      <li> <a href=\"https://www.sisostds.org/DigitalLibrary.aspx?Command=Core_Download&EntryId=47284\" target=\"SISO-REF-10.1\">SISO-REF-10.1-2019 Reference for Enumerations for Simulation, Operations Manual</a></li> </ul>\n");
             packageInfoBuilder.append("\n");
             packageInfoBuilder.append(" * @see java.lang.Package\n");
@@ -293,7 +295,7 @@ public class GenerateJammers
     {
     }
 
-    private void saveJammerFile(DataPkt data)
+    private void saveJammerFile(TypeClassData data)
     {
         data.sb.append("    }\n}\n");
         saveFile(data.directory, data.clsNm + ".java", data.sb.toString());
@@ -309,11 +311,12 @@ public class GenerateJammers
                 packageInfoFileWriter = new FileWriter(packageInfoFile, StandardCharsets.UTF_8);
                 packageInfoBuilder = new StringBuilder();
                 packageInfoBuilder.append("/**\n");
-                packageInfoBuilder.append(" * Infrastructure classes for ").append(sisoSpecificationTitleDate).append(" enumerations supporting <a href=\"https://github.com/open-dis/open-dis7-java\" target=\"open-dis7-java\">open-dis7-java</a> library.\n");
+                packageInfoBuilder.append(" *  Jammers type infrastructure classes for ").append(sisoSpecificationTitleDate).append(" enumerations supporting <a href=\"https://github.com/open-dis/open-dis7-java\" target=\"open-dis7-java\">open-dis7-java</a> library.\n");
                 packageInfoBuilder.append("\n");
-                packageInfoBuilder.append(" * <p> Online: NPS <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500\" target=\"MV3500\">MV3500 Networked Simulation course</a> \n");
-                packageInfoBuilder.append(" * links to <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/tree/master/specifications/README.md\" target=\"README.MV3500\">IEEE and SISO specification references</a> of interest. </p>\n");
-                packageInfoBuilder.append(" * <ul> <li> <a href=\"https://www.sisostds.org/DigitalLibrary.aspx?Command=Core_Download&EntryId=46172\" target=\"SISO-REF-010\" >SISO-REF-010-2020 Reference for Enumerations for Simulation Interoperability</a> </li> \n");
+                packageInfoBuilder.append(" * <p> Online: NPS <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/tree/master/examples/src/OpenDis7Examples\" target=\"MV3500\">MV3500 Networked Simulation course examples</a> \n");
+                packageInfoBuilder.append(" * which includes links to <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/tree/master/specifications/README.md\" target=\"README.MV3500\">IEEE and SISO specification references</a> of interest. </p>\n");
+                packageInfoBuilder.append(" * <ul>\n");
+                packageInfoBuilder.append(" *      <li> <a href=\"https://www.sisostds.org/DigitalLibrary.aspx?Command=Core_Download&EntryId=46172\" target=\"SISO-REF-010\" >SISO-REF-010-2020 Reference for Enumerations for Simulation Interoperability</a> </li> \n");
                 packageInfoBuilder.append(" *      <li> <a href=\"https://www.sisostds.org/DigitalLibrary.aspx?Command=Core_Download&EntryId=47284\" target=\"SISO-REF-10.1\">SISO-REF-10.1-2019 Reference for Enumerations for Simulation, Operations Manual</a></li> </ul>\n");
                 packageInfoBuilder.append("\n");
                 packageInfoBuilder.append(" * @see java.lang.Package\n");
@@ -338,10 +341,13 @@ public class GenerateJammers
         }
     }
 
-    private void appendCommonStatements(DataPkt data)
+    private void appendCommonStatements(TypeClassData data)
     {
       String contents = String.format(jammertechniqueTemplate, data.pkg,
-        sisoSpecificationTitleDate, "284",data.clsNm,data.clsNm);
+        sisoSpecificationTitleDate, 
+        "284", // TODO huh?
+        // TODO kind, category
+        data.clsNm,data.clsNm);
       data.sb.append(contents);
     }
 
@@ -351,9 +357,9 @@ public class GenerateJammers
       sb.append(String.format(template, elem.value, elem.description));
     }
 
-    private void writeKindFile(DataPkt d)
+    private void writeKindFile(TypeClassData d)
     {
-      DataPkt data = d;
+      TypeClassData data = d;
       if (data == null) {
         data = buildJammerCommon(fixName(currentKind), currentKind);
         appendStatement(currentKind, "Kind", data.sb);
@@ -361,9 +367,9 @@ public class GenerateJammers
       }
     }
 
-    private void writeCategoryFile(DataPkt d)
+    private void writeCategoryFile(TypeClassData d)
     {
-      DataPkt data = d;
+      TypeClassData data = d;
       if (data == null) {
         data = buildJammerCommon(fixName(currentCategory), currentCategory);
       }
@@ -375,9 +381,9 @@ public class GenerateJammers
       }
     }
 
-    private void writeSubCategoryFile(DataPkt d)
+    private void writeSubCategoryFile(TypeClassData d)
     {
-      DataPkt data = d;
+      TypeClassData data = d;
       if (data == null) {
         data = buildJammerCommon(fixName(currentSubCategory), currentSubCategory);
       }
@@ -389,9 +395,9 @@ public class GenerateJammers
         saveJammerFile(data);
     }
 
-    private void writeSpecificFile(DataPkt d) throws Exception
+    private void writeSpecificFile(TypeClassData d) throws Exception
     {
-      DataPkt data = d;
+      TypeClassData data = d;
       if (data == null) {
         data = buildJammerCommon(fixName(currentSpecific), currentSpecific);
       }
@@ -404,10 +410,10 @@ public class GenerateJammers
         saveJammerFile(data);
     }
 
-    private DataPkt buildJammerCommon(String fixedName, DescriptionElem elem)
+    private TypeClassData buildJammerCommon(String fixedName, DescriptionElem elem)
     {
       try {
-        DataPkt data = new DataPkt();
+        TypeClassData data = new TypeClassData();
         data.sb = new StringBuilder();
         buildPackagePathAbstract(elem, data.sb);
 
@@ -641,6 +647,9 @@ public class GenerateJammers
   private String fixName(String s)
   {
     String r = s.trim();
+    
+    if (r.isEmpty())
+        return r;
 
     // Convert any of these chars to underbar (u2013 is a hyphen observed in source XML):
     r = r.trim().replaceAll(",", " ").replaceAll("—"," ").replaceAll("-", " ").replaceAll("\\."," ").replaceAll("&"," ")

@@ -45,21 +45,23 @@ public class GenerateEntityTypes
   String entitytypecommonTemplate;
   String uidfactoryTemplate;
 
-  class DataPkt
+  class TypeClassData
   {
     String pkg;
     File directory;
     StringBuilder sb;
     
     private String fullName;
-    private String countryNm;
-    private String entKindNm;
-    private String domainName;
-    private String domainValue;
+    private String countryName;
+    private String countryValue;
+    private String entityKindName;
+    private String entityKindNameDescription;
+    private String entityKindValue;
+    private String entityDomainName;
+    private String entityDomainValue;
     private String clsNm;
     private String countryNamePretty;
     //private String domainPrettyName;
-    private String entKindNmDescription;
     private String entityUid;
   }
     
@@ -98,11 +100,12 @@ public class GenerateEntityTypes
             packageInfoFileWriter = new FileWriter(packageInfoFile, StandardCharsets.UTF_8);
             packageInfoBuilder = new StringBuilder();
             packageInfoBuilder.append("/**\n");
-            packageInfoBuilder.append(" * Infrastructure classes for ").append(sisoSpecificationTitleDate).append(" enumerations supporting <a href=\"https://github.com/open-dis/open-dis7-java\" target=\"open-dis7-java\">open-dis7-java</a> library.\n");
+            packageInfoBuilder.append(" * Entity type utility factory for ").append(sisoSpecificationTitleDate).append(" typed enumeration classes supporting <a href=\"https://github.com/open-dis/open-dis7-java\" target=\"open-dis7-java\">open-dis7-java</a> library.\n");
             packageInfoBuilder.append("\n");
-            packageInfoBuilder.append(" * <p> Online: NPS <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500\" target=\"MV3500\">MV3500 Networked Simulation course</a> \n");
-            packageInfoBuilder.append(" * links to <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/tree/master/specifications/README.md\" target=\"README.MV3500\">IEEE and SISO specification references</a> of interest. </p>\n");
-            packageInfoBuilder.append(" * <ul> <li> <a href=\"https://www.sisostds.org/DigitalLibrary.aspx?Command=Core_Download&EntryId=46172\" target=\"SISO-REF-010\" >SISO-REF-010-2020 Reference for Enumerations for Simulation Interoperability</a> </li> \n");
+            packageInfoBuilder.append(" * <p> Online: NPS <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/tree/master/examples/src/OpenDis7Examples\" target=\"MV3500\">MV3500 Networked Simulation course examples</a> \n");
+            packageInfoBuilder.append(" * which includes links to <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/tree/master/specifications/README.md\" target=\"README.MV3500\">IEEE and SISO specification references</a> of interest. </p>\n");
+            packageInfoBuilder.append(" * <ul>\n");
+            packageInfoBuilder.append(" *      <li> <a href=\"https://www.sisostds.org/DigitalLibrary.aspx?Command=Core_Download&EntryId=46172\" target=\"SISO-REF-010\" >SISO-REF-010-2020 Reference for Enumerations for Simulation Interoperability</a> </li> \n");
             packageInfoBuilder.append(" *      <li> <a href=\"https://www.sisostds.org/DigitalLibrary.aspx?Command=Core_Download&EntryId=47284\" target=\"SISO-REF-10.1\">SISO-REF-10.1-2019 Reference for Enumerations for Simulation, Operations Manual</a></li> </ul>\n");
             packageInfoBuilder.append("\n");
             packageInfoBuilder.append(" * @see java.lang.Package\n");
@@ -126,25 +129,25 @@ public class GenerateEntityTypes
         }
   }
 
-  Method methodPlatformDomainFromInt;
-  Method methodPlatformDomainName;
-  Method methodPlatformDomainDescription;
+  Method methodPlatformDomainFromIntMethod;
+  Method methodPlatformDomainNameMethod;
+  Method methodPlatformDomainDescriptionMethod;
   
-  Method countryFromInt;
-  Method countryName;
-  Method countryDescription;
+  Method countryFromIntMethod;
+  Method countryNameMethod;
+  Method countryDescriptionMethod;
   
-  Method kindFromInt;
-  Method kindName;
-  Method kindDescription;
+  Method kindFromIntMethod;
+  Method kindNameMethod;
+  Method kindDescriptionMethod;
 
-  Method munitionDomainFromInt;
-  Method munitionDomainName;
-  Method munitionDomainDescription;
+  Method munitionDomainFromIntMethod;
+  Method munitionDomainNameMethod;
+  Method munitionDomainDescriptionMethod;
   
-  Method supplyDomainFromInt;
-  Method supplyDomainName;
-  Method supplyDomainDescription;
+  Method supplyDomainFromIntMethod;
+  Method supplyDomainNameMethod;
+  Method supplyDomainDescriptionMethod;
 
   // Don't put imports in code for this, needs to have enumerations built first; do it this way
   // Update, this might now be unnecessary with the re-structuring of the projects
@@ -153,29 +156,29 @@ public class GenerateEntityTypes
     Method[] ma;
     try {
       ma = getEnumMethods("edu.nps.moves.dis7.enumerations.PlatformDomain");
-      methodPlatformDomainFromInt     = ma[FORVALUE];
-      methodPlatformDomainName        = ma[NAME];
-      methodPlatformDomainDescription = ma[DESCRIPTION];
+      methodPlatformDomainFromIntMethod     = ma[FORVALUE];
+      methodPlatformDomainNameMethod        = ma[NAME];
+      methodPlatformDomainDescriptionMethod = ma[DESCRIPTION];
 
       ma = getEnumMethods("edu.nps.moves.dis7.enumerations.Country");
-      countryFromInt     = ma[FORVALUE];
-      countryName        = ma[NAME];
-      countryDescription = ma[DESCRIPTION];
+      countryFromIntMethod     = ma[FORVALUE];
+      countryNameMethod        = ma[NAME];
+      countryDescriptionMethod = ma[DESCRIPTION];
 
       ma = getEnumMethods("edu.nps.moves.dis7.enumerations.EntityKind");
-      kindFromInt     = ma[FORVALUE];
-      kindName        = ma[NAME];
-      kindDescription = ma[DESCRIPTION];
+      kindFromIntMethod     = ma[FORVALUE];
+      kindNameMethod        = ma[NAME];
+      kindDescriptionMethod = ma[DESCRIPTION];
 
       ma = getEnumMethods("edu.nps.moves.dis7.enumerations.MunitionDomain");
-      munitionDomainFromInt     = ma[FORVALUE];
-      munitionDomainName        = ma[NAME];
-      munitionDomainDescription = ma[DESCRIPTION];
+      munitionDomainFromIntMethod     = ma[FORVALUE];
+      munitionDomainNameMethod        = ma[NAME];
+      munitionDomainDescriptionMethod = ma[DESCRIPTION];
 
       ma = getEnumMethods("edu.nps.moves.dis7.enumerations.SupplyDomain");
-      supplyDomainFromInt     = ma[FORVALUE];
-      supplyDomainName        = ma[NAME];
-      supplyDomainDescription = ma[DESCRIPTION];
+      supplyDomainFromIntMethod     = ma[FORVALUE];
+      supplyDomainNameMethod        = ma[NAME];
+      supplyDomainDescriptionMethod = ma[DESCRIPTION];
     }
     catch (Exception ex) {
       throw new RuntimeException(ex.getClass().getName() + ": " + ex.getLocalizedMessage());
@@ -557,7 +560,7 @@ public class GenerateEntityTypes
       uid2ClassWriter = new BufferedWriter(new FileWriter(f));
     }
     
-    private void saveEntityFile(DataPkt data, String uid)
+    private void saveEntityFile(TypeClassData data, String uid)
     {
         data.sb.append("    }\n}\n");
         saveFile(data.directory, data.clsNm + ".java", data.sb.toString());
@@ -574,11 +577,12 @@ public class GenerateEntityTypes
                 packageInfoFileWriter = new FileWriter(packageInfoFile, StandardCharsets.UTF_8);
                 packageInfoBuilder = new StringBuilder();
                 packageInfoBuilder.append("/**\n");
-                packageInfoBuilder.append(" * Infrastructure classes for ").append(sisoSpecificationTitleDate).append(" enumerations supporting <a href=\"https://github.com/open-dis/open-dis7-java\" target=\"open-dis7-java\">open-dis7-java</a> library.\n");
+                packageInfoBuilder.append(" * Entity type classes for ").append(sisoSpecificationTitleDate).append(" enumerations supporting <a href=\"https://github.com/open-dis/open-dis7-java\" target=\"open-dis7-java\">open-dis7-java</a> library.\n");
                 packageInfoBuilder.append("\n");
-                packageInfoBuilder.append(" * <p> Online: NPS <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500\" target=\"MV3500\">MV3500 Networked Simulation course</a> \n");
-                packageInfoBuilder.append(" * links to <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/tree/master/specifications/README.md\" target=\"README.MV3500\">IEEE and SISO specification references</a> of interest. </p>\n");
-                packageInfoBuilder.append(" * <ul> <li> <a href=\"https://www.sisostds.org/DigitalLibrary.aspx?Command=Core_Download&EntryId=46172\" target=\"SISO-REF-010\" >SISO-REF-010-2020 Reference for Enumerations for Simulation Interoperability</a> </li> \n");
+                packageInfoBuilder.append(" * <p> Online: NPS <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/tree/master/examples/src/OpenDis7Examples\" target=\"MV3500\">MV3500 Networked Simulation course examples</a> \n");
+                packageInfoBuilder.append(" * which includes links to <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/tree/master/specifications/README.md\" target=\"README.MV3500\">IEEE and SISO specification references</a> of interest. </p>\n");
+                packageInfoBuilder.append(" * <ul>\n");
+                packageInfoBuilder.append(" *      <li> <a href=\"https://www.sisostds.org/DigitalLibrary.aspx?Command=Core_Download&EntryId=46172\" target=\"SISO-REF-010\" >SISO-REF-010-2020 Reference for Enumerations for Simulation Interoperability</a> </li> \n");
                 packageInfoBuilder.append(" *      <li> <a href=\"https://www.sisostds.org/DigitalLibrary.aspx?Command=Core_Download&EntryId=47284\" target=\"SISO-REF-10.1\">SISO-REF-10.1-2019 Reference for Enumerations for Simulation, Operations Manual</a></li> </ul>\n");
                 packageInfoBuilder.append("\n");
                 packageInfoBuilder.append(" * @see java.lang.Package\n");
@@ -603,12 +607,36 @@ public class GenerateEntityTypes
         }
     }
   
-    private void appendCommonStatements(DataPkt data)
+    private void appendCommonStatements(TypeClassData data)
     {
-      String contents = String.format(entitytypecommonTemplate, data.pkg, 
-                                      sisoSpecificationTitleDate, data.fullName, 
-                                      data.countryNamePretty, data.entKindNmDescription, data.domainValue, data.entityUid,
-                                      data.clsNm, data.clsNm, data.countryNm, data.entKindNm, data.domainName, data.domainValue);
+      String currentSpecificName  = new String(); // handle potential nulls
+      String currentSpecificValue = new String();
+      if (currentSpecific != null)
+      {
+          currentSpecificName  = currentSpecific.toString() + " = ";
+          currentSpecificValue = "<code>" + currentSpecific.value + "</code>";
+      }
+      String currentSubCategoryName  = new String(); // handle potential nulls
+      String currentSubCategoryValue = new String();
+      if (currentSubCategory != null)
+      {
+          currentSubCategoryName  = currentSubCategory.toString() + " = ";
+          currentSubCategoryValue = "<code>" + currentSubCategory.value + "</code>";
+      }
+      String contents = String.format(entitytypecommonTemplate,      data.pkg,
+                                      data.countryNamePretty,         data.countryValue,
+                                      data.entityDomainName,          data.entityDomainValue,
+                                      data.entityKindNameDescription, data.entityKindValue,
+                                      currentCategory.toString(),     currentCategory.value,
+                                      currentSubCategoryName,         currentSubCategoryValue,
+                                      currentSpecificName,            currentSpecificValue,
+                                      data.entityUid,
+                                      data.fullName,
+                                      sisoSpecificationTitleDate,     
+                                      data.clsNm, data.clsNm, 
+                                      data.countryName, 
+                                      data.entityKindName, 
+                                      data.entityDomainName, data.entityDomainValue);
       data.sb.append(contents);
     }
 
@@ -626,9 +654,9 @@ public class GenerateEntityTypes
       sb.append(String.format(template, elem.value, elem.uid, elem.description));
     }
     
-    private void writeCategoryFile(DataPkt d)
+    private void writeCategoryFile(TypeClassData d)
     {
-      DataPkt data = d;
+      TypeClassData data = d;
       if (data == null) {
         data = buildEntityCommon(currentCategory.toString(), fixName(currentCategory),currentCategory.uid);
       }
@@ -639,7 +667,7 @@ public class GenerateEntityTypes
       }
     }
 
-    private void writeSubCategoryFile(DataPkt d)
+    private void writeSubCategoryFile(TypeClassData d)
     {
       if ((currentCategory == null) || (currentSubCategory == null))
       {
@@ -648,7 +676,7 @@ public class GenerateEntityTypes
               System.err.println ("DataPacket d=" + d.sb.toString());
       }
           
-      DataPkt data = d;
+      TypeClassData data = d;
       if (data == null) {
         data = buildEntityCommon(currentSubCategory.toString(), fixName(currentSubCategory), currentSubCategory.uid);
       }
@@ -659,9 +687,9 @@ public class GenerateEntityTypes
         saveEntityFile(data,currentSubCategory.uid);
     }
 
-    private void writeSpecificFile(DataPkt d)
+    private void writeSpecificFile(TypeClassData d)
     {
-      DataPkt data = d;
+      TypeClassData data = d;
       if (data == null) {
         data = buildEntityCommon(currentSpecific.toString(), fixName(currentSpecific),currentSpecific.uid);
       }
@@ -673,9 +701,9 @@ public class GenerateEntityTypes
         saveEntityFile(data,currentSpecific.uid);
     }
 
-    private void writeExtraFile(DataPkt d)
+    private void writeExtraFile(TypeClassData d)
     {
-      DataPkt data = d;
+      TypeClassData data = d;
       if (data == null) {
         data = buildEntityCommon(currentExtra.toString(), fixName(currentExtra),currentExtra.uid);
       }
@@ -688,51 +716,51 @@ public class GenerateEntityTypes
         saveEntityFile(data,currentExtra.uid);
     }
 
-    private DataPkt buildEntityCommon(String fullName, String fixedName, String uid)
+    private TypeClassData buildEntityCommon(String fullName, String fixedName, String uid)
     {
         try {
-        DataPkt data = new DataPkt();
+        TypeClassData dataPacket = new TypeClassData();
 
         if  (fullName == null)
-             data.fullName = "";
-        else data.fullName = fullName;
-        data.sb = new StringBuilder();
+             dataPacket.fullName = "";
+        else dataPacket.fullName = fullName;
+        dataPacket.sb = new StringBuilder();
 //        System.err.println("buildEntityCommon fixedName=" + fixedName + ", uid=" + uid + ", outputDirectory=" + outputDirectory); // debug trace
         
-        buildPackagePath(currentEntity, data);
-        data.directory = new File(outputDirectory, data.sb.toString());
-        data.directory.mkdirs(); // ensure that directory exists
+        buildPackagePath(currentEntity, dataPacket);
+        dataPacket.directory = new File(outputDirectory, dataPacket.sb.toString());
+        dataPacket.directory.mkdirs(); // ensure that directory exists
 
         // Protect against duplicate class names
         int i=1;
-        while(new File(data.directory,fixedName+".java").exists()){
+        while(new File(dataPacket.directory,fixedName+".java").exists()){
           fixedName = fixedName+ i++;
         }
 //        System.err.println("fixedName.java=" + fixedName + ".java"); // debug trace
 
-        String packagePath = packageName + "." + pathToPackage(data.sb.toString());
-        int    countryInt  = Integer.parseInt(currentEntity.country);
-        String countryNm = getName(countryFromInt, countryName, countryInt);
+        String packagePath = packageName + "." + pathToPackage(dataPacket.sb.toString());
+        int    countryInteger  = Integer.parseInt(currentEntity.country);
+        String countryName     = getName(countryFromIntMethod, countryNameMethod, countryInteger);
 
-        int domainInt = Integer.parseInt(currentEntity.domain);
-        int kindInt   = Integer.parseInt(currentEntity.kind);
+        int entityDomainInteger = Integer.parseInt(currentEntity.domain);
+        int entityKindInteger   = Integer.parseInt(currentEntity.kind);
 
-        String entityKindName        = getName(kindFromInt, kindName, kindInt);
-        String entityKindDescription = legalJavaDoc(getDescription(kindFromInt, kindDescription, kindInt));
+        String entityKindName        = getName(kindFromIntMethod, kindNameMethod, entityKindInteger);
+        String entityKindDescription = legalJavaDoc(getDescription(kindFromIntMethod, kindDescriptionMethod, entityKindInteger));
         
-        String domainName;
-        String domainDescription;
-        String domainVal;
+        String entityDomainName;
+        String entityDomainDescription;
+        String entityDomainValue;
         switch (entityKindName) {
           case "MUNITION":
-            domainName = "MunitionDomain";
-            domainDescription = "Munition Domain";
-            domainVal = getName(munitionDomainFromInt, munitionDomainName, domainInt);
+            entityDomainName = "MunitionDomain";
+            entityDomainDescription = "Munition Domain";
+            entityDomainValue = getName(munitionDomainFromIntMethod, munitionDomainNameMethod, entityDomainInteger);
             break;
           case "SUPPLY":
-            domainName = "SupplyDomain";
-            domainDescription = "Supply Domain";
-            domainVal = getName(supplyDomainFromInt, supplyDomainName, domainInt);
+            entityDomainName = "SupplyDomain";
+            entityDomainDescription = "Supply Domain";
+            entityDomainValue = getName(supplyDomainFromIntMethod, supplyDomainNameMethod, entityDomainInteger);
             break;
           case "OTHER":
           case "PLATFORM":
@@ -743,27 +771,29 @@ public class GenerateEntityTypes
           case "EXPENDABLE":
           case "SENSOR_EMITTER":
           default:
-            domainName = "PlatformDomain";
-            domainDescription = "Platform Domain";
-            domainVal = getName(methodPlatformDomainFromInt, methodPlatformDomainName, domainInt);
+            entityDomainName = "PlatformDomain";
+            entityDomainDescription = "Platform Domain";
+            entityDomainValue = getName(methodPlatformDomainFromIntMethod, methodPlatformDomainNameMethod, entityDomainInteger);
             break;
         }
 
-        data.pkg = packagePath;
-        data.entityUid = uid; //currentEntity.uid;
-        data.countryNm = countryNm;
-        data.entKindNm = entityKindName;
-        data.entKindNmDescription = entityKindDescription;
-        data.domainName = domainName;
+        dataPacket.pkg = packagePath;
+        dataPacket.entityUid = uid; //currentEntity.uid;
+        dataPacket.countryName     = countryName;
+        dataPacket.countryValue    = String.valueOf(countryInteger);
+        dataPacket.entityKindName  = entityKindName;
+        dataPacket.entityKindValue = String.valueOf(entityKindInteger);
+        dataPacket.entityKindNameDescription = entityKindDescription;
+        dataPacket.entityDomainName = entityDomainName;
+        dataPacket.entityDomainValue     = String.valueOf(entityDomainInteger);
         //data.domainPrettyName = domainDescription;
-        data.domainValue = domainVal;
-        data.clsNm = fixedName;
+        dataPacket.entityDomainValue = entityDomainValue;
+        dataPacket.clsNm = fixedName;
 
-        data.sb.setLength(0);
+        dataPacket.sb.setLength(0);
 
-        appendCommonStatements(data);
-       return data;
-      
+        appendCommonStatements(dataPacket);
+        return dataPacket;
       }
       catch (Exception ex) {
         throw new RuntimeException(ex);
@@ -859,7 +889,7 @@ public class GenerateEntityTypes
   }
   
   //Country, kind, domain 
-  private void buildPackagePath(EntityElem ent, DataPkt data) throws Exception
+  private void buildPackagePath(EntityElem ent, TypeClassData data) throws Exception
   {
     if (data == null)
         System.err.println("buildPackagePath data.sb 0: data = null");
@@ -869,20 +899,19 @@ public class GenerateEntityTypes
 //         System.err.println("buildPackagePath data.sb 1: empty string");
 //    else System.err.println("buildPackagePath data.sb 1: " + data.sb.toString());
     
-    // TODO failing here
-    String countrydesc = GenerateEntityTypes.this.getDescription(countryFromInt, countryDescription, Integer.parseInt(ent.country));
-    if (countrydesc.isEmpty())
+    String countryDescription = GenerateEntityTypes.this.getDescription(countryFromIntMethod, countryDescriptionMethod, Integer.parseInt(ent.country));
+    if (countryDescription.isEmpty())
     {
         System.err.println(this.getClass().getName() + ".buildPackagePath() failure, no country description");
         return;
     }
-//    System.err.println("countrydesc=" + countrydesc);
-    data.countryNamePretty = countrydesc;
-    data.sb.append(buildCountryPackagePart(countrydesc));
+//    System.err.println("countryDescription=" + countryDescription);
+    data.countryNamePretty = countryDescription;
+    data.sb.append(buildCountryPackagePart(countryDescription));
     data.sb.append("/");
 //    System.err.println("buildPackagePathdata.sb 2: " + data.sb.toString());
 
-    String kindname = getName(kindFromInt, kindName, Integer.parseInt(ent.kind));
+    String kindname = getName(kindFromIntMethod, kindNameMethod, Integer.parseInt(ent.kind));
     kindname = buidKindOrDomainPackagePart(kindname);
     data.sb.append(buidKindOrDomainPackagePart(kindname));
     data.sb.append("/");
@@ -893,13 +922,13 @@ public class GenerateEntityTypes
 
     switch (kindnamelc) {
       case "munition":
-        domainname = getName(munitionDomainFromInt, munitionDomainName, Integer.parseInt(ent.domain));
+        domainname = getName(munitionDomainFromIntMethod, munitionDomainNameMethod, Integer.parseInt(ent.domain));
         break;
       case "supply":
-        domainname = getName(supplyDomainFromInt, supplyDomainName, Integer.parseInt(ent.domain));
+        domainname = getName(supplyDomainFromIntMethod, supplyDomainNameMethod, Integer.parseInt(ent.domain));
         break;
       default:
-        domainname = getName(methodPlatformDomainFromInt, methodPlatformDomainName, Integer.parseInt(ent.domain));
+        domainname = getName(methodPlatformDomainFromIntMethod, methodPlatformDomainNameMethod, Integer.parseInt(ent.domain));
         break;
     }
 
@@ -1038,6 +1067,8 @@ public class GenerateEntityTypes
     if ((elem != null) && (elem.description != null))
     {
         r = fixName(elem.description);
+        if (r.isEmpty())
+            return r;
         if(!r.isEmpty() && (isNumeric(r) | isNumeric(r.substring(1))))
         {
           r = makeNonNumeric(elem,r);    
@@ -1050,6 +1081,9 @@ public class GenerateEntityTypes
   private String fixName(String s)
   {
     String r = s.trim();
+    
+    if (r.isEmpty())
+        return r;
   
     // Convert any of these chars to underbar (u2013 is a hyphen observed in source XML):
     r = r.trim().replaceAll(",", " ").replaceAll("—"," ").replaceAll("-", " ").replaceAll("\\."," ").replaceAll("&"," ")
@@ -1105,7 +1139,11 @@ public class GenerateEntityTypes
     {
         if  (args.length == 0)
              new GenerateEntityTypes("",      "",      ""     ).run(); // use defaults
-        else new GenerateEntityTypes(args[0], args[1], args[2]).run();
+        else 
+        {
+            System.out.println ("GenerateEntityTypes(" + args[0] + ", " + args[1] + ", " + args[2] + ").run()");
+            new GenerateEntityTypes(args[0], args[1], args[2]).run();
+        }
     }
     catch (SAXException | IOException | ParserConfigurationException ex)
     {

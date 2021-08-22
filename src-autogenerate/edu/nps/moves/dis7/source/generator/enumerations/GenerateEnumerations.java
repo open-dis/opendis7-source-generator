@@ -108,14 +108,13 @@ public class GenerateEnumerations
             packageInfoFileWriter = new FileWriter(packageInfoFile, StandardCharsets.UTF_8);
             packageInfoBuilder = new StringBuilder();
             packageInfoBuilder.append("/**\n");
-            packageInfoBuilder.append(" * Infrastructure classes for ").append(sisoSpecificationTitleDate).append(" enumerations supporting <a href=\"https://github.com/open-dis/open-dis7-java\" target=\"open-dis7-java\">open-dis7-java</a> library.\n");
+            packageInfoBuilder.append(" * Enumeration type infrastructure classes for ").append(sisoSpecificationTitleDate).append(" enumerations supporting <a href=\"https://github.com/open-dis/open-dis7-java\" target=\"open-dis7-java\">open-dis7-java</a> library.\n");
             packageInfoBuilder.append("\n");
-            packageInfoBuilder.append(" * <p> Online: NPS <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500\" target=\"MV3500\">MV3500 Networked Simulation course</a> \n");
+            packageInfoBuilder.append(" * <p> Online: NPS <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/tree/master/examples/src/OpenDis7Examples\" target=\"MV3500\">MV3500 Networked Simulation course examples</a> \n");
             packageInfoBuilder.append(" * links to <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/tree/master/specifications/README.md\" target=\"README.MV3500\">IEEE and SISO specification references</a> of interest. </p>\n");
-            packageInfoBuilder.append(" * <ul> <li> <a href=\"https://www.sisostds.org/DigitalLibrary.aspx?Command=Core_Download&EntryId=46172\" target=\"SISO-REF-010\" >SISO-REF-010-2020 Reference for Enumerations for Simulation Interoperability</a> </li> \n");
+            packageInfoBuilder.append(" * <ul>\n");
+            packageInfoBuilder.append(" *      <li> <a href=\"https://www.sisostds.org/DigitalLibrary.aspx?Command=Core_Download&EntryId=46172\" target=\"SISO-REF-010\" >SISO-REF-010-2020 Reference for Enumerations for Simulation Interoperability</a> </li> \n");
             packageInfoBuilder.append(" *      <li> <a href=\"https://www.sisostds.org/DigitalLibrary.aspx?Command=Core_Download&EntryId=47284\" target=\"SISO-REF-10.1\">SISO-REF-10.1-2019 Reference for Enumerations for Simulation, Operations Manual</a></li> </ul>\n");
-            packageInfoBuilder.append("\n");
-            packageInfoBuilder.append(" * Online: links to <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/tree/master/specifications/README.md\">IEEE and SISO specification references</a> of interest.");
             packageInfoBuilder.append("\n");
             packageInfoBuilder.append(" * @see java.lang.Package\n");
             packageInfoBuilder.append(" * @see <a href=\"https://stackoverflow.com/questions/22095487/why-is-package-info-java-useful\">https://stackoverflow.com/questions/22095487/why-is-package-info-java-useful</a>\n");
@@ -622,24 +621,37 @@ public class GenerateEnumerations
       
             String otherInf = uid2ExtraInterface.get(el.uid);
 
-            sb.append(String.format(disbitset1Template, packageName, sisoSpecificationTitleDate, "UID " + el.uid, el.size, el.name, classNameCorrected, (otherInf==null?"":"implements "+otherInf)));
+            sb.append(String.format(disbitset1Template, 
+                packageName, sisoSpecificationTitleDate, 
+                "UID " + el.uid, el.size, 
+                el.name, classNameCorrected, 
+                (otherInf==null?"":"implements "+otherInf)));
             enumNames.clear();
             if (el.elems.size() > MAX_ENUMERATIONS)
             {
-                System.out.println ("Enumerations class " + packageName + classNameCorrected + " has " + el.elems.size() +
+                System.out.println ("*** Enumerations class " + packageName + classNameCorrected + " has " + el.elems.size() +
                     ", possibly too large, limiting size to " + MAX_ENUMERATIONS);
             }
             el.elems.forEach((row) -> {
                 String xrefName = null;
                 if (row.xrefclassuid != null)
                     xrefName = uidClassNames.get(row.xrefclassuid); //Main.this.uid2ClassName.getProperty(row.xrefclassuid);
+                String bitsType = new String();
+                if  (Integer.valueOf(row.length) == 1)
+                     bitsType = "boolean";
+                else bitsType = "length=" + row.length;
                 if (xrefName != null) {
-                    sb.append(String.format(disbitsetcommentxrefTemplate, htmlize((row.description==null?"":row.description.replaceAll("\"", "").replaceAll("\'", "")+", ")),xrefName));
-                    sb.append(String.format(disbitset16Template, createEnumName(row.name), row.bitposition, row.length, xrefName));
+                    sb.append(String.format(disbitsetcommentxrefTemplate, 
+                        "bit position " + row.bitposition + ", " + bitsType,
+                        htmlize((row.description==null?"":row.description.replaceAll("\"", "").replaceAll("\'", "")+", ")),xrefName));
+                    sb.append(String.format(disbitset16Template, 
+                        createEnumName(row.name), row.bitposition, row.length, xrefName));
                 }
                 else {
                     if(row.description != null)
-                        sb.append(String.format(disbitsetcommentTemplate, (htmlize(row.description.replaceAll("\"", "").replaceAll("\'", "")))));
+                        sb.append(String.format(disbitsetcommentTemplate,
+                            "bit position " + row.bitposition + ", " + bitsType, 
+                            (htmlize(row.description.replaceAll("\"", "").replaceAll("\'", "")))));
                     sb.append(String.format(disbitset15Template, createEnumName(row.name), row.bitposition, row.length));
                 }
             });

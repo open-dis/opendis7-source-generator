@@ -38,7 +38,7 @@ public class GenerateObjectTypes
 
     String objecttypeTemplate;
 
-  class DataPkt
+  class TypeClassData
   {
     String pkg;
     File directory;
@@ -82,11 +82,12 @@ public class GenerateObjectTypes
             packageInfoFileWriter = new FileWriter(packageInfoFile, StandardCharsets.UTF_8);
             packageInfoBuilder = new StringBuilder();
             packageInfoBuilder.append("/**\n");
-            packageInfoBuilder.append(" * Infrastructure classes for ").append(sisoSpecificationTitleDate).append(" enumerations supporting <a href=\"https://github.com/open-dis/open-dis7-java\" target=\"open-dis7-java\">open-dis7-java</a> library.\n");
+            packageInfoBuilder.append(" * Object type infrastructure classes for ").append(sisoSpecificationTitleDate).append(" enumerations supporting <a href=\"https://github.com/open-dis/open-dis7-java\" target=\"open-dis7-java\">open-dis7-java</a> library.\n");
             packageInfoBuilder.append("\n");
-            packageInfoBuilder.append(" * <p> Online: NPS <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500\" target=\"MV3500\">MV3500 Networked Simulation course</a> \n");
-            packageInfoBuilder.append(" * links to <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/tree/master/specifications/README.md\" target=\"README.MV3500\">IEEE and SISO specification references</a> of interest. </p>\n");
-            packageInfoBuilder.append(" * <ul> <li> <a href=\"https://www.sisostds.org/DigitalLibrary.aspx?Command=Core_Download&EntryId=46172\" target=\"SISO-REF-010\" >SISO-REF-010-2020 Reference for Enumerations for Simulation Interoperability</a> </li> \n");
+            packageInfoBuilder.append(" * <p> Online: NPS <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/tree/master/examples/src/OpenDis7Examples\" target=\"MV3500\">MV3500 Networked Simulation course examples</a> \n");
+            packageInfoBuilder.append(" * which includes links to <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/tree/master/specifications/README.md\" target=\"README.MV3500\">IEEE and SISO specification references</a> of interest. </p>\n");
+            packageInfoBuilder.append(" * <ul>\n");
+            packageInfoBuilder.append(" *      <li> <a href=\"https://www.sisostds.org/DigitalLibrary.aspx?Command=Core_Download&EntryId=46172\" target=\"SISO-REF-010\" >SISO-REF-010-2020 Reference for Enumerations for Simulation Interoperability</a> </li> \n");
             packageInfoBuilder.append(" *      <li> <a href=\"https://www.sisostds.org/DigitalLibrary.aspx?Command=Core_Download&EntryId=47284\" target=\"SISO-REF-10.1\">SISO-REF-10.1-2019 Reference for Enumerations for Simulation, Operations Manual</a></li> </ul>\n");
             packageInfoBuilder.append("\n");
             packageInfoBuilder.append(" * @see java.lang.Package\n");
@@ -316,7 +317,7 @@ public class GenerateObjectTypes
         }
     }
     
-    private void saveFile(DataPkt data)
+    private void saveFile(TypeClassData data)
     {
         data.sb.append("    }\n}\n");
         GenerateObjectTypes.this.saveFile(data.directory, data.clsNm + ".java", data.sb.toString());
@@ -332,11 +333,12 @@ public class GenerateObjectTypes
                 packageInfoFileWriter = new FileWriter(packageInfoFile, StandardCharsets.UTF_8);
                 packageInfoBuilder = new StringBuilder();
                 packageInfoBuilder.append("/**\n");
-                packageInfoBuilder.append(" * Infrastructure classes for ").append(sisoSpecificationTitleDate).append(" enumerations supporting <a href=\"https://github.com/open-dis/open-dis7-java\" target=\"open-dis7-java\">open-dis7-java</a> library.\n");
+                packageInfoBuilder.append(" * Object type infrastructure classes for ").append(sisoSpecificationTitleDate).append(" enumerations supporting <a href=\"https://github.com/open-dis/open-dis7-java\" target=\"open-dis7-java\">open-dis7-java</a> library.\n");
                 packageInfoBuilder.append("\n");
-                packageInfoBuilder.append(" * <p> Online: NPS <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500\" target=\"MV3500\">MV3500 Networked Simulation course</a> \n");
-                packageInfoBuilder.append(" * links to <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/tree/master/specifications/README.md\" target=\"README.MV3500\">IEEE and SISO specification references</a> of interest. </p>\n");
-                packageInfoBuilder.append(" * <ul> <li> <a href=\"https://www.sisostds.org/DigitalLibrary.aspx?Command=Core_Download&EntryId=46172\" target=\"SISO-REF-010\" >SISO-REF-010-2020 Reference for Enumerations for Simulation Interoperability</a> </li> \n");
+                packageInfoBuilder.append(" * <p> Online: NPS <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/tree/master/examples/src/OpenDis7Examples\" target=\"MV3500\">MV3500 Networked Simulation course examples</a> \n");
+                packageInfoBuilder.append(" * which includes links to <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/tree/master/specifications/README.md\" target=\"README.MV3500\">IEEE and SISO specification references</a> of interest. </p>\n");
+                packageInfoBuilder.append(" * <ul>\n");
+                packageInfoBuilder.append(" *      <li> <a href=\"https://www.sisostds.org/DigitalLibrary.aspx?Command=Core_Download&EntryId=46172\" target=\"SISO-REF-010\" >SISO-REF-010-2020 Reference for Enumerations for Simulation Interoperability</a> </li> \n");
                 packageInfoBuilder.append(" *      <li> <a href=\"https://www.sisostds.org/DigitalLibrary.aspx?Command=Core_Download&EntryId=47284\" target=\"SISO-REF-10.1\">SISO-REF-10.1-2019 Reference for Enumerations for Simulation, Operations Manual</a></li> </ul>\n");
                 packageInfoBuilder.append("\n");
                 packageInfoBuilder.append(" * @see java.lang.Package\n");
@@ -361,7 +363,7 @@ public class GenerateObjectTypes
         }
     }
 
-    private void appendCommonStatements(DataPkt data)
+    private void appendCommonStatements(TypeClassData data)
     {
       String contents = String.format(objecttypeTemplate, data.pkg,
         sisoSpecificationTitleDate, currentCot.uid,data.clsNm,data.clsNm);
@@ -391,9 +393,9 @@ public class GenerateObjectTypes
        sb.append(String.format(template, cot.domain));
     }
   
-    private void writeCotFile(DataPkt d)
+    private void writeCotFile(TypeClassData d)
     {
-      DataPkt data = d;
+      TypeClassData data = d;
       if (data == null) {
         data = buildObjectTypeCommon(fixName(currentCot), currentCot);
         appendDomainStatement(currentCot, "Domain", data.sb); // not an error
@@ -401,9 +403,9 @@ public class GenerateObjectTypes
       }
     }
 
-    private void writeObjectFile(DataPkt d)
+    private void writeObjectFile(TypeClassData d)
     {
-      DataPkt data = d;
+      TypeClassData data = d;
       if (data == null) {
         data = buildObjectTypeCommon(fixName(currentObject), currentObject);
       }
@@ -415,9 +417,9 @@ public class GenerateObjectTypes
       }
     }
 
-    private void writeCategoryFile(DataPkt d)
+    private void writeCategoryFile(TypeClassData d)
     {
-      DataPkt data = d;
+      TypeClassData data = d;
       if (data == null) {
         data = buildObjectTypeCommon(fixName(currentCategory), currentCategory);
       }
@@ -429,9 +431,9 @@ public class GenerateObjectTypes
         saveFile(data);
     }
 
-    private void writeSubCategoryFile(DataPkt d) throws Exception
+    private void writeSubCategoryFile(TypeClassData d) throws Exception
     {
-      DataPkt data = d;
+      TypeClassData data = d;
       if (data == null) {
         data = buildObjectTypeCommon(fixName(currentSubCategory), currentSubCategory);
       }
@@ -444,10 +446,10 @@ public class GenerateObjectTypes
         saveFile(data);
     }
 
-    private DataPkt buildObjectTypeCommon(String fixedName, DescriptionElem elem)
+    private TypeClassData buildObjectTypeCommon(String fixedName, DescriptionElem elem)
     {
       try {
-        DataPkt data = new DataPkt();
+        TypeClassData data = new TypeClassData();
         data.sb = new StringBuilder();
         buildPackagePathAbstract(elem, data.sb);
 
@@ -681,6 +683,9 @@ public class GenerateObjectTypes
   private String fixName(String s)
   {
     String r = s.trim();
+    
+    if (r.isEmpty())
+        return r;
 
     // Convert any of these chars to underbar (u2013 is a hyphen observed in source XML):
     r = r.trim().replaceAll(",", " ").replaceAll("—"," ").replaceAll("-", " ").replaceAll("\\."," ").replaceAll("&"," ")
