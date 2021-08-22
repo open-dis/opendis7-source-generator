@@ -43,12 +43,12 @@
         </xsl:variable>
         
         <xsl:variable name="tableRowDivider">
-            <xsl:text>|-----------------------|:----------|:---------:|:---------:|:----------|</xsl:text>
+            <xsl:text>|-----------------------|:----------|:---------:|:---------:|:-------------------|</xsl:text>
             <xsl:text>&#10;</xsl:text>
         </xsl:variable>
         <xsl:variable name="tableHeader">
-                  <!--| PDU families and PDUs | Assess    | Javadoc   | Schemadoc | IEEE Spec |-->
-            <xsl:text>| PDU families and PDUs | Assess    |           |           | IEEE Spec |</xsl:text>
+                  <!--| PDU families and PDUs | Assess    | Javadoc   | Schemadoc | IEEE Specification |-->
+            <xsl:text>| PDU families and PDUs | Assess    |           |           | IEEE Specification |</xsl:text>
             <xsl:text>&#10;</xsl:text>
             <xsl:value-of select="$tableRowDivider"/>
         </xsl:variable>
@@ -76,23 +76,26 @@
             <xsl:text> PDUs</xsl:text>
             -->
             <xsl:text> |</xsl:text>
-                <xsl:text> [Javadoc](</xsl:text>
-                <xsl:value-of select="$javadocPdusUrl"/>
-                <xsl:choose>
-                    <xsl:when test="ends-with($complexTypeName,'Type')">
-                        <xsl:value-of select="substring-before($complexTypeName,'Type')"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:value-of select="$complexTypeName"/>
-                    </xsl:otherwise>
-                </xsl:choose>
-                <xsl:text>.html)</xsl:text>
-                <xsl:text> |</xsl:text>
-                <xsl:text> [Schemadoc](</xsl:text>
-                <xsl:value-of select="$schemadocPdusUrl"/>
-                <xsl:value-of select="$complexTypeName"/>
-                <xsl:text>.html)</xsl:text>
+            <xsl:text> [Javadoc](</xsl:text>
+            <xsl:value-of select="$javadocPdusUrl"/>
+            <xsl:choose>
+                <xsl:when test="ends-with($complexTypeName,'Type')">
+                    <xsl:value-of select="substring-before($complexTypeName,'Type')"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="$complexTypeName"/>
+                </xsl:otherwise>
+            </xsl:choose>
+            <xsl:text>.html)</xsl:text>
             <xsl:text> |</xsl:text>
+            <xsl:text> [Schemadoc](</xsl:text>
+            <xsl:value-of select="$schemadocPdusUrl"/>
+            <xsl:value-of select="$complexTypeName"/>
+            <xsl:text>.html)</xsl:text>
+            <xsl:text> |</xsl:text>
+            <xsl:text> </xsl:text>
+            <!-- typically includes spec paragraph -->
+            <xsl:value-of select="normalize-space(xs:annotation/xs:appinfo)"/>
             <xsl:text> |</xsl:text>
             <xsl:text>&#10;</xsl:text>
             
@@ -125,7 +128,9 @@
                 <xsl:value-of select="$pduName"/>
                 <xsl:text>.html)</xsl:text>
                 <xsl:text> |</xsl:text>
-                <xsl:text> TODO</xsl:text><!-- spec paragraph -->
+                <xsl:text> </xsl:text>
+                <!-- typically includes spec paragraph -->
+                <xsl:value-of select="normalize-space($ancestorElement/xs:annotation/xs:appinfo)"/>
                 <xsl:text> |</xsl:text>
                 <xsl:text>&#10;</xsl:text>
             </xsl:for-each><!-- PDU -->
