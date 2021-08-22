@@ -43,12 +43,12 @@
         </xsl:variable>
         
         <xsl:variable name="tableRowDivider">
-            <xsl:text>|-----------------------|:----------|:---------:|:---------:|:-------------------|</xsl:text>
+            <xsl:text>|-------------------|:----------|:---------:|:---------:|:-------------------|</xsl:text>
             <xsl:text>&#10;</xsl:text>
         </xsl:variable>
         <xsl:variable name="tableHeader">
-                  <!--| PDU families and PDUs | Assess    | Javadoc   | Schemadoc | IEEE Specification |-->
-            <xsl:text>| PDU families and PDUs | Assess    |           |           | IEEE Specification |</xsl:text>
+                  <!--| PDU type and PDUs | Assess    | Javadoc   | Schemadoc | IEEE Specification |-->
+            <xsl:text>| PDU type and PDUs | Assess    |           |           | IEEE Specification |</xsl:text>
             <xsl:text>&#10;</xsl:text>
             <xsl:value-of select="$tableRowDivider"/>
         </xsl:variable>
@@ -58,8 +58,11 @@
             
             <xsl:variable name="complexTypeName" select="@name"/>
             <xsl:variable name="pdusWithMatchingComplexType" 
-                        select="/xs:schema/xs:element[ends-with(@name,'Pdu')][not(ends-with(@name,'RPdu'))][not(@name = 'SEESPdu')][not(@name = 'IFFPdu')][not(@name = 'TSPIPdu')]
+                        select="/xs:schema/xs:element[ends-with(@name,'Pdu')][not(string-length(xs:annotation/xs:appinfo/xs:attribute[@name='aliasFor']/@fixed) > 0)]
                                 //xs:extension[@base = $complexTypeName]"/>
+            <!--
+                        select="/xs:schema/xs:element[ends-with(@name,'Pdu')][not(ends-with(@name,'RPdu'))][not(@name = 'SEESPdu')][not(@name = 'IFFPdu')][not(@name = 'TSPIPdu')]
+                                //xs:extension[@base = $complexTypeName]"/>-->
             
             <xsl:value-of select="$tableHeader"/>
             <xsl:text>| </xsl:text>
@@ -104,10 +107,15 @@
 
                 <xsl:variable name="ancestorElement" select="ancestor::xs:element"/>
                 <xsl:variable name="pduName"         select="$ancestorElement/@name"/>
+                <xsl:variable name="aliasName"       select="//xs:element[xs:annotation/xs:appinfo/xs:attribute[@name='aliasFor'][@fixed = $pduName]]/@name"/>
                 <xsl:text>| </xsl:text>
                 <xsl:value-of select="position()"/>
                 <xsl:text>. </xsl:text>
                 <xsl:value-of select="$pduName"/>
+                <xsl:if test="(string-length($aliasName) > 0)">
+                    <xsl:text disable-output-escaping="yes"> &lt;br /&gt; </xsl:text>
+                    <xsl:value-of select="$aliasName"/>
+                </xsl:if>
                 <xsl:text> |</xsl:text>
                 <xsl:text disable-output-escaping="yes"> &lt;ul&gt;</xsl:text>
                 <xsl:text disable-output-escaping="yes"> &lt;li&gt;</xsl:text>
