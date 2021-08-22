@@ -68,7 +68,9 @@
             <xsl:value-of select="$complexTypeName"/>
             <xsl:text>_ |</xsl:text>
             <xsl:text> </xsl:text>
+            <xsl:text>_</xsl:text>
             <xsl:value-of select="$idValue"/>
+            <xsl:text>_</xsl:text>
             <!--
             <xsl:value-of select="count($pdusWithMatchingComplexType)"/>
             <xsl:text> PDUs</xsl:text>
@@ -77,6 +79,8 @@
             <xsl:value-of select="count($pdusWithMatchingComplexType)"/>
             <xsl:text> PDUs</xsl:text>
             -->
+            <xsl:text> |</xsl:text>
+            <!-- assess -->
             <xsl:text> |</xsl:text>
             <xsl:text> [Javadoc](</xsl:text>
             <xsl:value-of select="$javadocPdusUrl"/>
