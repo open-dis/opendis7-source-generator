@@ -1,11 +1,11 @@
 <classes>
-    <class name="EntityManagementFamilyPdu" abstract="true" inheritsFrom="PduBase" comment=" Managment of grouping of PDUs, and more. Section 7.8">
+    <class name="EntityManagementFamilyPdu" id="7" abstract="true" inheritsFrom="PduBase" comment=" Managment of grouping of PDUs, and more. Section 7.8">
    
         <initialValue name="protocolFamily" value="DISProtocolFamily.ENTITY_MANAGEMENT"/>
     
     </class>
 
-    <class name="AggregateStatePdu" inheritsFrom="EntityManagementFamilyPdu"
+    <class name="AggregateStatePdu" id="33" inheritsFrom="EntityManagementFamilyPdu"
            comment="5.9.2.2 The Aggregate State PDU shall be used to communicate the state and other pertinent information about an aggregated unit.">
     
         <initialValue name="pduType" value="DisPduType.AGGREGATE_STATE"/>
@@ -106,7 +106,7 @@
       
     </class>
  
-    <class name="IsGroupOfPdu" inheritsFrom="EntityManagementFamilyPdu"
+    <class name="IsGroupOfPdu" id="34" inheritsFrom="EntityManagementFamilyPdu"
            comment="5.9.3.1 The IsGroupOf PDU shall communicate information about the individual states of a group of entities, including state information that is necessary for the receiving simulation applications to represent the issuing group of entities in the simulation applications’ own simulation.">
     
         <initialValue name="pduType" value="DisPduType.ISGROUPOF"/>
@@ -143,7 +143,7 @@
     
     </class>
 
-    <class name="TransferOwnershipPdu" inheritsFrom="EntityManagementFamilyPdu"
+    <class name="TransferOwnershipPdu" id="35" inheritsFrom="EntityManagementFamilyPdu"
            comment=" Information initiating the dyanic allocation and control of simulation entities between two simulation applications.">
     
         <initialValue name="pduType" value="DisPduType.TRANSFER_OWNERSHIP"/>
@@ -179,7 +179,7 @@
     </class>
 
 
-    <class name="IsPartOfPdu" inheritsFrom="EntityManagementFamilyPdu"
+    <class name="IsPartOfPdu" id="36" inheritsFrom="EntityManagementFamilyPdu"
            comment="5.9.5 Used to request hierarchical linkage of separately hosted simulation entities">
 
         <initialValue name="pduType" value="DisPduType.ISPARTOF"/>

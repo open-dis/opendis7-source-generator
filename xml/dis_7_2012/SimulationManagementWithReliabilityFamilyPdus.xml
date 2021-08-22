@@ -1,5 +1,6 @@
 <classes>
-   <class name="SimulationManagementWithReliabilityFamilyPdu" abstract="true" inheritsFrom="PduBase">
+   <class name="SimulationManagementWithReliabilityFamilyPdu" id="10" abstract="true" inheritsFrom="PduBase"
+          comment="Simulation Management with Reliability PDUs with reliability service levels in a DIS exercise are an alternative to the Simulation Management PDUs, and may or may not be required for participation in an DIS exercise,">
 
         <initialValue name="protocolFamily" value="DISProtocolFamily.SIMULATION_MANAGEMENT_WITH_RELIABILITY"/>
 
@@ -13,7 +14,7 @@
 
     </class>
 
-    <class name="CreateEntityRPdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu" comment="5.12.4.2 Serves the same function as the Create Entity PDU but with the addition of reliability service levels.">
+    <class name="CreateEntityRPdu" id="51" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu" comment="5.12.4.2 Serves the same function as the Create Entity PDU but with the addition of reliability service levels.">
       
         <initialValue name="pduType" value="DisPduType.CREATE_ENTITY_RELIABLE"/>
 
@@ -35,9 +36,9 @@
 
     </class>
 
-    <class name="CreateEntityReliablePdu" comment="alias, more descriptive name for a CreateEntityRPdu." aliasFor="CreateEntityRPdu"/>
+    <class name="CreateEntityReliablePdu" id="51" comment="alias, more descriptive name for a CreateEntityRPdu." aliasFor="CreateEntityRPdu"/>
     
-    <class name="RemoveEntityRPdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu" comment="5.12.4.3 Contains the same information as found in the Remove Entity PDU with the addition of the level of reliability service to be used for the removal action being requested.">
+    <class name="RemoveEntityRPdu" id="52" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu" comment="5.12.4.3 Contains the same information as found in the Remove Entity PDU with the addition of the level of reliability service to be used for the removal action being requested.">
       
         <initialValue name="pduType" value="DisPduType.REMOVE_ENTITY_RELIABLE"/>
 
@@ -59,9 +60,9 @@
 
     </class>
     
-    <class name="RemoveEntityReliablePdu" comment="alias, more descriptive name for a RemoveEntityRPdu." aliasFor="RemoveEntityRPdu"/>
+    <class name="RemoveEntityReliablePdu" id="52" comment="alias, more descriptive name for a RemoveEntityRPdu." aliasFor="RemoveEntityRPdu"/>
     
-    <class name="StartResumeRPdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu" comment="5.12.4.4 Serves the same function as the Start/Resume PDU but with the addition of reliability service levels">
+    <class name="StartResumeRPdu" id="53" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu" comment="5.12.4.4 Serves the same function as the Start/Resume PDU but with the addition of reliability service levels">
       
         <initialValue name="pduType" value="DisPduType.START_RESUME_RELIABLE"/>
 
@@ -91,9 +92,9 @@
   
     </class> 
  
-    <class name="StartResumeReliablePdu" comment="alias, more descriptive name for a StartResumeRPdu." aliasFor="StartResumeRPdu"/>
+    <class name="StartResumeReliablePdu" id="53" comment="alias, more descriptive name for a StartResumeRPdu." aliasFor="StartResumeRPdu"/>
     
-    <class name="StopFreezeRPdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu" comment="5.12.4.5 Serves the same function as the Stop/Freeze PDU (see 5.6.5.5.1) but with the addition of reliability service levels.">
+    <class name="StopFreezeRPdu" id="54" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu" comment="5.12.4.5 Serves the same function as the Stop/Freeze PDU (see 5.6.5.5.1) but with the addition of reliability service levels.">
       
         <initialValue name="pduType" value="DisPduType.STOP_FREEZE_RELIABLE"/>
    
@@ -123,9 +124,9 @@
    
     </class>
    
-    <class name="StopFreezeReliablePdu" comment="alias, more descriptive name for a StopFreezeRPdu." aliasFor="StopFreezeRPdu"/>
+    <class name="StopFreezeReliablePdu" id="54" comment="alias, more descriptive name for a StopFreezeRPdu." aliasFor="StopFreezeRPdu"/>
 
-    <class name="AcknowledgeRPdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
+    <class name="AcknowledgeRPdu" id="55" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
            comment="5.12.4.6 Serves the same function as the Acknowledge PDU but is used to acknowledge the receipt of a Create Entity-R PDU, a Remove Entity-R PDU, a Start/Resume-R PDU, or a Stop/Freeze-R PDU.">
       
         <initialValue name="pduType" value="DisPduType.ACKNOWLEDGE_RELIABLE"/>
@@ -144,9 +145,9 @@
    
     </class>
  
-    <class name="AcknowledgeReliablePdu" comment="alias, more descriptive name for a AcknowledgeRPdu." aliasFor="AcknowledgeRPdu"/>
+    <class name="AcknowledgeReliablePdu" id="55" comment="alias, more descriptive name for a AcknowledgeRPdu." aliasFor="AcknowledgeRPdu"/>
 
-    <class name="ActionRequestRPdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
+    <class name="ActionRequestRPdu" id="56" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
            comment="5.12.4.7 Serves the same function as the Action Request PDU but with the addition of reliability service levels.">
       
         <initialValue name="pduType" value="DisPduType.ACTION_REQUEST_RELIABLE"/>
@@ -194,9 +195,9 @@
     
     </class>
     
-    <class name="ActionRequestReliablePdu" comment="alias, more descriptive name for a ActionRequestRPdu." aliasFor="ActionRequestRPdu"/>
+    <class name="ActionRequestReliablePdu" id="56" comment="alias, more descriptive name for a ActionRequestRPdu." aliasFor="ActionRequestRPdu"/>
 
-    <class name="ActionResponseRPdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu" comment="5.12.4.8 Serves the same function as the Action Response PDU (see 5.6.5.8.1) but is used to acknowledge the receipt of an Action Request-R PDU.">
+    <class name="ActionResponseRPdu" id="57" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu" comment="5.12.4.8 Serves the same function as the Action Response PDU (see 5.6.5.8.1) but is used to acknowledge the receipt of an Action Request-R PDU.">
       
         <initialValue name="pduType" value="DisPduType.ACTION_RESPONSE_RELIABLE"/>
    
@@ -230,9 +231,9 @@
 
     </class>
     
-    <class name="ActionResponseReliablePdu" comment="alias, more descriptive name for a ActionResponseRPdu." aliasFor="ActionResponseRPdu"/>
+    <class name="ActionResponseReliablePdu" id="57" comment="alias, more descriptive name for a ActionResponseRPdu." aliasFor="ActionResponseRPdu"/>
 
-     <class name="DataQueryRPdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu" comment="5.12.4.9 Serves the same function as the Data Query PDU but with the addition of reliability service levels">
+     <class name="DataQueryRPdu" id="58" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu" comment="5.12.4.9 Serves the same function as the Data Query PDU but with the addition of reliability service levels">
       
         <initialValue name="pduType" value="DisPduType.DATA_QUERY_RELIABLE"/>
    
@@ -278,9 +279,9 @@
 
     </class>
     
-    <class name="DataQueryReliablePdu" comment="alias, more descriptive name for a DataQueryRPdu." aliasFor="DataQueryRPdu"/>
+    <class name="DataQueryReliablePdu" id="58" comment="alias, more descriptive name for a DataQueryRPdu." aliasFor="DataQueryRPdu"/>
     
-    <class name="SetDataRPdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
+    <class name="SetDataRPdu" id="59" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
            comment="5.12.4.10 Serves the same function as the Set Data PDU but with the addition of reliability service levels.">
       
         <initialValue name="pduType" value="DisPduType.SET_DATA_RELIABLE"/>
@@ -322,9 +323,9 @@
         </attribute>
     </class>
     
-    <class name="SetDataReliablePdu" comment="alias, more descriptive name for a SetDataRPdu." aliasFor="SetDataRPdu"/>
+    <class name="SetDataReliablePdu" id="59" comment="alias, more descriptive name for a SetDataRPdu." aliasFor="SetDataRPdu"/>
 
-    <class name="DataRPdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
+    <class name="DataRPdu" id="60" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
            comment="5.12.4.11 Serves the same function as the Data PDU but with the addition of reliability service levels and is used in response to a Data Query-R PDU, a Data-R PDU, or a Set Data-R PDU.">
       
         <initialValue name="pduType" value="DisPduType.DATA_RELIABLE"/>
@@ -367,9 +368,9 @@
   
     </class>
     
-    <class name="DataReliablePdu" comment="alias, more descriptive name for a DataRPdu." aliasFor="DataRPdu"/>
+    <class name="DataReliablePdu" id="60" comment="alias, more descriptive name for a DataRPdu." aliasFor="DataRPdu"/>
 
-    <class name="EventReportRPdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
+    <class name="EventReportRPdu" id="61" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
            comment="5.12.4.12 Contains the same information as found in the Event Report PDU.">
       
         <initialValue name="pduType" value="DisPduType.EVENT_REPORT_RELIABLE"/>
@@ -404,9 +405,9 @@
     
     </class>
     
-    <class name="EventReportReliablePdu" comment="alias, more descriptive name for a EventReportRPdu." aliasFor="EventReportRPdu"/>
+    <class name="EventReportReliablePdu" id="61" comment="alias, more descriptive name for a EventReportRPdu." aliasFor="EventReportRPdu"/>
 
-    <class name="CommentRPdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
+    <class name="CommentRPdu" id="62" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
            comment="5.12.4.13 Serves the same function as the Comment PDU.">
       
         <initialValue name="pduType" value="DisPduType.COMMENT_RELIABLE"/>
@@ -426,9 +427,9 @@
         </attribute>
     </class>
 
-    <class name="CommentReliablePdu" comment="alias, more descriptive name for a CommentRPdu." aliasFor="CommentRPdu"/>
+    <class name="CommentReliablePdu" id="62" comment="alias, more descriptive name for a CommentRPdu." aliasFor="CommentRPdu"/>
 
-    <class name="RecordQueryRPdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
+    <class name="RecordQueryRPdu" id="65" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
            comment="5.12.4.14 Used to communicate a request for data in record format.">
       
         <initialValue name="pduType" value="DisPduType.RECORD_QUERY_RELIABLE"/>
@@ -465,9 +466,9 @@
 
     </class>
     
-    <class name="RecordQueryReliablePdu" comment="alias, more descriptive name for a RecordQueryRPdu." aliasFor="RecordQueryRPdu"/>
+    <class name="RecordQueryReliablePdu" id="65" comment="alias, more descriptive name for a RecordQueryRPdu." aliasFor="RecordQueryRPdu"/>
 
-    <class name="SetRecordRPdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
+    <class name="SetRecordRPdu" id="64" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
             comment="5.12.4.15 Used to set or change certain parameter values. These parameter values are contained within a record format as compared to the datum format used in the Set Data-R PDU.">
           
         <initialValue name="pduType" value="DisPduType.SET_RECORD_RELIABLE"/>
@@ -503,9 +504,9 @@
         </attribute>
     </class>
 
-    <class name="SetRecordReliablePdu" comment="alias, more descriptive name for a SetRecordRPdu." aliasFor="SetRecordRPdu"/>
+    <class name="SetRecordReliablePdu" id="64" comment="alias, more descriptive name for a SetRecordRPdu." aliasFor="SetRecordRPdu"/>
 
-    <class name="RecordRPdu" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
+    <class name="RecordRPdu" id="63" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
            comment="5.12.4.16 Used to respond to a Record Query-R PDU or a Set Record-R PDU. It is used to provide information requested in a Record Query-R PDU, to confirm the information received in a Set Record-R PDU, and to confirm the receipt of a periodic or unsolicited Record-R PDU when the acknowledged service level is used.">
         
         <initialValue name="pduType" value="DisPduType.RECORD_RELIABLE"/>
@@ -538,5 +539,5 @@
         
     </class>
     
-    <class name="RecordReliablePdu" comment="alias, more descriptive name for a RecordRPdu." aliasFor="RecordRPdu"/>
+    <class name="RecordReliablePdu" id="63" comment="alias, more descriptive name for a RecordRPdu." aliasFor="RecordRPdu"/>
 </classes>

@@ -4120,6 +4120,42 @@
          </xs:extension>
       </xs:complexContent>
    </xs:complexType>
+   <xs:complexType name="VariableDatumType" abstract="false">
+      <!--abstract='false' base='rootType'-->
+      <xs:annotation>
+         <xs:appinfo>The variable datum type, the datum length, and the value for that variable datum type.
+            Section 6.2.93
+         </xs:appinfo>
+      </xs:annotation>
+      <xs:complexContent>
+         <xs:extension base="rootType">
+            <xs:attribute name="variableDatumID" type="xs:string">
+               <xs:annotation>
+                  <xs:appinfo>Type of variable datum to be transmitted. 32-bit enumeration defined in EBV (SISO
+                     enumeration VariableRecordType uid 66)
+                  </xs:appinfo>
+               </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="variableDatumLength" type="xs:unsignedLong">
+               <xs:annotation>
+                  <xs:appinfo>Length, IN BITS, of the variable datum.</xs:appinfo>
+               </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="variableDatumValue">
+               <xs:annotation>
+                  <xs:appinfo>This can be any number of bits long, depending on the datum.</xs:appinfo>
+               </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="padding" type="xs:unsignedInt">
+               <xs:annotation>
+                  <xs:appinfo>data structure to selectively provide padding of correct length, see DIS specification
+                     for computation algorithm.
+                  </xs:appinfo>
+               </xs:annotation>
+            </xs:attribute>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
    <xs:complexType name="VariableParameterType" abstract="false">
       <!--abstract='false' base='rootType'-->
       <xs:annotation>
@@ -4257,10 +4293,11 @@
       </xs:complexContent>
    </xs:complexType>
    <!--DistributedEmissionsFamilyPdus.xml contains 13 classes-->
-   <xs:complexType name="DistributedEmissionsFamilyPduType" abstract="true">
+   <xs:complexType name="DistributedEmissionsRegenerationFamilyPduType" abstract="true">
       <xs:annotation>
          <xs:appinfo>Section 5.3.7. Electronic Emissions. Abstract superclass for distributed emissions
             PDU
+            <xs:attribute name="id" type="xs:integer" fixed="6"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexContent>
@@ -4271,11 +4308,13 @@
    </xs:complexType>
    <xs:element name="DesignatorPdu">
       <xs:annotation>
-         <xs:appinfo>7.6.3 Handles designating operations. See 5.3.7.2.</xs:appinfo>
+         <xs:appinfo>7.6.3 Handles designating operations. See 5.3.7.2.
+            <xs:attribute name="id" type="xs:integer" fixed="24"></xs:attribute>
+         </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
          <xs:complexContent>
-            <xs:extension base="DistributedEmissionsFamilyPduType">
+            <xs:extension base="DistributedEmissionsRegenerationFamilyPduType">
                <xs:sequence>
                   <xs:element name="designatingEntityID" type="EntityIDType">
                      <xs:annotation>
@@ -4304,7 +4343,7 @@
                   </xs:element>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
-               <xs:attribute name="family" fixed="DistributedEmissionsFamilyPduType"></xs:attribute>
+               <xs:attribute name="family" fixed="DistributedEmissionsRegenerationFamilyPduType"></xs:attribute>
                <xs:attribute name="codeName" type="xs:string">
                   <xs:annotation>
                      <xs:appinfo>This field shall specify a unique emitter database number assigned to differentiate
@@ -4356,11 +4395,12 @@
             navigation aids, voice, beacon and data radio communications, directed energy weapons,
             and laser ranging and designation systems, which are handled by other PDUs. Section
             5.3.7.1. (length of list found in field numberOfSystems)
+            <xs:attribute name="id" type="xs:integer" fixed="23"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
          <xs:complexContent>
-            <xs:extension base="DistributedEmissionsFamilyPduType">
+            <xs:extension base="DistributedEmissionsRegenerationFamilyPduType">
                <xs:sequence>
                   <xs:element name="emittingEntityID" type="EntityIDType">
                      <xs:annotation>
@@ -4388,7 +4428,7 @@
                   </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
-               <xs:attribute name="family" fixed="DistributedEmissionsFamilyPduType"></xs:attribute>
+               <xs:attribute name="family" fixed="DistributedEmissionsRegenerationFamilyPduType"></xs:attribute>
                <xs:attribute name="stateUpdateIndicator" type="xs:string">
                   <xs:annotation>
                      <xs:appinfo>This field shall be used to indicate if the data in the PDU represents a state update
@@ -4420,7 +4460,7 @@
          <xs:appinfo>(length of list found in field numberOfBeams)</xs:appinfo>
       </xs:annotation>
       <xs:complexContent>
-         <xs:extension base="DistributedEmissionsFamilyPduType">
+         <xs:extension base="DistributedEmissionsRegenerationFamilyPduType">
             <xs:sequence>
                <xs:element name="emitterSystem" type="EmitterSystemType">
                   <xs:annotation>
@@ -4454,7 +4494,7 @@
                </xs:sequence>
             </xs:sequence>
             <!-- ========== debug: divider between elements and attributes ========== -->
-            <xs:attribute name="family" fixed="DistributedEmissionsFamilyPduType"></xs:attribute>
+            <xs:attribute name="family" fixed="DistributedEmissionsRegenerationFamilyPduType"></xs:attribute>
             <xs:attribute name="systemDataLength" type="xs:unsignedByte">
                <xs:annotation>
                   <xs:appinfo>this field shall specify the length of this emitter system's data in 32-bit words.</xs:appinfo>
@@ -4476,7 +4516,7 @@
          <xs:appinfo>(length of list found in field numberOfTargets)</xs:appinfo>
       </xs:annotation>
       <xs:complexContent>
-         <xs:extension base="DistributedEmissionsFamilyPduType">
+         <xs:extension base="DistributedEmissionsRegenerationFamilyPduType">
             <xs:sequence>
                <xs:element name="fundamentalParameterData" type="EEFundamentalParameterDataType"></xs:element>
                <xs:element name="beamData" type="BeamDataType"></xs:element>
@@ -4498,7 +4538,7 @@
                </xs:sequence>
             </xs:sequence>
             <!-- ========== debug: divider between elements and attributes ========== -->
-            <xs:attribute name="family" fixed="DistributedEmissionsFamilyPduType"></xs:attribute>
+            <xs:attribute name="family" fixed="DistributedEmissionsRegenerationFamilyPduType"></xs:attribute>
             <xs:attribute name="beamDataLength" type="xs:unsignedByte"></xs:attribute>
             <xs:attribute name="beamNumber" type="xs:unsignedByte"></xs:attribute>
             <xs:attribute name="beamParameterIndex" type="xs:unsignedShort"></xs:attribute>
@@ -4521,11 +4561,12 @@
          <xs:appinfo>Section 5.3.7.4.2 When present, layer 2 should follow layer 1 and have the following
             fields. This requires manual cleanup. the beamData attribute semantics are used in
             multiple ways. UNFINSISHED (length of list found in field numberOfParameters)
+            <xs:attribute name="id" type="xs:integer" fixed="28"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
          <xs:complexContent>
-            <xs:extension base="DistributedEmissionsFamilyPduType">
+            <xs:extension base="DistributedEmissionsRegenerationFamilyPduType">
                <xs:sequence>
                   <xs:element name="layerHeader" type="LayerHeaderType">
                      <xs:annotation>
@@ -4553,7 +4594,7 @@
                   </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
-               <xs:attribute name="family" fixed="DistributedEmissionsFamilyPduType"></xs:attribute>
+               <xs:attribute name="family" fixed="DistributedEmissionsRegenerationFamilyPduType"></xs:attribute>
                <xs:attribute name="secondaryOpParameter1" type="xs:unsignedByte"></xs:attribute>
                <xs:attribute name="secondaryOpParameter2" type="xs:unsignedByte"></xs:attribute>
                <xs:attribute name="numberOfParameters" type="xs:unsignedShort"></xs:attribute>
@@ -4562,9 +4603,15 @@
       </xs:complexType>
    </xs:element>
    <xs:element name="IFFPdu">
+      <xs:annotation>
+         <xs:appinfo>7.6.5.1 Information about military and civilian interrogators, transponders, and specific
+            other electronic systems. See 5.7.6
+            <xs:attribute name="id" type="xs:integer" fixed="28"></xs:attribute>
+         </xs:appinfo>
+      </xs:annotation>
       <xs:complexType>
          <xs:complexContent>
-            <xs:extension base="DistributedEmissionsFamilyPduType">
+            <xs:extension base="DistributedEmissionsRegenerationFamilyPduType">
                <xs:sequence>
                   <xs:element name="emittingEntityId" type="EntityIDType">
                      <xs:annotation>
@@ -4595,7 +4642,7 @@
                   </xs:element>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
-               <xs:attribute name="family" fixed="DistributedEmissionsFamilyPduType"></xs:attribute>
+               <xs:attribute name="family" fixed="DistributedEmissionsRegenerationFamilyPduType"></xs:attribute>
                <xs:attribute name="systemDesignator" type="xs:unsignedByte"></xs:attribute>
                <xs:attribute name="systemSpecificData" type="xs:unsignedByte"></xs:attribute>
             </xs:extension>
@@ -4604,12 +4651,15 @@
    </xs:element>
    <xs:element name="IdentificationFriendOrFoePdu">
       <xs:annotation>
-         <xs:appinfo>more descriptive name for an IFFPdu</xs:appinfo>
+         <xs:appinfo>alias, more descriptive name for an IFFPdu.
+            <xs:attribute name="aliasFor" type="xs:string" fixed="IFFPdu"></xs:attribute>
+            <xs:attribute name="id" type="xs:integer" fixed="28"></xs:attribute>
+         </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
          <xs:complexContent>
-            <xs:extension base="DistributedEmissionsFamilyPduType">
-               <xs:attribute name="family" fixed="DistributedEmissionsFamilyPduType"></xs:attribute>
+            <xs:extension base="DistributedEmissionsRegenerationFamilyPduType">
+               <xs:attribute name="family" fixed="DistributedEmissionsRegenerationFamilyPduType"></xs:attribute>
             </xs:extension>
          </xs:complexContent>
       </xs:complexType>
@@ -4618,11 +4668,12 @@
       <xs:annotation>
          <xs:appinfo>7.6.6 Certain supplemental information on an entity’s physical state and emissions.
             See 5.7.7 (length of list found in field numberOfPropulsionSystems numberOfVectoringNozzleSystems)
+            <xs:attribute name="id" type="xs:integer" fixed="30"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
          <xs:complexContent>
-            <xs:extension base="DistributedEmissionsFamilyPduType">
+            <xs:extension base="DistributedEmissionsRegenerationFamilyPduType">
                <xs:sequence>
                   <xs:element name="orginatingEntityID" type="EntityIDType">
                      <xs:annotation>
@@ -4659,7 +4710,7 @@
                   </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
-               <xs:attribute name="family" fixed="DistributedEmissionsFamilyPduType"></xs:attribute>
+               <xs:attribute name="family" fixed="DistributedEmissionsRegenerationFamilyPduType"></xs:attribute>
                <xs:attribute name="infraredSignatureRepresentationIndex" type="xs:unsignedShort">
                   <xs:annotation>
                      <xs:appinfo>IR Signature representation index</xs:appinfo>
@@ -4691,12 +4742,15 @@
    </xs:element>
    <xs:element name="SupplementalEmissionEntityStatePdu">
       <xs:annotation>
-         <xs:appinfo>more descriptive name for a SEESPdu</xs:appinfo>
+         <xs:appinfo>alias, more descriptive name for a SEESPdu.
+            <xs:attribute name="aliasFor" type="xs:string" fixed="SEESPdu"></xs:attribute>
+            <xs:attribute name="id" type="xs:integer" fixed="30"></xs:attribute>
+         </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
          <xs:complexContent>
-            <xs:extension base="DistributedEmissionsFamilyPduType">
-               <xs:attribute name="family" fixed="DistributedEmissionsFamilyPduType"></xs:attribute>
+            <xs:extension base="DistributedEmissionsRegenerationFamilyPduType">
+               <xs:attribute name="family" fixed="DistributedEmissionsRegenerationFamilyPduType"></xs:attribute>
             </xs:extension>
          </xs:complexContent>
       </xs:complexType>
@@ -4704,12 +4758,12 @@
    <xs:complexType name="UABeamType">
       <!--debug: another class, providing Pdu types-->
       <xs:complexContent>
-         <xs:extension base="DistributedEmissionsFamilyPduType">
+         <xs:extension base="DistributedEmissionsRegenerationFamilyPduType">
             <xs:sequence>
                <xs:element name="fundamentalParameterData" type="UAFundamentalParameterType"></xs:element>
             </xs:sequence>
             <!-- ========== debug: divider between elements and attributes ========== -->
-            <xs:attribute name="family" fixed="DistributedEmissionsFamilyPduType"></xs:attribute>
+            <xs:attribute name="family" fixed="DistributedEmissionsRegenerationFamilyPduType"></xs:attribute>
             <xs:attribute name="beamDataLength" type="xs:unsignedByte"></xs:attribute>
             <xs:attribute name="beamNumber" type="xs:unsignedByte"></xs:attribute>
             <xs:attribute name="padding" type="xs:unsignedShort"></xs:attribute>
@@ -4722,7 +4776,7 @@
          <xs:appinfo>(length of list found in field numberOfBeams)</xs:appinfo>
       </xs:annotation>
       <xs:complexContent>
-         <xs:extension base="DistributedEmissionsFamilyPduType">
+         <xs:extension base="DistributedEmissionsRegenerationFamilyPduType">
             <xs:sequence>
                <xs:element name="acousticEmitter" type="AcousticEmitterType">
                   <xs:annotation>
@@ -4754,7 +4808,7 @@
                </xs:sequence>
             </xs:sequence>
             <!-- ========== debug: divider between elements and attributes ========== -->
-            <xs:attribute name="family" fixed="DistributedEmissionsFamilyPduType"></xs:attribute>
+            <xs:attribute name="family" fixed="DistributedEmissionsRegenerationFamilyPduType"></xs:attribute>
             <xs:attribute name="systemDataLength" type="xs:unsignedByte">
                <xs:annotation>
                   <xs:appinfo>this field shall specify the length of this emitter system's data in 32-bit words.</xs:appinfo>
@@ -4775,11 +4829,12 @@
       <xs:annotation>
          <xs:appinfo>7.6.4 Information about underwater acoustic emmissions. See 5.7.5. (length of list
             found in field numberOfShafts numberOfAPAs numberOfUAEmitterSystems)
+            <xs:attribute name="id" type="xs:integer" fixed="29"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
          <xs:complexContent>
-            <xs:extension base="DistributedEmissionsFamilyPduType">
+            <xs:extension base="DistributedEmissionsRegenerationFamilyPduType">
                <xs:sequence>
                   <xs:element name="emittingEntityID" type="EntityIDType">
                      <xs:annotation>
@@ -4835,7 +4890,7 @@
                   </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
-               <xs:attribute name="family" fixed="DistributedEmissionsFamilyPduType"></xs:attribute>
+               <xs:attribute name="family" fixed="DistributedEmissionsRegenerationFamilyPduType"></xs:attribute>
                <xs:attribute name="stateChangeIndicator" type="xs:string">
                   <xs:annotation>
                      <xs:appinfo>This field shall be used to indicate whether the data in the UA PDU represent a state
@@ -4888,10 +4943,11 @@
       </xs:complexType>
    </xs:element>
    <!--EntityInformationFamilyPdus.xml contains 8 classes-->
-   <xs:complexType name="EntityInformationFamilyPduType" abstract="true">
+   <xs:complexType name="EntityInformationInteractionFamilyPduType" abstract="true">
       <xs:annotation>
          <xs:appinfo>Section 5.3.3. Common superclass for EntityState, Collision, collision-elastic, and
             entity state update PDUs.
+            <xs:attribute name="id" type="xs:integer" fixed="1"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexContent>
@@ -4907,11 +4963,12 @@
             used to exchange data available in any other PDU except where explicitly mentioned
             in the PDU issuance instructions within this standard. See 5.3.6. (length of list
             found in field numberAttributeRecordSet)
+            <xs:attribute name="id" type="xs:integer" fixed="72"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
          <xs:complexContent>
-            <xs:extension base="EntityInformationFamilyPduType">
+            <xs:extension base="EntityInformationInteractionFamilyPduType">
                <xs:sequence>
                   <xs:element name="originatingSimulationAddress" type="SimulationAddressType">
                      <xs:annotation>
@@ -4936,7 +4993,7 @@
                   </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
-               <xs:attribute name="family" fixed="EntityInformationFamilyPduType"></xs:attribute>
+               <xs:attribute name="family" fixed="EntityInformationInteractionFamilyPduType"></xs:attribute>
                <xs:attribute name="padding1" type="xs:long">
                   <xs:annotation>
                      <xs:appinfo>Padding</xs:appinfo>
@@ -5001,7 +5058,7 @@
          <xs:appinfo>(length of list found in field numberOfAttributeRecords)</xs:appinfo>
       </xs:annotation>
       <xs:complexContent>
-         <xs:extension base="EntityInformationFamilyPduType">
+         <xs:extension base="EntityInformationInteractionFamilyPduType">
             <xs:sequence>
                <xs:element name="entityId" type="EntityIDType"></xs:element>
                <!--Attribute (as element) AttributeRecordSet attributeRecords with objectlist classRef name=Attribute, type=AttributeType-->
@@ -5020,7 +5077,7 @@
                </xs:sequence>
             </xs:sequence>
             <!-- ========== debug: divider between elements and attributes ========== -->
-            <xs:attribute name="family" fixed="EntityInformationFamilyPduType"></xs:attribute>
+            <xs:attribute name="family" fixed="EntityInformationInteractionFamilyPduType"></xs:attribute>
             <xs:attribute name="numberOfAttributeRecords" type="xs:unsignedShort"></xs:attribute>
          </xs:extension>
       </xs:complexContent>
@@ -5029,11 +5086,12 @@
       <xs:annotation>
          <xs:appinfo>7.2.4 Information about elastic collisions in a DIS exercise shall be communicated
             using a Collision-Elastic PDU. See 5.3.4.
+            <xs:attribute name="id" type="xs:integer" fixed="66"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
          <xs:complexContent>
-            <xs:extension base="EntityInformationFamilyPduType">
+            <xs:extension base="EntityInformationInteractionFamilyPduType">
                <xs:sequence>
                   <xs:element name="issuingEntityID" type="EntityIDType">
                      <xs:annotation>
@@ -5086,7 +5144,7 @@
                   </xs:element>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
-               <xs:attribute name="family" fixed="EntityInformationFamilyPduType"></xs:attribute>
+               <xs:attribute name="family" fixed="EntityInformationInteractionFamilyPduType"></xs:attribute>
                <xs:attribute name="pad" type="xs:unsignedShort">
                   <xs:annotation>
                      <xs:appinfo>some padding</xs:appinfo>
@@ -5150,11 +5208,12 @@
       <xs:annotation>
          <xs:appinfo>7.2.3 Collisions between entities shall be communicated by issuing a Collision PDU.
             See 5.3.3.
+            <xs:attribute name="id" type="xs:integer" fixed="4"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
          <xs:complexContent>
-            <xs:extension base="EntityInformationFamilyPduType">
+            <xs:extension base="EntityInformationInteractionFamilyPduType">
                <xs:sequence>
                   <xs:element name="issuingEntityID" type="EntityIDType">
                      <xs:annotation>
@@ -5196,7 +5255,7 @@
                   </xs:element>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
-               <xs:attribute name="family" fixed="EntityInformationFamilyPduType"></xs:attribute>
+               <xs:attribute name="family" fixed="EntityInformationInteractionFamilyPduType"></xs:attribute>
                <xs:attribute name="collisionType" type="xs:string">
                   <xs:annotation>
                      <xs:appinfo>This field shall identify the type of collision. The Collision Type field shall be
@@ -5225,11 +5284,12 @@
       <xs:annotation>
          <xs:appinfo>7.2.2. Represents the position and state of one entity in the world. See 5.3.2. (length
             of list found in field numberOfVariableParameters)
+            <xs:attribute name="id" type="xs:integer" fixed="1"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
          <xs:complexContent>
-            <xs:extension base="EntityInformationFamilyPduType">
+            <xs:extension base="EntityInformationInteractionFamilyPduType">
                <xs:sequence>
                   <xs:element name="entityID" type="EntityIDType">
                      <xs:annotation>
@@ -5287,7 +5347,7 @@
                   </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
-               <xs:attribute name="family" fixed="EntityInformationFamilyPduType"></xs:attribute>
+               <xs:attribute name="family" fixed="EntityInformationInteractionFamilyPduType"></xs:attribute>
                <xs:attribute name="forceId" type="xs:string">
                   <xs:annotation>
                      <xs:appinfo>What force this entity is affiliated with, eg red, blue, neutral, etc (SISO enumeration
@@ -5324,11 +5384,12 @@
       <xs:annotation>
          <xs:appinfo>7.2.5. Nonstatic information about a particular entity may be communicated by issuing
             an Entity State Update PDU. 5.3.5. (length of list found in field numberOfVariableParameters)
+            <xs:attribute name="id" type="xs:integer" fixed="67"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
          <xs:complexContent>
-            <xs:extension base="EntityInformationFamilyPduType">
+            <xs:extension base="EntityInformationInteractionFamilyPduType">
                <xs:sequence>
                   <xs:element name="entityID" type="EntityIDType">
                      <xs:annotation>
@@ -5377,7 +5438,7 @@
                   </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
-               <xs:attribute name="family" fixed="EntityInformationFamilyPduType"></xs:attribute>
+               <xs:attribute name="family" fixed="EntityInformationInteractionFamilyPduType"></xs:attribute>
                <xs:attribute name="padding1" type="xs:unsignedByte">
                   <xs:annotation>
                      <xs:appinfo>Padding</xs:appinfo>
@@ -5410,7 +5471,7 @@
       </xs:annotation>
       <xs:complexType>
          <xs:complexContent>
-            <xs:extension base="EntityInformationFamilyPduType">
+            <xs:extension base="EntityInformationInteractionFamilyPduType">
                <xs:sequence>
                   <!--Attribute (as element) FastEntityStatePdu variableParameters with objectlist classRef name=VariableParameter, type=VariableParameterType-->
                   <xs:sequence minOccurs="0" maxOccurs="unbounded">
@@ -5430,7 +5491,7 @@
                   </xs:sequence>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
-               <xs:attribute name="family" fixed="EntityInformationFamilyPduType"></xs:attribute>
+               <xs:attribute name="family" fixed="EntityInformationInteractionFamilyPduType"></xs:attribute>
                <xs:attribute name="site" type="xs:unsignedShort">
                   <xs:annotation>
                      <xs:appinfo>The site ID</xs:appinfo>
@@ -5617,7 +5678,9 @@
    <!--EntityManagementFamilyPdus.xml contains 5 classes-->
    <xs:complexType name="EntityManagementFamilyPduType" abstract="true">
       <xs:annotation>
-         <xs:appinfo>Managment of grouping of PDUs, and more. Section 7.8</xs:appinfo>
+         <xs:appinfo>Managment of grouping of PDUs, and more. Section 7.8
+            <xs:attribute name="id" type="xs:integer" fixed="7"></xs:attribute>
+         </xs:appinfo>
       </xs:annotation>
       <xs:complexContent>
          <xs:extension base="PduBaseType">
@@ -5630,6 +5693,7 @@
          <xs:appinfo>5.9.2.2 The Aggregate State PDU shall be used to communicate the state and other pertinent
             information about an aggregated unit. (length of list found in field numberOfDisAggregates
             numberOfDisEntities numberOfSilentAggregateTypes numberOfSilentEntityTypes numberOfVariableDatumRecords)
+            <xs:attribute name="id" type="xs:integer" fixed="33"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -5773,6 +5837,7 @@
             of a group of entities, including state information that is necessary for the receiving
             simulation applications to represent the issuing group of entities in the simulation
             applications’ own simulation. (length of list found in field numberOfGroupedEntities)
+            <xs:attribute name="id" type="xs:integer" fixed="34"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -5836,7 +5901,9 @@
    </xs:element>
    <xs:element name="IsPartOfPdu">
       <xs:annotation>
-         <xs:appinfo>5.9.5 Used to request hierarchical linkage of separately hosted simulation entities</xs:appinfo>
+         <xs:appinfo>5.9.5 Used to request hierarchical linkage of separately hosted simulation entities
+            <xs:attribute name="id" type="xs:integer" fixed="36"></xs:attribute>
+         </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
          <xs:complexContent>
@@ -5884,6 +5951,7 @@
       <xs:annotation>
          <xs:appinfo>Information initiating the dyanic allocation and control of simulation entities between
             two simulation applications.
+            <xs:attribute name="id" type="xs:integer" fixed="35"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -5932,6 +6000,15 @@
    </xs:element>
    <!--InformationOperationsFamilyPdus.xml contains 3 classes-->
    <xs:complexType name="InformationOperationsFamilyPduType" abstract="true">
+      <xs:annotation>
+         <xs:appinfo>Information operations (IO) are the integrated employment of electronic warfare (EW),
+            computer network operations (CNO), psychological operations (PSYOP), military deception
+            (MILDEC), and operations security (OPSEC), along with specific supporting capabilities,
+            to influence, disrupt, corrupt, or otherwise affect enemy information and decision
+            making while protecting friendly information operations.
+            <xs:attribute name="id" type="xs:integer" fixed="13"></xs:attribute>
+         </xs:appinfo>
+      </xs:annotation>
       <xs:complexContent>
          <xs:extension base="PduBaseType">
             <xs:sequence>
@@ -5949,6 +6026,7 @@
       <xs:annotation>
          <xs:appinfo>5.13.3.1 Used to communicate an IO attack or the effects of an IO attack on one or
             more target entities. (length of list found in field numberOfIORecords)
+            <xs:attribute name="id" type="xs:integer" fixed="70"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -6015,6 +6093,7 @@
       <xs:annotation>
          <xs:appinfo>5.13.4.1 Used to communicate the effects of an IO attack on one or more target entities.
             (length of list found in field numberOfIORecords)
+            <xs:attribute name="id" type="xs:integer" fixed="71"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -6061,7 +6140,9 @@
    <!--LiveEntityFamilyPdus.xml contains 10 classes-->
    <xs:complexType name="LiveEntityFamilyPduType" abstract="true">
       <xs:annotation>
-         <xs:appinfo>Does not inherit from PduBase. See section 9.</xs:appinfo>
+         <xs:appinfo>Does not inherit from PduBase. See section 9.
+            <xs:attribute name="id" type="xs:integer" fixed="11"></xs:attribute>
+         </xs:appinfo>
       </xs:annotation>
       <xs:complexContent>
          <xs:extension base="PduType">
@@ -6071,7 +6152,9 @@
    </xs:complexType>
    <xs:element name="AppearancePdu">
       <xs:annotation>
-         <xs:appinfo>9.4.3 Communicate information about the appearance of a live entity.</xs:appinfo>
+         <xs:appinfo>9.4.3 Communicate information about the appearance of a live entity.
+            <xs:attribute name="id" type="xs:integer" fixed="47"></xs:attribute>
+         </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
          <xs:complexContent>
@@ -6108,6 +6191,7 @@
       <xs:annotation>
          <xs:appinfo>9.4.4 Communicate information about an entity’s articulated and attached parts. (length
             of list found in field numberOfParameterRecords)
+            <xs:attribute name="id" type="xs:integer" fixed="48"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -6139,7 +6223,9 @@
    </xs:element>
    <xs:element name="LEDetonationPdu">
       <xs:annotation>
-         <xs:appinfo>9.4.6 Communicate information associated with the impact or detonation of a munition.</xs:appinfo>
+         <xs:appinfo>9.4.6 Communicate information associated with the impact or detonation of a munition.
+            <xs:attribute name="id" type="xs:integer" fixed="50"></xs:attribute>
+         </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
          <xs:complexContent>
@@ -6170,7 +6256,9 @@
    </xs:element>
    <xs:element name="LEFirePdu">
       <xs:annotation>
-         <xs:appinfo>9.4.5 Representation of weapons fire in a DIS exercise involving LEs.</xs:appinfo>
+         <xs:appinfo>9.4.5 Representation of weapons fire in a DIS exercise involving LEs.
+            <xs:attribute name="id" type="xs:integer" fixed="49"></xs:attribute>
+         </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
          <xs:complexContent>
@@ -6198,7 +6286,10 @@
    </xs:element>
    <xs:element name="LiveEntityDetonationPdu">
       <xs:annotation>
-         <xs:appinfo>more descriptive name for a LEDetonationPdu</xs:appinfo>
+         <xs:appinfo>alias, more descriptive name for a LEDetonationPdu.
+            <xs:attribute name="aliasFor" type="xs:string" fixed="LEDetonationPdu"></xs:attribute>
+            <xs:attribute name="id" type="xs:integer" fixed="50"></xs:attribute>
+         </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
          <xs:complexContent>
@@ -6210,7 +6301,10 @@
    </xs:element>
    <xs:element name="LiveEntityFirePdu">
       <xs:annotation>
-         <xs:appinfo>more descriptive name for a LEFirePdu</xs:appinfo>
+         <xs:appinfo>alias, more descriptive name for a LEFirePdu.
+            <xs:attribute name="aliasFor" type="xs:string" fixed="LEFirePdu"></xs:attribute>
+            <xs:attribute name="id" type="xs:integer" fixed="49"></xs:attribute>
+         </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
          <xs:complexContent>
@@ -6222,7 +6316,9 @@
    </xs:element>
    <xs:element name="LiveEntityPdu">
       <xs:annotation>
-         <xs:appinfo>The live entity PDUs have a slightly different header</xs:appinfo>
+         <xs:appinfo>The live entity PDUs have a slightly different header
+            <xs:attribute name="id" type="xs:integer" fixed="11"></xs:attribute>
+         </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
          <xs:complexContent>
@@ -6248,6 +6344,7 @@
       <xs:annotation>
          <xs:appinfo>9.4.2 The Time Space Position Information (TSPI) PDU shall communicate information
             about the LE’s state vector. (length of list found in field systemSpecificDataLength)
+            <xs:attribute name="id" type="xs:integer" fixed="46"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -6292,7 +6389,10 @@
    </xs:element>
    <xs:element name="TimeSpacePositionInformationPdu">
       <xs:annotation>
-         <xs:appinfo>more descriptive name for a TSPIPdu</xs:appinfo>
+         <xs:appinfo>alias, more descriptive name for a TSPIPdu.
+            <xs:attribute name="aliasFor" type="xs:string" fixed="TSPIPdu"></xs:attribute>
+            <xs:attribute name="id" type="xs:integer" fixed="46"></xs:attribute>
+         </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
          <xs:complexContent>
@@ -6305,7 +6405,9 @@
    <!--LogisticsFamilyPdus.xml contains 7 classes-->
    <xs:complexType name="LogisticsFamilyPduType" abstract="true">
       <xs:annotation>
-         <xs:appinfo>Abstract superclass for logistics PDUs. Section 7.4</xs:appinfo>
+         <xs:appinfo>Abstract superclass for logistics PDUs. Section 7.4
+            <xs:attribute name="id" type="xs:integer" fixed="3"></xs:attribute>
+         </xs:appinfo>
       </xs:annotation>
       <xs:complexContent>
          <xs:extension base="PduBaseType">
@@ -6317,6 +6419,7 @@
       <xs:annotation>
          <xs:appinfo>5.5.10 Used by the repairing entity to communicate the repair that has been performed
             for the entity that requested repair service.
+            <xs:attribute name="id" type="xs:integer" fixed="9"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -6356,6 +6459,7 @@
       <xs:annotation>
          <xs:appinfo>5.5.11 used by the receiving entity to acknowledge the receipt of a Repair Complete
             PDU
+            <xs:attribute name="id" type="xs:integer" fixed="10"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -6398,6 +6502,7 @@
       <xs:annotation>
          <xs:appinfo>5.5.8 Used to communicate the canceling of a resupply service provided through logistics
             support.
+            <xs:attribute name="id" type="xs:integer" fixed="8"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -6424,6 +6529,7 @@
       <xs:annotation>
          <xs:appinfo>5.5.6 Communicate the offer of supplies by a supplying entity to a receiving entity.
             (length of list found in field numberOfSupplyTypes)
+            <xs:attribute name="id" type="xs:integer" fixed="6"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -6487,6 +6593,7 @@
       <xs:annotation>
          <xs:appinfo>5.5.7 Used to acknowledge the receipt of supplies by the receiving entity. (length
             of list found in field numberOfSupplyTypes)
+            <xs:attribute name="id" type="xs:integer" fixed="7"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -6548,6 +6655,7 @@
       <xs:annotation>
          <xs:appinfo>5.5.5 Communicate information associated with one entity requesting a service from
             another. (length of list found in field numberOfSupplyTypes)
+            <xs:attribute name="id" type="xs:integer" fixed="5"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -6601,7 +6709,9 @@
    <!--MinefieldFamilyPdus.xml contains 6 classes-->
    <xs:complexType name="MinefieldFamilyPduType" abstract="true">
       <xs:annotation>
-         <xs:appinfo>Abstract superclass for PDUs relating to minefields. Section 7.9</xs:appinfo>
+         <xs:appinfo>Abstract superclass for PDUs relating to minefields. Section 7.9
+            <xs:attribute name="id" type="xs:integer" fixed="8"></xs:attribute>
+         </xs:appinfo>
       </xs:annotation>
       <xs:complexContent>
          <xs:extension base="PduBaseType">
@@ -6627,6 +6737,7 @@
             numberOfMinesInThisPdu numberOfMinesInThisPdu numberOfMinesInThisPdu numberOfMinesInThisPdu
             numberOfMinesInThisPdu numberOfMinesInThisPdu numberOfMinesInThisPdu numberOfMinesInThisPdu
             numberOfMinesInThisPdu numberOfMinesInThisPdu numberOfMinesInThisPdu numberOfMinesInThisPdu)
+            <xs:attribute name="id" type="xs:integer" fixed="39"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -6894,6 +7005,7 @@
          <xs:appinfo>5.10.3 Contains information about the requesting entity and the region and mine types
             of interest to the requesting entity. (length of list found in field numberOfPerimeterPoints
             numberOfSensorTypes)
+            <xs:attribute name="id" type="xs:integer" fixed="38"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -6974,7 +7086,9 @@
    <xs:element name="MinefieldResponseNACKPdu">
       <xs:annotation>
          <xs:appinfo>5.10.5 Contains information about the requesting entity and the PDU(s) that were not
-            received in response to a query. (length of list found in field numberOfMissingPdus)
+            received in response to a query. NACK = Negative Acknowledgment. (length of list found
+            in field numberOfMissingPdus)
+            <xs:attribute name="id" type="xs:integer" fixed="40"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -7028,6 +7142,7 @@
          <xs:appinfo>5.10.2 Communicate information about the minefield, including the location, perimeter,
             and types of mines contained within it. (length of list found in field numberOfPerimeterPoints
             numberOfMineTypes)
+            <xs:attribute name="id" type="xs:integer" fixed="37"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -7124,7 +7239,9 @@
    <!--RadioCommunicationsFamilyPdus.xml contains 6 classes-->
    <xs:complexType name="RadioCommunicationsFamilyPduType" abstract="true">
       <xs:annotation>
-         <xs:appinfo>Abstract superclass for radio communications PDUs. Section 7.7</xs:appinfo>
+         <xs:appinfo>Abstract superclass for radio communications PDUs. Section 7.7
+            <xs:attribute name="id" type="xs:integer" fixed="4"></xs:attribute>
+         </xs:appinfo>
       </xs:annotation>
       <xs:complexContent>
          <xs:extension base="PduBaseType">
@@ -7137,6 +7254,7 @@
          <xs:appinfo>5.8.7 Communicates the state of a particular intercom device, request an action of
             another intercom device, or respond to an action request. (length of list found in
             field intercomParametersLength)
+            <xs:attribute name="id" type="xs:integer" fixed="32"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -7259,6 +7377,7 @@
          <xs:appinfo>5.8.5 Communicates the state of a particular radio receiver. Its primary application
             is in communicating state information to radio network monitors, data loggers, and
             similar applications for use in debugging, supervision, and after-action review.
+            <xs:attribute name="id" type="xs:integer" fixed="27"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -7300,6 +7419,7 @@
       <xs:annotation>
          <xs:appinfo>5.8.3 Communicates the state of a particular radio transmitter or simple intercom.
             (length of list found in field modulationParameterCount antennaPatternCount)
+            <xs:attribute name="id" type="xs:integer" fixed="25"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -7429,6 +7549,7 @@
       <xs:annotation>
          <xs:appinfo>First part of a simulation management (SIMAN) PDU and SIMAN-Reliability (SIMAN-R)
             PDU. Sectionn 6.2.81
+            <xs:attribute name="id" type="xs:integer" fixed="5"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexContent>
@@ -7453,6 +7574,7 @@
       <xs:annotation>
          <xs:appinfo>7.5.6 Acknowledges the receipt of a Start/Resume PDU, Stop/Freeze PDU, Create Entity
             PDU, or Remove Entity PDU. See 5.6.5.6.
+            <xs:attribute name="id" type="xs:integer" fixed="15"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -7486,6 +7608,7 @@
       <xs:annotation>
          <xs:appinfo>7.5.7 A request from an SM to a managed entity to perform a specified action. See
             5.6.5.7 (length of list found in field numberOfFixedDatumRecords numberOfVariableDatumRecords)
+            <xs:attribute name="id" type="xs:integer" fixed="16"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -7556,6 +7679,7 @@
          <xs:appinfo>Section 7.5.8. When an entity receives an Action Request PDU, that entity shall acknowledge
             the receipt of the Action Request PDU with an Action Response PDU. See 5.6.5.8. (length
             of list found in field numberOfFixedDatumRecords numberOfVariableDatumRecords)
+            <xs:attribute name="id" type="xs:integer" fixed="17"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -7623,6 +7747,7 @@
       <xs:annotation>
          <xs:appinfo>7.5.13 Used to enter arbitrary messages (character strings, for example). See 5.6.5.13
             (length of list found in field numberOfVariableDatumRecords)
+            <xs:attribute name="id" type="xs:integer" fixed="22"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -7664,7 +7789,9 @@
    </xs:element>
    <xs:element name="CreateEntityPdu">
       <xs:annotation>
-         <xs:appinfo>Section 7.5.2. Create a new entity. See 5.6.5.2.</xs:appinfo>
+         <xs:appinfo>Section 7.5.2. Create a new entity. See 5.6.5.2.
+            <xs:attribute name="id" type="xs:integer" fixed="11"></xs:attribute>
+         </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
          <xs:complexContent>
@@ -7683,6 +7810,7 @@
       <xs:annotation>
          <xs:appinfo>7.5.11 Information issued in response to a Data Query PDU or Set Data PDU. Section
             5.6.5.11 (length of list found in field numberOfFixedDatumRecords numberOfVariableDatumRecords)
+            <xs:attribute name="id" type="xs:integer" fixed="20"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -7750,6 +7878,7 @@
       <xs:annotation>
          <xs:appinfo>Section 7.5.9. Request for data from an entity. See 5.6.5.9 (length of list found
             in field numberOfFixedDatumRecords numberOfVariableDatumRecords)
+            <xs:attribute name="id" type="xs:integer" fixed="18"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -7817,6 +7946,7 @@
       <xs:annotation>
          <xs:appinfo>7.5.12 Reports occurance of a significant event to the simulation manager. See 5.6.5.12.
             (length of list found in field numberOfFixedDatumRecords numberOfVariableDatumRecords)
+            <xs:attribute name="id" type="xs:integer" fixed="21"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -7884,6 +8014,7 @@
       <xs:annotation>
          <xs:appinfo>Section 7.5.3 The removal of an entity from an exercise shall be communicated with
             a Remove Entity PDU. See 5.6.5.3.
+            <xs:attribute name="id" type="xs:integer" fixed="12"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -7906,6 +8037,7 @@
          <xs:appinfo>Section 7.5.10. Initializing or changing internal state information shall be communicated
             using a Set Data PDU. See 5.6.5.10 (length of list found in field numberOfFixedDatumRecords
             numberOfVariableDatumRecords)
+            <xs:attribute name="id" type="xs:integer" fixed="19"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -7971,7 +8103,9 @@
    </xs:element>
    <xs:element name="StartResumePdu">
       <xs:annotation>
-         <xs:appinfo>Section 7.5.4. Start or resume an entity or exercise. See 5.6.5.4.</xs:appinfo>
+         <xs:appinfo>Section 7.5.4. Start or resume an entity or exercise. See 5.6.5.4.
+            <xs:attribute name="id" type="xs:integer" fixed="13"></xs:attribute>
+         </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
          <xs:complexContent>
@@ -8009,7 +8143,9 @@
    </xs:element>
    <xs:element name="StopFreezePdu">
       <xs:annotation>
-         <xs:appinfo>Section 7.5.5. Stop or freeze an enity or exercise. See 5.6.5.5</xs:appinfo>
+         <xs:appinfo>Section 7.5.5. Stop or freeze an enity or exercise. See 5.6.5.5
+            <xs:attribute name="id" type="xs:integer" fixed="14"></xs:attribute>
+         </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
          <xs:complexContent>
@@ -8054,6 +8190,13 @@
    </xs:element>
    <!--SimulationManagementWithReliabilityFamilyPdus.xml contains 31 classes-->
    <xs:complexType name="SimulationManagementWithReliabilityFamilyPduType" abstract="true">
+      <xs:annotation>
+         <xs:appinfo>Simulation Management with Reliability PDUs with reliability service levels in a DIS
+            exercise are an alternative to the Simulation Management PDUs, and may or may not
+            be required for participation in an DIS exercise,
+            <xs:attribute name="id" type="xs:integer" fixed="10"></xs:attribute>
+         </xs:appinfo>
+      </xs:annotation>
       <xs:complexContent>
          <xs:extension base="PduBaseType">
             <xs:sequence>
@@ -8077,6 +8220,7 @@
          <xs:appinfo>5.12.4.6 Serves the same function as the Acknowledge PDU but is used to acknowledge
             the receipt of a Create Entity-R PDU, a Remove Entity-R PDU, a Start/Resume-R PDU,
             or a Stop/Freeze-R PDU.
+            <xs:attribute name="id" type="xs:integer" fixed="55"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -8104,7 +8248,10 @@
    </xs:element>
    <xs:element name="AcknowledgeReliablePdu">
       <xs:annotation>
-         <xs:appinfo>more descriptive name for a AcknowledgeRPdu</xs:appinfo>
+         <xs:appinfo>alias, more descriptive name for a AcknowledgeRPdu.
+            <xs:attribute name="aliasFor" type="xs:string" fixed="AcknowledgeRPdu"></xs:attribute>
+            <xs:attribute name="id" type="xs:integer" fixed="55"></xs:attribute>
+         </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
          <xs:complexContent>
@@ -8119,6 +8266,7 @@
          <xs:appinfo>5.12.4.7 Serves the same function as the Action Request PDU but with the addition
             of reliability service levels. (length of list found in field numberOfFixedDatumRecords
             numberOfVariableDatumRecords)
+            <xs:attribute name="id" type="xs:integer" fixed="56"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -8199,7 +8347,10 @@
    </xs:element>
    <xs:element name="ActionRequestReliablePdu">
       <xs:annotation>
-         <xs:appinfo>more descriptive name for a ActionRequestRPdu</xs:appinfo>
+         <xs:appinfo>alias, more descriptive name for a ActionRequestRPdu.
+            <xs:attribute name="aliasFor" type="xs:string" fixed="ActionRequestRPdu"></xs:attribute>
+            <xs:attribute name="id" type="xs:integer" fixed="56"></xs:attribute>
+         </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
          <xs:complexContent>
@@ -8214,6 +8365,7 @@
          <xs:appinfo>5.12.4.8 Serves the same function as the Action Response PDU (see 5.6.5.8.1) but is
             used to acknowledge the receipt of an Action Request-R PDU. (length of list found
             in field numberOfFixedDatumRecords numberOfVariableDatumRecords)
+            <xs:attribute name="id" type="xs:integer" fixed="57"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -8277,7 +8429,10 @@
    </xs:element>
    <xs:element name="ActionResponseReliablePdu">
       <xs:annotation>
-         <xs:appinfo>more descriptive name for a ActionResponseRPdu</xs:appinfo>
+         <xs:appinfo>alias, more descriptive name for a ActionResponseRPdu.
+            <xs:attribute name="aliasFor" type="xs:string" fixed="ActionResponseRPdu"></xs:attribute>
+            <xs:attribute name="id" type="xs:integer" fixed="57"></xs:attribute>
+         </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
          <xs:complexContent>
@@ -8291,6 +8446,7 @@
       <xs:annotation>
          <xs:appinfo>5.12.4.13 Serves the same function as the Comment PDU. (length of list found in field
             numberOfVariableDatumRecords)
+            <xs:attribute name="id" type="xs:integer" fixed="62"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -8330,7 +8486,10 @@
    </xs:element>
    <xs:element name="CommentReliablePdu">
       <xs:annotation>
-         <xs:appinfo>more descriptive name for a CommentRPdu</xs:appinfo>
+         <xs:appinfo>alias, more descriptive name for a CommentRPdu.
+            <xs:attribute name="aliasFor" type="xs:string" fixed="CommentRPdu"></xs:attribute>
+            <xs:attribute name="id" type="xs:integer" fixed="62"></xs:attribute>
+         </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
          <xs:complexContent>
@@ -8344,6 +8503,7 @@
       <xs:annotation>
          <xs:appinfo>5.12.4.2 Serves the same function as the Create Entity PDU but with the addition of
             reliability service levels.
+            <xs:attribute name="id" type="xs:integer" fixed="51"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -8370,7 +8530,10 @@
    </xs:element>
    <xs:element name="CreateEntityReliablePdu">
       <xs:annotation>
-         <xs:appinfo>more descriptive name for a CreateEntityRPdu</xs:appinfo>
+         <xs:appinfo>alias, more descriptive name for a CreateEntityRPdu.
+            <xs:attribute name="aliasFor" type="xs:string" fixed="CreateEntityRPdu"></xs:attribute>
+            <xs:attribute name="id" type="xs:integer" fixed="51"></xs:attribute>
+         </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
          <xs:complexContent>
@@ -8384,6 +8547,7 @@
       <xs:annotation>
          <xs:appinfo>5.12.4.9 Serves the same function as the Data Query PDU but with the addition of reliability
             service levels (length of list found in field numberOfFixedDatumRecords numberOfVariableDatumRecords)
+            <xs:attribute name="id" type="xs:integer" fixed="58"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -8464,7 +8628,10 @@
    </xs:element>
    <xs:element name="DataQueryReliablePdu">
       <xs:annotation>
-         <xs:appinfo>more descriptive name for a DataQueryRPdu</xs:appinfo>
+         <xs:appinfo>alias, more descriptive name for a DataQueryRPdu.
+            <xs:attribute name="aliasFor" type="xs:string" fixed="DataQueryRPdu"></xs:attribute>
+            <xs:attribute name="id" type="xs:integer" fixed="58"></xs:attribute>
+         </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
          <xs:complexContent>
@@ -8479,6 +8646,7 @@
          <xs:appinfo>5.12.4.11 Serves the same function as the Data PDU but with the addition of reliability
             service levels and is used in response to a Data Query-R PDU, a Data-R PDU, or a Set
             Data-R PDU. (length of list found in field numberOfFixedDatumRecords numberOfVariableDatumRecords)
+            <xs:attribute name="id" type="xs:integer" fixed="60"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -8554,7 +8722,10 @@
    </xs:element>
    <xs:element name="DataReliablePdu">
       <xs:annotation>
-         <xs:appinfo>more descriptive name for a DataRPdu</xs:appinfo>
+         <xs:appinfo>alias, more descriptive name for a DataRPdu.
+            <xs:attribute name="aliasFor" type="xs:string" fixed="DataRPdu"></xs:attribute>
+            <xs:attribute name="id" type="xs:integer" fixed="60"></xs:attribute>
+         </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
          <xs:complexContent>
@@ -8568,6 +8739,7 @@
       <xs:annotation>
          <xs:appinfo>5.12.4.12 Contains the same information as found in the Event Report PDU. (length
             of list found in field numberOfFixedDatumRecords numberOfVariableDatumRecords)
+            <xs:attribute name="id" type="xs:integer" fixed="61"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -8631,7 +8803,10 @@
    </xs:element>
    <xs:element name="EventReportReliablePdu">
       <xs:annotation>
-         <xs:appinfo>more descriptive name for a EventReportRPdu</xs:appinfo>
+         <xs:appinfo>alias, more descriptive name for a EventReportRPdu.
+            <xs:attribute name="aliasFor" type="xs:string" fixed="EventReportRPdu"></xs:attribute>
+            <xs:attribute name="id" type="xs:integer" fixed="61"></xs:attribute>
+         </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
          <xs:complexContent>
@@ -8645,6 +8820,7 @@
       <xs:annotation>
          <xs:appinfo>5.12.4.14 Used to communicate a request for data in record format. (length of list
             found in field numberOfRecords)
+            <xs:attribute name="id" type="xs:integer" fixed="65"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -8706,7 +8882,10 @@
    </xs:element>
    <xs:element name="RecordQueryReliablePdu">
       <xs:annotation>
-         <xs:appinfo>more descriptive name for a RecordQueryRPdu</xs:appinfo>
+         <xs:appinfo>alias, more descriptive name for a RecordQueryRPdu.
+            <xs:attribute name="aliasFor" type="xs:string" fixed="RecordQueryRPdu"></xs:attribute>
+            <xs:attribute name="id" type="xs:integer" fixed="65"></xs:attribute>
+         </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
          <xs:complexContent>
@@ -8723,6 +8902,7 @@
             received in a Set Record-R PDU, and to confirm the receipt of a periodic or unsolicited
             Record-R PDU when the acknowledged service level is used. (length of list found in
             field numberOfRecordSets)
+            <xs:attribute name="id" type="xs:integer" fixed="63"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -8775,7 +8955,10 @@
    </xs:element>
    <xs:element name="RecordReliablePdu">
       <xs:annotation>
-         <xs:appinfo>more descriptive name for a RecordRPdu</xs:appinfo>
+         <xs:appinfo>alias, more descriptive name for a RecordRPdu.
+            <xs:attribute name="aliasFor" type="xs:string" fixed="RecordRPdu"></xs:attribute>
+            <xs:attribute name="id" type="xs:integer" fixed="63"></xs:attribute>
+         </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
          <xs:complexContent>
@@ -8790,6 +8973,7 @@
          <xs:appinfo>5.12.4.3 Contains the same information as found in the Remove Entity PDU with the
             addition of the level of reliability service to be used for the removal action being
             requested.
+            <xs:attribute name="id" type="xs:integer" fixed="52"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -8816,7 +9000,10 @@
    </xs:element>
    <xs:element name="RemoveEntityReliablePdu">
       <xs:annotation>
-         <xs:appinfo>more descriptive name for a RemoveEntityRPdu</xs:appinfo>
+         <xs:appinfo>alias, more descriptive name for a RemoveEntityRPdu.
+            <xs:attribute name="aliasFor" type="xs:string" fixed="RemoveEntityRPdu"></xs:attribute>
+            <xs:attribute name="id" type="xs:integer" fixed="52"></xs:attribute>
+         </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
          <xs:complexContent>
@@ -8830,6 +9017,7 @@
       <xs:annotation>
          <xs:appinfo>5.12.4.10 Serves the same function as the Set Data PDU but with the addition of reliability
             service levels. (length of list found in field numberOfFixedDatumRecords numberOfVariableDatumRecords)
+            <xs:attribute name="id" type="xs:integer" fixed="59"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -8905,7 +9093,10 @@
    </xs:element>
    <xs:element name="SetDataReliablePdu">
       <xs:annotation>
-         <xs:appinfo>more descriptive name for a SetDataRPdu</xs:appinfo>
+         <xs:appinfo>alias, more descriptive name for a SetDataRPdu.
+            <xs:attribute name="aliasFor" type="xs:string" fixed="SetDataRPdu"></xs:attribute>
+            <xs:attribute name="id" type="xs:integer" fixed="59"></xs:attribute>
+         </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
          <xs:complexContent>
@@ -8920,6 +9111,7 @@
          <xs:appinfo>5.12.4.15 Used to set or change certain parameter values. These parameter values are
             contained within a record format as compared to the datum format used in the Set Data-R
             PDU. (length of list found in field numberOfRecordSets)
+            <xs:attribute name="id" type="xs:integer" fixed="64"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -8969,7 +9161,10 @@
    </xs:element>
    <xs:element name="SetRecordReliablePdu">
       <xs:annotation>
-         <xs:appinfo>more descriptive name for a SetRecordRPdu</xs:appinfo>
+         <xs:appinfo>alias, more descriptive name for a SetRecordRPdu.
+            <xs:attribute name="aliasFor" type="xs:string" fixed="SetRecordRPdu"></xs:attribute>
+            <xs:attribute name="id" type="xs:integer" fixed="64"></xs:attribute>
+         </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
          <xs:complexContent>
@@ -8983,6 +9178,7 @@
       <xs:annotation>
          <xs:appinfo>5.12.4.4 Serves the same function as the Start/Resume PDU but with the addition of
             reliability service levels
+            <xs:attribute name="id" type="xs:integer" fixed="53"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -9022,7 +9218,10 @@
    </xs:element>
    <xs:element name="StartResumeReliablePdu">
       <xs:annotation>
-         <xs:appinfo>more descriptive name for a StartResumeRPdu</xs:appinfo>
+         <xs:appinfo>alias, more descriptive name for a StartResumeRPdu.
+            <xs:attribute name="aliasFor" type="xs:string" fixed="StartResumeRPdu"></xs:attribute>
+            <xs:attribute name="id" type="xs:integer" fixed="53"></xs:attribute>
+         </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
          <xs:complexContent>
@@ -9036,6 +9235,7 @@
       <xs:annotation>
          <xs:appinfo>5.12.4.5 Serves the same function as the Stop/Freeze PDU (see 5.6.5.5.1) but with
             the addition of reliability service levels.
+            <xs:attribute name="id" type="xs:integer" fixed="54"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -9083,7 +9283,10 @@
    </xs:element>
    <xs:element name="StopFreezeReliablePdu">
       <xs:annotation>
-         <xs:appinfo>more descriptive name for a StopFreezeRPdu</xs:appinfo>
+         <xs:appinfo>alias, more descriptive name for a StopFreezeRPdu.
+            <xs:attribute name="aliasFor" type="xs:string" fixed="StopFreezeRPdu"></xs:attribute>
+            <xs:attribute name="id" type="xs:integer" fixed="54"></xs:attribute>
+         </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
          <xs:complexContent>
@@ -9096,7 +9299,9 @@
    <!--SyntheticEnvironmentFamilyPdus.xml contains 6 classes-->
    <xs:complexType name="SyntheticEnvironmentFamilyPduType" abstract="true">
       <xs:annotation>
-         <xs:appinfo>Section 5.3.11: Abstract superclass for synthetic environment PDUs</xs:appinfo>
+         <xs:appinfo>Section 5.3.11: Abstract superclass for synthetic environment PDUs
+            <xs:attribute name="id" type="xs:integer" fixed="9"></xs:attribute>
+         </xs:appinfo>
       </xs:annotation>
       <xs:complexContent>
          <xs:extension base="PduBaseType">
@@ -9110,6 +9315,7 @@
             a synthetic environment object that is geometrically anchored to the terrain with
             a set of three or more points that come to a closure. (length of list found in field
             numberOfPoints)
+            <xs:attribute name="id" type="xs:integer" fixed="45"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -9198,6 +9404,7 @@
       <xs:annotation>
          <xs:appinfo>7.10.2 Used to communicate information about environmental effects and processes.
             (length of list found in field numberOfEnvironmentRecords)
+            <xs:attribute name="id" type="xs:integer" fixed="41"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -9261,6 +9468,7 @@
       <xs:annotation>
          <xs:appinfo>7.10.3 Used to communicate information about global, spatially varying environmental
             effects. (length of list found in field numberOfGridAxes numberOfGridAxes)
+            <xs:attribute name="id" type="xs:integer" fixed="42"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -9379,6 +9587,7 @@
          <xs:appinfo>7.10.5 Used to communicate detailed information about the addition/modification of
             a synthetic environment object that is geometrically anchored to the terrain with
             one point and has size and orientation. (length of list found in field numberOfLinearSegments)
+            <xs:attribute name="id" type="xs:integer" fixed="44"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -9451,6 +9660,7 @@
          <xs:appinfo>7.10.4 Used to communicate detailed information about the addition/modification of
             a synthetic environment object that is geometrically anchored to the terrain with
             a single point.
+            <xs:attribute name="id" type="xs:integer" fixed="43"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -9539,6 +9749,7 @@
       <xs:annotation>
          <xs:appinfo>Abstract superclass for fire and detonation pdus that have shared information. Section
             7.3
+            <xs:attribute name="id" type="xs:integer" fixed="2"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexContent>
@@ -9552,6 +9763,7 @@
          <xs:appinfo>7.3.3 Used to communicate the detonation or impact of munitions, as well as non-munition
             explosions, the burst or initial bloom of chaff, and the ignition of a flare. (length
             of list found in field numberOfVariableParameters)
+            <xs:attribute name="id" type="xs:integer" fixed="3"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -9640,6 +9852,7 @@
       <xs:annotation>
          <xs:appinfo>7.3.4 Used to communicate the firing of a directed energy weapon. (length of list
             found in field numberOfDERecords)
+            <xs:attribute name="id" type="xs:integer" fixed="68"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -9741,6 +9954,7 @@
       <xs:annotation>
          <xs:appinfo>7.3.5 Used to communicate detailed damage information sustained by an entity regardless
             of the source of the damage. (length of list found in field numberOfDamageDescription)
+            <xs:attribute name="id" type="xs:integer" fixed="69"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
@@ -9784,7 +9998,9 @@
    </xs:element>
    <xs:element name="FirePdu">
       <xs:annotation>
-         <xs:appinfo>7.3.2 Used to communicate the firing of a weapon or expendable.</xs:appinfo>
+         <xs:appinfo>7.3.2 Used to communicate the firing of a weapon or expendable.
+            <xs:attribute name="id" type="xs:integer" fixed="2"></xs:attribute>
+         </xs:appinfo>
       </xs:annotation>
       <xs:complexType>
          <xs:complexContent>

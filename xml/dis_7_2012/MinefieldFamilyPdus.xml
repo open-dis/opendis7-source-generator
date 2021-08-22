@@ -1,11 +1,11 @@
 <classes>
-    <class name="MinefieldFamilyPdu" inheritsFrom="PduBase" abstract="true" comment=" Abstract superclass for PDUs relating to minefields. Section 7.9">
+    <class name="MinefieldFamilyPdu" id="8" inheritsFrom="PduBase" abstract="true" comment=" Abstract superclass for PDUs relating to minefields. Section 7.9">
 
         <initialValue name="protocolFamily" value="DISProtocolFamily.MINEFIELD"/>
      
     </class>
    
-    <class name="MinefieldStatePdu" inheritsFrom="MinefieldFamilyPdu"
+    <class name="MinefieldStatePdu" id="37" inheritsFrom="MinefieldFamilyPdu"
            comment="5.10.2 Communicate information about the minefield, including the location, perimeter, and types of mines contained within it.">
 
         <initialValue name="pduType" value="DisPduType.MINEFIELD_STATE"/>
@@ -64,7 +64,7 @@
    
     </class>
   
-    <class name="MinefieldQueryPdu" inheritsFrom="MinefieldFamilyPdu"
+    <class name="MinefieldQueryPdu" id="38" inheritsFrom="MinefieldFamilyPdu"
              comment="5.10.3 Contains information about the requesting entity and the region and mine types of interest to the requesting entity.">
     
         <initialValue name="pduType" value="DisPduType.MINEFIELD_QUERY"/>
@@ -114,7 +114,7 @@
         </attribute>
     </class>
 
-    <class name="MinefieldDataPdu" inheritsFrom="MinefieldFamilyPdu"
+    <class name="MinefieldDataPdu" id="39" inheritsFrom="MinefieldFamilyPdu"
            comment="5.10.4 Information about the location and status of a collection of mines in a minefield is conveyed through the Minefield Data PDU on an individual mine basis.">
 
         <initialValue name="pduType" value="DisPduType.MINEFIELD_DATA"/>
@@ -279,8 +279,8 @@
         
     </class>
 
-    <class name="MinefieldResponseNACKPdu" inheritsFrom="MinefieldFamilyPdu"
-           comment="5.10.5 Contains information about the requesting entity and the PDU(s) that were not received in response to a query.">
+    <class name="MinefieldResponseNACKPdu" id="40" inheritsFrom="MinefieldFamilyPdu"
+           comment="5.10.5 Contains information about the requesting entity and the PDU(s) that were not received in response to a query. NACK = Negative Acknowledgment.">
 
         <initialValue name="pduType" value="DisPduType.MINEFIELD_RESPONSE_NACK"/>
      

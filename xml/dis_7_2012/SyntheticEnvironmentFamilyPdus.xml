@@ -1,11 +1,11 @@
 <classes>
-    <class name="SyntheticEnvironmentFamilyPdu" inheritsFrom="PduBase"  abstract="true" comment="Section 5.3.11: Abstract superclass for synthetic environment PDUs">
+    <class name="SyntheticEnvironmentFamilyPdu" id="9" inheritsFrom="PduBase"  abstract="true" comment="Section 5.3.11: Abstract superclass for synthetic environment PDUs">
 
         <initialValue name="protocolFamily" value="DISProtocolFamily.SYNTHETIC_ENVIRONMENT"/>
      
     </class>
 
-    <class name="EnvironmentalProcessPdu" inheritsFrom="SyntheticEnvironmentFamilyPdu"
+    <class name="EnvironmentalProcessPdu" id="41" inheritsFrom="SyntheticEnvironmentFamilyPdu"
            comment="7.10.2 Used to communicate information about environmental effects and processes.">
            
         <initialValue name="pduType" value="DisPduType.ENVIRONMENTAL_PROCESS"/>
@@ -42,7 +42,7 @@
     
     </class>
         
-    <class name="GriddedDataPdu" inheritsFrom="SyntheticEnvironmentFamilyPdu"
+    <class name="GriddedDataPdu" id="42" inheritsFrom="SyntheticEnvironmentFamilyPdu"
                comment="7.10.3 Used to communicate information about global, spatially varying environmental effects.">
            
         <initialValue name="pduType" value="DisPduType.GRIDDED_DATA"/>
@@ -117,7 +117,7 @@
    
     </class>
 
-    <class name="PointObjectStatePdu" inheritsFrom="SyntheticEnvironmentFamilyPdu"
+    <class name="PointObjectStatePdu" id="43" inheritsFrom="SyntheticEnvironmentFamilyPdu"
            comment="7.10.4 Used to communicate detailed information about the addition/modification of a synthetic environment object that is geometrically anchored to the terrain with a single point.">
     
         <initialValue name="pduType" value="DisPduType.POINT_OBJECT_STATE"/>
@@ -180,7 +180,7 @@
    
     </class>
 
-    <class name="LinearObjectStatePdu" inheritsFrom="SyntheticEnvironmentFamilyPdu"
+    <class name="LinearObjectStatePdu" id="44" inheritsFrom="SyntheticEnvironmentFamilyPdu"
            comment="7.10.5 Used to communicate detailed information about the addition/modification of a synthetic environment object that is geometrically anchored to the terrain with one point and has size and orientation.">
       
         <initialValue name="pduType" value="DisPduType.LINEAR_OBJECT_STATE"/>
@@ -225,7 +225,7 @@
   
     </class>
  
-    <class name="ArealObjectStatePdu" inheritsFrom="SyntheticEnvironmentFamilyPdu"
+    <class name="ArealObjectStatePdu" id="45" inheritsFrom="SyntheticEnvironmentFamilyPdu"
            comment="7.10.6 Used to communicate detailed information about the addition/modification of a synthetic environment object that is geometrically anchored to the terrain with a set of three or more points that come to a closure.">
       
         <initialValue name="pduType" value="DisPduType.AREAL_OBJECT_STATE"/>

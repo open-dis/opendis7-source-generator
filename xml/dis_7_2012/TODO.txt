@@ -3,3 +3,5 @@ TODO
 1. Add, integrate root element DIS
 
 2. Handle VariableDatumType
+
+3. Add id values for each PDU and PduType

@@ -1,12 +1,12 @@
 <classes>
-    <class name="WarfareFamilyPdu" inheritsFrom="PduBase" abstract="true"
+    <class name="WarfareFamilyPdu" id="2" inheritsFrom="PduBase" abstract="true"
            comment="Abstract superclass for fire and detonation pdus that have shared information. Section 7.3">
 
         <initialValue name="protocolFamily" value="DISProtocolFamily.WARFARE"/>
 
     </class>
 
-    <class name="FirePdu" inheritsFrom="WarfareFamilyPdu" comment="7.3.2 Used to communicate the firing of a weapon or expendable.">
+    <class name="FirePdu" id="2" inheritsFrom="WarfareFamilyPdu" comment="7.3.2 Used to communicate the firing of a weapon or expendable.">
 
         <initialValue name="pduType" value="DisPduType.FIRE"/>
 
@@ -48,7 +48,7 @@
 
     </class>
 
-    <class name="DetonationPdu" inheritsFrom="WarfareFamilyPdu"
+    <class name="DetonationPdu" id="3" inheritsFrom="WarfareFamilyPdu"
            comment="7.3.3 Used to communicate the detonation or impact of munitions, as well as non-munition explosions, the burst or initial bloom of chaff, and the ignition of a flare.">
 
         <initialValue name="pduType" value="DisPduType.DETONATION"/>
@@ -105,7 +105,7 @@
 
     </class>
 
-    <class name="DirectedEnergyFirePdu" inheritsFrom="WarfareFamilyPdu"
+    <class name="DirectedEnergyFirePdu" id="68" inheritsFrom="WarfareFamilyPdu"
            comment="7.3.4 Used to communicate the firing of a directed energy weapon.">
 
         <initialValue name="pduType" value="DisPduType.DIRECTED_ENERGY_FIRE"/>
@@ -185,7 +185,7 @@
         </attribute>
     </class>
 
-    <class name="EntityDamageStatusPdu" inheritsFrom="WarfareFamilyPdu"
+    <class name="EntityDamageStatusPdu" id="69" inheritsFrom="WarfareFamilyPdu"
            comment="7.3.5 Used to communicate detailed damage information sustained by an entity regardless of the source of the damage.">
                 
         <initialValue name="pduType" value="DisPduType.ENTITY_DAMAGE_STATUS"/>

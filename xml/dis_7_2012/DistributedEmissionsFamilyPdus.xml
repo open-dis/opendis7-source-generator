@@ -1,11 +1,11 @@
 <classes>
-   <class name="DistributedEmissionsFamilyPdu" abstract="true" inheritsFrom="PduBase" comment="Section 5.3.7. Electronic Emissions. Abstract superclass for distributed emissions PDU">
+   <class name="DistributedEmissionsRegenerationFamilyPdu" id="6" abstract="true" inheritsFrom="PduBase" comment="Section 5.3.7. Electronic Emissions. Abstract superclass for distributed emissions PDU">
 
        <initialValue name="protocolFamily" value="DISProtocolFamily.DISTRIBUTED_EMISSION_REGENERATION"/>
 
     </class>
 
-    <class name="ElectromagneticEmissionPdu" inheritsFrom="DistributedEmissionsFamilyPdu"
+    <class name="ElectromagneticEmissionPdu" id="23" inheritsFrom="DistributedEmissionsRegenerationFamilyPdu"
            comment="7.6.2 Communicate active electromagnetic emissions, including radar and radar-related electronic warfare (e.g., jamming). Exceptions include IFF interrogations and replies, navigation aids, voice, beacon and data radio communications, directed energy weapons, and laser ranging and designation systems, which are handled by other PDUs. Section 5.3.7.1.">
     
         <initialValue name="pduType" value="DisPduType.ELECTROMAGNETIC_EMISSION"/>
@@ -115,7 +115,7 @@
         </attribute>
     </class>
     
-    <class name="DesignatorPdu" inheritsFrom="DistributedEmissionsFamilyPdu"
+    <class name="DesignatorPdu" id="24" inheritsFrom="DistributedEmissionsRegenerationFamilyPdu"
            comment="7.6.3 Handles designating operations. See 5.3.7.2.">
 
         <initialValue name="pduType" value="DisPduType.DESIGNATOR"/>
@@ -170,7 +170,7 @@
   
     </class>
     
-<class name="UnderwaterAcousticPdu" inheritsFrom="DistributedEmissionsFamilyPdu" comment="7.6.4 Information about underwater acoustic emmissions. See 5.7.5.">
+<class name="UnderwaterAcousticPdu" id="29" inheritsFrom="DistributedEmissionsRegenerationFamilyPdu" comment="7.6.4 Information about underwater acoustic emmissions. See 5.7.5.">
     
         <initialValue name="pduType" value="DisPduType.UNDERWATER_ACOUSTIC"/>
     
@@ -280,7 +280,7 @@
  
     </class> 
     
-    <class name="IFFPdu" inheritsFrom="DistributedEmissionsFamilyPdu" comment="7.6.5.1 Information about military and civilian interrogators, transponders, and specific other electronic systems. See 5.7.6">
+    <class name="IFFPdu" id="28" inheritsFrom="DistributedEmissionsRegenerationFamilyPdu" comment="7.6.5.1 Information about military and civilian interrogators, transponders, and specific other electronic systems. See 5.7.6">
         
         <initialValue name="pduType" value="DisPduType.IDENTIFICATION_FRIEND_OR_FOE"/>
     
@@ -314,10 +314,10 @@
    
     </class>
     
-    <class name="IdentificationFriendOrFoePdu" comment="alias, more descriptive name for an IFFPdu." aliasFor="IFFPdu"/>
+    <class name="IdentificationFriendOrFoePdu" id="28" comment="alias, more descriptive name for an IFFPdu." aliasFor="IFFPdu"/>
 
     <!-- basic IFF spec needs work, is incomplete, since it is impossible to unmarshall an IFFPdu and know what further layers are present, we can only go this far -->
-    <class name="IFFLayer2Pdu" inheritsFrom="IFFPdu"
+    <class name="IFFLayer2Pdu" id="28" inheritsFrom="IFFPdu"
            comment="Section 5.3.7.4.2 When present, layer 2 should follow layer 1 and have the following fields. This requires manual cleanup.
            the beamData attribute semantics are used in multiple ways. UNFINSISHED">
           
@@ -349,7 +349,7 @@
     
     </class>
     
-    <class name="SEESPdu" inheritsFrom="DistributedEmissionsFamilyPdu" comment="7.6.6 Certain supplemental information on an entity’s physical state and emissions. See 5.7.7">
+    <class name="SEESPdu" id="30" inheritsFrom="DistributedEmissionsRegenerationFamilyPdu" comment="7.6.6 Certain supplemental information on an entity’s physical state and emissions. See 5.7.7">
  
         <initialValue name="pduType" value="DisPduType.SUPPLEMENTAL_EMISSION_ENTITY_STATE"/>
    
@@ -391,6 +391,6 @@
        
     </class>
     
-    <class name="SupplementalEmissionEntityStatePdu" comment="alias, more descriptive name for a SEESPdu." aliasFor="SEESPdu"/>
+    <class name="SupplementalEmissionEntityStatePdu" id="30" comment="alias, more descriptive name for a SEESPdu." aliasFor="SEESPdu"/>
 
 </classes>

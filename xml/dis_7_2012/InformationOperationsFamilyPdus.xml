@@ -1,5 +1,9 @@
 <classes>
-    <class name="InformationOperationsFamilyPdu" abstract="true" inheritsFrom="PduBase" >
+    <class name="InformationOperationsFamilyPdu" id="13" abstract="true" inheritsFrom="PduBase" 
+           comment="Information operations (IO) are the integrated employment of electronic warfare (EW), computer
+network operations (CNO), psychological operations (PSYOP), military deception (MILDEC), and
+operations security (OPSEC), along with specific supporting capabilities, to influence, disrupt, corrupt, or
+otherwise affect enemy information and decision making while protecting friendly information operations." >
         
         <initialValue name="protocolFamily" value="DISProtocolFamily.INFORMATION_OPERATIONS"/>
      
@@ -9,7 +13,7 @@
 
     </class>
     
-    <class name="InformationOperationsActionPdu" inheritsFrom="InformationOperationsFamilyPdu"
+    <class name="InformationOperationsActionPdu" id="70" inheritsFrom="InformationOperationsFamilyPdu"
            comment="5.13.3.1 Used to communicate an IO attack or the effects of an IO attack on one or more target entities.">
           
         <initialValue name="pduType" value="DisPduType.INFORMATION_OPERATIONS_ACTION"/>
@@ -66,7 +70,7 @@
         
     </class>
     
-    <class name="InformationOperationsReportPdu" inheritsFrom="InformationOperationsFamilyPdu"
+    <class name="InformationOperationsReportPdu" id="71" inheritsFrom="InformationOperationsFamilyPdu"
            comment="5.13.4.1 Used to communicate the effects of an IO attack on one or more target entities.">
           
         <initialValue name="pduType" value="DisPduType.INFORMATION_OPERATIONS_REPORT"/>

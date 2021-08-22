@@ -1,5 +1,5 @@
  <classes>  
-      <class name="SimulationManagementFamilyPdu" abstract="true" inheritsFrom="PduBase"
+      <class name="SimulationManagementFamilyPdu" id="5" abstract="true" inheritsFrom="PduBase"
            comment="First part of a simulation management (SIMAN) PDU and SIMAN-Reliability (SIMAN-R) PDU. Sectionn 6.2.81">
 
         <initialValue name="protocolFamily" value="DISProtocolFamily.SIMULATION_MANAGEMENT"/>
@@ -14,7 +14,7 @@
 
     </class>
 
-    <class name="CreateEntityPdu" inheritsFrom="SimulationManagementFamilyPdu" comment="Section 7.5.2. Create a new entity. See 5.6.5.2.">
+    <class name="CreateEntityPdu" id="11" inheritsFrom="SimulationManagementFamilyPdu" comment="Section 7.5.2. Create a new entity. See 5.6.5.2.">
 
         <initialValue name="pduType" value="DisPduType.CREATE_ENTITY"/>
 
@@ -24,7 +24,7 @@
 
     </class>
 
-    <class name="RemoveEntityPdu" inheritsFrom="SimulationManagementFamilyPdu" comment="Section 7.5.3 The removal of an entity from an exercise shall be communicated with a Remove Entity PDU. See 5.6.5.3.">
+    <class name="RemoveEntityPdu" id="12" inheritsFrom="SimulationManagementFamilyPdu" comment="Section 7.5.3 The removal of an entity from an exercise shall be communicated with a Remove Entity PDU. See 5.6.5.3.">
 
         <initialValue name="pduType" value="DisPduType.REMOVE_ENTITY"/>
 
@@ -34,7 +34,7 @@
 
     </class>
 
-    <class name="StartResumePdu" inheritsFrom="SimulationManagementFamilyPdu" comment="Section 7.5.4. Start or resume an entity or exercise. See 5.6.5.4.">
+    <class name="StartResumePdu" id="13" inheritsFrom="SimulationManagementFamilyPdu" comment="Section 7.5.4. Start or resume an entity or exercise. See 5.6.5.4.">
 
         <initialValue name="pduType" value="DisPduType.START_RESUME"/>
 
@@ -52,7 +52,7 @@
 
     </class>
 
-    <class name="StopFreezePdu" inheritsFrom="SimulationManagementFamilyPdu" comment="Section 7.5.5. Stop or freeze an enity or exercise. See 5.6.5.5">
+    <class name="StopFreezePdu" id="14" inheritsFrom="SimulationManagementFamilyPdu" comment="Section 7.5.5. Stop or freeze an enity or exercise. See 5.6.5.5">
 
         <initialValue name="pduType" value="DisPduType.STOP_FREEZE"/>
 
@@ -78,7 +78,7 @@
 
     </class>
 
-    <class name="AcknowledgePdu" inheritsFrom="SimulationManagementFamilyPdu" comment="7.5.6 Acknowledges the receipt of a Start/Resume PDU, Stop/Freeze PDU, Create Entity PDU, or
+    <class name="AcknowledgePdu" id="15" inheritsFrom="SimulationManagementFamilyPdu" comment="7.5.6 Acknowledges the receipt of a Start/Resume PDU, Stop/Freeze PDU, Create Entity PDU, or
 Remove Entity PDU. See 5.6.5.6.">
 
         <initialValue name="pduType" value="DisPduType.ACKNOWLEDGE"/>
@@ -97,7 +97,7 @@ Remove Entity PDU. See 5.6.5.6.">
 
     </class>
 
-    <class name="ActionRequestPdu" inheritsFrom="SimulationManagementFamilyPdu" comment=" 7.5.7 A request from an SM to a managed entity to perform a specified action. See 5.6.5.7">
+    <class name="ActionRequestPdu" id="16" inheritsFrom="SimulationManagementFamilyPdu" comment=" 7.5.7 A request from an SM to a managed entity to perform a specified action. See 5.6.5.7">
     
         <initialValue name="pduType" value="DisPduType.ACTION_REQUEST"/>
     
@@ -131,7 +131,7 @@ Remove Entity PDU. See 5.6.5.6.">
     
     </class>
     
-    <class name="ActionResponsePdu" inheritsFrom="SimulationManagementFamilyPdu" comment="Section 7.5.8. When an entity receives an Action Request PDU, that entity shall acknowledge the receipt of the Action
+    <class name="ActionResponsePdu" id="17" inheritsFrom="SimulationManagementFamilyPdu" comment="Section 7.5.8. When an entity receives an Action Request PDU, that entity shall acknowledge the receipt of the Action
 Request PDU with an Action Response PDU. See 5.6.5.8.">
     
         <initialValue name="pduType" value="DisPduType.ACTION_RESPONSE"/>
@@ -166,7 +166,7 @@ Request PDU with an Action Response PDU. See 5.6.5.8.">
     
     </class>
         
-    <class name="DataQueryPdu" inheritsFrom="SimulationManagementFamilyPdu" comment="Section 7.5.9. Request for data from an entity. See 5.6.5.9">
+    <class name="DataQueryPdu" id="18" inheritsFrom="SimulationManagementFamilyPdu" comment="Section 7.5.9. Request for data from an entity. See 5.6.5.9">
     
         <initialValue name="pduType" value="DisPduType.DATA_QUERY"/>
     
@@ -200,7 +200,7 @@ Request PDU with an Action Response PDU. See 5.6.5.8.">
     
     </class>
     
-    <class name="SetDataPdu" inheritsFrom="SimulationManagementFamilyPdu" comment="Section 7.5.10. Initializing or changing internal state information shall be communicated using a Set Data PDU. See
+    <class name="SetDataPdu" id="19" inheritsFrom="SimulationManagementFamilyPdu" comment="Section 7.5.10. Initializing or changing internal state information shall be communicated using a Set Data PDU. See
 5.6.5.10">
     
         <initialValue name="pduType" value="DisPduType.SET_DATA"/>
@@ -235,7 +235,7 @@ Request PDU with an Action Response PDU. See 5.6.5.8.">
     
     </class>
     
-    <class name="DataPdu" inheritsFrom="SimulationManagementFamilyPdu" comment="7.5.11 Information issued in response to a Data Query PDU or Set Data PDU. Section 5.6.5.11">
+    <class name="DataPdu" id="20" inheritsFrom="SimulationManagementFamilyPdu" comment="7.5.11 Information issued in response to a Data Query PDU or Set Data PDU. Section 5.6.5.11">
         
         <initialValue name="pduType" value="DisPduType.DATA"/>
       
@@ -270,7 +270,7 @@ Request PDU with an Action Response PDU. See 5.6.5.8.">
     </class>
     
     
-    <class name="EventReportPdu" inheritsFrom="SimulationManagementFamilyPdu" comment="7.5.12 Reports occurance of a significant event to the simulation manager. See 5.6.5.12.">
+    <class name="EventReportPdu" id="21" inheritsFrom="SimulationManagementFamilyPdu" comment="7.5.12 Reports occurance of a significant event to the simulation manager. See 5.6.5.12.">
     
         <initialValue name="pduType" value="DisPduType.EVENT_REPORT"/>
     
@@ -305,7 +305,7 @@ Request PDU with an Action Response PDU. See 5.6.5.8.">
     </class>
     
     
-    <class name="CommentPdu" inheritsFrom="SimulationManagementFamilyPdu" comment="7.5.13 Used to enter arbitrary messages (character strings, for example). See 5.6.5.13">
+    <class name="CommentPdu" id="22" inheritsFrom="SimulationManagementFamilyPdu" comment="7.5.13 Used to enter arbitrary messages (character strings, for example). See 5.6.5.13">
     
         <initialValue name="pduType" value="DisPduType.COMMENT"/>
     

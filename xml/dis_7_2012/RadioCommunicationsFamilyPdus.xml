@@ -1,5 +1,5 @@
 <classes>
-    <class name="RadioCommunicationsFamilyPdu" inheritsFrom="PduBase" abstract="true"
+    <class name="RadioCommunicationsFamilyPdu" id="4" inheritsFrom="PduBase" abstract="true"
            comment=" Abstract superclass for radio communications PDUs. Section 7.7">
   
         <initialValue name="protocolFamily" value="DISProtocolFamily.RADIO_COMMUNICATIONS"/>
@@ -17,7 +17,7 @@
          
     </class>
     
-    <class name="TransmitterPdu" inheritsFrom="RadioCommunicationsFamilyPdu"
+    <class name="TransmitterPdu" id="25" inheritsFrom="RadioCommunicationsFamilyPdu"
            comment="5.8.3 Communicates the state of a particular radio transmitter or simple intercom.">
   
         <initialValue name="pduType" value="DisPduType.TRANSMITTER"/>
@@ -112,7 +112,7 @@
     </class>
 
     <!-- Special cased because of the dataLength fields which are a bit length 
-    <class name="SignalPdu" inheritsFrom="RadioCommunicationsFamilyPdu"
+    <class name="SignalPdu" id="26" inheritsFrom="RadioCommunicationsFamilyPdu"
            comment="5.8.4 Conveys the audio or digital data carried by the simulated radio or intercom transmission.">
     
         <initialValue name="pduType" value="DisPduType.SIGNAL"/>
@@ -153,7 +153,7 @@
         
       </class>
     
-      <class name="IntercomSignalPdu" inheritsFrom="RadioCommunicationsFamilyPdu" comment="5.8.6 Conveys the audio or digital data that is used to communicate between simulated intercom devices">
+      <class name="IntercomSignalPdu" id="31" inheritsFrom="RadioCommunicationsFamilyPdu" comment="5.8.6 Conveys the audio or digital data that is used to communicate between simulated intercom devices">
    
         <initialValue name="pduType" value="DisPduType.INTERCOM_SIGNAL"/>
   
@@ -198,7 +198,7 @@
      </class>
     -->
     
-    <class name="ReceiverPdu" inheritsFrom="RadioCommunicationsFamilyPdu"
+    <class name="ReceiverPdu" id="27" inheritsFrom="RadioCommunicationsFamilyPdu"
            comment="5.8.5 Communicates the state of a particular radio receiver. Its primary application is in communicating state information to radio network monitors, data loggers, and similar applications for use in debugging, supervision, and after-action review.">
     
         <initialValue name="pduType" value="DisPduType.RECEIVER"/>
@@ -245,7 +245,7 @@
         
     </class>
     
-    <class name="IntercomControlPdu" inheritsFrom="RadioCommunicationsFamilyPdu"
+    <class name="IntercomControlPdu" id="32" inheritsFrom="RadioCommunicationsFamilyPdu"
            comment="5.8.7 Communicates the state of a particular intercom device, request an action of another intercom device, or respond to an action request.">
    
         <initialValue name="pduType" value="DisPduType.INTERCOM_CONTROL"/>

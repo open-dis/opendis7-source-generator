@@ -1,12 +1,12 @@
 <classes>
 
-    <class name="EntityInformationFamilyPdu" abstract="true" inheritsFrom="PduBase" comment="Section 5.3.3. Common superclass for EntityState, Collision, collision-elastic, and entity state update PDUs.">
+    <class name="EntityInformationInteractionFamilyPdu" id="1" abstract="true" inheritsFrom="PduBase" comment="Section 5.3.3. Common superclass for EntityState, Collision, collision-elastic, and entity state update PDUs.">
  
        <initialValue name="protocolFamily" value="DISProtocolFamily.ENTITY_INFORMATION_INTERACTION"/>
            
     </class>
  
-    <class name="EntityStatePdu" inheritsFrom="EntityInformationFamilyPdu" comment=" 7.2.2. Represents the position and state of one entity in the world. See 5.3.2.">
+    <class name="EntityStatePdu" id="1" inheritsFrom="EntityInformationInteractionFamilyPdu" comment=" 7.2.2. Represents the position and state of one entity in the world. See 5.3.2.">
  
         <initialValue name="pduType" value="DisPduType.ENTITY_STATE"/>
   
@@ -66,7 +66,7 @@
 
     </class>
 
-    <class name="FastEntityStatePdu" inheritsFrom="EntityInformationFamilyPdu" comment="Represents the position and state of one entity in the world. This is identical in function to entity state pdu, but generates less garbage to collect in the Java world. Section 7.2.2.">
+    <class name="FastEntityStatePdu" id="" inheritsFrom="EntityInformationInteractionFamilyPdu" comment="Represents the position and state of one entity in the world. This is identical in function to entity state pdu, but generates less garbage to collect in the Java world. Section 7.2.2.">
  
         <initialValue name="pduType" value="DisPduType.ENTITY_STATE"/>
         
@@ -238,7 +238,7 @@
 
     </class>
 
-    <class name="CollisionPdu" inheritsFrom="EntityInformationFamilyPdu" comment="7.2.3 Collisions between entities shall be communicated by issuing a Collision PDU. See 5.3.3.">
+    <class name="CollisionPdu" id="4" inheritsFrom="EntityInformationInteractionFamilyPdu" comment="7.2.3 Collisions between entities shall be communicated by issuing a Collision PDU. See 5.3.3.">
 
         <initialValue name="pduType" value="DisPduType.COLLISION"/>
 
@@ -276,7 +276,7 @@
 
     </class>
 
-    <class name="CollisionElasticPdu" inheritsFrom="EntityInformationFamilyPdu" comment="7.2.4 Information about elastic collisions in a DIS exercise shall be communicated using a Collision-Elastic PDU. See 5.3.4.">
+    <class name="CollisionElasticPdu" id="66" inheritsFrom="EntityInformationInteractionFamilyPdu" comment="7.2.4 Information about elastic collisions in a DIS exercise shall be communicated using a Collision-Elastic PDU. See 5.3.4.">
 
         <initialValue name="pduType" value="DisPduType.COLLISION_ELASTIC"/>
         
@@ -342,7 +342,7 @@
 
     </class>
 
-    <class name="EntityStateUpdatePdu" inheritsFrom="EntityInformationFamilyPdu" comment="7.2.5. Nonstatic information about a particular entity may be communicated by issuing an Entity State Update PDU. 5.3.5.">
+    <class name="EntityStateUpdatePdu" id="67" inheritsFrom="EntityInformationInteractionFamilyPdu" comment="7.2.5. Nonstatic information about a particular entity may be communicated by issuing an Entity State Update PDU. 5.3.5.">
 
         <initialValue name="pduType" value="DisPduType.ENTITY_STATE_UPDATE"/>
 
@@ -382,7 +382,7 @@
 
     </class>
 
-    <class name="AttributePdu" inheritsFrom="EntityInformationFamilyPdu" comment="7.2.6. Information about individual attributes for a particular entity, other object, or event may be communicated using an Attribute PDU. The Attribute PDU shall not be used to exchange data available in any other PDU except where explicitly mentioned in the PDU issuance instructions within this standard. See 5.3.6.">
+    <class name="AttributePdu" id="72" inheritsFrom="EntityInformationInteractionFamilyPdu" comment="7.2.6. Information about individual attributes for a particular entity, other object, or event may be communicated using an Attribute PDU. The Attribute PDU shall not be used to exchange data available in any other PDU except where explicitly mentioned in the PDU issuance instructions within this standard. See 5.3.6.">
 
         <initialValue name="pduType" value="DisPduType.ATTRIBUTE"/>
 

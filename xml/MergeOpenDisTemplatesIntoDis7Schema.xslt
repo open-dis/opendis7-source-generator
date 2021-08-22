@@ -786,6 +786,36 @@
             <xsl:element name="xs:annotation">
                 <xsl:element name="xs:appinfo">
                     <xsl:value-of select="normalize-space($combinedAppinfo)"/>
+                    <xsl:if test="(string-length(@aliasFor) > 0)">
+                        <!--
+                        <xsl:message>
+                            <xsl:text>*** found </xsl:text>
+                            <xsl:value-of select="@name"/>
+                            <xsl:text> @aliasFor=</xsl:text>
+                            <xsl:value-of select="@aliasFor"/>
+                        </xsl:message>
+                        -->
+                        <xsl:element name="xs:attribute">
+                            <xsl:attribute name="name"><xsl:text>aliasFor</xsl:text></xsl:attribute>
+                            <xsl:attribute name="type"><xsl:text>xs:string</xsl:text></xsl:attribute>
+                            <xsl:attribute name="fixed"><xsl:value-of select="@aliasFor"/></xsl:attribute>
+                        </xsl:element>
+                    </xsl:if>
+                    <xsl:if test="(string-length(@id) > 0)">
+                        <!--
+                        <xsl:message>
+                            <xsl:text>*** found </xsl:text>
+                            <xsl:value-of select="@name"/>
+                            <xsl:text> @id=</xsl:text>
+                            <xsl:value-of select="@id"/>
+                        </xsl:message>
+                        -->
+                        <xsl:element name="xs:attribute">
+                            <xsl:attribute name="name"><xsl:text>id</xsl:text></xsl:attribute>
+                            <xsl:attribute name="type"><xsl:text>xs:integer</xsl:text></xsl:attribute>
+                            <xsl:attribute name="fixed"><xsl:value-of select="@id"/></xsl:attribute>
+                        </xsl:element>
+                    </xsl:if>
                 </xsl:element>
             </xsl:element>
         </xsl:if>
