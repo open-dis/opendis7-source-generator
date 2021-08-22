@@ -43,12 +43,12 @@
         </xsl:variable>
         
         <xsl:variable name="tableRowDivider">
-            <xsl:text>|-------------------|:-----:|:-------------------------|:----------------:|:-------------------|</xsl:text>
+            <xsl:text>|-------------------|:-----:|:-----------------------------|:----------------:|:-------------------|</xsl:text>
             <xsl:text>&#10;</xsl:text>
         </xsl:variable>
         <xsl:variable name="tableHeader">
-                  <!--| PDU type and PDUs | ID    |                   Assess |Javadoc Schemadoc | IEEE Standard |-->
-            <xsl:text>| PDU type and PDUs | ID    | &amp;nbsp; &nbsp; Assess |                  | IEEE Standard 1278.1-2012 |</xsl:text>
+                  <!--| PDU type and PDUs | ID    |                       Assess |Javadoc Schemadoc | IEEE Standard |-->
+            <xsl:text>| PDU type and PDUs | ID    | &amp;nbsp; &amp;nbsp; Assess |                  | IEEE Standard 1278.1-2012 |</xsl:text>
             <xsl:text>&#10;</xsl:text>
             <xsl:value-of select="$tableRowDivider"/>
         </xsl:variable>
@@ -115,7 +115,8 @@
                 
                 <xsl:text>| </xsl:text>
                 <xsl:value-of select="position()"/>
-                <xsl:text>. </xsl:text>
+                <xsl:text>.</xsl:text>
+                <xsl:text>&amp;nbsp;</xsl:text>
                 <xsl:value-of select="$pduName"/>
                 <xsl:if test="(string-length($aliasName) > 0)">
                     <xsl:text disable-output-escaping="yes"> &lt;br /&gt; </xsl:text>
