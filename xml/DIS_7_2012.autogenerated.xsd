@@ -1,5 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="7.0">
+   <xs:element name="DIS">
+      <xs:annotation>
+         <xs:appinfo>Root element for DIS PDU log, optionally contains head meta information</xs:appinfo>
+      </xs:annotation>
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element ref="head" minOccurs="0"></xs:element>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+               <xs:element ref="EntityStatePdu"></xs:element>
+               <xs:element ref="FirePdu"></xs:element>
+               <xs:element ref="DetonationPdu"></xs:element>
+               <xs:element ref="CollisionPdu"></xs:element>
+               <xs:element ref="ServiceRequestPdu"></xs:element>
+               <xs:element ref="ResupplyOfferPdu"></xs:element>
+               <xs:element ref="ResupplyReceivedPdu"></xs:element>
+               <xs:element ref="ResupplyCancelPdu"></xs:element>
+               <xs:element ref="RepairCompletePdu"></xs:element>
+               <xs:element ref="RepairResponsePdu"></xs:element>
+               <xs:element ref="CreateEntityPdu"></xs:element>
+               <xs:element ref="RemoveEntityPdu"></xs:element>
+               <xs:element ref="StartResumePdu"></xs:element>
+               <xs:element ref="StopFreezePdu"></xs:element>
+               <xs:element ref="AcknowledgePdu"></xs:element>
+               <xs:element ref="ActionRequestPdu"></xs:element>
+               <xs:element ref="ActionResponsePdu"></xs:element>
+               <xs:element ref="DataQueryPdu"></xs:element>
+               <xs:element ref="SetDataPdu"></xs:element>
+               <xs:element ref="DataPdu"></xs:element>
+               <xs:element ref="EventReportPdu"></xs:element>
+               <xs:element ref="CommentPdu"></xs:element>
+               <xs:element ref="ElectromagneticEmissionPdu"></xs:element>
+               <xs:element ref="DesignatorPdu"></xs:element>
+               <xs:element ref="TransmitterPdu"></xs:element>
+               <xs:element ref="SignalPdu"></xs:element>
+               <xs:element ref="ReceiverPdu"></xs:element>
+               <xs:element ref="IFFLayer2Pdu"></xs:element>
+               <xs:element ref="IFFPdu"></xs:element>
+               <xs:element ref="IdentificationFriendOrFoePdu"></xs:element>
+               <xs:element ref="UnderwaterAcousticPdu"></xs:element>
+               <xs:element ref="SEESPdu"></xs:element>
+               <xs:element ref="SupplementalEmissionEntityStatePdu"></xs:element>
+               <xs:element ref="IntercomSignalPdu"></xs:element>
+               <xs:element ref="IntercomControlPdu"></xs:element>
+               <xs:element ref="AggregateStatePdu"></xs:element>
+               <xs:element ref="IsGroupOfPdu"></xs:element>
+               <xs:element ref="TransferOwnershipPdu"></xs:element>
+               <xs:element ref="IsPartOfPdu"></xs:element>
+               <xs:element ref="MinefieldStatePdu"></xs:element>
+               <xs:element ref="MinefieldQueryPdu"></xs:element>
+               <xs:element ref="MinefieldDataPdu"></xs:element>
+               <xs:element ref="MinefieldResponseNACKPdu"></xs:element>
+               <xs:element ref="EnvironmentalProcessPdu"></xs:element>
+               <xs:element ref="GriddedDataPdu"></xs:element>
+               <xs:element ref="PointObjectStatePdu"></xs:element>
+               <xs:element ref="LinearObjectStatePdu"></xs:element>
+               <xs:element ref="ArealObjectStatePdu"></xs:element>
+               <xs:element ref="TSPIPdu"></xs:element>
+               <xs:element ref="TimeSpacePositionInformationPdu"></xs:element>
+               <xs:element ref="AppearancePdu"></xs:element>
+               <xs:element ref="ArticulatedPartsPdu"></xs:element>
+               <xs:element ref="LEFirePdu"></xs:element>
+               <xs:element ref="LiveEntityFirePdu"></xs:element>
+               <xs:element ref="LEDetonationPdu"></xs:element>
+               <xs:element ref="LiveEntityDetonationPdu"></xs:element>
+               <xs:element ref="CreateEntityRPdu"></xs:element>
+               <xs:element ref="CreateEntityReliablePdu"></xs:element>
+               <xs:element ref="RemoveEntityRPdu"></xs:element>
+               <xs:element ref="RemoveEntityReliablePdu"></xs:element>
+               <xs:element ref="StartResumeRPdu"></xs:element>
+               <xs:element ref="StartResumeReliablePdu"></xs:element>
+               <xs:element ref="StopFreezeRPdu"></xs:element>
+               <xs:element ref="StopFreezeReliablePdu"></xs:element>
+               <xs:element ref="AcknowledgeRPdu"></xs:element>
+               <xs:element ref="AcknowledgeReliablePdu"></xs:element>
+               <xs:element ref="ActionRequestRPdu"></xs:element>
+               <xs:element ref="ActionRequestReliablePdu"></xs:element>
+               <xs:element ref="ActionResponseRPdu"></xs:element>
+               <xs:element ref="ActionResponseReliablePdu"></xs:element>
+               <xs:element ref="DataQueryRPdu"></xs:element>
+               <xs:element ref="DataQueryReliablePdu"></xs:element>
+               <xs:element ref="SetDataRPdu"></xs:element>
+               <xs:element ref="SetDataReliablePdu"></xs:element>
+               <xs:element ref="DataRPdu"></xs:element>
+               <xs:element ref="DataReliablePdu"></xs:element>
+               <xs:element ref="EventReportRPdu"></xs:element>
+               <xs:element ref="EventReportReliablePdu"></xs:element>
+               <xs:element ref="CommentRPdu"></xs:element>
+               <xs:element ref="CommentReliablePdu"></xs:element>
+               <xs:element ref="RecordRPdu"></xs:element>
+               <xs:element ref="RecordReliablePdu"></xs:element>
+               <xs:element ref="SetRecordRPdu"></xs:element>
+               <xs:element ref="SetRecordReliablePdu"></xs:element>
+               <xs:element ref="RecordQueryRPdu"></xs:element>
+               <xs:element ref="RecordQueryReliablePdu"></xs:element>
+               <xs:element ref="CollisionElasticPdu"></xs:element>
+               <xs:element ref="EntityStateUpdatePdu"></xs:element>
+               <xs:element ref="DirectedEnergyFirePdu"></xs:element>
+               <xs:element ref="EntityDamageStatusPdu"></xs:element>
+               <xs:element ref="InformationOperationsActionPdu"></xs:element>
+               <xs:element ref="InformationOperationsReportPdu"></xs:element>
+               <xs:element ref="AttributePdu"></xs:element>
+            </xs:choice>
+         </xs:sequence>
+         <xs:attribute name="version" type="xs:string" fixed="7.0">
+            <xs:annotation>
+               <xs:appinfo>Warning: version is required and must be specified in source document.</xs:appinfo>
+            </xs:annotation>
+         </xs:attribute>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="head">
+      <xs:annotation>
+         <xs:appinfo>Functional summary: each DIS file includes an optional head statement that can contain
+            any number of meta statements.
+         </xs:appinfo>
+         <xs:documentation source="https://www.web3d.org/documents/specifications/19776-1/V3.3/Part01/concepts.html#Header"></xs:documentation>
+      </xs:annotation>
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element ref="meta" minOccurs="0" maxOccurs="unbounded"></xs:element>
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+   <xs:element name="meta">
+      <xs:annotation>
+         <xs:appinfo>Functional summary: the meta statement provides metadata information about a file,
+            where name and content attributes provide attribute=value metadata pairs.
+         </xs:appinfo>
+         <xs:documentation source="https://www.web3d.org/documents/specifications/19776-1/V3.3/Part01/concepts.html#Header"></xs:documentation>
+      </xs:annotation>
+      <xs:complexType>
+         <xs:attribute name="name" type="xs:string" use="required">
+            <xs:annotation>
+               <xs:documentation source="http://www.dublincore.org/documents/dcmi-terms/#terms-description"></xs:documentation>
+            </xs:annotation>
+         </xs:attribute>
+         <xs:attribute name="content" type="xs:string" use="required">
+            <xs:annotation>
+               <xs:documentation source="http://www.w3.org/TR/html4/struct/global.html#adef-content"></xs:documentation>
+            </xs:annotation>
+         </xs:attribute>
+      </xs:complexType>
+   </xs:element>
    <xs:complexType name="rootType" abstract="true"></xs:complexType>
    <xs:complexType name="APAType" abstract="false">
       <!--abstract='false' base='rootType'-->
@@ -6101,32 +6244,31 @@
          </xs:complexContent>
       </xs:complexType>
    </xs:element>
-   <xs:element name="LiveEntityPdu">
+   <xs:complexType name="LiveEntityPduType">
+      <!--debug: another class, providing Pdu types-->
       <xs:annotation>
          <xs:appinfo>The live entity PDUs have a slightly different header
             <xs:attribute name="id" type="xs:integer" fixed="11"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
-      <xs:complexType>
-         <xs:complexContent>
-            <xs:extension base="LiveEntityFamilyPduType">
-               <xs:attribute name="family" fixed="LiveEntityFamilyPduType"></xs:attribute>
-               <xs:attribute name="subprotocolNumber" type="xs:string">
-                  <xs:annotation>
-                     <xs:appinfo>Subprotocol used to decode the PDU. Section 13 of EBV. (SISO enumeration DISLiveEntitySubprotocolNumber
-                        uid 417)
-                     </xs:appinfo>
-                  </xs:annotation>
-               </xs:attribute>
-               <xs:attribute name="padding" type="xs:unsignedByte">
-                  <xs:annotation>
-                     <xs:appinfo>zero-filled array of padding</xs:appinfo>
-                  </xs:annotation>
-               </xs:attribute>
-            </xs:extension>
-         </xs:complexContent>
-      </xs:complexType>
-   </xs:element>
+      <xs:complexContent>
+         <xs:extension base="LiveEntityFamilyPduType">
+            <xs:attribute name="family" fixed="LiveEntityFamilyPduType"></xs:attribute>
+            <xs:attribute name="subprotocolNumber" type="xs:string">
+               <xs:annotation>
+                  <xs:appinfo>Subprotocol used to decode the PDU. Section 13 of EBV. (SISO enumeration DISLiveEntitySubprotocolNumber
+                     uid 417)
+                  </xs:appinfo>
+               </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="padding" type="xs:unsignedByte">
+               <xs:annotation>
+                  <xs:appinfo>zero-filled array of padding</xs:appinfo>
+               </xs:annotation>
+            </xs:attribute>
+         </xs:extension>
+      </xs:complexContent>
+   </xs:complexType>
    <xs:element name="TSPIPdu">
       <xs:annotation>
          <xs:appinfo>9.4.2 The Time Space Position Information (TSPI) PDU shall communicate information

@@ -85,6 +85,148 @@
             </xsl:comment>
             -->
             
+   <xs:element name="DIS">
+      <xs:annotation>
+         <xs:appinfo>Root element for DIS PDU log, optionally contains head meta information</xs:appinfo>
+      </xs:annotation>
+      <xs:complexType>
+		<xs:sequence>
+			<xs:element ref="head" minOccurs="0"/>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+               <!--  1 --><xs:element ref="EntityStatePdu"/>
+               <!--  2 --><xs:element ref="FirePdu"/>
+               <!--  3 --><xs:element ref="DetonationPdu"/>
+               <!--  4 --><xs:element ref="CollisionPdu"/>
+               <!--  5 --><xs:element ref="ServiceRequestPdu"/>
+               <!--  6 --><xs:element ref="ResupplyOfferPdu"/>
+               <!--  7 --><xs:element ref="ResupplyReceivedPdu"/>
+               <!--  8 --><xs:element ref="ResupplyCancelPdu"/>
+               <!--  9 --><xs:element ref="RepairCompletePdu"/>
+               <!-- 10 --><xs:element ref="RepairResponsePdu"/>
+               <!-- 11 --><xs:element ref="CreateEntityPdu"/>
+               <!-- 12 --><xs:element ref="RemoveEntityPdu"/>
+               <!-- 13 --><xs:element ref="StartResumePdu"/>
+               <!-- 14 --><xs:element ref="StopFreezePdu"/>
+               <!-- 15 --><xs:element ref="AcknowledgePdu"/>
+               <!-- 16 --><xs:element ref="ActionRequestPdu"/>
+               <!-- 17 --><xs:element ref="ActionResponsePdu"/>
+               <!-- 18 --><xs:element ref="DataQueryPdu"/>
+               <!-- 19 --><xs:element ref="SetDataPdu"/>
+               <!-- 20 --><xs:element ref="DataPdu"/>
+               <!-- 21 --><xs:element ref="EventReportPdu"/>
+               <!-- 22 --><xs:element ref="CommentPdu"/>
+               <!-- 23 --><xs:element ref="ElectromagneticEmissionPdu"/>
+               <!-- 24 --><xs:element ref="DesignatorPdu"/>
+               <!-- 25 --><xs:element ref="TransmitterPdu"/>
+               <!-- 26 --><xs:element ref="SignalPdu"/>
+               <!-- 27 --><xs:element ref="ReceiverPdu"/>
+               <!-- 28 --><xs:element ref="IFFLayer2Pdu"/>
+               <!-- 28 --><xs:element ref="IFFPdu"/>
+               <!-- 28 --><xs:element ref="IdentificationFriendOrFoePdu"/>
+               <!-- 29 --><xs:element ref="UnderwaterAcousticPdu"/>
+               <!-- 30 --><xs:element ref="SEESPdu"/>
+               <!-- 30 --><xs:element ref="SupplementalEmissionEntityStatePdu"/>
+               <!-- 31 --><xs:element ref="IntercomSignalPdu"/>
+               <!-- 32 --><xs:element ref="IntercomControlPdu"/>
+               <!-- 33 --><xs:element ref="AggregateStatePdu"/>
+               <!-- 34 --><xs:element ref="IsGroupOfPdu"/>
+               <!-- 35 --><xs:element ref="TransferOwnershipPdu"/>
+               <!-- 36 --><xs:element ref="IsPartOfPdu"/>
+               <!-- 37 --><xs:element ref="MinefieldStatePdu"/>
+               <!-- 38 --><xs:element ref="MinefieldQueryPdu"/>
+               <!-- 39 --><xs:element ref="MinefieldDataPdu"/>
+               <!-- 40 --><xs:element ref="MinefieldResponseNACKPdu"/>
+               <!-- 41 --><xs:element ref="EnvironmentalProcessPdu"/>
+               <!-- 42 --><xs:element ref="GriddedDataPdu"/>
+               <!-- 43 --><xs:element ref="PointObjectStatePdu"/>
+               <!-- 44 --><xs:element ref="LinearObjectStatePdu"/>
+               <!-- 45 --><xs:element ref="ArealObjectStatePdu"/>
+               <!-- 46 --><xs:element ref="TSPIPdu"/>
+               <!-- 46 --><xs:element ref="TimeSpacePositionInformationPdu"/>
+               <!-- 47 --><xs:element ref="AppearancePdu"/>
+               <!-- 48 --><xs:element ref="ArticulatedPartsPdu"/>
+               <!-- 49 --><xs:element ref="LEFirePdu"/>
+               <!-- 49 --><xs:element ref="LiveEntityFirePdu"/>
+               <!-- 50 --><xs:element ref="LEDetonationPdu"/>
+               <!-- 50 --><xs:element ref="LiveEntityDetonationPdu"/>
+               <!-- 51 --><xs:element ref="CreateEntityRPdu"/>
+               <!-- 51 --><xs:element ref="CreateEntityReliablePdu"/>
+               <!-- 52 --><xs:element ref="RemoveEntityRPdu"/>
+               <!-- 52 --><xs:element ref="RemoveEntityReliablePdu"/>
+               <!-- 53 --><xs:element ref="StartResumeRPdu"/>
+               <!-- 53 --><xs:element ref="StartResumeReliablePdu"/>
+               <!-- 54 --><xs:element ref="StopFreezeRPdu"/>
+               <!-- 54 --><xs:element ref="StopFreezeReliablePdu"/>
+               <!-- 55 --><xs:element ref="AcknowledgeRPdu"/>
+               <!-- 55 --><xs:element ref="AcknowledgeReliablePdu"/>
+               <!-- 56 --><xs:element ref="ActionRequestRPdu"/>
+               <!-- 56 --><xs:element ref="ActionRequestReliablePdu"/>
+               <!-- 57 --><xs:element ref="ActionResponseRPdu"/>
+               <!-- 57 --><xs:element ref="ActionResponseReliablePdu"/>
+               <!-- 58 --><xs:element ref="DataQueryRPdu"/>
+               <!-- 58 --><xs:element ref="DataQueryReliablePdu"/>
+               <!-- 59 --><xs:element ref="SetDataRPdu"/>
+               <!-- 59 --><xs:element ref="SetDataReliablePdu"/>
+               <!-- 60 --><xs:element ref="DataRPdu"/>
+               <!-- 60 --><xs:element ref="DataReliablePdu"/>
+               <!-- 61 --><xs:element ref="EventReportRPdu"/>
+               <!-- 61 --><xs:element ref="EventReportReliablePdu"/>
+               <!-- 62 --><xs:element ref="CommentRPdu"/>
+               <!-- 62 --><xs:element ref="CommentReliablePdu"/>
+               <!-- 63 --><xs:element ref="RecordRPdu"/>
+               <!-- 63 --><xs:element ref="RecordReliablePdu"/>
+               <!-- 64 --><xs:element ref="SetRecordRPdu"/>
+               <!-- 64 --><xs:element ref="SetRecordReliablePdu"/>
+               <!-- 65 --><xs:element ref="RecordQueryRPdu"/>
+               <!-- 65 --><xs:element ref="RecordQueryReliablePdu"/>
+               <!-- 66 --><xs:element ref="CollisionElasticPdu"/>
+               <!-- 67 --><xs:element ref="EntityStateUpdatePdu"/>
+               <!-- 68 --><xs:element ref="DirectedEnergyFirePdu"/>
+               <!-- 69 --><xs:element ref="EntityDamageStatusPdu"/>
+               <!-- 70 --><xs:element ref="InformationOperationsActionPdu"/>
+               <!-- 71 --><xs:element ref="InformationOperationsReportPdu"/>
+               <!-- 72 --><xs:element ref="AttributePdu"/>
+			</xs:choice>
+		</xs:sequence>
+		<xs:attribute name="version" type="xs:string" fixed="7.0">
+			<xs:annotation>
+				<xs:appinfo>Warning: version is required and must be specified in source document.</xs:appinfo>
+			</xs:annotation>
+		</xs:attribute>
+      </xs:complexType>
+   </xs:element>
+    <xs:element name="head">
+        <xs:annotation>
+            <xs:appinfo>Functional summary: each DIS file includes an optional head statement that can contain any number of meta statements.</xs:appinfo>
+            <xs:documentation source="https://www.web3d.org/documents/specifications/19776-1/V3.3/Part01/concepts.html#Header"/>
+        </xs:annotation>
+        <xs:complexType>
+			<xs:sequence>
+				<xs:element ref="meta" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="meta">
+        <xs:annotation>
+            <xs:appinfo>Functional summary: the meta statement provides metadata information about a file, where name and content attributes provide attribute=value metadata pairs.</xs:appinfo>
+            <xs:documentation source="https://www.web3d.org/documents/specifications/19776-1/V3.3/Part01/concepts.html#Header"/>
+        </xs:annotation>
+        <xs:complexType>
+                    <xs:attribute name="name" type="xs:string" use="required">
+                        <xs:annotation>
+                            <xs:documentation source="http://www.dublincore.org/documents/dcmi-terms/#terms-description"/>
+                            <!-- https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#NameTyping -->
+                        </xs:annotation>
+                    </xs:attribute>
+                    <xs:attribute name="content" type="xs:string" use="required">
+                        <xs:annotation>
+                            <xs:documentation source="http://www.w3.org/TR/html4/struct/global.html#adef-content"/>
+                        </xs:annotation>
+                    </xs:attribute>
+                    <!-- other html atttributes include dir (direction), http-equiv, lang (language) and scheme -->
+        </xs:complexType>
+    </xs:element>
+    
 <xsl:message>
     <xsl:text>*** Top-level DIS_7_2012.xml definitions file has count(//*/*[local-name() = 'class'])=</xsl:text>
     <xsl:value-of select="count(//*/*[local-name() = 'class'])"/>
@@ -157,7 +299,7 @@
                     </xsl:message>
                 </xsl:if>
 
-                <!-- now process all class definitions in thie document -->
+                <!-- now process all class definitions in the document -->
                 <xsl:for-each select="$nodes/*">
 
                     <!-- debug -->
@@ -278,6 +420,7 @@
         <!-- use names of corresponding schema elements -->
         <xsl:choose>
             <!-- ===================================================== -->
+            <!-- Pdu types -->
             <xsl:when test="(local-name() = 'class') and contains(@name, 'Family')">
                 <xs:complexType name="{concat(@name,$nameSuffix)}" abstract="{@abstract}">
                     <xsl:call-template name="handle-comment-documentation"/>
@@ -297,7 +440,7 @@
             </xsl:when>
             <!-- ===================================================== -->
             <!-- Pdu elements (not Pdu and PduBase) -->
-            <xsl:when test="(local-name() = 'class') and not(contains(@name, 'Family')) and 
+            <xsl:when test="(local-name() = 'class') and not(contains(@name, 'Family')) and not(@abstract = 'true') and
                              ends-with(@name, 'Pdu') and not(starts-with(@name, 'Pdu'))">
             
                 <xsl:element name="xs:element">

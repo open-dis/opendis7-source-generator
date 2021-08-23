@@ -156,6 +156,33 @@
         </xsl:for-each><!-- PDU family -->
             
     </xsl:template>
+           
+    <xsl:template name="generate-PDU-list">
+        
+        <xsl:message>
+            <xsl:for-each select="/xs:schema/xs:element[ends-with(@name,'Pdu')]">
+                <xsl:sort select="xs:integer(xs:annotation/xs:appinfo/xs:attribute[@name='id']/@fixed)" order="ascending"/>
+                
+                <xsl:variable name="idValue" select="xs:integer(xs:annotation/xs:appinfo/xs:attribute[@name='id']/@fixed)"/>
+                <xsl:text>               </xsl:text>
+                <xsl:comment>
+                    <xsl:text> </xsl:text>
+                    <xsl:if test="($idValue lt 10)">
+                        <xsl:text> </xsl:text>
+                    </xsl:if>
+                    <xsl:value-of select="$idValue"/>
+                    <xsl:text> </xsl:text>
+                </xsl:comment>
+                <xsl:element name="xs:element">
+                    <xsl:attribute name="ref">
+                        <xsl:value-of select="@name"/>
+                    </xsl:attribute>
+                </xsl:element>
+                <xsl:text>&#10;</xsl:text>
+            </xsl:for-each>
+        </xsl:message>
+            
+    </xsl:template>
 
     <!-- ===================================================== -->
     
