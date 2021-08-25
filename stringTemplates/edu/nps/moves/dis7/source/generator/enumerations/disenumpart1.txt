@@ -12,7 +12,7 @@ import edu.nps.moves.dis7.pdus.*;
 /**
  * Generated from XML,
  * %s %s,
- * marshal size %s.
+ * marshal size %s;
  * %s has %d enumerations total.
  */
 public enum %s %s
