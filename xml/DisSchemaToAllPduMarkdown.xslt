@@ -105,6 +105,8 @@
             <xsl:text> |</xsl:text>
             <xsl:text>&#10;</xsl:text>
             
+            <!-- https://stackoverflow.com/questions/66560651/checkbox-in-github-markdown-table-not-updating -->
+            
             <xsl:for-each select="$pdusWithMatchingComplexType">
                 <xsl:sort select="xs:integer(ancestor::xs:element/xs:annotation/xs:appinfo/xs:attribute[@name='id'  ]/@fixed)" order="ascending"/>
 
@@ -161,6 +163,7 @@
         
         <xsl:message>
             <xsl:for-each select="/xs:schema/xs:element[ends-with(@name,'Pdu')]">
+                <xsl:sort select="xs:integer(xs:annotation/xs:appinfo/xs:attribute[@name='name']/@name)" order="ascending"/>
                 <xsl:sort select="xs:integer(xs:annotation/xs:appinfo/xs:attribute[@name='id']/@fixed)" order="ascending"/>
                 
                 <xsl:variable name="idValue" select="xs:integer(xs:annotation/xs:appinfo/xs:attribute[@name='id']/@fixed)"/>

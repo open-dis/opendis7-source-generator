@@ -265,12 +265,10 @@
 </xsl:message>  -->
 
             <!-- special definitions while sorting out complete interface hierarchy -->
-            <xs:complexType name="rootType" abstract="true"/>
-            
-            <xsl:call-template name="create-complex-types-primary-document"/> <!-- classes/class in topmost document -->          
+            <xs:complexType name="rootType" abstract="true"/>          
 
             <xsl:for-each select="//xi:include"> <!-- now repeat for each include -->
-                <xsl:sort select="@href" order="ascending"/>
+            <!--<xsl:sort select="@href" order="ascending"/>-->
 
                 <xsl:variable name="pduFamilyDocument" select="@href"/>
                 <xsl:message>
@@ -311,8 +309,11 @@
                         
                     </xsl:comment>
                     <xsl:apply-templates select="//class">
+                        <xsl:sort select="@name[ends-with(@name,'Type')]" order="ascending"/>
+                        <xsl:sort select="@name[ends-with(@name,'Pdu')]"  order="ascending"/>
+                 <!--<xsl:sort select="not(ends-with(@name,'PduType') or ends-with(@name,'Pdu'))" order="ascending"/>
                         <xsl:sort select="@name[not(contains(.,'Family'))]" order="ascending"/>
-                        <xsl:sort select="@name[    contains(.,'Family') ]"/>
+                        <xsl:sort select="@name[    contains(.,'Family') ]"/>-->
                     </xsl:apply-templates>
 
                 </xsl:for-each>
@@ -323,6 +324,8 @@
                 </xsl:message>
 
             </xsl:for-each><!-- PDU XML file -->
+            
+            <xsl:call-template name="create-complex-types-primary-document"/> <!-- classes/class in topmost document -->
 
             <xsl:message>
                 <xsl:text>====================================================</xsl:text>
