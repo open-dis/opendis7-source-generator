@@ -671,6 +671,7 @@
                 <pathelement path="src-specialcase/java"/>
                 <pathelement path="src-generated/java"/>
             </src>
+            <exclude name="edu/nps/moves/dis7/pdus/VariableDatum.java"/><!-- TODO fix autogeneration to match special case -->
             <classpath>
                 <pathelement path="build/classes"/>
             </classpath>
@@ -750,6 +751,7 @@
         <copy todir="../open-dis7-java/src-generated" overwrite="true">
             <fileset dir="src-generated/java">
                 <include name="**/*.java"/>
+                <exclude name="edu/nps/moves/dis7/pdus/VariableDatum.java"/><!-- TODO fix autogeneration to match special case -->
             </fileset>
             <fileset dir="src-supporting/java">
                 <include name="**/*.java"/>
