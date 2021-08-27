@@ -7,19 +7,21 @@ import edu.nps.moves.dis7.enumerations.*;
 
 /**
  * <ul>
- *     <li> Country: %s = <code>%s</code> </li>
- *     <li> Entity kind: %s = <code>%s</code> </li>
- *     <li> Domain: %s = <code>%s</code> </li>
- *     <li> Category: %s = <code>%s</code> </li>
- *     <li> Subcategory: %s %s </li>
- *     <li> Specific: %s %s </li>
- *     <li> Entity type uid: %s </li>
- *     <li> Full name: %s </li>
- *     <li> Reference: %s </li>
+ *     <li> Country: %s = <code>%s</code>; </li>
+ *     <li> Entity kind: %s = <code>%s</code>; </li>
+ *     <li> Domain: %s = <code>%s</code>; </li>
+ *     <li> Category: %s = <code>%s</code>; </li>
+ *     <li> SubCategory: %s %s; </li>
+ *     <li> Specific: %s %s; </li>
+ *     <li> Entity type uid: %s; </li>
+ *     <li> Reference: <a href="https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/blob/master/specifications/README.md" target="_blank">%s</a>. </li>
  * </ul>
+ * <p> Full name: %s. </p>
  * @see Country
- * @see Domain
  * @see EntityKind
+ * @see Domain
+ * @see Category
+ * @see SubCategory
  */
 public class %s extends EntityType
 {
