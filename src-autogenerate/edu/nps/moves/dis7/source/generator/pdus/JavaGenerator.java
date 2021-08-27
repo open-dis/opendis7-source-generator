@@ -335,7 +335,7 @@ public class JavaGenerator extends Generator
             readTemplates();
         
         pw.println(String.format(domainTemplate1));
-        for(ClassAttribute attr : aClass.getClassAttributes()) {
+        for (ClassAttribute attr : aClass.getClassAttributes()) {
             if(attr.getAttributeKind().equals(ClassAttribute.ClassAttributeType.SISO_ENUM)) {
                 pw.println(String.format(domainTemplate2,attr.getType(),attr.getComment()));
             }            
@@ -612,7 +612,7 @@ public class JavaGenerator extends Generator
     {
         // Write a constructor
         pw.println();
-        pw.println("/** Constructor */");
+        pw.println("/** Constructor creates and configures a new instance object */");
         pw.println(" public " + aClass.getName() + "()");
         pw.println(" {");
 
@@ -672,6 +672,7 @@ public class JavaGenerator extends Generator
 "   * @see <a href=\"https://en.wikipedia.org/wiki/Marshalling_(computer_science)\" target=\"_blank\">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>\n" +
 "   * @return serialized size in bytes\n" +
 "   */");
+//      printWriter.println("@Override");
         printWriter.println("public int getMarshalledSize()");
         printWriter.println("{");
         printWriter.println("   int marshalSize = 0; ");
@@ -685,38 +686,42 @@ public class JavaGenerator extends Generator
         for (ClassAttribute anAttribute : aClass.getClassAttributes()) {
             switch (anAttribute.getAttributeKind()) {
                 case PRIMITIVE:
+                    // primitive cannot be null, no checking required
                     printWriter.print("   marshalSize += ");
                     printWriter.println(primitiveSizes.get(anAttribute.getType()) + ";  // " + anAttribute.getName());
                     break;
                 case CLASSREF:
                 case SISO_ENUM:
                 case SISO_BITFIELD:
-                    printWriter.print("   marshalSize += ");
+                    printWriter.println("   if (" + anAttribute.getName() + " != null)");
+                    printWriter.print  ("       marshalSize += ");
                     printWriter.println(anAttribute.getName() + ".getMarshalledSize();");
                     break;
                 case PRIMITIVE_LIST:
                     //System.out.println("Generating fixed list for " + anAttribute.getName() + " listIsClass:" + anAttribute.listIsClass());
                     // If this is a fixed list of primitives, it's the list size times the size of the primitive.
                     //pw.println("   marshalSize = marshalSize + " +  anAttribute.getListLength() + " * " + primitiveSizes.get(anAttribute.getType()) + ";  // " + anAttribute.getName());
-                    printWriter.println("   marshalSize += " + anAttribute.getName()+".length * "  + primitiveSizes.get(anAttribute.getType()) + ";");
+                    printWriter.println("   if (" + anAttribute.getName() + " != null)");
+                    printWriter.println("       marshalSize += " + anAttribute.getName()+".length * "  + primitiveSizes.get(anAttribute.getType()) + ";");
                     break;
                 case OBJECT_LIST:
                     // If this is a dynamic list of primitives, it's the list size times the size of the primitive.
-                    printWriter.println("   for(int idx=0; idx < " + anAttribute.getName() + ".size(); idx++)");
-                    printWriter.println("   {");
+                    printWriter.println("   if (" + anAttribute.getName() + " != null)");
+                    printWriter.println("       for (int idx=0; idx < " + anAttribute.getName() + ".size(); idx++)");
+                    printWriter.println("       {");
                     //pw.println( anAttribute.getName() + ".size() " + " * " +  " new " + anAttribute.getType() + "().getMarshalledSize()"  + ";  // " + anAttribute.getName());
-                    printWriter.println("        " + anAttribute.getType() + " listElement = " + anAttribute.getName() + ".get(idx);");
-                    printWriter.println("        marshalSize += listElement.getMarshalledSize();");
-                    printWriter.println("   }");
+                    printWriter.println("            " + anAttribute.getType() + " listElement = " + anAttribute.getName() + ".get(idx);");
+                    printWriter.println("            marshalSize += listElement.getMarshalledSize();");
+                    printWriter.println("       }");
                     break;
                 case PADTO16:
                 case PADTO32:
                 case PADTO64:
-                    printWriter.println("   marshalSize += "+anAttribute.getName()+".length;");
+                    printWriter.println("   if (" + anAttribute.getName() + " != null)");
+                    printWriter.println("       marshalSize += "+anAttribute.getName()+".length;");
                     break;
             }          
         }
-
         printWriter.println();
         printWriter.println("   return marshalSize;");
         printWriter.println("}");
@@ -993,6 +998,7 @@ public class JavaGenerator extends Generator
         pw.println(" * @param dos the OutputStream");
         pw.println(" */");
  
+//      pw.println("@Override");
         pw.println("public void marshal(DataOutputStream dos) throws Exception");
         pw.println("{");
 
@@ -1061,7 +1067,7 @@ public class JavaGenerator extends Generator
                 // Write out the method call to marshal a fixed length list, aka an array.
                 case PRIMITIVE_LIST:
                     pw.println();
-                    pw.println("       for(int idx = 0; idx < " + anAttribute.getName() + ".length; idx++)");
+                    pw.println("       for (int idx = 0; idx < " + anAttribute.getName() + ".length; idx++)");
 
                     marshalType = marshalTypes.getProperty(anAttribute.getType());
 
@@ -1073,13 +1079,13 @@ public class JavaGenerator extends Generator
 
                 // Write out a section of code to marshal a variable length list. The code should look like
                 //
-                // for(int idx = 0; idx < attrName.size(); idx++)
+                // for (int idx = 0; idx < attrName.size(); idx++)
                 // { anAttribute.marshal(dos);
                 // }
                 //    
                 case OBJECT_LIST:
                     pw.println();
-                    pw.println("       for(int idx = 0; idx < " + anAttribute.getName() + ".size(); idx++)");
+                    pw.println("       for (int idx = 0; idx < " + anAttribute.getName() + ".size(); idx++)");
                     pw.println("       {");
 
                     marshalType = marshalTypes.getProperty(anAttribute.getType());
@@ -1124,6 +1130,7 @@ public class JavaGenerator extends Generator
         pw.println(" * @return marshalled serialized size in bytes");
         pw.println(" */");
 
+//      pw.println("@Override");
         pw.println("public int unmarshal(DataInputStream dis) throws Exception");
         pw.println("{");
         pw.flush();
@@ -1177,7 +1184,7 @@ public class JavaGenerator extends Generator
                     break;
                     
                 case PRIMITIVE_LIST:
-                    pw.println("        for(int idx = 0; idx < " + attributeName + ".length; idx++)");
+                    pw.println("        for (int idx = 0; idx < " + attributeName + ".length; idx++)");
 
                     // This is some sleaze. We're an array, but an array of what? We could be either a
                     // primitive or a class. We need to figure out which. This is done via the expedient
@@ -1198,9 +1205,9 @@ public class JavaGenerator extends Generator
                     
                 case OBJECT_LIST:
                     if (anAttribute.getCountFieldName() != null)
-                        pw.println("        for(int idx = 0; idx < " + anAttribute.getCountFieldName() + "; idx++)");
+                        pw.println("        for (int idx = 0; idx < " + anAttribute.getCountFieldName() + "; idx++)");
                     else
-                        pw.println("        for(int idx = 0; idx < " + anAttribute.getName() + ".size(); idx++)");
+                        pw.println("        for (int idx = 0; idx < " + anAttribute.getName() + ".size(); idx++)");
 
                     pw.println("        {");
 
@@ -1272,12 +1279,12 @@ public class JavaGenerator extends Generator
         //pw.println("    try \n    {");
 
         // Loop through the class attributes, generating the output for each.
-        for(ClassAttribute anAttribute: aClass.getClassAttributes()) {
+        for (ClassAttribute anAttribute: aClass.getClassAttributes())
+        {
             if(anAttribute.shouldSerialize == false) {
                  pw.println("    // attribute " + anAttribute.getName() + " marked as not serialized");
                  continue;
             }
-            
             String marshalType;
             String capped;
             
@@ -1307,7 +1314,7 @@ public class JavaGenerator extends Generator
                     
                 case PRIMITIVE_LIST:
                     pw.println();
-                    pw.println("   for(int idx = 0; idx < " + anAttribute.getName() + ".length; idx++)");
+                    pw.println("   for (int idx = 0; idx < " + anAttribute.getName() + ".length; idx++)");
 
                     // This is some sleaze. We're an array, but an array of what? We could be either a
                     // primitive or a class. We need to figure out which. This is done via the expedient
@@ -1331,7 +1338,7 @@ public class JavaGenerator extends Generator
                     
                 case OBJECT_LIST:
                     pw.println();
-                    pw.println("   for(int idx = 0; idx < " + anAttribute.getName() + ".size(); idx++)");
+                    pw.println("   for (int idx = 0; idx < " + anAttribute.getName() + ".size(); idx++)");
                     pw.println("   {");
 
                     // This is some sleaze. We're an array, but an array of what? We could be either a
@@ -1393,13 +1400,16 @@ public class JavaGenerator extends Generator
         if(!(aClass.getParentClass().equalsIgnoreCase("root")))
             pw.println("    super.unmarshal(byteBuffer);\n");
 
+        pw.println("    try");
+        pw.println("    {");
         // Loop through the class attributes, generating the output for each.
-        for(ClassAttribute anAttribute : aClass.getClassAttributes()) { 
+        for (ClassAttribute anAttribute : aClass.getClassAttributes()) { 
 
             if(anAttribute.shouldSerialize == false) {
-                 pw.println("    // attribute " + anAttribute.getName() + " marked as not serialized");
+                 pw.println("        // attribute " + anAttribute.getName() + " marked as not serialized");
                  continue;
             }
+            pw.println("        // attribute " + anAttribute.getName() + " marked as not serialized");
             String marshalType;
             String capped;
             switch(anAttribute.getAttributeKind()) {
@@ -1410,81 +1420,86 @@ public class JavaGenerator extends Generator
                         capped = "";
                 
                     if(marshalType.equalsIgnoreCase("UnsignedByte"))
-                        pw.println("    " + anAttribute.getName() + " = (byte)(byteBuffer.get() & 0xFF);");               
+                        pw.println("        " + anAttribute.getName() + " = (byte)(byteBuffer.get() & 0xFF);");               
                     else if (marshalType.equalsIgnoreCase("UnsignedShort"))
-                        pw.println("    " + anAttribute.getName() + " = (short)(byteBuffer.getShort() & 0xFFFF);");               
+                        pw.println("        " + anAttribute.getName() + " = (short)(byteBuffer.getShort() & 0xFFFF);");               
                     else
-                        pw.println("    " + anAttribute.getName() + " = byteBuffer.get" + capped + "();");
+                        pw.println("        " + anAttribute.getName() + " = byteBuffer.get" + capped + "();");
                     break;
                     
                 case SISO_ENUM:
-                    pw.println("    " + anAttribute.getName() + " = "+anAttribute.getType()+".unmarshalEnum(byteBuffer);");
+                    pw.println("        " + anAttribute.getName() + " = "+anAttribute.getType()+".unmarshalEnum(byteBuffer);");
                     break;
                     
                 case SISO_BITFIELD:
                 case CLASSREF:         
-                    pw.println("    " + anAttribute.getName() + ".unmarshal(byteBuffer);" );
+                    pw.println("        " + anAttribute.getName() + ".unmarshal(byteBuffer);" );
                     break;
 
                 case PRIMITIVE_LIST:
-                    pw.println("    for(int idx = 0; idx < " + anAttribute.getName() + ".length; idx++)");
+                    pw.println("        for (int idx = 0; idx < " + anAttribute.getName() + ".length; idx++)");
 
                     marshalType = marshalTypes.getProperty(anAttribute.getType());
 
                     if(marshalType == null) // It's a class  // should be unnecessary w/ refactor
-                        pw.println("        " + anAttribute.getName() + "[idx].unmarshal(byteBuffer);" );
+                        pw.println("            " + anAttribute.getName() + "[idx].unmarshal(byteBuffer);" );
                     else { // It's a primitive
                         capped = this.initialCap(marshalType);
                         if( capped.equals("Byte") )
                              capped = "";
-                        pw.println("        " +  anAttribute.getName() + "[idx] = byteBuffer.get" + capped + "();");
+                        pw.println("            " +  anAttribute.getName() + "[idx] = byteBuffer.get" + capped + "();");
                     }
                     break;
                     
                 case OBJECT_LIST:
                     if(anAttribute.getCountFieldName() != null)
-                        pw.println("    for(int idx = 0; idx < " + anAttribute.getCountFieldName() + "; idx++)");
+                        pw.println("        for (int idx = 0; idx < " + anAttribute.getCountFieldName() + "; idx++)");
                     else
-                        pw.println("    for(int idx = 0; idx < " + anAttribute.getName() + ".size(); idx++)");
+                        pw.println("        for (int idx = 0; idx < " + anAttribute.getName() + ".size(); idx++)");
                 
-                    pw.println("    {");
+                    pw.println("        {");
 
                     if(anAttribute.getUnderlyingTypeIsEnum()) {
-                        pw.println("    " +anAttribute.getType() + " anX = "+anAttribute.getType() + ".unmarshalEnum(byteBuffer);");
-                        pw.println("    " + anAttribute.getName() + ".add(anX);");
+                        pw.println("        " +anAttribute.getType() + " anX = "+anAttribute.getType() + ".unmarshalEnum(byteBuffer);");
+                        pw.println("        " + anAttribute.getName() + ".add(anX);");
                     }
                     else {
                         marshalType = marshalTypes.getProperty(anAttribute.getType());
 
                         if(marshalType == null) { // It's a class
-                            pw.println("    " + anAttribute.getType() + " anX = new " + anAttribute.getType() + "();");                           
-                            pw.println("    anX.unmarshal(byteBuffer);");
-                            pw.println("    " + anAttribute.getName() + ".add(anX);");
+                            pw.println("        " + anAttribute.getType() + " anX = new " + anAttribute.getType() + "();");                           
+                            pw.println("        anX.unmarshal(byteBuffer);");
+                            pw.println("        " + anAttribute.getName() + ".add(anX);");
                         }
                         else { // It's a primitive  // should be unnecessary now w/ refactor
                             capped = this.initialCap(marshalType);
                             if( capped.equals("Byte") )
                                 capped = "";
-                            pw.println("    byteBuffer.get" + capped + "(" + anAttribute.getName() + ");");
+                            pw.println("        byteBuffer.get" + capped + "(" + anAttribute.getName() + ");");
                         }
                     }
-                    pw.println("    }");
+                    pw.println("        }");
                     pw.println();
                     break;
                     
                                     
                 case PADTO16:
-                    pw.println("    "+anAttribute.getName() + " = new byte[Align.from16bits(byteBuffer)];");
+                    pw.println("        "+anAttribute.getName() + " = new byte[Align.from16bits(byteBuffer)];");
                     break;
                 case PADTO32:
-                    pw.println("    "+anAttribute.getName() + " = new byte[Align.from32bits(byteBuffer)];");
+                    pw.println("        "+anAttribute.getName() + " = new byte[Align.from32bits(byteBuffer)];");
                     break;
                 case PADTO64:
-                    pw.println("    "+anAttribute.getName() + " = new byte[Align.from64bits(byteBuffer)];");
+                    pw.println("        "+anAttribute.getName() + " = new byte[Align.from64bits(byteBuffer)];");
                     break;
             }
-
         } // End of loop through ivars for writing the unmarshal method
+        
+        pw.println("    }");
+        pw.println("    catch (java.nio.BufferUnderflowException bue)");
+        pw.println("    {");
+        pw.println("        System.err.println(\"*** buffer underflow error while unmarshalling \" + this.getClass().getName());");
+        pw.println("    }");
         pw.println("    return getMarshalledSize();");
         pw.println("}\n");
     }
@@ -1561,7 +1576,7 @@ public class JavaGenerator extends Generator
         // have to loop through all the attributes, selecting only the primitive types. If we
         // want to be official, we should short the names alphabetically as well to conform
         // to canonical XML.
-        for(int idx = 0; idx < ivars.size(); idx++)
+        for (int idx = 0; idx < ivars.size(); idx++)
         {
             ClassAttribute anAttribute = (ClassAttribute)ivars.get(idx);
     
@@ -1602,7 +1617,7 @@ public class JavaGenerator extends Generator
             if( (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.FIXED_LIST) )
             {
                 pw.println();
-                pw.println("       for(int idx = 0; idx < " + anAttribute.getName() + ".length; idx++)");
+                pw.println("       for (int idx = 0; idx < " + anAttribute.getName() + ".length; idx++)");
                 pw.println("       {");
                 
                 // This is some sleaze. We're an array, but an array of what? We could be either a
@@ -1628,7 +1643,7 @@ public class JavaGenerator extends Generator
             
             // Write out a section of code to marshal a variable length list. The code should look like
             //
-            // for(int idx = 0; idx < attrName.size(); idx++)
+            // for (int idx = 0; idx < attrName.size(); idx++)
             // { anAttribute.marshal(dos);
             // }
             //    
@@ -1636,7 +1651,7 @@ public class JavaGenerator extends Generator
             if( (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.VARIABLE_LIST) )
             {
                 pw.println();
-                pw.println("       for(int idx = 0; idx < " + anAttribute.getName() + ".size(); idx++)");
+                pw.println("       for (int idx = 0; idx < " + anAttribute.getName() + ".size(); idx++)");
                 pw.println("       {");
                 
                 // This is some sleaze. We're an array, but an array of what? We could be either a
@@ -1768,7 +1783,7 @@ public class JavaGenerator extends Generator
                 
               case PRIMITIVE_LIST:
                 pw.println();
-                pw.println("     for(int idx = 0; idx < "+ anAttribute.getListLength() + "; idx++)");
+                pw.println("     for (int idx = 0; idx < "+ anAttribute.getListLength() + "; idx++)");
                 pw.println("     {");
                 pw.println("          if(!(" + attname + "[idx] == rhs." + attname + "[idx])) ivarsEqual = false;");
                 pw.println("     }");
@@ -1777,7 +1792,7 @@ public class JavaGenerator extends Generator
 
               case OBJECT_LIST:
                 pw.println();
-                pw.println("     for(int idx = 0; idx < " + attname + ".size(); idx++)");
+                pw.println("     for (int idx = 0; idx < " + attname + ".size(); idx++)");
                 pw.println("        if( ! ( " + attname + ".get(idx).equals(rhs." + attname + ".get(idx)))) ivarsEqual = false;");
                 pw.println();
                 break;

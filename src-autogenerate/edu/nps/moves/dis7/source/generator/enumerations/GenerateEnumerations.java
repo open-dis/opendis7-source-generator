@@ -741,10 +741,13 @@ public class GenerateEnumerations
                 additionalInterface = "implements "+otherIf;
             */
             /* enumeration initial template, de-spacify name */
+            int numberOfEnumerations = el.elems.size();
             if(el.footnote == null)
-              sb.append(String.format(disenumpart1Template,             packageName, sisoSpecificationTitleDate,  "UID " + el.uid, el.size, el.name,                  classNameCorrected, additionalInterface));
+              sb.append(String.format(disenumpart1Template,             packageName, sisoSpecificationTitleDate,  "UID " + el.uid, el.size, el.name,
+                                      numberOfEnumerations,              classNameCorrected, additionalInterface));
             else
-              sb.append(String.format(disenumpart1withfootnoteTemplate, packageName, sisoSpecificationTitleDate,  "UID " + el.uid, el.size, el.name, el.footnote, classNameCorrected, additionalInterface));
+              sb.append(String.format(disenumpart1withfootnoteTemplate, packageName, sisoSpecificationTitleDate,  "UID " + el.uid, el.size, el.name,
+                                      numberOfEnumerations, el.footnote, classNameCorrected, additionalInterface));
 
             enumNames.clear();
             // enum section

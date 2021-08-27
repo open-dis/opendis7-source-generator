@@ -577,7 +577,7 @@ public class GenerateEntityTypes
                 packageInfoFileWriter = new FileWriter(packageInfoFile, StandardCharsets.UTF_8);
                 packageInfoBuilder = new StringBuilder();
                 packageInfoBuilder.append("/**\n");
-                packageInfoBuilder.append(" * Entity type classes for ").append(sisoSpecificationTitleDate).append(" enumerations supporting <a href=\"https://github.com/open-dis/open-dis7-java\" target=\"open-dis7-java\">open-dis7-java</a> library.\n");
+                packageInfoBuilder.append(" * Definitions of shared values for world entities using type classes for ").append(sisoSpecificationTitleDate).append(" enumerations supporting the <a href=\"https://github.com/open-dis/open-dis7-java\" target=\"open-dis7-java\">open-dis7-java</a> library.\n");
                 packageInfoBuilder.append("\n");
                 packageInfoBuilder.append(" * <p> Online: NPS <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/tree/master/examples/src/OpenDis7Examples\" target=\"MV3500\">MV3500 Networked Simulation course examples</a> \n");
                 packageInfoBuilder.append(" * which includes links to <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/tree/master/specifications/README.md\" target=\"README.MV3500\">IEEE and SISO specification references</a> of interest. </p>\n");
@@ -613,26 +613,26 @@ public class GenerateEntityTypes
       String currentSpecificValue = new String();
       if (currentSpecific != null)
       {
-          currentSpecificName  = currentSpecific.toString() + " = ";
+          currentSpecificName  = fixName(currentSpecific.description) + " = ";
           currentSpecificValue = "<code>" + currentSpecific.value + "</code>";
       }
       String currentSubCategoryName  = new String(); // handle potential nulls
       String currentSubCategoryValue = new String();
       if (currentSubCategory != null)
       {
-          currentSubCategoryName  = currentSubCategory.toString() + " = ";
+          currentSubCategoryName  = fixName(currentSubCategory.description) + " = ";
           currentSubCategoryValue = "<code>" + currentSubCategory.value + "</code>";
       }
-      String contents = String.format(entitytypecommonTemplate,      data.pkg,
+      String contents = String.format(entitytypecommonTemplate,       data.pkg,
                                       data.countryNamePretty,         data.countryValue,
                                       data.entityDomainName,          data.entityDomainValue,
                                       data.entityKindNameDescription, data.entityKindValue,
-                                      currentCategory.toString(),     currentCategory.value,
+                                      currentCategory.description,    currentCategory.value,
                                       currentSubCategoryName,         currentSubCategoryValue,
                                       currentSpecificName,            currentSpecificValue,
                                       data.entityUid,
-                                      data.fullName,
                                       sisoSpecificationTitleDate,     
+                                      data.fullName,
                                       data.clsNm, data.clsNm, 
                                       data.countryName, 
                                       data.entityKindName, 
