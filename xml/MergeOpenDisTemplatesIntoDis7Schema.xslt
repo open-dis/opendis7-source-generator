@@ -308,10 +308,12 @@
                         <xsl:text> classes</xsl:text>
                         
                     </xsl:comment>
-                    <xsl:apply-templates select="//class">
-                        <xsl:sort select="@name[ends-with(@name,'Type')]" order="ascending"/>
-                        <xsl:sort select="@name[ends-with(@name,'Pdu')]"  order="ascending"/>
-                 <!--<xsl:sort select="not(ends-with(@name,'PduType') or ends-with(@name,'Pdu'))" order="ascending"/>
+                    <xsl:apply-templates select="/classes/class">
+                        <xsl:sort select="./@name[ends-with(.,'Pdu')]"  order="ascending"/>
+                        <xsl:sort select="./@name[ends-with(.,'Type')]" order="ascending"/>
+                 <!--
+                        <xsl:sort select="@name" order="ascending"/>
+                        <xsl:sort select="not(ends-with(@name,'PduType') or ends-with(@name,'Pdu'))" order="ascending"/>
                         <xsl:sort select="@name[not(contains(.,'Family'))]" order="ascending"/>
                         <xsl:sort select="@name[    contains(.,'Family') ]"/>-->
                     </xsl:apply-templates>
