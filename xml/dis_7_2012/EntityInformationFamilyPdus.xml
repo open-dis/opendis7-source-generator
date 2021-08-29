@@ -50,7 +50,7 @@
             <classRef name="DeadReckoningParameters"/>
         </attribute>
 
-        <attribute name="marking" comment="characters that can be used for debugging, or to draw unique strings on the side of entities in the world">
+        <attribute name="marking" comment="11 characters that can be used for entity identifiication, debugging, or to draw unique strings on the side of entities in the world">
             <classRef name="EntityMarking"/>
         </attribute>
  
@@ -221,7 +221,7 @@
             <primitive type="float32"/>
         </attribute>
 
-        <attribute name="marking" comment="characters that can be used for debugging, or to draw unique strings on the side of entities in the world">
+        <attribute name="marking" comment="11 characters that can be used for entity identifiication, debugging, or to draw unique strings on the side of entities in the world">
             <primitivelist length="12" couldBeString="true" fixedlength="true">
                 <primitive type="uint8"/>
             </primitivelist>

@@ -1049,7 +1049,7 @@ dB and RPM)"/>
     </class>
 
     <class name="EntityMarking" inheritsFrom="root" 
-           comment="Specifies the character set used inthe first byte, followed by 11 characters of text data. Section 6.29">
+           comment="Specifies the character set used in the first byte, followed by 11 characters of text data. Section 6.29">
             
         <attribute name="characterSet" comment="The character set">
             <sisoenum type="EntityMarkingCharacterSet" comment="uid 45"/>
