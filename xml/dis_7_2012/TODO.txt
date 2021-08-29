@@ -1,7 +1,5 @@
 TODO
 
-1. Add, integrate root element DIS
+1. Handle autogeneration of VariableDatumType
 
-2. Handle VariableDatumType
-
-3. Add id values for each PDU and PduType
+2. Add id values for each PDU and PduType
