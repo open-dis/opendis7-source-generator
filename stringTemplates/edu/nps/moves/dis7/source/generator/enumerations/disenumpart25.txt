@@ -33,18 +33,20 @@
       return %s;
     }
 
-    /** provide enumeration for a given value
-     * @param i integer value of interest
+    /** 
+     * Provide enumeration for a given value
+     * @param value integer value of interest
      * @return enumeration corresponding to numeric value
      */
-    public static %s getEnumForValue(int i)
+    public static %s getEnumForValue(int value)
     {
-       for(%s val: %s.values()) {
-          if(val.getValue()==i)
-              return val;
+       for (%s nextEnum : %s.values())
+       {
+          if (nextEnum.getValue() == value)
+              return nextEnum;
        }
        System.out.flush(); // ensure contiguous console outputs
-       System.err.println("No enumeration found for value " + i + " of enumeration %s");
+       System.err.println("No corresponding enumeration found for value " + value + " of enum %s");
        System.err.flush(); // ensure contiguous console outputs
        return null;
     }
