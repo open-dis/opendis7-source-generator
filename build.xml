@@ -133,14 +133,14 @@
     </target>
     
     <target name="clean.pduLogs" description="clean recorded pduLog files">
-        <delete verbose="true">
+        <delete verbose="true" failonerror="false">
             <fileset dir="pduLog">
                 <include name="*.dislog"/>
             </fileset>
         </delete>
     </target>
 
-    <target name="clean.build" depends="clean,clean.generated-jars-javadoc,clean.generated-source">
+    <target name="clean.build" depends="clean.generated-jars-javadoc,clean.generated-source,clean.pduLogs">
     </target>
 
     <target name="clean.generated-jars-javadoc">
