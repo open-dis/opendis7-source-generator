@@ -660,6 +660,9 @@
                 <pathelement path="lib/commons-io-2.6.jar"/>
             </classpath>
         </java>
+        <echo message="*** delete problem classes replaced by manually tuned files in src-specialcase"/>
+        <delete verbose="true" file="src-generated\java\edu\nps\moves\dis7\pdus\SignalPdu.java"/>
+        <delete verbose="true" file="src-generated\java\edu\nps\moves\dis7\pdus\IntercomSignalPdu.java"/>
         
         <javac destdir="build/classes"
                 debug="true"
