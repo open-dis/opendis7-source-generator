@@ -103,7 +103,7 @@ public class GenerateEntityTypes
             packageInfoBuilder.append(" * Entity type utility factory for ").append(sisoSpecificationTitleDate).append(" typed enumeration classes supporting <a href=\"https://github.com/open-dis/open-dis7-java\" target=\"open-dis7-java\">open-dis7-java</a> library.\n");
             packageInfoBuilder.append("\n");
             packageInfoBuilder.append(" * <p> Online: NPS <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/tree/master/examples/src/OpenDis7Examples\" target=\"MV3500\">MV3500 Networked Simulation course examples</a> \n");
-            packageInfoBuilder.append(" * which includes links to <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/tree/master/specifications/README.md\" target=\"README.MV3500\">IEEE and SISO specification references</a> of interest. </p>\n");
+            packageInfoBuilder.append(" * which include links to <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/tree/master/specifications/README.md\" target=\"README.MV3500\">IEEE and SISO specification references</a> of interest. </p>\n");
             packageInfoBuilder.append(" * <ul>\n");
             packageInfoBuilder.append(" *      <li> <a href=\"https://www.sisostds.org/DigitalLibrary.aspx?Command=Core_Download&EntryId=46172\" target=\"SISO-REF-010\" >SISO-REF-010-2020 Reference for Enumerations for Simulation Interoperability</a> </li> \n");
             packageInfoBuilder.append(" *      <li> <a href=\"https://www.sisostds.org/DigitalLibrary.aspx?Command=Core_Download&EntryId=47284\" target=\"SISO-REF-10.1\">SISO-REF-10.1-2019 Reference for Enumerations for Simulation, Operations Manual</a></li> </ul>\n");
@@ -580,7 +580,7 @@ public class GenerateEntityTypes
                 packageInfoBuilder.append(" * Definitions of shared values for world entities using type classes for ").append(sisoSpecificationTitleDate).append(" enumerations supporting the <a href=\"https://github.com/open-dis/open-dis7-java\" target=\"open-dis7-java\">open-dis7-java</a> library.\n");
                 packageInfoBuilder.append("\n");
                 packageInfoBuilder.append(" * <p> Online: NPS <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/tree/master/examples/src/OpenDis7Examples\" target=\"MV3500\">MV3500 Networked Simulation course examples</a> \n");
-                packageInfoBuilder.append(" * which includes links to <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/tree/master/specifications/README.md\" target=\"README.MV3500\">IEEE and SISO specification references</a> of interest. </p>\n");
+                packageInfoBuilder.append(" * which include links to <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/tree/master/specifications/README.md\" target=\"README.MV3500\">IEEE and SISO specification references</a> of interest. </p>\n");
                 packageInfoBuilder.append(" * <ul>\n");
                 packageInfoBuilder.append(" *      <li> <a href=\"https://www.sisostds.org/DigitalLibrary.aspx?Command=Core_Download&EntryId=46172\" target=\"SISO-REF-010\" >SISO-REF-010-2020 Reference for Enumerations for Simulation Interoperability</a> </li> \n");
                 packageInfoBuilder.append(" *      <li> <a href=\"https://www.sisostds.org/DigitalLibrary.aspx?Command=Core_Download&EntryId=47284\" target=\"SISO-REF-10.1\">SISO-REF-10.1-2019 Reference for Enumerations for Simulation, Operations Manual</a></li> </ul>\n");
@@ -616,12 +616,20 @@ public class GenerateEntityTypes
           currentSpecificName  = fixName(currentSpecific.description) + " = ";
           currentSpecificValue = "<code>" + currentSpecific.value + "</code>";
       }
+      else
+      {
+          currentSpecificValue  = "<code>(none)</code>"; // second of two entries to avoid whitespace
+      }
       String currentSubCategoryName  = new String(); // handle potential nulls
       String currentSubCategoryValue = new String();
       if (currentSubCategory != null)
       {
           currentSubCategoryName  = fixName(currentSubCategory.description) + " = ";
           currentSubCategoryValue = "<code>" + currentSubCategory.value + "</code>";
+      }
+      else
+      {
+          currentSubCategoryValue  = "<code>(none)</code>"; // second of two entries to avoid whitespace
       }
       String contents = String.format(entitytypecommonTemplate,       data.pkg,
                                       data.countryNamePretty,         data.countryValue,
