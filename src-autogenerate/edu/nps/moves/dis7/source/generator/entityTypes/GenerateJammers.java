@@ -22,8 +22,9 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 
 /**
- * GenerateOpenDis7JavaPackages.java created on Aug 6, 2019 
- MOVES Institute, Naval Postgraduate School (NPS), Monterey California USA https://www.nps.edu
+ * GenerateOpenDis7JavaPackages.java creates source code from SISO enumeration definitions.
+ * Created on Aug 6, 2019 by
+ * MOVES Institute, Naval Postgraduate School (NPS), Monterey California USA https://www.nps.edu
  *
  * @author Don McGregor, Mike Bailey and Don Brutzman
  * @version $Id$
@@ -148,7 +149,7 @@ public class GenerateJammers
     String description;
     String value;
 
-    String pkgFromDescription;
+    String packageFromDescription;
     String enumFromDescription;
     List<DescriptionElem> children = new ArrayList<>();
   }
@@ -460,7 +461,7 @@ public class GenerateJammers
   {
     String mangledDescription = fixName(elem);
     mangledDescription = makeUnique(mangledDescription, lis);
-    elem.pkgFromDescription = mangledDescription;
+    elem.packageFromDescription = mangledDescription;
     elem.enumFromDescription = mangledDescription.toUpperCase();
   }
 
@@ -471,7 +472,7 @@ public class GenerateJammers
       outer:
       {
         for (DescriptionElem hd : lis) {
-          if (hd.pkgFromDescription.equalsIgnoreCase(news))
+          if (hd.packageFromDescription.equalsIgnoreCase(news))
             break outer;
         }
         return news;

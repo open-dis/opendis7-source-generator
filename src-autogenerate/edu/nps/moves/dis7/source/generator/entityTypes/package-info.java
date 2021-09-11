@@ -1,5 +1,5 @@
 /**
- * Entity type generator classes supporting edu.nps.moves.dis7.source.generator library.
+ * Code generator classes supporting software production of entity types, jammers and object types to create the <code>edu.nps.moves.dis7</code> Java library.
  *
  * @see java.lang.Package
  * @see <a href="https://stackoverflow.com/questions/22095487/why-is-package-info-java-useful">https://stackoverflow.com/questions/22095487/why-is-package-info-java-useful</a>

@@ -21,10 +21,11 @@ import org.xml.sax.helpers.DefaultHandler;
 import java.util.List;
 
 /**
- * GenerateOpenDis7JavaPackages.java created on Aug 6, 2019 MOVES Institute, Naval Postgraduate School (NPS), Monterey California USA https://www.nps.edu
+ * GenerateOpenDis7JavaPackages creates source code from SISO enumeration definitions.
+ * Created on Aug 6, 2019 by MOVES Institute, Naval Postgraduate School (NPS), Monterey California USA https://www.nps.edu
  *
  * @author Don McGregor, Mike Bailey and Don Brutzman
- * @version $Id$
+ * @version $Id$by 
  */
 public class GenerateObjectTypes
 {
@@ -145,7 +146,7 @@ public class GenerateObjectTypes
   {
     String description;
 
-    String pkgFromDescription;
+    String packageFromDescription;
     String enumFromDescription;
     ArrayList<DescriptionElem> children = new ArrayList<>();
   }
@@ -496,7 +497,7 @@ public class GenerateObjectTypes
   {
     String mangledDescription = fixName(elem);
     mangledDescription = makeUnique(mangledDescription, lis);
-    elem.pkgFromDescription = mangledDescription;
+    elem.packageFromDescription = mangledDescription;
     elem.enumFromDescription = mangledDescription.toUpperCase();
   }
 
@@ -507,7 +508,7 @@ public class GenerateObjectTypes
       outer:
       {
         for (DescriptionElem hd : lis) {
-          if (hd.pkgFromDescription.equalsIgnoreCase(news))
+          if (hd.packageFromDescription.equalsIgnoreCase(news))
             break outer;
         }
         return news;
