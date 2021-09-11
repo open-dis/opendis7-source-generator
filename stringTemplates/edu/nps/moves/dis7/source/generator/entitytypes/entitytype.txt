@@ -11,7 +11,7 @@ abstract public class Base extends EntityType
     {
         setCountry(Country.%s);
         setEntityKind(EntityKind.%s);
-        setDomain(Domain.inst(%s.%s));
+        setDomain(Domain.createInstance(%s.%s));
     }
 }
 

@@ -6,6 +6,8 @@ import edu.nps.moves.dis7.pdus.*;
 import edu.nps.moves.dis7.enumerations.*;
 
 /**
+ * <p> Entity class <b><code>%s</code></b> collects multiple enumeration values together.
+ * Usage: create an instance of this class with <code>%s.createInstance()</code> or <code>new %s()</code>. </p>
  * <ul>
  *     <li> Country: %s = <code>%s</code>; </li>
  *     <li> Entity kind: %s = <code>%s</code>; </li>
@@ -14,16 +16,17 @@ import edu.nps.moves.dis7.enumerations.*;
  *     <li> SubCategory: %s %s; </li>
  *     <li> Specific: %s %s; </li>
  *     <li> Entity type uid: %s; </li>
- *     <li> Reference: <a href="https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/blob/master/specifications/README.md" target="_blank">%s</a>. </li>
+ *     <li> Online document reference: <a href="https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/blob/master/specifications/README.md" target="_blank">%s</a>. </li>
  * </ul>
  * <p> Full name: %s. </p>
- * @see Country
- * @see EntityKind
+ * @see Country#%s
+ * @see EntityKind#%s
  * @see Domain
- * @see Category
- * @see SubCategory
+ * @see %s
+%s
+%s
  */
-public class %s extends EntityType
+public final class %s extends EntityType
 {
     /** Default constructor */
     public %s()

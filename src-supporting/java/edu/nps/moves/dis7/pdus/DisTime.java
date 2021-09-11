@@ -77,7 +77,7 @@ public class DisTime
      * create a new instance for each thread.
      * return singleton instance of DisTime
      */
-   /* public static DisTime getInstance()
+   /* public static DisTime createInstance()
     {
         if (disTime == null) {
             disTime = new DisTime();
