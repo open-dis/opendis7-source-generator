@@ -5,8 +5,8 @@ This project provides a complete implementation of the IEEE DIS Protocol and
 associated enumerations that are used in the
 [open-dis7-java](https://github.com/open-dis/open-dis7-java) project.
 
-Recent project products include full Java support for all 72 DIS7 Protocol Data Units (PDUs)
-and all 27,000 SISO enumerations.
+Recent project products include full Java support for all 72 DISv7 Protocol Data Units (PDUs)
+and over 22,000 SISO-REF-010 enumerations.
 
 Additional testing and experimentation is performed in the NPS MOVES
 [Networked Graphics MV3500](https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500) course.
