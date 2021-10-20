@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 
 <!-- XML description file for the DIS-2012 (Final DIS version 7) protocol. Some classes require manual clean up and intervention. -->
-<!-- This is not an XML Schema!  It is a customized set of data-structure . -->
+<!-- This is not an XML Schema!  It is a customized set of data-structure definitions. -->
 
 <!-- This file is used by the XML protocol-generator, a fairly simple program that processes this XML file and generates
    a programming language source file, for example Java or C++. Almost all the work of writing a
