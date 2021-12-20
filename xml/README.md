@@ -4,8 +4,10 @@ Manually prepared [XML resources](dis_7_2012) are used for autogenerating classe
 Note that the simple XML provided in the data-structures directory is transformed 
 to build the final XML schema for DIS-XML validation.
 
-Subdirectories provide information that is converted into software classes.  
+Subdirectories provide information that is converted into software classes.
+
 a.  The [SISO](SISO) subdirectory provides selected assets from the Simulation Interoperability Standards Organization (SISO).
+
 b.  The [dis_7_2012](dis_7_2012) subdirectory provides data structures for each PDU and each contained data type.
 
 Now available:
