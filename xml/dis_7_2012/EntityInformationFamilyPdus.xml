@@ -38,7 +38,7 @@
             <classRef name="Vector3Double"/>
         </attribute>
 
-        <attribute name="entityOrientation" comment="describes the orientation of the entity, in euler angles">
+        <attribute name="entityOrientation" comment="describes the orientation of the entity, in euler angles with units of radians">
             <classRef name="EulerAngles"/>
         </attribute>
 
@@ -50,7 +50,7 @@
             <classRef name="DeadReckoningParameters"/>
         </attribute>
 
-        <attribute name="marking" comment="11 characters that can be used for entity identifiication, debugging, or to draw unique strings on the side of entities in the world">
+        <attribute name="marking" comment="11 characters that can be used for entity identification, debugging, or to draw unique strings on the side of entities in the world">
             <classRef name="EntityMarking"/>
         </attribute>
  
@@ -368,7 +368,7 @@
             <classRef name="Vector3Double"/>
         </attribute>
 
-        <attribute name="entityOrientation" comment="This field shall specify an entity's orientation and shall be represented by an Euler Angles record (see 6.2.33).">
+        <attribute name="entityOrientation" comment="This field shall specify an entity's orientation with units of radians and shall be represented by an Euler Angles record (see 6.2.33).">
             <classRef name="EulerAngles"/>
         </attribute>
 
