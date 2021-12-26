@@ -746,6 +746,7 @@
         <echo message="Both enumerations and PDUs are created by open-dis7-source-generator, with"/>
         <echo message="   PDU classes  packaged into open-dis7-pdus-*.jar         archives by open-dis7-java project and"/>
         <echo message="   enumerations packaged into open-dis7-enumerations-*.jar archives by open-dis7-source-generator."/>
+        <echo message="   Complete set packaged into open-dis7-full.jar           archive  by open-dis7-java project."/>
         
         <delete includeemptydirs="true" failonerror="false"><!-- verbose="true" -->
             <fileset dir="../open-dis7-java/src-generated" includes="**/*"/>
