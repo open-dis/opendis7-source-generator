@@ -4,16 +4,15 @@
  */
 package edu.nps.moves.dis7.source.generator.pdus;
 
-import java.util.*;
+import edu.nps.moves.dis7.source.generator.pdus.ClassAttribute.ClassAttributeType;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-
-import edu.nps.moves.dis7.source.generator.pdus.ClassAttribute.ClassAttributeType;
-import java.io.FileWriter;
+import java.util.*;
 
 /**
  * Given the input object, something of an abstract syntax tree, this generates a source code file in the Java language.
@@ -315,9 +314,121 @@ public class JavaGenerator extends Generator
 
         writeToStringMethod(pw, aClass);
         
+        if (aClass.getName().startsWith("EntityStatePdu"))
+            writeEntityStateUtilityMethods(pw, aClass);
+        
         pw.println("} // end of class");
         pw.flush();
         pw.close();
+    }
+    private void writeEntityStateUtilityMethods(PrintWriter pw, GeneratedClass aClass)
+    {
+        pw.println("    // EntityStateUtilityMethods");
+        pw.println();
+        
+        StringBuilder utilityBlock = new StringBuilder() 
+        // """multiline text block""" would be nice but that is JDK 14+
+        // https://stackoverflow.com/questions/878573/does-java-have-support-for-multiline-strings
+            .append("  /** Direction enumerations */\n")
+            .append("  public enum Direction\n")
+            .append("  {\n")
+            .append("      /** NORTH direction along Y axis */\n")
+            .append("      NORTH, \n")
+            .append("      /** NORTHEAST direction */\n")
+            .append("      NORTHEAST, \n")
+            .append("      /** EAST direction along X axis */\n")
+            .append("      EAST, \n")
+            .append("      /** SOUTHEAST direction */\n")
+            .append("      SOUTHEAST, \n")
+            .append("      /** SOUTH direction along -Y axis */\n")
+            .append("      SOUTH, \n")
+            .append("      /** SOUTHWEST direction */\n")
+            .append("      SOUTHWEST, \n")
+            .append("      /** WEST direction along -X axis */\n")
+            .append("      WEST, \n")
+            .append("      /** NORTHWEST direction */\n")
+            .append("      NORTHWEST\n")
+            .append("  }\n")
+            .append("\n")
+            .append("  /** Utility method to set entity linear velocity using speed and direction\n")
+            .append("    * @param speed in meters/second\n")
+            .append("    * @param direction using Directions enumerations\n")
+            .append("    * @see Direction\n")
+            .append("    * @return same object to permit progressive setters */\n")
+            .append("  public final EntityStatePdu setEntityLinearVelocity (float speed, Direction direction)\n")
+            .append("  {\n")
+            .append("      float xFactor = 0.0f;\n")
+            .append("      float yFactor = 0.0f;\n")
+            .append("      switch (direction)\n")
+            .append("      {\n")
+            .append("          case NORTH:\n")
+            .append("              xFactor =  0.0f;   yFactor =  1.0f;\n")
+            .append("              break;\n")
+            .append("              \n")
+            .append("          case EAST:\n")
+            .append("              xFactor =  1.0f;   yFactor =  0.0f;\n")
+            .append("              break;\n")
+            .append("              \n")
+            .append("          case SOUTH:\n")
+            .append("              xFactor =  0.0f;   yFactor = -1.0f;\n")
+            .append("              break;\n")
+            .append("              \n")
+            .append("          case WEST:\n")
+            .append("              xFactor = -1.0f;   yFactor =  0.0f;\n")
+            .append("              break;\n")
+            .append("          case NORTHEAST:\n")
+            .append("              xFactor =  0.7071f;   yFactor =  0.7071f;\n")
+            .append("              break;\n")
+            .append("              \n")
+            .append("          case SOUTHEAST:\n")
+            .append("              xFactor = -0.7071f;   yFactor =  0.7071f;\n")
+            .append("              break;\n")
+            .append("              \n")
+            .append("          case SOUTHWEST:\n")
+            .append("              xFactor = -0.7071f;   yFactor = -0.7071f;\n")
+            .append("              break;\n")
+            .append("              \n")
+            .append("          case NORTHWEST:\n")
+            .append("              xFactor =  0.7071f;   yFactor = -0.7071f;\n")
+            .append("              break;\n")
+            .append("          default:\n")
+            .append("              System.err.println(\"*** unexpected internal error, encountered illegal EntityStatePdu Direction\");\n")
+            .append("              \n")
+            .append("      }\n")
+            .append("      Vector3Float newVelocity = new Vector3Float().setX(xFactor*speed).setY(yFactor*speed).setZ(getEntityLinearVelocity().z);\n")
+            .append("      setEntityLinearVelocity(newVelocity);\n")
+            .append("      return this;\n")
+            .append("    }\n")
+            .append("   /** Marking utility to clear character values\n")
+            .append("    * @return same object to permit progressive setters */\n")
+            .append("    public EntityStatePdu clearMarking()\n")
+            .append("   {\n")
+            .append("       byte[] emptyByteArray = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};\n")
+            .append("       marking.setCharacters(emptyByteArray);\n")
+            .append("       return this;\n")
+            .append("   }\n")
+            .append("    /** Marking utility to set character values, 11 characters maximum\n")
+            .append("    *@param newMarking new 11-character string to assign as marking value\n")
+            .append("    * @return same object to permit progressive setters */\n")
+            .append("   public EntityStatePdu setMarking(String newMarking)\n")
+            .append("   {\n")
+            .append("       if ((newMarking == null) || newMarking.isEmpty())\n")
+            .append("           clearMarking();\n")
+            .append("       else if (newMarking.length() > 11)\n")
+            .append("           System.err.println (\"*** marking '\" + newMarking + \"' is greater than 11 characters, truncating\");\n")
+            .append("       newMarking = String.format(\"%11s\", newMarking);\n")
+            .append("       marking.setCharacters(newMarking.getBytes());\n")
+            .append("           \n")
+            .append("       return this;\n")
+            .append("   }\n")
+            .append("   /** Marking utility to get character values as a string\n")
+            .append("    * @return 11-character String value corresponding to marking */\n")
+            .append("   public String getMarkingString()\n")
+            .append("   {\n")
+            .append("       return new String(marking.getCharacters());\n")
+            .append("   }\n");
+        pw.println(utilityBlock.toString());
+        pw.println();
     }
 
   /*  String domainTemplate1;
