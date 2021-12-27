@@ -350,6 +350,7 @@ public class JavaGenerator extends Generator
             .append("      NORTHWEST\n")
             .append("  }\n")
             .append("\n")
+                
             .append("  /** Utility method to set entity linear velocity using speed and direction\n")
             .append("    * @param speed in meters/second\n")
             .append("    * @param direction using Directions enumerations\n")
@@ -399,6 +400,32 @@ public class JavaGenerator extends Generator
             .append("      setEntityLinearVelocity(newVelocity);\n")
             .append("      return this;\n")
             .append("    }\n")
+                
+            .append("   /** Setter for {@link EntityStatePdu#entityLocation}\n")
+            .append("     * @param x location\n")
+            .append("     * @param y location\n")
+            .append("     * @param z location\n")
+            .append("     * @return same object to permit progressive setters */\n")
+            .append("   public EntityStatePdu setEntityLocation(double x, double y, double z)\n")
+            .append("   {\n")
+            .append("       // TODO autogenerate such utility constructors\n")
+            .append("       entityLocation = new Vector3Double().setX(x).setY(y).setZ(z);\n")
+            .append("       return this;\n")
+            .append("   }        \n")
+        
+            .append("   /** Advance location using linear velocities for a single timestep\n")
+            .append("    * @param timestep duration of travel\n")
+            .append("    * @return same object to permit progressive setters */\n")
+            .append("    public EntityStatePdu advanceEntityLocation(double timestep)\n")
+            .append("    {\n")
+            .append("        Vector3Double location = getEntityLocation();\n")
+            .append("        Vector3Float  velocity = getEntityLinearVelocity();\n")
+            .append("        setEntityLocation(location.getX() + velocity.getX() * timestep,\n")
+            .append("                          location.getY() + velocity.getY() * timestep,\n")
+            .append("                          location.getZ() + velocity.getZ() * timestep);\n")
+            .append("       return this;\n")
+            .append("    }\n")
+                
             .append("   /** Marking utility to clear character values\n")
             .append("    * @return same object to permit progressive setters */\n")
             .append("    public EntityStatePdu clearMarking()\n")
@@ -407,6 +434,7 @@ public class JavaGenerator extends Generator
             .append("       marking.setCharacters(emptyByteArray);\n")
             .append("       return this;\n")
             .append("   }\n")
+                
             .append("    /** Marking utility to set character values, 11 characters maximum\n")
             .append("    *@param newMarking new 11-character string to assign as marking value\n")
             .append("    * @return same object to permit progressive setters */\n")
@@ -421,12 +449,16 @@ public class JavaGenerator extends Generator
             .append("           \n")
             .append("       return this;\n")
             .append("   }\n")
+                
             .append("   /** Marking utility to get character values as a string\n")
             .append("    * @return 11-character String value corresponding to marking */\n")
             .append("   public String getMarkingString()\n")
             .append("   {\n")
             .append("       return new String(marking.getCharacters());\n")
             .append("   }\n");
+        
+        // TODO downcaset Vector3Double to Vector3Float
+        
         pw.println(utilityBlock.toString());
         pw.println();
     }
