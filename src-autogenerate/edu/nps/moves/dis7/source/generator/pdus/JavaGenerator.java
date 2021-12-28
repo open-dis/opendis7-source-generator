@@ -326,7 +326,7 @@ public class JavaGenerator extends Generator
         pw.println("    // EntityStateUtilityMethods");
         pw.println();
         
-        StringBuilder utilityBlock = new StringBuilder() 
+        StringBuilder utilitySourceCodeBlock = new StringBuilder() 
         // """multiline text block""" would be nice but that is JDK 14+
         // https://stackoverflow.com/questions/878573/does-java-have-support-for-multiline-strings
             .append("  /** Direction enumerations */\n")
@@ -459,7 +459,7 @@ public class JavaGenerator extends Generator
         
         // TODO downcaset Vector3Double to Vector3Float
         
-        pw.println(utilityBlock.toString());
+        pw.println(utilitySourceCodeBlock.toString());
         pw.println();
     }
 
