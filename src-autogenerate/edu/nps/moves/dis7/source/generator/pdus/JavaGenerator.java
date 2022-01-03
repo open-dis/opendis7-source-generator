@@ -290,6 +290,8 @@ public class JavaGenerator extends Generator
         pw.flush();
         writeConstructor(pw, aClass);
         pw.flush();
+        writeCopyMethod(pw, aClass);
+        pw.flush();
         writeGetMarshalledSizeMethod(pw, aClass);
         pw.flush();
         writeGettersAndSetters(pw, aClass);
@@ -425,6 +427,20 @@ public class JavaGenerator extends Generator
             .append("                          location.getZ() + velocity.getZ() * timestep);\n")
             .append("       return this;\n")
             .append("    }\n")
+
+            .append("    /** Setter for {@link EntityStatePdu#entityOrientation}\n")
+            .append("      * @param phi new value of interest\n")
+            .append("      * @param theta new value of interest\n")
+            .append("      * @param psi new value of interest\n")
+            .append("      * @return same object to permit progressive setters */\n")
+            .append("    public EntityStatePdu setEntityOrientation(float phi, float theta, float psi)\n")
+            .append("    {\n")
+            .append("        // TODO autogenerate such utility constructors\n")
+            .append("        EulerAngles pEntityOrientation = new EulerAngles();\n")
+            .append("        pEntityOrientation = pEntityOrientation.setPhi(phi).setTheta(theta).setPsi(psi);\n")
+            .append("        entityOrientation = pEntityOrientation;\n")
+            .append("        return this;\n")
+            .append("    }\n")
                 
             .append("   /** Marking utility to clear character values\n")
             .append("    * @return same object to permit progressive setters */\n")
@@ -545,6 +561,11 @@ public class JavaGenerator extends Generator
             aPackage = tokenizer.nextToken();
             pw.println("import " + aPackage + ";");
         }
+        if (aClass.getName().endsWith("Pdu") && !aClass.getName().equals(("Pdu"))&& !aClass.isAbstract())
+        {
+            pw.println("import java.nio.ByteBuffer;"); // used by copy() method
+//            pw.println("import edu.nps.moves.dis7.utilities.PduFactory;"); // used by copy() method
+        }
         pw.println();
     }
 
@@ -621,9 +642,9 @@ public class JavaGenerator extends Generator
                     //if (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.STATIC_IVAR) {
                     attributeType = types.getProperty(anAttribute.getType());
                     String value = anAttribute.getDefaultValue();
-                    pw.print("   /** Default static instance variable */\n");
-                    pw.print("   public static " + attributeType + "  " + anAttribute.getName());
-                    pw.print(" = " + value + ";\n");
+                    pw.print  ("   /** Default static instance variable */\n");
+                    pw.print  ("   public static " + attributeType + "  " + anAttribute.getName());
+                    pw.println(" = " + value + ";");
                     break;
 
                     // This attribute is a primitive. 
@@ -643,7 +664,7 @@ public class JavaGenerator extends Generator
 
                     String defaultValue = anAttribute.getDefaultValue();
 
-                    pw.print("   " + fieldaccess + " " + attributeType + "  " + anAttribute.getName());
+                    pw.print("   " + fieldaccess + " " + attributeType + " " + anAttribute.getName());
                     if (defaultValue != null)
                         pw.print(" = (" + attributeType + ")" + defaultValue); // Needs cast to primitive type for float/double issues
                     pw.println(";\n");
@@ -752,6 +773,34 @@ public class JavaGenerator extends Generator
                     
             }
         } // End of loop through ivars
+    }
+  
+    private void writeCopyMethod(PrintWriter pw, GeneratedClass aClass)
+    {
+        if (aClass.getName().endsWith("Pdu") && !aClass.getName().equals(("Pdu"))&& !aClass.isAbstract())
+        {
+            pw.println("/** copy method creates a deep copy of current object  ");
+            pw.println(" * @return deep copy of PDU */");
+            pw.println(" public " + aClass.getName() + " copy()");
+            pw.println(" {");
+//            pw.println("     PduFactory pduFactory = new PduFactory();");
+            pw.println("     " + aClass.getName() + " newCopy = new " + aClass.getName() + "();");
+            pw.println("     ByteBuffer byteBuffer = ByteBuffer.allocate(200);");
+            pw.println("     try");
+            pw.println("     {");
+            pw.println("         this.marshal(byteBuffer);");
+            pw.println("         newCopy.unmarshal(byteBuffer);");
+            pw.println("     }");
+            pw.println("     catch (Exception e)");
+            pw.println("     {");
+            pw.println("         System.out.println(\"" + aClass.getName() + " deep copy() marshall/unmarshall exception \" + e.getMessage());");
+            pw.println("         e.printStackTrace();");
+            pw.println("         System.exit(-1);");
+            pw.println("     }");
+            pw.println("     return newCopy;");
+            pw.println(" }");
+        }
+        return;
     }
   
     private void writeConstructor(PrintWriter pw, GeneratedClass aClass)
@@ -1971,8 +2020,9 @@ public class JavaGenerator extends Generator
         pw.println(" @Override");
         pw.println(" public String toString()");
         pw.println(" {");
-        pw.println("    StringBuilder sb = new StringBuilder();");
-        pw.println("    sb.append(getClass().getSimpleName()).append(\":\\n\");\n");
+        pw.println("    StringBuilder sb  = new StringBuilder();");
+        pw.println("    StringBuilder sb2 = new StringBuilder();");
+        pw.println("    sb.append(getClass().getSimpleName());");
 
         ArrayList<ClassAttribute> objlists = new ArrayList<>();
 
@@ -2001,32 +2051,54 @@ public class JavaGenerator extends Generator
   
     private void writePrimitiveList(PrintWriter pw, ClassAttribute attr)
     {
-        pw.print("    sb.append(\" ");
-        pw.print(attr.getName());
-        pw.println(": \").append(\"\\n\");");
-        pw.print("    sb.append(Arrays.toString(");
-        pw.print(attr.getName());
-        pw.println(")).append(\"\\n\");");
+        pw.print  ("    sb.append(\" ");
+        pw.print  (attr.getName());
+        pw.println(":\");");
+        pw.print  ("    sb.append(Arrays.toString(");
+        pw.print  (attr.getName());
+        pw.println(")); // writePrimitiveList");
+        
+//      pw.print("    sb.append(\" ");
+//      pw.print(attr.getName());
+//      pw.println(": \").append(\"\\n\");");
+//      pw.print("    sb.append(Arrays.toString(");
+//      pw.print(attr.getName());
+//      pw.println(")).append(\"\\n\");");
     }
   
     private void writeList(PrintWriter pw, ClassAttribute attr)
     {
-        pw.print("    sb.append(\" ");
-        pw.print(attr.getName());
-        pw.println(": \").append(\"\\n\");");
+        pw.print  ("    sb.append(\" ");
+        pw.print  (attr.getName());
+        pw.println(": \");");
+
         pw.print("    ");
         pw.print(attr.getName());
-        pw.println(".forEach(r->{ sb.append(r.getClass().getSimpleName()).append(\": \").append(r).append(\"\\n\");});");
+        pw.println(".forEach(r->{ sb2.append(\" \").append(r);}); // writeList");
+        pw.println("    sb.append(sb2.toString().trim());");
+        pw.println("    sb2.delete(0,sb2.length()-1); // reset");
     
+//      pw.print("    sb.append(\" ");
+//      pw.print(attr.getName());
+//      pw.println(": \").append(\"\\n\");");
+//      pw.print("    ");
+//      pw.print(attr.getName());
+//      pw.println(".forEach(r->{ sb.append(r.getClass().getSimpleName()).append(\": \").append(r).append(\"\\n\");});");
     }
     
     private void writeOneToString(PrintWriter pw, ClassAttribute attr)
     {
-        pw.print("    sb.append(\" ");
-        pw.print(attr.getName());
-        pw.print(": \").append(");
-        pw.print(attr.getName());
-        pw.println(").append(\"\\n\");");
+        pw.print  ("    sb.append(\" ");
+        pw.print  (attr.getName());
+        pw.print(":\").append(");
+        pw.print  (attr.getName());
+        pw.println("); // writeOneToString");
+        
+//        pw.print("    sb.append(\" ");
+//        pw.print(attr.getName());
+//        pw.print(": \").append(");
+//        pw.print(attr.getName());
+//        pw.println(").append(\"\\n\");");
     }
    
     /** 
