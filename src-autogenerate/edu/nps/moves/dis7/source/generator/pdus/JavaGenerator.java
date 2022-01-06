@@ -316,16 +316,57 @@ public class JavaGenerator extends Generator
 
         writeToStringMethod(pw, aClass);
         
-        if (aClass.getName().startsWith("EntityStatePdu"))
-            writeEntityStateUtilityMethods(pw, aClass);
+        if      (aClass.getName().equals("Pdu"))
+                 writePduUtilityMethods(pw, aClass);
+        else if (aClass.getName().startsWith("EntityStatePdu"))
+                 writeEntityStateUtilityMethods(pw, aClass);
         
         pw.println("} // end of class");
         pw.flush();
         pw.close();
     }
+    /** Additional methods of interest */
+    private void writePduUtilityMethods(PrintWriter pw, GeneratedClass aClass)
+    {
+        pw.println("    // writePduUtilityMethods");
+        pw.println();
+        
+        StringBuilder utilitySourceCodeBlock = new StringBuilder()
+            .append(" /**\n")
+            .append("  * Whether or not timestamp for this Pdu occurs after timestamp as another Pdu.\n")
+            .append("  * @param pdu2 second Pdu for comparison\n")
+            .append("  * @return whether timestamp for this Pdu occurs later\n")
+            .append("  */\n")
+            .append("  public boolean occursAfter(Pdu pdu2)\n")
+            .append("  {\n")
+            .append("     return (getTimestamp() < pdu2.getTimestamp());\n")
+            .append("  }\n")
+            .append(" /**\n")
+            .append("  * Whether or not timestamp for this Pdu occurs before timestamp as another Pdu.\n")
+            .append("  * @param pdu2 second Pdu for comparison\n")
+            .append("  * @return whether timestamp for this Pdu occurs earlier\n")
+            .append("  */\n")
+            .append("  public boolean occursBefore(Pdu pdu2)\n")
+            .append("  {\n")
+            .append("     return (getTimestamp() < pdu2.getTimestamp());\n")
+            .append("  }\n")
+            .append(" /**\n")
+            .append("  * Whether or not this Pdu occurs at same timestamp as another Pdu.\n")
+            .append("  * @param pdu2 second Pdu for comparison\n")
+            .append("  * @return whether timestamps are identical for both Pdus\n")
+            .append("  */\n")
+            .append("  public boolean occursSameTime(Pdu pdu2)\n")
+            .append("  {\n")
+            .append("     return (getTimestamp() == pdu2.getTimestamp());\n")
+            .append("  }\n");
+        
+        pw.println(utilitySourceCodeBlock.toString());
+        pw.println();
+    }
+    /** Additional methods of interest */
     private void writeEntityStateUtilityMethods(PrintWriter pw, GeneratedClass aClass)
     {
-        pw.println("    // EntityStateUtilityMethods");
+        pw.println("    // writeEntityStateUtilityMethods");
         pw.println();
         
         StringBuilder utilitySourceCodeBlock = new StringBuilder() 
