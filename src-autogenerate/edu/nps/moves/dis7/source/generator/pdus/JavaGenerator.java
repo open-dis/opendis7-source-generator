@@ -818,15 +818,23 @@ public class JavaGenerator extends Generator
   
     private void writeCopyMethod(PrintWriter pw, GeneratedClass aClass)
     {
+        int BYTE_BUFFER_SIZE = 400; // TODO what is expected max buffer size?
+        
         if (aClass.getName().endsWith("Pdu") && !aClass.getName().equals(("Pdu"))&& !aClass.isAbstract())
         {
-            pw.println("/** copy method creates a deep copy of current object  ");
+            pw.println("/** copy method creates a deep copy of current object using preferred marshalling method");
             pw.println(" * @return deep copy of PDU */");
             pw.println(" public " + aClass.getName() + " copy()");
             pw.println(" {");
+            pw.println("     return copyByteBuffer();");
+            pw.println(" }");
+            pw.println("/** copy method creates a deep copy of current object using ByteBuffer methods ");
+            pw.println(" * @return deep copy of PDU */");
+            pw.println(" public " + aClass.getName() + " copyByteBuffer()");
+            pw.println(" {");
 //            pw.println("     PduFactory pduFactory = new PduFactory();");
             pw.println("     " + aClass.getName() + " newCopy = new " + aClass.getName() + "();");
-            pw.println("     ByteBuffer byteBuffer = ByteBuffer.allocate(200);");
+            pw.println("     ByteBuffer byteBuffer = ByteBuffer.allocate(" + BYTE_BUFFER_SIZE + ");");
             pw.println("     try");
             pw.println("     {");
             pw.println("         this.marshal(byteBuffer);");
@@ -834,12 +842,32 @@ public class JavaGenerator extends Generator
             pw.println("     }");
             pw.println("     catch (Exception e)");
             pw.println("     {");
-            pw.println("         System.out.println(\"" + aClass.getName() + " deep copy() marshall/unmarshall exception \" + e.getMessage());");
+            pw.println("         System.out.println(\"" + aClass.getName() + " deep copy() marshall/unmarshall ByteBuffer exception \" + e.getMessage());");
             pw.println("         e.printStackTrace();");
             pw.println("         System.exit(-1);");
             pw.println("     }");
             pw.println("     return newCopy;");
             pw.println(" }");
+//            pw.println("/** copy method creates a deep copy of current object using... ");
+//            pw.println(" * @return deep copy of PDU */");
+//            pw.println(" public " + aClass.getName() + " copyDOS()");
+//            pw.println(" {");
+////            pw.println("     PduFactory pduFactory = new PduFactory();");
+//            pw.println("     " + aClass.getName() + " newCopy = new " + aClass.getName() + "();");
+//            pw.println("     DataOutputStream dos = new DataOutputStream(new ByteArrayOutputStream());");
+//            pw.println("     try");
+//            pw.println("     {");
+//            pw.println("         this.marshal(dos);");
+//            pw.println("         newCopy.unmarshal(dos);");
+//            pw.println("     }");
+//            pw.println("     catch (Exception e)");
+//            pw.println("     {");
+//            pw.println("         System.out.println(\"" + aClass.getName() + " deep copy() marshall/unmarshall DataOutputStream exception \" + e.getMessage());");
+//            pw.println("         e.printStackTrace();");
+//            pw.println("         System.exit(-1);");
+//            pw.println("     }");
+//            pw.println("     return newCopy;");
+//            pw.println(" }");
         }
         return;
     }
