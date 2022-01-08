@@ -605,7 +605,7 @@ public class JavaGenerator extends Generator
         if (aClass.getName().endsWith("Pdu") && !aClass.getName().equals(("Pdu"))&& !aClass.isAbstract())
         {
             pw.println("import java.nio.ByteBuffer;"); // used by copy() method
-//            pw.println("import edu.nps.moves.dis7.utilities.PduFactory;"); // used by copy() method
+//          pw.println("import edu.nps.moves.dis7.utilities.PduFactory;"); // not available for copy() method, in different package
         }
         pw.println();
     }
@@ -832,7 +832,8 @@ public class JavaGenerator extends Generator
             pw.println(" * @return deep copy of PDU */");
             pw.println(" public " + aClass.getName() + " copyByteBuffer()");
             pw.println(" {");
-//            pw.println("     PduFactory pduFactory = new PduFactory();");
+//          pw.println("     PduFactory pduFactory = new PduFactory();");
+//          pw.println("     EntityStatePdu newCopy = pduFactory.make" + aClass.getName() + "();");
             pw.println("     " + aClass.getName() + " newCopy = new " + aClass.getName() + "();");
             pw.println("     ByteBuffer byteBuffer = ByteBuffer.allocate(" + BYTE_BUFFER_SIZE + ");");
             pw.println("     try");
@@ -1092,7 +1093,14 @@ public class JavaGenerator extends Generator
                     pw.println("/** Getter for {@link "+aClass.getName()+"#"+anAttribute.getName()+"}");
                     pw.println("  * @return value of interest */");
                     pw.println("public " + anAttribute.getType() + " get" + this.initialCap(anAttribute.getName()) + "()");
-                    pw.println("{\n    return " + anAttribute.getName() + "; \n}");
+                    pw.println("{");
+                    if (anAttribute.listIsClass())
+                    {
+                    pw.println("    if (" + anAttribute.getName() + " == null)");
+                    pw.println("        " + anAttribute.getName() + " = new " + aClass.getName() + "(); // ensure initial object present");
+                    }
+                    pw.println("    return " + anAttribute.getName() + ";");
+                    pw.println("}\n");
                     pw.println();
                     break;
                     
