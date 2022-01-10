@@ -290,7 +290,7 @@ public class JavaGenerator extends Generator
         pw.flush();
         writeConstructor(pw, aClass);
         pw.flush();
-        writeCopyMethod(pw, aClass);
+        writeCopyMethods(pw, aClass);
         pw.flush();
         writeGetMarshalledSizeMethod(pw, aClass);
         pw.flush();
@@ -602,7 +602,11 @@ public class JavaGenerator extends Generator
             aPackage = tokenizer.nextToken();
             pw.println("import " + aPackage + ";");
         }
-        if (aClass.getName().endsWith("Pdu") && !aClass.getName().equals(("Pdu"))&& !aClass.isAbstract())
+        if (aClass.getName().equals(("Pdu")))
+        {
+            pw.println("import edu.nps.moves.dis7.utilities.PduFactory;");
+        }
+        else if (aClass.getName().endsWith("Pdu") && !aClass.getName().equals(("Pdu"))&& !aClass.isAbstract())
         {
             pw.println("import java.nio.ByteBuffer;"); // used by copy() method
 //          pw.println("import edu.nps.moves.dis7.utilities.PduFactory;"); // not available for copy() method, in different package
@@ -674,7 +678,7 @@ public class JavaGenerator extends Generator
             }
             String attributeType;
             int listLength;
-            String clsnm;
+            String className;
             
             String fieldaccess = "protected"; // allow subclassing anAttribute.isHidden()? "private":"protected";
             
@@ -762,17 +766,17 @@ public class JavaGenerator extends Generator
                     break;
 
 //            if((anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.SISO_ENUM)) {
-//                String clsnm = anAttribute.getType();
+//                String className = anAttribute.getType();
 //                if(anAttribute.getComment() != null)
 //                    pw.println("   /** " + anAttribute.getComment() + " */");
 //                if(anAttribute.getDefaultValue() == null) 
-//                    pw.println("   protected "+ clsnm + " "+ anAttribute.getName() + ";\n");
+//                    pw.println("   protected "+ className + " "+ anAttribute.getName() + ";\n");
 //                else
-//                    pw.println("   protected "+ clsnm + " "+ anAttribute.getName() + " = " + anAttribute.getDefaultValue() + ";\n");
+//                    pw.println("   protected "+ className + " "+ anAttribute.getName() + " = " + anAttribute.getDefaultValue() + ";\n");
 //
 //            }
                 case SISO_ENUM:
-                    clsnm = anAttribute.getType();
+                    className = anAttribute.getType();
                     if ((anAttribute.getComment() != null) && !anAttribute.getComment().trim().isEmpty())
                     {
                         pw.println("   /** " + anAttribute.getComment() + " */");
@@ -780,13 +784,13 @@ public class JavaGenerator extends Generator
                     else pw.println("   /** " + anAttribute.getName() + " is an undescribed parameter... */");
 
                     if (anAttribute.getDefaultValue() == null)
-                        pw.println("   " + fieldaccess + " " + clsnm + " " + anAttribute.getName() + " = " + clsnm + ".values()[0];\n");
+                        pw.println("   " + fieldaccess + " " + className + " " + anAttribute.getName() + " = " + className + ".values()[0];\n");
                     else
-                        pw.println("   " + fieldaccess + " " + clsnm + " " + anAttribute.getName() + " = " + anAttribute.getDefaultValue() + ";\n");
+                        pw.println("   " + fieldaccess + " " + className + " " + anAttribute.getName() + " = " + anAttribute.getDefaultValue() + ";\n");
                     break;
 
                 case SISO_BITFIELD:
-                    clsnm = anAttribute.getType();
+                    className = anAttribute.getType();
                     if ((anAttribute.getComment() != null) && !anAttribute.getComment().trim().isEmpty())
                     {
                         pw.println("   /** " + anAttribute.getComment() + " */");
@@ -794,9 +798,9 @@ public class JavaGenerator extends Generator
                     else pw.println("   /** " + anAttribute.getName() + " is an undescribed parameter... */");
 
                     if (anAttribute.getDefaultValue() == null)
-                        pw.println("   " + fieldaccess + " " + clsnm + " " + anAttribute.getName() + " = new " + clsnm + "();\n");
+                        pw.println("   " + fieldaccess + " " + className + " " + anAttribute.getName() + " = new " + className + "();\n");
                     else
-                        pw.println("   " + fieldaccess + " " + clsnm + " " + anAttribute.getName() + " = " + anAttribute.getDefaultValue() + ";\n");
+                        pw.println("   " + fieldaccess + " " + className + " " + anAttribute.getName() + " = " + anAttribute.getDefaultValue() + ";\n");
                     break;
                     
                 case PADTO16:
@@ -816,11 +820,31 @@ public class JavaGenerator extends Generator
         } // End of loop through ivars
     }
   
-    private void writeCopyMethod(PrintWriter pw, GeneratedClass aClass)
+    private void writeCopyMethods(PrintWriter pw, GeneratedClass aClass)
     {
         int BYTE_BUFFER_SIZE = 400; // TODO what is expected max buffer size?
         
-        if (aClass.getName().endsWith("Pdu") && !aClass.getName().equals(("Pdu"))&& !aClass.isAbstract())
+        if (aClass.getName().equals(("Pdu")))
+        {
+            pw.println("    /** Create deep copy of current object using PduFactory.");
+            pw.println("     * @return deep copy of PDU */");
+            pw.println("     public Pdu copyByPduFactory()");
+            pw.println("     {");
+            pw.println("         PduFactory pduFactory = new PduFactory();");
+            pw.println("         Pdu newPdu = pduFactory.createPdu(pduType); // initialize empty as placeholder");
+            pw.println("         try");
+            pw.println("         {");
+            pw.println("             newPdu = pduFactory.createPdu(marshal());");
+            pw.println("         }");
+            pw.println("         catch (Exception e)");
+            pw.println("         {");
+            pw.println("             System.out.println(\"" + aClass.getName() + " copyByPduFactory() Exception: \" + e.getMessage());");
+            pw.println("             System.exit(-1);");
+            pw.println("         }");
+            pw.println("         return newPdu;");
+            pw.println("     }");
+        }
+        else if (aClass.getName().endsWith("Pdu") && !aClass.getName().equals(("Pdu"))&& !aClass.isAbstract())
         {
             pw.println("/** copy method creates a deep copy of current object using preferred marshalling method");
             pw.println(" * @return deep copy of PDU */");
@@ -828,7 +852,7 @@ public class JavaGenerator extends Generator
             pw.println(" {");
             pw.println("     return copyDataOutputStream();");
             pw.println(" }");
-            pw.println("/** copy method creates a deep copy of current object using ByteBuffer methods.");
+            pw.println("/** Creates a \"deep copy\" of current object using ByteBuffer methods.");
             pw.println(" * @return deep copy of PDU */");
             pw.println(" public " + aClass.getName() + " copyByteBuffer()");
             pw.println(" {");
@@ -851,7 +875,11 @@ public class JavaGenerator extends Generator
             pw.println(" }");
             pw.println();
             
+            pw.println("/** byteArrayOutputStream (baos) is used for marshal/unmarshal serialization");
+            pw.println("   * @see copyDataOutputStream() */");
             pw.println("protected ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();");
+            pw.println("/** dataOutputStream (dos) is used for marshal/unmarshal serialization");
+            pw.println("   * @see copyDataOutputStream() */");
             pw.println("protected DataOutputStream      dataOutputStream      = new DataOutputStream(byteArrayOutputStream);");
             pw.println();
             pw.println("/** copy method creates a deep copy of current object using DataOutputStream methods.");
