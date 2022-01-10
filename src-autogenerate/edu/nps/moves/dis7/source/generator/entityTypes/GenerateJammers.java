@@ -47,7 +47,12 @@ public class GenerateJammers
       File directory;
       // TODO kind, category
       StringBuilder sb;
-      String clsNm;
+      String className;
+      private String countryName;
+      private String countryNamePretty;
+      private String countryValue;
+      private String entityKindName;
+      private String entityKindNameDescription;
     }
     
     private String        packageInfoPath;
@@ -302,7 +307,7 @@ public class GenerateJammers
     private void saveJammerFile(TypeClassData data)
     {
         data.sb.append("    }\n}\n");
-        saveFile(data.directory, data.clsNm + ".java", data.sb.toString());
+        saveFile(data.directory, data.className + ".java", data.sb.toString());
       
         packageInfoPath = data.directory + "/" + "package-info.java";
         packageInfoFile = new File(packageInfoPath);
@@ -330,6 +335,7 @@ public class GenerateJammers
                 packageInfoBuilder.append(" * @see <a href=\"https://stackoverflow.com/questions/22095487/why-is-package-info-java-useful\">https://stackoverflow.com/questions/22095487/why-is-package-info-java-useful</a>\n");
                 packageInfoBuilder.append(" * @see <a href=\"https://stackoverflow.com/questions/624422/how-do-i-document-packages-in-java\">https://stackoverflow.com/questions/624422/how-do-i-document-packages-in-java</a>\n");
                 packageInfoBuilder.append(" */\n");
+                packageInfoBuilder.append("// created by edu/nps/moves/dis7/source/generator/entitytypes/GenerateJammers.java\n");
                 packageInfoBuilder.append("\n");
                 packageInfoBuilder.append("package ").append(data.pkg).append(";\n");
 
@@ -354,7 +360,7 @@ public class GenerateJammers
         sisoSpecificationTitleDate, 
         "284", // TODO huh?
         // TODO kind, category
-        data.clsNm,data.clsNm);
+        data.className,data.className);
       data.sb.append(contents);
     }
 
@@ -435,9 +441,9 @@ public class GenerateJammers
 
         String pkg = packageName + "." + pathToPackage(data.sb.toString());
         data.pkg = pkg;
-        data.clsNm = fixedName;
+        data.className = fixedName;
         data.sb.setLength(0);
-
+        
         appendCommonStatements(data);
         return data;
       }

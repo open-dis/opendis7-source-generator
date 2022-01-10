@@ -52,7 +52,9 @@ public class GenerateEntityTypes
       StringBuilder sb;
 
       private String fullName;
+      private String className;
       private String countryName;
+      private String countryNamePretty;
       private String countryValue;
       private String entityKindName;
       private String entityKindNameDescription;
@@ -60,8 +62,6 @@ public class GenerateEntityTypes
       private String entityKindValue;
       private String entityDomainName;
       private String entityDomainValue;
-      private String className;
-      private String countryNamePretty;
     //private String domainPrettyName;
       private String entityUid;
     }
@@ -544,12 +544,12 @@ public class GenerateEntityTypes
     {
     }
     
-    private void addToPropertiesFile(String pkg, String clsNm, String uid)
+    private void addToPropertiesFile(String pkg, String className, String uid)
     {
       try {
         if(uid2ClassWriter == null)
           buildUid2ClassWriter();
-        uid2ClassWriter.write(uid+"="+pkg+"."+clsNm);
+        uid2ClassWriter.write(uid+"="+pkg+"."+className);
         uid2ClassWriter.newLine();
       }
       catch(IOException ex) {
@@ -588,7 +588,17 @@ public class GenerateEntityTypes
                 packageInfoFileWriter = new FileWriter(packageInfoFile, StandardCharsets.UTF_8);
                 packageInfoBuilder = new StringBuilder();
                 packageInfoBuilder.append("/**\n");
-                packageInfoBuilder.append(" * Typed classes for world entities defined by ").append(sisoSpecificationTitleDate).append(" enumerations.\n");
+                if (!data.countryValue.isEmpty())
+                    packageInfoBuilder.append(" ").append(data.countryNamePretty);
+                if (!data.entityKindName.isEmpty())
+                    packageInfoBuilder.append(" ").append(data.entityKindName);
+                if (!data.entityDomainName.isEmpty())
+                    packageInfoBuilder.append(" ").append(data.entityDomainName);
+                if (!data.countryValue.isEmpty() && !data.entityKindName.isEmpty() && !data.entityDomainName.isEmpty())
+                    packageInfoBuilder.append(" t");
+                else
+                    packageInfoBuilder.append(" T");
+                packageInfoBuilder.append("yped classes for world entities defined by ").append(sisoSpecificationTitleDate).append(" enumerations.\n");
                 packageInfoBuilder.append("\n");
                 packageInfoBuilder.append(" * <p> Online references: </p>\n");
                 packageInfoBuilder.append(" * <ul>\n");
@@ -603,6 +613,7 @@ public class GenerateEntityTypes
                 packageInfoBuilder.append(" * @see <a href=\"https://stackoverflow.com/questions/22095487/why-is-package-info-java-useful\">Stack Overflow: why-is-package-info-java-useful</a>\n");
                 packageInfoBuilder.append(" * @see <a href=\"https://stackoverflow.com/questions/624422/how-do-i-document-packages-in-java\">Stack Overflow: how-do-i-document-packages-in-java</a>\n");
                 packageInfoBuilder.append(" */\n");
+                packageInfoBuilder.append("// created by edu/nps/moves/dis7/source/generator/entitytypes/GenerateEntityTypes.java\n");
                 packageInfoBuilder.append("\n");
                 packageInfoBuilder.append("package ").append(data.pkg).append(";\n");
 
