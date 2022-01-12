@@ -47,12 +47,12 @@ public class GenerateJammers
       File directory;
       // TODO kind, category
       StringBuilder sb;
-      String className;
-      private String countryName;
-      private String countryNamePretty;
-      private String countryValue;
-      private String entityKindName;
-      private String entityKindNameDescription;
+      String className                         = new String();
+      private String countryName               = new String();
+      private String countryNamePretty         = new String();
+      private String countryValue              = new String();
+      private String entityKindName            = new String();
+      private String entityKindNameDescription = new String();
     }
     
     private String        packageInfoPath;
@@ -189,10 +189,10 @@ public class GenerateJammers
      */
   public class MyHandler extends DefaultHandler
   {
-    JammerKindElem currentKind;
-    JammerCategoryElem currentCategory;
+    JammerKindElem        currentKind;
+    JammerCategoryElem    currentCategory;
     JammerSubCategoryElem currentSubCategory;
-    JammerSpecificElem currentSpecific;
+    JammerSpecificElem    currentSpecific;
     int filesWrittenCount = 0;
 
     @Override
@@ -320,7 +320,15 @@ public class GenerateJammers
                 packageInfoFileWriter = new FileWriter(packageInfoFile, StandardCharsets.UTF_8);
                 packageInfoBuilder = new StringBuilder();
                 packageInfoBuilder.append("/**\n");
-                packageInfoBuilder.append(" *  Jammers type infrastructure classes for ").append(sisoSpecificationTitleDate).append(" enumerations.\n");
+                if (!data.countryNamePretty.isEmpty())
+                    packageInfoBuilder.append(" ").append(data.countryNamePretty);
+                if (!data.entityKindName.isEmpty())
+                    packageInfoBuilder.append(" ").append(data.entityKindName);
+                if (!data.countryValue.isEmpty() && !data.entityKindName.isEmpty())
+                    packageInfoBuilder.append(" j");
+                else
+                    packageInfoBuilder.append(" J");
+                packageInfoBuilder.append("ammers type infrastructure classes for ").append(sisoSpecificationTitleDate).append(" enumerations.\n");
                 packageInfoBuilder.append("\n");
                 packageInfoBuilder.append(" * <p> Online references: </p>\n");
                 packageInfoBuilder.append(" * <ul>\n");
