@@ -66,6 +66,5 @@ public class GenerateOpenDis7JavaPackages
     edu.nps.moves.dis7.source.generator.entityTypes.GenerateEntityTypes.main(new String[]{DEFAULT_SISO_XML_FILE, entitiesOutputPath, entitiesPackage});
 
     System.out.println("------------- DIS7 source generation complete -------------");
-
   }
 }
