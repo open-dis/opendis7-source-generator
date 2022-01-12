@@ -44,7 +44,7 @@ import java.util.*;
  * monotonically increasing timestamp field.</p>
  *
  * <p><b>Unix time</b>. Note that many applications in the wild have been known to completely ignore
- * the standard and to simply put commonly used Unix time (seconds since 1 January 1970) into the
+ * the standard and to simply put commonly used <a href="https://en.wikipedia.org/wiki/Unix_time">Unix time</a> (seconds since 1 January 1970) into the
  * field. </p>
  *
  * <p><b>Year time</b>.  The rollover associated with official DIS timestamps don't work all that well in numerous applications,
