@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2008-2021, MOVES Institute, Naval Postgraduate School (NPS). All rights reserved.
+ * Copyright (c) 2008-2022, MOVES Institute, Naval Postgraduate School (NPS). All rights reserved.
  * This work is provided under a BSD open-source license, see project license.html and license.txt
  */
 package edu.nps.moves.dis7.source.generator.pdus;
@@ -2025,7 +2025,7 @@ public class CsharpGenerator extends Generator {
     }
 
     private void writeLicenseNotice(PrintStringBuffer printStringBuffer) {
-        printStringBuffer.println("// Copyright (c) 1995-2021 held by the author(s).  All rights reserved.");
+        printStringBuffer.println("// Copyright (c) 1995-2022 held by the author(s).  All rights reserved.");
         printStringBuffer.println("// Redistribution and use in source and binary forms, with or without");
         printStringBuffer.println("// modification, are permitted provided that the following conditions");
         printStringBuffer.println("// are met:");
