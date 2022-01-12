@@ -12,24 +12,26 @@ import org.xml.sax.*;
 import org.xml.sax.helpers.*;
 
 /**
- * <p>A class that reads an XML file in a specific format, and spits out Java, C#,
- * Objective-C, or C++ classes that do <i>most</i> of the work of the protocol.</p>
+ * <p>
+ * A class that reads an XML file in a specific format, and spits out Java, Python, C#,
+ * C++, or Objective-C classes that do <i>most</i> of the work of the generating a 
+ * DIS protocol API codebase.</p>
  *
- * <p>This can rely on properties set in the XML file for the language. For example,
- * the Java element in the XML file can specify whether Hibernate or JAXB support
+ * <p>In effect, this program is reading an XML file and creating an abstract description 
+ * for each of the protocol data units (PDUs). That abstract description is written out as 
+ * source code in various languages, such as Java, Python, C++, etc.</p>
+ *
+ * <p>This program can rely on properties set in the XML file for the language. For example,
+ * the Java element in the XML file can specify whether JAXB or Hibernate support
  * is included in the generated code.</p>
  * 
- * <p>There is a huge risk of using variable names that have ambiguous meaning
- * here, as many of the terms such as "class" are also used
- * by java or c++. </p>
- *
- * <p>In effect this is reading an XML file and creating an abstract description of
- * the protocol data units. That abstract description is written out as source
- * code in various languages, such as C++, Java, etc.</p>
+ * <p>There is a <i>huge</i> risk of using variable names that have ambiguous meaning
+ * here, since many of the terms such as "class" are also used
+ * by java or c++. Be careful and scrupulous out there!</p>
  *
  * @author Don McGregor, Mike Bailey and Don Brutzman
  */
-public class GeneratePdus 
+public class GeneratePdus  // TODO rename? perhaps GeneratePdusByProgrammingLanguage
 {
     // set defaults to allow direct run
     private static String            language = edu.nps.moves.dis7.source.generator.GenerateOpenDis7JavaPackages.DEFAULT_LANGUAGE;
@@ -230,8 +232,8 @@ public class GeneratePdus
             for(String s : args)
                 System.out.print (s);
             System.out.println("Usage: xmlFile language"); 
-            System.out.println("Allowable languages are java, cpp, objc, python, and csharp");
-            System.out.println("Continuing with default values..."); 
+            System.out.println("Allowable language values are java, python, cpp, objc, and csharp");
+            System.out.println("Continuing with GeneratePdus default values..."); 
 //            System.exit(0);
         }
         else

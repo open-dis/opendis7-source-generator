@@ -11,7 +11,7 @@ package edu.nps.moves.dis7.source.generator.pdus;
  *
  * @author DMcG
  */
-public class InitialValue 
+public class InitialValue // TODO refactor rename as GeneratedInitialValue for consistency
 {
     /** The field name that will be  initialized in this class's constructor */
     private String variable;

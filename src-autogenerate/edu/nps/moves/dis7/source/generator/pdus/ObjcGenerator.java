@@ -20,7 +20,7 @@ import java.util.*;
  */
 
 /** PDU autogeneration supporting class. */
-public class ObjcGenerator extends Generator
+public class ObjcGenerator extends Generator // TODO refactor rename as ObjectiveC_Generator
 {
     /**
      * ivars are often preceded by a special character. This sets what that character is,

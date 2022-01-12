@@ -15,9 +15,13 @@ import java.nio.file.Paths;
 import java.util.*;
 
 /**
+ * This class autogenerates Java source code from XML PDU definitions, specifically 
+ * producing most source code needed for the open-dis7-java distribution.
  * Given the input object, something of an abstract syntax tree, this generates a source code file in the Java language.
  * It has ivars, getters, setters, and serialization/deserialization methods.
  * Fully implemented.
+ * @see Generator
+ * @see PythonGenerator
  * @author DMcG
  */
 public class JavaGenerator extends Generator

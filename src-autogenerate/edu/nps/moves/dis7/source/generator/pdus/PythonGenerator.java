@@ -14,7 +14,12 @@ import java.util.ArrayList;
 import java.util.Map;
 /* not thouroughly examined, global change: VARIABLE_LIST to OBJECT_LIST and FIXED_LIST to PRIMITIVE_LIST */
 /**
+ * This class autogenerates Python source code from XML PDU definitions, specifically 
+ * producing most source code needed for the open-dis7-python distribution.
+ * TODO see JavaGenerator for related functionality that will be needed in Python.
  * Constructor, not fully implemented.
+ * @see Generator
+ * @see JavaGenerator
  * @author DMcG
  */
 public class PythonGenerator extends Generator

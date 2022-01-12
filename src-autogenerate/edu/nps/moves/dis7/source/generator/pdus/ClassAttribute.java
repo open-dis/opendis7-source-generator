@@ -14,7 +14,7 @@ import java.util.*;
  * @author DMcG
  */
 
-public class ClassAttribute 
+public class ClassAttribute // TODO consider refactor renaming as GeneratedClassAttribute
 {
     /**
      * The various things an attribute can be: a primitive type (int, short, byte, etc), 

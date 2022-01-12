@@ -10,7 +10,7 @@ import java.util.*;
  *
  * @author DMcG
  */
-public class TreeNode 
+public class TreeNode // TODO consider refactor renaming as PythonTreeNode
 {
     GeneratedClass aClass = null;
     List<TreeNode> children = new ArrayList<>();

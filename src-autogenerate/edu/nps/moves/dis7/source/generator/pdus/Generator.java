@@ -8,7 +8,7 @@ import java.io.*;
 import java.util.*;
 
 /**
- * Abstract superclass for all the concrete language generators, such as java, c++, etc.
+ * Abstract superclass for all the concrete language generators such as Java, Python, C++, etc.
  *
  * @author Don McGregor, Mike Bailey and Don Brutzman
  */

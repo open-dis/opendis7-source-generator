@@ -1,5 +1,6 @@
 /**
- * Code generator classes supporting software production to create the <code>edu.nps.moves.dis7</code> Java library.
+ * Code generator classes supporting software production to create the <code>edu.nps.moves.dis7</code> libraries.
+ * Current support includes Java, with Python as work in progress.
  *
  * @see java.lang.Package
  * @see <a href="https://stackoverflow.com/questions/22095487/why-is-package-info-java-useful">https://stackoverflow.com/questions/22095487/why-is-package-info-java-useful</a>
