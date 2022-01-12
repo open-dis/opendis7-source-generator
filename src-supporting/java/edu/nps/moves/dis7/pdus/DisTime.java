@@ -16,8 +16,8 @@ import java.util.*;
  * units since the start of the hour. Rollover problems can easily occur.  The timestamp field in the PDU header is
  * four bytes long and is specified to be an unsigned integer value.</p>
  *
- * <p>Additionally, there are two types of official timestamps in the PDU header: absolute time and
- * relative time. Absolute time is used when the host is synchronized to 
+ * <p>Additionally, there are two types of official timestamps in the PDU header: 
+ * <i>absolute time</i> and <i>relative time</i>. Absolute time is used when the host is synchronized to 
  * <a href="https://en.wikipedia.org/wiki/Coordinated_Universal_Time" target="_blank">Coordinated Universal Time (UTC)</a>, i.e. the host
  * is accurately synchronized with UTC via <a href="https://en.wikipedia.org/wiki/Network_Time_Protocol" target="_blank">Network Time Protocol (NTP)</a>.
  * The packet timestamps originating from such hosts can be legitimately
@@ -43,8 +43,12 @@ import java.util.*;
  * Receiving applications should expect this behavior, and not simply expect a
  * monotonically increasing timestamp field.</p>
  *
- * <p>The rollover associated with official DIS timestamps don't work all that well in NPS applications,
- * which often expect a monotonically increasing timestamp field.   Such variations are also incompatible
+ * <p><b>Unix time</b>. Note that many applications in the wild have been known to completely ignore
+ * the standard and to simply put commonly used Unix time (seconds since 1 January 1970) into the
+ * field. </p>
+ *
+ * <p><b>Year time</b>.  The rollover associated with official DIS timestamps don't work all that well in numerous applications,
+ * which often expect a monotonically increasing timestamp field.   Such unpredictable rollover variations are also incompatible
  * with archival recording or streaming playback of Live-Virtual-Constructive (LVC) behavior streams.
  * To avoid such problems, NPS created a "yearly" timestamp which measures 
  * hundredths of a second since the start of the current year. The maximum value for
@@ -52,21 +56,21 @@ import java.util.*;
  * One hundredth of a second resolution is accurate enough for most applications, and you typically don't have to worry about
  * rollover, instead getting only a monotonically increasing timestamp value.</p>
  *
- * <p>Note that many applications in the wild have been known to completely ignore
- * the standard and to simply put the <b>Unix time</b> (seconds since 1 January 1970) into the
- * field. </p>
- *
- * <p>TODO.  Functionality is needed to define a shared common time origin, and also to
- * precisely adjust stream timestamps when coordinating recorded PDU playback within LVC applications.</p>
- *
- * <p>TODO. Be careful with the shared instance of this class--it has static synchronized methods but is not yet
- * confirmed to be thread safe. If you are using multiple threads, suggest you
- * create a new instance of the class for each thread to prevent the values from
- * getting stomped on.</p>
+ * <p><b>TODO: time 0.0</b>.  Functionality is needed to define a shared common time origin, and also to
+ * precisely adjust stream timestamps when coordinating recorded PDU playback within LVC applications.
+ * We think the ability to "start at time 0.0", or normalizing initial time to zero 
+ * for a recorded PDU stream, is actually a pretty common use case.</p>
  * <p> Don McGregor, Mike Bailey,  and Don Brutzman</p>
  * 
  * @author DMcG
  */
+// * problems unlikely:
+// * <p><b>TODO: confirm thread safe</b>. Be careful with the shared instance of this class --
+// * it has static synchronized methods but is not yet
+// * confirmed to be thread safe. If you are using multiple threads, suggest you
+// * create a new instance of the class for each thread to prevent the values from
+// * getting stomped on.</p>
+
 public class DisTime
 {
     /** mask for absolute timestamps */
@@ -150,9 +154,9 @@ public class DisTime
      * @see <a href="https://en.wikipedia.org/wiki/Network_Time_Protocol" target="_blank">Wikipedia: Network Time Protocol (NTP)</a>
      * @return DIS time units, relative
      */
-    public int getCurrentDisRelativeTimestamp()
+    public static int getCurrentDisRelativeTimestamp()
     {
-        int val = this.getCurrentDisTimeUnitsSinceTopOfHour();
+        int val = getCurrentDisTimeUnitsSinceTopOfHour();
         val = (val << 1) & RELATIVE_TIMESTAMP_MASK; // always flip the lsb to 0
         return val;
     }
@@ -214,12 +218,13 @@ public class DisTime
     }
     
     /**
-     * Convert timestamp value to string for logging and diagnostics
+     * Convert timestamp value to string for logging and diagnostics.
+     * TODO consider different formats for different timestampStyle values.
      * @param timestamp value in milliseconds
      * @see GregorianCalendar
      * @return string value provided by GregorianCalendar
      */
-    public static String timestampToString(int timestamp)
+    public static String convertToString(int timestamp)
     {
         GregorianCalendar newCalendar = new GregorianCalendar();
         newCalendar.setTimeInMillis(timestamp);
