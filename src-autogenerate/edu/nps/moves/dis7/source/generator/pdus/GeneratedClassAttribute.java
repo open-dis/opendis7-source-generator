@@ -14,7 +14,7 @@ import java.util.*;
  * @author DMcG
  */
 
-public class ClassAttribute // TODO consider refactor renaming as GeneratedClassAttribute
+public class GeneratedClassAttribute // TODO consider refactor renaming as GeneratedClassAttribute
 {
     /**
      * The various things an attribute can be: a primitive type (int, short, byte, etc), 
@@ -85,7 +85,7 @@ public class ClassAttribute // TODO consider refactor renaming as GeneratedClass
     /** If this is a dynamic length list field or primitive list, we also need the field that this tells the 
      * length for.
      */
-    protected ClassAttribute dynamicListClassAttribute = null;
+    protected GeneratedClassAttribute dynamicListClassAttribute = null;
     
     /**
      * The default value for this attribute if it is a primitive.
@@ -120,7 +120,7 @@ public class ClassAttribute // TODO consider refactor renaming as GeneratedClass
     protected boolean isBitField = false;
 
     /** List of bit fields. */
-    protected List<BitField> bitFieldList = new ArrayList<>();
+    protected List<GeneratedBitField> bitFieldList = new ArrayList<>();
     
     /** Should we serialize this attribute to the message or not? By default yes, but
      * this can be overridden by the attribute serialize="false" in the xml
@@ -409,7 +409,7 @@ public class ClassAttribute // TODO consider refactor renaming as GeneratedClass
      * set special attribute
      * @param attr special attribute
      */
-    public void setDynamicListClassAttribute(ClassAttribute attr)
+    public void setDynamicListClassAttribute(GeneratedClassAttribute attr)
     {
         dynamicListClassAttribute = attr;
     }
@@ -418,7 +418,7 @@ public class ClassAttribute // TODO consider refactor renaming as GeneratedClass
      * get special attribute
      * @return special attribute
      */
-    public ClassAttribute getDynamicListClassAttribute()
+    public GeneratedClassAttribute getDynamicListClassAttribute()
     {
         return dynamicListClassAttribute;
     }
@@ -445,7 +445,7 @@ public class ClassAttribute // TODO consider refactor renaming as GeneratedClass
      * Add a bit field
      * @param aBitField BitField to add
      */
-    public void addBitField(BitField aBitField)
+    public void addBitField(GeneratedBitField aBitField)
     {
         bitFieldList.add(aBitField);
     }

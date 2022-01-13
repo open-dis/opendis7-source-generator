@@ -20,10 +20,10 @@ import java.util.*;
 public class GeneratedClass 
 {
     /** A list of all the attributes (ivars) of one class */
-    protected List<ClassAttribute> classAttributes = new ArrayList<>();
+    protected List<GeneratedClassAttribute> classAttributes = new ArrayList<>();
     
     /** A list of attribute names and initial values for those attributes. */
-    protected List<InitialValue> initialValues = new ArrayList<>();
+    protected List<GeneratedInitialValue> initialValues = new ArrayList<>();
     
     /** comments for this generated class */
     private String comment;
@@ -111,28 +111,28 @@ public class GeneratedClass
     
     /** Add one ivar/attribute to the class
      * @param anAttribute of interest */
-    public void addClassAttribute(ClassAttribute anAttribute)
+    public void addClassAttribute(GeneratedClassAttribute anAttribute)
     {
         classAttributes.add(anAttribute);
     }
     
     /** Return a list of all the attributes of the class
-     * @return list of {@link ClassAttribute} values */
-    public List<ClassAttribute> getClassAttributes()
+     * @return list of {@link GeneratedClassAttribute} values */
+    public List<GeneratedClassAttribute> getClassAttributes()
     {
         return classAttributes;
     }
     
     /** Add one initial value to the class
      * @param anInitialValue of interest */
-    public void addInitialValue(InitialValue anInitialValue)
+    public void addInitialValue(GeneratedInitialValue anInitialValue)
     {
         initialValues.add(anInitialValue);
     }
     
     /** Return a list of all the initial values of the class
-     * @return list of {@link InitialValue} settings */
-    public List<InitialValue> getInitialValues()
+     * @return list of {@link GeneratedInitialValue} settings */
+    public List<GeneratedInitialValue> getInitialValues()
     {
         return initialValues;
     }
@@ -164,7 +164,7 @@ public class GeneratedClass
         
         for(int idx = 0; idx < classAttributes.size(); idx++)
         {
-            ClassAttribute attribute = classAttributes.get(idx);
+            GeneratedClassAttribute attribute = classAttributes.get(idx);
             String anAttribute = "  Name: " + attribute.getName() + " Comment: " + attribute.getComment() + 
                                  " Kind: " + attribute.getAttributeKind() + " Type:" + attribute.getType() + "\n";
             result = result + anAttribute;

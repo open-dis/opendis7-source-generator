@@ -167,15 +167,15 @@ public void writeHeaderFile(GeneratedClass aClass)
             
             for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
             {
-                ClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
+                GeneratedClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
                 
                 // If this attribute is a class, we need to do an import on that class
-                if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF)
+                if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.CLASSREF)
                 {
                     pw.println("#import \"" + anAttribute.getType() + ".h\"");
                 }
                 
-                if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST)
+                if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.OBJECT_LIST)
                 {
                     hasVariableLengthList = true;
                     pw.println("#import \"" + anAttribute.getType() + ".h\"");
@@ -221,9 +221,9 @@ public void writeHeaderFile(GeneratedClass aClass)
             
             for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
             {
-                ClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
+                GeneratedClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
                 
-                if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE)
+                if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE)
                 {
                     if(anAttribute.getComment() != null)
                         pw.println("  " + "/** " + anAttribute.getComment() + " */");
@@ -233,7 +233,7 @@ public void writeHeaderFile(GeneratedClass aClass)
                     
                 }
                 
-                if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF)
+                if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.CLASSREF)
                 {
                     if(anAttribute.getComment() != null)
                         pw.println("  " + "/** " + anAttribute.getComment() + " */");
@@ -242,7 +242,7 @@ public void writeHeaderFile(GeneratedClass aClass)
                     pw.println();
                 }
                 
-                if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
+                if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
                 {
                     if(anAttribute.getComment() != null)
                         pw.println("  " + "/** " + anAttribute.getComment() + " */");
@@ -255,7 +255,7 @@ public void writeHeaderFile(GeneratedClass aClass)
                     pw.println();
                 }
                 
-                if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST)
+                if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.OBJECT_LIST)
                 {
                     if(anAttribute.getComment() != null)
                         pw.println("  " + "/** " + anAttribute.getComment() + " */");
@@ -272,25 +272,25 @@ public void writeHeaderFile(GeneratedClass aClass)
             for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
             {
                 // @property(readwrite, assign) unsigned char protocolVersion;
-                ClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
+                GeneratedClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
                 
-                if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE)
+                if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE)
                 {
                     pw.println("@property(readwrite, assign) " + types.get(anAttribute.getType()) + " "  + anAttribute.getName() + "; ");
                 }
                 
-                if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF)
+                if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.CLASSREF)
                 {
                     pw.println("@property(readwrite, retain) " + anAttribute.getType() + "* "  + anAttribute.getName() + "; ");
                 }
                 
-                if((anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE_LIST))
+                if((anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE_LIST))
                 {
                     pw.println("@property(readwrite) " + types.get(anAttribute.getType()) + "* " + anAttribute.getName() + "Ptr;");
                     pw.println("@property(readonly) int " + anAttribute.getName() + "Length;");
                 }
                 
-                if((anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST) )
+                if((anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.OBJECT_LIST) )
                 {
                     pw.println("@property(readwrite, retain) " + "NSMutableArray*" + anAttribute.getName() + "; ");
                 }
@@ -350,8 +350,8 @@ public void writeHeaderFile(GeneratedClass aClass)
             // Write the synthesize decl for the properties
             for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
             {
-                ClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
-                if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
+                GeneratedClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
+                if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
                 {
                     pw.println("@synthesize " + anAttribute.getName() + "Ptr;");
                     pw.println("@synthesize " + anAttribute.getName() + "Length;");
@@ -427,9 +427,9 @@ public void writeEqualityOperator(PrintWriter printWriter, GeneratedClass aClass
 
         for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
         {
-            ClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
+            GeneratedClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
 
-            if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE || anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF)
+            if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE || anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.CLASSREF)
             {
                 if(anAttribute.getIsDynamicListLengthField() == false)
                 {
@@ -444,7 +444,7 @@ public void writeEqualityOperator(PrintWriter printWriter, GeneratedClass aClass
 
             }
 
-            if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
+            if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
             {
                 String indexType = (String)types.get(anAttribute.getType());
 
@@ -456,7 +456,7 @@ public void writeEqualityOperator(PrintWriter printWriter, GeneratedClass aClass
                 printWriter.println();
             }
 
-            if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST)
+            if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.OBJECT_LIST)
             {
                 printWriter.println();
                 printWriter.println("     for(int idx = 0; idx < "  + anAttribute.getName() + ".size(); idx++)");
@@ -508,7 +508,7 @@ public void writeMarshalMethod(PrintWriter pw, GeneratedClass aClass)
 
         for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
         {
-            ClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
+            GeneratedClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
 
             if(anAttribute.shouldSerialize == false)
             {
@@ -518,7 +518,7 @@ public void writeMarshalMethod(PrintWriter pw, GeneratedClass aClass)
             
             // Write out the code to marshal this, depending on the type of attribute
 
-            if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE)
+            if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE)
             {
                 if(anAttribute.getIsDynamicListLengthField() == false)
                 {
@@ -528,7 +528,7 @@ public void writeMarshalMethod(PrintWriter pw, GeneratedClass aClass)
                 }
                 else
                 {
-                     ClassAttribute listAttribute = anAttribute.getDynamicListClassAttribute();
+                     GeneratedClassAttribute listAttribute = anAttribute.getDynamicListClassAttribute();
                      String marshalType = marshalTypes.getProperty(anAttribute.getType());
                      String capped = this.initialCap(marshalType);
                      //pw.println("    dataStream << ( " + types.get(anAttribute.getType()) + " )"  + listAttribute.getName() + ".size();");
@@ -537,12 +537,12 @@ public void writeMarshalMethod(PrintWriter pw, GeneratedClass aClass)
 
             }
 
-            if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF)
+            if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.CLASSREF)
             {
                 pw.println("    ["  + anAttribute.getName() + " marshalUsingStream:dataStream];");
             }
 
-            if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
+            if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
             {
                 pw.println();
                 pw.println("     for(int idx = 0; idx < " + anAttribute.getListLength() + "; idx++)");
@@ -569,7 +569,7 @@ public void writeMarshalMethod(PrintWriter pw, GeneratedClass aClass)
                 pw.println();
             }
 
-            if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST)
+            if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.OBJECT_LIST)
             {
                 pw.println();
                 pw.println("     for(int idx = 0; idx < ["  + anAttribute.getName() + " count]; idx++)");
@@ -623,7 +623,7 @@ public void writeMarshalMethod(PrintWriter pw, GeneratedClass aClass)
 
     for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
     {
-        ClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
+        GeneratedClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
 
         if(anAttribute.shouldSerialize == false)
         {
@@ -633,19 +633,19 @@ public void writeMarshalMethod(PrintWriter pw, GeneratedClass aClass)
         
         // Write out the code to marshal this, depending on the type of attribute
 
-        if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE)
+        if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE)
         {
             String t = marshalTypes.getProperty(anAttribute.getType());
             t = this.initialCap(t);
             printWriter.println("    " + anAttribute.getName() + " = " + "[dataStream read"  + t + "];");
         }
 
-        if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF)
+        if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.CLASSREF)
         {
             printWriter.println("    [" + anAttribute.getName() + " unmarshalUsingStream:dataStream];");
         }
 
-        if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
+        if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
         {
             String t = marshalTypes.getProperty(anAttribute.getType());
             t = this.initialCap(t);
@@ -657,7 +657,7 @@ public void writeMarshalMethod(PrintWriter pw, GeneratedClass aClass)
             printWriter.println();
         }
 
-        if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST)
+        if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.OBJECT_LIST)
         {
             printWriter.println();
             printWriter.println("     [" + anAttribute.getName() + " removeAllObjects];"); // Clear out any existing objects in the list
@@ -716,9 +716,9 @@ private void writeInitializer(PrintWriter pw, GeneratedClass aClass)
 
     for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
     {
-        ClassAttribute attribute = aClass.getClassAttributes().get(idx);
-        if((attribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE) ||
-           (attribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF))
+        GeneratedClassAttribute attribute = aClass.getClassAttributes().get(idx);
+        if((attribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE) ||
+           (attribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.CLASSREF))
         {
             attributeCount++;
         }
@@ -729,8 +729,8 @@ private void writeInitializer(PrintWriter pw, GeneratedClass aClass)
 
         for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
         {
-            ClassAttribute attribute = aClass.getClassAttributes().get(idx);
-            if((attribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE))
+            GeneratedClassAttribute attribute = aClass.getClassAttributes().get(idx);
+            if((attribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE))
             {
                 if(attribute.getDefaultValue() != null)
                 {
@@ -748,7 +748,7 @@ private void writeInitializer(PrintWriter pw, GeneratedClass aClass)
         List inits = aClass.getInitialValues();
         for(int idx = 0; idx < inits.size(); idx++)
         {
-            InitialValue anInitialValue = (InitialValue)inits.get(idx);
+            GeneratedInitialValue anInitialValue = (GeneratedInitialValue)inits.get(idx);
             String setterName = anInitialValue.getSetterMethodName();
 
             System.out.println("Found initial value: " + setterName + " " + anInitialValue.getVariableValue());
@@ -758,10 +758,10 @@ private void writeInitializer(PrintWriter pw, GeneratedClass aClass)
 
        for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
        {
-          ClassAttribute attribute = aClass.getClassAttributes().get(idx);
+          GeneratedClassAttribute attribute = aClass.getClassAttributes().get(idx);
 
           // Every primitive that doesn't have an initial value gets set to zero
-          if(attribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE)
+          if(attribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE)
           {
               if(!usedValues.contains(attribute.getName()))
               {
@@ -770,11 +770,11 @@ private void writeInitializer(PrintWriter pw, GeneratedClass aClass)
           }
           // We need to initialize class instances
 
-          if(attribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF)
+          if(attribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.CLASSREF)
           {
               pw.println("    " + attribute.getName() + " = [[" + attribute.getType() + " alloc] init];");
           }
-          if(attribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
+          if(attribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
           {
               pw.println("     // Initialize fixed length array");
               int arrayLength = attribute.getListLength();
@@ -787,7 +787,7 @@ private void writeInitializer(PrintWriter pw, GeneratedClass aClass)
               pw.println("     " + attribute.getName() + "Ptr = &" + attribute.getName() + "[0];");
               pw.println();
           }
-          if(attribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST)
+          if(attribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.OBJECT_LIST)
           {
               pw.println("    " + attribute.getName() + " = [NSMutableArray arrayWithCapacity:1];");
           }
@@ -824,21 +824,21 @@ private void writeInitializer(PrintWriter pw, GeneratedClass aClass)
 
     for(int idx = 0; idx < ivars.size(); idx++)
     {
-        ClassAttribute anAttribute = (ClassAttribute)ivars.get(idx);
+        GeneratedClassAttribute anAttribute = (GeneratedClassAttribute)ivars.get(idx);
 
-        if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE)
+        if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE)
         {
             printWriter.print("   marshalSize = marshalSize + ");
             printWriter.println(primitiveSizes.get(anAttribute.getType()) + ";  // "  + anAttribute.getName());
         }
 
-        if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF)
+        if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.CLASSREF)
         {
             printWriter.print("   marshalSize = marshalSize + ");
             printWriter.println("[" + anAttribute.getName() + " getMarshalledSize];");
         }
 
-        if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
+        if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
         {
             printWriter.print("   marshalSize = marshalSize + ");
             // If this is a fixed list of primitives, it's the list size times the size of the primitive.
@@ -853,7 +853,7 @@ private void writeInitializer(PrintWriter pw, GeneratedClass aClass)
             }
         }
 
-        if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST)
+        if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.OBJECT_LIST)
         {
             // If this is a dynamic list of primitives, it's the list size times the size of the primitive.
             if(anAttribute.getUnderlyingTypeIsPrimitive() == true)
@@ -891,12 +891,12 @@ private void writeInitializer(PrintWriter pw, GeneratedClass aClass)
     printWriter.println("{");
     for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
     {
-        ClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
+        GeneratedClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
 
-        ClassAttribute.ClassAttributeType kind = anAttribute.getAttributeKind();
+        GeneratedClassAttribute.ClassAttributeType kind = anAttribute.getAttributeKind();
 
-        if( (kind == ClassAttribute.ClassAttributeType.CLASSREF) ||
-            (kind == ClassAttribute.ClassAttributeType.OBJECT_LIST))
+        if( (kind == GeneratedClassAttribute.ClassAttributeType.CLASSREF) ||
+            (kind == GeneratedClassAttribute.ClassAttributeType.OBJECT_LIST))
         {
              printWriter.println("  [" + anAttribute.getName() + " release];" );
         }
@@ -933,8 +933,8 @@ private boolean classHasOnlyPrimitives(GeneratedClass aClass)
     // Flip flag to false if anything is not a primitive.
     for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
     {
-        ClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
-        if(anAttribute.getAttributeKind() != ClassAttribute.ClassAttributeType.PRIMITIVE)
+        GeneratedClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
+        if(anAttribute.getAttributeKind() != GeneratedClassAttribute.ClassAttributeType.PRIMITIVE)
         {
             isAllPrimitive = false;
             System.out.println("Not primitive for class " + aClass.getName() + " and attribute " + anAttribute.getName() + " " + anAttribute.getAttributeKind());

@@ -227,17 +227,17 @@ public void writeHeaderFile(GeneratedClass aClass)
             
             for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
             {
-                ClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
+                GeneratedClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
                 
                 // If this attribute is a class, we need to do an import on that class
-                if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF)
+                if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.CLASSREF)
                 {
                     pw.println("#include <" + namespace + anAttribute.getType() + ".h>");
                 }
                 
                 // if this attribute is a variable-length list that holds a class, we need to
                 // do an import on the class that is in the list.
-                if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST)
+                if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.OBJECT_LIST)
                 {
                     pw.println("#include <" + namespace + anAttribute.getType() + ".h>");
                     hasVariableLengthList = true;
@@ -317,9 +317,9 @@ public void writeHeaderFile(GeneratedClass aClass)
             
             for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
             {
-                ClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
+                GeneratedClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
                 
-                if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE)
+                if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE)
                 {
                     if(anAttribute.getComment() != null)
                         pw.println("  " + "/** " + anAttribute.getComment() + " */");
@@ -329,7 +329,7 @@ public void writeHeaderFile(GeneratedClass aClass)
                     
                 }
                 
-                if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF)
+                if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.CLASSREF)
                 {
                     if(anAttribute.getComment() != null)
                         pw.println("  " + "/** " + anAttribute.getComment() + " */");
@@ -338,7 +338,7 @@ public void writeHeaderFile(GeneratedClass aClass)
                     pw.println();
                 }
                 
-                if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
+                if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
                 {
                     if(anAttribute.getComment() != null)
                         pw.println("  " + "/** " + anAttribute.getComment() + " */");
@@ -347,7 +347,7 @@ public void writeHeaderFile(GeneratedClass aClass)
                     pw.println();
                 }
                 
-                if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST)
+                if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.OBJECT_LIST)
                 {
                     if(anAttribute.getComment() != null)
                         pw.println("  " + "/** " + anAttribute.getComment() + " */");
@@ -377,9 +377,9 @@ public void writeHeaderFile(GeneratedClass aClass)
             // Getter and setter methods for each ivar
             for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
             {
-                ClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
+                GeneratedClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
                 
-                if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE)
+                if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE)
                 {
                     pw.println("    " + types.get(anAttribute.getType()) + " " + "get" + this.initialCap(anAttribute.getName()) + "() const; ");
                     if(anAttribute.getIsDynamicListLengthField() == false)
@@ -388,14 +388,14 @@ public void writeHeaderFile(GeneratedClass aClass)
                     }
                 }
 
-                if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF)
+                if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.CLASSREF)
                 {
                     pw.println("    " + anAttribute.getType() + "& " + "get" + this.initialCap(anAttribute.getName()) + "(); ");
                     pw.println("    const " + anAttribute.getType() + "&  get" + this.initialCap(anAttribute.getName()) + "() const; ");
                     pw.println("    void set" + this.initialCap(anAttribute.getName()) + "(const " + anAttribute.getType() + "    &pX);");
                 }
                 
-                if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
+                if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
                 {
                     // Sleaze. We need to figure out what type of array we are, and this is slightly complex.
                     String arrayType = this.getArrayType(anAttribute.getType());
@@ -410,7 +410,7 @@ public void writeHeaderFile(GeneratedClass aClass)
                 }
                 
                 
-                if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST)
+                if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.OBJECT_LIST)
                 {
                     pw.println("    std::vector<" + anAttribute.getType() + ">& " + "get" + this.initialCap(anAttribute.getName()) + "(); ");
                     pw.println("    const std::vector<" + anAttribute.getType() + ">& " + "get" + this.initialCap(anAttribute.getName()) + "() const; ");
@@ -486,7 +486,7 @@ public void writeCppFile(GeneratedClass aClass)
             // Write the getter and setter methods for each of the attributes
             for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
             {
-                ClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
+                GeneratedClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
                 this.writeGetterMethod(pw, aClass, anAttribute);
                 this.writeSetterMethod(pw, aClass, anAttribute);
             }
@@ -543,9 +543,9 @@ public void writeEqualityOperator(PrintWriter pw, GeneratedClass aClass)
         
         for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
         {
-            ClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
+            GeneratedClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
             
-            if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE || anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF)
+            if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE || anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.CLASSREF)
             {
                 if(anAttribute.getIsDynamicListLengthField() == false)
                 {
@@ -560,7 +560,7 @@ public void writeEqualityOperator(PrintWriter pw, GeneratedClass aClass)
                 
             }
             
-            if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
+            if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
             {
                 String indexType = (String)types.get(anAttribute.getType());
                 
@@ -572,7 +572,7 @@ public void writeEqualityOperator(PrintWriter pw, GeneratedClass aClass)
                 pw.println();
             }
             
-            if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST)
+            if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.OBJECT_LIST)
             {
                 pw.println();
                 pw.println("     for(size_t idx = 0; idx < " + IVAR_PREFIX + anAttribute.getName() + ".size(); idx++)");
@@ -623,7 +623,7 @@ public void writeMarshalMethod(PrintWriter pw, GeneratedClass aClass)
         
         for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
         {
-            ClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
+            GeneratedClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
             
             if(anAttribute.shouldSerialize == false)
             {
@@ -633,7 +633,7 @@ public void writeMarshalMethod(PrintWriter pw, GeneratedClass aClass)
             
             // Write out the code to marshal this, depending on the type of attribute
             
-            if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE)
+            if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE)
             { 
                 if(anAttribute.getIsDynamicListLengthField() == false)
                 {
@@ -641,18 +641,18 @@ public void writeMarshalMethod(PrintWriter pw, GeneratedClass aClass)
                 }
                 else
                 {
-                     ClassAttribute listAttribute = anAttribute.getDynamicListClassAttribute();
+                     GeneratedClassAttribute listAttribute = anAttribute.getDynamicListClassAttribute();
                      pw.println("    dataStream << ( " + types.get(anAttribute.getType()) + " )" +  IVAR_PREFIX + listAttribute.getName() + ".size();");
                 }
                
             }
             
-            if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF)
+            if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.CLASSREF)
             { 
                 pw.println("    " +  IVAR_PREFIX + anAttribute.getName() + ".marshal(dataStream);");
             }
             
-            if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
+            if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
             { 
                 pw.println();
                 pw.println("     for(size_t idx = 0; idx < " + anAttribute.getListLength() + "; idx++)");
@@ -678,7 +678,7 @@ public void writeMarshalMethod(PrintWriter pw, GeneratedClass aClass)
                 pw.println();
             }
             
-            if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST)
+            if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.OBJECT_LIST)
             { 
                 pw.println();
                 pw.println("     for(size_t idx = 0; idx < " +  IVAR_PREFIX + anAttribute.getName() + ".size(); idx++)");
@@ -732,7 +732,7 @@ public void writeUnmarshalMethod(PrintWriter pw, GeneratedClass aClass)
     
     for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
     {
-        ClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
+        GeneratedClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
         
         if(anAttribute.shouldSerialize == false)
         {
@@ -742,17 +742,17 @@ public void writeUnmarshalMethod(PrintWriter pw, GeneratedClass aClass)
         
         // Write out the code to marshal this, depending on the type of attribute
         
-        if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE)
+        if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE)
         { 
             pw.println("    dataStream >> " +  IVAR_PREFIX + anAttribute.getName() + ";");
         }
         
-        if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF)
+        if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.CLASSREF)
         { 
             pw.println("    " +  IVAR_PREFIX + anAttribute.getName() + ".unmarshal(dataStream);");
         }
         
-        if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
+        if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
         { 
             pw.println();
             pw.println("     for(size_t idx = 0; idx < " + anAttribute.getListLength() + "; idx++)");
@@ -762,7 +762,7 @@ public void writeUnmarshalMethod(PrintWriter pw, GeneratedClass aClass)
             pw.println();
         }
         
-        if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST)
+        if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.OBJECT_LIST)
         { 
             pw.println();
             pw.println("     " + IVAR_PREFIX + anAttribute.getName() + ".clear();"); // Clear out any existing objects in the list
@@ -819,10 +819,10 @@ private void writeCtor(PrintWriter pw, GeneratedClass aClass)
     
     for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
     {
-        ClassAttribute attribute = aClass.getClassAttributes().get(idx);
-        if((attribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE) ||
-           (attribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF) ||
-           (attribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST))
+        GeneratedClassAttribute attribute = aClass.getClassAttributes().get(idx);
+        if((attribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE) ||
+           (attribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.CLASSREF) ||
+           (attribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.OBJECT_LIST))
         {
             attributeCount++;
         }
@@ -847,12 +847,12 @@ private void writeCtor(PrintWriter pw, GeneratedClass aClass)
     
         for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
         {
-            ClassAttribute anAttribute = aClass.getClassAttributes().get(idx);   
+            GeneratedClassAttribute anAttribute = aClass.getClassAttributes().get(idx);   
             
             // This is a primitive type; initialize it to either the default value specified in 
             // the XML file or to zero. Tends to minimize the possiblity
             // of bad stack-allocated values hosing the system.
-            if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE)
+            if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE)
             { 
                 
                 String defaultValue = anAttribute.getDefaultValue();
@@ -876,7 +876,7 @@ private void writeCtor(PrintWriter pw, GeneratedClass aClass)
             
                        
             // We need to allcoate ivars that are objects....
-            if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF)
+            if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.CLASSREF)
             { 
                // pw.print(" " + anAttribute.getName() + "( " + anAttribute.getType() + "())" );
                 pw.print("   " +  IVAR_PREFIX + anAttribute.getName() + "()" );
@@ -888,7 +888,7 @@ private void writeCtor(PrintWriter pw, GeneratedClass aClass)
             }
             
             // We need to allcoate ivars that are lists/vectors....
-            if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST)
+            if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.OBJECT_LIST)
             { 
                // pw.print(" " + anAttribute.getName() + "( " + anAttribute.getType() + "())" );
                 pw.print("   " +  IVAR_PREFIX + anAttribute.getName() + "(0)" );
@@ -907,17 +907,17 @@ private void writeCtor(PrintWriter pw, GeneratedClass aClass)
         List inits = aClass.getInitialValues();
         for(int idx = 0; idx < inits.size(); idx++)
         {
-            InitialValue anInitialValue = (InitialValue)inits.get(idx);
+            GeneratedInitialValue anInitialValue = (GeneratedInitialValue)inits.get(idx);
             String setterName = anInitialValue.getSetterMethodName();
             pw.println("    " + setterName + "( " + anInitialValue.getVariableValue() + " );");
         }
     
        for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
        {
-          ClassAttribute attribute = aClass.getClassAttributes().get(idx);
+          GeneratedClassAttribute attribute = aClass.getClassAttributes().get(idx);
         
           // We need to initialize primitive array types
-          if(attribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
+          if(attribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
           {
               pw.println("     // Initialize fixed length array");
               int arrayLength = attribute.getListLength();
@@ -943,10 +943,10 @@ private void writeDtor(PrintWriter pw, GeneratedClass aClass)
     
     for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
     {
-        ClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
+        GeneratedClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
         
         // We need to deallocate ivars that are objects....
-        if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST)
+        if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.OBJECT_LIST)
         { 
            pw.println("    " +  IVAR_PREFIX + anAttribute.getName() + ".clear();");
         } // end of if object
@@ -955,9 +955,9 @@ private void writeDtor(PrintWriter pw, GeneratedClass aClass)
     pw.println("}\n");
 }
 
-private void writeGetterMethod(PrintWriter pw, GeneratedClass aClass, ClassAttribute anAttribute)
+private void writeGetterMethod(PrintWriter pw, GeneratedClass aClass, GeneratedClassAttribute anAttribute)
 {
-    if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE)
+    if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE)
     { 
         pw.println(types.get(anAttribute.getType()) + " " + aClass.getName()  +"::" + "get" + this.initialCap(anAttribute.getName()) + "() const");
         pw.println("{");
@@ -967,14 +967,14 @@ private void writeGetterMethod(PrintWriter pw, GeneratedClass aClass, ClassAttri
         }
         else
         {
-            ClassAttribute listAttribute = anAttribute.getDynamicListClassAttribute();
+            GeneratedClassAttribute listAttribute = anAttribute.getDynamicListClassAttribute();
             pw.println( "   return " +  IVAR_PREFIX + listAttribute.getName() + ".size();");
         }
         
         pw.println("}\n");
     }
     
-    if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF)
+    if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.CLASSREF)
     { 
         pw.println(anAttribute.getType() + "& " + aClass.getName()  +"::" + "get" + this.initialCap(anAttribute.getName()) + "() ");
         pw.println("{");
@@ -987,7 +987,7 @@ private void writeGetterMethod(PrintWriter pw, GeneratedClass aClass, ClassAttri
         pw.println("}\n");
     }
     
-    if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
+    if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
     { 
         pw.println(this.getArrayType(anAttribute.getType()) + "* " + aClass.getName()  +"::" + "get" + this.initialCap(anAttribute.getName()) + "() ");
         pw.println("{");
@@ -1002,7 +1002,7 @@ private void writeGetterMethod(PrintWriter pw, GeneratedClass aClass, ClassAttri
     }
     
     
-    if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST)
+    if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.OBJECT_LIST)
     { 
         pw.println("std::vector<" + anAttribute.getType() + ">& " + aClass.getName()  +"::" + "get" + this.initialCap(anAttribute.getName()) + "() ");
         pw.println("{");
@@ -1024,11 +1024,11 @@ private void writeGetterMethod(PrintWriter pw, GeneratedClass aClass, ClassAttri
      * write out setter method
      * @param pw PrintWriter
      * @param aClass GeneratedClass
-     * @param anAttribute a ClassAttribute
+     * @param anAttribute a GeneratedClassAttribute
      */
-    public void writeSetterMethod(PrintWriter pw, GeneratedClass aClass, ClassAttribute anAttribute)
+    public void writeSetterMethod(PrintWriter pw, GeneratedClass aClass, GeneratedClassAttribute anAttribute)
 {
-    if((anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE) && (anAttribute.getIsDynamicListLengthField() == false))
+    if((anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE) && (anAttribute.getIsDynamicListLengthField() == false))
     { 
         pw.println("void " + aClass.getName()  + "::" + "set" + this.initialCap(anAttribute.getName()) + "(" + types.get(anAttribute.getType()) + " pX)");
         pw.println("{");
@@ -1038,7 +1038,7 @@ private void writeGetterMethod(PrintWriter pw, GeneratedClass aClass, ClassAttri
         pw.println("}\n");
     }
     
-    if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF)
+    if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.CLASSREF)
     { 
         pw.println("void " + aClass.getName()  + "::" + "set" + this.initialCap(anAttribute.getName()) + "(const " + anAttribute.getType() + " &pX)");
         pw.println("{");
@@ -1046,7 +1046,7 @@ private void writeGetterMethod(PrintWriter pw, GeneratedClass aClass, ClassAttri
         pw.println("}\n");
     }
     
-    if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
+    if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
     { 
         pw.println("void " + aClass.getName()  + "::" + "set" + this.initialCap(anAttribute.getName()) + "(const " + this.getArrayType(anAttribute.getType()) + "* x)");
         pw.println("{");
@@ -1075,7 +1075,7 @@ private void writeGetterMethod(PrintWriter pw, GeneratedClass aClass, ClassAttri
     }
     
     
-    if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST)
+    if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.OBJECT_LIST)
     { 
         pw.println("void " + aClass.getName()  + "::" + "set" + this.initialCap(anAttribute.getName()) + "(const std::vector<" + anAttribute.getType() + ">& pX)");
         pw.println("{");
@@ -1105,21 +1105,21 @@ public void writeGetMarshalledSizeMethod(PrintWriter pw, GeneratedClass aClass)
     
     for(int idx = 0; idx < ivars.size(); idx++)
     {
-        ClassAttribute anAttribute = (ClassAttribute)ivars.get(idx);
+        GeneratedClassAttribute anAttribute = (GeneratedClassAttribute)ivars.get(idx);
     
-        if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE)
+        if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE)
         {
             pw.print("   marshalSize = marshalSize + ");
             pw.println(primitiveSizes.get(anAttribute.getType()) + ";  // " + IVAR_PREFIX + anAttribute.getName());
         }
         
-        if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF)
+        if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.CLASSREF)
         {
             pw.print("   marshalSize = marshalSize + ");
             pw.println(IVAR_PREFIX + anAttribute.getName() + ".getMarshalledSize();  // " + IVAR_PREFIX + anAttribute.getName());
         }
         
-        if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
+        if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
         {
             pw.print("   marshalSize = marshalSize + ");
             // If this is a fixed list of primitives, it's the list size times the size of the primitive.
@@ -1134,7 +1134,7 @@ public void writeGetMarshalledSizeMethod(PrintWriter pw, GeneratedClass aClass)
             }
         }
         
-        if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST)
+        if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.OBJECT_LIST)
         {
             // If this is a dynamic list of primitives, it's the list size times the size of the primitive.
             if(anAttribute.getUnderlyingTypeIsPrimitive() == true)
@@ -1187,8 +1187,8 @@ private boolean classHasOnlyPrimitives(GeneratedClass aClass)
     // Flip flag to false if anything is not a primitive.
     for(int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
     {
-        ClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
-        if(anAttribute.getAttributeKind() != ClassAttribute.ClassAttributeType.PRIMITIVE)
+        GeneratedClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
+        if(anAttribute.getAttributeKind() != GeneratedClassAttribute.ClassAttributeType.PRIMITIVE)
         {
             isAllPrimitive = false;
             System.out.println("Not primitive for class " + aClass.getName() + " and attribute " + anAttribute.getName() + " " + anAttribute.getAttributeKind());

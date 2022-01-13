@@ -4,7 +4,7 @@
  */
 package edu.nps.moves.dis7.source.generator.pdus;
 
-import edu.nps.moves.dis7.source.generator.pdus.ClassAttribute.ClassAttributeType;
+import edu.nps.moves.dis7.source.generator.pdus.GeneratedClassAttribute.ClassAttributeType;
 import java.io.*;
 import java.util.*;
 import javax.xml.parsers.*;
@@ -102,7 +102,7 @@ public class GeneratePdus  // TODO rename? perhaps GeneratePdusByProgrammingLang
     private GeneratedClass currentGeneratedClass = null;
     
     /** As we parse the XML document, this is the current attribute */
-    private ClassAttribute currentClassAttribute = null;
+    private GeneratedClassAttribute currentClassAttribute = null;
     
     // The languages may have language-specific properties, such as libraries that they
     // depend on. Each language has its own set of properties.
@@ -334,12 +334,12 @@ public class GeneratePdus  // TODO rename? perhaps GeneratePdusByProgrammingLang
 
             // Trip through every class attribute in this class and confirm that the type is either a primitive or references
             // another class defined in the document.
-            for(ClassAttribute anAttribute : aClass.getClassAttributes())
+            for(GeneratedClassAttribute anAttribute : aClass.getClassAttributes())
             {
-                ClassAttribute.ClassAttributeType kindOfNode = anAttribute.getAttributeKind();
+                GeneratedClassAttribute.ClassAttributeType kindOfNode = anAttribute.getAttributeKind();
                 
                 // The primitive type is on the known list of primitives.
-                if(kindOfNode == ClassAttribute.ClassAttributeType.PRIMITIVE)
+                if(kindOfNode == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE)
                 {
                     if(primitiveTypes.contains(anAttribute.getType()) == false)
                     {
@@ -348,7 +348,7 @@ public class GeneratePdus  // TODO rename? perhaps GeneratePdusByProgrammingLang
                     }
                 }
                 // The class referenced is available elsewehere in the document
-                if(kindOfNode == ClassAttribute.ClassAttributeType.CLASSREF)
+                if(kindOfNode == GeneratedClassAttribute.ClassAttributeType.CLASSREF)
                 {
                     if(generatedClassNames.get(anAttribute.getType()) == null)
                     {
@@ -363,7 +363,7 @@ public class GeneratePdus  // TODO rename? perhaps GeneratePdusByProgrammingLang
             // Run through the list of initial values, ensuring that the initial values mentioned actually exist as attributes
             // somewhere up the inheritance chain.
             
-            for(InitialValue anInitialValue : aClass.getInitialValues()) {          
+            for(GeneratedInitialValue anInitialValue : aClass.getInitialValues()) {          
                 GeneratedClass currentClass = aClass;
                 boolean found = false;
                 
@@ -371,7 +371,7 @@ public class GeneratePdus  // TODO rename? perhaps GeneratePdusByProgrammingLang
                 while(currentClass != null)
                 {
                     List thisClassesAttributes = currentClass.getClassAttributes();
-                    for(ClassAttribute anAttribute : currentClass.getClassAttributes()) {
+                    for(GeneratedClassAttribute anAttribute : currentClass.getClassAttributes()) {
                         //System.out.println("--checking " + anAttribute.getName() + " against inital value " + anInitialValue.getVariable());
                         if(anInitialValue.getVariable().equals(anAttribute.getName()))
                         {
@@ -512,7 +512,7 @@ public class GeneratePdus  // TODO rename? perhaps GeneratePdusByProgrammingLang
 
         private void handleAttribute(Attributes attributes)
         {
-            currentClassAttribute = new ClassAttribute();
+            currentClassAttribute = new GeneratedClassAttribute();
 
             // Attributes on the attribute tag.
             for (int idx = 0; idx < attributes.getLength(); idx++) {
@@ -553,7 +553,7 @@ public class GeneratePdus  // TODO rename? perhaps GeneratePdusByProgrammingLang
                 }
             }
             if ((anAttributeName != null) && (anInitialValue != null)) {
-                InitialValue aValue = new InitialValue(anAttributeName, anInitialValue);
+                GeneratedInitialValue aValue = new GeneratedInitialValue(anAttributeName, anInitialValue);
                 currentGeneratedClass.addInitialValue(aValue);
             }
         }
@@ -619,7 +619,7 @@ public class GeneratePdus  // TODO rename? perhaps GeneratePdusByProgrammingLang
         
         private void handleStaticIvar(Attributes attributes)
         {
-            currentClassAttribute.setAttributeKind(ClassAttribute.ClassAttributeType.STATIC_IVAR);
+            currentClassAttribute.setAttributeKind(GeneratedClassAttribute.ClassAttributeType.STATIC_IVAR);
             for (int idx = 0; idx < attributes.getLength(); idx++) {
                 switch (attributes.getQName(idx).toLowerCase()) {
                     case TYPE:
@@ -654,14 +654,14 @@ public class GeneratePdus  // TODO rename? perhaps GeneratePdusByProgrammingLang
                         break;
                 }
             }
-            BitField bitField = new BitField(flagName, flagMask, flagComment, currentClassAttribute);
+            GeneratedBitField bitField = new GeneratedBitField(flagName, flagMask, flagComment, currentClassAttribute);
             currentClassAttribute.bitFieldList.add(bitField);
         }
         
         private void handlePrimitive(Attributes attributes)
         {
-            if (currentClassAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.UNSET) 
-                currentClassAttribute.setAttributeKind(ClassAttribute.ClassAttributeType.PRIMITIVE);
+            if (currentClassAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.UNSET) 
+                currentClassAttribute.setAttributeKind(GeneratedClassAttribute.ClassAttributeType.PRIMITIVE);
          
             currentClassAttribute.setUnderlyingTypeIsPrimitive(true);
 
@@ -681,8 +681,8 @@ public class GeneratePdus  // TODO rename? perhaps GeneratePdusByProgrammingLang
         {
             // The classref may occur inside a List element; if that's the case, we want to 
             // respect the existing list type.
-            if (currentClassAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.UNSET) {
-                currentClassAttribute.setAttributeKind(ClassAttribute.ClassAttributeType.CLASSREF);
+            if (currentClassAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.UNSET) {
+                currentClassAttribute.setAttributeKind(GeneratedClassAttribute.ClassAttributeType.CLASSREF);
                 currentClassAttribute.setUnderlyingTypeIsPrimitive(false);
             }
 
@@ -703,8 +703,8 @@ public class GeneratePdus  // TODO rename? perhaps GeneratePdusByProgrammingLang
         
         private void handleSisoEnum(Attributes attributes)
         {
-            if(currentClassAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.UNSET) {
-                currentClassAttribute.setAttributeKind(ClassAttribute.ClassAttributeType.SISO_ENUM);
+            if(currentClassAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.UNSET) {
+                currentClassAttribute.setAttributeKind(GeneratedClassAttribute.ClassAttributeType.SISO_ENUM);
                 currentClassAttribute.setUnderlyingTypeIsPrimitive(false);
             }
             else
@@ -729,8 +729,8 @@ public class GeneratePdus  // TODO rename? perhaps GeneratePdusByProgrammingLang
 
        private void handleSisoBitfield(Attributes attributes)
         {
-            if(currentClassAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.UNSET) {
-                currentClassAttribute.setAttributeKind(ClassAttribute.ClassAttributeType.SISO_BITFIELD);
+            if(currentClassAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.UNSET) {
+                currentClassAttribute.setAttributeKind(GeneratedClassAttribute.ClassAttributeType.SISO_BITFIELD);
                 currentClassAttribute.setUnderlyingTypeIsPrimitive(false);
             }
 
@@ -758,13 +758,13 @@ public class GeneratePdus  // TODO rename? perhaps GeneratePdusByProgrammingLang
                     case LENGTH:
                         switch (attributes.getValue(idx)) {
                             case "16":
-                                currentClassAttribute.setAttributeKind(ClassAttribute.ClassAttributeType.PADTO16);
+                                currentClassAttribute.setAttributeKind(GeneratedClassAttribute.ClassAttributeType.PADTO16);
                                 break;
                             case "32":
-                                currentClassAttribute.setAttributeKind(ClassAttribute.ClassAttributeType.PADTO32);
+                                currentClassAttribute.setAttributeKind(GeneratedClassAttribute.ClassAttributeType.PADTO32);
                                 break;
                             case "64":
-                                currentClassAttribute.setAttributeKind(ClassAttribute.ClassAttributeType.PADTO64);
+                                currentClassAttribute.setAttributeKind(GeneratedClassAttribute.ClassAttributeType.PADTO64);
                                 break;
                             default:
                                 System.err.println("Unrecognized value for padtoboundary length attribute: "+attributes.getValue(idx));
@@ -779,7 +779,7 @@ public class GeneratePdus  // TODO rename? perhaps GeneratePdusByProgrammingLang
        
         private void handleObjectList(Attributes attributes)
         {
-            currentClassAttribute.setAttributeKind(ClassAttribute.ClassAttributeType.OBJECT_LIST);
+            currentClassAttribute.setAttributeKind(GeneratedClassAttribute.ClassAttributeType.OBJECT_LIST);
             for (int idx = 0; idx < attributes.getLength(); idx++) {
                 // Variable list length fields require a name of another field that contains how many
                 // list items there are. This is used in unmarshalling.
@@ -795,7 +795,7 @@ public class GeneratePdus  // TODO rename? perhaps GeneratePdusByProgrammingLang
                     boolean atFound = false;
 
                     for (int jdx = 0; jdx < ats.size(); jdx++) {
-                        ClassAttribute at = (ClassAttribute) ats.get(jdx);
+                        GeneratedClassAttribute at = (GeneratedClassAttribute) ats.get(jdx);
                         if (at.getName().equals(attributes.getValue(idx))) {
                             at.setIsDynamicListLengthField(true);
                             at.setDynamicListClassAttribute(currentClassAttribute);
@@ -814,7 +814,7 @@ public class GeneratePdus  // TODO rename? perhaps GeneratePdusByProgrammingLang
         boolean atFound = false;
 
         for (int jdx = 0; jdx < ats.size(); jdx++) {
-          ClassAttribute at = (ClassAttribute) ats.get(jdx);
+          GeneratedClassAttribute at = (GeneratedClassAttribute) ats.get(jdx);
           if (at.getName().equals(attributes.getValue(idx))) {
             at.setIsDynamicListLengthField(lstType == ClassAttributeType.OBJECT_LIST);
             at.setIsPrimitiveListLengthField(lstType == ClassAttributeType.PRIMITIVE_LIST);
@@ -831,7 +831,7 @@ public class GeneratePdus  // TODO rename? perhaps GeneratePdusByProgrammingLang
       
       private void handlePrimitiveList(Attributes attributes)
       {
-        currentClassAttribute.setAttributeKind(ClassAttribute.ClassAttributeType.PRIMITIVE_LIST);
+        currentClassAttribute.setAttributeKind(GeneratedClassAttribute.ClassAttributeType.PRIMITIVE_LIST);
         
         for (int idx = 0; idx < attributes.getLength(); idx++) {
           String nm = attributes.getQName(idx).toLowerCase();

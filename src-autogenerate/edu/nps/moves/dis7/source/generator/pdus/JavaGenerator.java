@@ -4,7 +4,7 @@
  */
 package edu.nps.moves.dis7.source.generator.pdus;
 
-import edu.nps.moves.dis7.source.generator.pdus.ClassAttribute.ClassAttributeType;
+import edu.nps.moves.dis7.source.generator.pdus.GeneratedClassAttribute.ClassAttributeType;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -542,8 +542,8 @@ public class JavaGenerator extends Generator
             readTemplates();
         
         pw.println(String.format(domainTemplate1));
-        for (ClassAttribute attr : aClass.getClassAttributes()) {
-            if(attr.getAttributeKind().equals(ClassAttribute.ClassAttributeType.SISO_ENUM)) {
+        for (GeneratedClassAttribute attr : aClass.getClassAttributes()) {
+            if(attr.getAttributeKind().equals(GeneratedClassAttribute.ClassAttributeType.SISO_ENUM)) {
                 pw.println(String.format(domainTemplate2,attr.getType(),attr.getComment()));
             }            
         }
@@ -675,7 +675,7 @@ public class JavaGenerator extends Generator
     {
         List ivars = aClass.getClassAttributes();
         //System.out.println("Ivars for class: " + aClass.getName());
-        for (ClassAttribute anAttribute : aClass.getClassAttributes()) {
+        for (GeneratedClassAttribute anAttribute : aClass.getClassAttributes()) {
             if (anAttribute.shouldSerialize == false) {
                 pw.println("    // attribute " + anAttribute.getName() + " marked as not serialized");
                 continue;
@@ -688,7 +688,7 @@ public class JavaGenerator extends Generator
             
             switch (anAttribute.attributeKind) {
                 case STATIC_IVAR:
-                    //if (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.STATIC_IVAR) {
+                    //if (anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.STATIC_IVAR) {
                     attributeType = types.getProperty(anAttribute.getType());
                     String value = anAttribute.getDefaultValue();
                     pw.print  ("   /** Default static instance variable */\n");
@@ -769,7 +769,7 @@ public class JavaGenerator extends Generator
                     pw.println("   " + fieldaccess + " List< " + attributeType + " > " + anAttribute.getName() + " = new ArrayList< " + attributeType + " >();\n ");
                     break;
 
-//            if((anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.SISO_ENUM)) {
+//            if((anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.SISO_ENUM)) {
 //                String className = anAttribute.getType();
 //                if(anAttribute.getComment() != null)
 //                    pw.println("   /** " + anAttribute.getComment() + " */");
@@ -931,7 +931,7 @@ public class JavaGenerator extends Generator
         pw.println(" {");
 
         // Set primitive types with initial values
-        for (InitialValue anInit : aClass.getInitialValues()) {
+        for (GeneratedInitialValue anInit : aClass.getInitialValues()) {
 
             // This is irritating. we have to match up the attribute name with the type,
             // so we can do a cast. Otherwise java pukes because it wants to interpret all
@@ -943,7 +943,7 @@ public class JavaGenerator extends Generator
             
             String attName=null;
             while (currentClass != null) {
-                for (ClassAttribute anAttribute : currentClass.classAttributes) {
+                for (GeneratedClassAttribute anAttribute : currentClass.classAttributes) {
                     attName = anAttribute.getName();
                     //System.out.println("--checking " + anAttribute.getName() + " against inital value " + anInitialValue.getVariable());
                     if (anInit.getVariable().equals(anAttribute.getName())) {
@@ -997,7 +997,7 @@ public class JavaGenerator extends Generator
             printWriter.println("   marshalSize = super.getMarshalledSize();");
         }
 
-        for (ClassAttribute anAttribute : aClass.getClassAttributes()) {
+        for (GeneratedClassAttribute anAttribute : aClass.getClassAttributes()) {
             switch (anAttribute.getAttributeKind()) {
                 case PRIMITIVE:
                     // primitive cannot be null, no checking required
@@ -1046,7 +1046,7 @@ public class JavaGenerator extends Generator
     {
         pw.println();
 
-        for (ClassAttribute anAttribute : aClass.classAttributes) {
+        for (GeneratedClassAttribute anAttribute : aClass.classAttributes) {
 
             // The setter method should be of the form
             //
@@ -1098,7 +1098,7 @@ public class JavaGenerator extends Generator
                     else //todo, now obsolete with new definition of PRIMITIVE_LIST  // This is the count field for a dynamic list
                     {
                         String beanType = types.getProperty(anAttribute.getType());
-                        ClassAttribute listAttribute = anAttribute.getDynamicListClassAttribute();
+                        GeneratedClassAttribute listAttribute = anAttribute.getDynamicListClassAttribute();
 
                         pw.println("/** Utility method to get size of field");
                         pw.println(" * @return size of field */");
@@ -1245,7 +1245,7 @@ public class JavaGenerator extends Generator
         List attributes = aClass.getClassAttributes();
 
         for (int idx = 0; idx < attributes.size(); idx++) {
-            ClassAttribute anAttribute = (ClassAttribute) attributes.get(idx);
+            GeneratedClassAttribute anAttribute = (GeneratedClassAttribute) attributes.get(idx);
 
             switch (anAttribute.getAttributeKind()) {
 
@@ -1256,7 +1256,7 @@ public class JavaGenerator extends Generator
                     String bitfieldIvarName = anAttribute.getName();
 
                     for (int jdx = 0; jdx < bitfields.size(); jdx++) {
-                        BitField bitfield = (BitField) bitfields.get(jdx);
+                        GeneratedBitField bitfield = (GeneratedBitField) bitfields.get(jdx);
                         String capped = this.initialCap(bitfield.name);
                         String cappedIvar = this.initialCap(bitfieldIvarName);
                         int shiftBits = super.getBitsToShift(anAttribute, bitfield.mask);
@@ -1323,7 +1323,7 @@ public class JavaGenerator extends Generator
         pw.println("    try \n    {");
 
         // Loop through the class attributes, generating the output for each.
-        for (ClassAttribute anAttribute : aClass.getClassAttributes()) {
+        for (GeneratedClassAttribute anAttribute : aClass.getClassAttributes()) {
 
             if (anAttribute.shouldSerialize == false) {
                 pw.println("    // attribute " + anAttribute.getName() + " marked as not serialized");
@@ -1342,12 +1342,12 @@ public class JavaGenerator extends Generator
                 // If we're a normal primitivetype, marshal out directly; otherwise, marshall out
                 // the list length.
                 if (anAttribute.getIsDynamicListLengthField()) {
-                  ClassAttribute listAttribute = anAttribute.getDynamicListClassAttribute();
+                  GeneratedClassAttribute listAttribute = anAttribute.getDynamicListClassAttribute();
                   pw.println("       dos.write" + capped + "(" + listAttribute.getName() + ".size());");
                 }
                 
                 else if (anAttribute.getIsPrimitiveListLengthField()) {
-                  ClassAttribute listAttribute = anAttribute.getDynamicListClassAttribute();
+                  GeneratedClassAttribute listAttribute = anAttribute.getDynamicListClassAttribute();
                   pw.println("       dos.write" + capped + "(" + listAttribute.getName() + ".length);");
                 }
 
@@ -1455,7 +1455,7 @@ public class JavaGenerator extends Generator
         pw.println("    try \n    {");
 
         // Loop through the class attributes, generating the output for each.
-        for (ClassAttribute anAttribute : aClass.getClassAttributes()) {
+        for (GeneratedClassAttribute anAttribute : aClass.getClassAttributes()) {
 
             if (anAttribute.shouldSerialize == false) {
                 pw.println("    // attribute " + anAttribute.getName() + " marked as not serialized");
@@ -1592,7 +1592,7 @@ public class JavaGenerator extends Generator
         //pw.println("    try \n    {");
 
         // Loop through the class attributes, generating the output for each.
-        for (ClassAttribute anAttribute: aClass.getClassAttributes())
+        for (GeneratedClassAttribute anAttribute: aClass.getClassAttributes())
         {
             if(anAttribute.shouldSerialize == false) {
                  pw.println("    // attribute " + anAttribute.getName() + " marked as not serialized");
@@ -1716,7 +1716,7 @@ public class JavaGenerator extends Generator
         pw.println("    try");
         pw.println("    {");
         // Loop through the class attributes, generating the output for each.
-        for (ClassAttribute anAttribute : aClass.getClassAttributes()) { 
+        for (GeneratedClassAttribute anAttribute : aClass.getClassAttributes()) { 
 
             if(anAttribute.shouldSerialize == false) {
                  pw.println("        // attribute " + anAttribute.getName() + " marked as not serialized");
@@ -1891,7 +1891,7 @@ public class JavaGenerator extends Generator
         // to canonical XML.
         for (int idx = 0; idx < ivars.size(); idx++)
         {
-            ClassAttribute anAttribute = (ClassAttribute)ivars.get(idx);
+            GeneratedClassAttribute anAttribute = (GeneratedClassAttribute)ivars.get(idx);
     
             if(anAttribute.shouldSerialize == false)
             {
@@ -1900,7 +1900,7 @@ public class JavaGenerator extends Generator
             }
         
             // Write out a method call to serialize a primitive type
-            if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE)
+            if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE)
             {
                 // If we're a normal primitive type, marshal out directly; otherwise, marshall out
                 // the list length.
@@ -1910,7 +1910,7 @@ public class JavaGenerator extends Generator
                 }
                else
                {
-                   ClassAttribute listAttribute = anAttribute.getDynamicListClassAttribute();
+                   GeneratedClassAttribute listAttribute = anAttribute.getDynamicListClassAttribute();
                    //pw.println("       dos.write" + capped + "( (" + marshalType + ")" + listAttribute.getName() + ".size());");
                }
                 
@@ -1919,7 +1919,7 @@ public class JavaGenerator extends Generator
  */      
         /*
             // Write out a method call to serialize a class.
-            if( anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF )
+            if( anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.CLASSREF )
             {
                 String marshalType = anAttribute.getType();
             
@@ -1927,7 +1927,7 @@ public class JavaGenerator extends Generator
             }
             
             // Write out the method call to marshal a fixed length list, aka an array.
-            if( (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.FIXED_LIST) )
+            if( (anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.FIXED_LIST) )
             {
                 pw.println();
                 pw.println("       for (int idx = 0; idx < " + anAttribute.getName() + ".length; idx++)");
@@ -1961,7 +1961,7 @@ public class JavaGenerator extends Generator
             // }
             //    
             
-            if( (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.VARIABLE_LIST) )
+            if( (anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.VARIABLE_LIST) )
             {
                 pw.println();
                 pw.println("       for (int idx = 0; idx < " + anAttribute.getName() + ".size(); idx++)");
@@ -2075,7 +2075,7 @@ public class JavaGenerator extends Generator
             pw.println();
 
           for (int idx = 0; idx < aClass.getClassAttributes().size(); idx++) {
-            ClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
+            GeneratedClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
             if (anAttribute.isHidden())
               continue;
             String attname = anAttribute.getName();
@@ -2142,7 +2142,7 @@ public class JavaGenerator extends Generator
         pw.println("    StringBuilder sb2 = new StringBuilder();");
         pw.println("    sb.append(getClass().getSimpleName());");
 
-        ArrayList<ClassAttribute> objlists = new ArrayList<>();
+        ArrayList<GeneratedClassAttribute> objlists = new ArrayList<>();
 
         aClass.getClassAttributes().forEach(attr -> {
             if (!attr.isHidden()) {
@@ -2167,7 +2167,7 @@ public class JavaGenerator extends Generator
         pw.println(" }");
     }
   
-    private void writePrimitiveList(PrintWriter pw, ClassAttribute attr)
+    private void writePrimitiveList(PrintWriter pw, GeneratedClassAttribute attr)
     {
         pw.print  ("    sb.append(\" ");
         pw.print  (attr.getName());
@@ -2184,7 +2184,7 @@ public class JavaGenerator extends Generator
 //      pw.println(")).append(\"\\n\");");
     }
   
-    private void writeList(PrintWriter pw, ClassAttribute attr)
+    private void writeList(PrintWriter pw, GeneratedClassAttribute attr)
     {
         pw.print  ("    sb.append(\" ");
         pw.print  (attr.getName());
@@ -2204,7 +2204,7 @@ public class JavaGenerator extends Generator
 //      pw.println(".forEach(r->{ sb.append(r.getClass().getSimpleName()).append(\": \").append(r).append(\"\\n\");});");
     }
     
-    private void writeOneToString(PrintWriter pw, ClassAttribute attr)
+    private void writeOneToString(PrintWriter pw, GeneratedClassAttribute attr)
     {
         pw.print  ("    sb.append(\" ");
         pw.print  (attr.getName());

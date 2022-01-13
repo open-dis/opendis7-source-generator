@@ -134,7 +134,7 @@ public abstract class Generator
      * @param mask a character set for the mask value
      * @return number of bits to shift
      */
-    protected int getBitsToShift(ClassAttribute anAttribute, String mask)
+    protected int getBitsToShift(GeneratedClassAttribute anAttribute, String mask)
     {
         String fieldType = anAttribute.getType();
         

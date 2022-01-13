@@ -319,11 +319,11 @@ public class JavascriptGenerator extends Generator
         }
         while(true);
         
-        List<ClassAttribute> allAttributes = new ArrayList<>();
+        List<GeneratedClassAttribute> allAttributes = new ArrayList<>();
         for(int jdx = classHierarchy.size() -1; jdx >= 0; jdx--)
         {
             GeneratedClass thisLevel = classHierarchy.get(jdx);
-            List<ClassAttribute> ivars = thisLevel.getClassAttributes();
+            List<GeneratedClassAttribute> ivars = thisLevel.getClassAttributes();
             allAttributes.addAll(ivars);
         }
        
@@ -335,7 +335,7 @@ public class JavascriptGenerator extends Generator
         
         for(int idx = 0; idx < allAttributes.size(); idx++)
         {
-            ClassAttribute anAttribute = allAttributes.get(idx);
+            GeneratedClassAttribute anAttribute = allAttributes.get(idx);
             
             // Some attributes can be marked as do-not-marshal
             if(anAttribute.shouldSerialize == false)
@@ -344,7 +344,7 @@ public class JavascriptGenerator extends Generator
                 continue;
             }
             // Write out a method call to deserialize a primitive type
-            if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE)
+            if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE)
             {
                 String marshalType = marshalTypes.getProperty(anAttribute.getType());
                 String capped = this.initialCap(marshalType);
@@ -364,13 +364,13 @@ public class JavascriptGenerator extends Generator
             }
             
             // Write out a method call to encode a class.
-            if( anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF)
+            if( anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.CLASSREF)
             {                
                 pw.println("       this." + anAttribute.getName() + ".encodeToBinary(outputStream);" );
             }
             
             // Write out the method call to encode a fixed length list, aka an array.
-            if( (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE_LIST) )
+            if( (anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE_LIST) )
             {
                 pw.println("       for(var idx = 0; idx < " + anAttribute.getListLength() + "; idx++)");
                 pw.println("       {");
@@ -391,7 +391,7 @@ public class JavascriptGenerator extends Generator
             }
             
              // Variable length list
-            if( (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST) )
+            if( (anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.OBJECT_LIST) )
             {
                 pw.println("       for(var idx = 0; idx < this." + anAttribute.getName() + ".length; idx++)");
                 pw.println("       {");
@@ -442,11 +442,11 @@ public class JavascriptGenerator extends Generator
         }
         while(true);
         
-        List<ClassAttribute> allAttributes = new ArrayList<>();
+        List<GeneratedClassAttribute> allAttributes = new ArrayList<>();
         for(int jdx = classHierarchy.size() -1; jdx >= 0; jdx--)
         {
             GeneratedClass thisLevel = classHierarchy.get(jdx);
-            List<ClassAttribute> ivars = thisLevel.getClassAttributes();
+            List<GeneratedClassAttribute> ivars = thisLevel.getClassAttributes();
             allAttributes.addAll(ivars);
         }
                 
@@ -456,7 +456,7 @@ public class JavascriptGenerator extends Generator
         
         for(int idx = 0; idx < allAttributes.size(); idx++)
         {
-            ClassAttribute anAttribute = allAttributes.get(idx);
+            GeneratedClassAttribute anAttribute = allAttributes.get(idx);
             
             // Some attributes can be marked as do-not-marshal
             if(anAttribute.shouldSerialize == false)
@@ -466,7 +466,7 @@ public class JavascriptGenerator extends Generator
             }
             
             // Write out a method call to deserialize a primitive type
-            if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE)
+            if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE)
             {
                 String marshalType = unmarshalTypes.getProperty(anAttribute.getType());
                 String capped = this.initialCap(marshalType);
@@ -483,7 +483,7 @@ public class JavascriptGenerator extends Generator
             }
             
             // Write out a method call to deserialize a class.
-            if( anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF)
+            if( anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.CLASSREF)
             {
                 String marshalType = anAttribute.getType();
                 
@@ -492,7 +492,7 @@ public class JavascriptGenerator extends Generator
             
                 
             // Write out the method call to unmarshal a fixed length list, aka an array.
-            if( (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE_LIST) )
+            if( (anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE_LIST) )
             {
                
                 
@@ -515,7 +515,7 @@ public class JavascriptGenerator extends Generator
             }
             
             // Variable length list
-            if( (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST) )
+            if( (anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.OBJECT_LIST) )
             {
                 pw.println("       for(var idx = 0; idx < this." + anAttribute.getCountFieldName() + "; idx++)");
                 pw.println("       {");
@@ -599,7 +599,7 @@ public class JavascriptGenerator extends Generator
                 
         for(int idx = 0; idx < attributes.size(); idx++)
         {
-            ClassAttribute anAttribute = (ClassAttribute)attributes.get(idx);
+            GeneratedClassAttribute anAttribute = (GeneratedClassAttribute)attributes.get(idx);
 
             switch(anAttribute.getAttributeKind())
             {
@@ -611,7 +611,7 @@ public class JavascriptGenerator extends Generator
    
                     for(int jdx = 0; jdx < bitfields.size(); jdx++)
                     {
-                        BitField bitfield = (BitField)bitfields.get(jdx);
+                        GeneratedBitField bitfield = (GeneratedBitField)bitfields.get(jdx);
                         String capped = this.initialCap(anAttribute.getName());
                         String methodBase = capped + "_" + bitfield.name;
                         int shiftBits = super.getBitsToShift(anAttribute, bitfield.mask);
@@ -686,10 +686,10 @@ public class JavascriptGenerator extends Generator
         
         for(int idx = 0; idx < ivars.size(); idx++)
         {
-            ClassAttribute anAttribute = (ClassAttribute)ivars.get(idx);
+            GeneratedClassAttribute anAttribute = (GeneratedClassAttribute)ivars.get(idx);
             
             // This attribute is a primitive. 
-            if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE)
+            if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE)
             {
                 // The primitive type--we need to do a lookup from the abstract type in the
                 // xml to the javascript-specific type.
@@ -723,7 +723,7 @@ public class JavascriptGenerator extends Generator
             // /** This is a description */
             // protected AClass foo = new AClass();
             //
-            if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF)
+            if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.CLASSREF)
             {
                 String attributeType = anAttribute.getType();
                 if(anAttribute.getComment() != null)
@@ -736,7 +736,7 @@ public class JavascriptGenerator extends Generator
         
             // The attribute is a fixed list, ie an array of some type--maybe primitve, maybe a class.
             
-            if( (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE_LIST) )
+            if( (anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE_LIST) )
             {
                 String attributeType = anAttribute.getType();
                 int listLength = anAttribute.getListLength();
@@ -763,7 +763,7 @@ public class JavascriptGenerator extends Generator
             }
             
             // The attribute is a variable list of some kind. 
-            if( (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST) )
+            if( (anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.OBJECT_LIST) )
             {
                 String attributeType = anAttribute.getType();
                 int listLength = anAttribute.getListLength();
@@ -799,7 +799,7 @@ public class JavascriptGenerator extends Generator
           List initialValues = aClass.getInitialValues();
           for(int jdx = 0; jdx < initialValues.size(); jdx++)
           {
-              InitialValue aVal = (InitialValue)initialValues.get(jdx);
+              GeneratedInitialValue aVal = (GeneratedInitialValue)initialValues.get(jdx);
               if(aVal.getVariable().equalsIgnoreCase(attributeName))
               {
                   //if(log) System.out.println("Variable name:" + aVal.getVariable());

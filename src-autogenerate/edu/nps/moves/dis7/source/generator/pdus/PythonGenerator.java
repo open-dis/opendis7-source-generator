@@ -147,10 +147,10 @@ public class PythonGenerator extends Generator
         List ivars = aClass.getClassAttributes();
         for(int idx = 0; idx < ivars.size(); idx++)
         {
-            ClassAttribute anAttribute = (ClassAttribute)ivars.get(idx);
+            GeneratedClassAttribute anAttribute = (GeneratedClassAttribute)ivars.get(idx);
             
             // This attribute is a primitive. 
-            if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE)
+            if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE)
             {
                 
                 String defaultValue = anAttribute.getDefaultValue();
@@ -167,7 +167,7 @@ public class PythonGenerator extends Generator
             } // end of primitive attribute type
             
             // This is a class
-            if(anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF)
+            if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.CLASSREF)
             {
                 String attributeType = anAttribute.getType();
                 
@@ -180,7 +180,7 @@ public class PythonGenerator extends Generator
             
             // The attribute is a fixed list, ie an array of some type--maybe primitve, maybe a class.
             
-            if( (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE_LIST) )
+            if( (anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE_LIST) )
             {
                 String attributeType = anAttribute.getType();
                 int listLength = anAttribute.getListLength();
@@ -219,7 +219,7 @@ public class PythonGenerator extends Generator
             }
             
             // The attribute is a variable list of some kind. 
-            if( (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST) )
+            if( (anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.OBJECT_LIST) )
             {
                 String attributeType = anAttribute.getType();
                 int listLength = anAttribute.getListLength();
@@ -239,7 +239,7 @@ public class PythonGenerator extends Generator
         List inits = aClass.getInitialValues();
         for(int idx = 0; idx < inits.size(); idx++)
         {
-            InitialValue anInit = (InitialValue)inits.get(idx);
+            GeneratedInitialValue anInit = (GeneratedInitialValue)inits.get(idx);
             GeneratedClass currentClass = aClass;
             boolean found = false;
         
@@ -248,7 +248,7 @@ public class PythonGenerator extends Generator
                     List thisClassesAttributes = currentClass.getClassAttributes();
                     for(int jdx = 0; jdx < thisClassesAttributes.size(); jdx++)
                     {
-                        ClassAttribute anAttribute = (ClassAttribute)thisClassesAttributes.get(jdx);
+                        GeneratedClassAttribute anAttribute = (GeneratedClassAttribute)thisClassesAttributes.get(jdx);
                         //System.out.println("--checking " + anAttribute.getName() + " against inital value " + anInitialValue.getVariable());
                         if(anInit.getVariable().equals(anAttribute.getName()))
                         {
@@ -299,7 +299,7 @@ public class PythonGenerator extends Generator
         List attributes = aClass.getClassAttributes();
         for(int idx = 0; idx < attributes.size(); idx++)
         {
-            ClassAttribute anAttribute = (ClassAttribute)attributes.get(idx);
+            GeneratedClassAttribute anAttribute = (GeneratedClassAttribute)attributes.get(idx);
             
             // Some fields may be declared but shouldn't be serialized
             if(anAttribute.shouldSerialize == false)
@@ -318,7 +318,7 @@ public class PythonGenerator extends Generator
                      
                      if(anAttribute.getIsDynamicListLengthField() == true)
                      {
-                          ClassAttribute listAttribute = anAttribute.getDynamicListClassAttribute();
+                          GeneratedClassAttribute listAttribute = anAttribute.getDynamicListClassAttribute();
                           pw.println(INDENT + INDENT + "outputStream.write_" + marshalType + "( len(self." + listAttribute.getName() + "));");
                      }
                      else
@@ -401,7 +401,7 @@ public class PythonGenerator extends Generator
         List attributes = aClass.getClassAttributes();
         for(int idx = 0; idx < attributes.size(); idx++)
         {
-            ClassAttribute anAttribute = (ClassAttribute)attributes.get(idx);
+            GeneratedClassAttribute anAttribute = (GeneratedClassAttribute)attributes.get(idx);
             
             // Some fields may be declared but should not be serialized or
             // unserialized
@@ -497,7 +497,7 @@ public class PythonGenerator extends Generator
         
         for(int idx = 0; idx < attributes.size(); idx++)
         {
-            ClassAttribute anAttribute = (ClassAttribute)attributes.get(idx);
+            GeneratedClassAttribute anAttribute = (GeneratedClassAttribute)attributes.get(idx);
            
             
             switch(anAttribute.getAttributeKind())
@@ -510,7 +510,7 @@ public class PythonGenerator extends Generator
    
                     for(int jdx = 0; jdx < bitfields.size(); jdx++)
                     {
-                        BitField bitfield = (BitField)bitfields.get(jdx);
+                        GeneratedBitField bitfield = (GeneratedBitField)bitfields.get(jdx);
                         String capped = this.initialCap(bitfield.name);
                         int shiftBits = this.getBitsToShift(anAttribute, bitfield.mask);
                         

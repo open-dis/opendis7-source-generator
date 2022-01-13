@@ -384,14 +384,14 @@ public class CsharpGenerator extends Generator {
         List<String> referencedClasses = new ArrayList<>();
 
         for (int idx = 0; idx < ivars.size(); idx++) {
-            ClassAttribute anAttribute = (ClassAttribute) ivars.get(idx);
+            GeneratedClassAttribute anAttribute = (GeneratedClassAttribute) ivars.get(idx);
 
             //String attributeType = types.getProperty(anAttribute.getType());
 
-            //if (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE)
+            //if (anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE)
             //{
 
-            if (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF && useDotNet) {
+            if (anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.CLASSREF && useDotNet) {
                 if (!referencedClasses.contains(anAttribute.getType())) {
                     referencedClasses.add(anAttribute.getType());
                     pw.println(indent, "[XmlInclude(typeof(" + anAttribute.getType() + "))]");
@@ -430,10 +430,10 @@ public class CsharpGenerator extends Generator {
     private void writeIvars(PrintStringBuffer pw, GeneratedClass aClass, int indent) {
         List ivars = aClass.getClassAttributes();
         for (int idx = 0; idx < ivars.size(); idx++) {
-            ClassAttribute anAttribute = (ClassAttribute) ivars.get(idx);
+            GeneratedClassAttribute anAttribute = (GeneratedClassAttribute) ivars.get(idx);
 
             // This attribute is a primitive.
-            if (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE) {
+            if (anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE) {
                 // The primitive type--we need to do a lookup from the abstract type in the
                 // xml to the C#-specific type. The output should look something like
                 //
@@ -466,7 +466,7 @@ public class CsharpGenerator extends Generator {
             // /** This is a description */
             // protected AClass foo = new AClass();
             //
-            if (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF)
+            if (anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.CLASSREF)
             {
                 String attributeType = anAttribute.getType();
                 if (anAttribute.getComment() != null)
@@ -481,7 +481,7 @@ public class CsharpGenerator extends Generator {
 
             // The attribute is a fixed list, ie an array of some type--maybe primitve, maybe a class.
 
-            if ((anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE_LIST))
+            if ((anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE_LIST))
             {
                 String attributeType = anAttribute.getType();
                 int listLength = anAttribute.getListLength();
@@ -507,7 +507,7 @@ public class CsharpGenerator extends Generator {
             }
 
             // The attribute is a variable list of some kind.
-            if ((anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST)) {
+            if ((anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.OBJECT_LIST)) {
                 if (anAttribute.getComment() != null) {
                     pw.println(indent, "/// <summary>");
                     pw.println(indent, "/// " + anAttribute.getComment());
@@ -546,7 +546,7 @@ public class CsharpGenerator extends Generator {
         // Set primitive types with initial values
         List inits = aClass.getInitialValues();
         for (int idx = 0; idx < inits.size(); idx++) {
-            InitialValue anInit = (InitialValue) inits.get(idx);
+            GeneratedInitialValue anInit = (GeneratedInitialValue) inits.get(idx);
 
             // This is irritating. we have to match up the attribute name with the type,
             // so we can do a cast. Otherwise java pukes because it wants to interpret all
@@ -559,7 +559,7 @@ public class CsharpGenerator extends Generator {
             while (currentClass != null) {
                 List thisClassesAttributes = currentClass.getClassAttributes();
                 for (int jdx = 0; jdx < thisClassesAttributes.size(); jdx++) {
-                    ClassAttribute anAttribute = (ClassAttribute) thisClassesAttributes.get(jdx);
+                    GeneratedClassAttribute anAttribute = (GeneratedClassAttribute) thisClassesAttributes.get(jdx);
 
                     if (anInit.getVariable().equals(anAttribute.getName())) {
                         found = true;
@@ -584,9 +584,9 @@ public class CsharpGenerator extends Generator {
         // If we have fixed lists with object instances in them, initialize thos
 
         for (int idx = 0; idx < ivars.size(); idx++) {
-            ClassAttribute anAttribute = (ClassAttribute) ivars.get(idx);
+            GeneratedClassAttribute anAttribute = (GeneratedClassAttribute) ivars.get(idx);
 
-            if (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE_LIST) {
+            if (anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE_LIST) {
                 //System.out.println("Generating constructor fixed list for " + anAttribute.getName() + " listIsClass:" + anAttribute.listIsClass());
                 if (anAttribute.listIsClass() == true) {
                     pw.println(indent + 1, "");
@@ -630,19 +630,19 @@ public class CsharpGenerator extends Generator {
         }
 
         for (int idx = 0; idx < ivars.size(); idx++) {
-            ClassAttribute anAttribute = (ClassAttribute) ivars.get(idx);
+            GeneratedClassAttribute anAttribute = (GeneratedClassAttribute) ivars.get(idx);
 
-            if (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE) {
+            if (anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE) {
                 pw.print(indent + 1, "marshalSize += ");
                 pw.println(primitiveSizes.get(anAttribute.getType()) + ";  // this._" + anAttribute.getName());
             }
 
-            if (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF) {
+            if (anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.CLASSREF) {
                 pw.print(indent + 1, "marshalSize += ");
                 pw.println("this._" + anAttribute.getName() + ".GetMarshalledSize();  // this._" + anAttribute.getName());
             }
 
-            if (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE_LIST) {
+            if (anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE_LIST) {
                 //System.out.println("Generating fixed list for " + anAttribute.getName() + " listIsClass:" + anAttribute.listIsClass());
                 // If this is a fixed list of primitives, it's the list size times the size of the primitive.
                 if (anAttribute.getUnderlyingTypeIsPrimitive() == true) {
@@ -660,7 +660,7 @@ public class CsharpGenerator extends Generator {
                 }
             }
 
-            if (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST) {
+            if (anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.OBJECT_LIST) {
                 // If this is a dynamic list of primitives, it's the list size times the size of the primitive.
                 if (anAttribute.getUnderlyingTypeIsPrimitive() == true) {
                     pw.println(indent + 1, "this._" + anAttribute.getName() + ".Count " + " * " + primitiveSizes.get(anAttribute.getType()) + ";  // " + anAttribute.getName());
@@ -723,7 +723,7 @@ public class CsharpGenerator extends Generator {
         pw.println(indent, "}");
     }
 
-    private void writePropertySummary(PrintStringBuffer pw, ClassAttribute anAttribute, int indent) {
+    private void writePropertySummary(PrintStringBuffer pw, GeneratedClassAttribute anAttribute, int indent) {
         if (anAttribute.getComment() != null) { //PES 01/22/2009  Added for intellisense support
             pw.println(indent, "/// <summary>");
             pw.println(indent, "/// Gets or sets the " + anAttribute.getComment());
@@ -742,11 +742,11 @@ public class CsharpGenerator extends Generator {
      */
     public void writeBitflagMethods(PrintStringBuffer pw, GeneratedClass aClass, int indent)
     {
-        List<ClassAttribute> attributes = aClass.getClassAttributes();
+        List<GeneratedClassAttribute> attributes = aClass.getClassAttributes();
         
         for(int idx = 0; idx < attributes.size(); idx++)
         {
-            ClassAttribute anAttribute = attributes.get(idx);
+            GeneratedClassAttribute anAttribute = attributes.get(idx);
            
             
             switch(anAttribute.getAttributeKind())
@@ -759,7 +759,7 @@ public class CsharpGenerator extends Generator {
    
                     for(int jdx = 0; jdx < bitfields.size(); jdx++)
                     {
-                        BitField bitfield = (BitField)bitfields.get(jdx);
+                        GeneratedBitField bitfield = (GeneratedBitField)bitfields.get(jdx);
                         String capped = this.initialCap(bitfield.name);
                         int shiftBits = super.getBitsToShift(anAttribute, bitfield.mask);
                         String attributeType = types.getProperty(anAttribute.getType());
@@ -818,7 +818,7 @@ public class CsharpGenerator extends Generator {
         String classNameConflictModifier;
 
         for (int idx = 0; idx < ivars.size(); idx++) {
-            ClassAttribute anAttribute = (ClassAttribute) ivars.get(idx);
+            GeneratedClassAttribute anAttribute = (GeneratedClassAttribute) ivars.get(idx);
 
             classNameConflictModifier = ""; //Used to modify the get/set public accessor if class name is the same
 
@@ -828,7 +828,7 @@ public class CsharpGenerator extends Generator {
                 classNameConflictModifier = "_";
             }
 
-            if (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE) {
+            if (anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE) {
                 if (anAttribute.getIsDynamicListLengthField() == false) {
                     String beanType = types.getProperty(anAttribute.getType());
 
@@ -862,7 +862,7 @@ public class CsharpGenerator extends Generator {
                 } else // This is the count field for a dynamic list
                 {//PES 01/21/2009 added back in to account for getting length on dynamic lists
                     String beanType = types.getProperty(anAttribute.getType());
-                    ClassAttribute listAttribute = anAttribute.getDynamicListClassAttribute();
+                    GeneratedClassAttribute listAttribute = anAttribute.getDynamicListClassAttribute();
 
 //                    pw.println(indent, "/// <summary>");
 //                    pw.println(indent, "/// Note that setting this value will not change the marshalled value. The list whose length this describes is used for that purpose.");
@@ -905,7 +905,7 @@ public class CsharpGenerator extends Generator {
 
             // The attribute is a class of some sort. Generate getters and setters.
 
-            if (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF) {
+            if (anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.CLASSREF) {
 //                writePropertySummary(pw, anAttribute, indent);
 //                pw.println(indent, "public void set" + this.initialCap(anAttribute.getName()) + "(" + anAttribute.getType() + " p" + this.initialCap(anAttribute.getName()) + ")");
 //                pw.println(indent, "{ ");
@@ -941,7 +941,7 @@ public class CsharpGenerator extends Generator {
             }
 
             // The attribute is an array of some sort. Generate getters and setters.
-            if ((anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE_LIST)) {
+            if ((anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE_LIST)) {
                 if (anAttribute.getUnderlyingTypeIsPrimitive()) {
 //                    writePropertySummary(pw, anAttribute, indent);
 //                    pw.println(indent, "public void set" + this.initialCap(anAttribute.getName()) + "(" + types.getProperty(anAttribute.getType()) + "[] p" + this.initialCap(anAttribute.getName()) + ")");
@@ -1014,7 +1014,7 @@ public class CsharpGenerator extends Generator {
                 }
             }
 
-            if ((anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST)) {	//Set List to the actual type 01/21/2009 PES
+            if ((anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.OBJECT_LIST)) {	//Set List to the actual type 01/21/2009 PES
 
                 //PES 04/29/2009  Added to speed up unboxing of data, using byte[] vice unboxing of a Class ie. OneByteChunk
                 if (anAttribute.getType().equalsIgnoreCase("OneByteChunk")) {
@@ -1093,7 +1093,7 @@ public class CsharpGenerator extends Generator {
     }
 
     private void writeMarshalMethod(PrintStringBuffer pw, GeneratedClass aClass, int indent) {
-        List<ClassAttribute> ivars;
+        List<GeneratedClassAttribute> ivars;
         String baseclassName = aClass.getParentClass();
         String newKeyword = ""; //PES 032209 added to remove warning from C# compiler
 
@@ -1197,7 +1197,7 @@ public class CsharpGenerator extends Generator {
         //for me to determine if the OneByteChunk was used as it defaulted to a short data type.
         List<String> variableListfix = new ArrayList<>();
         for (int idx = 0; idx < ivars.size(); idx++) {
-            ClassAttribute anAttribute = ivars.get(idx);
+            GeneratedClassAttribute anAttribute = ivars.get(idx);
             if (anAttribute.getType().equalsIgnoreCase("OneByteChunk")) {
                 variableListfix.add(anAttribute.getName());
             }
@@ -1205,7 +1205,7 @@ public class CsharpGenerator extends Generator {
 
 
         for (int idx = 0; idx < ivars.size(); idx++) {
-            ClassAttribute anAttribute = ivars.get(idx);
+            GeneratedClassAttribute anAttribute = ivars.get(idx);
             
             // Some attributes can be marked as do-not-marshal
             if(anAttribute.shouldSerialize == false)
@@ -1215,7 +1215,7 @@ public class CsharpGenerator extends Generator {
             }
 
             // Write out a method call to serialize a primitive type
-            if (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE) {
+            if (anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE) {
                 String marshalType = marshalTypes.getProperty(anAttribute.getType());
                 String capped = this.camelCaseCapIgnoreSpaces(anAttribute.getType());
 
@@ -1224,7 +1224,7 @@ public class CsharpGenerator extends Generator {
                 if (anAttribute.getIsDynamicListLengthField() == false) {
                     pw.println(indent + 3, "dos.Write" + capped + "((" + marshalType + ")this._" + anAttribute.getName() + ");");
                 } else {
-                    ClassAttribute listAttribute = anAttribute.getDynamicListClassAttribute();
+                    GeneratedClassAttribute listAttribute = anAttribute.getDynamicListClassAttribute();
 
                     //This was determined not to be working due to the fact that the OneByteChunk class is never referenced for the
                     //data length field.  See above for work around
@@ -1246,14 +1246,14 @@ public class CsharpGenerator extends Generator {
             }
 
             // Write out a method call to serialize a class.
-            if (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF) {
+            if (anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.CLASSREF) {
                 String marshalType = anAttribute.getType();
 
                 pw.println(indent + 3, "this._" + anAttribute.getName() + ".Marshal(dos);");
             }
 
             // Write out the method call to marshal a fixed length list, aka an array.
-            if ((anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE_LIST)) {
+            if ((anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE_LIST)) {
                 pw.println();
                 pw.println(indent + 3, "for (int idx = 0; idx < this._" + anAttribute.getName() + ".Length; idx++)");
                 pw.println(indent + 3, "{");
@@ -1288,7 +1288,7 @@ public class CsharpGenerator extends Generator {
             // }
             //
 
-            if ((anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST)) {
+            if ((anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.OBJECT_LIST)) {
                 //PES 04/29/2009  Added to speed up unboxing of data, using byte[] vice unboxing of a Class ie. OneByteChunk
                 if (anAttribute.getType().equalsIgnoreCase("OneByteChunk")) {
                     pw.println(indent + 3, "dos.WriteByte (this._" + anAttribute.getName() + ");");
@@ -1333,7 +1333,7 @@ public class CsharpGenerator extends Generator {
     }
 
     private void writeUnmarshallMethod(PrintStringBuffer pw, GeneratedClass aClass, int indent) {
-        List<ClassAttribute> ivars;
+        List<GeneratedClassAttribute> ivars;
         String baseclassName;
 
         String newKeyword = ""; //PES 032209 added to remove warning from C# compiler
@@ -1368,7 +1368,7 @@ public class CsharpGenerator extends Generator {
 
         ivars = aClass.getClassAttributes();
         for (int idx = 0; idx < ivars.size(); idx++) {
-            ClassAttribute anAttribute = ivars.get(idx);
+            GeneratedClassAttribute anAttribute = ivars.get(idx);
 
             // Some attributes can be marked as do-not-marshal
             if(anAttribute.shouldSerialize == false)
@@ -1378,7 +1378,7 @@ public class CsharpGenerator extends Generator {
             }
             
             // Write out a method call to deserialize a primitive type
-            if (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE) {
+            if (anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE) {
                 String marshalType = unmarshalTypes.getProperty(anAttribute.getType());
                 String capped = this.camelCaseCapIgnoreSpaces(anAttribute.getType());
                 if (marshalType.equalsIgnoreCase("UnsignedByte")) {
@@ -1391,14 +1391,14 @@ public class CsharpGenerator extends Generator {
             }
 
             // Write out a method call to deserialize a class.
-            if (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF) {
+            if (anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.CLASSREF) {
                 String marshalType = anAttribute.getType();
 
                 pw.println(indent + 3, "this._" + anAttribute.getName() + ".Unmarshal(dis);");
             }
 
             // Write out the method call to unmarshal a fixed length list, aka an array.
-            if ((anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE_LIST)) {
+            if ((anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE_LIST)) {
                 pw.println(indent + 3, "for (int idx = 0; idx < this._" + anAttribute.getName() + ".Length; idx++)");
                 pw.println(indent + 3, "{");
 
@@ -1423,7 +1423,7 @@ public class CsharpGenerator extends Generator {
 
             // Unmarshall a variable length array.
 
-            if ((anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST)) {
+            if ((anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.OBJECT_LIST)) {
                 String marshalType = marshalTypes.getProperty(anAttribute.getType());
 
                 //PES 04/29/2009  Added to speed up unboxing of data, using byte[] vice unboxing of a Class ie. OneByteChunk
@@ -1474,7 +1474,7 @@ public class CsharpGenerator extends Generator {
     //printing out all the data, the format used is not nice.  This method however will display faster than using the XML reflection method provided.
     //Only used for debugging purposes until a better method could be developed.
     private void writeReflectionMethod(PrintStringBuffer pw, GeneratedClass aClass, int indent) {
-        List<ClassAttribute> ivars;
+        List<GeneratedClassAttribute> ivars;
         String tab = "\\t ";
 
         String newKeyword = ""; //PES 032209 added to remove warning from C# compiler
@@ -1521,17 +1521,17 @@ public class CsharpGenerator extends Generator {
         //for me to determine if the OneByteChunk was used as it defaulted to a short data type.
         List<String> variableListfix = new ArrayList<>();
         for (int idx = 0; idx < ivars.size(); idx++) {
-            ClassAttribute anAttribute = ivars.get(idx);
+            GeneratedClassAttribute anAttribute = ivars.get(idx);
             if (anAttribute.getType().equalsIgnoreCase("OneByteChunk")) {
                 variableListfix.add(anAttribute.getName());
             }
         }
 
         for (int idx = 0; idx < ivars.size(); idx++) {
-            ClassAttribute anAttribute = ivars.get(idx);
+            GeneratedClassAttribute anAttribute = ivars.get(idx);
 
             // Write out a method call to reflect a primitive type
-            if (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE) {
+            if (anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE) {
                 String marshalType = marshalTypes.getProperty(anAttribute.getType());
                 //String capped = this.initialCap(marshalType);
 
@@ -1542,7 +1542,7 @@ public class CsharpGenerator extends Generator {
                     pw.println(indent + 2, "sb.AppendLine(\"<" + anAttribute.getName() + " type=\\\"" + marshalType + "\\\">\" + this._" + anAttribute.getName() + ".ToString(CultureInfo.InvariantCulture) + \"</" + anAttribute.getName() + ">\");");
 
                 } else {
-                    ClassAttribute listAttribute = anAttribute.getDynamicListClassAttribute();
+                    GeneratedClassAttribute listAttribute = anAttribute.getDynamicListClassAttribute();
 
                     //PES 04/29/2009  Added to speed up unboxing of data, using byte[] vice unboxing of a Class ie. OneByteChunk
                     if (variableListfix.contains(listAttribute.getName()) == true) {
@@ -1554,7 +1554,7 @@ public class CsharpGenerator extends Generator {
             }
 
             // Write out a method call to reflect another class.
-            if (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF) {
+            if (anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.CLASSREF) {
                 //String marshalType = anAttribute.getType();
                 pw.println(indent + 2, "sb.AppendLine(\"<" + anAttribute.getName() + ">\");");
                 pw.println(indent + 2, "this._" + anAttribute.getName() + ".Reflection(sb);");
@@ -1562,7 +1562,7 @@ public class CsharpGenerator extends Generator {
             }
 
             // Write out the method call to marshal a fixed length list, aka an array.
-            if ((anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE_LIST)) {
+            if ((anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE_LIST)) {
                 //pw.println("    sb.Append(\"</" + anAttribute.getName() + ">\"  + System.Environment.NewLine);");
 
                 pw.println(indent + 2, "for (int idx = 0; idx < this._" + anAttribute.getName() + ".Length; idx++)");
@@ -1589,7 +1589,7 @@ public class CsharpGenerator extends Generator {
                 pw.println();
             }
 
-            if ((anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST)) {
+            if ((anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.OBJECT_LIST)) {
                 //This will fix the OneByteChunk problem where the arrays length is correctly set to Length vice Count.  This is needed as
                 //there was no way to determine if the underlining data referenced the OneByteChunk class
                 //PES 04/29/2009  Added to speed up unboxing of data, using byte[] vice unboxing of a Class ie. OneByteChunk
@@ -1696,9 +1696,9 @@ public class CsharpGenerator extends Generator {
 
             for (int idx = 0; idx < aClass.getClassAttributes().size(); idx++)
             {
-                ClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
+                GeneratedClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
 
-                if (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE)
+                if (anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE)
                 {
                     pw.println(indent + 1, "if (this._" + anAttribute.getName() + " != obj._" + anAttribute.getName() + ")");
                     pw.println(indent + 1, "{");
@@ -1707,7 +1707,7 @@ public class CsharpGenerator extends Generator {
                     pw.println();
                 }
 
-                if (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF)
+                if (anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.CLASSREF)
                 {
                     pw.println(indent + 1, "if (!this._" + anAttribute.getName() + ".Equals(obj._" + anAttribute.getName() + "))");
                     pw.println(indent + 1, "{");
@@ -1716,7 +1716,7 @@ public class CsharpGenerator extends Generator {
                     pw.println();
                 }
 
-                if (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
+                if (anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
                 {
                     //PES 12082009 Added to account for issue with comparison of fields that are not marshalled.  Such as when creating two identical PDUs then
                     //comparing them.  The _numberofxxx variables will contain 0 as they only get filled when marshalling.
@@ -1742,7 +1742,7 @@ public class CsharpGenerator extends Generator {
                     pw.println();
                 }
 
-                if (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST)
+                if (anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.OBJECT_LIST)
                 {
                     //PES 04/29/2009  Added to speed up unboxing of data, using byte[] vice unboxing of a Class ie. OneByteChunk
                     if (anAttribute.getType().equalsIgnoreCase("OneByteChunk"))
@@ -1810,26 +1810,26 @@ public class CsharpGenerator extends Generator {
             }
 
             for (int idx = 0; idx < aClass.getClassAttributes().size(); idx++) {
-                ClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
+                GeneratedClassAttribute anAttribute = aClass.getClassAttributes().get(idx);
 
-                if (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE_LIST ||
-                    anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST ||
+                if (anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE_LIST ||
+                    anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.OBJECT_LIST ||
                     (!parentClass.equalsIgnoreCase("root") && idx == 0))
                 {
                     pw.println();
                 }
 
-                if (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE)
+                if (anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE)
                 {
                     pw.println(indent + 1, "result = GenerateHash(result) ^ this._" + anAttribute.getName() + ".GetHashCode();");
                 }
 
-                if (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.CLASSREF)
+                if (anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.CLASSREF)
                 {
                     pw.println(indent + 1, "result = GenerateHash(result) ^ this._" + anAttribute.getName() + ".GetHashCode();");
                 }
 
-                if (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
+                if (anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
                 {
                     //pw.println(indent + 1, "if (" + anAttribute.getListLength() + " > 0)");
                     //pw.println(indent + 1, "{");
@@ -1840,7 +1840,7 @@ public class CsharpGenerator extends Generator {
                     //pw.println(indent + 1, "}");
                 }
 
-                if (anAttribute.getAttributeKind() == ClassAttribute.ClassAttributeType.OBJECT_LIST)
+                if (anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.OBJECT_LIST)
                 {
                     if (anAttribute.getType().equalsIgnoreCase("OneByteChunk"))
                     {

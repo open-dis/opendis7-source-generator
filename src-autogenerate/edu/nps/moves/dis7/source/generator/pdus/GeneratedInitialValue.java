@@ -11,7 +11,7 @@ package edu.nps.moves.dis7.source.generator.pdus;
  *
  * @author DMcG
  */
-public class InitialValue // TODO refactor rename as GeneratedInitialValue for consistency
+public class GeneratedInitialValue // TODO refactor rename as GeneratedInitialValue for consistency
 {
     /** The field name that will be  initialized in this class's constructor */
     private String variable;
@@ -24,7 +24,7 @@ public class InitialValue // TODO refactor rename as GeneratedInitialValue for c
      * @param pVariable name of variable
      * @param pValue initial value
      */
-    public InitialValue(String pVariable, String pValue)
+    public GeneratedInitialValue(String pVariable, String pValue)
     {
         variable = pVariable;
         variableValue = pValue;
