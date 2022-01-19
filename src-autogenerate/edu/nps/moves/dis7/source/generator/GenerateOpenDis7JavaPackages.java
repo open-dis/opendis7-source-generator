@@ -51,7 +51,7 @@ public class GenerateOpenDis7JavaPackages
     System.out.println("------------- Generating pdus in "+pduPackage+" -------------");
     System.getProperties().setProperty("xmlpg.generatedSourceDir", pduOutputPath); // legacy parameter passing
     System.getProperties().setProperty("xmlpg.package", pduPackage);
-    edu.nps.moves.dis7.source.generator.pdus.GeneratePdus.main(new String[]{DEFAULT_PDU_XML_FILE, "java"});
+    edu.nps.moves.dis7.source.generator.pdus.GeneratePdusForGivenLanguage.main(new String[]{DEFAULT_PDU_XML_FILE, "java"});
 
     // JAMMERS
     System.out.println("------------- Generating jammers in "+jammerPackage+" -------------");
