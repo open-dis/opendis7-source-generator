@@ -20,7 +20,7 @@ import java.util.Properties;
  * 
  * @author DMcG
  */
-public class JavascriptGenerator extends Generator
+public class JavascriptGenerator extends AbstractGenerator
 {
     /** Maps the primitive types listed in the XML file to the java types */
     Properties types = new Properties();

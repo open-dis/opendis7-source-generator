@@ -20,11 +20,11 @@ import java.util.*;
  * Given the input object, something of an abstract syntax tree, this generates a source code file in the Java language.
  * It has ivars, getters, setters, and serialization/deserialization methods.
  * Fully implemented.
- * @see Generator
+ * @see AbstractGenerator
  * @see PythonGenerator
  * @author DMcG
  */
-public class JavaGenerator extends Generator
+public class JavaGenerator extends AbstractGenerator
 {
     /**
      * Some Java (or Java-like) distributions don't have the full Java JDK 1.6 stack, such as Android. That means no JAXB, and no Hibernate/JPA. These booleans flip on or off the generation of the

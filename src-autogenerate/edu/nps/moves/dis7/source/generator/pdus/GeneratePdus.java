@@ -219,20 +219,23 @@ public class GeneratePdus  // TODO rename? perhaps GeneratePdusByProgrammingLang
     }
 
     /**
-     * entry point.Pass in two arguments, the language you want to generate for and the XML file
-     * that describes the classes
-     * @param args arguments (xmlfile, language)
+     * Entry point: pass in two arguments,
+     * the XML file that describes the classes and the programming language API that you want to generate.
+     * @param args arguments for xmlfile and programming language
      */
     public static void main(String args[])
     {
         System.out.println (GeneratePdus.class.getName());
         if(args.length < 2 || args.length > 2)
         {
-            System.out.println("Arguments:"); 
+            System.out.print("Arguments: "); 
+            if (args.length == 0)
+                System.out.print ("none provided");
             for(String s : args)
                 System.out.print (s);
+            System.out.println();
             System.out.println("Usage: xmlFile language"); 
-            System.out.println("Allowable language values are java, python, cpp, objc, and csharp");
+            System.out.println("Allowable language values are java, python, cpp, csharp, and objc");
             System.out.println("Continuing with GeneratePdus default values..."); 
 //            System.exit(0);
         }
@@ -243,6 +246,7 @@ public class GeneratePdus  // TODO rename? perhaps GeneratePdusByProgrammingLang
             if (!args[1].isEmpty())
                    language = args[1];
         }
+        language = language.toLowerCase();
         System.out.println (" sisoXmlFile=" + sisoXmlFile);
         System.out.println ("    language=" + language);
         
@@ -269,24 +273,24 @@ public class GeneratePdus  // TODO rename? perhaps GeneratePdusByProgrammingLang
                  language.equalsIgnoreCase(OBJC)       || language.equalsIgnoreCase(CSHARP) ||
                  language.equalsIgnoreCase(JAVASCRIPT) || language.equalsIgnoreCase(PYTHON) ))
             {
-                System.out.println("Not a valid language to generate. The options are java, cpp, objc, javascript, python and csharp");
-                System.out.println("Usage: Xmlpg xmlFile language"); 
-                System.exit(0);
+                System.out.println("Not a valid language to generate. The options are java, python, cpp, csharp, javascript and objc");
+                System.out.println("Usage: GeneratePdus xmlFile language"); // formerly xmlpg
+                System.exit(-1);
             }
         }
         catch (FileNotFoundException fnfe) 
         {
             System.out.println("XML file " + xmlFile + " not found. Please check the path and try again");
-            System.out.println("Usage: Xmlpg xmlFile language"); 
+            System.out.println("Usage: GeneratePdus xmlFile language"); // formerly xmlpg
             fnfe.printStackTrace();
-            System.exit(0);
+            System.exit(-1);
         }
         catch(IOException e)
         {
-            System.out.println("Problem with arguments to Xmlpg. Please check them.");
-            System.out.println("Usage: Xmlpg xmlFile language"); 
+            System.out.println("Problem with arguments to GeneratePdus. Please check them."); // formerly xmlpg
+            System.out.println("Usage: GeneratePdus xmlFile language"); 
             e.printStackTrace();
-            System.exit(0);
+            System.exit(-1);
         }
     }
     

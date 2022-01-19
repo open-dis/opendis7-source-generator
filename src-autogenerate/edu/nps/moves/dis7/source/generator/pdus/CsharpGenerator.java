@@ -24,7 +24,7 @@ import java.util.StringTokenizer;
  * modified by Peter Smith (Naval Air Warfare Center - Training Systems Division
  * modified by Zvonko Bostjancic (Blubit d.o.o.)
  */
-public class CsharpGenerator extends Generator {
+public class CsharpGenerator extends AbstractGenerator {
 
     /** whether using dot net */
     protected boolean useDotNet = true;

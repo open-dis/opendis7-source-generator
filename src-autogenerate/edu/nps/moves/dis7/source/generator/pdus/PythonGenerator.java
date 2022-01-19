@@ -18,11 +18,11 @@ import java.util.Map;
  * producing most source code needed for the open-dis7-python distribution.
  * TODO see JavaGenerator for related functionality that will be needed in Python.
  * Constructor, not fully implemented.
- * @see Generator
+ * @see AbstractGenerator
  * @see JavaGenerator
  * @author DMcG
  */
-public class PythonGenerator extends Generator
+public class PythonGenerator extends AbstractGenerator
 {
     /** Standard python indent is four spaces */
     public String INDENT="    ";

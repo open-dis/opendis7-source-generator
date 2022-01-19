@@ -13,7 +13,7 @@ import java.util.*;
  * @author Don McGregor, Mike Bailey and Don Brutzman
  */
 
-public abstract class Generator 
+public abstract class AbstractGenerator 
 {
     /** Contains abstract descriptions of all the classes, key = name, value = object
     */
@@ -30,7 +30,7 @@ public abstract class Generator
      * @param pClassDescriptions of interest
      * @param pLanguageProperties of interest
      */
-    public Generator(Map<String, GeneratedClass> pClassDescriptions, Properties pLanguageProperties)
+    public AbstractGenerator(Map<String, GeneratedClass> pClassDescriptions, Properties pLanguageProperties)
     {
         classDescriptions = pClassDescriptions;
         languageProperties = pLanguageProperties;

@@ -19,7 +19,7 @@ import java.util.*;
  */
 
 /** PDU autogeneration supporting class. */
-public class CppGenerator extends Generator
+public class CppGenerator extends AbstractGenerator
 {
     /**
      * ivars are often preceded by a special character. This sets what that character is, 
