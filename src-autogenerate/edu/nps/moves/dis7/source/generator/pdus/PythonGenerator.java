@@ -41,49 +41,51 @@ public class PythonGenerator extends AbstractGenerator
     {
         super(pClassDescriptions, pythonProperties);
         
-        marshalTypes.setProperty("unsigned short", "unsigned_short");
-        marshalTypes.setProperty("unsigned byte", "unsigned_byte");
-        marshalTypes.setProperty("unsigned int", "unsigned_int");
+        // Set up the mapping between Open-DIS primitive types and marshal types. 
+        marshalTypes.setProperty("unsigned short",    "unsigned_short");
+        marshalTypes.setProperty("unsigned byte",     "unsigned_byte");
+        marshalTypes.setProperty("unsigned int",      "unsigned_int");
 	    marshalTypes.setProperty("unsigned long", "long"); // This is wrong; no unsigned long type in java. Fix with a BigInt or similar
         
-        marshalTypes.setProperty("byte", "byte");
-        marshalTypes.setProperty("short", "short");
-        marshalTypes.setProperty("int", "int");
-        marshalTypes.setProperty("long", "long");
+        marshalTypes.setProperty("byte",   "byte");
+        marshalTypes.setProperty("short",  "short");
+        marshalTypes.setProperty("int",    "int");
+        marshalTypes.setProperty("long",   "long");
         
         marshalTypes.setProperty("double", "double");
-        marshalTypes.setProperty("float", "float");
+        marshalTypes.setProperty("float",  "float");
         
         // Unmarshalling types
         unmarshalTypes.setProperty("unsigned short", "unsigned_short");
-        unmarshalTypes.setProperty("unsigned byte", "unsigned_byte");
-        unmarshalTypes.setProperty("unsigned int", "int");
-        unmarshalTypes.setProperty("unsigned long", "long"); // ^^^ This is wrong--should be unsigned
+        unmarshalTypes.setProperty("unsigned byte",  "unsigned_byte");
+        unmarshalTypes.setProperty("unsigned int",   "int");
+        unmarshalTypes.setProperty("unsigned long",  "long"); // ^^^ This is wrong--should be unsigned
         
-        unmarshalTypes.setProperty("byte", "byte");
-        unmarshalTypes.setProperty("short", "short");
-        unmarshalTypes.setProperty("int", "int");
-        unmarshalTypes.setProperty("long", "long");
+        unmarshalTypes.setProperty("byte",   "byte");
+        unmarshalTypes.setProperty("short" , "short");
+        unmarshalTypes.setProperty("int",    "int");
+        unmarshalTypes.setProperty("long",   "long");
         
         unmarshalTypes.setProperty("double", "double");
-        unmarshalTypes.setProperty("float", "float");
+        unmarshalTypes.setProperty("float",  "float");
     }
 
     @Override
     public void writeClasses()
     {
-       List sortedClasses =  this.sortClasses();
-       this.directory = "src/main/python";
+        List sortedClasses =  this.sortClasses(); // TODO empty
+        this.directory = "src/main/python";
        
-       this.createDirectory();
+        this.createDirectory();
         
-       PrintWriter pw;
+        PrintWriter pw;
        
-       try
-       {
+        try
+        {
+            // TODO missing languageProperties!
             // Create the new, empty file, and create printwriter object for output to it
             String outputFileName = languageProperties.getProperty("filename");
-            String directoryName = languageProperties.getProperty("directory");
+            String directoryName  = languageProperties.getProperty("directory");
             System.out.println("putting network code in " + directoryName + "/" + outputFileName);
             File outputFile = new File(directoryName + "/" + outputFileName);
             outputFile.getParentFile().mkdirs();
@@ -95,24 +97,20 @@ public class PythonGenerator extends AbstractGenerator
             pw.println("import DataInputStream");
             pw.println("import DataOutputStream");
             pw.println();
-       
-             
-              
+            
             System.out.println("number of classes: " + sortedClasses.size());
-        Iterator it = sortedClasses.iterator();
-         while(it.hasNext())
-          {
-           
-              GeneratedClass aClass = (GeneratedClass)it.next();
-              String name = aClass.getName();
-              System.out.println("creating python class " + name);
-              // print the source code of the class to the file
-              this.writeClass(pw, aClass);
-           }
-         
-         pw.flush();
-         pw.close();
-       }
+            Iterator it = sortedClasses.iterator();
+            while(it.hasNext())
+            {
+                GeneratedClass aClass = (GeneratedClass)it.next();
+                String name = aClass.getName();
+                System.out.println("creating python class " + name);
+                // print the source code of the class to the file
+                this.writeClass(pw, aClass);
+            }
+            pw.flush();
+            pw.close();
+        }
         catch(IOException e)
         {
             System.err.println("problem creating class " + e);
@@ -577,7 +575,7 @@ public class PythonGenerator extends AbstractGenerator
      * structure, then traverses the tree in preorder fashion to ensure that a
      * base class is written before a subclass. The implementation is a little
      * wonky in places.
-     *
+     * // TODO alternative is to provide __inii.py list of classes
      * @return sorted List of classes
      */
     public List sortClasses()

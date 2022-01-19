@@ -31,7 +31,7 @@ import org.xml.sax.helpers.*;
  *
  * @author Don McGregor, Mike Bailey and Don Brutzman
  */
-public class GeneratePdus  // TODO rename? perhaps GeneratePdusByProgrammingLanguage
+public class GeneratePdusForGivenLanguage  // TODO rename? perhaps GeneratePdusByProgrammingLanguage
 {
     // set defaults to allow direct run
     private static String            language = edu.nps.moves.dis7.source.generator.GenerateOpenDis7JavaPackages.DEFAULT_LANGUAGE;
@@ -149,11 +149,11 @@ public class GeneratePdus  // TODO rename? perhaps GeneratePdusByProgrammingLang
     /**
      * Create a new collection of Java objects by reading an XML file; these
      * java objects can be used to generate code templates of any language,
-     * once you write the translator.
+     * once you write the translator for that language.
      * @param xmlDescriptionFileName file name
-     * @param languageToGenerate programming language (e.g. Java)
+     * @param languageToGenerate programming language (e.g. Java, Python)
      */
-    public GeneratePdus(String xmlDescriptionFileName, String languageToGenerate)
+    public GeneratePdusForGivenLanguage(String xmlDescriptionFileName, String languageToGenerate)
     {       
         try {
             DefaultHandler handler = new MyHandler();
@@ -170,22 +170,21 @@ public class GeneratePdus  // TODO rename? perhaps GeneratePdusByProgrammingLang
 
         // This does at least a cursory santity check on the data that has been read in from XML
         // It is far from complete.
-        if (!this.astIsPlausible()) {
+        if (!this.abstractSyntaxTreeIsPlausible()) {
             System.out.println("The generated XML file is not internally consistent according to astIsPlausible()");
             System.out.println("There are one or more errors in the XML file. See output for details.");
             System.exit(1);
         }
 
-        //System.out.println("putting java files in " + javaDirectory);
         switch (languageToGenerate.toLowerCase()) {
             case JAVA:
+                // System.out.println("putting java files in " + javaDirectory);
                 JavaGenerator javaGenerator = new JavaGenerator(generatedClassNames, javaProperties);
                 javaGenerator.writeClasses();
                 break;
 
             // Use the same information to generate classes in C++
             case CPP:
-
                 CppGenerator cppGenerator = new CppGenerator(generatedClassNames, cppProperties);
                 cppGenerator.writeClasses();
                 break;
@@ -197,14 +196,12 @@ public class GeneratePdus  // TODO rename? perhaps GeneratePdusByProgrammingLang
                 break;
 
             case OBJC:
-
                 // create a new generator object for objc
                 ObjcGenerator objcGenerator = new ObjcGenerator(generatedClassNames, objcProperties);
                 objcGenerator.writeClasses();
                 break;
 
             case JAVASCRIPT:
-
                 // create a new generator object for javascript
                 JavascriptGenerator javascriptGenerator = new JavascriptGenerator(generatedClassNames, javascriptProperties);
                 javascriptGenerator.writeClasses();
@@ -225,7 +222,7 @@ public class GeneratePdus  // TODO rename? perhaps GeneratePdusByProgrammingLang
      */
     public static void main(String args[])
     {
-        System.out.println (GeneratePdus.class.getName());
+        System.out.println (GeneratePdusForGivenLanguage.class.getName());
         if(args.length < 2 || args.length > 2)
         {
             System.out.print("Arguments: "); 
@@ -252,8 +249,8 @@ public class GeneratePdus  // TODO rename? perhaps GeneratePdusByProgrammingLang
         
         checkArguments(sisoXmlFile, language);
         
-        GeneratePdus generatePdusResult = new GeneratePdus(sisoXmlFile, language);  // includes simple list of PDUs
-        System.out.println (GeneratePdus.class.getName() + " complete.");
+        GeneratePdusForGivenLanguage generatePdusResult = new GeneratePdusForGivenLanguage(sisoXmlFile, language);  // includes simple list of PDUs
+        System.out.println (GeneratePdusForGivenLanguage.class.getName() + " complete.");
     }
     
     /**
@@ -309,7 +306,7 @@ public class GeneratePdus  // TODO rename? perhaps GeneratePdusByProgrammingLang
      * show up soon enough when the products are compiled.  It's had to be hacked to
      * get around some of the special cases.
      */
-    private boolean astIsPlausible()
+    private boolean abstractSyntaxTreeIsPlausible()
     { 
         // Create a list of primitive types we can use to check against
 
@@ -334,8 +331,8 @@ public class GeneratePdus  // TODO rename? perhaps GeneratePdusByProgrammingLang
         generatedClassNames.put("Domain", new GeneratedClass());
         
         // trip through every class specified
-        for(GeneratedClass aClass : generatedClassNames.values()) {
-
+        for (GeneratedClass aClass : generatedClassNames.values())
+        {
             // Trip through every class attribute in this class and confirm that the type is either a primitive or references
             // another class defined in the document.
             for(GeneratedClassAttribute anAttribute : aClass.getClassAttributes())
@@ -389,10 +386,7 @@ public class GeneratePdus  // TODO rename? perhaps GeneratePdusByProgrammingLang
                 {
                     System.out.println("Could not find initial value matching attribute name for " + anInitialValue.getVariable() + " in class " + aClass.getName());
                 }
-                    
-                    
-                    
-            } // end of for loop thorugh initial values
+            } // end of for loop through initial values
 
         } // End of trip through classes
         generatedClassNames.remove("JammerKind");
@@ -404,7 +398,7 @@ public class GeneratePdus  // TODO rename? perhaps GeneratePdusByProgrammingLang
         generatedClassNames.remove("Domain");
 
         return true;
-    } // end of astIsPlausible
+    } // end of abstractSyntaxTreeIsPlausible
 
   /** XML handler for recursively reading information and autogenerating code, namely an
      * inner class that handles the SAX parsing of the XML file. This is relatively simple, if
@@ -620,7 +614,6 @@ public class GeneratePdus  // TODO rename? perhaps GeneratePdusByProgrammingLang
             }
         }
         
-        
         private void handleStaticIvar(Attributes attributes)
         {
             currentClassAttribute.setAttributeKind(GeneratedClassAttribute.ClassAttributeType.STATIC_IVAR);
@@ -707,7 +700,7 @@ public class GeneratePdus  // TODO rename? perhaps GeneratePdusByProgrammingLang
         
         private void handleSisoEnum(Attributes attributes)
         {
-            if(currentClassAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.UNSET) {
+            if (currentClassAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.UNSET) {
                 currentClassAttribute.setAttributeKind(GeneratedClassAttribute.ClassAttributeType.SISO_ENUM);
                 currentClassAttribute.setUnderlyingTypeIsPrimitive(false);
             }
@@ -733,7 +726,7 @@ public class GeneratePdus  // TODO rename? perhaps GeneratePdusByProgrammingLang
 
        private void handleSisoBitfield(Attributes attributes)
         {
-            if(currentClassAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.UNSET) {
+            if (currentClassAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.UNSET) {
                 currentClassAttribute.setAttributeKind(GeneratedClassAttribute.ClassAttributeType.SISO_BITFIELD);
                 currentClassAttribute.setUnderlyingTypeIsPrimitive(false);
             }
@@ -815,62 +808,67 @@ public class GeneratePdus  // TODO rename? perhaps GeneratePdusByProgrammingLang
         }
       private void backReferenceCountField(Attributes attributes, List ats, int idx, ClassAttributeType lstType)
       {
-        boolean atFound = false;
+        boolean attributeFound = false;
 
-        for (int jdx = 0; jdx < ats.size(); jdx++) {
-          GeneratedClassAttribute at = (GeneratedClassAttribute) ats.get(jdx);
-          if (at.getName().equals(attributes.getValue(idx))) {
-            at.setIsDynamicListLengthField(lstType == ClassAttributeType.OBJECT_LIST);
-            at.setIsPrimitiveListLengthField(lstType == ClassAttributeType.PRIMITIVE_LIST);
-            at.setDynamicListClassAttribute(currentClassAttribute);
-            atFound = true;
+        for (int jdx = 0; jdx < ats.size(); jdx++)
+        {
+            GeneratedClassAttribute at = (GeneratedClassAttribute) ats.get(jdx);
+            if (at.getName().equals(attributes.getValue(idx))) 
+            {
+                at.setIsDynamicListLengthField(lstType == ClassAttributeType.OBJECT_LIST);
+                at.setIsPrimitiveListLengthField(lstType == ClassAttributeType.PRIMITIVE_LIST);
+                at.setDynamicListClassAttribute(currentClassAttribute);
+                attributeFound = true;
 
-            break;
-          }
+                break;
+            }
         }
-        if (atFound == false) {
+        if (attributeFound == false)
+        {
           System.out.println("Could not find a matching attribute for the length field for " + attributes.getValue(idx));
         }
       }
       
-      private void handlePrimitiveList(Attributes attributes)
-      {
+    private void handlePrimitiveList(Attributes attributes)
+    {
         currentClassAttribute.setAttributeKind(GeneratedClassAttribute.ClassAttributeType.PRIMITIVE_LIST);
-        
-        for (int idx = 0; idx < attributes.getLength(); idx++) {
-          String nm = attributes.getQName(idx).toLowerCase();
-          switch (attributes.getQName(idx).toLowerCase()) {
-            case COULDBESTRING:
-              if (attributes.getValue(idx).equalsIgnoreCase(TRUE))
-                currentClassAttribute.setCouldBeString(true);
-              break;
 
-            case LENGTH:
-              String length = attributes.getValue(idx);
-              try {
-                int listLen = Integer.parseInt(length);
-                currentClassAttribute.setListLength(listLen);
+        for (int idx = 0; idx < attributes.getLength(); idx++) 
+        {
+            String nm = attributes.getQName(idx).toLowerCase();
+            switch (attributes.getQName(idx).toLowerCase())
+            {
+                case COULDBESTRING:
+                    if (attributes.getValue(idx).equalsIgnoreCase(TRUE))
+                      currentClassAttribute.setCouldBeString(true);
+                    break;
+
+                case LENGTH:
+                    String length = attributes.getValue(idx);
+                    try {
+                      int listLen = Integer.parseInt(length);
+                      currentClassAttribute.setListLength(listLen);
+                    }
+                    catch (NumberFormatException e) {
+                      System.out.println("Invalid list length found. Bad format for integer " + length);
+                      currentClassAttribute.setListLength(0);
+                    }
+                    break;
+
+                case FIXEDLENGTH:
+                    currentClassAttribute.setFixedLength(Boolean.parseBoolean(attributes.getValue(idx)));
+                    break;
+
+                case COUNTFIELDNAME:
+                    currentClassAttribute.setCountFieldName(attributes.getValue(idx));
+                    backReferenceCountField(attributes, currentGeneratedClass.getClassAttributes(), idx, currentClassAttribute.getAttributeKind());
+                    break;
+
+                default:
+                    currentClassAttribute.setListLength(0); //Apr8
+                    break;
               }
-              catch (NumberFormatException e) {
-                System.out.println("Invalid list length found. Bad format for integer " + length);
-                currentClassAttribute.setListLength(0);
-              }
-              break;
-              
-            case FIXEDLENGTH:
-              currentClassAttribute.setFixedLength(Boolean.parseBoolean(attributes.getValue(idx)));
-              break;
-              
-            case COUNTFIELDNAME:
-              currentClassAttribute.setCountFieldName(attributes.getValue(idx));
-              backReferenceCountField(attributes, currentGeneratedClass.getClassAttributes(), idx, currentClassAttribute.getAttributeKind());
-              break;
-              
-            default:
-              currentClassAttribute.setListLength(0); //Apr8
-              break;
-          }
+            }
         }
-      }
     }
 }

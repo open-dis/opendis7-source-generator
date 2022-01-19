@@ -99,6 +99,7 @@ public class JavaGenerator extends AbstractGenerator
         // in the generated java file, specifically the data types. This could be externalized to
         // a properties file, but there's only a dozen or so and an external props file
         // would just add some complexity.
+        
         // dont quite get this.  looks in error
         types.setProperty("uint8",   "byte");
         types.setProperty("uint16",  "short");
@@ -224,7 +225,8 @@ public class JavaGenerator extends AbstractGenerator
         packageInfoFile = new File(packageInfoPath);
         
         FileWriter packageInfoFileWriter;
-        try {
+        try 
+        {
             packageInfoFile.createNewFile();
             packageInfoFileWriter = new FileWriter(packageInfoFile, StandardCharsets.UTF_8);
             packageInfoBuilder = new StringBuilder();
