@@ -35,11 +35,11 @@ public class PythonGenerator extends AbstractGenerator
  * Given the input object, something of an abstract syntax tree, this generates a source code file in the Python language.It has ivars, getters, setters, and serialization/deserialization methods.Warning: only partially implemented.
  * @author DMcG
      * @param pClassDescriptions String Map of class descriptions
-     * @param pythonProperties special language properties
+     * @param languagePropertiesPython special language properties
  */
-    public PythonGenerator(Map<String, GeneratedClass> pClassDescriptions, Properties pythonProperties)
+    public PythonGenerator(Map<String, GeneratedClass> pClassDescriptions, Properties languagePropertiesPython)
     {
-        super(pClassDescriptions, pythonProperties);
+        super(pClassDescriptions, languagePropertiesPython);
         
         // Set up the mapping between Open-DIS primitive types and marshal types. 
         marshalTypes.setProperty("unsigned short",    "unsigned_short");
@@ -82,11 +82,16 @@ public class PythonGenerator extends AbstractGenerator
        
         try
         {
-            // TODO missing languageProperties!
+            // *** TODO missing languageProperties! ***
             // Create the new, empty file, and create printwriter object for output to it
-            String outputFileName = languageProperties.getProperty("filename");
-            String directoryName  = languageProperties.getProperty("directory");
+            String outputFileName = new String(); // default
+//            if (!languageProperties.getProperty("filename").isBlank())
+//                 outputFileName = languageProperties.getProperty("filename");
+            String directoryName = this.directory; // default
+//            if (!languageProperties.getProperty("directory").isBlank())
+//                 directoryName = languageProperties.getProperty("directory");
             System.out.println("putting network code in " + directoryName + "/" + outputFileName);
+            
             File outputFile = new File(directoryName + "/" + outputFileName);
             outputFile.getParentFile().mkdirs();
             outputFile.createNewFile();
