@@ -2196,7 +2196,8 @@ public class JavaGenerator extends AbstractGenerator
         pw.print(attr.getName());
         pw.println(".forEach(r->{ sb2.append(\" \").append(r);}); // writeList");
         pw.println("    sb.append(sb2.toString().trim());");
-        pw.println("    sb2.delete(0,sb2.length()-1); // reset");
+        pw.println("    // https://stackoverflow.com/questions/2242471/clearing-a-string-buffer-builder-after-loop");
+        pw.println("    sb2.setLength(0); // reset");
     
 //      pw.print("    sb.append(\" ");
 //      pw.print(attr.getName());
