@@ -63,18 +63,26 @@ public abstract class AbstractGenerator
     protected void createDirectory()
     {
         System.out.println("creating subdirectory=" + this.getDirectory());
+        boolean directoryExists = false;
         if (this.getDirectory() != null)
         {
             File dir = new File(this.getDirectory());
-            boolean success = dir.mkdirs();
-
-            if (success)
+            if (dir.exists())
+                directoryExists = true;
+            else
+            {
+                System.out.println("Director canWrite()=" + dir.canWrite() + ", creating expected output directory (" + dir.getAbsolutePath() + ")...");
+                directoryExists = dir.mkdirs(); // create directory plus intermediate path subdirectories
+                System.out.println("File creation success: " + directoryExists);            
+            }
+            if (directoryExists)
             {
                 System.out.println("cleaning directory " + dir.getPath());
-                for(File f : dir.listFiles())
-                  if(!f.isDirectory() && !f.getName().equals(".keep") && !f.getName().equals("README.md"))
-                    f.delete();
+                for (File someFile : dir.listFiles())
+                  if(!someFile.isDirectory() && !someFile.getName().equals(".keep") && !someFile.getName().equals("README.md"))
+                      someFile.delete();
             }
+            else System.exit(-1);
         }
         else
         {

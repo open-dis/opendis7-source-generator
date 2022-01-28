@@ -45,7 +45,7 @@ public class PythonGenerator extends AbstractGenerator
         marshalTypes.setProperty("unsigned short",    "unsigned_short");
         marshalTypes.setProperty("unsigned byte",     "unsigned_byte");
         marshalTypes.setProperty("unsigned int",      "unsigned_int");
-	    marshalTypes.setProperty("unsigned long", "long"); // This is wrong; no unsigned long type in java. Fix with a BigInt or similar
+        marshalTypes.setProperty("unsigned long", "long"); // This is wrong; no unsigned long type in java. Fix with a BigInt or similar
         
         marshalTypes.setProperty("byte",   "byte");
         marshalTypes.setProperty("short",  "short");
@@ -74,7 +74,7 @@ public class PythonGenerator extends AbstractGenerator
     public void writeClasses()
     {
         List sortedClasses =  this.sortClasses(); // TODO empty
-        this.directory = "src/main/python";
+        this.directory = "./src/main/python";
        
         this.createDirectory();
         
@@ -84,17 +84,20 @@ public class PythonGenerator extends AbstractGenerator
         {
             // *** TODO missing languageProperties! ***
             // Create the new, empty file, and create printwriter object for output to it
-            String outputFileName = new String(); // default
+            String outputFileName = "dis7.py"; // default filename from prior open-dis-python implementation
 //            if (!languageProperties.getProperty("filename").isBlank())
 //                 outputFileName = languageProperties.getProperty("filename");
             String directoryName = this.directory; // default
 //            if (!languageProperties.getProperty("directory").isBlank())
 //                 directoryName = languageProperties.getProperty("directory");
-            System.out.println("putting network code in " + directoryName + "/" + outputFileName);
+            if (!directoryName.isBlank() && !outputFileName.isBlank()) 
+                System.out.println("putting network code in " + directoryName + "/" + outputFileName);
+            else
+                System.out.println("problem with output file directory/name ...");
             
-            File outputFile = new File(directoryName + "/" + outputFileName);
-            outputFile.getParentFile().mkdirs();
-            outputFile.createNewFile();
+            File outputFile = new File(directoryName + "/" + outputFileName); // just creates object...
+            outputFile.getParentFile().mkdirs(); // superfluous, already handled by createDirectory() above
+            outputFile.createNewFile(); // now creates file
             pw = new PrintWriter(outputFile);
             this.writeLicense(pw);
             pw.println();

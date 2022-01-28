@@ -18,7 +18,7 @@ public class GenerateOpenDis7JavaPackages
     
   // shared static defaults
   /** Java is programming language for this generator */
-  public static final String      DEFAULT_LANGUAGE = "java"; // "java"; "python" // TODO python testing
+  public static final String      DEFAULT_LANGUAGE = "python"; // "java"; "python" // TODO python testing
   /** xml/SISO/SISO-REF-010.xml */
   public static final String DEFAULT_SISO_XML_FILE = "xml/SISO/SISO-REF-010.xml";
   /** xml/dis_7_2012/DIS_7_2012.xml */
