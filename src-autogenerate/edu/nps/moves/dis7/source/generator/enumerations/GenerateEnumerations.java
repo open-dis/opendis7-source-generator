@@ -187,7 +187,7 @@ public class GenerateEnumerations
         System.out.println("Begin uid preprocess...");
         factory.newSAXParser().parse(xmlFile,new UidCollector());
 
-        System.out.println("Begin enum enumeration generation...");
+        System.out.println("Begin enumeration generation...");
         MyHandler handler = new MyHandler();
         factory.newSAXParser().parse(xmlFile, handler); // apparently can't reuse xmlFile
 
@@ -384,7 +384,7 @@ public class GenerateEnumerations
                     currentEnum.size = attributes.getValue("size");
                     currentEnum.footnote = attributes.getValue("footnote");
                     if (currentEnum.footnote != null)
-                        currentEnum.footnote = currentEnum.footnote.replaceAll("—","-").replaceAll("–","-").replaceAll("\"", "").replaceAll("\'", ""); // mdash
+                        currentEnum.footnote = normalizeDescription(currentEnum.footnote);
                     enums.add(currentEnum);
                     //maybeSysOut(attributes.getValue("xref"), "enum uid " + currentEnum.uid + " " + currentEnum.name);
                     break;
@@ -401,8 +401,7 @@ public class GenerateEnumerations
                         if (value != null)
                             currentEnumRow.description += value;
                         if (currentEnumRow.description != null)
-                            currentEnumRow.description = currentEnumRow.description.replaceAll("—","-").replaceAll("–","-").replaceAll("\"", "").replaceAll("\'", "")
-                                                                                   .replaceAll(" "," ").replaceAll("/","");
+                            currentEnumRow.description = normalizeDescription(currentEnumRow.description);
                     }
                     break;
 
@@ -413,11 +412,11 @@ public class GenerateEnumerations
                     // TODO if description is empty, get meta key-value
                     currentEnumRow.description = attributes.getValue("description");
                     if (currentEnumRow.description != null)
-                        currentEnumRow.description = currentEnumRow.description.replaceAll("—","-").replaceAll("–","-").replaceAll("\"", "").replaceAll("\'", "");
+                        currentEnumRow.description = normalizeDescription(currentEnumRow.description);
                     currentEnumRow.value = attributes.getValue("value");
                     currentEnumRow.footnote = attributes.getValue("footnote");
                     if (currentEnum.footnote != null)
-                        currentEnum.footnote = currentEnum.footnote.replaceAll("—","-").replaceAll("–","-").replaceAll("\"", "").replaceAll("\'", "");
+                        currentEnum.footnote = normalizeDescription(currentEnum.footnote);
                     currentEnumRow.xrefclassuid = attributes.getValue("xref");
                     currentEnum.elems.add(currentEnumRow);
                     //maybeSysOut(attributes.getValue("xref"), "enumrow uid " + currentEnum.uid + " " + currentEnum.name + " " + currentEnumRow.value + " " + currentEnumRow.description);
@@ -439,7 +438,7 @@ public class GenerateEnumerations
                     currentBitfieldRow.name = fixName(attributes.getValue("name")); // name canonicalization C14N
                     currentBitfieldRow.description = attributes.getValue("description");
                     if (currentBitfieldRow.description != null)
-                        currentBitfieldRow.description = currentBitfieldRow.description.replaceAll("—","-").replaceAll("–","-").replaceAll("\"", "").replaceAll("\'", "");
+                        currentBitfieldRow.description = normalizeDescription(currentBitfieldRow.description);
                     currentBitfieldRow.bitposition = attributes.getValue("bit_position");
                     String len = attributes.getValue("length");
                     if (len != null)
@@ -464,7 +463,7 @@ public class GenerateEnumerations
                     currentDictRow.value = attributes.getValue("value");
                     currentDictRow.description = attributes.getValue("description");
                     if (currentDictRow.description != null)
-                        currentDictRow.description = currentDictRow.description.replaceAll("—","-").replaceAll("–","-").replaceAll("\"", "").replaceAll("\'", "");
+                        currentDictRow.description = normalizeDescription(currentDictRow.description);
                     currentDict.elems.add(currentDictRow);
                     //maybeSysOut(attributes.getValue("xref"), "dictrow uid" + currentDict.uid + " " + currentDict.name + " " + currentDictRow.value + " " + currentDictRow.description);
                     break;
@@ -566,7 +565,7 @@ public class GenerateEnumerations
                 String name = row.value.replaceAll("[^a-zA-Z0-9]", ""); // only chars and numbers
                 if (!dictNames.contains(name))
                 {
-                     String fullName = row.description.replaceAll("\"", "").replaceAll("\'", "").replaceAll("&", "&amp;");
+                     String fullName = normalizeDescription(row.description);
                      sb.append(String.format(disdictenumpart2Template, name, fullName, name, fullName)); // first Javadoc then enumeration pair
                      dictNames.add(name);
                 }
@@ -645,7 +644,7 @@ public class GenerateEnumerations
                 if (xrefName != null) {
                     sb.append(String.format(disbitsetcommentxrefTemplate, 
                         "bit position " + row.bitposition + ", " + bitsType,
-                        htmlize((row.description==null?"":row.description.replaceAll("\"", "").replaceAll("\'", "")+", ")),xrefName));
+                        htmlize((row.description==null?"":normalizeDescription(row.description)+", ")),xrefName));
                     sb.append(String.format(disbitset16Template, 
                         createEnumName(row.name), row.bitposition, row.length, xrefName));
                 }
@@ -653,7 +652,7 @@ public class GenerateEnumerations
                     if(row.description != null)
                         sb.append(String.format(disbitsetcommentTemplate,
                             "bit position " + row.bitposition + ", " + bitsType, 
-                            (htmlize(row.description.replaceAll("\"", "").replaceAll("\'", "")))));
+                            (htmlize(normalizeDescription(row.description)))));
                     sb.append(String.format(disbitset15Template, createEnumName(row.name), row.bitposition, row.length));
                 }
             });
@@ -789,7 +788,7 @@ public class GenerateEnumerations
                     if(aliases != null && aliases.getProperty(row.value)!=null)
                       writeOneEnum(sb,row,aliases.getProperty(row.value));
                     else {
-                      String enumName = createEnumName(row.description.replaceAll("\"", "").replaceAll("\'", ""));
+                      String enumName = createEnumName(normalizeDescription(row.description));
                       writeOneEnum(sb, row, enumName);
                     }
                   /*  if(row.xrefclassuid != null)
@@ -874,7 +873,7 @@ public class GenerateEnumerations
                 if(aliases != null && aliases.getProperty(row.value)!=null)
                   writeOneEnum(additionalRowStringBuilder,row,aliases.getProperty(row.value));
                 else {
-                  String enumName = createEnumName(row.description.replaceAll("\"", "").replaceAll("\'", ""));
+                  String enumName = createEnumName(normalizeDescription(row.description));
                   writeOneEnum(additionalRowStringBuilder, row, enumName);
                 }
             } /* ); */
@@ -925,6 +924,41 @@ public class GenerateEnumerations
         }
     }
         
+        /**
+         * Normalize string characters to create valid description
+         * @param value of interest
+         * @return normalized value
+         */
+        private String normalizeDescription(String value)
+        {
+            String normalizedEntry = value.trim()
+                                          .replaceAll("&", "&amp;").replaceAll("&amp;amp;", "&amp;");
+            // note that no solitary & characters appear in valid XML document, so this is restoring escape characters for HTML Javadoc
+            if (!value.equals(value.trim())) // normalizedEntry))
+                System.out.println ("*** normalizeDescription: " + 
+                                    "'" + value + "' to " + 
+                                    "'" + normalizedEntry + "'");
+            return normalizedEntry;
+        }
+        /**
+         * Normalize string characters to create valid Java name
+         * @param value of interest
+         * @return normalized value
+         */
+        private String normalizeToken(String value)
+        {
+            String normalizedEntry = value.trim()
+                                          .replaceAll("\"", "").replaceAll("\'", "")
+                                          .replaceAll("—","-").replaceAll("–","-") // mdash
+                                          .replaceAll("/","")
+                                          .replaceAll("&", "&amp;").replaceAll("&amp;amp;", "&amp;");
+            if (!value.equals(normalizedEntry))
+                System.out.println ("*** normalize " + "\n" + 
+                                    "'" + value + "' to\n" + 
+                                    "'" + normalizedEntry + "'");
+            return normalizedEntry;
+        }
+        
       private void writeOneEnum(StringBuilder sb, EnumRowElem row, String enumName)
       {
         String xrefName = null;
@@ -932,12 +966,12 @@ public class GenerateEnumerations
           xrefName = uidClassNames.get(row.xrefclassuid);
 
         if (xrefName == null) {
-          sb.append(String.format(disenumfootnotecommentTemplate, htmlize(row.description.replaceAll("\"", "").replaceAll("\'", "")) + (row.footnote == null ? "" : ", " + htmlize(row.footnote))));
-          sb.append(String.format(disenumpart2Template, enumName, row.value, row.description.replaceAll("\"", "").replaceAll("\'", "")));
+          sb.append(String.format(disenumfootnotecommentTemplate, htmlize(normalizeDescription(row.description)) + (row.footnote == null ? "" : ", " + htmlize(normalizeDescription(row.footnote)))));
+          sb.append(String.format(disenumpart2Template, enumName, row.value, normalizeDescription(row.description)));
         }
         else {
           sb.append(String.format(disenumcommentTemplate, xrefName));
-          sb.append(String.format(disenumpart21Template, createEnumName(row.description.replaceAll("\"", "").replaceAll("\'", "")), row.value, row.description.replaceAll("\"", "").replaceAll("\'", ""), xrefName));
+          sb.append(String.format(disenumpart21Template, createEnumName(normalizeDescription(row.description)), row.value, normalizeDescription(row.description), xrefName));
         }
       }
         /**
