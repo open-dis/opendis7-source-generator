@@ -84,7 +84,7 @@ public class PythonGenerator extends AbstractGenerator
         {
             // *** TODO missing languageProperties! ***
             // Create the new, empty file, and create printwriter object for output to it
-            String outputFileName = "dis7.py"; // default filename from prior open-dis-python implementation
+            String outputFileName = "opendis7.py"; // default filename from prior open-dis-python implementation
 //            if (!languageProperties.getProperty("filename").isBlank())
 //                 outputFileName = languageProperties.getProperty("filename");
             String directoryName = this.directory; // default
