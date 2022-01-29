@@ -5,6 +5,8 @@
 
 package edu.nps.moves.dis7.source.generator;
 
+import edu.nps.moves.dis7.source.generator.pdus.GeneratePdusForGivenLanguage;
+
 /**
  * GenerateOpenDis7JavaPackages.java created on Jul 17, 2019
  * MOVES Institute, Naval Postgraduate School (NPS), Monterey California USA https://www.nps.edu
@@ -40,31 +42,44 @@ public class GenerateOpenDis7JavaPackages
     /** Command-line or solo invocation to run this object
      * @param args not used
      */
-  public static void main(String[] args)
-  {
-    System.out.println (GenerateOpenDis7JavaPackages.class.getName());
-    // ENUMERATIONS
-    System.out.println("------------- Generating enumerations in "+enumPackage+" -------------");
-    edu.nps.moves.dis7.source.generator.enumerations.GenerateEnumerations.main(new String[]{DEFAULT_SISO_XML_FILE, enumOutputPath, enumPackage});
+    public static void main(String[] args)
+    {
+        String whichLanguage = DEFAULT_LANGUAGE;
+        // TODO parse arguments for language
+        
+        System.out.println (GenerateOpenDis7JavaPackages.class.getName() + "commencing...");
+        if (whichLanguage.equalsIgnoreCase("java"))
+        {
+            // ENUMERATIONS
+            System.out.println("------------- Generating enumerations in "+enumPackage+" -------------");
+            edu.nps.moves.dis7.source.generator.enumerations.GenerateEnumerations.main(new String[]{DEFAULT_SISO_XML_FILE, enumOutputPath, enumPackage});
 
-    // PDUS and associated objects, legacy classes
-    System.out.println("------------- Generating pdus in "+pduPackage+" -------------");
-    System.getProperties().setProperty("xmlpg.generatedSourceDir", pduOutputPath); // legacy parameter passing
-    System.getProperties().setProperty("xmlpg.package", pduPackage);
-    edu.nps.moves.dis7.source.generator.pdus.GeneratePdusForGivenLanguage.main(new String[]{DEFAULT_PDU_XML_FILE, "java"});
+            // PDUS and associated objects, legacy classes
+            System.out.println("------------- Generating pdus in "+pduPackage+" -------------");
+            System.getProperties().setProperty("xmlpg.generatedSourceDir", pduOutputPath); // legacy parameter passing
+            System.getProperties().setProperty("xmlpg.package", pduPackage);
+            edu.nps.moves.dis7.source.generator.pdus.GeneratePdusForGivenLanguage.main(new String[]{DEFAULT_PDU_XML_FILE, "java"});
 
-    // JAMMERS
-    System.out.println("------------- Generating jammers in "+jammerPackage+" -------------");
-    edu.nps.moves.dis7.source.generator.entityTypes.GenerateJammers.main(new String[]{DEFAULT_SISO_XML_FILE, jammerOutputPath, jammerPackage});
+            // JAMMERS
+            System.out.println("------------- Generating jammers in "+jammerPackage+" -------------");
+            edu.nps.moves.dis7.source.generator.entityTypes.GenerateJammers.main(new String[]{DEFAULT_SISO_XML_FILE, jammerOutputPath, jammerPackage});
 
-    // Object types
-    System.out.println("------------- Generating object types in "+objectTypePackage+" -------------");
-    edu.nps.moves.dis7.source.generator.entityTypes.GenerateObjectTypes.main(new String[]{DEFAULT_SISO_XML_FILE, objectTypeOutputPath, objectTypePackage});
+            // Object types
+            System.out.println("------------- Generating object types in "+objectTypePackage+" -------------");
+            edu.nps.moves.dis7.source.generator.entityTypes.GenerateObjectTypes.main(new String[]{DEFAULT_SISO_XML_FILE, objectTypeOutputPath, objectTypePackage});
 
-    //ENTITIES
-    System.out.println("------------- Generating entity types in "+entitiesPackage+" -------------");
-    edu.nps.moves.dis7.source.generator.entityTypes.GenerateEntityTypes.main(new String[]{DEFAULT_SISO_XML_FILE, entitiesOutputPath, entitiesPackage});
+            //ENTITIES
+            System.out.println("------------- Generating entity types in "+entitiesPackage+" -------------");
+            edu.nps.moves.dis7.source.generator.entityTypes.GenerateEntityTypes.main(new String[]{DEFAULT_SISO_XML_FILE, entitiesOutputPath, entitiesPackage});
 
-    System.out.println("------------- DIS7 source generation complete -------------");
-  }
+            System.out.println("------------- DIS7 source generation complete -------------");
+        }
+        else if (whichLanguage.equalsIgnoreCase("python"))
+        {
+            GeneratePdusForGivenLanguage.main(new String[]{DEFAULT_SISO_XML_FILE, whichLanguage} );
+        }
+        else System.out.println (GenerateOpenDis7JavaPackages.class.getName() + " unsupported language: " + whichLanguage);
+
+        System.out.println (GenerateOpenDis7JavaPackages.class.getName() + "complete.");
+    }
 }
