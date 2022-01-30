@@ -5,6 +5,7 @@
 
 package edu.nps.moves.dis7.source.generator.entityTypes;
 
+import edu.nps.moves.dis7.source.generator.enumerations.GenerateEnumerations;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -124,7 +125,7 @@ public class GenerateObjectTypes
 
     loadTemplates();
 
-    //System.out.println("Generating jammers: ");
+    System.out.println("Generating object types: ");
     MyHandler handler = new MyHandler();
     factory.newSAXParser().parse(new File(sisoXmlFile), handler);
     System.out.println (GenerateObjectTypes.class.getName() + " complete."); // TODO  + handler.enums.size() + " enums created.");
@@ -739,7 +740,25 @@ public class GenerateObjectTypes
     }
     //System.out.println("In: "+s+" out: "+r);
     return r;
-  }
+  }    
+  /**
+     * Normalize string characters to create valid description
+     * @param value of interest
+     * @return normalized value
+     */
+    private String normalizeDescription(String value)
+    {
+        return GenerateEnumerations.normalizeDescription(value);
+    }
+    /**
+     * Normalize string characters to create valid Java name.  Note that unmangled name typically remains available in the description
+     * @param value of interest
+     * @return normalized value
+     */
+    private String normalizeToken(String value)
+    {
+        return GenerateEnumerations.normalizeToken(value);
+    }
 
   /** GenerateObjectTypes invocation, passing run-time arguments (if any)
      * @param args three configuration arguments, if defaults not used

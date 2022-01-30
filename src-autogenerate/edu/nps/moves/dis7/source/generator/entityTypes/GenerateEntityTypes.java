@@ -4,6 +4,7 @@
  */
 package edu.nps.moves.dis7.source.generator.entityTypes;
 
+import edu.nps.moves.dis7.source.generator.enumerations.GenerateEnumerations;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -389,7 +390,7 @@ public class GenerateEntityTypes
           currentCategory.value            = attributes.getValue("value");
           currentCategory.description      = attributes.getValue("description");
           if (currentCategory.description != null)
-              currentCategory.description  = currentCategory.description.replaceAll("—","-").replaceAll("–","-").replaceAll("\"", "").replaceAll("\'", "");
+              currentCategory.description  = normalizeDescription(currentCategory.description);
           currentCategory.uid              = attributes.getValue("uid");
           
           if (currentSubCategory != null) // attribute order independent
@@ -419,7 +420,7 @@ public class GenerateEntityTypes
           currentSubCategory.value            = attributes.getValue("value");
           currentSubCategory.description      = attributes.getValue("description");
           if (currentSubCategory.description != null)
-              currentSubCategory.description  = currentSubCategory.description.replaceAll("—","-").replaceAll("–","-").replaceAll("\"", "").replaceAll("\'", "");
+              currentSubCategory.description  = normalizeDescription(currentSubCategory.description);
           currentSubCategory.uid              = attributes.getValue("uid");
           
           if (currentCategory != null) // attribute order independent
@@ -439,7 +440,7 @@ public class GenerateEntityTypes
           currentSpecific.value            = attributes.getValue("value");
           currentSpecific.description      = attributes.getValue("description");
           if (currentSpecific.description != null)
-              currentSpecific.description  = currentSpecific.description.replaceAll("—","-").replaceAll("–","-").replaceAll("\"", "").replaceAll("\'", "");
+              currentSpecific.description  = normalizeDescription(currentSpecific.description);
           currentSpecific.uid              = attributes.getValue("uid");
           currentSpecific.parent           = currentSubCategory;
           
@@ -461,7 +462,7 @@ public class GenerateEntityTypes
           currentExtra.value            = attributes.getValue("value");
           currentExtra.description      = attributes.getValue("description");
           if (currentExtra.description != null)
-              currentExtra.description  = currentExtra.description.replaceAll("—","-").replaceAll("–","-").replaceAll("\"", "").replaceAll("\'", "");
+              currentExtra.description  = normalizeDescription(currentExtra.description);
           currentExtra.uid              = attributes.getValue("uid");
           
           if (currentSpecific != null) // attribute order independent
@@ -1161,6 +1162,13 @@ public class GenerateEntityTypes
     r = r.replaceAll("=",  "EQ");
     r = r.replaceAll("%",  "pct");
     
+    if (r.contains("\\"))
+    {
+        // editing XML file and reporting disparity seems best way to fix
+        System.out.println("*** [GenerateEntityTypes] warning, encountered backslash: " + s);
+        r = r.replaceAll("\\\\",  "_"); // \\\\ is regex escape
+    } 
+    
     // Java identifier can't start with digit
     if (Character.isDigit(r.charAt(0)))
         r = "_" + r;
@@ -1181,7 +1189,26 @@ public class GenerateEntityTypes
     }
     //System.out.println("In: "+s+" out: "+r);
     return r;
-  }
+}
+
+    /**
+     * Normalize string characters to create valid description
+     * @param value of interest
+     * @return normalized value
+     */
+    private String normalizeDescription(String value)
+    {
+        return GenerateEnumerations.normalizeDescription(value);
+    }
+    /**
+     * Normalize string characters to create valid Java name.  Note that unmangled name typically remains available in the description
+     * @param value of interest
+     * @return normalized value
+     */
+    private String normalizeToken(String value)
+    {
+        return GenerateEnumerations.normalizeToken(value);
+    }
 
   /** GenerateEntityTypes invocation, passing run-time arguments (if any)
      * @param args three configuration arguments, if defaults not used

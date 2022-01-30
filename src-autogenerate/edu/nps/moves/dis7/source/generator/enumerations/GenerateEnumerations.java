@@ -414,6 +414,18 @@ public class GenerateEnumerations
                     if (currentEnumRow.description != null)
                         currentEnumRow.description = normalizeDescription(currentEnumRow.description);
                     currentEnumRow.value = attributes.getValue("value");
+
+/* special case, 2147483648 is one greater than max Java integer, reported 30 JAN 2022
+    <enumrow value="2147483648" description="Rectangular Volume Record 4" group="1" status="hold" uuid="fdccf8e0-e73c-4137-b140-f7d0882b0778">
+      <cr value="1913" />
+    </enumrow>
+*/            
+            if (currentEnumRow.value.equals("2147483648"))
+            {
+                System.out.println ("*** Special case 'Rectangular Volume Record 4' value 2147483648 reset to 2147483647" +
+                                    " in order to avoid exceeding max integer value");
+                currentEnumRow.value = "2147483647";
+            }
                     currentEnumRow.footnote = attributes.getValue("footnote");
                     if (currentEnum.footnote != null)
                         currentEnum.footnote = normalizeDescription(currentEnum.footnote);
@@ -924,40 +936,6 @@ public class GenerateEnumerations
         }
     }
         
-        /**
-         * Normalize string characters to create valid description
-         * @param value of interest
-         * @return normalized value
-         */
-        private String normalizeDescription(String value)
-        {
-            String normalizedEntry = value.trim()
-                                          .replaceAll("&", "&amp;").replaceAll("&amp;amp;", "&amp;");
-            // note that no solitary & characters appear in valid XML document, so this is restoring escape characters for HTML Javadoc
-            if (!value.equals(value.trim())) // normalizedEntry))
-                System.out.println ("*** normalizeDescription: " + 
-                                    "'" + value + "' to " + 
-                                    "'" + normalizedEntry + "'");
-            return normalizedEntry;
-        }
-        /**
-         * Normalize string characters to create valid Java name
-         * @param value of interest
-         * @return normalized value
-         */
-        private String normalizeToken(String value)
-        {
-            String normalizedEntry = value.trim()
-                                          .replaceAll("\"", "").replaceAll("\'", "")
-                                          .replaceAll("—","-").replaceAll("–","-") // mdash
-                                          .replaceAll("/","")
-                                          .replaceAll("&", "&amp;").replaceAll("&amp;amp;", "&amp;");
-            if (!value.equals(normalizedEntry))
-                System.out.println ("*** normalize " + "\n" + 
-                                    "'" + value + "' to\n" + 
-                                    "'" + normalizedEntry + "'");
-            return normalizedEntry;
-        }
         
       private void writeOneEnum(StringBuilder sb, EnumRowElem row, String enumName)
       {
@@ -967,7 +945,7 @@ public class GenerateEnumerations
 
         if (xrefName == null) {
           sb.append(String.format(disenumfootnotecommentTemplate, htmlize(normalizeDescription(row.description)) + (row.footnote == null ? "" : ", " + htmlize(normalizeDescription(row.footnote)))));
-          sb.append(String.format(disenumpart2Template, enumName, row.value, normalizeDescription(row.description)));
+          sb.append(String.format(disenumpart2Template, normalizeToken(enumName), row.value, normalizeDescription(row.description)));
         }
         else {
           sb.append(String.format(disenumcommentTemplate, xrefName));
@@ -1064,4 +1042,42 @@ public class GenerateEnumerations
             ex.printStackTrace(System.err);
         }
     }
+        /**
+         * Normalize string characters to create valid description
+         * @param value of interest
+         * @return normalized value
+         */
+        public static String normalizeDescription(String value)
+        {
+            String normalizedEntry = value.trim()
+                                          .replaceAll("&", "&amp;").replaceAll("&amp;amp;", "&amp;")
+                                          .replaceAll("\"", "'");
+            // note that no solitary & characters appear in valid XML document, so this is restoring escape characters for HTML Javadoc
+//            if (!value.equals(normalizedEntry))
+//                System.out.println ("*** normalizeDescription: " + 
+//                                    "'" + value + "' to " + 
+//                                    "'" + normalizedEntry + "'");
+            return normalizedEntry;
+        }
+        /**
+         * Normalize string characters to create valid Java name.  Note that unmangled name typically remains available in the description
+         * @param value of interest
+         * @return normalized value
+         */
+        public static String normalizeToken(String value)
+        {
+            String normalizedEntry = value.trim()
+                                          .replaceAll("\"", "").replaceAll("\'", "")
+                                          .replaceAll("—","-").replaceAll("–","-") // mdash
+                    // 
+                                          .replaceAll("\\*","x").replaceAll("/","") // escaped regex for multiply, divide
+                                          .replaceAll("&", "&amp;").replaceAll("&amp;amp;", "&amp;");
+            if (!normalizedEntry.isEmpty() && Character.isDigit(normalizedEntry.toCharArray()[0]))
+                    normalizedEntry = '_' + normalizedEntry;
+            if (!value.equals(normalizedEntry) && !normalizedEntry.equals(value.trim()))
+                System.out.println ("*** normalize " + "\n" + 
+                                    "'" + value + "' to\n" + 
+                                    "'" + normalizedEntry + "'");
+            return normalizedEntry;
+        }
 }
