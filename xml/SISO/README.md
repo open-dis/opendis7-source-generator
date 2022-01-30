@@ -20,7 +20,5 @@ Schema obtained from
 * SISO-REF-010.xsd
 * https://www.sisostds.org/schemas/SISO-REF-010.xsd
 
-Necessary schema changes to support validation:
-
-* Changed xs:schema from 2.5 to 2.6 as follows:
-* xs:schema xmlns="http://www.sisostds.org/schemas/SISO-REF-010/2.6" targetNamespace="http://www.sisostds.org/schemas/SISO-REF-010/2.6"
+Currently applied SISO-REF-010-v30-DRAFT-20220129-d11 with small modifications as noted in 
+[Issue #3](https://github.com/open-dis/open-dis7-source-generator/issues/3).
