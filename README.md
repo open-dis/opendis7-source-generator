@@ -67,9 +67,9 @@ The initial project directory looks like:
 |               `-- dis7
 |                   `-- source
 |                       `-- generator
-|                           |-- entitytypes
+|                           |-- entityTypes
 |                           |-- enumerations
-|                           |-- generator/pdus
+|                           +-- pdus
 |-- src-generated
 |-- src-specialcase
 |-- src-supporting
@@ -104,9 +104,12 @@ After project execution, the directory tree will also contain:
 6. **src-specialcase** -- required DIS class files which could not be described by XML
 7. **src-supporting** -- class files satisfying generated source dependencies
 8. **xml** -- SISO and IEEE-based XML files which serve as the input to the generator
-9. **build** -- products of the Java compiler
-10. **dist** -- jar files which are the final products of the project
+9. **build** -- generated directory holding products of the Java compiler
+10. **dist** -- generated jar files and javadoc, the products of the project
 11. **test** -- an empty directory created by Netbeans
+
+Products are then copied to the open-dis7-java projects for further integration, testing
+and publication.
 
 <h3>Project Internals</h3>
 
@@ -164,8 +167,8 @@ When a SAX "start" element is encountered, a new Java object is created -- one o
 When a SAX "end" element is encountered, the "current" element is written out as a complete EntityType class, with specific category, subcategory, etc., values. Template files are used as above.
 
 Further work:
-Refactor Java generator classes
-Implement other language outputs
-Improve descriptions / javadoc in XML
-Implement information "toString()" methods for classes like EulerAngles, EntityID, EntityKind
 
+Refactor Java generator classes -- reasonably stable, minor refactoring occurs occasionally
+Implement other language outputs -- Python work is in progress
+Improve descriptions / javadoc in XML -- looking pretty good now!
+Implement information "toString()" methods for classes like EulerAngles, EntityID, EntityKind
