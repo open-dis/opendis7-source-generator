@@ -6,9 +6,6 @@
 package edu.nps.moves.dis7.utilities;
 
 import edu.nps.moves.dis7.pdus.*;
-//import java.lang.reflect.InvocationTargetException;
-//import java.lang.reflect.Method;
-//import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.*;
 import java.util.*;
@@ -143,13 +140,18 @@ public class DisTime
      * <a href="https://en.wikipedia.org/wiki/Epoch_(computing)" target="_blank">https://en.wikipedia.org/wiki/Epoch_(computing)</a>.
      */
     private static Instant     epochLvc        = Instant.now(); // initialized at start
+  
+    /**
+     * Default value is TimestampStyle.IEEE_ABSOLUTE.
+     */
+    public static final TimestampStyle TIMESTAMP_STYLE_DEFAULT = TimestampStyle.IEEE_ABSOLUTE;
     
     /** We can marshal the PDU with a timestamp set to any of several styles. 
      * Remember, you MUST set a timestamp. DIS will regard multiple packets sent 
      * with the same timestamp as duplicates and may discard them.
      * Default value is TimestampStyle.IEEE_ABSOLUTE.
      */
-    private static TimestampStyle timestampStyle = TimestampStyle.IEEE_ABSOLUTE;
+    private static TimestampStyle timestampStyle = TIMESTAMP_STYLE_DEFAULT;
   
     /** mask for absolute timestamps */
     public static final int ABSOLUTE_TIMESTAMP_MASK = 0x00000001;
@@ -158,10 +160,8 @@ public class DisTime
     public static final int RELATIVE_TIMESTAMP_MASK = 0xfffffffe;
     
     /** Ability to create new PDUs */
-    private static PduFactory pduFactory = new PduFactory(timestampStyle);
+    private static PduFactory pduFactory = new PduFactory(TIMESTAMP_STYLE_DEFAULT);
     
-    /** calendar instance */
-    private static GregorianCalendar calendar = new GregorianCalendar();
 //    private LocalDateTime todayDateTime = new LocalDateTime();
 //    private Instant       todayInstant  = new Instant();
     
@@ -175,7 +175,7 @@ public class DisTime
     /**
      * Shared instance. This method is not thread-safe. If you are working in multiple threads,
      * create a new instance for each thread.
-//     * return singleton instance of DisTime
+     * return singleton instance of DisTime
      */
    /* public static DisTime createInstance()
     {
@@ -188,7 +188,7 @@ public class DisTime
     
     public DisTime()
     {
-//        pduFactory = new PduFactory(timestampStyle);
+        // initialize
     }
     
     /** Provide parsable time metadata encapsulated in CommentPdu for sharing
@@ -225,6 +225,7 @@ public class DisTime
     private static synchronized int getCurrentDisTimeUnitsSinceTopOfHour()
     {
         // set calendar object to current time
+        GregorianCalendar calendar = new GregorianCalendar();
         long currentTime = System.currentTimeMillis(); // UTC milliseconds since 1970
         calendar.setTimeInMillis(currentTime);
 
@@ -324,6 +325,7 @@ public class DisTime
     private static synchronized int getCurrentYearTimestamp()
     {
         // set calendar object to current time
+        GregorianCalendar calendar = new GregorianCalendar();
         long currentTime = System.currentTimeMillis(); // UTC milliseconds since 1970
         calendar.setTimeInMillis(currentTime);
 
@@ -415,7 +417,7 @@ public class DisTime
     public static String convertToString(int timestamp)
     {
         GregorianCalendar newCalendar = new GregorianCalendar();
-        SimpleDateFormat formatter = new SimpleDateFormat(dateFormatPattern + " " + timeFormatPattern);
+        SimpleDateFormat  formatter   = new SimpleDateFormat(dateFormatPattern + " " + timeFormatPattern);
         
         if      ((timestampStyle == TimestampStyle.IEEE_ABSOLUTE) || 
                  (timestampStyle == TimestampStyle.IEEE_RELATIVE))
@@ -565,7 +567,7 @@ public class DisTime
 //        DisTime.initializeTimestampMethod();
         System.out.println("=== legacy java.util.Date, calendar methods ===");
         System.out.println("DisTime.getTimestampStyle()                       = " + DisTime.getTimestampStyle());
-        System.out.println("patterns                                          = " + dateFormatPattern + " " + timeFormatPattern);
+        System.out.println("patterns                                            " + dateFormatPattern + " " + timeFormatPattern);
         int initialTimestamp = DisTime.getCurrentDisTimestamp();
         System.out.println("DisTime.getCurrentDisTimestamp() initialTimestamp = " + convertToString(initialTimestamp)                               + " = " + Integer.toUnsignedString(initialTimestamp)                 + " = " + initialTimestamp                 + " (unsigned vs signed output)");
         System.out.println("DisTime.getCurrentDisTimestamp()                  = " + convertToString(DisTime.getCurrentDisTimestamp())               + " = " + Integer.toUnsignedString(DisTime.getCurrentDisTimestamp()) + " = " + DisTime.getCurrentDisTimestamp() + " (unsigned vs signed output)");
@@ -585,6 +587,13 @@ public class DisTime
         System.out.println("java.time.LocalDateTime.now(), Instant.now()      = " + java.time.LocalDateTime.now() + ", " + java.time.Instant.now());
         System.out.println("java.time.LocalDateTime.now(), Instant.now()      = " + java.time.LocalDateTime.now() + ", " + java.time.Instant.now());
 
+        
+        System.out.println("DisTime.hasEpochLvc()                     default = " + DisTime.hasEpochLvc());
+        System.out.println("DisTime.setEpochLvc(Instant.now())...");
+        setEpochLvc(Instant.now());
+        System.out.println("DisTime.hasEpochLvc(),                            = " + DisTime.hasEpochLvc());
+        System.out.println("clearEpochLvc()...");
+        clearEpochLvc();
         System.out.println("DisTime.hasEpochLvc()                             = " + DisTime.hasEpochLvc());
         System.out.println("DisTime.setEpochLvcNow()...");
         setEpochLvcNow();
