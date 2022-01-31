@@ -1,4 +1,6 @@
-TODO.  Our intent is to move all of the java-specific directories here:
+## TODO
+
+Our intent is to move all of the java-specific directories here:
 * src-generated
 * src-specialcase
 * src-supporting
