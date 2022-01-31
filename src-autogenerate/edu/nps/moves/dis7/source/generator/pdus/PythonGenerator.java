@@ -74,9 +74,9 @@ public class PythonGenerator extends AbstractGenerator
     public void writeClasses()
     {
         List sortedClasses =  this.sortClasses(); // TODO empty
-        this.directory = "./src/main/python";
+        this.generatedSourceDirectoryName = "./src/python";
        
-        this.createDirectory();
+        this.createDirectory(); // somewhat duplicative of code that follows, TODO refactor each
         
         PrintWriter pw;
        
@@ -87,7 +87,7 @@ public class PythonGenerator extends AbstractGenerator
             String outputFileName = "opendis7.py"; // default filename from prior open-dis-python implementation
 //            if (!languageProperties.getProperty("filename").isBlank())
 //                 outputFileName = languageProperties.getProperty("filename");
-            String directoryName = this.directory; // default
+            String directoryName = this.generatedSourceDirectoryName; // default
 //            if (!languageProperties.getProperty("directory").isBlank())
 //                 directoryName = languageProperties.getProperty("directory");
             if (!directoryName.isBlank() && !outputFileName.isBlank()) 
