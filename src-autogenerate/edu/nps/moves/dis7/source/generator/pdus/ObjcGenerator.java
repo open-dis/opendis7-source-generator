@@ -66,7 +66,7 @@ public class ObjcGenerator extends AbstractGenerator // TODO refactor rename as 
             pObjcProperties.setProperty("directory", clDirectory);
        
 
-        super.setDirectory(pObjcProperties.getProperty("directory"));
+        super.setGeneratedSourceDirectoryName(pObjcProperties.getProperty("directory"));
 
         // Set up a mapping between the strings used in the XML file and the strings used
         // in the java file, specifically the data types. This could be externalized to
@@ -122,7 +122,7 @@ public class ObjcGenerator extends AbstractGenerator // TODO refactor rename as 
     @Override
     public void writeClasses()
     {
-        this.createDirectory();
+        createGeneratedSourceDirectory(false); // boolean: whether to clean out prior files, if any exist in that directory
         
         Iterator it = classDescriptions.values().iterator();
 
@@ -156,7 +156,7 @@ public void writeHeaderFile(GeneratedClass aClass)
     {
         String name = aClass.getName();
         //System.out.println("Creating cpp and .h source code files for " + name);
-        String headerFullPath = getDirectory() + "/" + name + ".h";
+        String headerFullPath = getGeneratedSourceDirectoryName() + "/" + name + ".h";
         File outputFile = new File(headerFullPath);
         outputFile.createNewFile();
         // Write includes for any classes we may reference. this generates multiple #includes if we
@@ -336,7 +336,7 @@ public void writeHeaderFile(GeneratedClass aClass)
    {
         String name = aClass.getName();
         System.out.println("Creating Objc .m and .h source code files for " + name);
-        String headerFullPath = getDirectory() + "/" + name + ".m";
+        String headerFullPath = getGeneratedSourceDirectoryName() + "/" + name + ".m";
         File outputFile = new File(headerFullPath);
         outputFile.createNewFile();
         try (PrintWriter pw = new PrintWriter(outputFile)) {
@@ -439,7 +439,7 @@ public void writeEqualityOperator(PrintWriter printWriter, GeneratedClass aClass
                 /*
                 else
                 {
-                    pw.println("     if( ! (  this.get" + this.initialCap(anAttribute.getName()) + "() == rhs.get" + this.initialCap(anAttribute.getName()) + "()) ) ivarsEqual = false;");
+                    pw.println("     if( ! (  this.get" + this.initialCapital(anAttribute.getName()) + "() == rhs.get" + this.initialCapital(anAttribute.getName()) + "()) ) ivarsEqual = false;");
                 }
                  */
 
@@ -524,14 +524,14 @@ public void writeMarshalMethod(PrintWriter pw, GeneratedClass aClass)
                 if(anAttribute.getIsDynamicListLengthField() == false)
                 {
                      String marshalType = marshalTypes.getProperty(anAttribute.getType());
-                     String capped = this.initialCap(marshalType);
+                     String capped = this.initialCapital(marshalType);
                      pw.println("    [dataStream write" + capped + ":" + anAttribute.getName() + "];");
                 }
                 else
                 {
                      GeneratedClassAttribute listAttribute = anAttribute.getDynamicListClassAttribute();
                      String marshalType = marshalTypes.getProperty(anAttribute.getType());
-                     String capped = this.initialCap(marshalType);
+                     String capped = this.initialCapital(marshalType);
                      //pw.println("    dataStream << ( " + types.get(anAttribute.getType()) + " )"  + listAttribute.getName() + ".size();");
                      pw.println("    [dataStream write" + capped + ":[" + listAttribute.getName() + " count]];");
                 }
@@ -562,7 +562,7 @@ public void writeMarshalMethod(PrintWriter pw, GeneratedClass aClass)
                 }
                 else
                 {
-                    String capped = this.initialCap(marshalType);
+                    String capped = this.initialCapital(marshalType);
                     pw.println("    [dataStream write" + capped + ":" + anAttribute.getName() + "[idx]];");
                 }
 
@@ -637,7 +637,7 @@ public void writeMarshalMethod(PrintWriter pw, GeneratedClass aClass)
         if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE)
         {
             String t = marshalTypes.getProperty(anAttribute.getType());
-            t = this.initialCap(t);
+            t = this.initialCapital(t);
             printWriter.println("    " + anAttribute.getName() + " = " + "[dataStream read"  + t + "];");
         }
 
@@ -649,7 +649,7 @@ public void writeMarshalMethod(PrintWriter pw, GeneratedClass aClass)
         if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
         {
             String t = marshalTypes.getProperty(anAttribute.getType());
-            t = this.initialCap(t);
+            t = this.initialCapital(t);
             printWriter.println();
             printWriter.println("     for(int idx = 0; idx < " + anAttribute.getListLength() + "; idx++)");
             printWriter.println("     {");
@@ -735,7 +735,7 @@ private void writeInitializer(PrintWriter pw, GeneratedClass aClass)
             {
                 if(attribute.getDefaultValue() != null)
                 {
-                   String setterName = "set" + this.initialCap(attribute.getName());
+                   String setterName = "set" + this.initialCapital(attribute.getName());
                    //pw.println("    [self " + setterName + ":" + attribute.getDefaultValue() + "];");
                    pw.println("    " +  attribute.getName() +" = " + attribute.getDefaultValue() + ";");
                    usedValues.add(attribute.getName());
@@ -913,7 +913,7 @@ private void writeInitializer(PrintWriter pw, GeneratedClass aClass)
 * @return same string with first letter capitalized
 */
     @Override
-    public String initialCap(String aString)
+    public String initialCapital(String aString)
 {
     StringBuffer stb = new StringBuffer(aString);
     stb.setCharAt(0, Character.toUpperCase(aString.charAt(0)));

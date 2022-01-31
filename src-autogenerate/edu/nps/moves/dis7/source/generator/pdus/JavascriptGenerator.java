@@ -60,9 +60,9 @@ public class JavascriptGenerator extends AbstractGenerator
         //System.out.println("System properties:" + systemProperties);
         //System.out.println("Javascript properties: " + pJavascriptProperties);
         namespace = javascriptProperties.getProperty("namespace");
-        super.setDirectory(systemProperties.getProperty("xmlpg.generatedSourceDir"));
+        super.setGeneratedSourceDirectoryName(systemProperties.getProperty("xmlpg.generatedSourceDir"));
         
-        //super.setDirectory("javascript/dis");
+        //super.setGeneratedSourceDirectoryName("javascript/dis");
         //System.out.println("Destination directory: " + pJavascriptProperties.getProperty("xmlpg.generatedSourceDir"));
 
         try
@@ -173,7 +173,7 @@ public class JavascriptGenerator extends AbstractGenerator
     public void writeClasses()
     {
 
-        this.createDirectory();
+        createGeneratedSourceDirectory(false); // boolean: whether to clean out prior files, if any exist in that directory
         
         Iterator it = classDescriptions.values().iterator();
         
@@ -193,12 +193,12 @@ public class JavascriptGenerator extends AbstractGenerator
               if(pack != null)
               {
                   pack = pack.replace(".", "/");
-                  fullPath = getDirectory() + "/" + name + ".js";
+                  fullPath = getGeneratedSourceDirectoryName() + "/" + name + ".js";
                   //System.out.println("full path is " + fullPath);
               }
               else
              {
-                   fullPath = getDirectory() + "/" + name + ".js";
+                   fullPath = getGeneratedSourceDirectoryName() + "/" + name + ".js";
              }
              //System.out.println("Creating Javascript source code file for " + fullPath);
               
@@ -225,7 +225,7 @@ public class JavascriptGenerator extends AbstractGenerator
         /*
         try
         {
-            String fullPath = getDirectory() + "/exports.js";
+            String fullPath = getGeneratedSourceDirectoryName() + "/exports.js";
             File outputFile = new File(fullPath);
             outputFile.getParentFile().mkdirs();
             outputFile.createNewFile();
@@ -347,7 +347,7 @@ public class JavascriptGenerator extends AbstractGenerator
             if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE)
             {
                 String marshalType = marshalTypes.getProperty(anAttribute.getType());
-                String capped = this.initialCap(marshalType);
+                String capped = this.initialCapital(marshalType);
                 
                 // Encode primitive types
                 if(marshalType.equalsIgnoreCase("UnsignedByte"))
@@ -378,7 +378,7 @@ public class JavascriptGenerator extends AbstractGenerator
                 if(anAttribute.getUnderlyingTypeIsPrimitive() == true)
                 {
                     String marshalType = unmarshalTypes.getProperty(anAttribute.getType());
-                    String capped = this.initialCap(marshalType);
+                    String capped = this.initialCapital(marshalType);
                 
                     pw.println("          outputStream.write" + capped + "(this." + anAttribute.getName() + "[ idx ] );");
                 }
@@ -409,7 +409,7 @@ public class JavascriptGenerator extends AbstractGenerator
                 }
                 else // It's a primitive
                 {
-                    String capped = this.initialCap(marshalType);
+                    String capped = this.initialCapital(marshalType);
                     pw.println("           outputStream.write" + capped + "(" + anAttribute.getName() + ");");
                 }
                 pw.println("       }");
@@ -469,7 +469,7 @@ public class JavascriptGenerator extends AbstractGenerator
             if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE)
             {
                 String marshalType = unmarshalTypes.getProperty(anAttribute.getType());
-                String capped = this.initialCap(marshalType);
+                String capped = this.initialCapital(marshalType);
                 
                 if(marshalType.equalsIgnoreCase("UnsignedByte"))
                     pw.println("       this." + anAttribute.getName() + " = inputStream.readUByte();");
@@ -502,7 +502,7 @@ public class JavascriptGenerator extends AbstractGenerator
                 if(anAttribute.getUnderlyingTypeIsPrimitive() == true)
                 {
                     String marshalType = unmarshalTypes.getProperty(anAttribute.getType());
-                    String capped = this.initialCap(marshalType);
+                    String capped = this.initialCapital(marshalType);
                 
                     pw.println("          this." + anAttribute.getName() + "[ idx ] = inputStream.read" + capped + "();");
                 }
@@ -535,7 +535,7 @@ public class JavascriptGenerator extends AbstractGenerator
                 }
                 else // It's a primitive
                 {
-                    String capped = this.initialCap(marshalType);
+                    String capped = this.initialCapital(marshalType);
                     pw.println("           inputStream.read" + capped + "(" + anAttribute.getName() + ");");
                 }
                 pw.println("       }");
@@ -612,7 +612,7 @@ public class JavascriptGenerator extends AbstractGenerator
                     for(int jdx = 0; jdx < bitfields.size(); jdx++)
                     {
                         GeneratedBitField bitfield = (GeneratedBitField)bitfields.get(jdx);
-                        String capped = this.initialCap(anAttribute.getName());
+                        String capped = this.initialCapital(anAttribute.getName());
                         String methodBase = capped + "_" + bitfield.name;
                         int shiftBits = super.getBitsToShift(anAttribute, bitfield.mask);
                         

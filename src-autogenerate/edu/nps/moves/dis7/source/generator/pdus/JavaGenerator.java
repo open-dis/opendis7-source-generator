@@ -83,7 +83,7 @@ public class JavaGenerator extends AbstractGenerator
             if (clPackage != null)
                 pJavaProperties.setProperty("package", clPackage);
 
-            super.setDirectory(clDirectory);
+            super.setGeneratedSourceDirectoryName(clDirectory);
 
             System.out.println("Source code directory set to " + clDirectory);
         }
@@ -174,7 +174,7 @@ public class JavaGenerator extends AbstractGenerator
         
         readTemplates();  // get the license
         
-        this.createDirectory();
+        createGeneratedSourceDirectory(true); // boolean: whether to clean out prior files, if any exist in that directory
 
         Iterator classDescriptionsIterator = classDescriptions.values().iterator();
 
@@ -192,14 +192,14 @@ public class JavaGenerator extends AbstractGenerator
                 // with slashes (edu/nps/moves/dis and create that directory
                 if (aClassPackageName != null) {
                     aClassPackageName = aClassPackageName.replace(".", "/");
-                    aClassFullPath  = getDirectory() + "/" + aClassPackageName + "/" ;
+                    aClassFullPath  = getGeneratedSourceDirectoryName() + "/" + aClassPackageName + "/" ;
 //                    if (aClassName.endsWith("Pdu") || aClassPackageName.endsWith("dis7")) //  is there a better way to distinguish?
 //                       aClassFullPath += pduSubpackageName + "/";
                     aClassFullPath += aClassName + ".java";
                     //System.out.println("full path is " + fullPath);
                 }
                 else {
-                    aClassFullPath = getDirectory() + "/" + aClassName + ".java";
+                    aClassFullPath = getGeneratedSourceDirectoryName() + "/" + aClassName + ".java";
                 }
                 //System.out.println("Creating Java source code file for " + fullPath);
 
@@ -221,7 +221,7 @@ public class JavaGenerator extends AbstractGenerator
 
         } // End while
         
-        packageInfoPath = getDirectory() + "/edu/nps/moves/dis7/pdus/" + "package-info.java";
+        packageInfoPath = getGeneratedSourceDirectoryName() + "/edu/nps/moves/dis7/pdus/" + "package-info.java";
         packageInfoFile = new File(packageInfoPath);
         
         FileWriter packageInfoFileWriter;
@@ -1065,12 +1065,12 @@ public class JavaGenerator extends AbstractGenerator
                     if (anAttribute.getIsDynamicListLengthField() == false) {
                         String beanType = types.getProperty(anAttribute.getType());
                         pw.println("/** Setter for {@link "+aClass.getName()+"#"+anAttribute.getName()+"}");
-                        pw.println("  * @param p" + this.initialCap(anAttribute.getName()) + " new value of interest");
+                        pw.println("  * @param p" + this.initialCapital(anAttribute.getName()) + " new value of interest");
                         pw.println("  * @return same object to permit progressive setters */");
                         pw.print("public ");
                         pw.print(aClass.getName());
-                        pw.println(" set" + this.initialCap(anAttribute.getName()) + "(" + beanType + " p" + this.initialCap(anAttribute.getName()) + ")");
-                        pw.println("{\n    " + anAttribute.getName() + " = p" + this.initialCap(anAttribute.getName()) + ";");
+                        pw.println(" set" + this.initialCapital(anAttribute.getName()) + "(" + beanType + " p" + this.initialCapital(anAttribute.getName()) + ")");
+                        pw.println("{\n    " + anAttribute.getName() + " = p" + this.initialCapital(anAttribute.getName()) + ";");
                         pw.println("    return this;");
                         pw.println("}");
                         
@@ -1078,22 +1078,22 @@ public class JavaGenerator extends AbstractGenerator
                         if (beanType.equals("byte") || beanType.equals("short") || beanType.equals("long"))
                         {
                         pw.println("/** Utility setter for {@link "+aClass.getName()+"#"+anAttribute.getName()+"}");
-                        pw.println("  * @param p" + this.initialCap(anAttribute.getName()) + " new value of interest");
+                        pw.println("  * @param p" + this.initialCapital(anAttribute.getName()) + " new value of interest");
                         pw.println("  * @return same object to permit progressive setters */");
                         pw.print("public ");
                         pw.print(aClass.getName());
-                        pw.print(" set" + this.initialCap(anAttribute.getName()) + "(" );
+                        pw.print(" set" + this.initialCapital(anAttribute.getName()) + "(" );
                         pw.print("int"); // allow int, will then coerce downcasting to beantype when setting
-                        pw.print(" p" + this.initialCap(anAttribute.getName()) + ")");
+                        pw.print(" p" + this.initialCapital(anAttribute.getName()) + ")");
                         // TODO overflow checks when downcasting int to given beantype
-                        pw.println("{\n    " + anAttribute.getName() + " = (" + beanType + ") p" + this.initialCap(anAttribute.getName()) + ";");
+                        pw.println("{\n    " + anAttribute.getName() + " = (" + beanType + ") p" + this.initialCapital(anAttribute.getName()) + ";");
                         pw.println("    return this;");
                         pw.println("}");
                         }
 
                         pw.println("/** Getter for {@link "+aClass.getName()+"#"+anAttribute.getName()+"}");
                         pw.println("  * @return value of interest */");
-                        pw.println("public " + beanType + " get" + this.initialCap(anAttribute.getName()) + "()");
+                        pw.println("public " + beanType + " get" + this.initialCapital(anAttribute.getName()) + "()");
                         pw.println("{\n    return " + anAttribute.getName() + "; \n}");
                         pw.println();
                     }
@@ -1104,7 +1104,7 @@ public class JavaGenerator extends AbstractGenerator
 
                         pw.println("/** Utility method to get size of field");
                         pw.println(" * @return size of field */");
-                        pw.println("public " + beanType + " get" + this.initialCap(anAttribute.getName()) + "()");
+                        pw.println("public " + beanType + " get" + this.initialCapital(anAttribute.getName()) + "()");
                         pw.println("{\n    return (" + beanType + ")" + listAttribute.getName() + ".size(); \n}");
 
                         pw.println();
@@ -1112,13 +1112,13 @@ public class JavaGenerator extends AbstractGenerator
                         pw.println("/** Note that setting this value will not change the marshalled value. The list whose length this describes is used for that purpose.");
                         pw.println(" * The get" + anAttribute.getName() + " method will also be based on the actual list length rather than this value. ");
                         pw.println(" * The method is simply here for java bean completeness.");
-                        pw.println(" * @param p" + this.initialCap(anAttribute.getName()) + " passed parameter");
+                        pw.println(" * @param p" + this.initialCapital(anAttribute.getName()) + " passed parameter");
                         pw.println(" * @return this object");
                         pw.println(" */");
                         pw.print("public ");
                         pw.print(aClass.getName());
-                        pw.println(" set" + this.initialCap(anAttribute.getName()) + "(" + beanType + " p" + this.initialCap(anAttribute.getName()) + ")");
-                        pw.println("{\n    " + anAttribute.getName() + " = p" + this.initialCap(anAttribute.getName()) + ";");
+                        pw.println(" set" + this.initialCapital(anAttribute.getName()) + "(" + beanType + " p" + this.initialCapital(anAttribute.getName()) + ")");
+                        pw.println("{\n    " + anAttribute.getName() + " = p" + this.initialCapital(anAttribute.getName()) + ";");
                         pw.println("    return this;");
                         pw.println("}");
 
@@ -1130,18 +1130,18 @@ public class JavaGenerator extends AbstractGenerator
                 // The attribute is a class of some sort. Generate getters and setters.
                 case CLASSREF:
                     pw.println("/** Setter for {@link "+aClass.getName()+"#"+anAttribute.getName()+"}");
-                    pw.println("  * @param p" + this.initialCap(anAttribute.getName()) + " new value of interest");
+                    pw.println("  * @param p" + this.initialCapital(anAttribute.getName()) + " new value of interest");
                     pw.println("  * @return same object to permit progressive setters */");
                     pw.print("public ");
                     pw.print(aClass.getName());
-                    pw.println(" set" + this.initialCap(anAttribute.getName()) + "(" + anAttribute.getType() + " p" + this.initialCap(anAttribute.getName()) + ")");
-                    pw.println("{\n    " + anAttribute.getName() + " = p" + this.initialCap(anAttribute.getName()) + ";");
+                    pw.println(" set" + this.initialCapital(anAttribute.getName()) + "(" + anAttribute.getType() + " p" + this.initialCapital(anAttribute.getName()) + ")");
+                    pw.println("{\n    " + anAttribute.getName() + " = p" + this.initialCapital(anAttribute.getName()) + ";");
                     pw.println("    return this;");
                     pw.println("}");
                     
                     pw.println("/** Getter for {@link "+aClass.getName()+"#"+anAttribute.getName()+"}");
                     pw.println("  * @return value of interest */");
-                    pw.println("public " + anAttribute.getType() + " get" + this.initialCap(anAttribute.getName()) + "()");
+                    pw.println("public " + anAttribute.getType() + " get" + this.initialCapital(anAttribute.getName()) + "()");
                     pw.println("{");
                     if (anAttribute.listIsClass())
                     {
@@ -1156,40 +1156,40 @@ public class JavaGenerator extends AbstractGenerator
                 // The attribute is an array of some sort. Generate getters and setters.
                 case PRIMITIVE_LIST:
                     pw.println("/** Setter for {@link "+aClass.getName()+"#"+anAttribute.getName()+"}");
-                    pw.println("  * @param p" + this.initialCap(anAttribute.getName()) + " new value of interest");
+                    pw.println("  * @param p" + this.initialCapital(anAttribute.getName()) + " new value of interest");
                     pw.println("  * @return same object to permit progressive setters */");
                     pw.print("public ");
                     pw.print(aClass.getName());
-                    pw.println(" set" + this.initialCap(anAttribute.getName()) + "(" + types.getProperty(anAttribute.getType()) + "[] p" + this.initialCap(anAttribute.getName()) + ")");
+                    pw.println(" set" + this.initialCapital(anAttribute.getName()) + "(" + types.getProperty(anAttribute.getType()) + "[] p" + this.initialCapital(anAttribute.getName()) + ")");
 
                     if (!anAttribute.isFixedLength())
-                        pw.println("{\n    " + anAttribute.getName() + " = p" + this.initialCap(anAttribute.getName()) + ";");
+                        pw.println("{\n    " + anAttribute.getName() + " = p" + this.initialCapital(anAttribute.getName()) + ";");
                     else
-                        pw.println("{\n    " + anAttribute.getName() + " = Arrays.copyOf(p" + this.initialCap(anAttribute.getName()) + ", " + anAttribute.getName() + ".length);");
+                        pw.println("{\n    " + anAttribute.getName() + " = Arrays.copyOf(p" + this.initialCapital(anAttribute.getName()) + ", " + anAttribute.getName() + ".length);");
 
                     pw.println("    return this;");
                     pw.println("}");
                     pw.println("/** Getter for {@link "+aClass.getName()+"#"+anAttribute.getName()+"}");
                     pw.println("  * @return value of interest */");
-                    pw.println("public " + types.getProperty(anAttribute.getType()) + "[] get" + this.initialCap(anAttribute.getName()) + "()");
+                    pw.println("public " + types.getProperty(anAttribute.getType()) + "[] get" + this.initialCapital(anAttribute.getName()) + "()");
                     pw.println("{\n    return " + anAttribute.getName() + "; \n}");
                     pw.println();
                     break;
 
                 case OBJECT_LIST:
                     pw.println("/** Setter for {@link "+aClass.getName()+"#"+anAttribute.getName()+"}");
-                    pw.println("  * @param p" + this.initialCap(anAttribute.getName()) + " new value of interest");
+                    pw.println("  * @param p" + this.initialCapital(anAttribute.getName()) + " new value of interest");
                     pw.println("  * @return same object to permit progressive setters */");
                     pw.print("public ");
                     pw.print(aClass.getName());
-                    pw.println(" set" + this.initialCap(anAttribute.getName()) + "(List<" + anAttribute.getType() + ">" + " p" + this.initialCap(anAttribute.getName()) + ")");
-                    pw.println("{\n    " + anAttribute.getName() + " = p" + this.initialCap(anAttribute.getName()) + ";");
+                    pw.println(" set" + this.initialCapital(anAttribute.getName()) + "(List<" + anAttribute.getType() + ">" + " p" + this.initialCapital(anAttribute.getName()) + ")");
+                    pw.println("{\n    " + anAttribute.getName() + " = p" + this.initialCapital(anAttribute.getName()) + ";");
                     pw.println("    return this;");
                     pw.println("}");
 
                     pw.println("/** Getter for {@link "+aClass.getName()+"#"+anAttribute.getName()+"}");
                     pw.println("  * @return value of interest */");
-                    pw.println("public List<" + anAttribute.getType() + ">" + " get" + this.initialCap(anAttribute.getName()) + "()");
+                    pw.println("public List<" + anAttribute.getType() + ">" + " get" + this.initialCapital(anAttribute.getName()) + "()");
                     pw.println("{\n    return " + anAttribute.getName() + "; \n}");
                     pw.println();
                     break;
@@ -1197,18 +1197,18 @@ public class JavaGenerator extends AbstractGenerator
                 case SISO_ENUM:
                     String enumtype = anAttribute.getType();
                     pw.println("/** Setter for {@link "+aClass.getName()+"#"+anAttribute.getName()+"}");
-                    pw.println("  * @param p" + this.initialCap(anAttribute.getName()) + " new value of interest");
+                    pw.println("  * @param p" + this.initialCapital(anAttribute.getName()) + " new value of interest");
                     pw.println("  * @return same object to permit progressive setters */");
                     pw.print("public ");
                     pw.print(aClass.getName());
-                    pw.println(" set" + this.initialCap(anAttribute.getName()) + "(" + enumtype + " p" + this.initialCap(anAttribute.getName()) + ")");
-                    pw.println("{\n    " + anAttribute.getName() + " = p" + this.initialCap(anAttribute.getName()) + ";");
+                    pw.println(" set" + this.initialCapital(anAttribute.getName()) + "(" + enumtype + " p" + this.initialCapital(anAttribute.getName()) + ")");
+                    pw.println("{\n    " + anAttribute.getName() + " = p" + this.initialCapital(anAttribute.getName()) + ";");
                     pw.println("    return this;");
                     pw.println("}");
 
                     pw.println("/** Getter for {@link "+aClass.getName()+"#"+anAttribute.getName()+"}");
                     pw.println("  * @return value of interest */");
-                    pw.println("public " + enumtype + " get" + this.initialCap(anAttribute.getName()) + "()");
+                    pw.println("public " + enumtype + " get" + this.initialCapital(anAttribute.getName()) + "()");
                     pw.println("{\n    return " + anAttribute.getName() + "; \n}");
                     pw.println();
                     break;
@@ -1216,18 +1216,18 @@ public class JavaGenerator extends AbstractGenerator
                 case SISO_BITFIELD:
                     String bitfieldtype = anAttribute.getType();
                     pw.println("/** Setter for {@link "+aClass.getName()+"#"+anAttribute.getName()+"}");
-                    pw.println("  * @param p" + this.initialCap(anAttribute.getName()) + " new value of interest");
+                    pw.println("  * @param p" + this.initialCapital(anAttribute.getName()) + " new value of interest");
                     pw.println("  * @return same object to permit progressive setters */");
                     pw.print("public ");
                     pw.print(aClass.getName());
-                    pw.println(" set" + this.initialCap(anAttribute.getName()) + "(" + bitfieldtype + " p" + this.initialCap(anAttribute.getName()) + ")");
-                    pw.println("{\n    " + anAttribute.getName() + " = p" + this.initialCap(anAttribute.getName()) + ";");
+                    pw.println(" set" + this.initialCapital(anAttribute.getName()) + "(" + bitfieldtype + " p" + this.initialCapital(anAttribute.getName()) + ")");
+                    pw.println("{\n    " + anAttribute.getName() + " = p" + this.initialCapital(anAttribute.getName()) + ";");
                     pw.println("    return this;");
                     pw.println("}");
                     
                     pw.println("/** Getter for {@link "+aClass.getName()+"#"+anAttribute.getName()+"}");
                     pw.println("  * @return value of interest */");
-                    pw.println("public " + bitfieldtype + " get" + this.initialCap(anAttribute.getName()) + "()");
+                    pw.println("public " + bitfieldtype + " get" + this.initialCapital(anAttribute.getName()) + "()");
                     pw.println("{\n    return " + anAttribute.getName() + "; \n}");
                     pw.println();
                     break;
@@ -1259,8 +1259,8 @@ public class JavaGenerator extends AbstractGenerator
 
                     for (int jdx = 0; jdx < bitfields.size(); jdx++) {
                         GeneratedBitField bitfield = (GeneratedBitField) bitfields.get(jdx);
-                        String capped = this.initialCap(bitfield.name);
-                        String cappedIvar = this.initialCap(bitfieldIvarName);
+                        String capped = this.initialCapital(bitfield.name);
+                        String cappedIvar = this.initialCapital(bitfieldIvarName);
                         int shiftBits = super.getBitsToShift(anAttribute, bitfield.mask);
 
                         // write getter
@@ -1339,7 +1339,7 @@ public class JavaGenerator extends AbstractGenerator
             // Write out a method call to serialize a primitive type
               case PRIMITIVE:
                 marshalType = marshalTypes.getProperty(anAttribute.getType());
-                capped = this.initialCap(marshalType);
+                capped = this.initialCapital(marshalType);
 
                 // If we're a normal primitivetype, marshal out directly; otherwise, marshall out
                 // the list length.
@@ -1386,7 +1386,7 @@ public class JavaGenerator extends AbstractGenerator
 
                     marshalType = marshalTypes.getProperty(anAttribute.getType());
 
-                    capped = this.initialCap(marshalType);
+                    capped = this.initialCapital(marshalType);
                     pw.println("           dos.write" + capped + "(" + anAttribute.getName() + "[idx]);");
 
                     pw.println();
@@ -1405,9 +1405,9 @@ public class JavaGenerator extends AbstractGenerator
 
                     marshalType = marshalTypes.getProperty(anAttribute.getType());
 
-                    pw.println("            " + anAttribute.getType() + " a" + initialCap(anAttribute.getType() + " = "
+                    pw.println("            " + anAttribute.getType() + " a" + initialCapital(anAttribute.getType() + " = "
                         + anAttribute.getName() + ".get(idx);"));
-                    pw.println("            a" + initialCap(anAttribute.getType()) + ".marshal(dos);");
+                    pw.println("            a" + initialCapital(anAttribute.getType()) + ".marshal(dos);");
 
                     pw.println("       }");
                     pw.println();
@@ -1467,7 +1467,7 @@ public class JavaGenerator extends AbstractGenerator
             switch(anAttribute.getAttributeKind()) {
                 case PRIMITIVE:            
                     String marshalType = unmarshalTypes.getProperty(anAttribute.getType());
-                    String capped = this.initialCap(marshalType);
+                    String capped = this.initialCapital(marshalType);
                 
                     if (marshalType.equalsIgnoreCase("UnsignedByte")) {// || marshalType.equalsIgnoreCase("uint8"))
                         pw.println("        " + attributeName + " = (byte)dis.read" + capped + "();");
@@ -1512,7 +1512,7 @@ public class JavaGenerator extends AbstractGenerator
                     }
                     else { // It's a primitive
                         int primitiveByteSize = primitiveSizesMap.get(anAttribute.getType());
-                        capped = this.initialCap(marshalType);
+                        capped = this.initialCapital(marshalType);
                         pw.println("            " + anAttribute.getName() + "[idx] = dis.read" + capped + "();");
                         pw.println("        uPosition += ("+attributeName + ".length * "+primitiveByteSize+");");
                     }
@@ -1540,7 +1540,7 @@ public class JavaGenerator extends AbstractGenerator
                             pw.println("            " + anAttribute.getName() + ".add(anX);");
                         }
                         else  { // It's a primitive
-                            capped = this.initialCap(marshalType);
+                            capped = this.initialCapital(marshalType);
                             pw.println("            dis.read" + capped + "(" + anAttribute.getName() + ");");
                             pw.println("            uPosition += 4; // mike check");
                         }
@@ -1606,7 +1606,7 @@ public class JavaGenerator extends AbstractGenerator
             switch(anAttribute.getAttributeKind()) {
                 case PRIMITIVE:
                     marshalType = marshalTypes.getProperty(anAttribute.getType());
-                    capped = this.initialCap(marshalType);
+                    capped = this.initialCapital(marshalType);
                     if( capped.equals("Byte") )
                         capped = "";    // ByteBuffer just has put() for bytes
 
@@ -1640,7 +1640,7 @@ public class JavaGenerator extends AbstractGenerator
 
                     if(anAttribute.getUnderlyingTypeIsPrimitive())
                     {
-                        capped = this.initialCap(marshalType);
+                        capped = this.initialCapital(marshalType);
                         if( capped.equals("Byte") )
                             capped = "";    // ByteBuffer just has put() for bytes
                         pw.println("       byteBuffer.put" + capped + "((" + marshalType + ")" + anAttribute.getName() + "[idx]);");
@@ -1665,7 +1665,7 @@ public class JavaGenerator extends AbstractGenerator
 
                     if(anAttribute.getUnderlyingTypeIsPrimitive())
                     {
-                        capped = this.initialCap(marshalType);
+                        capped = this.initialCapital(marshalType);
                         if( capped.equals("Byte") ){
                             capped = "";    // ByteBuffer just uses put() for bytes
                         }
@@ -1674,8 +1674,8 @@ public class JavaGenerator extends AbstractGenerator
                     }
                     else
                     {
-                        pw.println("        " + anAttribute.getType() + " a" + initialCap(anAttribute.getType() + " = " + anAttribute.getName() + ".get(idx);"));
-                        pw.println("        a" + initialCap(anAttribute.getType()) + ".marshal(byteBuffer);" );
+                        pw.println("        " + anAttribute.getType() + " a" + initialCapital(anAttribute.getType() + " = " + anAttribute.getName() + ".get(idx);"));
+                        pw.println("        a" + initialCapital(anAttribute.getType()) + ".marshal(byteBuffer);" );
                     }
 
                     pw.println("   }");
@@ -1730,7 +1730,7 @@ public class JavaGenerator extends AbstractGenerator
             switch(anAttribute.getAttributeKind()) {
                 case PRIMITIVE:
                     marshalType = unmarshalTypes.getProperty(anAttribute.getType());
-                    capped = this.initialCap(marshalType);
+                    capped = this.initialCapital(marshalType);
                     if( capped.equals("Byte") )
                         capped = "";
                 
@@ -1759,7 +1759,7 @@ public class JavaGenerator extends AbstractGenerator
                     if(marshalType == null) // It's a class  // should be unnecessary w/ refactor
                         pw.println("            " + anAttribute.getName() + "[idx].unmarshal(byteBuffer);" );
                     else { // It's a primitive
-                        capped = this.initialCap(marshalType);
+                        capped = this.initialCapital(marshalType);
                         if( capped.equals("Byte") )
                              capped = "";
                         pw.println("            " +  anAttribute.getName() + "[idx] = byteBuffer.get" + capped + "();");
@@ -1787,7 +1787,7 @@ public class JavaGenerator extends AbstractGenerator
                             pw.println("        " + anAttribute.getName() + ".add(anX);");
                         }
                         else { // It's a primitive  // should be unnecessary now w/ refactor
-                            capped = this.initialCap(marshalType);
+                            capped = this.initialCapital(marshalType);
                             if( capped.equals("Byte") )
                                 capped = "";
                             pw.println("        byteBuffer.get" + capped + "(" + anAttribute.getName() + ");");
@@ -1908,7 +1908,7 @@ public class JavaGenerator extends AbstractGenerator
                 // the list length.
                 if(anAttribute.getIsDynamicListLengthField() == false)
                 {
-                     pw.print( "      textWriter.print(" "" + anAttribute.getName() + "" + "="" " + "this.get" + this.initialCap(anAttribute.getName()) + "();");
+                     pw.print( "      textWriter.print(" "" + anAttribute.getName() + "" + "="" " + "this.get" + this.initialCapital(anAttribute.getName()) + "();");
                 }
                else
                {
@@ -1944,7 +1944,7 @@ public class JavaGenerator extends AbstractGenerator
                 
                 if(anAttribute.getUnderlyingTypeIsPrimitive())
                 {
-                    String capped = this.initialCap(marshalType);
+                    String capped = this.initialCapital(marshalType);
                     pw.println("           dos.write" + capped + "(" + anAttribute.getName() + "[idx]);");
                 }
                 else
@@ -1978,14 +1978,14 @@ public class JavaGenerator extends AbstractGenerator
                 
                 if(anAttribute.getUnderlyingTypeIsPrimitive())
                 {
-                    String capped = this.initialCap(marshalType);
+                    String capped = this.initialCapital(marshalType);
                     pw.println("           dos.write" + capped + "(" + anAttribute.getName() + ");");
                 }
                 else
                 {
-                    pw.println("            " + anAttribute.getType() + " a" + initialCap(anAttribute.getType() + " = (" + anAttribute.getType() + ")" +
+                    pw.println("            " + anAttribute.getType() + " a" + initialCapital(anAttribute.getType() + " = (" + anAttribute.getType() + ")" +
                                                                                      anAttribute.getName() + ".get(idx);"));
-                    pw.println("            a" + initialCap(anAttribute.getType()) + ".marshal(dos);" );
+                    pw.println("            a" + initialCapital(anAttribute.getType()) + ".marshal(dos);" );
                 }
                 
                 pw.println("       } // end of list marshalling");
@@ -2228,7 +2228,7 @@ public class JavaGenerator extends AbstractGenerator
      * @return same string with first letter capitalized
      */
     @Override
-    public String initialCap(String aString)
+    public String initialCapital(String aString)
     {
       if(aString == null)   //test test!
         return "";

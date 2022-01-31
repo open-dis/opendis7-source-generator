@@ -74,9 +74,10 @@ public class PythonGenerator extends AbstractGenerator
     public void writeClasses()
     {
         List sortedClasses =  this.sortClasses(); // TODO empty
-        this.generatedSourceDirectoryName = "./src/python";
+        generatedSourceDirectoryName = "./src/python";
        
-        this.createDirectory(); // somewhat duplicative of code that follows, TODO refactor each
+        // somewhat duplicative of code that follows, TODO refactor each
+        createGeneratedSourceDirectory(false); // boolean: whether to clean out prior files, if any exist in that directory
         
         PrintWriter pw;
        
@@ -96,7 +97,8 @@ public class PythonGenerator extends AbstractGenerator
                 System.out.println("problem with output file directory/name ...");
             
             File outputFile = new File(directoryName + "/" + outputFileName); // just creates object...
-            outputFile.getParentFile().mkdirs(); // superfluous, already handled by createDirectory() above
+            if (!outputFile.getParentFile().exists()) // watch out, don't wipe out other contents in this directory
+                 outputFile.getParentFile().mkdirs(); // superfluous, already handled by createGeneratedSourceDirectory() above
             outputFile.createNewFile(); // now creates file
             pw = new PrintWriter(outputFile);
             this.writeLicense(pw);
@@ -517,7 +519,7 @@ public class PythonGenerator extends AbstractGenerator
                     for(int jdx = 0; jdx < bitfields.size(); jdx++)
                     {
                         GeneratedBitField bitfield = (GeneratedBitField)bitfields.get(jdx);
-                        String capped = this.initialCap(bitfield.name);
+                        String capped = this.initialCapital(bitfield.name);
                         int shiftBits = this.getBitsToShift(anAttribute, bitfield.mask);
                         
                         // write getter

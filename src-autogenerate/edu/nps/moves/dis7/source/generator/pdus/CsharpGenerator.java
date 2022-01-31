@@ -89,7 +89,7 @@ public class CsharpGenerator extends AbstractGenerator {
             pCsharpProperties.setProperty("using", clUsing);
         
 
-        super.setDirectory(pCsharpProperties.getProperty("directory"));
+        super.setGeneratedSourceDirectoryName(pCsharpProperties.getProperty("directory"));
         
         String dotNet = pCsharpProperties.getProperty("useDotNet");
         if(dotNet != null && dotNet.equalsIgnoreCase("false"))
@@ -175,7 +175,7 @@ public class CsharpGenerator extends AbstractGenerator {
      */
     @Override
     public void writeClasses() {
-        this.createDirectory();
+        createGeneratedSourceDirectory(false); // boolean: whether to clean out prior files, if any exist in that directory
 
         Iterator it = classDescriptions.values().iterator();
 
@@ -211,12 +211,12 @@ public class CsharpGenerator extends AbstractGenerator {
                 if (namespace != null)
                 {
                     namespace = namespace.replace(".", "/");
-                    fullPath = getDirectory() + "/" + name + ".cs";
+                    fullPath = getGeneratedSourceDirectoryName() + "/" + name + ".cs";
                     //System.out.println("full path is " + fullPath);
                 } 
                 else
                 {
-                    fullPath = getDirectory() + "/" + name + ".cs";
+                    fullPath = getGeneratedSourceDirectoryName() + "/" + name + ".cs";
                 }
                 //System.out.println("Creating Csharp source code file for " + fullPath);
 
@@ -760,7 +760,7 @@ public class CsharpGenerator extends AbstractGenerator {
                     for(int jdx = 0; jdx < bitfields.size(); jdx++)
                     {
                         GeneratedBitField bitfield = (GeneratedBitField)bitfields.get(jdx);
-                        String capped = this.initialCap(bitfield.name);
+                        String capped = this.initialCapital(bitfield.name);
                         int shiftBits = super.getBitsToShift(anAttribute, bitfield.mask);
                         String attributeType = types.getProperty(anAttribute.getType());
                         
@@ -824,7 +824,7 @@ public class CsharpGenerator extends AbstractGenerator {
 
             //Check to see if conflict with Class name or C# key words.  Appended underscore as a temporary workaround.  Also note that
             //the key words and class names should be put into a collection to make future testing easier.
-            if (aClass.getName().equals(this.initialCap(anAttribute.getName())) || anAttribute.getName().equalsIgnoreCase("system")) {
+            if (aClass.getName().equals(this.initialCapital(anAttribute.getName())) || anAttribute.getName().equalsIgnoreCase("system")) {
                 classNameConflictModifier = "_";
             }
 
@@ -833,9 +833,9 @@ public class CsharpGenerator extends AbstractGenerator {
                     String beanType = types.getProperty(anAttribute.getType());
 
 //                    writePropertySummary(pw, anAttribute, indent);
-//                    pw.println(indent, "public void set" + this.initialCap(anAttribute.getName()) + "(" + beanType + " p" + this.initialCap(anAttribute.getName()) + ")");
+//                    pw.println(indent, "public void set" + this.initialCapital(anAttribute.getName()) + "(" + beanType + " p" + this.initialCapital(anAttribute.getName()) + ")");
 //                    pw.println(indent, "{ ");
-//                    pw.println(indent + 1, "_" + anAttribute.getName() + " = p" + this.initialCap(anAttribute.getName()) + ";");
+//                    pw.println(indent + 1, "_" + anAttribute.getName() + " = p" + this.initialCapital(anAttribute.getName()) + ";");
 //                    pw.println(indent, "}");
 //
 //                    pw.println();
@@ -846,7 +846,7 @@ public class CsharpGenerator extends AbstractGenerator {
                         pw.println(indent, "[XmlElement(Type = typeof(" + beanType + "), ElementName = \"" + anAttribute.getName() + "\")]");
                     }
                     
-                    pw.println(indent, "public " + beanType + " " + this.initialCap(anAttribute.getName()) + classNameConflictModifier);
+                    pw.println(indent, "public " + beanType + " " + this.initialCapital(anAttribute.getName()) + classNameConflictModifier);
                     pw.println(indent, "{");
                     pw.println(indent + 1, "get");
                     pw.println(indent + 1, "{");
@@ -869,9 +869,9 @@ public class CsharpGenerator extends AbstractGenerator {
 //                    pw.println(indent, "/// The get" + anAttribute.getName() + " method will also be based on the actual list length rather than this value. ");
 //                    pw.println(indent, "/// The method is simply here for completeness and should not be used for any computations.");
 //                    pw.println(indent, "/// </summary>");
-//                    pw.println(indent, "public void set" + this.initialCap(anAttribute.getName()) + "(" + beanType + " p" + this.initialCap(anAttribute.getName()) + ")");
+//                    pw.println(indent, "public void set" + this.initialCapital(anAttribute.getName()) + "(" + beanType + " p" + this.initialCapital(anAttribute.getName()) + ")");
 //                    pw.println(indent, "{");
-//                    pw.println(indent + 1, "_" + anAttribute.getName() + " = p" + this.initialCap(anAttribute.getName()) + ";");
+//                    pw.println(indent + 1, "_" + anAttribute.getName() + " = p" + this.initialCapital(anAttribute.getName()) + ";");
 //                    pw.println(indent, "}");
 //
 //                    pw.println();
@@ -886,7 +886,7 @@ public class CsharpGenerator extends AbstractGenerator {
                         pw.println(indent, "[XmlElement(Type = typeof(" + beanType + "), ElementName = \"" + anAttribute.getName() + "\")]");
                     }
                     
-                    pw.println(indent, "public " + beanType + " " + this.initialCap(anAttribute.getName()) + classNameConflictModifier);
+                    pw.println(indent, "public " + beanType + " " + this.initialCapital(anAttribute.getName()) + classNameConflictModifier);
                     pw.println(indent, "{");
                     pw.println(indent + 1, "get");
                     pw.println(indent + 1, "{");
@@ -907,14 +907,14 @@ public class CsharpGenerator extends AbstractGenerator {
 
             if (anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.CLASSREF) {
 //                writePropertySummary(pw, anAttribute, indent);
-//                pw.println(indent, "public void set" + this.initialCap(anAttribute.getName()) + "(" + anAttribute.getType() + " p" + this.initialCap(anAttribute.getName()) + ")");
+//                pw.println(indent, "public void set" + this.initialCapital(anAttribute.getName()) + "(" + anAttribute.getType() + " p" + this.initialCapital(anAttribute.getName()) + ")");
 //                pw.println(indent, "{ ");
-//                pw.println(indent + 1, "_" + anAttribute.getName() + " = p" + this.initialCap(anAttribute.getName()) + ";");
+//                pw.println(indent + 1, "_" + anAttribute.getName() + " = p" + this.initialCapital(anAttribute.getName()) + ";");
 //                pw.println(indent, "}");
 //                pw.println();
 //
 //                writePropertySummary(pw, anAttribute, indent);
-//                pw.println(indent, "public " + anAttribute.getType() + " get" + this.initialCap(anAttribute.getName()) + "()");
+//                pw.println(indent, "public " + anAttribute.getType() + " get" + this.initialCapital(anAttribute.getName()) + "()");
 //                pw.println(indent, "{");
 //                pw.println(indent + 1, "return _" + anAttribute.getName() + ";");
 //                pw.println(indent, "}");
@@ -925,7 +925,7 @@ public class CsharpGenerator extends AbstractGenerator {
                 {
                     pw.println(indent, "[XmlElement(Type = typeof(" + anAttribute.getType() + "), ElementName = \"" + anAttribute.getName() + "\")]");
                 }
-                pw.println(indent, "public " + anAttribute.getType() + " " + this.initialCap(anAttribute.getName()) + classNameConflictModifier);
+                pw.println(indent, "public " + anAttribute.getType() + " " + this.initialCapital(anAttribute.getName()) + classNameConflictModifier);
                 pw.println(indent, "{");
                 pw.println(indent + 1, "get");
                 pw.println(indent + 1, "{");
@@ -944,15 +944,15 @@ public class CsharpGenerator extends AbstractGenerator {
             if ((anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE_LIST)) {
                 if (anAttribute.getUnderlyingTypeIsPrimitive()) {
 //                    writePropertySummary(pw, anAttribute, indent);
-//                    pw.println(indent, "public void set" + this.initialCap(anAttribute.getName()) + "(" + types.getProperty(anAttribute.getType()) + "[] p" + this.initialCap(anAttribute.getName()) + ")");
+//                    pw.println(indent, "public void set" + this.initialCapital(anAttribute.getName()) + "(" + types.getProperty(anAttribute.getType()) + "[] p" + this.initialCapital(anAttribute.getName()) + ")");
 //                    pw.println(indent, "{");
-//                    pw.println(indent + 1, "_" + anAttribute.getName() + " = p" + this.initialCap(anAttribute.getName()) + ";");
+//                    pw.println(indent + 1, "_" + anAttribute.getName() + " = p" + this.initialCapital(anAttribute.getName()) + ";");
 //                    pw.println(indent, "}");
 //                    pw.println();
 //
 //                    writePropertySummary(pw, anAttribute, indent);
 //                    //pw.println("@XmlElement(name=\"" + anAttribute.getName() + "\" )");
-//                    pw.println(indent, "public " + types.getProperty(anAttribute.getType()) + "[] get" + this.initialCap(anAttribute.getName()) + "()");
+//                    pw.println(indent, "public " + types.getProperty(anAttribute.getType()) + "[] get" + this.initialCapital(anAttribute.getName()) + "()");
 //                    pw.println(indent, "{");
 //                    pw.println(indent + 1, "return _" + anAttribute.getName() + ";");
 //                    pw.println(indent, "}");
@@ -963,7 +963,7 @@ public class CsharpGenerator extends AbstractGenerator {
                     {
                          pw.println(indent, "[XmlArray(ElementName = \"" + anAttribute.getName() + "\")]");
                     }
-                    pw.println(indent, "public " + types.getProperty(anAttribute.getType()) + "[] " + this.initialCap(anAttribute.getName()) + classNameConflictModifier);
+                    pw.println(indent, "public " + types.getProperty(anAttribute.getType()) + "[] " + this.initialCapital(anAttribute.getName()) + classNameConflictModifier);
                     pw.println(indent, "{");
                     pw.println(indent + 1, "get");
                     pw.println(indent + 1, "{");
@@ -979,15 +979,15 @@ public class CsharpGenerator extends AbstractGenerator {
 
                 } else if (anAttribute.listIsClass() == true) {
 //                    writePropertySummary(pw, anAttribute, indent);
-//                    pw.println(indent, "public void set" + this.initialCap(anAttribute.getName()) + "(" + anAttribute.getType() + "[] p" + this.initialCap(anAttribute.getName()) + ")");
+//                    pw.println(indent, "public void set" + this.initialCapital(anAttribute.getName()) + "(" + anAttribute.getType() + "[] p" + this.initialCapital(anAttribute.getName()) + ")");
 //                    pw.println(indent, "{");
-//                    pw.println(indent + 1, "_" + anAttribute.getName() + " = p" + this.initialCap(anAttribute.getName()) + ";");
+//                    pw.println(indent + 1, "_" + anAttribute.getName() + " = p" + this.initialCapital(anAttribute.getName()) + ";");
 //                    pw.println(indent, "}");
 //                    pw.println();
 //
 //                    writePropertySummary(pw, anAttribute, indent);
 //                    //pw.println("@XmlElementWrapper(name=\"" + anAttribute.getName() + "Array\" )");
-//                    pw.println(indent, "public " + anAttribute.getType() + "[] get" + this.initialCap(anAttribute.getName()) + "()");
+//                    pw.println(indent, "public " + anAttribute.getType() + "[] get" + this.initialCapital(anAttribute.getName()) + "()");
 //                    pw.println(indent, "{");
 //                    pw.println(indent + 1, "return _" + anAttribute.getName() + ";");
 //                    pw.println(indent, "}");
@@ -998,7 +998,7 @@ public class CsharpGenerator extends AbstractGenerator {
                     {
                         pw.println(indent, "[XmlArrayItem(ElementName = \"" + anAttribute.getName() + "Array\", DataType = \"" + anAttribute.getType() + "\"))]");
                     }
-                    pw.println(indent, "public " + anAttribute.getType() + "[] " + this.initialCap(anAttribute.getName()));
+                    pw.println(indent, "public " + anAttribute.getType() + "[] " + this.initialCapital(anAttribute.getName()));
                     pw.println(indent, "{");
                     pw.println(indent + 1, "get");
                     pw.println(indent + 1, "{");
@@ -1018,16 +1018,16 @@ public class CsharpGenerator extends AbstractGenerator {
 
                 //PES 04/29/2009  Added to speed up unboxing of data, using byte[] vice unboxing of a Class ie. OneByteChunk
                 if (anAttribute.getType().equalsIgnoreCase("OneByteChunk")) {
-//                    pw.println(indent, "public void set" + this.initialCap(anAttribute.getName()) + "(byte[] p" + this.initialCap(anAttribute.getName()) + ")");
+//                    pw.println(indent, "public void set" + this.initialCapital(anAttribute.getName()) + "(byte[] p" + this.initialCapital(anAttribute.getName()) + ")");
 //                    pw.println(indent, "{");
-//                    pw.println(indent + 1, "_" + anAttribute.getName() + " = p" + this.initialCap(anAttribute.getName()) + ";");
+//                    pw.println(indent + 1, "_" + anAttribute.getName() + " = p" + this.initialCapital(anAttribute.getName()) + ";");
 //                    pw.println(indent, "}");
 //                    pw.println();
 //
 //                    //Set List to actual type 01/21/2009 PES
 //                    //pw.println("@XmlElementWrapper(name=\"" + anAttribute.getName() + "List\" )");
 //                    writeClassAttributeSummary(pw, anAttribute, indent);
-//                    pw.println(indent, "public byte[] get" + this.initialCap(anAttribute.getName()) + "()");
+//                    pw.println(indent, "public byte[] get" + this.initialCapital(anAttribute.getName()) + "()");
 //                    pw.println(indent, "{");
 //                    pw.println(indent + 1, "return _" + anAttribute.getName() + ";");
 //                    pw.println(indent, "}");
@@ -1039,7 +1039,7 @@ public class CsharpGenerator extends AbstractGenerator {
                         pw.println(indent, "[XmlElement(ElementName = \"" + anAttribute.getName() + "List\", DataType = \"hexBinary\")]");
                     }
                     
-                    pw.println(indent, "public byte[] " + this.initialCap(anAttribute.getName()));
+                    pw.println(indent, "public byte[] " + this.initialCapital(anAttribute.getName()));
                     pw.println(indent, "{");
                     pw.println(indent + 1, "get");
                     pw.println(indent + 1, "{");
@@ -1054,16 +1054,16 @@ public class CsharpGenerator extends AbstractGenerator {
                     pw.println();
 
                 } else {
-//                    pw.println(indent, "public void set" + this.initialCap(anAttribute.getName()) + "(List<" + anAttribute.getType() + ">" + " p" + this.initialCap(anAttribute.getName()) + ")");
+//                    pw.println(indent, "public void set" + this.initialCapital(anAttribute.getName()) + "(List<" + anAttribute.getType() + ">" + " p" + this.initialCapital(anAttribute.getName()) + ")");
 //                    pw.println(indent, "{");
-//                    pw.println(indent + 1, "_" + anAttribute.getName() + " = p" + this.initialCap(anAttribute.getName()) + ";");
+//                    pw.println(indent + 1, "_" + anAttribute.getName() + " = p" + this.initialCapital(anAttribute.getName()) + ";");
 //                    pw.println(indent, "}");
 //                    pw.println();
 //
 //                    //Set List to actual type 01/21/2009 PES
 //                    //pw.println("@XmlElementWrapper(name=\"" + anAttribute.getName() + "List\" )");
 //                    writeClassAttributeSummary(pw, anAttribute, indent);
-//                    pw.println(indent, "public List<" + anAttribute.getType() + ">" + " get" + this.initialCap(anAttribute.getName()) + "()");
+//                    pw.println(indent, "public List<" + anAttribute.getType() + ">" + " get" + this.initialCapital(anAttribute.getName()) + "()");
 //                    pw.println(indent, "{");
 //                    pw.println(indent + 1, "return _" + anAttribute.getName() + ";");
 //                    pw.println(indent, "}");
@@ -1074,7 +1074,7 @@ public class CsharpGenerator extends AbstractGenerator {
                     {
                         pw.println(indent, "[XmlElement(ElementName = \"" + anAttribute.getName() + "List\", Type = typeof(List<" + anAttribute.getType() + ">))]");
                     }
-                    pw.println(indent, "public List<" + anAttribute.getType() + "> " + this.initialCap(anAttribute.getName()));
+                    pw.println(indent, "public List<" + anAttribute.getType() + "> " + this.initialCapital(anAttribute.getName()));
                     pw.println(indent, "{");
                     pw.println(indent + 1, "get");
                     pw.println(indent + 1, "{");
@@ -1309,9 +1309,9 @@ public class CsharpGenerator extends AbstractGenerator {
                         String capped = this.camelCaseCapIgnoreSpaces(anAttribute.getType());
                         pw.println(indent + 4, "dos.Write" + capped + "(this._" + anAttribute.getName() + ");");
                     } else {
-                        pw.println(indent + 4, anAttribute.getType() + " a" + initialCap(anAttribute.getType() + " = (" + anAttribute.getType() + ")this._"
+                        pw.println(indent + 4, anAttribute.getType() + " a" + initialCapital(anAttribute.getType() + " = (" + anAttribute.getType() + ")this._"
                                 + anAttribute.getName() + "[idx];"));
-                        pw.println(indent + 4, "a" + initialCap(anAttribute.getType()) + ".Marshal(dos);");
+                        pw.println(indent + 4, "a" + initialCapital(anAttribute.getType()) + ".Marshal(dos);");
                     }
 
                     pw.println(indent + 3, "}");  // end of list marshalling
@@ -1430,7 +1430,7 @@ public class CsharpGenerator extends AbstractGenerator {
                 if (anAttribute.getType().equalsIgnoreCase("OneByteChunk")) {
                     pw.println(indent + 3, "this._" + anAttribute.getName() + " = dis.ReadByteArray" + "(this._" + anAttribute.getCountFieldName() + ");");
                 } else {
-                    pw.println(indent + 3, "for (int idx = 0; idx < this." + this.initialCap(anAttribute.getCountFieldName()) + "; idx++)");
+                    pw.println(indent + 3, "for (int idx = 0; idx < this." + this.initialCapital(anAttribute.getCountFieldName()) + "; idx++)");
                     pw.println(indent + 3, "{");
 
                     // This is some sleaze. We're an array, but an array of what? We could be either a
@@ -1533,7 +1533,7 @@ public class CsharpGenerator extends AbstractGenerator {
             // Write out a method call to reflect a primitive type
             if (anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE) {
                 String marshalType = marshalTypes.getProperty(anAttribute.getType());
-                //String capped = this.initialCap(marshalType);
+                //String capped = this.initialCapital(marshalType);
 
                 // If we're a normal primitivetype, marshal out directly; otherwise, marshall out
                 // the list length.
@@ -1576,7 +1576,7 @@ public class CsharpGenerator extends AbstractGenerator {
                 String marshalType = marshalTypes.getProperty(anAttribute.getType());
 
                 if (anAttribute.getUnderlyingTypeIsPrimitive()) {
-                    //String capped = this.initialCap(marshalType);
+                    //String capped = this.initialCapital(marshalType);
                     pw.println(indent + 3, "sb.AppendLine(\"<" + anAttribute.getName() + "\" + idx.ToString(CultureInfo.InvariantCulture) + \" type=\\\"" + marshalType + "\\\">\" + this._" + anAttribute.getName() + "[idx] + \"</" + anAttribute.getName() + "\" + idx.ToString(CultureInfo.InvariantCulture) + \">\");");
                     //pw.println("           sb.Append(\"" + marshalType + tab + "\" + _" + anAttribute.getName() + "[idx] + System.Environment.NewLine);");
                 } else {
@@ -1616,7 +1616,7 @@ public class CsharpGenerator extends AbstractGenerator {
                     String marshalType = marshalTypes.getProperty(anAttribute.getType());
 
                     if (anAttribute.getUnderlyingTypeIsPrimitive()) {
-                        //String capped = this.initialCap(marshalType);
+                        //String capped = this.initialCapital(marshalType);
 
                         pw.println(indent + 3, "sb.AppendLine(\"<" + anAttribute.getName() + "\" + idx.ToString(CultureInfo.InvariantCulture) + \" type=\\\"" + anAttribute.getType() + "\\\">\" + this._" + anAttribute.getName() + "[idx].ToString(CultureInfo.InvariantCulture));");
                         pw.println(indent + 3, "sb.AppendLine(\"</" + anAttribute.getName() + "\" + idx.ToString(CultureInfo.InvariantCulture) + \">\");");
@@ -1626,8 +1626,8 @@ public class CsharpGenerator extends AbstractGenerator {
                     else
                     {
                         pw.println(indent + 3, "sb.AppendLine(\"<" + anAttribute.getName() + "\" + idx.ToString(CultureInfo.InvariantCulture) + \" type=\\\"" + anAttribute.getType() + "\\\">\");");
-                        pw.println(indent + 3, anAttribute.getType() + " a" + initialCap(anAttribute.getType() + " = (" + anAttribute.getType() + ")this._" + anAttribute.getName() + "[idx];"));
-                        pw.println(indent + 3, "a" + initialCap(anAttribute.getType()) + ".Reflection(sb);");
+                        pw.println(indent + 3, anAttribute.getType() + " a" + initialCapital(anAttribute.getType() + " = (" + anAttribute.getType() + ")this._" + anAttribute.getName() + "[idx];"));
+                        pw.println(indent + 3, "a" + initialCapital(anAttribute.getType()) + ".Reflection(sb);");
                         pw.println(indent + 3, "sb.AppendLine(\"</" + anAttribute.getName() + "\" + idx.ToString(CultureInfo.InvariantCulture) + \">\");");
                     }
                     pw.println(indent + 2, "}"); // end of list marshalling
@@ -1882,7 +1882,7 @@ public class CsharpGenerator extends AbstractGenerator {
      * returns a string with the first letter capitalized.
      */
     @Override
-    public String initialCap(String aString) {
+    public String initialCapital(String aString) {
         StringBuffer stb = new StringBuffer(aString);
         stb.setCharAt(0, Character.toUpperCase(aString.charAt(0)));
 

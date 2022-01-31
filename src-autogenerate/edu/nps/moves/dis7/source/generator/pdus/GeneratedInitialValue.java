@@ -73,7 +73,7 @@ public class GeneratedInitialValue // TODO refactor rename as GeneratedInitialVa
     public String getSetterMethodName()
     {
         String methodName = variable;
-        methodName = "set" + this.initialCap(methodName);
+        methodName = "set" + this.initialCapital(methodName);
         
         return methodName;
     }
@@ -93,7 +93,7 @@ public class GeneratedInitialValue // TODO refactor rename as GeneratedInitialVa
 		//caused the accessor methods to return an error stating member names can not be the same as
 		//there enclosing type.  Anthore problem was a key word was used  "System".  Therefore my solution was to check for the class name and the field names being the same and changing
 		//the field name by adding an underscore at the end which is being done in the CSharpGenerator.java file, this is not an ideal solution.
-		methodName = this.initialCap(methodName) ; 
+		methodName = this.initialCapital(methodName) ; 
         
 		return methodName;
 	}
@@ -104,7 +104,7 @@ public class GeneratedInitialValue // TODO refactor rename as GeneratedInitialVa
      * @param aString of interest
      * @return same string with first letter capitalized
      */
-    public String initialCap(String aString)
+    public String initialCapital(String aString)
     {
         StringBuffer stb = new StringBuffer(aString);
         stb.setCharAt(0, Character.toUpperCase(aString.charAt(0)));

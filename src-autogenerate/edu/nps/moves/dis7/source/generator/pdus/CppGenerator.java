@@ -61,7 +61,7 @@ public class CppGenerator extends AbstractGenerator
             pCppProperties.setProperty("directory", clDirectory);
         
 
-        super.setDirectory(pCppProperties.getProperty("directory"));
+        super.setGeneratedSourceDirectoryName(pCppProperties.getProperty("directory"));
         
         // Set up a mapping between the strings used in the XML file and the strings used
         // in the java file, specifically the data types. This could be externalized to
@@ -117,7 +117,7 @@ public class CppGenerator extends AbstractGenerator
     @Override
     public void writeClasses()
     {
-        this.createDirectory();
+        createGeneratedSourceDirectory(false); // boolean: whether to clean out prior files, if any exist in that directory
         
         this.writeMacroFile();
         
@@ -162,7 +162,7 @@ public class CppGenerator extends AbstractGenerator
         
         try
         {
-            String headerFullPath = getDirectory() + "/" + headerFile + ".h";
+            String headerFullPath = getGeneratedSourceDirectoryName() + "/" + headerFile + ".h";
             File outputFile = new File(headerFullPath);
             outputFile.createNewFile();
             try (PrintWriter pw = new PrintWriter(outputFile)) {
@@ -203,7 +203,7 @@ public void writeHeaderFile(GeneratedClass aClass)
     {
         String name = aClass.getName();
         //System.out.println("Creating cpp and .h source code files for " + name);
-        String headerFullPath = getDirectory() + "/" + name + ".h";
+        String headerFullPath = getGeneratedSourceDirectoryName() + "/" + name + ".h";
         File outputFile = new File(headerFullPath);
         outputFile.createNewFile();
         // Write the usual #ifdef to prevent multiple inclusions by the preprocessor
@@ -381,30 +381,30 @@ public void writeHeaderFile(GeneratedClass aClass)
                 
                 if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE)
                 {
-                    pw.println("    " + types.get(anAttribute.getType()) + " " + "get" + this.initialCap(anAttribute.getName()) + "() const; ");
+                    pw.println("    " + types.get(anAttribute.getType()) + " " + "get" + this.initialCapital(anAttribute.getName()) + "() const; ");
                     if(anAttribute.getIsDynamicListLengthField() == false)
                     {
-                        pw.println("    void " + "set" + this.initialCap(anAttribute.getName()) + "(" + types.get(anAttribute.getType()) + " pX); ");
+                        pw.println("    void " + "set" + this.initialCapital(anAttribute.getName()) + "(" + types.get(anAttribute.getType()) + " pX); ");
                     }
                 }
 
                 if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.CLASSREF)
                 {
-                    pw.println("    " + anAttribute.getType() + "& " + "get" + this.initialCap(anAttribute.getName()) + "(); ");
-                    pw.println("    const " + anAttribute.getType() + "&  get" + this.initialCap(anAttribute.getName()) + "() const; ");
-                    pw.println("    void set" + this.initialCap(anAttribute.getName()) + "(const " + anAttribute.getType() + "    &pX);");
+                    pw.println("    " + anAttribute.getType() + "& " + "get" + this.initialCapital(anAttribute.getName()) + "(); ");
+                    pw.println("    const " + anAttribute.getType() + "&  get" + this.initialCapital(anAttribute.getName()) + "() const; ");
+                    pw.println("    void set" + this.initialCapital(anAttribute.getName()) + "(const " + anAttribute.getType() + "    &pX);");
                 }
                 
                 if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
                 {
                     // Sleaze. We need to figure out what type of array we are, and this is slightly complex.
                     String arrayType = this.getArrayType(anAttribute.getType());
-                    pw.println("    " + arrayType + "*  get" + this.initialCap(anAttribute.getName()) + "(); ");
-                    pw.println("    const " + arrayType + "*  get" + this.initialCap(anAttribute.getName()) + "() const; ");
-                    pw.println("    void set" + this.initialCap(anAttribute.getName()) + "( const " + arrayType + "*    pX);");
+                    pw.println("    " + arrayType + "*  get" + this.initialCapital(anAttribute.getName()) + "(); ");
+                    pw.println("    const " + arrayType + "*  get" + this.initialCapital(anAttribute.getName()) + "() const; ");
+                    pw.println("    void set" + this.initialCapital(anAttribute.getName()) + "( const " + arrayType + "*    pX);");
                     if(anAttribute.getCouldBeString() == true)
                     {
-                        pw.println("    void " + "setByString" + this.initialCap(anAttribute.getName()) + "(const " + arrayType + "* pX);");
+                        pw.println("    void " + "setByString" + this.initialCapital(anAttribute.getName()) + "(const " + arrayType + "* pX);");
                     }
                     
                 }
@@ -412,9 +412,9 @@ public void writeHeaderFile(GeneratedClass aClass)
                 
                 if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.OBJECT_LIST)
                 {
-                    pw.println("    std::vector<" + anAttribute.getType() + ">& " + "get" + this.initialCap(anAttribute.getName()) + "(); ");
-                    pw.println("    const std::vector<" + anAttribute.getType() + ">& " + "get" + this.initialCap(anAttribute.getName()) + "() const; ");
-                    pw.println("    void set" + this.initialCap(anAttribute.getName()) + "(const std::vector<" + anAttribute.getType() + ">&    pX);");
+                    pw.println("    std::vector<" + anAttribute.getType() + ">& " + "get" + this.initialCapital(anAttribute.getName()) + "(); ");
+                    pw.println("    const std::vector<" + anAttribute.getType() + ">& " + "get" + this.initialCapital(anAttribute.getName()) + "() const; ");
+                    pw.println("    void set" + this.initialCapital(anAttribute.getName()) + "(const std::vector<" + anAttribute.getType() + ">&    pX);");
                 }
                 
                 pw.println();
@@ -458,7 +458,7 @@ public void writeCppFile(GeneratedClass aClass)
    {
         String name = aClass.getName();
         //System.out.println("Creating cpp and .h source code files for " + name);
-        String headerFullPath = getDirectory() + "/" + name + ".cpp";
+        String headerFullPath = getGeneratedSourceDirectoryName() + "/" + name + ".cpp";
         File outputFile = new File(headerFullPath);
         outputFile.createNewFile();
         try (PrintWriter pw = new PrintWriter(outputFile)) {
@@ -554,7 +554,7 @@ public void writeEqualityOperator(PrintWriter pw, GeneratedClass aClass)
                 /*
                 else
                 {
-                    pw.println("     if( ! (  this.get" + this.initialCap(anAttribute.getName()) + "() == rhs.get" + this.initialCap(anAttribute.getName()) + "()) ) ivarsEqual = false;");
+                    pw.println("     if( ! (  this.get" + this.initialCapital(anAttribute.getName()) + "() == rhs.get" + this.initialCapital(anAttribute.getName()) + "()) ) ivarsEqual = false;");
                 }
                  */
                 
@@ -959,7 +959,7 @@ private void writeGetterMethod(PrintWriter pw, GeneratedClass aClass, GeneratedC
 {
     if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE)
     { 
-        pw.println(types.get(anAttribute.getType()) + " " + aClass.getName()  +"::" + "get" + this.initialCap(anAttribute.getName()) + "() const");
+        pw.println(types.get(anAttribute.getType()) + " " + aClass.getName()  +"::" + "get" + this.initialCapital(anAttribute.getName()) + "() const");
         pw.println("{");
         if(anAttribute.getIsDynamicListLengthField() == false)
         {
@@ -976,12 +976,12 @@ private void writeGetterMethod(PrintWriter pw, GeneratedClass aClass, GeneratedC
     
     if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.CLASSREF)
     { 
-        pw.println(anAttribute.getType() + "& " + aClass.getName()  +"::" + "get" + this.initialCap(anAttribute.getName()) + "() ");
+        pw.println(anAttribute.getType() + "& " + aClass.getName()  +"::" + "get" + this.initialCapital(anAttribute.getName()) + "() ");
         pw.println("{");
         pw.println("    return " +  IVAR_PREFIX + anAttribute.getName() + ";");
         pw.println("}\n");
         
-        pw.println("const " + anAttribute.getType() + "& " + aClass.getName()  +"::" + "get" + this.initialCap(anAttribute.getName()) + "() const");
+        pw.println("const " + anAttribute.getType() + "& " + aClass.getName()  +"::" + "get" + this.initialCapital(anAttribute.getName()) + "() const");
         pw.println("{");
         pw.println("    return " +  IVAR_PREFIX + anAttribute.getName() + ";");
         pw.println("}\n");
@@ -989,12 +989,12 @@ private void writeGetterMethod(PrintWriter pw, GeneratedClass aClass, GeneratedC
     
     if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
     { 
-        pw.println(this.getArrayType(anAttribute.getType()) + "* " + aClass.getName()  +"::" + "get" + this.initialCap(anAttribute.getName()) + "() ");
+        pw.println(this.getArrayType(anAttribute.getType()) + "* " + aClass.getName()  +"::" + "get" + this.initialCapital(anAttribute.getName()) + "() ");
         pw.println("{");
         pw.println("    return " +  IVAR_PREFIX + anAttribute.getName() + ";");
         pw.println("}\n");
         
-        pw.println("const " + this.getArrayType(anAttribute.getType()) + "* " + aClass.getName()  +"::" + "get" + this.initialCap(anAttribute.getName()) + "() const");
+        pw.println("const " + this.getArrayType(anAttribute.getType()) + "* " + aClass.getName()  +"::" + "get" + this.initialCapital(anAttribute.getName()) + "() const");
         pw.println("{");
         pw.println("    return " +  IVAR_PREFIX + anAttribute.getName() + ";");
         pw.println("}\n");
@@ -1004,12 +1004,12 @@ private void writeGetterMethod(PrintWriter pw, GeneratedClass aClass, GeneratedC
     
     if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.OBJECT_LIST)
     { 
-        pw.println("std::vector<" + anAttribute.getType() + ">& " + aClass.getName()  +"::" + "get" + this.initialCap(anAttribute.getName()) + "() ");
+        pw.println("std::vector<" + anAttribute.getType() + ">& " + aClass.getName()  +"::" + "get" + this.initialCapital(anAttribute.getName()) + "() ");
         pw.println("{");
         pw.println("    return " + IVAR_PREFIX +  anAttribute.getName() + ";");
         pw.println("}\n");
         
-        pw.println("const std::vector<" + anAttribute.getType() + ">& " + aClass.getName()  +"::" + "get" + this.initialCap(anAttribute.getName()) + "() const");
+        pw.println("const std::vector<" + anAttribute.getType() + ">& " + aClass.getName()  +"::" + "get" + this.initialCapital(anAttribute.getName()) + "() const");
         pw.println("{");
         pw.println("    return " +  IVAR_PREFIX + anAttribute.getName() + ";");
         pw.println("}\n");
@@ -1030,7 +1030,7 @@ private void writeGetterMethod(PrintWriter pw, GeneratedClass aClass, GeneratedC
 {
     if((anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE) && (anAttribute.getIsDynamicListLengthField() == false))
     { 
-        pw.println("void " + aClass.getName()  + "::" + "set" + this.initialCap(anAttribute.getName()) + "(" + types.get(anAttribute.getType()) + " pX)");
+        pw.println("void " + aClass.getName()  + "::" + "set" + this.initialCapital(anAttribute.getName()) + "(" + types.get(anAttribute.getType()) + " pX)");
         pw.println("{");
         if(!anAttribute.getIsDynamicListLengthField())
             pw.println( "    " +  IVAR_PREFIX + anAttribute.getName() + " = pX;");
@@ -1040,7 +1040,7 @@ private void writeGetterMethod(PrintWriter pw, GeneratedClass aClass, GeneratedC
     
     if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.CLASSREF)
     { 
-        pw.println("void " + aClass.getName()  + "::" + "set" + this.initialCap(anAttribute.getName()) + "(const " + anAttribute.getType() + " &pX)");
+        pw.println("void " + aClass.getName()  + "::" + "set" + this.initialCapital(anAttribute.getName()) + "(const " + anAttribute.getType() + " &pX)");
         pw.println("{");
         pw.println( "    " +  IVAR_PREFIX + anAttribute.getName() + " = pX;");
         pw.println("}\n");
@@ -1048,7 +1048,7 @@ private void writeGetterMethod(PrintWriter pw, GeneratedClass aClass, GeneratedC
     
     if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE_LIST)
     { 
-        pw.println("void " + aClass.getName()  + "::" + "set" + this.initialCap(anAttribute.getName()) + "(const " + this.getArrayType(anAttribute.getType()) + "* x)");
+        pw.println("void " + aClass.getName()  + "::" + "set" + this.initialCapital(anAttribute.getName()) + "(const " + this.getArrayType(anAttribute.getType()) + "* x)");
         pw.println("{");
         
         // The safest way to handle this is to set up a loop and individually copy over the array in a for loop. This makes
@@ -1065,7 +1065,7 @@ private void writeGetterMethod(PrintWriter pw, GeneratedClass aClass, GeneratedC
         if(anAttribute.getCouldBeString() == true)
         {
             pw.println("// An alternate method to set the value if this could be a string. This is not strictly comnpliant with the DIS standard.");
-            pw.println("void " + aClass.getName()  + "::" + "setByString" + this.initialCap(anAttribute.getName()) + "(const " + this.getArrayType(anAttribute.getType()) + "* x)");
+            pw.println("void " + aClass.getName()  + "::" + "setByString" + this.initialCapital(anAttribute.getName()) + "(const " + this.getArrayType(anAttribute.getType()) + "* x)");
             pw.println("{");
             pw.println("   strncpy(_" + anAttribute.getName() + ", x, " + anAttribute.getListLength() + "-1);");
             pw.println("   _" + anAttribute.getName() + "[" + anAttribute.getListLength() + " -1] = '\\0';");
@@ -1077,7 +1077,7 @@ private void writeGetterMethod(PrintWriter pw, GeneratedClass aClass, GeneratedC
     
     if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.OBJECT_LIST)
     { 
-        pw.println("void " + aClass.getName()  + "::" + "set" + this.initialCap(anAttribute.getName()) + "(const std::vector<" + anAttribute.getType() + ">& pX)");
+        pw.println("void " + aClass.getName()  + "::" + "set" + this.initialCapital(anAttribute.getName()) + "(const std::vector<" + anAttribute.getType() + ">& pX)");
         pw.println("{");
         pw.println( "     " +  IVAR_PREFIX + anAttribute.getName() + " = pX;");
         pw.println("}\n");
@@ -1166,7 +1166,7 @@ public void writeGetMarshalledSizeMethod(PrintWriter pw, GeneratedClass aClass)
 * @return same string with first letter capitalized
 */
     @Override
-    public String initialCap(String aString)
+    public String initialCapital(String aString)
 {
     StringBuffer stb = new StringBuffer(aString);
     stb.setCharAt(0, Character.toUpperCase(aString.charAt(0)));
