@@ -1,12 +1,10 @@
-*TODO alert:* [project rename](https://github.com/open-dis/open-dis7-source-generator/issues/4) will occur soon, with new name *opendis7-source-generator*
-
-# open-dis7-source-generator
+ opendis7-source-generator
 This is a project to generate a type-safe java implementation of the DIS Protocol v. 7, IEEE Standard 1278.1-2012 from SISO and IEEE specifications.  This project is written in Java.
 
 This project provides a complete implementation of the IEEE DIS Protocol and
 associated enumerations that are used in the
-[open-dis7-java](https://github.com/open-dis/open-dis7-java) and related projects.
-In preparation: opendis7-python.
+[opendis7-java](https://github.com/open-dis/opendis7-java) and related projects.
+In preparation: [opendis7-python](https://github.com/open-dis/opendis7-python).
 
 Recent project products include full Java support for all 72 DISv7 Protocol Data Units (PDUs)
 and over 22,000 SISO-REF-010 enumerations.
@@ -111,7 +109,7 @@ After project execution, the directory tree will also contain:
 10. **dist** -- generated jar files and javadoc, the products of the project
 11. **test** -- an empty directory created by Netbeans
 
-Products are then copied to the open-dis7-java projects for further integration, testing
+Products are then copied to the opendis7-java projects for further integration, testing
 and publication.
 
 <h3>Project Internals</h3>
