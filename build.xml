@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="open-dis7-source-generator" default="all" basedir=".">
-    <description>Builds, tests, and runs the project open-dis7-source-generator.</description>
+<project name="opendis7-source-generator" default="all" basedir=".">
+    <description>Builds, tests, and runs the project opendis7-source-generator.</description>
     
     <import file="nbproject/build-impl.xml"/>
     <!--
@@ -51,7 +51,7 @@
 
     An example of overriding the target for project execution could look like this:
 
-        <target name="run" depends="open-dis7-source-generator-impl.jar">
+        <target name="run" depends="opendis7-source-generator-impl.jar">
             <exec dir="bin" executable="launcher.exe">
                 <arg file="${dist.jar}"/>
             </exec>
@@ -69,7 +69,7 @@
     
     <!-- javadoc manifest properties -->
     <property name="manifest.name"          value="OpenDIS7 Entity Enumerations"/>
-    <property name="Built-By"               value="https://github.com/open-dis/open-dis7-source-generator"/>
+    <property name="Built-By"               value="https://github.com/open-dis/opendis7-source-generator"/>
     <property name="Specification-Title"    value="SISO Reference for Enumerations for Simulation Interoperability SISO-REF-010"/>
     <property name="Specification-Version"  value="29"/>
     <property name="Specification-Vendor"   value="Simulation Interoperability Standards Organization (SISO)"/>
@@ -78,7 +78,7 @@
     <property name="Implementation-Vendor"  value="Naval Postgraduate School (NPS)"/>
 
     <property environment="env"/>
-    <property name="open-dis7-java"      location="../open-dis7-java"/>
+    <property name="opendis7-java"      location="../opendis7-java"/>
     
     <target name="all" depends="clean.build,clean" description="Build enumeration and PDU source code, assemble all products.">
         <!-- TODO current configuration is Java only; Python is next -->
@@ -127,9 +127,9 @@
         <echo message="javadoc complete"/>
         -->
         
-        <antcall target="jar" description="create jar files, includes copy-generated-jars-to-open-dis7-java"/>
-        <antcall target="copy-generated-source-to-open-dis7-java" description="useful for debugging, accepted updates in version control there"/>
-        <echo message="open-dis7-source-generator build all complete"/>
+        <antcall target="jar" description="create jar files, includes copy-generated-jars-to-opendis7-java"/>
+        <antcall target="copy-generated-source-to-opendis7-java" description="useful for debugging, accepted updates in version control there"/>
+        <echo message="opendis7-source-generator build all complete"/>
     </target>
     
     <target name="clean.pduLogs" description="clean recorded pduLog files">
@@ -184,7 +184,7 @@
         <antcall target="jar.enumerations.classes"/>
         <antcall target="jar.enumerations.source"/>
         <antcall target="jar.enumerations.javadoc"/>
-        <antcall target="copy-generated-jars-to-open-dis7-java"/>
+        <antcall target="copy-generated-jars-to-opendis7-java"/>
     </target>
    
     <target name="package-dis7-enumerations-prior-jars" 
@@ -208,8 +208,8 @@
         <mkdir dir="dist"/>
         
         <echo message="Packaging .class binaries for all generated OpenDIS7 entity enumerations into a single JAR"/>
-        <delete  file="dist/open-dis7-enumerations-classes.jar"/>
-        <jar destfile="dist/open-dis7-enumerations-classes.jar"
+        <delete  file="dist/opendis7-enumerations-classes.jar"/>
+        <jar destfile="dist/opendis7-enumerations-classes.jar"
               basedir="."
              includes=""
              excludes="**/*"
@@ -261,15 +261,15 @@
         <mkdir dir="dist"/>
         
         <echo message="Packaging .java source for all generated OpenDIS7 entity enumerations into a single JAR"/>
-        <delete  file="dist/open-dis7-enumerations-source.jar"/>
-        <jar destfile="dist/open-dis7-enumerations-source.jar"
+        <delete  file="dist/opendis7-enumerations-source.jar"/>
+        <jar destfile="dist/opendis7-enumerations-source.jar"
               basedir="."
              includes=""
              excludes="**/*"
                update="true"
             zip64Mode="always">
             <!-- omit
-             excludes="build/,dist/,images/,lib/,nbproject/,stringTemplates/,test/,xml/,build.xml,src-autogenerate/,src-generated/,src-specialcase/,src-supporting/,src-generated/**/pdus/,**/open-dis7-enumerations-source.jar"
+             excludes="build/,dist/,images/,lib/,nbproject/,stringTemplates/,test/,xml/,build.xml,src-autogenerate/,src-generated/,src-specialcase/,src-supporting/,src-generated/**/pdus/,**/opendis7-enumerations-source.jar"
              includes="src-generated/**/*.java,src-specialcase/**/*.java,src-supporting/**/*.java"
              includes="edu/nps/moves/dis7/**/*"
              excludes="edu/nps/moves/dis7/pdus/**/*,edu/nps/moves/dis7/source/generator/**/*"
@@ -325,7 +325,7 @@
         <local name="store.dir"/>
         <local name="store.jar"/>
         
-        <property name="store.jar.name" value="open-dis7-entities-chn"/>
+        <property name="store.jar.name" value="opendis7-entities-chn"/>
         <property name="store.dir" value="dist"/>
         <property name="store.jar" value="${store.dir}/${store.jar.name}.jar"/>
 
@@ -354,7 +354,7 @@
         <local name="store.dir"/>
         <local name="store.jar"/>
         
-        <property name="store.jar.name" value="open-dis7-entities-deu"/>
+        <property name="store.jar.name" value="opendis7-entities-deu"/>
         <property name="store.dir" value="dist"/>
         <property name="store.jar" value="${store.dir}/${store.jar.name}.jar"/>
 
@@ -368,7 +368,7 @@
 
             <!-- https://docs.oracle.com/javase/tutorial/deployment/jar/manifestindex.html -->
             <manifest>
-                <attribute name="Built-By" value="open-dis7-source-generator https://github.com/open-dis/open-dis7-source-generator"/>
+                <attribute name="Built-By" value="opendis7-source-generator https://github.com/open-dis/opendis7-source-generator"/>
                 <attribute name="Specification-Title" value="OpenDIS7 German Entities"/>
                 <attribute name="Specification-Version" value="Reference for Enumerations for Simulation Interoperability SISO-REF-010-v29"/>
                 <attribute name="Specification-Vendor" value="Naval Postgraduate School (NPS)"/>
@@ -384,7 +384,7 @@
         <local name="store.dir"/>
         <local name="store.jar"/>
         
-        <property name="store.jar.name" value="open-dis7-entities-rus"/>
+        <property name="store.jar.name" value="opendis7-entities-rus"/>
         <property name="store.dir" value="dist"/>
         <property name="store.jar" value="${store.dir}/${store.jar.name}.jar"/>
 
@@ -412,7 +412,7 @@
         <local name="store.dir"/>
         <local name="store.jar"/>
         
-        <property name="store.jar.name" value="open-dis7-entities-usa-all"/>
+        <property name="store.jar.name" value="opendis7-entities-usa-all"/>
         <property name="store.dir" value="dist"/>
         <property name="store.jar" value="${store.dir}/${store.jar.name}.jar"/>
 
@@ -425,7 +425,7 @@
              excludes=".keep">
 
             <manifest>
-                <attribute name="Built-By" value="open-dis7-source-generator https://github.com/open-dis/open-dis7-source-generator"/>
+                <attribute name="Built-By" value="opendis7-source-generator https://github.com/open-dis/opendis7-source-generator"/>
                 <attribute name="Specification-Title" value="OpenDIS7 American Entities"/>
                 <attribute name="Specification-Version" value="Reference for Enumerations for Simulation Interoperability SISO-REF-010-v29"/>
                 <attribute name="Specification-Vendor" value="Naval Postgraduate School (NPS)"/>
@@ -441,7 +441,7 @@
         <local name="store.dir"/>
         <local name="store.jar"/>
         
-        <property name="store.jar.name" value="open-dis7-entities-usa-munitions"/>
+        <property name="store.jar.name" value="opendis7-entities-usa-munitions"/>
         <property name="store.dir" value="dist"/>
         <property name="store.jar" value="${store.dir}/${store.jar.name}.jar"/>
 
@@ -454,7 +454,7 @@
              excludes=".keep">
 
             <manifest>
-                <attribute name="Built-By" value="open-dis7-source-generator https://github.com/open-dis/open-dis7-source-generator"/>
+                <attribute name="Built-By" value="opendis7-source-generator https://github.com/open-dis/opendis7-source-generator"/>
                 <attribute name="Specification-Title" value="OpenDIS7 American Munition Entities"/>
                 <attribute name="Specification-Version" value="Reference for Enumerations for Simulation Interoperability SISO-REF-010-v29"/>
                 <attribute name="Specification-Vendor" value="Naval Postgraduate School (NPS)"/>
@@ -470,7 +470,7 @@
         <local name="store.dir"/>
         <local name="store.jar"/>
         
-        <property name="store.jar.name" value="open-dis7-entities-usa-air"/>
+        <property name="store.jar.name" value="opendis7-entities-usa-air"/>
         <property name="store.dir" value="dist"/>
         <property name="store.jar" value="${store.dir}/${store.jar.name}.jar"/>
 
@@ -483,7 +483,7 @@
              excludes=".keep">
 
             <manifest>
-                <attribute name="Built-By" value="open-dis7-source-generator https://github.com/open-dis/open-dis7-source-generator"/>
+                <attribute name="Built-By" value="opendis7-source-generator https://github.com/open-dis/opendis7-source-generator"/>
                 <attribute name="Specification-Title" value="OpenDIS7 American Air Entities"/>
                 <attribute name="Specification-Version" value="Reference for Enumerations for Simulation Interoperability SISO-REF-010-v29"/>
                 <attribute name="Specification-Vendor" value="Naval Postgraduate School (NPS)"/>
@@ -499,7 +499,7 @@
         <local name="store.dir"/>
         <local name="store.jar"/>
         
-        <property name="store.jar.name" value="open-dis7-entities-usa-land"/>
+        <property name="store.jar.name" value="opendis7-entities-usa-land"/>
         <property name="store.dir" value="dist"/>
         <property name="store.jar" value="${store.dir}/${store.jar.name}.jar"/>
 
@@ -512,7 +512,7 @@
              excludes=".keep">
 
             <manifest>
-                <attribute name="Built-By" value="open-dis7-source-generator https://github.com/open-dis/open-dis7-source-generator"/>
+                <attribute name="Built-By" value="opendis7-source-generator https://github.com/open-dis/opendis7-source-generator"/>
                 <attribute name="Specification-Title" value="OpenDIS7 American Land Entities"/>
                 <attribute name="Specification-Version" value="Reference for Enumerations for Simulation Interoperability SISO-REF-010-v29"/>
                 <attribute name="Specification-Vendor" value="Naval Postgraduate School (NPS)"/>
@@ -528,7 +528,7 @@
         <local name="store.dir"/>
         <local name="store.jar"/>
         
-        <property name="store.jar.name" value="open-dis7-entities-usa-surface"/>
+        <property name="store.jar.name" value="opendis7-entities-usa-surface"/>
         <property name="store.dir" value="dist"/>
         <property name="store.jar" value="${store.dir}/${store.jar.name}.jar"/>
 
@@ -541,7 +541,7 @@
              excludes=".keep">
 
             <manifest>
-                <attribute name="Built-By" value="open-dis7-source-generator https://github.com/open-dis/open-dis7-source-generator"/>
+                <attribute name="Built-By" value="opendis7-source-generator https://github.com/open-dis/opendis7-source-generator"/>
                 <attribute name="Specification-Title" value="OpenDIS7 American Surface Entities"/>
                 <attribute name="Specification-Version" value="Reference for Enumerations for Simulation Interoperability SISO-REF-010-v29"/>
                 <attribute name="Specification-Vendor" value="Naval Postgraduate School (NPS)"/>
@@ -557,7 +557,7 @@
         <local name="store.dir"/>
         <local name="store.jar"/>
         
-        <property name="store.jar.name" value="open-dis7-entities-nato"/>
+        <property name="store.jar.name" value="opendis7-entities-nato"/>
         <property name="store.dir" value="dist"/>
         <property name="store.jar" value="${store.dir}/${store.jar.name}.jar"/>
 
@@ -596,7 +596,7 @@
                             edu/nps/moves/dis7/entities/tur/**">
 
             <manifest>
-                <attribute name="Built-By" value="open-dis7-source-generator https://github.com/open-dis/open-dis7-source-generator"/>
+                <attribute name="Built-By" value="opendis7-source-generator https://github.com/open-dis/opendis7-source-generator"/>
                 <attribute name="Specification-Title" value="OpenDIS7 Nato Entities"/>
                 <attribute name="Specification-Version" value="Reference for Enumerations for Simulation Interoperability SISO-REF-010-v29"/>
                 <attribute name="Specification-Vendor" value="Naval Postgraduate School (NPS)"/>
@@ -636,7 +636,7 @@
         </java>
         <echo message="copy utilities to special-case tree to support compilation"/>
         <copy todir="src-specialcase/java/edu/nps/moves/dis7/utilities" overwrite="true" verbose="true">
-            <fileset dir="${open-dis7-java}/src/edu/nps/moves/dis7/utilities">
+            <fileset dir="${opendis7-java}/src/edu/nps/moves/dis7/utilities">
                 <include name="DisTime.java"/>
                 <include name="PduFactory.java"/>
             </fileset>
@@ -709,8 +709,8 @@
         
         <echo message="Packaging javadoc documentation for all generated OpenDIS7 entity enumerations into a single JAR"/>
         <echo message="(note that generated javadoc subdirectory is found within dist subdirectory)"/>
-        <delete  file="dist/open-dis7-enumerations-javadoc.jar"/>
-        <jar destfile="dist/open-dis7-enumerations-javadoc.jar"
+        <delete  file="dist/opendis7-enumerations-javadoc.jar"/>
+        <jar destfile="dist/opendis7-enumerations-javadoc.jar"
                update="true"
              includes=""
              excludes="**/*"
@@ -749,18 +749,18 @@
         </jar>
     </target>
     
-    <!-- Invoke this in lieu of step #3 under "If you desire to update the open-dis7-java" project in ./README.md -->
-    <target name="copy-generated-source-to-open-dis7-java">
-        <echo message="Both enumerations and PDUs are created by open-dis7-source-generator, with"/>
-        <echo message="   PDU classes  packaged into open-dis7-pdus-*.jar         archives by open-dis7-java project and"/>
-        <echo message="   enumerations packaged into open-dis7-enumerations-*.jar archives by open-dis7-source-generator."/>
-        <echo message="   Complete set packaged into open-dis7-full.jar           archive  by open-dis7-java project."/>
+    <!-- Invoke this in lieu of step #3 under "If you desire to update the opendis7-java" project in ./README.md -->
+    <target name="copy-generated-source-to-opendis7-java">
+        <echo message="Both enumerations and PDUs are created by opendis7-source-generator, with"/>
+        <echo message="   PDU classes  packaged into opendis7-pdus-*.jar         archives by opendis7-java project and"/>
+        <echo message="   enumerations packaged into opendis7-enumerations-*.jar archives by opendis7-source-generator."/>
+        <echo message="   Complete set packaged into opendis7-full.jar           archive  by opendis7-java project."/>
         
         <delete includeemptydirs="true" failonerror="false"><!-- verbose="true" -->
-            <fileset dir="${open-dis7-java}/src-generated" includes="**/*"/>
+            <fileset dir="${opendis7-java}/src-generated" includes="**/*"/>
         </delete>
-        <mkdir  dir="${open-dis7-java}/src-generated"/>
-        <copy todir="${open-dis7-java}/src-generated" overwrite="true">
+        <mkdir  dir="${opendis7-java}/src-generated"/>
+        <copy todir="${opendis7-java}/src-generated" overwrite="true">
             <fileset dir="src-generated/java">
                 <include name="**/*.java"/>
                 <exclude name="edu/nps/moves/dis7/pdus/VariableDatum.java"/><!-- TODO fix autogeneration to match special case -->
@@ -770,7 +770,7 @@
             </fileset>
         </copy>
         <!-- TODO duplicate; this can become order dependent if autogenerated version makes corresponding specialcase unnecessary... -->
-        <copy todir="${open-dis7-java}/src-generated" overwrite="true">
+        <copy todir="${opendis7-java}/src-generated" overwrite="true">
             <fileset dir="src-specialcase/java">
                 <include name="**/*.java"/>
                 <exclude name="edu/nps/moves/dis7/utilities/DisTime.java"/>   <!-- duplicated for source-generator compilation purposes -->
@@ -779,33 +779,33 @@
         </copy>
     </target>
     
-    <target name="copy-generated-jars-to-open-dis7-java">
-        <echo message="Copy copy generated jars to open-dis7-java project"/>
-        <echo message="Both enumerations and PDUs are created by open-dis7-source-generator, with"/>
-        <echo message="   PDU classes  packaged into open-dis7-*.jar              archives by open-dis7-java project and"/>
-        <echo message="   enumerations packaged into open-dis7-enumerations-*.jar archives by open-dis7-source-generator."/>
+    <target name="copy-generated-jars-to-opendis7-java">
+        <echo message="Copy copy generated jars to opendis7-java project"/>
+        <echo message="Both enumerations and PDUs are created by opendis7-source-generator, with"/>
+        <echo message="   PDU classes  packaged into opendis7-*.jar              archives by opendis7-java project and"/>
+        <echo message="   enumerations packaged into opendis7-enumerations-*.jar archives by opendis7-source-generator."/>
         
         <delete includeemptydirs="true" failonerror="false" verbose="false"><!-- verbose="true" false -->
-            <fileset dir="${open-dis7-java}/dist">
-                <include name="open-dis7-enumerations-classes.jar"/>
-                <include name="open-dis7-enumerations-source.jar"/>
-                <include name="open-dis7-enumerations-javadoc.jar"/>
+            <fileset dir="${opendis7-java}/dist">
+                <include name="opendis7-enumerations-classes.jar"/>
+                <include name="opendis7-enumerations-source.jar"/>
+                <include name="opendis7-enumerations-javadoc.jar"/>
             </fileset>
         </delete>
-        <mkdir dir="${open-dis7-java}/dist"/>
-        <echo message="copy dist/open-dis7-enumerations-classes.jar, -source.jar, -javadoc.jar to ${open-dis7-java}/dist"/>
-        <copy todir="${open-dis7-java}/dist" overwrite="true" verbose="true" force="true" failonerror="true">
+        <mkdir dir="${opendis7-java}/dist"/>
+        <echo message="copy dist/opendis7-enumerations-classes.jar, -source.jar, -javadoc.jar to ${opendis7-java}/dist"/>
+        <copy todir="${opendis7-java}/dist" overwrite="true" verbose="true" force="true" failonerror="true">
             <fileset dir="dist">
-                <include name="open-dis7-enumerations-classes.jar"/>
-                <include name="open-dis7-enumerations-source.jar"/>
-                <include name="open-dis7-enumerations-javadoc.jar"/>
+                <include name="opendis7-enumerations-classes.jar"/>
+                <include name="opendis7-enumerations-source.jar"/>
+                <include name="opendis7-enumerations-javadoc.jar"/>
             </fileset>
         </copy>
     </target>
     
     <target name="view.issues.online" description="view online issues in web browser (Netbeans only)">
-        <echo message="https://github.com/open-dis/open-dis7-source-generator/issues" />
-        <nbbrowse url="https://github.com/open-dis/open-dis7-source-generator/issues" />
+        <echo message="https://github.com/open-dis/opendis7-source-generator/issues" />
+        <nbbrowse url="https://github.com/open-dis/opendis7-source-generator/issues" />
         <!-- TODO implementation-independent approach if possible, but note that other Ant approaches usually have to be customized for each OS. -->
     </target>
     
@@ -816,7 +816,7 @@
     
     <target name="view.javadoc.online" description="view online package javadoc in web browser (Netbeans only)">
         <echo message="view online javadoc in dist/javadoc subdirectory"/>
-        <nbbrowse url="https://savage.nps.edu/open-dis7-java/javadoc" />
+        <nbbrowse url="https://savage.nps.edu/opendis7-java/javadoc" />
         <!-- TODO implementation-independent approach if possible, but note that other Ant approaches usually have to be customized for each OS. -->
     </target>
 
@@ -915,7 +915,7 @@
         <echo message="validate build.xml"/>
         <xmlvalidate file="build.xml"                      failonerror="false" warn="true" lenient="true"/>
         <echo message="check XML Spy project file well formed"/>
-        <xmlvalidate file="xml/open-dis7-source-generator.spp" failonerror="false" warn="true" lenient="true"/>
+        <xmlvalidate file="xml/opendis7-source-generator.spp" failonerror="false" warn="true" lenient="true"/>
         <echo message="check XSLT stylesheet file well formed"/>
         <xmlvalidate file="xml/MergeOpenDisTemplatesIntoDis7Schema.xslt" failonerror="false" warn="true" lenient="true"/>
         
