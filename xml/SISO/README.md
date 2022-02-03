@@ -21,4 +21,4 @@ Schema obtained from
 * https://www.sisostds.org/schemas/SISO-REF-010.xsd
 
 Currently applied SISO-REF-010-v30-DRAFT-20220129-d11 with small modifications as noted in 
-[Issue #3](https://github.com/open-dis/open-dis7-source-generator/issues/3).
+[Issue #3](https://github.com/open-dis/opendis7-source-generator/issues/3).
