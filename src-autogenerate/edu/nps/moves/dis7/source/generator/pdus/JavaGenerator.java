@@ -32,7 +32,7 @@ public class JavaGenerator extends AbstractGenerator
      */
 
     /**
-     * Maps the primitive types listed in the XML file to the java types
+     * Maps the primitive types listed in the XML file (key) to the java types (value)
      */
     Properties types = new Properties();
 
@@ -95,12 +95,13 @@ public class JavaGenerator extends AbstractGenerator
 
         final String UNSIGNED_INT8 = "uint8"; // TODO generalize this approach
         
-        // Set up a mapping between the strings used in the Open-DIS XML file and the strings used
-        // in the generated java file, specifically the data types. This could be externalized to
+        // Set up a mapping between the strings used in the Open-DIS XML file (key) and the strings used
+        // in the generated java file (value), specifically the data types. This could be externalized to
         // a properties file, but there's only a dozen or so and an external props file
         // would just add some complexity.
         
-        // dont quite get this.  looks in error
+        // don't quite get this....  looks in error, duplicating marshallTypes.  
+        // TODO rename all occurrences to marshallTypes since they exactly match (DRY principle)
         types.setProperty("uint8",   "byte");
         types.setProperty("uint16",  "short");
         types.setProperty("uint32",  "int");
