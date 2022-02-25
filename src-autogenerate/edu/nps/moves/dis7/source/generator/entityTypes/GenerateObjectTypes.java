@@ -353,7 +353,7 @@ public class GenerateObjectTypes
                 packageInfoBuilder.append(" * @see <a href=\"https://stackoverflow.com/questions/22095487/why-is-package-info-java-useful\">https://stackoverflow.com/questions/22095487/why-is-package-info-java-useful</a>\n");
                 packageInfoBuilder.append(" * @see <a href=\"https://stackoverflow.com/questions/624422/how-do-i-document-packages-in-java\">https://stackoverflow.com/questions/624422/how-do-i-document-packages-in-java</a>\n");
                 packageInfoBuilder.append(" */\n");
-                packageInfoBuilder.append("// created by edu/nps/moves/dis7/source/generator/entitytypes/GenerateObjectTypes.java\n");
+                packageInfoBuilder.append("// created by edu/nps/moves/dis7/source/generator/entityTypes/GenerateObjectTypes.java\n");
                 packageInfoBuilder.append("\n");
                 packageInfoBuilder.append("package ").append(data.pkg).append(";\n");
 

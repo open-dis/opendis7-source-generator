@@ -614,7 +614,7 @@ public class GenerateEntityTypes
                 packageInfoBuilder.append(" * @see <a href=\"https://stackoverflow.com/questions/22095487/why-is-package-info-java-useful\">Stack Overflow: why-is-package-info-java-useful</a>\n");
                 packageInfoBuilder.append(" * @see <a href=\"https://stackoverflow.com/questions/624422/how-do-i-document-packages-in-java\">Stack Overflow: how-do-i-document-packages-in-java</a>\n");
                 packageInfoBuilder.append(" */\n");
-                packageInfoBuilder.append("// created by edu/nps/moves/dis7/source/generator/entitytypes/GenerateEntityTypes.java\n");
+                packageInfoBuilder.append("// created by edu/nps/moves/dis7/source/generator/entityTypes/GenerateEntityTypes.java\n");
                 packageInfoBuilder.append("\n");
                 packageInfoBuilder.append("package ").append(data.pkg).append(";\n");
 
