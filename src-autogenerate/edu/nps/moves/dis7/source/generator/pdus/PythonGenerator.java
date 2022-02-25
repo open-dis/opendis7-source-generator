@@ -41,17 +41,20 @@ public class PythonGenerator extends AbstractGenerator
     {
         super(pClassDescriptions, languagePropertiesPython);
         
-        // Set up the mapping between Open-DIS primitive types and marshal types. 
-        marshalTypes.setProperty("unsigned short",    "unsigned_short");
-        marshalTypes.setProperty("unsigned byte",     "unsigned_byte");
-        marshalTypes.setProperty("unsigned int",      "unsigned_int");
-        marshalTypes.setProperty("unsigned long", "long"); // This is wrong; no unsigned long type in java. Fix with a BigInt or similar
+        // Set up the mapping between Open-DIS primitive types (key) and marshal types in Python (value).
         
+// originals have wrong names according to XML data file
+//        marshalTypes.setProperty("unsigned short",    "unsigned_short");
+//        marshalTypes.setProperty("unsigned byte",     "unsigned_byte");
+//        marshalTypes.setProperty("unsigned int",      "unsigned_int");
+//        marshalTypes.setProperty("unsigned long", "long"); // This is wrong; no unsigned long type in java. Fix with a BigInt or similar
+
+        // TODO copy other marshallTypes from JavaGenerator..
+
         marshalTypes.setProperty("byte",   "byte");
         marshalTypes.setProperty("short",  "short");
         marshalTypes.setProperty("int",    "int");
         marshalTypes.setProperty("long",   "long");
-        
         marshalTypes.setProperty("double", "double");
         marshalTypes.setProperty("float",  "float");
         
