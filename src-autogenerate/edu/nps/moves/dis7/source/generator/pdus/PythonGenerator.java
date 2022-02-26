@@ -43,36 +43,34 @@ public class PythonGenerator extends AbstractGenerator
         
         // Set up the mapping between Open-DIS primitive types (key) and marshal types in Python (value).
         
-// originals have wrong names according to XML data file
-//        marshalTypes.setProperty("unsigned short",    "unsigned_short");
-//        marshalTypes.setProperty("unsigned byte",     "unsigned_byte");
-//        marshalTypes.setProperty("unsigned int",      "unsigned_int");
-//        marshalTypes.setProperty("unsigned long", "long"); // This is wrong; no unsigned long type in java. Fix with a BigInt or similar
-
-        // TODO copy other marshallTypes from JavaGenerator..
-
-        marshalTypes.setProperty("byte",   "byte");
-        marshalTypes.setProperty("short",  "short");
-        marshalTypes.setProperty("int",    "int");
-        marshalTypes.setProperty("long",   "long");
-        marshalTypes.setProperty("double", "double");
-        marshalTypes.setProperty("float",  "float");
         
+        // Set up the mapping between Open-DIS primitive types and marshal types.       
+        marshalTypes.setProperty("uint8",   "byte");
+        marshalTypes.setProperty("uint16",  "short");
+        marshalTypes.setProperty("uint32",  "int");
+        marshalTypes.setProperty("uint64",  "long");
+        marshalTypes.setProperty("int8",    "byte");
+        marshalTypes.setProperty("int16",   "short");
+        marshalTypes.setProperty("int32",   "int");
+        marshalTypes.setProperty("int64",   "long");
+        marshalTypes.setProperty("float32", "float");
+        marshalTypes.setProperty("float64", "double");
+        //marshalTypes.setProperty("utf","EntityID");
+
         // Unmarshalling types
-        unmarshalTypes.setProperty("unsigned short", "unsigned_short");
-        unmarshalTypes.setProperty("unsigned byte",  "unsigned_byte");
-        unmarshalTypes.setProperty("unsigned int",   "int");
-        unmarshalTypes.setProperty("unsigned long",  "long"); // ^^^ This is wrong--should be unsigned
+        //unmarshalTypes.setProperty("EntityID","utf");
+        unmarshalTypes.setProperty("uint8",   "UnsignedByte");
+        unmarshalTypes.setProperty("uint16",  "UnsignedShort");
+        unmarshalTypes.setProperty("uint32",  "int");
+        unmarshalTypes.setProperty("uint64",  "long");
+        unmarshalTypes.setProperty("int8",    "byte");
+        unmarshalTypes.setProperty("int16",   "short");
+        unmarshalTypes.setProperty("int32",   "int");
+        unmarshalTypes.setProperty("int64",   "long");
+        unmarshalTypes.setProperty("float32", "float");
+        unmarshalTypes.setProperty("float64", "double");
         
-        unmarshalTypes.setProperty("byte",   "byte");
-        unmarshalTypes.setProperty("short" , "short");
-        unmarshalTypes.setProperty("int",    "int");
-        unmarshalTypes.setProperty("long",   "long");
-        
-        unmarshalTypes.setProperty("double", "double");
-        unmarshalTypes.setProperty("float",  "float");
     }
-
     @Override
     public void writeClasses()
     {
@@ -306,11 +304,10 @@ public class PythonGenerator extends AbstractGenerator
             pw.println(INDENT + INDENT + "super( " + aClass.getName() + ", self ).serialize(outputStream)");
         }
         
-        
-        List attributes = aClass.getClassAttributes();
+        List<GeneratedClassAttribute> attributes = aClass.getClassAttributes();
         for(int idx = 0; idx < attributes.size(); idx++)
         {
-            GeneratedClassAttribute anAttribute = (GeneratedClassAttribute)attributes.get(idx);
+            GeneratedClassAttribute anAttribute = /*(GeneratedClassAttribute)*/attributes.get(idx);
             
             // Some fields may be declared but shouldn't be serialized
             if(anAttribute.shouldSerialize == false)
