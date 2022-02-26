@@ -35,7 +35,7 @@ public class GeneratePdusForGivenLanguage  // TODO rename? perhaps GeneratePdusB
 {
     // set defaults to allow direct run
     private static String            language = edu.nps.moves.dis7.source.generator.GenerateOpenDis7JavaPackages.DEFAULT_LANGUAGE;
-    private static String         sisoXmlFile = edu.nps.moves.dis7.source.generator.GenerateOpenDis7JavaPackages.DEFAULT_SISO_XML_FILE;
+    private static String         sisoXmlFile = "xml/dis_7_2012/DIS_7_2012.xml";
         
     // Elements and attributes we look for in our XML pdu description files:
 
@@ -222,6 +222,8 @@ public class GeneratePdusForGivenLanguage  // TODO rename? perhaps GeneratePdusB
      */
     public static void main(String args[])
     {
+        language = edu.nps.moves.dis7.source.generator.GenerateOpenDis7JavaPackages.PYTHON_LANGUAGE; // JAVA_LANGUAGE PYTHON_LANGUAGE
+        
         System.out.println (GeneratePdusForGivenLanguage.class.getName());
         if(args.length < 2 || args.length > 2)
         {
@@ -270,7 +272,7 @@ public class GeneratePdusForGivenLanguage  // TODO rename? perhaps GeneratePdusB
                  language.equalsIgnoreCase(OBJC)       || language.equalsIgnoreCase(CSHARP) ||
                  language.equalsIgnoreCase(JAVASCRIPT) || language.equalsIgnoreCase(PYTHON) ))
             {
-                System.out.println("Not a valid language to generate. The options are java, python, cpp, csharp, javascript and objc");
+                System.out.println("Not a valid language to generate. The options are java (supported), python (testing), and cpp, csharp, javascript and objc");
                 System.out.println("Usage: GeneratePdus xmlFile language"); // formerly xmlpg
                 System.exit(-1);
             }
@@ -371,7 +373,7 @@ public class GeneratePdusForGivenLanguage  // TODO rename? perhaps GeneratePdusB
                 //System.out.println("----Looking for matches of inital value " + anInitialValue.getVariable());
                 while(currentClass != null)
                 {
-                    List thisClassesAttributes = currentClass.getClassAttributes();
+                    List attributesForCurruentClass = currentClass.getClassAttributes();
                     for(GeneratedClassAttribute anAttribute : currentClass.getClassAttributes()) {
                         //System.out.println("--checking " + anAttribute.getName() + " against inital value " + anInitialValue.getVariable());
                         if(anInitialValue.getVariable().equals(anAttribute.getName()))
@@ -708,7 +710,7 @@ public class GeneratePdusForGivenLanguage  // TODO rename? perhaps GeneratePdusB
                 currentClassAttribute.setUnderlyingTypeIsEnum(true);
 
             for (int idx = 0; idx < attributes.getLength(); idx++) {
-                String nm = attributes.getQName(idx);
+                String attributeName = attributes.getQName(idx);
                 switch (attributes.getQName(idx).toLowerCase()) {
                     case TYPE:
                         currentClassAttribute.setType(attributes.getValue(idx));
@@ -835,7 +837,7 @@ public class GeneratePdusForGivenLanguage  // TODO rename? perhaps GeneratePdusB
 
         for (int idx = 0; idx < attributes.getLength(); idx++) 
         {
-            String nm = attributes.getQName(idx).toLowerCase();
+            String attributeName = attributes.getQName(idx).toLowerCase();
             switch (attributes.getQName(idx).toLowerCase())
             {
                 case COULDBESTRING:

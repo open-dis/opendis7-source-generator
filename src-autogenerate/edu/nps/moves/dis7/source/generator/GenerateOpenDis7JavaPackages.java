@@ -17,12 +17,20 @@ import edu.nps.moves.dis7.source.generator.pdus.GeneratePdusForGivenLanguage;
 public class GenerateOpenDis7JavaPackages
 {
   // @formatter:off
-    
   // shared static defaults
-  /** Java is programming language for this generator */
-  public static final String      DEFAULT_LANGUAGE = "python"; // "java"; "python" // TODO python testing
+  
+  /** Java is a supported programming language for this generator */
+  public static final String      JAVA_LANGUAGE    = "java";   // tested sat
+  
+  /** Python is undergoing testing to be a supported programming language for this generator */
+  public static final String      PYTHON_LANGUAGE  = "python"; // TODO python testing
+    
+  /** Java is default programming language for this generator */
+  public static final String      DEFAULT_LANGUAGE = JAVA_LANGUAGE;
+  
   /** xml/SISO/SISO-REF-010.xml */
   public static final String DEFAULT_SISO_XML_FILE = "xml/SISO/SISO-REF-010.xml";
+  
   /** xml/dis_7_2012/DIS_7_2012.xml */
   public static final String  DEFAULT_PDU_XML_FILE = "xml/dis_7_2012/DIS_7_2012.xml";
 
@@ -44,12 +52,13 @@ public class GenerateOpenDis7JavaPackages
      */
     public static void main(String[] args)
     {
-        String whichLanguage = DEFAULT_LANGUAGE;
-        // TODO parse arguments for language
+        String whichLanguage = PYTHON_LANGUAGE; // DEFAULT_LANGUAGE JAVA_LANGUAGE PYTHON_LANGUAGE
         
         System.out.println (GenerateOpenDis7JavaPackages.class.getName() + "commencing...");
         if (whichLanguage.equalsIgnoreCase("java"))
         {
+            System.out.println("------------- opendis7-java generation commence -------------");
+            System.out.println();
             // ENUMERATIONS
             System.out.println("------------- Generating enumerations in "+enumPackage+" -------------");
             edu.nps.moves.dis7.source.generator.enumerations.GenerateEnumerations.main(new String[]{DEFAULT_SISO_XML_FILE, enumOutputPath, enumPackage});
@@ -72,11 +81,17 @@ public class GenerateOpenDis7JavaPackages
             System.out.println("------------- Generating entity types in "+entitiesPackage+" -------------");
             edu.nps.moves.dis7.source.generator.entityTypes.GenerateEntityTypes.main(new String[]{DEFAULT_SISO_XML_FILE, entitiesOutputPath, entitiesPackage});
 
-            System.out.println("------------- DIS7 source generation complete -------------");
+            System.out.println("------------- opendis7-java generation complete -------------");
         }
         else if (whichLanguage.equalsIgnoreCase("python"))
         {
-            GeneratePdusForGivenLanguage.main(new String[]{DEFAULT_SISO_XML_FILE, whichLanguage} );
+            System.out.println("------------- opendis7-python generation commence -------------");
+            
+            GeneratePdusForGivenLanguage generatePdusForGivenLanguage = new GeneratePdusForGivenLanguage(DEFAULT_SISO_XML_FILE, whichLanguage);
+            
+            generatePdusForGivenLanguage.main(new String[]{DEFAULT_SISO_XML_FILE, whichLanguage});
+            
+            System.out.println("------------- opendis7-python generation complete -------------");
         }
         else System.out.println (GenerateOpenDis7JavaPackages.class.getName() + " unsupported language: " + whichLanguage);
 
