@@ -13,11 +13,13 @@ and over 22,000 SISO-REF-010 enumerations.
 Additional testing and experimentation is performed in the NPS MOVES
 [Networked Graphics MV3500](https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500) course.
 
-<h3>Background</h3>
+### Background
 
-This work is an update/continuation of the **`open-dis/xmlpg`** project created by the late Don McGregor of the Naval Postgraduate School.  Goals are twofold:
+This work is an update/continuation of the **`open-dis/xmlpg`** project created by the late Don McGregor of the Naval Postgraduate School (NPS).
 
-1. To provide reference implementations of the DIS protocol network messages in several languages.
+Goals are twofold:
+
+1. To provide reference implementations of the DIS protocol network messages in several programming languages.
 2. To do so by means of single XML descriptions of the protocol which are then referenced by individual language generators.
 
 While there exists code in the project to generate source in JavaScript, Python and other languages, that code is legacy, and so far only the Java implementation is complete.
