@@ -41,12 +41,12 @@ class EmitterBeam( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.beamDataLength);
-        outputStream.write_null(self.beamNumber);
-        outputStream.write_null(self.beamParameterIndex);
+        outputStream.write_byte(self.beamDataLength);
+        outputStream.write_byte(self.beamNumber);
+        outputStream.write_short(self.beamParameterIndex);
         self.fundamentalParameterData.serialize(outputStream)
         self.beamData.serialize(outputStream)
-        outputStream.write_null( len(self.trackJamData));
+        outputStream.write_byte( len(self.trackJamData));
         self.beamStatus.serialize(outputStream)
         self.jammingTechnique.serialize(outputStream)
         for anObj in self.trackJamData:
@@ -57,12 +57,12 @@ class EmitterBeam( object ):
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.beamDataLength = inputStream.read_null();
-        self.beamNumber = inputStream.read_null();
-        self.beamParameterIndex = inputStream.read_null();
+        self.beamDataLength = inputStream.read_byte();
+        self.beamNumber = inputStream.read_byte();
+        self.beamParameterIndex = inputStream.read_short();
         self.fundamentalParameterData.parse(inputStream)
         self.beamData.parse(inputStream)
-        self.numberOfTargets = inputStream.read_null();
+        self.numberOfTargets = inputStream.read_byte();
         self.beamStatus.parse(inputStream)
         self.jammingTechnique.parse(inputStream)
         for idx in range(0, self.numberOfTargets):
@@ -88,16 +88,16 @@ class MunitionDescriptor( object ):
     def serialize(self, outputStream):
         """serialize the class """
         self.munitionType.serialize(outputStream)
-        outputStream.write_null(self.quantity);
-        outputStream.write_null(self.rate);
+        outputStream.write_short(self.quantity);
+        outputStream.write_short(self.rate);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
         self.munitionType.parse(inputStream)
-        self.quantity = inputStream.read_null();
-        self.rate = inputStream.read_null();
+        self.quantity = inputStream.read_short();
+        self.rate = inputStream.read_short();
 
 
 
@@ -127,13 +127,13 @@ class MinefieldSensorType( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.sensorType);
+        outputStream.write_short(self.sensorType);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.sensorType = inputStream.read_null();
+        self.sensorType = inputStream.read_short();
 
 
 
@@ -150,17 +150,17 @@ class LayerHeader( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.layerNumber);
-        outputStream.write_null(self.layerSpecificInformation);
-        outputStream.write_null(self.length);
+        outputStream.write_byte(self.layerNumber);
+        outputStream.write_byte(self.layerSpecificInformation);
+        outputStream.write_short(self.length);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.layerNumber = inputStream.read_null();
-        self.layerSpecificInformation = inputStream.read_null();
-        self.length = inputStream.read_null();
+        self.layerNumber = inputStream.read_byte();
+        self.layerSpecificInformation = inputStream.read_byte();
+        self.length = inputStream.read_short();
 
 
 
@@ -202,41 +202,41 @@ class AngleDeception( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.recordType);
-        outputStream.write_null(self.recordLength);
-        outputStream.write_null(self.padding);
-        outputStream.write_null(self.emitterNumber);
-        outputStream.write_null(self.beamNumber);
-        outputStream.write_null(self.padding2);
-        outputStream.write_null(self.azimuthOffset);
-        outputStream.write_null(self.azimuthWidth);
-        outputStream.write_null(self.azimuthPullRate);
-        outputStream.write_null(self.azimuthPullAcceleration);
-        outputStream.write_null(self.elevationOffset);
-        outputStream.write_null(self.elevationWidth);
-        outputStream.write_null(self.elevationPullRate);
-        outputStream.write_null(self.elevationPullAcceleration);
-        outputStream.write_null(self.padding3);
+        outputStream.write_int(self.recordType);
+        outputStream.write_short(self.recordLength);
+        outputStream.write_short(self.padding);
+        outputStream.write_byte(self.emitterNumber);
+        outputStream.write_byte(self.beamNumber);
+        outputStream.write_byte(self.padding2);
+        outputStream.write_float(self.azimuthOffset);
+        outputStream.write_float(self.azimuthWidth);
+        outputStream.write_float(self.azimuthPullRate);
+        outputStream.write_float(self.azimuthPullAcceleration);
+        outputStream.write_float(self.elevationOffset);
+        outputStream.write_float(self.elevationWidth);
+        outputStream.write_float(self.elevationPullRate);
+        outputStream.write_float(self.elevationPullAcceleration);
+        outputStream.write_int(self.padding3);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.recordType = inputStream.read_null();
-        self.recordLength = inputStream.read_null();
-        self.padding = inputStream.read_null();
-        self.emitterNumber = inputStream.read_null();
-        self.beamNumber = inputStream.read_null();
-        self.padding2 = inputStream.read_null();
-        self.azimuthOffset = inputStream.read_null();
-        self.azimuthWidth = inputStream.read_null();
-        self.azimuthPullRate = inputStream.read_null();
-        self.azimuthPullAcceleration = inputStream.read_null();
-        self.elevationOffset = inputStream.read_null();
-        self.elevationWidth = inputStream.read_null();
-        self.elevationPullRate = inputStream.read_null();
-        self.elevationPullAcceleration = inputStream.read_null();
-        self.padding3 = inputStream.read_null();
+        self.recordType = inputStream.read_int();
+        self.recordLength = inputStream.read_short();
+        self.padding = inputStream.read_short();
+        self.emitterNumber = inputStream.read_byte();
+        self.beamNumber = inputStream.read_byte();
+        self.padding2 = inputStream.read_byte();
+        self.azimuthOffset = inputStream.read_float();
+        self.azimuthWidth = inputStream.read_float();
+        self.azimuthPullRate = inputStream.read_float();
+        self.azimuthPullAcceleration = inputStream.read_float();
+        self.elevationOffset = inputStream.read_float();
+        self.elevationWidth = inputStream.read_float();
+        self.elevationPullRate = inputStream.read_float();
+        self.elevationPullAcceleration = inputStream.read_float();
+        self.padding3 = inputStream.read_int();
 
 
 
@@ -252,15 +252,15 @@ class VectoringNozzleSystem( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.horizontalDeflectionAngle);
-        outputStream.write_null(self.verticalDeflectionAngle);
+        outputStream.write_float(self.horizontalDeflectionAngle);
+        outputStream.write_float(self.verticalDeflectionAngle);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.horizontalDeflectionAngle = inputStream.read_null();
-        self.verticalDeflectionAngle = inputStream.read_null();
+        self.horizontalDeflectionAngle = inputStream.read_float();
+        self.verticalDeflectionAngle = inputStream.read_float();
 
 
 
@@ -292,17 +292,17 @@ class RadioType( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.domain);
-        outputStream.write_null(self.specific);
-        outputStream.write_null(self.extra);
+        outputStream.write_byte(self.domain);
+        outputStream.write_byte(self.specific);
+        outputStream.write_byte(self.extra);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.domain = inputStream.read_null();
-        self.specific = inputStream.read_null();
-        self.extra = inputStream.read_null();
+        self.domain = inputStream.read_byte();
+        self.specific = inputStream.read_byte();
+        self.extra = inputStream.read_byte();
 
 
 
@@ -332,7 +332,7 @@ class BeamAntennaPattern( object ):
         self.azimuthBeamwidth = 0
         """ Full width of the beam to the -3dB power density points in the x-y plane of the beam coordinnate system.  Elevation beamwidth is represented by a 32-bit floating point number in units of radians."""
         self.elevationBeamwidth = 0
-        """ This field shall specify the full width of the beam to the –3 dB power density points in the x-z plane of the beam coordinate system. Elevation beamwidth shall be represented by a 32-bit floating point number in units of radians."""
+        """ This field shall specify the full width of the beam to the â€“3 dB power density points in the x-z plane of the beam coordinate system. Elevation beamwidth shall be represented by a 32-bit floating point number in units of radians."""
         self.padding1 = 0
         """ Padding"""
         self.padding2 = 0
@@ -349,28 +349,28 @@ class BeamAntennaPattern( object ):
     def serialize(self, outputStream):
         """serialize the class """
         self.beamDirection.serialize(outputStream)
-        outputStream.write_null(self.azimuthBeamwidth);
-        outputStream.write_null(self.elevationBeamwidth);
-        outputStream.write_null(self.padding1);
-        outputStream.write_null(self.padding2);
-        outputStream.write_null(self.ez);
-        outputStream.write_null(self.ex);
-        outputStream.write_null(self.phase);
-        outputStream.write_null(self.padding3);
+        outputStream.write_float(self.azimuthBeamwidth);
+        outputStream.write_float(self.elevationBeamwidth);
+        outputStream.write_byte(self.padding1);
+        outputStream.write_short(self.padding2);
+        outputStream.write_float(self.ez);
+        outputStream.write_float(self.ex);
+        outputStream.write_float(self.phase);
+        outputStream.write_int(self.padding3);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
         self.beamDirection.parse(inputStream)
-        self.azimuthBeamwidth = inputStream.read_null();
-        self.elevationBeamwidth = inputStream.read_null();
-        self.padding1 = inputStream.read_null();
-        self.padding2 = inputStream.read_null();
-        self.ez = inputStream.read_null();
-        self.ex = inputStream.read_null();
-        self.phase = inputStream.read_null();
-        self.padding3 = inputStream.read_null();
+        self.azimuthBeamwidth = inputStream.read_float();
+        self.elevationBeamwidth = inputStream.read_float();
+        self.padding1 = inputStream.read_byte();
+        self.padding2 = inputStream.read_short();
+        self.ez = inputStream.read_float();
+        self.ex = inputStream.read_float();
+        self.phase = inputStream.read_float();
+        self.padding3 = inputStream.read_int();
 
 
 
@@ -392,8 +392,8 @@ class ElectronicEmitter( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.systemDataLength);
-        outputStream.write_null( len(self.beams));
+        outputStream.write_byte(self.systemDataLength);
+        outputStream.write_byte( len(self.beams));
         self.emitterSystem.serialize(outputStream)
         self.location.serialize(outputStream)
         for anObj in self.beams:
@@ -404,8 +404,8 @@ class ElectronicEmitter( object ):
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.systemDataLength = inputStream.read_null();
-        self.numberOfBeams = inputStream.read_null();
+        self.systemDataLength = inputStream.read_byte();
+        self.numberOfBeams = inputStream.read_byte();
         self.emitterSystem.parse(inputStream)
         self.location.parse(inputStream)
         for idx in range(0, self.numberOfBeams):
@@ -427,19 +427,19 @@ class VariableTransmitterParameters( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.recordLength);
+        outputStream.write_short(self.recordLength);
         for idx in range(0, 0):
-            outputStream.write_null( self.recordSpecificFields[ idx ] );
+            outputStream.write_UnsignedByte( self.recordSpecificFields[ idx ] );
 
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.recordLength = inputStream.read_null();
+        self.recordLength = inputStream.read_short();
         self.recordSpecificFields = [0]*0
         for idx in range(0, 0):
-            val = inputStream.read_null
+            val = inputStream.read_UnsignedByte
             self.recordSpecificFields[  idx  ] = val
 
 
@@ -459,21 +459,21 @@ class Attribute( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.recordType);
-        outputStream.write_null(self.recordLength);
+        outputStream.write_int(self.recordType);
+        outputStream.write_short(self.recordLength);
         for idx in range(0, 0):
-            outputStream.write_null( self.recordSpecificFields[ idx ] );
+            outputStream.write_UnsignedByte( self.recordSpecificFields[ idx ] );
 
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.recordType = inputStream.read_null();
-        self.recordLength = inputStream.read_null();
+        self.recordType = inputStream.read_int();
+        self.recordLength = inputStream.read_short();
         self.recordSpecificFields = [0]*0
         for idx in range(0, 0):
-            val = inputStream.read_null
+            val = inputStream.read_UnsignedByte
             self.recordSpecificFields[  idx  ] = val
 
 
@@ -491,7 +491,7 @@ class AttributeRecordSet( object ):
     def serialize(self, outputStream):
         """serialize the class """
         self.entityId.serialize(outputStream)
-        outputStream.write_null( len(self.attributeRecords));
+        outputStream.write_short( len(self.attributeRecords));
         for anObj in self.attributeRecords:
             anObj.serialize(outputStream)
 
@@ -501,7 +501,7 @@ class AttributeRecordSet( object ):
         """"Parse a message. This may recursively call embedded objects."""
 
         self.entityId.parse(inputStream)
-        self.numberOfAttributeRecords = inputStream.read_null();
+        self.numberOfAttributeRecords = inputStream.read_short();
         for idx in range(0, self.numberOfAttributeRecords):
             element = null()
             element.parse(inputStream)
@@ -524,7 +524,7 @@ class Association( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.padding);
+        outputStream.write_byte(self.padding);
         self.associatedEntityID.serialize(outputStream)
         self.associatedLocation.serialize(outputStream)
 
@@ -532,7 +532,7 @@ class Association( object ):
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.padding = inputStream.read_null();
+        self.padding = inputStream.read_byte();
         self.associatedEntityID.parse(inputStream)
         self.associatedLocation.parse(inputStream)
 
@@ -549,17 +549,17 @@ class LiveEntityOrientationError( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.azimuthError);
-        outputStream.write_null(self.elevationError);
-        outputStream.write_null(self.rotationError);
+        outputStream.write_short(self.azimuthError);
+        outputStream.write_short(self.elevationError);
+        outputStream.write_short(self.rotationError);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.azimuthError = inputStream.read_null();
-        self.elevationError = inputStream.read_null();
-        self.rotationError = inputStream.read_null();
+        self.azimuthError = inputStream.read_short();
+        self.elevationError = inputStream.read_short();
+        self.rotationError = inputStream.read_short();
 
 
 
@@ -582,33 +582,33 @@ class RecordSpecificationElement( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.recordSetSerialNumber);
-        outputStream.write_null(self.padding);
-        outputStream.write_null(self.recordLength);
-        outputStream.write_null(self.recordCount);
+        outputStream.write_int(self.recordSetSerialNumber);
+        outputStream.write_int(self.padding);
+        outputStream.write_short(self.recordLength);
+        outputStream.write_short(self.recordCount);
         for idx in range(0, 0):
-            outputStream.write_null( self.recordValues[ idx ] );
+            outputStream.write_UnsignedByte( self.recordValues[ idx ] );
 
         for idx in range(0, 0):
-            outputStream.write_null( self.padTo64[ idx ] );
+            outputStream.write_UnsignedByte( self.padTo64[ idx ] );
 
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.recordSetSerialNumber = inputStream.read_null();
-        self.padding = inputStream.read_null();
-        self.recordLength = inputStream.read_null();
-        self.recordCount = inputStream.read_null();
+        self.recordSetSerialNumber = inputStream.read_int();
+        self.padding = inputStream.read_int();
+        self.recordLength = inputStream.read_short();
+        self.recordCount = inputStream.read_short();
         self.recordValues = [0]*0
         for idx in range(0, 0):
-            val = inputStream.read_null
+            val = inputStream.read_UnsignedByte
             self.recordValues[  idx  ] = val
 
         self.padTo64 = [0]*0
         for idx in range(0, 0):
-            val = inputStream.read_null
+            val = inputStream.read_UnsignedByte
             self.padTo64[  idx  ] = val
 
 
@@ -651,14 +651,14 @@ class ObjectIdentifier( object ):
     def serialize(self, outputStream):
         """serialize the class """
         self.simulationAddress.serialize(outputStream)
-        outputStream.write_null(self.objectNumber);
+        outputStream.write_short(self.objectNumber);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
         self.simulationAddress.parse(inputStream)
-        self.objectNumber = inputStream.read_null();
+        self.objectNumber = inputStream.read_short();
 
 
 
@@ -672,13 +672,13 @@ class FixedDatum( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.fixedDatumValue);
+        outputStream.write_int(self.fixedDatumValue);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.fixedDatumValue = inputStream.read_null();
+        self.fixedDatumValue = inputStream.read_int();
 
 
 
@@ -693,7 +693,7 @@ class VariableParameter( object ):
     def serialize(self, outputStream):
         """serialize the class """
         for idx in range(0, 15):
-            outputStream.write_null( self.recordSpecificFields[ idx ] );
+            outputStream.write_UnsignedByte( self.recordSpecificFields[ idx ] );
 
 
 
@@ -702,7 +702,7 @@ class VariableParameter( object ):
 
         self.recordSpecificFields = [0]*15
         for idx in range(0, 15):
-            val = inputStream.read_null
+            val = inputStream.read_UnsignedByte
             self.recordSpecificFields[  idx  ] = val
 
 
@@ -717,13 +717,13 @@ class ChangeOptions( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.value);
+        outputStream.write_byte(self.value);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.value = inputStream.read_null();
+        self.value = inputStream.read_byte();
 
 
 
@@ -739,15 +739,15 @@ class LiveSimulationAddress( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.liveSiteNumber);
-        outputStream.write_null(self.liveApplicationNumber);
+        outputStream.write_byte(self.liveSiteNumber);
+        outputStream.write_byte(self.liveApplicationNumber);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.liveSiteNumber = inputStream.read_null();
-        self.liveApplicationNumber = inputStream.read_null();
+        self.liveSiteNumber = inputStream.read_byte();
+        self.liveApplicationNumber = inputStream.read_byte();
 
 
 
@@ -767,19 +767,19 @@ class UAFundamentalParameter( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.beamCenterAzimuthHorizontal);
-        outputStream.write_null(self.azimuthalBeamwidthHorizontal);
-        outputStream.write_null(self.beamCenterDepressionElevation);
-        outputStream.write_null(self.depressionElevationBeamWidth);
+        outputStream.write_float(self.beamCenterAzimuthHorizontal);
+        outputStream.write_float(self.azimuthalBeamwidthHorizontal);
+        outputStream.write_float(self.beamCenterDepressionElevation);
+        outputStream.write_float(self.depressionElevationBeamWidth);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.beamCenterAzimuthHorizontal = inputStream.read_null();
-        self.azimuthalBeamwidthHorizontal = inputStream.read_null();
-        self.beamCenterDepressionElevation = inputStream.read_null();
-        self.depressionElevationBeamWidth = inputStream.read_null();
+        self.beamCenterAzimuthHorizontal = inputStream.read_float();
+        self.azimuthalBeamwidthHorizontal = inputStream.read_float();
+        self.beamCenterDepressionElevation = inputStream.read_float();
+        self.depressionElevationBeamWidth = inputStream.read_float();
 
 
 
@@ -807,27 +807,27 @@ class DirectedEnergyDamage( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.recordType);
-        outputStream.write_null(self.recordLength);
-        outputStream.write_null(self.padding);
+        outputStream.write_int(self.recordType);
+        outputStream.write_short(self.recordLength);
+        outputStream.write_short(self.padding);
         self.damageLocation.serialize(outputStream)
-        outputStream.write_null(self.damageDiameter);
-        outputStream.write_null(self.temperature);
+        outputStream.write_float(self.damageDiameter);
+        outputStream.write_float(self.temperature);
         self.fireEventID.serialize(outputStream)
-        outputStream.write_null(self.padding2);
+        outputStream.write_short(self.padding2);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.recordType = inputStream.read_null();
-        self.recordLength = inputStream.read_null();
-        self.padding = inputStream.read_null();
+        self.recordType = inputStream.read_int();
+        self.recordLength = inputStream.read_short();
+        self.padding = inputStream.read_short();
         self.damageLocation.parse(inputStream)
-        self.damageDiameter = inputStream.read_null();
-        self.temperature = inputStream.read_null();
+        self.damageDiameter = inputStream.read_float();
+        self.temperature = inputStream.read_float();
         self.fireEventID.parse(inputStream)
-        self.padding2 = inputStream.read_null();
+        self.padding2 = inputStream.read_short();
 
 
 
@@ -846,16 +846,16 @@ class ExplosionDescriptor( object ):
     def serialize(self, outputStream):
         """serialize the class """
         self.explodingObject.serialize(outputStream)
-        outputStream.write_null(self.padding);
-        outputStream.write_null(self.explosiveForce);
+        outputStream.write_short(self.padding);
+        outputStream.write_float(self.explosiveForce);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
         self.explodingObject.parse(inputStream)
-        self.padding = inputStream.read_null();
-        self.explosiveForce = inputStream.read_null();
+        self.padding = inputStream.read_short();
+        self.explosiveForce = inputStream.read_float();
 
 
 
@@ -871,15 +871,15 @@ class ClockTime( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.hour);
-        outputStream.write_null(self.timePastHour);
+        outputStream.write_int(self.hour);
+        outputStream.write_int(self.timePastHour);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.hour = inputStream.read_null();
-        self.timePastHour = inputStream.read_null();
+        self.hour = inputStream.read_int();
+        self.timePastHour = inputStream.read_int();
 
 
 
@@ -897,17 +897,17 @@ class SecondaryOperationalData( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.operationalData1);
-        outputStream.write_null(self.operationalData2);
-        outputStream.write_null(self.numberOfIFFFundamentalParameterRecords);
+        outputStream.write_byte(self.operationalData1);
+        outputStream.write_byte(self.operationalData2);
+        outputStream.write_short(self.numberOfIFFFundamentalParameterRecords);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.operationalData1 = inputStream.read_null();
-        self.operationalData2 = inputStream.read_null();
-        self.numberOfIFFFundamentalParameterRecords = inputStream.read_null();
+        self.operationalData1 = inputStream.read_byte();
+        self.operationalData2 = inputStream.read_byte();
+        self.numberOfIFFFundamentalParameterRecords = inputStream.read_short();
 
 
 
@@ -961,21 +961,21 @@ class EEFundamentalParameterData( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.frequency);
-        outputStream.write_null(self.frequencyRange);
-        outputStream.write_null(self.effectiveRadiatedPower);
-        outputStream.write_null(self.pulseRepetitionFrequency);
-        outputStream.write_null(self.pulseWidth);
+        outputStream.write_float(self.frequency);
+        outputStream.write_float(self.frequencyRange);
+        outputStream.write_float(self.effectiveRadiatedPower);
+        outputStream.write_float(self.pulseRepetitionFrequency);
+        outputStream.write_float(self.pulseWidth);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.frequency = inputStream.read_null();
-        self.frequencyRange = inputStream.read_null();
-        self.effectiveRadiatedPower = inputStream.read_null();
-        self.pulseRepetitionFrequency = inputStream.read_null();
-        self.pulseWidth = inputStream.read_null();
+        self.frequency = inputStream.read_float();
+        self.frequencyRange = inputStream.read_float();
+        self.effectiveRadiatedPower = inputStream.read_float();
+        self.pulseRepetitionFrequency = inputStream.read_float();
+        self.pulseWidth = inputStream.read_float();
 
 
 
@@ -992,14 +992,14 @@ class RadioCommsHeader( object ):
     def serialize(self, outputStream):
         """serialize the class """
         self.radioReferenceID.serialize(outputStream)
-        outputStream.write_null(self.radioNumber);
+        outputStream.write_short(self.radioNumber);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
         self.radioReferenceID.parse(inputStream)
-        self.radioNumber = inputStream.read_null();
+        self.radioNumber = inputStream.read_short();
 
 
 
@@ -1017,17 +1017,17 @@ class LEVector3FixedByte( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.x);
-        outputStream.write_null(self.y);
-        outputStream.write_null(self.z);
+        outputStream.write_byte(self.x);
+        outputStream.write_byte(self.y);
+        outputStream.write_byte(self.z);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.x = inputStream.read_null();
-        self.y = inputStream.read_null();
-        self.z = inputStream.read_null();
+        self.x = inputStream.read_byte();
+        self.y = inputStream.read_byte();
+        self.z = inputStream.read_byte();
 
 
 
@@ -1053,11 +1053,11 @@ class DirectedEnergyAreaAimpoint( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.recordType);
-        outputStream.write_null(self.recordLength);
-        outputStream.write_null(self.padding);
-        outputStream.write_null( len(self.beamAntennaParameterList));
-        outputStream.write_null( len(self.directedEnergyTargetEnergyDepositionRecordList));
+        outputStream.write_int(self.recordType);
+        outputStream.write_short(self.recordLength);
+        outputStream.write_short(self.padding);
+        outputStream.write_short( len(self.beamAntennaParameterList));
+        outputStream.write_short( len(self.directedEnergyTargetEnergyDepositionRecordList));
         for anObj in self.beamAntennaParameterList:
             anObj.serialize(outputStream)
 
@@ -1069,11 +1069,11 @@ class DirectedEnergyAreaAimpoint( object ):
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.recordType = inputStream.read_null();
-        self.recordLength = inputStream.read_null();
-        self.padding = inputStream.read_null();
-        self.beamAntennaPatternRecordCount = inputStream.read_null();
-        self.directedEnergyTargetEnergyDepositionRecordCount = inputStream.read_null();
+        self.recordType = inputStream.read_int();
+        self.recordLength = inputStream.read_short();
+        self.padding = inputStream.read_short();
+        self.beamAntennaPatternRecordCount = inputStream.read_short();
+        self.directedEnergyTargetEnergyDepositionRecordCount = inputStream.read_short();
         for idx in range(0, self.beamAntennaPatternRecordCount):
             element = null()
             element.parse(inputStream)
@@ -1101,17 +1101,17 @@ class Vector3Float( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.x);
-        outputStream.write_null(self.y);
-        outputStream.write_null(self.z);
+        outputStream.write_float(self.x);
+        outputStream.write_float(self.y);
+        outputStream.write_float(self.z);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.x = inputStream.read_null();
-        self.y = inputStream.read_null();
-        self.z = inputStream.read_null();
+        self.x = inputStream.read_float();
+        self.y = inputStream.read_float();
+        self.z = inputStream.read_float();
 
 
 
@@ -1129,18 +1129,18 @@ class Expendable( object ):
     def serialize(self, outputStream):
         """serialize the class """
         self.expendable.serialize(outputStream)
-        outputStream.write_null(self.station);
-        outputStream.write_null(self.quantity);
-        outputStream.write_null(self.padding);
+        outputStream.write_int(self.station);
+        outputStream.write_short(self.quantity);
+        outputStream.write_byte(self.padding);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
         self.expendable.parse(inputStream)
-        self.station = inputStream.read_null();
-        self.quantity = inputStream.read_null();
-        self.padding = inputStream.read_null();
+        self.station = inputStream.read_int();
+        self.quantity = inputStream.read_short();
+        self.padding = inputStream.read_byte();
 
 
 
@@ -1170,29 +1170,29 @@ class LinearSegmentParameter( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.segmentNumber);
-        outputStream.write_null(self.specificSegmentAppearance);
+        outputStream.write_byte(self.segmentNumber);
+        outputStream.write_int(self.specificSegmentAppearance);
         self.segmentLocation.serialize(outputStream)
         self.segmentOrientation.serialize(outputStream)
-        outputStream.write_null(self.segmentLength);
-        outputStream.write_null(self.segmentWidth);
-        outputStream.write_null(self.segmentHeight);
-        outputStream.write_null(self.segmentDepth);
-        outputStream.write_null(self.padding);
+        outputStream.write_float(self.segmentLength);
+        outputStream.write_float(self.segmentWidth);
+        outputStream.write_float(self.segmentHeight);
+        outputStream.write_float(self.segmentDepth);
+        outputStream.write_int(self.padding);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.segmentNumber = inputStream.read_null();
-        self.specificSegmentAppearance = inputStream.read_null();
+        self.segmentNumber = inputStream.read_byte();
+        self.specificSegmentAppearance = inputStream.read_int();
         self.segmentLocation.parse(inputStream)
         self.segmentOrientation.parse(inputStream)
-        self.segmentLength = inputStream.read_null();
-        self.segmentWidth = inputStream.read_null();
-        self.segmentHeight = inputStream.read_null();
-        self.segmentDepth = inputStream.read_null();
-        self.padding = inputStream.read_null();
+        self.segmentLength = inputStream.read_float();
+        self.segmentWidth = inputStream.read_float();
+        self.segmentHeight = inputStream.read_float();
+        self.segmentDepth = inputStream.read_float();
+        self.padding = inputStream.read_int();
 
 
 
@@ -1208,15 +1208,15 @@ class SimulationAddress( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.site);
-        outputStream.write_null(self.application);
+        outputStream.write_short(self.site);
+        outputStream.write_short(self.application);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.site = inputStream.read_null();
-        self.application = inputStream.read_null();
+        self.site = inputStream.read_short();
+        self.application = inputStream.read_short();
 
 
 
@@ -1235,16 +1235,16 @@ class TrackJamData( object ):
     def serialize(self, outputStream):
         """serialize the class """
         self.entityID.serialize(outputStream)
-        outputStream.write_null(self.emitterNumber);
-        outputStream.write_null(self.beamNumber);
+        outputStream.write_byte(self.emitterNumber);
+        outputStream.write_byte(self.beamNumber);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
         self.entityID.parse(inputStream)
-        self.emitterNumber = inputStream.read_null();
-        self.beamNumber = inputStream.read_null();
+        self.emitterNumber = inputStream.read_byte();
+        self.beamNumber = inputStream.read_byte();
 
 
 
@@ -1259,15 +1259,15 @@ class AggregateType( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.category);
-        outputStream.write_null(self.extra);
+        outputStream.write_byte(self.category);
+        outputStream.write_byte(self.extra);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.category = inputStream.read_null();
-        self.extra = inputStream.read_null();
+        self.category = inputStream.read_byte();
+        self.extra = inputStream.read_byte();
 
 
 
@@ -1305,21 +1305,21 @@ class BeamData( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.beamAzimuthCenter);
-        outputStream.write_null(self.beamAzimuthSweep);
-        outputStream.write_null(self.beamElevationCenter);
-        outputStream.write_null(self.beamElevationSweep);
-        outputStream.write_null(self.beamSweepSync);
+        outputStream.write_float(self.beamAzimuthCenter);
+        outputStream.write_float(self.beamAzimuthSweep);
+        outputStream.write_float(self.beamElevationCenter);
+        outputStream.write_float(self.beamElevationSweep);
+        outputStream.write_float(self.beamSweepSync);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.beamAzimuthCenter = inputStream.read_null();
-        self.beamAzimuthSweep = inputStream.read_null();
-        self.beamElevationCenter = inputStream.read_null();
-        self.beamElevationSweep = inputStream.read_null();
-        self.beamSweepSync = inputStream.read_null();
+        self.beamAzimuthCenter = inputStream.read_float();
+        self.beamAzimuthSweep = inputStream.read_float();
+        self.beamElevationCenter = inputStream.read_float();
+        self.beamElevationSweep = inputStream.read_float();
+        self.beamSweepSync = inputStream.read_float();
 
 
 
@@ -1352,14 +1352,14 @@ class SimulationIdentifier( object ):
     def serialize(self, outputStream):
         """serialize the class """
         self.simulationAddress.serialize(outputStream)
-        outputStream.write_null(self.referenceNumber);
+        outputStream.write_short(self.referenceNumber);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
         self.simulationAddress.parse(inputStream)
-        self.referenceNumber = inputStream.read_null();
+        self.referenceNumber = inputStream.read_short();
 
 
 
@@ -1375,14 +1375,14 @@ class EventIdentifier( object ):
     def serialize(self, outputStream):
         """serialize the class """
         self.simulationAddress.serialize(outputStream)
-        outputStream.write_null(self.eventNumber);
+        outputStream.write_short(self.eventNumber);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
         self.simulationAddress.parse(inputStream)
-        self.eventNumber = inputStream.read_null();
+        self.eventNumber = inputStream.read_short();
 
 
 
@@ -1397,17 +1397,17 @@ class LiveEntityOrientation16( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.psi);
-        outputStream.write_null(self.theta);
-        outputStream.write_null(self.phi);
+        outputStream.write_short(self.psi);
+        outputStream.write_short(self.theta);
+        outputStream.write_short(self.phi);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.psi = inputStream.read_null();
-        self.theta = inputStream.read_null();
-        self.phi = inputStream.read_null();
+        self.psi = inputStream.read_short();
+        self.theta = inputStream.read_short();
+        self.phi = inputStream.read_short();
 
 
 
@@ -1445,19 +1445,19 @@ class IntercomCommunicationsParameters( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.recordLength);
+        outputStream.write_short(self.recordLength);
         for idx in range(0, 0):
-            outputStream.write_null( self.recordSpecificField[ idx ] );
+            outputStream.write_UnsignedByte( self.recordSpecificField[ idx ] );
 
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.recordLength = inputStream.read_null();
+        self.recordLength = inputStream.read_short();
         self.recordSpecificField = [0]*0
         for idx in range(0, 0):
-            val = inputStream.read_null
+            val = inputStream.read_UnsignedByte
             self.recordSpecificField[  idx  ] = val
 
 
@@ -1480,18 +1480,18 @@ class Munition( object ):
     def serialize(self, outputStream):
         """serialize the class """
         self.munitionType.serialize(outputStream)
-        outputStream.write_null(self.station);
-        outputStream.write_null(self.quantity);
-        outputStream.write_null(self.padding);
+        outputStream.write_int(self.station);
+        outputStream.write_short(self.quantity);
+        outputStream.write_byte(self.padding);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
         self.munitionType.parse(inputStream)
-        self.station = inputStream.read_null();
-        self.quantity = inputStream.read_null();
-        self.padding = inputStream.read_null();
+        self.station = inputStream.read_int();
+        self.quantity = inputStream.read_short();
+        self.padding = inputStream.read_byte();
 
 
 
@@ -1509,17 +1509,17 @@ class AngularVelocityVector( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.x);
-        outputStream.write_null(self.y);
-        outputStream.write_null(self.z);
+        outputStream.write_float(self.x);
+        outputStream.write_float(self.y);
+        outputStream.write_float(self.z);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.x = inputStream.read_null();
-        self.y = inputStream.read_null();
-        self.z = inputStream.read_null();
+        self.x = inputStream.read_float();
+        self.y = inputStream.read_float();
+        self.z = inputStream.read_float();
 
 
 
@@ -1535,19 +1535,19 @@ class IntercomIdentifier( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.siteNumber);
-        outputStream.write_null(self.applicationNumber);
-        outputStream.write_null(self.referenceNumber);
-        outputStream.write_null(self.intercomNumber);
+        outputStream.write_short(self.siteNumber);
+        outputStream.write_short(self.applicationNumber);
+        outputStream.write_short(self.referenceNumber);
+        outputStream.write_short(self.intercomNumber);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.siteNumber = inputStream.read_null();
-        self.applicationNumber = inputStream.read_null();
-        self.referenceNumber = inputStream.read_null();
-        self.intercomNumber = inputStream.read_null();
+        self.siteNumber = inputStream.read_short();
+        self.applicationNumber = inputStream.read_short();
+        self.referenceNumber = inputStream.read_short();
+        self.intercomNumber = inputStream.read_short();
 
 
 
@@ -1563,15 +1563,15 @@ class StorageFuel( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.fuelQuantity);
-        outputStream.write_null(self.padding);
+        outputStream.write_int(self.fuelQuantity);
+        outputStream.write_byte(self.padding);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.fuelQuantity = inputStream.read_null();
-        self.padding = inputStream.read_null();
+        self.fuelQuantity = inputStream.read_int();
+        self.padding = inputStream.read_byte();
 
 
 
@@ -1591,19 +1591,19 @@ class Sensor( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.sensorType);
-        outputStream.write_null(self.station);
-        outputStream.write_null(self.quantity);
-        outputStream.write_null(self.padding);
+        outputStream.write_short(self.sensorType);
+        outputStream.write_int(self.station);
+        outputStream.write_short(self.quantity);
+        outputStream.write_short(self.padding);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.sensorType = inputStream.read_null();
-        self.station = inputStream.read_null();
-        self.quantity = inputStream.read_null();
-        self.padding = inputStream.read_null();
+        self.sensorType = inputStream.read_short();
+        self.station = inputStream.read_int();
+        self.quantity = inputStream.read_short();
+        self.padding = inputStream.read_short();
 
 
 
@@ -1623,22 +1623,22 @@ class ExpendableReload( object ):
     def serialize(self, outputStream):
         """serialize the class """
         self.expendable.serialize(outputStream)
-        outputStream.write_null(self.station);
-        outputStream.write_null(self.standardQuantity);
-        outputStream.write_null(self.maximumQuantity);
-        outputStream.write_null(self.standardQuantityReloadTime);
-        outputStream.write_null(self.maximumQuantityReloadTime);
+        outputStream.write_int(self.station);
+        outputStream.write_short(self.standardQuantity);
+        outputStream.write_short(self.maximumQuantity);
+        outputStream.write_int(self.standardQuantityReloadTime);
+        outputStream.write_int(self.maximumQuantityReloadTime);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
         self.expendable.parse(inputStream)
-        self.station = inputStream.read_null();
-        self.standardQuantity = inputStream.read_null();
-        self.maximumQuantity = inputStream.read_null();
-        self.standardQuantityReloadTime = inputStream.read_null();
-        self.maximumQuantityReloadTime = inputStream.read_null();
+        self.station = inputStream.read_int();
+        self.standardQuantity = inputStream.read_short();
+        self.maximumQuantity = inputStream.read_short();
+        self.standardQuantityReloadTime = inputStream.read_int();
+        self.maximumQuantityReloadTime = inputStream.read_int();
 
 
 
@@ -1655,14 +1655,14 @@ class EntityIdentifier( object ):
     def serialize(self, outputStream):
         """serialize the class """
         self.simulationAddress.serialize(outputStream)
-        outputStream.write_null(self.entityNumber);
+        outputStream.write_short(self.entityNumber);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
         self.simulationAddress.parse(inputStream)
-        self.entityNumber = inputStream.read_null();
+        self.entityNumber = inputStream.read_short();
 
 
 
@@ -1680,17 +1680,17 @@ class EntityID( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.siteID);
-        outputStream.write_null(self.applicationID);
-        outputStream.write_null(self.entityID);
+        outputStream.write_short(self.siteID);
+        outputStream.write_short(self.applicationID);
+        outputStream.write_short(self.entityID);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.siteID = inputStream.read_null();
-        self.applicationID = inputStream.read_null();
-        self.entityID = inputStream.read_null();
+        self.siteID = inputStream.read_short();
+        self.applicationID = inputStream.read_short();
+        self.entityID = inputStream.read_short();
 
 
 
@@ -1707,14 +1707,14 @@ class UnattachedIdentifier( object ):
     def serialize(self, outputStream):
         """serialize the class """
         self.simulationAddress.serialize(outputStream)
-        outputStream.write_null(self.referenceNumber);
+        outputStream.write_short(self.referenceNumber);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
         self.simulationAddress.parse(inputStream)
-        self.referenceNumber = inputStream.read_null();
+        self.referenceNumber = inputStream.read_short();
 
 
 
@@ -1734,19 +1734,19 @@ class GridAxisDescriptor( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.domainInitialXi);
-        outputStream.write_null(self.domainFinalXi);
-        outputStream.write_null(self.domainPointsXi);
-        outputStream.write_null(self.interleafFactor);
+        outputStream.write_double(self.domainInitialXi);
+        outputStream.write_double(self.domainFinalXi);
+        outputStream.write_short(self.domainPointsXi);
+        outputStream.write_byte(self.interleafFactor);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.domainInitialXi = inputStream.read_null();
-        self.domainFinalXi = inputStream.read_null();
-        self.domainPointsXi = inputStream.read_null();
-        self.interleafFactor = inputStream.read_null();
+        self.domainInitialXi = inputStream.read_double();
+        self.domainFinalXi = inputStream.read_double();
+        self.domainPointsXi = inputStream.read_short();
+        self.interleafFactor = inputStream.read_byte();
 
 
 
@@ -1765,16 +1765,16 @@ class EntityTypeVP( object ):
     def serialize(self, outputStream):
         """serialize the class """
         self.entityType.serialize(outputStream)
-        outputStream.write_null(self.padding);
-        outputStream.write_null(self.padding1);
+        outputStream.write_short(self.padding);
+        outputStream.write_int(self.padding1);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
         self.entityType.parse(inputStream)
-        self.padding = inputStream.read_null();
-        self.padding1 = inputStream.read_null();
+        self.padding = inputStream.read_short();
+        self.padding1 = inputStream.read_int();
 
 
 
@@ -1808,17 +1808,17 @@ class Pdu( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.exerciseID);
-        outputStream.write_null(self.timestamp);
-        outputStream.write_null(self.length);
+        outputStream.write_byte(self.exerciseID);
+        outputStream.write_int(self.timestamp);
+        outputStream.write_short(self.length);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.exerciseID = inputStream.read_null();
-        self.timestamp = inputStream.read_null();
-        self.length = inputStream.read_null();
+        self.exerciseID = inputStream.read_byte();
+        self.timestamp = inputStream.read_int();
+        self.length = inputStream.read_short();
 
 
 
@@ -1834,19 +1834,19 @@ class VariableDatum( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.variableDatumLength);
+        outputStream.write_int(self.variableDatumLength);
         for idx in range(0, 0):
-            outputStream.write_null( self.variableDatumValue[ idx ] );
+            outputStream.write_UnsignedByte( self.variableDatumValue[ idx ] );
 
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.variableDatumLength = inputStream.read_null();
+        self.variableDatumLength = inputStream.read_int();
         self.variableDatumValue = [0]*0
         for idx in range(0, 0):
-            val = inputStream.read_null
+            val = inputStream.read_UnsignedByte
             self.variableDatumValue[  idx  ] = val
 
 
@@ -1864,18 +1864,18 @@ class UABeam( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.beamDataLength);
-        outputStream.write_null(self.beamNumber);
-        outputStream.write_null(self.padding);
+        outputStream.write_byte(self.beamDataLength);
+        outputStream.write_byte(self.beamNumber);
+        outputStream.write_short(self.padding);
         self.fundamentalParameterData.serialize(outputStream)
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.beamDataLength = inputStream.read_null();
-        self.beamNumber = inputStream.read_null();
-        self.padding = inputStream.read_null();
+        self.beamDataLength = inputStream.read_byte();
+        self.beamNumber = inputStream.read_byte();
+        self.padding = inputStream.read_short();
         self.fundamentalParameterData.parse(inputStream)
 
 
@@ -1890,19 +1890,19 @@ class StandardVariableRecord( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.recordLength);
+        outputStream.write_short(self.recordLength);
         for idx in range(0, 0):
-            outputStream.write_null( self.recordSpecificFields[ idx ] );
+            outputStream.write_UnsignedByte( self.recordSpecificFields[ idx ] );
 
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.recordLength = inputStream.read_null();
+        self.recordLength = inputStream.read_short();
         self.recordSpecificFields = [0]*0
         for idx in range(0, 0):
-            val = inputStream.read_null
+            val = inputStream.read_UnsignedByte
             self.recordSpecificFields[  idx  ] = val
 
 
@@ -1919,14 +1919,14 @@ class CommunicationsNodeID( object ):
     def serialize(self, outputStream):
         """serialize the class """
         self.entityID.serialize(outputStream)
-        outputStream.write_null(self.elementID);
+        outputStream.write_short(self.elementID);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
         self.entityID.parse(inputStream)
-        self.elementID = inputStream.read_null();
+        self.elementID = inputStream.read_short();
 
 
 
@@ -1941,17 +1941,17 @@ class LiveEntityOrientation( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.psi);
-        outputStream.write_null(self.theta);
-        outputStream.write_null(self.phi);
+        outputStream.write_byte(self.psi);
+        outputStream.write_byte(self.theta);
+        outputStream.write_byte(self.phi);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.psi = inputStream.read_null();
-        self.theta = inputStream.read_null();
-        self.phi = inputStream.read_null();
+        self.psi = inputStream.read_byte();
+        self.theta = inputStream.read_byte();
+        self.phi = inputStream.read_byte();
 
 
 
@@ -1967,15 +1967,15 @@ class PropulsionSystemData( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.powerSetting);
-        outputStream.write_null(self.engineRpm);
+        outputStream.write_float(self.powerSetting);
+        outputStream.write_float(self.engineRpm);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.powerSetting = inputStream.read_null();
-        self.engineRpm = inputStream.read_null();
+        self.powerSetting = inputStream.read_float();
+        self.engineRpm = inputStream.read_float();
 
 
 
@@ -1996,21 +1996,21 @@ class ArticulatedPartVP( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.changeIndicator);
-        outputStream.write_null(self.partAttachedTo);
-        outputStream.write_null(self.parameterType);
-        outputStream.write_null(self.parameterValue);
-        outputStream.write_null(self.padding);
+        outputStream.write_byte(self.changeIndicator);
+        outputStream.write_short(self.partAttachedTo);
+        outputStream.write_int(self.parameterType);
+        outputStream.write_float(self.parameterValue);
+        outputStream.write_int(self.padding);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.changeIndicator = inputStream.read_null();
-        self.partAttachedTo = inputStream.read_null();
-        self.parameterType = inputStream.read_null();
-        self.parameterValue = inputStream.read_null();
-        self.padding = inputStream.read_null();
+        self.changeIndicator = inputStream.read_byte();
+        self.partAttachedTo = inputStream.read_short();
+        self.parameterType = inputStream.read_int();
+        self.parameterValue = inputStream.read_float();
+        self.padding = inputStream.read_int();
 
 
 
@@ -2027,14 +2027,14 @@ class LiveEntityIdentifier( object ):
     def serialize(self, outputStream):
         """serialize the class """
         self.liveSimulationAddress.serialize(outputStream)
-        outputStream.write_null(self.entityNumber);
+        outputStream.write_short(self.entityNumber);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
         self.liveSimulationAddress.parse(inputStream)
-        self.entityNumber = inputStream.read_null();
+        self.entityNumber = inputStream.read_short();
 
 
 
@@ -2054,18 +2054,18 @@ class SeparationVP( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.padding1);
+        outputStream.write_byte(self.padding1);
         self.parentEntityID.serialize(outputStream)
-        outputStream.write_null(self.padding2);
+        outputStream.write_short(self.padding2);
         self.stationLocation.serialize(outputStream)
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.padding1 = inputStream.read_null();
+        self.padding1 = inputStream.read_byte();
         self.parentEntityID.parse(inputStream)
-        self.padding2 = inputStream.read_null();
+        self.padding2 = inputStream.read_short();
         self.stationLocation.parse(inputStream)
 
 
@@ -2118,8 +2118,8 @@ class DataQueryDatumSpecification( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null( len(self.fixedDatumIDList));
-        outputStream.write_null( len(self.variableDatumIDList));
+        outputStream.write_int( len(self.fixedDatumIDList));
+        outputStream.write_int( len(self.variableDatumIDList));
         for anObj in self.fixedDatumIDList:
             anObj.serialize(outputStream)
 
@@ -2131,8 +2131,8 @@ class DataQueryDatumSpecification( object ):
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.numberOfFixedDatums = inputStream.read_null();
-        self.numberOfVariableDatums = inputStream.read_null();
+        self.numberOfFixedDatums = inputStream.read_int();
+        self.numberOfVariableDatums = inputStream.read_int();
         for idx in range(0, self.numberOfFixedDatums):
             element = null()
             element.parse(inputStream)
@@ -2162,19 +2162,19 @@ class RadioIdentifier( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.siteNumber);
-        outputStream.write_null(self.applicationNumber);
-        outputStream.write_null(self.referenceNumber);
-        outputStream.write_null(self.radioNumber);
+        outputStream.write_short(self.siteNumber);
+        outputStream.write_short(self.applicationNumber);
+        outputStream.write_short(self.referenceNumber);
+        outputStream.write_short(self.radioNumber);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.siteNumber = inputStream.read_null();
-        self.applicationNumber = inputStream.read_null();
-        self.referenceNumber = inputStream.read_null();
-        self.radioNumber = inputStream.read_null();
+        self.siteNumber = inputStream.read_short();
+        self.applicationNumber = inputStream.read_short();
+        self.referenceNumber = inputStream.read_short();
+        self.radioNumber = inputStream.read_short();
 
 
 
@@ -2188,13 +2188,13 @@ class RequestID( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.requestID);
+        outputStream.write_int(self.requestID);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.requestID = inputStream.read_null();
+        self.requestID = inputStream.read_int();
 
 
 
@@ -2209,19 +2209,19 @@ class IFFData( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.recordLength);
+        outputStream.write_short(self.recordLength);
         for idx in range(0, 0):
-            outputStream.write_null( self.recordSpecificFields[ idx ] );
+            outputStream.write_UnsignedByte( self.recordSpecificFields[ idx ] );
 
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.recordLength = inputStream.read_null();
+        self.recordLength = inputStream.read_short();
         self.recordSpecificFields = [0]*0
         for idx in range(0, 0):
-            val = inputStream.read_null
+            val = inputStream.read_UnsignedByte
             self.recordSpecificFields[  idx  ] = val
 
 
@@ -2238,17 +2238,17 @@ class IntercomReferenceID( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.siteNumber);
-        outputStream.write_null(self.applicationNumber);
-        outputStream.write_null(self.referenceNumber);
+        outputStream.write_short(self.siteNumber);
+        outputStream.write_short(self.applicationNumber);
+        outputStream.write_short(self.referenceNumber);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.siteNumber = inputStream.read_null();
-        self.applicationNumber = inputStream.read_null();
-        self.referenceNumber = inputStream.read_null();
+        self.siteNumber = inputStream.read_short();
+        self.applicationNumber = inputStream.read_short();
+        self.referenceNumber = inputStream.read_short();
 
 
 
@@ -2264,19 +2264,19 @@ class LiveEntityRelativeWorldCoordinates( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.referencePoint);
-        outputStream.write_null(self.deltaX);
-        outputStream.write_null(self.deltaY);
-        outputStream.write_null(self.deltaZ);
+        outputStream.write_short(self.referencePoint);
+        outputStream.write_short(self.deltaX);
+        outputStream.write_short(self.deltaY);
+        outputStream.write_short(self.deltaZ);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.referencePoint = inputStream.read_null();
-        self.deltaX = inputStream.read_null();
-        self.deltaY = inputStream.read_null();
-        self.deltaZ = inputStream.read_null();
+        self.referencePoint = inputStream.read_short();
+        self.deltaX = inputStream.read_short();
+        self.deltaY = inputStream.read_short();
+        self.deltaZ = inputStream.read_short();
 
 
 
@@ -2292,14 +2292,14 @@ class AttachedPartVP( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.partAttachedTo);
+        outputStream.write_short(self.partAttachedTo);
         self.attachedPartType.serialize(outputStream)
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.partAttachedTo = inputStream.read_null();
+        self.partAttachedTo = inputStream.read_short();
         self.attachedPartType.parse(inputStream)
 
 
@@ -2317,14 +2317,14 @@ class GroupID( object ):
     def serialize(self, outputStream):
         """serialize the class """
         self.simulationAddress.serialize(outputStream)
-        outputStream.write_null(self.groupNumber);
+        outputStream.write_short(self.groupNumber);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
         self.simulationAddress.parse(inputStream)
-        self.groupNumber = inputStream.read_null();
+        self.groupNumber = inputStream.read_short();
 
 
 
@@ -2341,14 +2341,14 @@ class OwnershipStatusRecord( object ):
     def serialize(self, outputStream):
         """serialize the class """
         self.entityId.serialize(outputStream)
-        outputStream.write_null(self.padding);
+        outputStream.write_byte(self.padding);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
         self.entityId.parse(inputStream)
-        self.padding = inputStream.read_null();
+        self.padding = inputStream.read_byte();
 
 
 
@@ -2362,13 +2362,13 @@ class UnsignedDISInteger( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.val);
+        outputStream.write_int(self.val);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.val = inputStream.read_null();
+        self.val = inputStream.read_int();
 
 
 
@@ -2387,7 +2387,7 @@ class DeadReckoningParameters( object ):
     def serialize(self, outputStream):
         """serialize the class """
         for idx in range(0, 15):
-            outputStream.write_null( self.parameters[ idx ] );
+            outputStream.write_UnsignedByte( self.parameters[ idx ] );
 
         self.entityLinearAcceleration.serialize(outputStream)
         self.entityAngularVelocity.serialize(outputStream)
@@ -2398,7 +2398,7 @@ class DeadReckoningParameters( object ):
 
         self.parameters = [0]*15
         for idx in range(0, 15):
-            val = inputStream.read_null
+            val = inputStream.read_UnsignedByte
             self.parameters[  idx  ] = val
 
         self.entityLinearAcceleration.parse(inputStream)
@@ -2416,13 +2416,13 @@ class ProtocolMode( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.protocolMode);
+        outputStream.write_short(self.protocolMode);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.protocolMode = inputStream.read_null();
+        self.protocolMode = inputStream.read_short();
 
 
 
@@ -2461,39 +2461,39 @@ class FalseTargetsAttribute( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.recordType);
-        outputStream.write_null(self.recordLength);
-        outputStream.write_null(self.padding);
-        outputStream.write_null(self.emitterNumber);
-        outputStream.write_null(self.beamNumber);
-        outputStream.write_null(self.padding2);
-        outputStream.write_null(self.padding3);
-        outputStream.write_null(self.falseTargetCount);
-        outputStream.write_null(self.walkSpeed);
-        outputStream.write_null(self.walkAcceleration);
-        outputStream.write_null(self.maximumWalkDistance);
-        outputStream.write_null(self.keepTime);
-        outputStream.write_null(self.echoSpacing);
-        outputStream.write_null(self.firstTargetOffset);
+        outputStream.write_int(self.recordType);
+        outputStream.write_short(self.recordLength);
+        outputStream.write_short(self.padding);
+        outputStream.write_byte(self.emitterNumber);
+        outputStream.write_byte(self.beamNumber);
+        outputStream.write_byte(self.padding2);
+        outputStream.write_short(self.padding3);
+        outputStream.write_short(self.falseTargetCount);
+        outputStream.write_float(self.walkSpeed);
+        outputStream.write_float(self.walkAcceleration);
+        outputStream.write_float(self.maximumWalkDistance);
+        outputStream.write_float(self.keepTime);
+        outputStream.write_float(self.echoSpacing);
+        outputStream.write_float(self.firstTargetOffset);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.recordType = inputStream.read_null();
-        self.recordLength = inputStream.read_null();
-        self.padding = inputStream.read_null();
-        self.emitterNumber = inputStream.read_null();
-        self.beamNumber = inputStream.read_null();
-        self.padding2 = inputStream.read_null();
-        self.padding3 = inputStream.read_null();
-        self.falseTargetCount = inputStream.read_null();
-        self.walkSpeed = inputStream.read_null();
-        self.walkAcceleration = inputStream.read_null();
-        self.maximumWalkDistance = inputStream.read_null();
-        self.keepTime = inputStream.read_null();
-        self.echoSpacing = inputStream.read_null();
-        self.firstTargetOffset = inputStream.read_null();
+        self.recordType = inputStream.read_int();
+        self.recordLength = inputStream.read_short();
+        self.padding = inputStream.read_short();
+        self.emitterNumber = inputStream.read_byte();
+        self.beamNumber = inputStream.read_byte();
+        self.padding2 = inputStream.read_byte();
+        self.padding3 = inputStream.read_short();
+        self.falseTargetCount = inputStream.read_short();
+        self.walkSpeed = inputStream.read_float();
+        self.walkAcceleration = inputStream.read_float();
+        self.maximumWalkDistance = inputStream.read_float();
+        self.keepTime = inputStream.read_float();
+        self.echoSpacing = inputStream.read_float();
+        self.firstTargetOffset = inputStream.read_float();
 
 
 
@@ -2510,14 +2510,14 @@ class MinefieldIdentifier( object ):
     def serialize(self, outputStream):
         """serialize the class """
         self.simulationAddress.serialize(outputStream)
-        outputStream.write_null(self.minefieldNumber);
+        outputStream.write_short(self.minefieldNumber);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
         self.simulationAddress.parse(inputStream)
-        self.minefieldNumber = inputStream.read_null();
+        self.minefieldNumber = inputStream.read_short();
 
 
 
@@ -2531,13 +2531,13 @@ class NamedLocationIdentification( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.stationNumber);
+        outputStream.write_short(self.stationNumber);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.stationNumber = inputStream.read_null();
+        self.stationNumber = inputStream.read_short();
 
 
 
@@ -2551,7 +2551,7 @@ class ModulationParameters( object ):
     def serialize(self, outputStream):
         """serialize the class """
         for idx in range(0, 0):
-            outputStream.write_null( self.recordSpecificFields[ idx ] );
+            outputStream.write_UnsignedByte( self.recordSpecificFields[ idx ] );
 
 
 
@@ -2560,7 +2560,7 @@ class ModulationParameters( object ):
 
         self.recordSpecificFields = [0]*0
         for idx in range(0, 0):
-            val = inputStream.read_null
+            val = inputStream.read_UnsignedByte
             self.recordSpecificFields[  idx  ] = val
 
 
@@ -2593,17 +2593,17 @@ class EulerAngles( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.psi);
-        outputStream.write_null(self.theta);
-        outputStream.write_null(self.phi);
+        outputStream.write_float(self.psi);
+        outputStream.write_float(self.theta);
+        outputStream.write_float(self.phi);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.psi = inputStream.read_null();
-        self.theta = inputStream.read_null();
-        self.phi = inputStream.read_null();
+        self.psi = inputStream.read_float();
+        self.theta = inputStream.read_float();
+        self.phi = inputStream.read_float();
 
 
 
@@ -2643,39 +2643,39 @@ class DirectedEnergyPrecisionAimpoint( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.recordType);
-        outputStream.write_null(self.recordLength);
-        outputStream.write_null(self.padding);
+        outputStream.write_int(self.recordType);
+        outputStream.write_short(self.recordLength);
+        outputStream.write_short(self.padding);
         self.targetSpotLocation.serialize(outputStream)
         self.targetSpotEntityLocation.serialize(outputStream)
         self.targetSpotVelocity.serialize(outputStream)
         self.targetSpotAcceleration.serialize(outputStream)
         self.targetEntityID.serialize(outputStream)
-        outputStream.write_null(self.targetComponentID);
-        outputStream.write_null(self.beamSpotCrossSectionSemiMajorAxis);
-        outputStream.write_null(self.beamSpotCrossSectionSemiMinorAxis);
-        outputStream.write_null(self.beamSpotCrossSectionOrientationAngle);
-        outputStream.write_null(self.peakIrradiance);
-        outputStream.write_null(self.padding2);
+        outputStream.write_byte(self.targetComponentID);
+        outputStream.write_float(self.beamSpotCrossSectionSemiMajorAxis);
+        outputStream.write_float(self.beamSpotCrossSectionSemiMinorAxis);
+        outputStream.write_float(self.beamSpotCrossSectionOrientationAngle);
+        outputStream.write_float(self.peakIrradiance);
+        outputStream.write_int(self.padding2);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.recordType = inputStream.read_null();
-        self.recordLength = inputStream.read_null();
-        self.padding = inputStream.read_null();
+        self.recordType = inputStream.read_int();
+        self.recordLength = inputStream.read_short();
+        self.padding = inputStream.read_short();
         self.targetSpotLocation.parse(inputStream)
         self.targetSpotEntityLocation.parse(inputStream)
         self.targetSpotVelocity.parse(inputStream)
         self.targetSpotAcceleration.parse(inputStream)
         self.targetEntityID.parse(inputStream)
-        self.targetComponentID = inputStream.read_null();
-        self.beamSpotCrossSectionSemiMajorAxis = inputStream.read_null();
-        self.beamSpotCrossSectionSemiMinorAxis = inputStream.read_null();
-        self.beamSpotCrossSectionOrientationAngle = inputStream.read_null();
-        self.peakIrradiance = inputStream.read_null();
-        self.padding2 = inputStream.read_null();
+        self.targetComponentID = inputStream.read_byte();
+        self.beamSpotCrossSectionSemiMajorAxis = inputStream.read_float();
+        self.beamSpotCrossSectionSemiMinorAxis = inputStream.read_float();
+        self.beamSpotCrossSectionOrientationAngle = inputStream.read_float();
+        self.peakIrradiance = inputStream.read_float();
+        self.padding2 = inputStream.read_int();
 
 
 
@@ -2691,7 +2691,7 @@ class IffDataSpecification( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null( len(self.iffDataRecords));
+        outputStream.write_short( len(self.iffDataRecords));
         for anObj in self.iffDataRecords:
             anObj.serialize(outputStream)
 
@@ -2700,7 +2700,7 @@ class IffDataSpecification( object ):
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.numberOfIffDataRecords = inputStream.read_null();
+        self.numberOfIffDataRecords = inputStream.read_short();
         for idx in range(0, self.numberOfIffDataRecords):
             element = null()
             element.parse(inputStream)
@@ -2728,23 +2728,23 @@ class EntityTypeRaw( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.domain);
-        outputStream.write_null(self.country);
-        outputStream.write_null(self.category);
-        outputStream.write_null(self.subCategory);
-        outputStream.write_null(self.specific);
-        outputStream.write_null(self.extra);
+        outputStream.write_byte(self.domain);
+        outputStream.write_short(self.country);
+        outputStream.write_byte(self.category);
+        outputStream.write_byte(self.subCategory);
+        outputStream.write_byte(self.specific);
+        outputStream.write_byte(self.extra);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.domain = inputStream.read_null();
-        self.country = inputStream.read_null();
-        self.category = inputStream.read_null();
-        self.subCategory = inputStream.read_null();
-        self.specific = inputStream.read_null();
-        self.extra = inputStream.read_null();
+        self.domain = inputStream.read_byte();
+        self.country = inputStream.read_short();
+        self.category = inputStream.read_byte();
+        self.subCategory = inputStream.read_byte();
+        self.specific = inputStream.read_byte();
+        self.extra = inputStream.read_byte();
 
 
 
@@ -2775,7 +2775,7 @@ class RecordQuerySpecification( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null( len(self.recordIDs));
+        outputStream.write_int( len(self.recordIDs));
         for anObj in self.recordIDs:
             anObj.serialize(outputStream)
 
@@ -2784,7 +2784,7 @@ class RecordQuerySpecification( object ):
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.numberOfRecords = inputStream.read_null();
+        self.numberOfRecords = inputStream.read_int();
         for idx in range(0, self.numberOfRecords):
             element = null()
             element.parse(inputStream)
@@ -2805,15 +2805,15 @@ class ObjectType( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.category);
-        outputStream.write_null(self.subCategory);
+        outputStream.write_byte(self.category);
+        outputStream.write_byte(self.subCategory);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.category = inputStream.read_null();
-        self.subCategory = inputStream.read_null();
+        self.category = inputStream.read_byte();
+        self.subCategory = inputStream.read_byte();
 
 
 
@@ -2846,14 +2846,14 @@ class AggregateIdentifier( object ):
     def serialize(self, outputStream):
         """serialize the class """
         self.simulationAddress.serialize(outputStream)
-        outputStream.write_null(self.aggregateID);
+        outputStream.write_short(self.aggregateID);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
         self.simulationAddress.parse(inputStream)
-        self.aggregateID = inputStream.read_null();
+        self.aggregateID = inputStream.read_short();
 
 
 
@@ -2868,7 +2868,7 @@ class EntityMarking( object ):
     def serialize(self, outputStream):
         """serialize the class """
         for idx in range(0, 11):
-            outputStream.write_null( self.characters[ idx ] );
+            outputStream.write_UnsignedByte( self.characters[ idx ] );
 
 
 
@@ -2877,7 +2877,7 @@ class EntityMarking( object ):
 
         self.characters = [0]*11
         for idx in range(0, 11):
-            val = inputStream.read_null
+            val = inputStream.read_UnsignedByte
             self.characters[  idx  ] = val
 
 
@@ -2895,19 +2895,19 @@ class Appearance( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.visual);
-        outputStream.write_null(self.ir);
-        outputStream.write_null(self.em);
-        outputStream.write_null(self.audio);
+        outputStream.write_int(self.visual);
+        outputStream.write_int(self.ir);
+        outputStream.write_int(self.em);
+        outputStream.write_int(self.audio);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.visual = inputStream.read_null();
-        self.ir = inputStream.read_null();
-        self.em = inputStream.read_null();
-        self.audio = inputStream.read_null();
+        self.visual = inputStream.read_int();
+        self.ir = inputStream.read_int();
+        self.em = inputStream.read_int();
+        self.audio = inputStream.read_int();
 
 
 
@@ -2923,15 +2923,15 @@ class TotalRecordSets( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.totalRecordSets);
-        outputStream.write_null(self.padding);
+        outputStream.write_short(self.totalRecordSets);
+        outputStream.write_short(self.padding);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.totalRecordSets = inputStream.read_null();
-        self.padding = inputStream.read_null();
+        self.totalRecordSets = inputStream.read_short();
+        self.padding = inputStream.read_short();
 
 
 
@@ -2948,14 +2948,14 @@ class MineEntityIdentifier( object ):
     def serialize(self, outputStream):
         """serialize the class """
         self.simulationAddress.serialize(outputStream)
-        outputStream.write_null(self.mineEntityNumber);
+        outputStream.write_short(self.mineEntityNumber);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
         self.simulationAddress.parse(inputStream)
-        self.mineEntityNumber = inputStream.read_null();
+        self.mineEntityNumber = inputStream.read_short();
 
 
 
@@ -2971,19 +2971,19 @@ class JammingTechnique( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.kind);
-        outputStream.write_null(self.category);
-        outputStream.write_null(self.subCategory);
-        outputStream.write_null(self.specific);
+        outputStream.write_byte(self.kind);
+        outputStream.write_byte(self.category);
+        outputStream.write_byte(self.subCategory);
+        outputStream.write_byte(self.specific);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.kind = inputStream.read_null();
-        self.category = inputStream.read_null();
-        self.subCategory = inputStream.read_null();
-        self.specific = inputStream.read_null();
+        self.kind = inputStream.read_byte();
+        self.category = inputStream.read_byte();
+        self.subCategory = inputStream.read_byte();
+        self.specific = inputStream.read_byte();
 
 
 
@@ -3003,8 +3003,8 @@ class DatumSpecification( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null( len(self.fixedDatumIDList));
-        outputStream.write_null( len(self.variableDatumIDList));
+        outputStream.write_int( len(self.fixedDatumIDList));
+        outputStream.write_int( len(self.variableDatumIDList));
         for anObj in self.fixedDatumIDList:
             anObj.serialize(outputStream)
 
@@ -3016,8 +3016,8 @@ class DatumSpecification( object ):
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.numberOfFixedDatums = inputStream.read_null();
-        self.numberOfVariableDatums = inputStream.read_null();
+        self.numberOfFixedDatums = inputStream.read_int();
+        self.numberOfVariableDatums = inputStream.read_int();
         for idx in range(0, self.numberOfFixedDatums):
             element = null()
             element.parse(inputStream)
@@ -3043,15 +3043,15 @@ class ModulationType( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.spreadSpectrum);
-        outputStream.write_null(self.detail);
+        outputStream.write_short(self.spreadSpectrum);
+        outputStream.write_short(self.detail);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.spreadSpectrum = inputStream.read_null();
-        self.detail = inputStream.read_null();
+        self.spreadSpectrum = inputStream.read_short();
+        self.detail = inputStream.read_short();
 
 
 
@@ -3119,15 +3119,15 @@ class EngineFuel( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.fuelQuantity);
-        outputStream.write_null(self.padding);
+        outputStream.write_int(self.fuelQuantity);
+        outputStream.write_byte(self.padding);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.fuelQuantity = inputStream.read_null();
-        self.padding = inputStream.read_null();
+        self.fuelQuantity = inputStream.read_int();
+        self.padding = inputStream.read_byte();
 
 
 
@@ -3144,14 +3144,14 @@ class SupplyQuantity( object ):
     def serialize(self, outputStream):
         """serialize the class """
         self.supplyType.serialize(outputStream)
-        outputStream.write_null(self.quantity);
+        outputStream.write_float(self.quantity);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
         self.supplyType.parse(inputStream)
-        self.quantity = inputStream.read_null();
+        self.quantity = inputStream.read_float();
 
 
 
@@ -3187,23 +3187,23 @@ class SilentEntitySystem( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.numberOfEntities);
-        outputStream.write_null(self.numberOfAppearanceRecords);
+        outputStream.write_short(self.numberOfEntities);
+        outputStream.write_short(self.numberOfAppearanceRecords);
         self.entityType.serialize(outputStream)
         for idx in range(0, 0):
-            outputStream.write_null( self.appearanceRecordList[ idx ] );
+            outputStream.write_int( self.appearanceRecordList[ idx ] );
 
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.numberOfEntities = inputStream.read_null();
-        self.numberOfAppearanceRecords = inputStream.read_null();
+        self.numberOfEntities = inputStream.read_short();
+        self.numberOfAppearanceRecords = inputStream.read_short();
         self.entityType.parse(inputStream)
         self.appearanceRecordList = [0]*0
         for idx in range(0, 0):
-            val = inputStream.read_null
+            val = inputStream.read_int
             self.appearanceRecordList[  idx  ] = val
 
 
@@ -3257,35 +3257,35 @@ class BlankingSector( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.recordType);
-        outputStream.write_null(self.recordLength);
-        outputStream.write_null(self.padding);
-        outputStream.write_null(self.emitterNumber);
-        outputStream.write_null(self.beamNumber);
-        outputStream.write_null(self.padding2);
-        outputStream.write_null(self.leftAzimuth);
-        outputStream.write_null(self.rightAzimuth);
-        outputStream.write_null(self.lowerElevation);
-        outputStream.write_null(self.upperElevation);
-        outputStream.write_null(self.residualPower);
-        outputStream.write_null(self.padding3);
+        outputStream.write_int(self.recordType);
+        outputStream.write_short(self.recordLength);
+        outputStream.write_short(self.padding);
+        outputStream.write_byte(self.emitterNumber);
+        outputStream.write_byte(self.beamNumber);
+        outputStream.write_byte(self.padding2);
+        outputStream.write_float(self.leftAzimuth);
+        outputStream.write_float(self.rightAzimuth);
+        outputStream.write_float(self.lowerElevation);
+        outputStream.write_float(self.upperElevation);
+        outputStream.write_float(self.residualPower);
+        outputStream.write_long(self.padding3);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.recordType = inputStream.read_null();
-        self.recordLength = inputStream.read_null();
-        self.padding = inputStream.read_null();
-        self.emitterNumber = inputStream.read_null();
-        self.beamNumber = inputStream.read_null();
-        self.padding2 = inputStream.read_null();
-        self.leftAzimuth = inputStream.read_null();
-        self.rightAzimuth = inputStream.read_null();
-        self.lowerElevation = inputStream.read_null();
-        self.upperElevation = inputStream.read_null();
-        self.residualPower = inputStream.read_null();
-        self.padding3 = inputStream.read_null();
+        self.recordType = inputStream.read_int();
+        self.recordLength = inputStream.read_short();
+        self.padding = inputStream.read_short();
+        self.emitterNumber = inputStream.read_byte();
+        self.beamNumber = inputStream.read_byte();
+        self.padding2 = inputStream.read_byte();
+        self.leftAzimuth = inputStream.read_float();
+        self.rightAzimuth = inputStream.read_float();
+        self.lowerElevation = inputStream.read_float();
+        self.upperElevation = inputStream.read_float();
+        self.residualPower = inputStream.read_float();
+        self.padding3 = inputStream.read_long();
 
 
 
@@ -3300,17 +3300,17 @@ class LiveEntityLinearVelocity( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.xComponent);
-        outputStream.write_null(self.yComponent);
-        outputStream.write_null(self.zComponent);
+        outputStream.write_short(self.xComponent);
+        outputStream.write_short(self.yComponent);
+        outputStream.write_short(self.zComponent);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.xComponent = inputStream.read_null();
-        self.yComponent = inputStream.read_null();
-        self.zComponent = inputStream.read_null();
+        self.xComponent = inputStream.read_short();
+        self.yComponent = inputStream.read_short();
+        self.zComponent = inputStream.read_short();
 
 
 
@@ -3330,11 +3330,11 @@ class LaunchedMunitionRecord( object ):
     def serialize(self, outputStream):
         """serialize the class """
         self.fireEventID.serialize(outputStream)
-        outputStream.write_null(self.padding);
+        outputStream.write_short(self.padding);
         self.firingEntityID.serialize(outputStream)
-        outputStream.write_null(self.padding2);
+        outputStream.write_short(self.padding2);
         self.targetEntityID.serialize(outputStream)
-        outputStream.write_null(self.padding3);
+        outputStream.write_short(self.padding3);
         self.targetLocation.serialize(outputStream)
 
 
@@ -3342,11 +3342,11 @@ class LaunchedMunitionRecord( object ):
         """"Parse a message. This may recursively call embedded objects."""
 
         self.fireEventID.parse(inputStream)
-        self.padding = inputStream.read_null();
+        self.padding = inputStream.read_short();
         self.firingEntityID.parse(inputStream)
-        self.padding2 = inputStream.read_null();
+        self.padding2 = inputStream.read_short();
         self.targetEntityID.parse(inputStream)
-        self.padding3 = inputStream.read_null();
+        self.padding3 = inputStream.read_short();
         self.targetLocation.parse(inputStream)
 
 
@@ -3371,27 +3371,27 @@ class IFFFundamentalParameterData( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.erp);
-        outputStream.write_null(self.frequency);
-        outputStream.write_null(self.pgrf);
-        outputStream.write_null(self.pulseWidth);
-        outputStream.write_null(self.burstLength);
+        outputStream.write_float(self.erp);
+        outputStream.write_float(self.frequency);
+        outputStream.write_float(self.pgrf);
+        outputStream.write_float(self.pulseWidth);
+        outputStream.write_int(self.burstLength);
         for idx in range(0, 3):
-            outputStream.write_null( self.systemSpecificData[ idx ] );
+            outputStream.write_UnsignedByte( self.systemSpecificData[ idx ] );
 
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.erp = inputStream.read_null();
-        self.frequency = inputStream.read_null();
-        self.pgrf = inputStream.read_null();
-        self.pulseWidth = inputStream.read_null();
-        self.burstLength = inputStream.read_null();
+        self.erp = inputStream.read_float();
+        self.frequency = inputStream.read_float();
+        self.pgrf = inputStream.read_float();
+        self.pulseWidth = inputStream.read_float();
+        self.burstLength = inputStream.read_int();
         self.systemSpecificData = [0]*3
         for idx in range(0, 3):
-            val = inputStream.read_null
+            val = inputStream.read_UnsignedByte
             self.systemSpecificData[  idx  ] = val
 
 
@@ -3425,31 +3425,31 @@ class FundamentalOperationalData( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.systemStatus);
-        outputStream.write_null(self.dataField1);
-        outputStream.write_null(self.informationLayers);
-        outputStream.write_null(self.dataField2);
-        outputStream.write_null(self.parameter1);
-        outputStream.write_null(self.parameter2);
-        outputStream.write_null(self.parameter3);
-        outputStream.write_null(self.parameter4);
-        outputStream.write_null(self.parameter5);
-        outputStream.write_null(self.parameter6);
+        outputStream.write_byte(self.systemStatus);
+        outputStream.write_byte(self.dataField1);
+        outputStream.write_byte(self.informationLayers);
+        outputStream.write_byte(self.dataField2);
+        outputStream.write_short(self.parameter1);
+        outputStream.write_short(self.parameter2);
+        outputStream.write_short(self.parameter3);
+        outputStream.write_short(self.parameter4);
+        outputStream.write_short(self.parameter5);
+        outputStream.write_short(self.parameter6);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.systemStatus = inputStream.read_null();
-        self.dataField1 = inputStream.read_null();
-        self.informationLayers = inputStream.read_null();
-        self.dataField2 = inputStream.read_null();
-        self.parameter1 = inputStream.read_null();
-        self.parameter2 = inputStream.read_null();
-        self.parameter3 = inputStream.read_null();
-        self.parameter4 = inputStream.read_null();
-        self.parameter5 = inputStream.read_null();
-        self.parameter6 = inputStream.read_null();
+        self.systemStatus = inputStream.read_byte();
+        self.dataField1 = inputStream.read_byte();
+        self.informationLayers = inputStream.read_byte();
+        self.dataField2 = inputStream.read_byte();
+        self.parameter1 = inputStream.read_short();
+        self.parameter2 = inputStream.read_short();
+        self.parameter3 = inputStream.read_short();
+        self.parameter4 = inputStream.read_short();
+        self.parameter5 = inputStream.read_short();
+        self.parameter6 = inputStream.read_short();
 
 
 
@@ -3471,20 +3471,20 @@ class EntityType( object ):
     def serialize(self, outputStream):
         """serialize the class """
         self.domain.serialize(outputStream)
-        outputStream.write_null(self.category);
-        outputStream.write_null(self.subCategory);
-        outputStream.write_null(self.specific);
-        outputStream.write_null(self.extra);
+        outputStream.write_byte(self.category);
+        outputStream.write_byte(self.subCategory);
+        outputStream.write_byte(self.specific);
+        outputStream.write_byte(self.extra);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
         self.domain.parse(inputStream)
-        self.category = inputStream.read_null();
-        self.subCategory = inputStream.read_null();
-        self.specific = inputStream.read_null();
-        self.extra = inputStream.read_null();
+        self.category = inputStream.read_byte();
+        self.subCategory = inputStream.read_byte();
+        self.specific = inputStream.read_byte();
+        self.extra = inputStream.read_byte();
 
 
 
@@ -3500,7 +3500,7 @@ class StandardVariableSpecification( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null( len(self.standardVariables));
+        outputStream.write_short( len(self.standardVariables));
         for anObj in self.standardVariables:
             anObj.serialize(outputStream)
 
@@ -3509,7 +3509,7 @@ class StandardVariableSpecification( object ):
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.numberOfStandardVariableRecords = inputStream.read_null();
+        self.numberOfStandardVariableRecords = inputStream.read_short();
         for idx in range(0, self.numberOfStandardVariableRecords):
             element = null()
             element.parse(inputStream)
@@ -3537,9 +3537,9 @@ class UAEmitter( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.systemDataLength);
-        outputStream.write_null( len(self.beams));
-        outputStream.write_null(self.padding);
+        outputStream.write_byte(self.systemDataLength);
+        outputStream.write_byte( len(self.beams));
+        outputStream.write_short(self.padding);
         self.acousticEmitter.serialize(outputStream)
         self.location.serialize(outputStream)
         for anObj in self.beams:
@@ -3550,9 +3550,9 @@ class UAEmitter( object ):
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.systemDataLength = inputStream.read_null();
-        self.numberOfBeams = inputStream.read_null();
-        self.padding = inputStream.read_null();
+        self.systemDataLength = inputStream.read_byte();
+        self.numberOfBeams = inputStream.read_byte();
+        self.padding = inputStream.read_short();
         self.acousticEmitter.parse(inputStream)
         self.location.parse(inputStream)
         for idx in range(0, self.numberOfBeams):
@@ -3591,15 +3591,15 @@ class Vector2Float( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.x);
-        outputStream.write_null(self.y);
+        outputStream.write_float(self.x);
+        outputStream.write_float(self.y);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.x = inputStream.read_null();
-        self.y = inputStream.read_null();
+        self.x = inputStream.read_float();
+        self.y = inputStream.read_float();
 
 
 
@@ -3619,23 +3619,23 @@ class Environment( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.length);
-        outputStream.write_null(self.index);
-        outputStream.write_null(self.padding1);
+        outputStream.write_short(self.length);
+        outputStream.write_byte(self.index);
+        outputStream.write_byte(self.padding1);
         for idx in range(0, 0):
-            outputStream.write_null( self.geometry[ idx ] );
+            outputStream.write_UnsignedByte( self.geometry[ idx ] );
 
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.length = inputStream.read_null();
-        self.index = inputStream.read_null();
-        self.padding1 = inputStream.read_null();
+        self.length = inputStream.read_short();
+        self.index = inputStream.read_byte();
+        self.padding1 = inputStream.read_byte();
         self.geometry = [0]*0
         for idx in range(0, 0):
-            val = inputStream.read_null
+            val = inputStream.read_UnsignedByte
             self.geometry[  idx  ] = val
 
 
@@ -3651,13 +3651,13 @@ class AcousticEmitter( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.acousticIDNumber);
+        outputStream.write_byte(self.acousticIDNumber);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.acousticIDNumber = inputStream.read_null();
+        self.acousticIDNumber = inputStream.read_byte();
 
 
 
@@ -3672,7 +3672,7 @@ class AggregateMarking( object ):
     def serialize(self, outputStream):
         """serialize the class """
         for idx in range(0, 31):
-            outputStream.write_null( self.characters[ idx ] );
+            outputStream.write_UnsignedByte( self.characters[ idx ] );
 
 
 
@@ -3681,7 +3681,7 @@ class AggregateMarking( object ):
 
         self.characters = [0]*31
         for idx in range(0, 31):
-            val = inputStream.read_null
+            val = inputStream.read_UnsignedByte
             self.characters[  idx  ] = val
 
 
@@ -3697,13 +3697,13 @@ class DataFilterRecord( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.bitFlags);
+        outputStream.write_int(self.bitFlags);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.bitFlags = inputStream.read_null();
+        self.bitFlags = inputStream.read_int();
 
 
 
@@ -3728,22 +3728,22 @@ class MunitionReload( object ):
     def serialize(self, outputStream):
         """serialize the class """
         self.munitionType.serialize(outputStream)
-        outputStream.write_null(self.station);
-        outputStream.write_null(self.standardQuantity);
-        outputStream.write_null(self.maximumQuantity);
-        outputStream.write_null(self.standardQuantityReloadTime);
-        outputStream.write_null(self.maximumQuantityReloadTime);
+        outputStream.write_int(self.station);
+        outputStream.write_short(self.standardQuantity);
+        outputStream.write_short(self.maximumQuantity);
+        outputStream.write_int(self.standardQuantityReloadTime);
+        outputStream.write_int(self.maximumQuantityReloadTime);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
         self.munitionType.parse(inputStream)
-        self.station = inputStream.read_null();
-        self.standardQuantity = inputStream.read_null();
-        self.maximumQuantity = inputStream.read_null();
-        self.standardQuantityReloadTime = inputStream.read_null();
-        self.maximumQuantityReloadTime = inputStream.read_null();
+        self.station = inputStream.read_int();
+        self.standardQuantity = inputStream.read_short();
+        self.maximumQuantity = inputStream.read_short();
+        self.standardQuantityReloadTime = inputStream.read_int();
+        self.maximumQuantityReloadTime = inputStream.read_int();
 
 
 
@@ -3757,15 +3757,15 @@ class LiveEntityPositionError( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.horizontalError);
-        outputStream.write_null(self.verticalError);
+        outputStream.write_short(self.horizontalError);
+        outputStream.write_short(self.verticalError);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.horizontalError = inputStream.read_null();
-        self.verticalError = inputStream.read_null();
+        self.horizontalError = inputStream.read_short();
+        self.verticalError = inputStream.read_short();
 
 
 
@@ -3787,21 +3787,21 @@ class StorageFuelReload( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.standardQuantity);
-        outputStream.write_null(self.maximumQuantity);
-        outputStream.write_null(self.standardQuantityReloadTime);
-        outputStream.write_null(self.maximumQuantityReloadTime);
-        outputStream.write_null(self.padding);
+        outputStream.write_int(self.standardQuantity);
+        outputStream.write_int(self.maximumQuantity);
+        outputStream.write_int(self.standardQuantityReloadTime);
+        outputStream.write_int(self.maximumQuantityReloadTime);
+        outputStream.write_byte(self.padding);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.standardQuantity = inputStream.read_null();
-        self.maximumQuantity = inputStream.read_null();
-        self.standardQuantityReloadTime = inputStream.read_null();
-        self.maximumQuantityReloadTime = inputStream.read_null();
-        self.padding = inputStream.read_null();
+        self.standardQuantity = inputStream.read_int();
+        self.maximumQuantity = inputStream.read_int();
+        self.standardQuantityReloadTime = inputStream.read_int();
+        self.maximumQuantityReloadTime = inputStream.read_int();
+        self.padding = inputStream.read_byte();
 
 
 
@@ -3852,16 +3852,16 @@ class DirectedEnergyTargetEnergyDeposition( object ):
     def serialize(self, outputStream):
         """serialize the class """
         self.targetEntityID.serialize(outputStream)
-        outputStream.write_null(self.padding);
-        outputStream.write_null(self.peakIrradiance);
+        outputStream.write_short(self.padding);
+        outputStream.write_float(self.peakIrradiance);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
         self.targetEntityID.parse(inputStream)
-        self.padding = inputStream.read_null();
-        self.peakIrradiance = inputStream.read_null();
+        self.padding = inputStream.read_short();
+        self.peakIrradiance = inputStream.read_float();
 
 
 
@@ -3875,15 +3875,15 @@ class MineEmplacementTime( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.hour);
-        outputStream.write_null(self.timePastTheHour);
+        outputStream.write_int(self.hour);
+        outputStream.write_int(self.timePastTheHour);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.hour = inputStream.read_null();
-        self.timePastTheHour = inputStream.read_null();
+        self.hour = inputStream.read_int();
+        self.timePastTheHour = inputStream.read_int();
 
 
 
@@ -3905,21 +3905,21 @@ class EngineFuelReload( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.standardQuantity);
-        outputStream.write_null(self.maximumQuantity);
-        outputStream.write_null(self.standardQuantityReloadTime);
-        outputStream.write_null(self.maximumQuantityReloadTime);
-        outputStream.write_null(self.padding);
+        outputStream.write_int(self.standardQuantity);
+        outputStream.write_int(self.maximumQuantity);
+        outputStream.write_int(self.standardQuantityReloadTime);
+        outputStream.write_int(self.maximumQuantityReloadTime);
+        outputStream.write_byte(self.padding);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.standardQuantity = inputStream.read_null();
-        self.maximumQuantity = inputStream.read_null();
-        self.standardQuantityReloadTime = inputStream.read_null();
-        self.maximumQuantityReloadTime = inputStream.read_null();
-        self.padding = inputStream.read_null();
+        self.standardQuantity = inputStream.read_int();
+        self.maximumQuantity = inputStream.read_int();
+        self.standardQuantityReloadTime = inputStream.read_int();
+        self.maximumQuantityReloadTime = inputStream.read_int();
+        self.padding = inputStream.read_byte();
 
 
 
@@ -3934,17 +3934,17 @@ class ShaftRPM( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.currentRPM);
-        outputStream.write_null(self.orderedRPM);
-        outputStream.write_null(self.RPMrateOfChange);
+        outputStream.write_short(self.currentRPM);
+        outputStream.write_short(self.orderedRPM);
+        outputStream.write_int(self.RPMrateOfChange);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.currentRPM = inputStream.read_null();
-        self.orderedRPM = inputStream.read_null();
-        self.RPMrateOfChange = inputStream.read_null();
+        self.currentRPM = inputStream.read_short();
+        self.orderedRPM = inputStream.read_short();
+        self.RPMrateOfChange = inputStream.read_int();
 
 
 
@@ -3978,17 +3978,17 @@ class Vector3Double( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.x);
-        outputStream.write_null(self.y);
-        outputStream.write_null(self.z);
+        outputStream.write_double(self.x);
+        outputStream.write_double(self.y);
+        outputStream.write_double(self.z);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.x = inputStream.read_null();
-        self.y = inputStream.read_null();
-        self.z = inputStream.read_null();
+        self.x = inputStream.read_double();
+        self.y = inputStream.read_double();
+        self.z = inputStream.read_double();
 
 
 
@@ -4004,7 +4004,7 @@ class RecordSpecification( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null( len(self.recordSets));
+        outputStream.write_int( len(self.recordSets));
         for anObj in self.recordSets:
             anObj.serialize(outputStream)
 
@@ -4013,7 +4013,7 @@ class RecordSpecification( object ):
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.numberOfRecordSets = inputStream.read_null();
+        self.numberOfRecordSets = inputStream.read_int();
         for idx in range(0, self.numberOfRecordSets):
             element = null()
             element.parse(inputStream)
@@ -4049,17 +4049,17 @@ class EventIdentifierLiveEntity( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.siteNumber);
-        outputStream.write_null(self.applicationNumber);
-        outputStream.write_null(self.eventNumber);
+        outputStream.write_byte(self.siteNumber);
+        outputStream.write_byte(self.applicationNumber);
+        outputStream.write_short(self.eventNumber);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.siteNumber = inputStream.read_null();
-        self.applicationNumber = inputStream.read_null();
-        self.eventNumber = inputStream.read_null();
+        self.siteNumber = inputStream.read_byte();
+        self.applicationNumber = inputStream.read_byte();
+        self.eventNumber = inputStream.read_short();
 
 
 
@@ -4076,14 +4076,14 @@ class ExpendableDescriptor( object ):
     def serialize(self, outputStream):
         """serialize the class """
         self.expendableType.serialize(outputStream)
-        outputStream.write_null(self.padding);
+        outputStream.write_long(self.padding);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
         self.expendableType.parse(inputStream)
-        self.padding = inputStream.read_null();
+        self.padding = inputStream.read_long();
 
 
 
@@ -4097,15 +4097,15 @@ class APA( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.parameterIndex);
-        outputStream.write_null(self.value);
+        outputStream.write_short(self.parameterIndex);
+        outputStream.write_short(self.value);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.parameterIndex = inputStream.read_null();
-        self.value = inputStream.read_null();
+        self.parameterIndex = inputStream.read_short();
+        self.value = inputStream.read_short();
 
 
 
@@ -4122,14 +4122,14 @@ class EntityAssociationVP( object ):
     def serialize(self, outputStream):
         """serialize the class """
         self.entityID.serialize(outputStream)
-        outputStream.write_null(self.groupNumber);
+        outputStream.write_short(self.groupNumber);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
         self.entityID.parse(inputStream)
-        self.groupNumber = inputStream.read_null();
+        self.groupNumber = inputStream.read_short();
 
 
 
@@ -4143,13 +4143,13 @@ class EmitterSystem( object ):
 
     def serialize(self, outputStream):
         """serialize the class """
-        outputStream.write_null(self.emitterIDNumber);
+        outputStream.write_byte(self.emitterIDNumber);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
-        self.emitterIDNumber = inputStream.read_null();
+        self.emitterIDNumber = inputStream.read_byte();
 
 
 
@@ -4189,12 +4189,12 @@ class GridAxisDescriptorVariable( GridAxisDescriptor ):
     def serialize(self, outputStream):
         """serialize the class """
         super( GridAxisDescriptorVariable, self ).serialize(outputStream)
-        outputStream.write_null(self.numberOfPointsOnXiAxis);
-        outputStream.write_null(self.initialIndex);
-        outputStream.write_null(self.coordinateScaleXi);
-        outputStream.write_null(self.coordinateOffsetXi);
+        outputStream.write_short(self.numberOfPointsOnXiAxis);
+        outputStream.write_short(self.initialIndex);
+        outputStream.write_double(self.coordinateScaleXi);
+        outputStream.write_double(self.coordinateOffsetXi);
         for idx in range(0, 0):
-            outputStream.write_null( self.xiValues[ idx ] );
+            outputStream.write_UnsignedShort( self.xiValues[ idx ] );
 
 
 
@@ -4202,13 +4202,13 @@ class GridAxisDescriptorVariable( GridAxisDescriptor ):
         """"Parse a message. This may recursively call embedded objects."""
 
         super( GridAxisDescriptorVariable, self).parse(inputStream)
-        self.numberOfPointsOnXiAxis = inputStream.read_null();
-        self.initialIndex = inputStream.read_null();
-        self.coordinateScaleXi = inputStream.read_null();
-        self.coordinateOffsetXi = inputStream.read_null();
+        self.numberOfPointsOnXiAxis = inputStream.read_short();
+        self.initialIndex = inputStream.read_short();
+        self.coordinateScaleXi = inputStream.read_double();
+        self.coordinateOffsetXi = inputStream.read_double();
         self.xiValues = [0]*0
         for idx in range(0, 0):
-            val = inputStream.read_null
+            val = inputStream.read_UnsignedShort
             self.xiValues[  idx  ] = val
 
 
@@ -4228,16 +4228,16 @@ class GridAxisDescriptorFixed( GridAxisDescriptor ):
     def serialize(self, outputStream):
         """serialize the class """
         super( GridAxisDescriptorFixed, self ).serialize(outputStream)
-        outputStream.write_null(self.numberOfPointsOnXiAxis);
-        outputStream.write_null(self.initialIndex);
+        outputStream.write_short(self.numberOfPointsOnXiAxis);
+        outputStream.write_short(self.initialIndex);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
         super( GridAxisDescriptorFixed, self).parse(inputStream)
-        self.numberOfPointsOnXiAxis = inputStream.read_null();
-        self.initialIndex = inputStream.read_null();
+        self.numberOfPointsOnXiAxis = inputStream.read_short();
+        self.initialIndex = inputStream.read_short();
 
 
 
@@ -4256,7 +4256,7 @@ class PduBase( Pdu ):
         """serialize the class """
         super( PduBase, self ).serialize(outputStream)
         self.pduStatus.serialize(outputStream)
-        outputStream.write_null(self.padding);
+        outputStream.write_byte(self.padding);
 
 
     def parse(self, inputStream):
@@ -4264,7 +4264,7 @@ class PduBase( Pdu ):
 
         super( PduBase, self).parse(inputStream)
         self.pduStatus.parse(inputStream)
-        self.padding = inputStream.read_null();
+        self.padding = inputStream.read_byte();
 
 
 
@@ -4344,13 +4344,13 @@ class MinefieldDataPdu( MinefieldFamilyPdu ):
         super( MinefieldDataPdu, self ).serialize(outputStream)
         self.minefieldID.serialize(outputStream)
         self.requestingEntityID.serialize(outputStream)
-        outputStream.write_null(self.minefieldSequenceNumbeer);
-        outputStream.write_null(self.requestID);
-        outputStream.write_null(self.pduSequenceNumber);
-        outputStream.write_null(self.numberOfPdus);
-        outputStream.write_null(self.numberOfMinesInThisPdu);
-        outputStream.write_null( len(self.sensorTypes));
-        outputStream.write_null(self.padding);
+        outputStream.write_short(self.minefieldSequenceNumbeer);
+        outputStream.write_byte(self.requestID);
+        outputStream.write_byte(self.pduSequenceNumber);
+        outputStream.write_byte(self.numberOfPdus);
+        outputStream.write_byte(self.numberOfMinesInThisPdu);
+        outputStream.write_byte( len(self.sensorTypes));
+        outputStream.write_byte(self.padding);
         self.dataFilter.serialize(outputStream)
         self.mineType.serialize(outputStream)
         for anObj in self.sensorTypes:
@@ -4360,43 +4360,43 @@ class MinefieldDataPdu( MinefieldFamilyPdu ):
             anObj.serialize(outputStream)
 
         for idx in range(0, 0):
-            outputStream.write_null( self.groundBurialDepthOffset[ idx ] );
+            outputStream.write_float( self.groundBurialDepthOffset[ idx ] );
 
         for idx in range(0, 0):
-            outputStream.write_null( self.waterBurialDepthOffset[ idx ] );
+            outputStream.write_float( self.waterBurialDepthOffset[ idx ] );
 
         for idx in range(0, 0):
-            outputStream.write_null( self.snowBurialDepthOffset[ idx ] );
+            outputStream.write_float( self.snowBurialDepthOffset[ idx ] );
 
         for anObj in self.mineOrientation:
             anObj.serialize(outputStream)
 
         for idx in range(0, 0):
-            outputStream.write_null( self.thermalContrast[ idx ] );
+            outputStream.write_float( self.thermalContrast[ idx ] );
 
         for idx in range(0, 0):
-            outputStream.write_null( self.reflectance[ idx ] );
+            outputStream.write_float( self.reflectance[ idx ] );
 
         for anObj in self.mineEmplacementTime:
             anObj.serialize(outputStream)
 
         for idx in range(0, 0):
-            outputStream.write_null( self.mineEntityNumber[ idx ] );
+            outputStream.write_UnsignedShort( self.mineEntityNumber[ idx ] );
 
         for anObj in self.fusing:
             anObj.serialize(outputStream)
 
         for idx in range(0, 0):
-            outputStream.write_null( self.scalarDetectionCoefficient[ idx ] );
+            outputStream.write_UnsignedByte( self.scalarDetectionCoefficient[ idx ] );
 
         for anObj in self.paintScheme:
             anObj.serialize(outputStream)
 
         for idx in range(0, 0):
-            outputStream.write_null( self.numberOfTripDetonationWires[ idx ] );
+            outputStream.write_UnsignedByte( self.numberOfTripDetonationWires[ idx ] );
 
         for idx in range(0, 0):
-            outputStream.write_null( self.numberOfVertices[ idx ] );
+            outputStream.write_UnsignedByte( self.numberOfVertices[ idx ] );
 
 
 
@@ -4406,13 +4406,13 @@ class MinefieldDataPdu( MinefieldFamilyPdu ):
         super( MinefieldDataPdu, self).parse(inputStream)
         self.minefieldID.parse(inputStream)
         self.requestingEntityID.parse(inputStream)
-        self.minefieldSequenceNumbeer = inputStream.read_null();
-        self.requestID = inputStream.read_null();
-        self.pduSequenceNumber = inputStream.read_null();
-        self.numberOfPdus = inputStream.read_null();
-        self.numberOfMinesInThisPdu = inputStream.read_null();
-        self.numberOfSensorTypes = inputStream.read_null();
-        self.padding = inputStream.read_null();
+        self.minefieldSequenceNumbeer = inputStream.read_short();
+        self.requestID = inputStream.read_byte();
+        self.pduSequenceNumber = inputStream.read_byte();
+        self.numberOfPdus = inputStream.read_byte();
+        self.numberOfMinesInThisPdu = inputStream.read_byte();
+        self.numberOfSensorTypes = inputStream.read_byte();
+        self.padding = inputStream.read_byte();
         self.dataFilter.parse(inputStream)
         self.mineType.parse(inputStream)
         for idx in range(0, self.numberOfSensorTypes):
@@ -4427,17 +4427,17 @@ class MinefieldDataPdu( MinefieldFamilyPdu ):
 
         self.groundBurialDepthOffset = [0]*0
         for idx in range(0, 0):
-            val = inputStream.read_null
+            val = inputStream.read_float
             self.groundBurialDepthOffset[  idx  ] = val
 
         self.waterBurialDepthOffset = [0]*0
         for idx in range(0, 0):
-            val = inputStream.read_null
+            val = inputStream.read_float
             self.waterBurialDepthOffset[  idx  ] = val
 
         self.snowBurialDepthOffset = [0]*0
         for idx in range(0, 0):
-            val = inputStream.read_null
+            val = inputStream.read_float
             self.snowBurialDepthOffset[  idx  ] = val
 
         for idx in range(0, self.numberOfMinesInThisPdu):
@@ -4447,12 +4447,12 @@ class MinefieldDataPdu( MinefieldFamilyPdu ):
 
         self.thermalContrast = [0]*0
         for idx in range(0, 0):
-            val = inputStream.read_null
+            val = inputStream.read_float
             self.thermalContrast[  idx  ] = val
 
         self.reflectance = [0]*0
         for idx in range(0, 0):
-            val = inputStream.read_null
+            val = inputStream.read_float
             self.reflectance[  idx  ] = val
 
         for idx in range(0, self.numberOfMinesInThisPdu):
@@ -4462,7 +4462,7 @@ class MinefieldDataPdu( MinefieldFamilyPdu ):
 
         self.mineEntityNumber = [0]*0
         for idx in range(0, 0):
-            val = inputStream.read_null
+            val = inputStream.read_UnsignedShort
             self.mineEntityNumber[  idx  ] = val
 
         for idx in range(0, self.numberOfMinesInThisPdu):
@@ -4472,7 +4472,7 @@ class MinefieldDataPdu( MinefieldFamilyPdu ):
 
         self.scalarDetectionCoefficient = [0]*0
         for idx in range(0, 0):
-            val = inputStream.read_null
+            val = inputStream.read_UnsignedByte
             self.scalarDetectionCoefficient[  idx  ] = val
 
         for idx in range(0, self.numberOfMinesInThisPdu):
@@ -4482,12 +4482,12 @@ class MinefieldDataPdu( MinefieldFamilyPdu ):
 
         self.numberOfTripDetonationWires = [0]*0
         for idx in range(0, 0):
-            val = inputStream.read_null
+            val = inputStream.read_UnsignedByte
             self.numberOfTripDetonationWires[  idx  ] = val
 
         self.numberOfVertices = [0]*0
         for idx in range(0, 0):
-            val = inputStream.read_null
+            val = inputStream.read_UnsignedByte
             self.numberOfVertices[  idx  ] = val
 
 
@@ -4555,7 +4555,7 @@ class AppearancePdu( LiveEntityFamilyPdu ):
         """serialize the class """
         super( AppearancePdu, self ).serialize(outputStream)
         self.liveEntityId.serialize(outputStream)
-        outputStream.write_null(self.appearanceFlags);
+        outputStream.write_short(self.appearanceFlags);
         self.entityType.serialize(outputStream)
         self.alternateEntityType.serialize(outputStream)
         self.entityMarking.serialize(outputStream)
@@ -4567,7 +4567,7 @@ class AppearancePdu( LiveEntityFamilyPdu ):
 
         super( AppearancePdu, self).parse(inputStream)
         self.liveEntityId.parse(inputStream)
-        self.appearanceFlags = inputStream.read_null();
+        self.appearanceFlags = inputStream.read_short();
         self.entityType.parse(inputStream)
         self.alternateEntityType.parse(inputStream)
         self.entityMarking.parse(inputStream)
@@ -4629,10 +4629,10 @@ class MinefieldStatePdu( MinefieldFamilyPdu ):
         """serialize the class """
         super( MinefieldStatePdu, self ).serialize(outputStream)
         self.minefieldID.serialize(outputStream)
-        outputStream.write_null(self.minefieldSequence);
-        outputStream.write_null( len(self.perimeterPoints));
+        outputStream.write_short(self.minefieldSequence);
+        outputStream.write_byte( len(self.perimeterPoints));
         self.minefieldType.serialize(outputStream)
-        outputStream.write_null( len(self.mineType));
+        outputStream.write_short( len(self.mineType));
         self.minefieldLocation.serialize(outputStream)
         self.minefieldOrientation.serialize(outputStream)
         self.protocolMode.serialize(outputStream)
@@ -4649,10 +4649,10 @@ class MinefieldStatePdu( MinefieldFamilyPdu ):
 
         super( MinefieldStatePdu, self).parse(inputStream)
         self.minefieldID.parse(inputStream)
-        self.minefieldSequence = inputStream.read_null();
-        self.numberOfPerimeterPoints = inputStream.read_null();
+        self.minefieldSequence = inputStream.read_short();
+        self.numberOfPerimeterPoints = inputStream.read_byte();
         self.minefieldType.parse(inputStream)
-        self.numberOfMineTypes = inputStream.read_null();
+        self.numberOfMineTypes = inputStream.read_short();
         self.minefieldLocation.parse(inputStream)
         self.minefieldOrientation.parse(inputStream)
         self.protocolMode.parse(inputStream)
@@ -4689,7 +4689,7 @@ class RepairCompletePdu( LogisticsFamilyPdu ):
         super( RepairCompletePdu, self ).serialize(outputStream)
         self.receivingEntityID.serialize(outputStream)
         self.repairingEntityID.serialize(outputStream)
-        outputStream.write_null(self.padding4);
+        outputStream.write_short(self.padding4);
 
 
     def parse(self, inputStream):
@@ -4698,7 +4698,7 @@ class RepairCompletePdu( LogisticsFamilyPdu ):
         super( RepairCompletePdu, self).parse(inputStream)
         self.receivingEntityID.parse(inputStream)
         self.repairingEntityID.parse(inputStream)
-        self.padding4 = inputStream.read_null();
+        self.padding4 = inputStream.read_short();
 
 
 
@@ -4745,8 +4745,8 @@ class RepairResponsePdu( LogisticsFamilyPdu ):
         super( RepairResponsePdu, self ).serialize(outputStream)
         self.receivingEntityID.serialize(outputStream)
         self.repairingEntityID.serialize(outputStream)
-        outputStream.write_null(self.padding1);
-        outputStream.write_null(self.padding2);
+        outputStream.write_byte(self.padding1);
+        outputStream.write_short(self.padding2);
 
 
     def parse(self, inputStream):
@@ -4755,8 +4755,8 @@ class RepairResponsePdu( LogisticsFamilyPdu ):
         super( RepairResponsePdu, self).parse(inputStream)
         self.receivingEntityID.parse(inputStream)
         self.repairingEntityID.parse(inputStream)
-        self.padding1 = inputStream.read_null();
-        self.padding2 = inputStream.read_null();
+        self.padding1 = inputStream.read_byte();
+        self.padding2 = inputStream.read_short();
 
 
 
@@ -4784,10 +4784,10 @@ class MinefieldResponseNACKPdu( MinefieldFamilyPdu ):
         super( MinefieldResponseNACKPdu, self ).serialize(outputStream)
         self.minefieldID.serialize(outputStream)
         self.requestingEntityID.serialize(outputStream)
-        outputStream.write_null(self.requestID);
-        outputStream.write_null(self.numberOfMissingPdus);
+        outputStream.write_byte(self.requestID);
+        outputStream.write_byte(self.numberOfMissingPdus);
         for idx in range(0, 0):
-            outputStream.write_null( self.missingPduSequenceNumbers[ idx ] );
+            outputStream.write_UnsignedByte( self.missingPduSequenceNumbers[ idx ] );
 
 
 
@@ -4797,11 +4797,11 @@ class MinefieldResponseNACKPdu( MinefieldFamilyPdu ):
         super( MinefieldResponseNACKPdu, self).parse(inputStream)
         self.minefieldID.parse(inputStream)
         self.requestingEntityID.parse(inputStream)
-        self.requestID = inputStream.read_null();
-        self.numberOfMissingPdus = inputStream.read_null();
+        self.requestID = inputStream.read_byte();
+        self.numberOfMissingPdus = inputStream.read_byte();
         self.missingPduSequenceNumbers = [0]*0
         for idx in range(0, 0):
-            val = inputStream.read_null
+            val = inputStream.read_UnsignedByte
             self.missingPduSequenceNumbers[  idx  ] = val
 
 
@@ -4854,13 +4854,13 @@ class IntercomSignalPdu( RadioCommunicationsFamilyPdu ):
         """serialize the class """
         super( IntercomSignalPdu, self ).serialize(outputStream)
         self.intercomReferenceID.serialize(outputStream)
-        outputStream.write_null(self.intercomNumber);
-        outputStream.write_null(self.encodingScheme);
-        outputStream.write_null(self.sampleRate);
-        outputStream.write_null(self.dataLength);
-        outputStream.write_null(self.samples);
+        outputStream.write_short(self.intercomNumber);
+        outputStream.write_short(self.encodingScheme);
+        outputStream.write_int(self.sampleRate);
+        outputStream.write_short(self.dataLength);
+        outputStream.write_short(self.samples);
         for idx in range(0, 0):
-            outputStream.write_null( self.data[ idx ] );
+            outputStream.write_UnsignedByte( self.data[ idx ] );
 
 
 
@@ -4869,14 +4869,14 @@ class IntercomSignalPdu( RadioCommunicationsFamilyPdu ):
 
         super( IntercomSignalPdu, self).parse(inputStream)
         self.intercomReferenceID.parse(inputStream)
-        self.intercomNumber = inputStream.read_null();
-        self.encodingScheme = inputStream.read_null();
-        self.sampleRate = inputStream.read_null();
-        self.dataLength = inputStream.read_null();
-        self.samples = inputStream.read_null();
+        self.intercomNumber = inputStream.read_short();
+        self.encodingScheme = inputStream.read_short();
+        self.sampleRate = inputStream.read_int();
+        self.dataLength = inputStream.read_short();
+        self.samples = inputStream.read_short();
         self.data = [0]*0
         for idx in range(0, 0):
-            val = inputStream.read_null
+            val = inputStream.read_UnsignedByte
             self.data[  idx  ] = val
 
 
@@ -4908,9 +4908,9 @@ class ResupplyReceivedPdu( LogisticsFamilyPdu ):
         super( ResupplyReceivedPdu, self ).serialize(outputStream)
         self.receivingEntityID.serialize(outputStream)
         self.supplyingEntityID.serialize(outputStream)
-        outputStream.write_null( len(self.supplies));
-        outputStream.write_null(self.padding1);
-        outputStream.write_null(self.padding2);
+        outputStream.write_byte( len(self.supplies));
+        outputStream.write_byte(self.padding1);
+        outputStream.write_short(self.padding2);
         for anObj in self.supplies:
             anObj.serialize(outputStream)
 
@@ -4922,9 +4922,9 @@ class ResupplyReceivedPdu( LogisticsFamilyPdu ):
         super( ResupplyReceivedPdu, self).parse(inputStream)
         self.receivingEntityID.parse(inputStream)
         self.supplyingEntityID.parse(inputStream)
-        self.numberOfSupplyTypes = inputStream.read_null();
-        self.padding1 = inputStream.read_null();
-        self.padding2 = inputStream.read_null();
+        self.numberOfSupplyTypes = inputStream.read_byte();
+        self.padding1 = inputStream.read_byte();
+        self.padding2 = inputStream.read_short();
         for idx in range(0, self.numberOfSupplyTypes):
             element = null()
             element.parse(inputStream)
@@ -5016,10 +5016,10 @@ class MinefieldQueryPdu( MinefieldFamilyPdu ):
         super( MinefieldQueryPdu, self ).serialize(outputStream)
         self.minefieldID.serialize(outputStream)
         self.requestingEntityID.serialize(outputStream)
-        outputStream.write_null(self.requestID);
-        outputStream.write_null( len(self.requestedPerimeterPoints));
-        outputStream.write_null(self.padding);
-        outputStream.write_null( len(self.sensorTypes));
+        outputStream.write_byte(self.requestID);
+        outputStream.write_byte( len(self.requestedPerimeterPoints));
+        outputStream.write_byte(self.padding);
+        outputStream.write_byte( len(self.sensorTypes));
         self.dataFilter.serialize(outputStream)
         self.requestedMineType.serialize(outputStream)
         for anObj in self.requestedPerimeterPoints:
@@ -5036,10 +5036,10 @@ class MinefieldQueryPdu( MinefieldFamilyPdu ):
         super( MinefieldQueryPdu, self).parse(inputStream)
         self.minefieldID.parse(inputStream)
         self.requestingEntityID.parse(inputStream)
-        self.requestID = inputStream.read_null();
-        self.numberOfPerimeterPoints = inputStream.read_null();
-        self.padding = inputStream.read_null();
-        self.numberOfSensorTypes = inputStream.read_null();
+        self.requestID = inputStream.read_byte();
+        self.numberOfPerimeterPoints = inputStream.read_byte();
+        self.padding = inputStream.read_byte();
+        self.numberOfSensorTypes = inputStream.read_byte();
         self.dataFilter.parse(inputStream)
         self.requestedMineType.parse(inputStream)
         for idx in range(0, self.numberOfPerimeterPoints):
@@ -5078,14 +5078,14 @@ class LEFirePdu( LiveEntityFamilyPdu ):
         """serialize the class """
         super( LEFirePdu, self ).serialize(outputStream)
         self.firingLiveEntityId.serialize(outputStream)
-        outputStream.write_null(self.flags);
+        outputStream.write_byte(self.flags);
         self.targetLiveEntityId.serialize(outputStream)
         self.munitionLiveEntityId.serialize(outputStream)
         self.eventId.serialize(outputStream)
         self.location.serialize(outputStream)
         self.munitionDescriptor.serialize(outputStream)
         self.velocity.serialize(outputStream)
-        outputStream.write_null(self.range);
+        outputStream.write_short(self.range);
 
 
     def parse(self, inputStream):
@@ -5093,14 +5093,14 @@ class LEFirePdu( LiveEntityFamilyPdu ):
 
         super( LEFirePdu, self).parse(inputStream)
         self.firingLiveEntityId.parse(inputStream)
-        self.flags = inputStream.read_null();
+        self.flags = inputStream.read_byte();
         self.targetLiveEntityId.parse(inputStream)
         self.munitionLiveEntityId.parse(inputStream)
         self.eventId.parse(inputStream)
         self.location.parse(inputStream)
         self.munitionDescriptor.parse(inputStream)
         self.velocity.parse(inputStream)
-        self.range = inputStream.read_null();
+        self.range = inputStream.read_short();
 
 
 
@@ -5145,17 +5145,17 @@ class GriddedDataPdu( SyntheticEnvironmentFamilyPdu ):
         """serialize the class """
         super( GriddedDataPdu, self ).serialize(outputStream)
         self.environmentalSimulationApplicationID.serialize(outputStream)
-        outputStream.write_null(self.fieldNumber);
-        outputStream.write_null(self.pduNumber);
-        outputStream.write_null(self.pduTotal);
-        outputStream.write_null( len(self.gridDataRecords));
+        outputStream.write_short(self.fieldNumber);
+        outputStream.write_short(self.pduNumber);
+        outputStream.write_short(self.pduTotal);
+        outputStream.write_byte( len(self.gridDataRecords));
         self.environmentType.serialize(outputStream)
         self.orientation.serialize(outputStream)
         self.sampleTime.serialize(outputStream)
-        outputStream.write_null(self.totalValues);
-        outputStream.write_null(self.vectorDimension);
-        outputStream.write_null(self.padding1);
-        outputStream.write_null(self.padding2);
+        outputStream.write_int(self.totalValues);
+        outputStream.write_byte(self.vectorDimension);
+        outputStream.write_byte(self.padding1);
+        outputStream.write_short(self.padding2);
         for anObj in self.gridAxisDescriptors:
             anObj.serialize(outputStream)
 
@@ -5169,17 +5169,17 @@ class GriddedDataPdu( SyntheticEnvironmentFamilyPdu ):
 
         super( GriddedDataPdu, self).parse(inputStream)
         self.environmentalSimulationApplicationID.parse(inputStream)
-        self.fieldNumber = inputStream.read_null();
-        self.pduNumber = inputStream.read_null();
-        self.pduTotal = inputStream.read_null();
-        self.numberOfGridAxes = inputStream.read_null();
+        self.fieldNumber = inputStream.read_short();
+        self.pduNumber = inputStream.read_short();
+        self.pduTotal = inputStream.read_short();
+        self.numberOfGridAxes = inputStream.read_byte();
         self.environmentType.parse(inputStream)
         self.orientation.parse(inputStream)
         self.sampleTime.parse(inputStream)
-        self.totalValues = inputStream.read_null();
-        self.vectorDimension = inputStream.read_null();
-        self.padding1 = inputStream.read_null();
-        self.padding2 = inputStream.read_null();
+        self.totalValues = inputStream.read_int();
+        self.vectorDimension = inputStream.read_byte();
+        self.padding1 = inputStream.read_byte();
+        self.padding2 = inputStream.read_short();
         for idx in range(0, self.numberOfGridAxes):
             element = null()
             element.parse(inputStream)
@@ -5259,18 +5259,18 @@ class CreateEntityRPdu( SimulationManagementWithReliabilityFamilyPdu ):
     def serialize(self, outputStream):
         """serialize the class """
         super( CreateEntityRPdu, self ).serialize(outputStream)
-        outputStream.write_null(self.pad1);
-        outputStream.write_null(self.pad2);
-        outputStream.write_null(self.requestID);
+        outputStream.write_byte(self.pad1);
+        outputStream.write_short(self.pad2);
+        outputStream.write_int(self.requestID);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
         super( CreateEntityRPdu, self).parse(inputStream)
-        self.pad1 = inputStream.read_null();
-        self.pad2 = inputStream.read_null();
-        self.requestID = inputStream.read_null();
+        self.pad1 = inputStream.read_byte();
+        self.pad2 = inputStream.read_short();
+        self.requestID = inputStream.read_int();
 
 
 
@@ -5300,9 +5300,9 @@ class ResupplyOfferPdu( LogisticsFamilyPdu ):
         super( ResupplyOfferPdu, self ).serialize(outputStream)
         self.receivingEntityID.serialize(outputStream)
         self.supplyingEntityID.serialize(outputStream)
-        outputStream.write_null( len(self.supplies));
-        outputStream.write_null(self.padding1);
-        outputStream.write_null(self.padding2);
+        outputStream.write_byte( len(self.supplies));
+        outputStream.write_byte(self.padding1);
+        outputStream.write_short(self.padding2);
         for anObj in self.supplies:
             anObj.serialize(outputStream)
 
@@ -5314,9 +5314,9 @@ class ResupplyOfferPdu( LogisticsFamilyPdu ):
         super( ResupplyOfferPdu, self).parse(inputStream)
         self.receivingEntityID.parse(inputStream)
         self.supplyingEntityID.parse(inputStream)
-        self.numberOfSupplyTypes = inputStream.read_null();
-        self.padding1 = inputStream.read_null();
-        self.padding2 = inputStream.read_null();
+        self.numberOfSupplyTypes = inputStream.read_byte();
+        self.padding1 = inputStream.read_byte();
+        self.padding2 = inputStream.read_short();
         for idx in range(0, self.numberOfSupplyTypes):
             element = null()
             element.parse(inputStream)
@@ -5344,9 +5344,9 @@ class RecordRPdu( SimulationManagementWithReliabilityFamilyPdu ):
     def serialize(self, outputStream):
         """serialize the class """
         super( RecordRPdu, self ).serialize(outputStream)
-        outputStream.write_null(self.requestID);
-        outputStream.write_null(self.pad1);
-        outputStream.write_null( len(self.recordSets));
+        outputStream.write_int(self.requestID);
+        outputStream.write_byte(self.pad1);
+        outputStream.write_int( len(self.recordSets));
         for anObj in self.recordSets:
             anObj.serialize(outputStream)
 
@@ -5356,9 +5356,9 @@ class RecordRPdu( SimulationManagementWithReliabilityFamilyPdu ):
         """"Parse a message. This may recursively call embedded objects."""
 
         super( RecordRPdu, self).parse(inputStream)
-        self.requestID = inputStream.read_null();
-        self.pad1 = inputStream.read_null();
-        self.numberOfRecordSets = inputStream.read_null();
+        self.requestID = inputStream.read_int();
+        self.pad1 = inputStream.read_byte();
+        self.numberOfRecordSets = inputStream.read_int();
         for idx in range(0, self.numberOfRecordSets):
             element = null()
             element.parse(inputStream)
@@ -5402,15 +5402,15 @@ class PointObjectStatePdu( SyntheticEnvironmentFamilyPdu ):
         super( PointObjectStatePdu, self ).serialize(outputStream)
         self.objectID.serialize(outputStream)
         self.referencedObjectID.serialize(outputStream)
-        outputStream.write_null(self.updateNumber);
+        outputStream.write_int(self.updateNumber);
         self.objectType.serialize(outputStream)
         self.objectLocation.serialize(outputStream)
         self.objectOrientation.serialize(outputStream)
-        outputStream.write_null(self.specificObjectAppearance);
-        outputStream.write_null(self.padding1);
+        outputStream.write_int(self.specificObjectAppearance);
+        outputStream.write_short(self.padding1);
         self.requesterID.serialize(outputStream)
         self.receivingID.serialize(outputStream)
-        outputStream.write_null(self.pad2);
+        outputStream.write_int(self.pad2);
 
 
     def parse(self, inputStream):
@@ -5419,15 +5419,15 @@ class PointObjectStatePdu( SyntheticEnvironmentFamilyPdu ):
         super( PointObjectStatePdu, self).parse(inputStream)
         self.objectID.parse(inputStream)
         self.referencedObjectID.parse(inputStream)
-        self.updateNumber = inputStream.read_null();
+        self.updateNumber = inputStream.read_int();
         self.objectType.parse(inputStream)
         self.objectLocation.parse(inputStream)
         self.objectOrientation.parse(inputStream)
-        self.specificObjectAppearance = inputStream.read_null();
-        self.padding1 = inputStream.read_null();
+        self.specificObjectAppearance = inputStream.read_int();
+        self.padding1 = inputStream.read_short();
         self.requesterID.parse(inputStream)
         self.receivingID.parse(inputStream)
-        self.pad2 = inputStream.read_null();
+        self.pad2 = inputStream.read_int();
 
 
 
@@ -5464,11 +5464,11 @@ class UnderwaterAcousticPdu( DistributedEmissionsRegenerationFamilyPdu ):
         super( UnderwaterAcousticPdu, self ).serialize(outputStream)
         self.emittingEntityID.serialize(outputStream)
         self.eventID.serialize(outputStream)
-        outputStream.write_null(self.pad);
-        outputStream.write_null(self.propulsionPlantConfiguration);
-        outputStream.write_null( len(self.shaftRPMs));
-        outputStream.write_null( len(self.apaData));
-        outputStream.write_null( len(self.emitterSystems));
+        outputStream.write_byte(self.pad);
+        outputStream.write_byte(self.propulsionPlantConfiguration);
+        outputStream.write_byte( len(self.shaftRPMs));
+        outputStream.write_byte( len(self.apaData));
+        outputStream.write_byte( len(self.emitterSystems));
         for anObj in self.shaftRPMs:
             anObj.serialize(outputStream)
 
@@ -5486,11 +5486,11 @@ class UnderwaterAcousticPdu( DistributedEmissionsRegenerationFamilyPdu ):
         super( UnderwaterAcousticPdu, self).parse(inputStream)
         self.emittingEntityID.parse(inputStream)
         self.eventID.parse(inputStream)
-        self.pad = inputStream.read_null();
-        self.propulsionPlantConfiguration = inputStream.read_null();
-        self.numberOfShafts = inputStream.read_null();
-        self.numberOfAPAs = inputStream.read_null();
-        self.numberOfUAEmitterSystems = inputStream.read_null();
+        self.pad = inputStream.read_byte();
+        self.propulsionPlantConfiguration = inputStream.read_byte();
+        self.numberOfShafts = inputStream.read_byte();
+        self.numberOfAPAs = inputStream.read_byte();
+        self.numberOfUAEmitterSystems = inputStream.read_byte();
         for idx in range(0, self.numberOfShafts):
             element = null()
             element.parse(inputStream)
@@ -5510,7 +5510,7 @@ class UnderwaterAcousticPdu( DistributedEmissionsRegenerationFamilyPdu ):
 
 
 class IsGroupOfPdu( EntityManagementFamilyPdu ):
-    """5.9.3.1 The IsGroupOf PDU shall communicate information about the individual states of a group of entities, including state information that is necessary for the receiving simulation applications to represent the issuing group of entities in the simulation applications’ own simulation."""
+    """5.9.3.1 The IsGroupOf PDU shall communicate information about the individual states of a group of entities, including state information that is necessary for the receiving simulation applications to represent the issuing group of entities in the simulation applicationsâ€™ own simulation."""
 
     def __init__(self):
         """ Initializer for IsGroupOfPdu"""
@@ -5534,10 +5534,10 @@ class IsGroupOfPdu( EntityManagementFamilyPdu ):
         """serialize the class """
         super( IsGroupOfPdu, self ).serialize(outputStream)
         self.groupEntityID.serialize(outputStream)
-        outputStream.write_null( len(self.groupedEntityDescriptions));
-        outputStream.write_null(self.pad);
-        outputStream.write_null(self.latitude);
-        outputStream.write_null(self.longitude);
+        outputStream.write_byte( len(self.groupedEntityDescriptions));
+        outputStream.write_int(self.pad);
+        outputStream.write_double(self.latitude);
+        outputStream.write_double(self.longitude);
         for anObj in self.groupedEntityDescriptions:
             anObj.serialize(outputStream)
 
@@ -5548,10 +5548,10 @@ class IsGroupOfPdu( EntityManagementFamilyPdu ):
 
         super( IsGroupOfPdu, self).parse(inputStream)
         self.groupEntityID.parse(inputStream)
-        self.numberOfGroupedEntities = inputStream.read_null();
-        self.pad = inputStream.read_null();
-        self.latitude = inputStream.read_null();
-        self.longitude = inputStream.read_null();
+        self.numberOfGroupedEntities = inputStream.read_byte();
+        self.pad = inputStream.read_int();
+        self.latitude = inputStream.read_double();
+        self.longitude = inputStream.read_double();
         for idx in range(0, self.numberOfGroupedEntities):
             element = null()
             element.parse(inputStream)
@@ -5588,8 +5588,8 @@ class IFFPdu( DistributedEmissionsRegenerationFamilyPdu ):
         self.eventID.serialize(outputStream)
         self.location.serialize(outputStream)
         self.systemID.serialize(outputStream)
-        outputStream.write_null(self.systemDesignator);
-        outputStream.write_null(self.systemSpecificData);
+        outputStream.write_byte(self.systemDesignator);
+        outputStream.write_byte(self.systemSpecificData);
         self.fundamentalParameters.serialize(outputStream)
 
 
@@ -5601,8 +5601,8 @@ class IFFPdu( DistributedEmissionsRegenerationFamilyPdu ):
         self.eventID.parse(inputStream)
         self.location.parse(inputStream)
         self.systemID.parse(inputStream)
-        self.systemDesignator = inputStream.read_null();
-        self.systemSpecificData = inputStream.read_null();
+        self.systemDesignator = inputStream.read_byte();
+        self.systemSpecificData = inputStream.read_byte();
         self.fundamentalParameters.parse(inputStream)
 
 
@@ -5641,11 +5641,11 @@ class ArealObjectStatePdu( SyntheticEnvironmentFamilyPdu ):
         super( ArealObjectStatePdu, self ).serialize(outputStream)
         self.objectID.serialize(outputStream)
         self.referencedObjectID.serialize(outputStream)
-        outputStream.write_null(self.updateNumber);
+        outputStream.write_short(self.updateNumber);
         self.objectType.serialize(outputStream)
-        outputStream.write_null(self.specificObjectAppearance);
-        outputStream.write_null(self.generalObjectAppearance);
-        outputStream.write_null( len(self.objectLocation));
+        outputStream.write_int(self.specificObjectAppearance);
+        outputStream.write_short(self.generalObjectAppearance);
+        outputStream.write_short( len(self.objectLocation));
         self.requesterID.serialize(outputStream)
         self.receivingID.serialize(outputStream)
         for anObj in self.objectLocation:
@@ -5659,11 +5659,11 @@ class ArealObjectStatePdu( SyntheticEnvironmentFamilyPdu ):
         super( ArealObjectStatePdu, self).parse(inputStream)
         self.objectID.parse(inputStream)
         self.referencedObjectID.parse(inputStream)
-        self.updateNumber = inputStream.read_null();
+        self.updateNumber = inputStream.read_short();
         self.objectType.parse(inputStream)
-        self.specificObjectAppearance = inputStream.read_null();
-        self.generalObjectAppearance = inputStream.read_null();
-        self.numberOfPoints = inputStream.read_null();
+        self.specificObjectAppearance = inputStream.read_int();
+        self.generalObjectAppearance = inputStream.read_short();
+        self.numberOfPoints = inputStream.read_short();
         self.requesterID.parse(inputStream)
         self.receivingID.parse(inputStream)
         for idx in range(0, self.numberOfPoints):
@@ -5696,8 +5696,8 @@ class ServiceRequestPdu( LogisticsFamilyPdu ):
         super( ServiceRequestPdu, self ).serialize(outputStream)
         self.requestingEntityID.serialize(outputStream)
         self.servicingEntityID.serialize(outputStream)
-        outputStream.write_null( len(self.supplies));
-        outputStream.write_null(self.padding1);
+        outputStream.write_byte( len(self.supplies));
+        outputStream.write_short(self.padding1);
         for anObj in self.supplies:
             anObj.serialize(outputStream)
 
@@ -5709,8 +5709,8 @@ class ServiceRequestPdu( LogisticsFamilyPdu ):
         super( ServiceRequestPdu, self).parse(inputStream)
         self.requestingEntityID.parse(inputStream)
         self.servicingEntityID.parse(inputStream)
-        self.numberOfSupplyTypes = inputStream.read_null();
-        self.padding1 = inputStream.read_null();
+        self.numberOfSupplyTypes = inputStream.read_byte();
+        self.padding1 = inputStream.read_short();
         for idx in range(0, self.numberOfSupplyTypes):
             element = null()
             element.parse(inputStream)
@@ -5761,17 +5761,17 @@ class DirectedEnergyFirePdu( WarfareFamilyPdu ):
         self.eventID.serialize(outputStream)
         self.munitionType.serialize(outputStream)
         self.shotStartTime.serialize(outputStream)
-        outputStream.write_null(self.commulativeShotTime);
+        outputStream.write_float(self.commulativeShotTime);
         self.apertureEmitterLocation.serialize(outputStream)
-        outputStream.write_null(self.apertureDiameter);
-        outputStream.write_null(self.wavelength);
-        outputStream.write_null(self.pad1);
-        outputStream.write_null(self.pulseRepititionFrequency);
-        outputStream.write_null(self.pulseWidth);
-        outputStream.write_null(self.pad2);
-        outputStream.write_null(self.pad3);
-        outputStream.write_null(self.pad4);
-        outputStream.write_null( len(self.dERecords));
+        outputStream.write_float(self.apertureDiameter);
+        outputStream.write_float(self.wavelength);
+        outputStream.write_int(self.pad1);
+        outputStream.write_float(self.pulseRepititionFrequency);
+        outputStream.write_float(self.pulseWidth);
+        outputStream.write_byte(self.pad2);
+        outputStream.write_int(self.pad3);
+        outputStream.write_short(self.pad4);
+        outputStream.write_short( len(self.dERecords));
         for anObj in self.dERecords:
             anObj.serialize(outputStream)
 
@@ -5785,17 +5785,17 @@ class DirectedEnergyFirePdu( WarfareFamilyPdu ):
         self.eventID.parse(inputStream)
         self.munitionType.parse(inputStream)
         self.shotStartTime.parse(inputStream)
-        self.commulativeShotTime = inputStream.read_null();
+        self.commulativeShotTime = inputStream.read_float();
         self.apertureEmitterLocation.parse(inputStream)
-        self.apertureDiameter = inputStream.read_null();
-        self.wavelength = inputStream.read_null();
-        self.pad1 = inputStream.read_null();
-        self.pulseRepititionFrequency = inputStream.read_null();
-        self.pulseWidth = inputStream.read_null();
-        self.pad2 = inputStream.read_null();
-        self.pad3 = inputStream.read_null();
-        self.pad4 = inputStream.read_null();
-        self.numberOfDERecords = inputStream.read_null();
+        self.apertureDiameter = inputStream.read_float();
+        self.wavelength = inputStream.read_float();
+        self.pad1 = inputStream.read_int();
+        self.pulseRepititionFrequency = inputStream.read_float();
+        self.pulseWidth = inputStream.read_float();
+        self.pad2 = inputStream.read_byte();
+        self.pad3 = inputStream.read_int();
+        self.pad4 = inputStream.read_short();
+        self.numberOfDERecords = inputStream.read_short();
         for idx in range(0, self.numberOfDERecords):
             element = null()
             element.parse(inputStream)
@@ -5818,19 +5818,19 @@ class AcknowledgeRPdu( SimulationManagementWithReliabilityFamilyPdu ):
     def serialize(self, outputStream):
         """serialize the class """
         super( AcknowledgeRPdu, self ).serialize(outputStream)
-        outputStream.write_null(self.requestID);
+        outputStream.write_int(self.requestID);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
         super( AcknowledgeRPdu, self).parse(inputStream)
-        self.requestID = inputStream.read_null();
+        self.requestID = inputStream.read_int();
 
 
 
 class SEESPdu( DistributedEmissionsRegenerationFamilyPdu ):
-    """7.6.6 Certain supplemental information on an entity’s physical state and emissions. See 5.7.7"""
+    """7.6.6 Certain supplemental information on an entityâ€™s physical state and emissions. See 5.7.7"""
 
     def __init__(self):
         """ Initializer for SEESPdu"""
@@ -5858,11 +5858,11 @@ class SEESPdu( DistributedEmissionsRegenerationFamilyPdu ):
         """serialize the class """
         super( SEESPdu, self ).serialize(outputStream)
         self.orginatingEntityID.serialize(outputStream)
-        outputStream.write_null(self.infraredSignatureRepresentationIndex);
-        outputStream.write_null(self.acousticSignatureRepresentationIndex);
-        outputStream.write_null(self.radarCrossSectionSignatureRepresentationIndex);
-        outputStream.write_null( len(self.propulsionSystemData));
-        outputStream.write_null( len(self.vectoringSystemData));
+        outputStream.write_short(self.infraredSignatureRepresentationIndex);
+        outputStream.write_short(self.acousticSignatureRepresentationIndex);
+        outputStream.write_short(self.radarCrossSectionSignatureRepresentationIndex);
+        outputStream.write_short( len(self.propulsionSystemData));
+        outputStream.write_short( len(self.vectoringSystemData));
         for anObj in self.propulsionSystemData:
             anObj.serialize(outputStream)
 
@@ -5876,11 +5876,11 @@ class SEESPdu( DistributedEmissionsRegenerationFamilyPdu ):
 
         super( SEESPdu, self).parse(inputStream)
         self.orginatingEntityID.parse(inputStream)
-        self.infraredSignatureRepresentationIndex = inputStream.read_null();
-        self.acousticSignatureRepresentationIndex = inputStream.read_null();
-        self.radarCrossSectionSignatureRepresentationIndex = inputStream.read_null();
-        self.numberOfPropulsionSystems = inputStream.read_null();
-        self.numberOfVectoringNozzleSystems = inputStream.read_null();
+        self.infraredSignatureRepresentationIndex = inputStream.read_short();
+        self.acousticSignatureRepresentationIndex = inputStream.read_short();
+        self.radarCrossSectionSignatureRepresentationIndex = inputStream.read_short();
+        self.numberOfPropulsionSystems = inputStream.read_short();
+        self.numberOfVectoringNozzleSystems = inputStream.read_short();
         for idx in range(0, self.numberOfPropulsionSystems):
             element = null()
             element.parse(inputStream)
@@ -5936,8 +5936,8 @@ class DetonationPdu( WarfareFamilyPdu ):
         self.locationInWorldCoordinates.serialize(outputStream)
         self.descriptor.serialize(outputStream)
         self.locationOfEntityCoordinates.serialize(outputStream)
-        outputStream.write_null( len(self.variableParameters));
-        outputStream.write_null(self.pad);
+        outputStream.write_byte( len(self.variableParameters));
+        outputStream.write_short(self.pad);
         for anObj in self.variableParameters:
             anObj.serialize(outputStream)
 
@@ -5955,8 +5955,8 @@ class DetonationPdu( WarfareFamilyPdu ):
         self.locationInWorldCoordinates.parse(inputStream)
         self.descriptor.parse(inputStream)
         self.locationOfEntityCoordinates.parse(inputStream)
-        self.numberOfVariableParameters = inputStream.read_null();
-        self.pad = inputStream.read_null();
+        self.numberOfVariableParameters = inputStream.read_byte();
+        self.pad = inputStream.read_short();
         for idx in range(0, self.numberOfVariableParameters):
             element = null()
             element.parse(inputStream)
@@ -6041,9 +6041,9 @@ class ActionResponseRPdu( SimulationManagementWithReliabilityFamilyPdu ):
     def serialize(self, outputStream):
         """serialize the class """
         super( ActionResponseRPdu, self ).serialize(outputStream)
-        outputStream.write_null(self.requestID);
-        outputStream.write_null( len(self.fixedDatumRecords));
-        outputStream.write_null( len(self.variableDatumRecords));
+        outputStream.write_int(self.requestID);
+        outputStream.write_int( len(self.fixedDatumRecords));
+        outputStream.write_int( len(self.variableDatumRecords));
         for anObj in self.fixedDatumRecords:
             anObj.serialize(outputStream)
 
@@ -6056,9 +6056,9 @@ class ActionResponseRPdu( SimulationManagementWithReliabilityFamilyPdu ):
         """"Parse a message. This may recursively call embedded objects."""
 
         super( ActionResponseRPdu, self).parse(inputStream)
-        self.requestID = inputStream.read_null();
-        self.numberOfFixedDatumRecords = inputStream.read_null();
-        self.numberOfVariableDatumRecords = inputStream.read_null();
+        self.requestID = inputStream.read_int();
+        self.numberOfFixedDatumRecords = inputStream.read_int();
+        self.numberOfVariableDatumRecords = inputStream.read_int();
         for idx in range(0, self.numberOfFixedDatumRecords):
             element = null()
             element.parse(inputStream)
@@ -6106,11 +6106,11 @@ class FirePdu( WarfareFamilyPdu ):
         self.targetEntityID.serialize(outputStream)
         self.munitionExpendibleID.serialize(outputStream)
         self.eventID.serialize(outputStream)
-        outputStream.write_null(self.fireMissionIndex);
+        outputStream.write_int(self.fireMissionIndex);
         self.locationInWorldCoordinates.serialize(outputStream)
         self.descriptor.serialize(outputStream)
         self.velocity.serialize(outputStream)
-        outputStream.write_null(self.range);
+        outputStream.write_float(self.range);
 
 
     def parse(self, inputStream):
@@ -6121,11 +6121,11 @@ class FirePdu( WarfareFamilyPdu ):
         self.targetEntityID.parse(inputStream)
         self.munitionExpendibleID.parse(inputStream)
         self.eventID.parse(inputStream)
-        self.fireMissionIndex = inputStream.read_null();
+        self.fireMissionIndex = inputStream.read_int();
         self.locationInWorldCoordinates.parse(inputStream)
         self.descriptor.parse(inputStream)
         self.velocity.parse(inputStream)
-        self.range = inputStream.read_null();
+        self.range = inputStream.read_float();
 
 
 
@@ -6153,10 +6153,10 @@ class DataQueryPdu( SimulationManagementFamilyPdu ):
     def serialize(self, outputStream):
         """serialize the class """
         super( DataQueryPdu, self ).serialize(outputStream)
-        outputStream.write_null(self.requestID);
-        outputStream.write_null(self.timeInterval);
-        outputStream.write_null( len(self.fixedDatums));
-        outputStream.write_null( len(self.variableDatums));
+        outputStream.write_int(self.requestID);
+        outputStream.write_int(self.timeInterval);
+        outputStream.write_int( len(self.fixedDatums));
+        outputStream.write_int( len(self.variableDatums));
         for anObj in self.fixedDatums:
             anObj.serialize(outputStream)
 
@@ -6169,10 +6169,10 @@ class DataQueryPdu( SimulationManagementFamilyPdu ):
         """"Parse a message. This may recursively call embedded objects."""
 
         super( DataQueryPdu, self).parse(inputStream)
-        self.requestID = inputStream.read_null();
-        self.timeInterval = inputStream.read_null();
-        self.numberOfFixedDatumRecords = inputStream.read_null();
-        self.numberOfVariableDatumRecords = inputStream.read_null();
+        self.requestID = inputStream.read_int();
+        self.timeInterval = inputStream.read_int();
+        self.numberOfFixedDatumRecords = inputStream.read_int();
+        self.numberOfVariableDatumRecords = inputStream.read_int();
         for idx in range(0, self.numberOfFixedDatumRecords):
             element = null()
             element.parse(inputStream)
@@ -6212,11 +6212,11 @@ class DataRPdu( SimulationManagementWithReliabilityFamilyPdu ):
     def serialize(self, outputStream):
         """serialize the class """
         super( DataRPdu, self ).serialize(outputStream)
-        outputStream.write_null(self.requestID);
-        outputStream.write_null(self.pad1);
-        outputStream.write_null(self.pad2);
-        outputStream.write_null( len(self.fixedDatumRecords));
-        outputStream.write_null( len(self.variableDatumRecords));
+        outputStream.write_int(self.requestID);
+        outputStream.write_byte(self.pad1);
+        outputStream.write_short(self.pad2);
+        outputStream.write_int( len(self.fixedDatumRecords));
+        outputStream.write_int( len(self.variableDatumRecords));
         for anObj in self.fixedDatumRecords:
             anObj.serialize(outputStream)
 
@@ -6229,11 +6229,11 @@ class DataRPdu( SimulationManagementWithReliabilityFamilyPdu ):
         """"Parse a message. This may recursively call embedded objects."""
 
         super( DataRPdu, self).parse(inputStream)
-        self.requestID = inputStream.read_null();
-        self.pad1 = inputStream.read_null();
-        self.pad2 = inputStream.read_null();
-        self.numberOfFixedDatumRecords = inputStream.read_null();
-        self.numberOfVariableDatumRecords = inputStream.read_null();
+        self.requestID = inputStream.read_int();
+        self.pad1 = inputStream.read_byte();
+        self.pad2 = inputStream.read_short();
+        self.numberOfFixedDatumRecords = inputStream.read_int();
+        self.numberOfVariableDatumRecords = inputStream.read_int();
         for idx in range(0, self.numberOfFixedDatumRecords):
             element = null()
             element.parse(inputStream)
@@ -6268,10 +6268,10 @@ class ReceiverPdu( RadioCommunicationsFamilyPdu ):
         """serialize the class """
         super( ReceiverPdu, self ).serialize(outputStream)
         self.header.serialize(outputStream)
-        outputStream.write_null(self.padding1);
-        outputStream.write_null(self.receivedPower);
+        outputStream.write_short(self.padding1);
+        outputStream.write_float(self.receivedPower);
         self.transmitterEntityId.serialize(outputStream)
-        outputStream.write_null(self.transmitterRadioId);
+        outputStream.write_short(self.transmitterRadioId);
 
 
     def parse(self, inputStream):
@@ -6279,10 +6279,10 @@ class ReceiverPdu( RadioCommunicationsFamilyPdu ):
 
         super( ReceiverPdu, self).parse(inputStream)
         self.header.parse(inputStream)
-        self.padding1 = inputStream.read_null();
-        self.receivedPower = inputStream.read_null();
+        self.padding1 = inputStream.read_short();
+        self.receivedPower = inputStream.read_float();
         self.transmitterEntityId.parse(inputStream)
-        self.transmitterRadioId = inputStream.read_null();
+        self.transmitterRadioId = inputStream.read_short();
 
 
 
@@ -6302,18 +6302,18 @@ class RemoveEntityRPdu( SimulationManagementWithReliabilityFamilyPdu ):
     def serialize(self, outputStream):
         """serialize the class """
         super( RemoveEntityRPdu, self ).serialize(outputStream)
-        outputStream.write_null(self.pad1);
-        outputStream.write_null(self.pad2);
-        outputStream.write_null(self.requestID);
+        outputStream.write_byte(self.pad1);
+        outputStream.write_short(self.pad2);
+        outputStream.write_int(self.requestID);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
         super( RemoveEntityRPdu, self).parse(inputStream)
-        self.pad1 = inputStream.read_null();
-        self.pad2 = inputStream.read_null();
-        self.requestID = inputStream.read_null();
+        self.pad1 = inputStream.read_byte();
+        self.pad2 = inputStream.read_short();
+        self.requestID = inputStream.read_int();
 
 
 
@@ -6347,8 +6347,8 @@ class LinearObjectStatePdu( SyntheticEnvironmentFamilyPdu ):
         super( LinearObjectStatePdu, self ).serialize(outputStream)
         self.objectID.serialize(outputStream)
         self.referencedObjectID.serialize(outputStream)
-        outputStream.write_null(self.updateNumber);
-        outputStream.write_null( len(self.linearSegmentParameters));
+        outputStream.write_short(self.updateNumber);
+        outputStream.write_byte( len(self.linearSegmentParameters));
         self.requesterID.serialize(outputStream)
         self.receivingID.serialize(outputStream)
         self.objectType.serialize(outputStream)
@@ -6363,8 +6363,8 @@ class LinearObjectStatePdu( SyntheticEnvironmentFamilyPdu ):
         super( LinearObjectStatePdu, self).parse(inputStream)
         self.objectID.parse(inputStream)
         self.referencedObjectID.parse(inputStream)
-        self.updateNumber = inputStream.read_null();
-        self.numberOfLinearSegments = inputStream.read_null();
+        self.updateNumber = inputStream.read_short();
+        self.numberOfLinearSegments = inputStream.read_byte();
         self.requesterID.parse(inputStream)
         self.receivingID.parse(inputStream)
         self.objectType.parse(inputStream)
@@ -6406,15 +6406,15 @@ class IntercomControlPdu( RadioCommunicationsFamilyPdu ):
     def serialize(self, outputStream):
         """serialize the class """
         super( IntercomControlPdu, self ).serialize(outputStream)
-        outputStream.write_null(self.communicationsChannelType);
+        outputStream.write_byte(self.communicationsChannelType);
         self.sourceEntityID.serialize(outputStream)
-        outputStream.write_null(self.sourceIntercomNumber);
-        outputStream.write_null(self.sourceLineID);
-        outputStream.write_null(self.transmitPriority);
+        outputStream.write_short(self.sourceIntercomNumber);
+        outputStream.write_byte(self.sourceLineID);
+        outputStream.write_byte(self.transmitPriority);
         self.masterIntercomReferenceID.serialize(outputStream)
-        outputStream.write_null(self.masterIntercomNumber);
-        outputStream.write_null(self.masterChannelID);
-        outputStream.write_null( len(self.intercomParameters));
+        outputStream.write_short(self.masterIntercomNumber);
+        outputStream.write_short(self.masterChannelID);
+        outputStream.write_int( len(self.intercomParameters));
         for anObj in self.intercomParameters:
             anObj.serialize(outputStream)
 
@@ -6424,15 +6424,15 @@ class IntercomControlPdu( RadioCommunicationsFamilyPdu ):
         """"Parse a message. This may recursively call embedded objects."""
 
         super( IntercomControlPdu, self).parse(inputStream)
-        self.communicationsChannelType = inputStream.read_null();
+        self.communicationsChannelType = inputStream.read_byte();
         self.sourceEntityID.parse(inputStream)
-        self.sourceIntercomNumber = inputStream.read_null();
-        self.sourceLineID = inputStream.read_null();
-        self.transmitPriority = inputStream.read_null();
+        self.sourceIntercomNumber = inputStream.read_short();
+        self.sourceLineID = inputStream.read_byte();
+        self.transmitPriority = inputStream.read_byte();
         self.masterIntercomReferenceID.parse(inputStream)
-        self.masterIntercomNumber = inputStream.read_null();
-        self.masterChannelID = inputStream.read_null();
-        self.intercomParametersLength = inputStream.read_null();
+        self.masterIntercomNumber = inputStream.read_short();
+        self.masterChannelID = inputStream.read_short();
+        self.intercomParametersLength = inputStream.read_int();
         for idx in range(0, self.intercomParametersLength):
             element = null()
             element.parse(inputStream)
@@ -6465,12 +6465,12 @@ class SignalPdu( RadioCommunicationsFamilyPdu ):
         """serialize the class """
         super( SignalPdu, self ).serialize(outputStream)
         self.header.serialize(outputStream)
-        outputStream.write_null(self.encodingScheme);
-        outputStream.write_null(self.sampleRate);
-        outputStream.write_null(self.dataLength);
-        outputStream.write_null(self.samples);
+        outputStream.write_short(self.encodingScheme);
+        outputStream.write_int(self.sampleRate);
+        outputStream.write_short(self.dataLength);
+        outputStream.write_short(self.samples);
         for idx in range(0, 0):
-            outputStream.write_null( self.data[ idx ] );
+            outputStream.write_UnsignedByte( self.data[ idx ] );
 
 
 
@@ -6479,13 +6479,13 @@ class SignalPdu( RadioCommunicationsFamilyPdu ):
 
         super( SignalPdu, self).parse(inputStream)
         self.header.parse(inputStream)
-        self.encodingScheme = inputStream.read_null();
-        self.sampleRate = inputStream.read_null();
-        self.dataLength = inputStream.read_null();
-        self.samples = inputStream.read_null();
+        self.encodingScheme = inputStream.read_short();
+        self.sampleRate = inputStream.read_int();
+        self.dataLength = inputStream.read_short();
+        self.samples = inputStream.read_short();
         self.data = [0]*0
         for idx in range(0, 0):
-            val = inputStream.read_null
+            val = inputStream.read_UnsignedByte
             self.data[  idx  ] = val
 
 
@@ -6531,12 +6531,12 @@ class InformationOperationsReportPdu( InformationOperationsFamilyPdu ):
     def serialize(self, outputStream):
         """serialize the class """
         super( InformationOperationsReportPdu, self ).serialize(outputStream)
-        outputStream.write_null(self.padding1);
+        outputStream.write_byte(self.padding1);
         self.ioAttackerID.serialize(outputStream)
         self.ioPrimaryTargetID.serialize(outputStream)
-        outputStream.write_null(self.padding2);
-        outputStream.write_null(self.padding3);
-        outputStream.write_null( len(self.ioRecords));
+        outputStream.write_short(self.padding2);
+        outputStream.write_short(self.padding3);
+        outputStream.write_short( len(self.ioRecords));
         for anObj in self.ioRecords:
             anObj.serialize(outputStream)
 
@@ -6546,12 +6546,12 @@ class InformationOperationsReportPdu( InformationOperationsFamilyPdu ):
         """"Parse a message. This may recursively call embedded objects."""
 
         super( InformationOperationsReportPdu, self).parse(inputStream)
-        self.padding1 = inputStream.read_null();
+        self.padding1 = inputStream.read_byte();
         self.ioAttackerID.parse(inputStream)
         self.ioPrimaryTargetID.parse(inputStream)
-        self.padding2 = inputStream.read_null();
-        self.padding3 = inputStream.read_null();
-        self.numberOfIORecords = inputStream.read_null();
+        self.padding2 = inputStream.read_short();
+        self.padding3 = inputStream.read_short();
+        self.numberOfIORecords = inputStream.read_short();
         for idx in range(0, self.numberOfIORecords):
             element = null()
             element.parse(inputStream)
@@ -6582,9 +6582,9 @@ class StartResumeRPdu( SimulationManagementWithReliabilityFamilyPdu ):
         super( StartResumeRPdu, self ).serialize(outputStream)
         self.realWorldTime.serialize(outputStream)
         self.simulationTime.serialize(outputStream)
-        outputStream.write_null(self.pad1);
-        outputStream.write_null(self.pad2);
-        outputStream.write_null(self.requestID);
+        outputStream.write_byte(self.pad1);
+        outputStream.write_short(self.pad2);
+        outputStream.write_int(self.requestID);
 
 
     def parse(self, inputStream):
@@ -6593,9 +6593,9 @@ class StartResumeRPdu( SimulationManagementWithReliabilityFamilyPdu ):
         super( StartResumeRPdu, self).parse(inputStream)
         self.realWorldTime.parse(inputStream)
         self.simulationTime.parse(inputStream)
-        self.pad1 = inputStream.read_null();
-        self.pad2 = inputStream.read_null();
-        self.requestID = inputStream.read_null();
+        self.pad1 = inputStream.read_byte();
+        self.pad2 = inputStream.read_short();
+        self.requestID = inputStream.read_int();
 
 
 
@@ -6644,18 +6644,18 @@ class CollisionElasticPdu( EntityInformationInteractionFamilyPdu ):
         self.issuingEntityID.serialize(outputStream)
         self.collidingEntityID.serialize(outputStream)
         self.collisionEventID.serialize(outputStream)
-        outputStream.write_null(self.pad);
+        outputStream.write_short(self.pad);
         self.contactVelocity.serialize(outputStream)
-        outputStream.write_null(self.mass);
+        outputStream.write_float(self.mass);
         self.locationOfImpact.serialize(outputStream)
-        outputStream.write_null(self.collisionIntermediateResultXX);
-        outputStream.write_null(self.collisionIntermediateResultXY);
-        outputStream.write_null(self.collisionIntermediateResultXZ);
-        outputStream.write_null(self.collisionIntermediateResultYY);
-        outputStream.write_null(self.collisionIntermediateResultYZ);
-        outputStream.write_null(self.collisionIntermediateResultZZ);
+        outputStream.write_float(self.collisionIntermediateResultXX);
+        outputStream.write_float(self.collisionIntermediateResultXY);
+        outputStream.write_float(self.collisionIntermediateResultXZ);
+        outputStream.write_float(self.collisionIntermediateResultYY);
+        outputStream.write_float(self.collisionIntermediateResultYZ);
+        outputStream.write_float(self.collisionIntermediateResultZZ);
         self.unitSurfaceNormal.serialize(outputStream)
-        outputStream.write_null(self.coefficientOfRestitution);
+        outputStream.write_float(self.coefficientOfRestitution);
 
 
     def parse(self, inputStream):
@@ -6665,23 +6665,23 @@ class CollisionElasticPdu( EntityInformationInteractionFamilyPdu ):
         self.issuingEntityID.parse(inputStream)
         self.collidingEntityID.parse(inputStream)
         self.collisionEventID.parse(inputStream)
-        self.pad = inputStream.read_null();
+        self.pad = inputStream.read_short();
         self.contactVelocity.parse(inputStream)
-        self.mass = inputStream.read_null();
+        self.mass = inputStream.read_float();
         self.locationOfImpact.parse(inputStream)
-        self.collisionIntermediateResultXX = inputStream.read_null();
-        self.collisionIntermediateResultXY = inputStream.read_null();
-        self.collisionIntermediateResultXZ = inputStream.read_null();
-        self.collisionIntermediateResultYY = inputStream.read_null();
-        self.collisionIntermediateResultYZ = inputStream.read_null();
-        self.collisionIntermediateResultZZ = inputStream.read_null();
+        self.collisionIntermediateResultXX = inputStream.read_float();
+        self.collisionIntermediateResultXY = inputStream.read_float();
+        self.collisionIntermediateResultXZ = inputStream.read_float();
+        self.collisionIntermediateResultYY = inputStream.read_float();
+        self.collisionIntermediateResultYZ = inputStream.read_float();
+        self.collisionIntermediateResultZZ = inputStream.read_float();
         self.unitSurfaceNormal.parse(inputStream)
-        self.coefficientOfRestitution = inputStream.read_null();
+        self.coefficientOfRestitution = inputStream.read_float();
 
 
 
 class TSPIPdu( LiveEntityFamilyPdu ):
-    """9.4.2 The Time Space Position Information (TSPI) PDU shall communicate information about the LE’s state vector."""
+    """9.4.2 The Time Space Position Information (TSPI) PDU shall communicate information about the LEâ€™s state vector."""
 
     def __init__(self):
         """ Initializer for TSPIPdu"""
@@ -6705,17 +6705,17 @@ class TSPIPdu( LiveEntityFamilyPdu ):
         """serialize the class """
         super( TSPIPdu, self ).serialize(outputStream)
         self.liveEntityId.serialize(outputStream)
-        outputStream.write_null(self.TSPIFlag);
+        outputStream.write_byte(self.TSPIFlag);
         self.entityLocation.serialize(outputStream)
         self.entityLinearVelocity.serialize(outputStream)
         self.entityOrientation.serialize(outputStream)
         self.positionError.serialize(outputStream)
         self.orientationError.serialize(outputStream)
         self.deadReckoningParameters.serialize(outputStream)
-        outputStream.write_null(self.measuredSpeed);
-        outputStream.write_null(self.systemSpecificDataLength);
+        outputStream.write_short(self.measuredSpeed);
+        outputStream.write_byte(self.systemSpecificDataLength);
         for idx in range(0, 0):
-            outputStream.write_null( self.systemSpecificData[ idx ] );
+            outputStream.write_UnsignedByte( self.systemSpecificData[ idx ] );
 
 
 
@@ -6724,18 +6724,18 @@ class TSPIPdu( LiveEntityFamilyPdu ):
 
         super( TSPIPdu, self).parse(inputStream)
         self.liveEntityId.parse(inputStream)
-        self.TSPIFlag = inputStream.read_null();
+        self.TSPIFlag = inputStream.read_byte();
         self.entityLocation.parse(inputStream)
         self.entityLinearVelocity.parse(inputStream)
         self.entityOrientation.parse(inputStream)
         self.positionError.parse(inputStream)
         self.orientationError.parse(inputStream)
         self.deadReckoningParameters.parse(inputStream)
-        self.measuredSpeed = inputStream.read_null();
-        self.systemSpecificDataLength = inputStream.read_null();
+        self.measuredSpeed = inputStream.read_short();
+        self.systemSpecificDataLength = inputStream.read_byte();
         self.systemSpecificData = [0]*0
         for idx in range(0, 0):
-            val = inputStream.read_null
+            val = inputStream.read_UnsignedByte
             self.systemSpecificData[  idx  ] = val
 
 
@@ -6773,12 +6773,12 @@ class DesignatorPdu( DistributedEmissionsRegenerationFamilyPdu ):
         super( DesignatorPdu, self ).serialize(outputStream)
         self.designatingEntityID.serialize(outputStream)
         self.designatedEntityID.serialize(outputStream)
-        outputStream.write_null(self.designatorPower);
-        outputStream.write_null(self.designatorWavelength);
+        outputStream.write_float(self.designatorPower);
+        outputStream.write_float(self.designatorWavelength);
         self.designatorSpotWrtDesignated.serialize(outputStream)
         self.designatorSpotLocation.serialize(outputStream)
-        outputStream.write_null(self.padding1);
-        outputStream.write_null(self.padding2);
+        outputStream.write_byte(self.padding1);
+        outputStream.write_short(self.padding2);
         self.entityLinearAcceleration.serialize(outputStream)
 
 
@@ -6788,12 +6788,12 @@ class DesignatorPdu( DistributedEmissionsRegenerationFamilyPdu ):
         super( DesignatorPdu, self).parse(inputStream)
         self.designatingEntityID.parse(inputStream)
         self.designatedEntityID.parse(inputStream)
-        self.designatorPower = inputStream.read_null();
-        self.designatorWavelength = inputStream.read_null();
+        self.designatorPower = inputStream.read_float();
+        self.designatorWavelength = inputStream.read_float();
         self.designatorSpotWrtDesignated.parse(inputStream)
         self.designatorSpotLocation.parse(inputStream)
-        self.padding1 = inputStream.read_null();
-        self.padding2 = inputStream.read_null();
+        self.padding1 = inputStream.read_byte();
+        self.padding2 = inputStream.read_short();
         self.entityLinearAcceleration.parse(inputStream)
 
 
@@ -6832,13 +6832,13 @@ class EntityStatePdu( EntityInformationInteractionFamilyPdu ):
         """serialize the class """
         super( EntityStatePdu, self ).serialize(outputStream)
         self.entityID.serialize(outputStream)
-        outputStream.write_null( len(self.variableParameters));
+        outputStream.write_byte( len(self.variableParameters));
         self.entityType.serialize(outputStream)
         self.alternativeEntityType.serialize(outputStream)
         self.entityLinearVelocity.serialize(outputStream)
         self.entityLocation.serialize(outputStream)
         self.entityOrientation.serialize(outputStream)
-        outputStream.write_null(self.entityAppearance);
+        outputStream.write_int(self.entityAppearance);
         self.deadReckoningParameters.serialize(outputStream)
         self.marking.serialize(outputStream)
         for anObj in self.variableParameters:
@@ -6851,13 +6851,13 @@ class EntityStatePdu( EntityInformationInteractionFamilyPdu ):
 
         super( EntityStatePdu, self).parse(inputStream)
         self.entityID.parse(inputStream)
-        self.numberOfVariableParameters = inputStream.read_null();
+        self.numberOfVariableParameters = inputStream.read_byte();
         self.entityType.parse(inputStream)
         self.alternativeEntityType.parse(inputStream)
         self.entityLinearVelocity.parse(inputStream)
         self.entityLocation.parse(inputStream)
         self.entityOrientation.parse(inputStream)
-        self.entityAppearance = inputStream.read_null();
+        self.entityAppearance = inputStream.read_int();
         self.deadReckoningParameters.parse(inputStream)
         self.marking.parse(inputStream)
         for idx in range(0, self.numberOfVariableParameters):
@@ -6869,7 +6869,7 @@ class EntityStatePdu( EntityInformationInteractionFamilyPdu ):
 
 
 class ArticulatedPartsPdu( LiveEntityFamilyPdu ):
-    """9.4.4 Communicate information about an entity’s articulated and attached parts."""
+    """9.4.4 Communicate information about an entityâ€™s articulated and attached parts."""
 
     def __init__(self):
         """ Initializer for ArticulatedPartsPdu"""
@@ -6884,7 +6884,7 @@ class ArticulatedPartsPdu( LiveEntityFamilyPdu ):
         """serialize the class """
         super( ArticulatedPartsPdu, self ).serialize(outputStream)
         self.liveEntityId.serialize(outputStream)
-        outputStream.write_null( len(self.variableParameters));
+        outputStream.write_byte( len(self.variableParameters));
         for anObj in self.variableParameters:
             anObj.serialize(outputStream)
 
@@ -6895,7 +6895,7 @@ class ArticulatedPartsPdu( LiveEntityFamilyPdu ):
 
         super( ArticulatedPartsPdu, self).parse(inputStream)
         self.liveEntityId.parse(inputStream)
-        self.numberOfParameterRecords = inputStream.read_null();
+        self.numberOfParameterRecords = inputStream.read_byte();
         for idx in range(0, self.numberOfParameterRecords):
             element = null()
             element.parse(inputStream)
@@ -6930,11 +6930,11 @@ class SetDataRPdu( SimulationManagementWithReliabilityFamilyPdu ):
     def serialize(self, outputStream):
         """serialize the class """
         super( SetDataRPdu, self ).serialize(outputStream)
-        outputStream.write_null(self.pad1);
-        outputStream.write_null(self.pad2);
-        outputStream.write_null(self.requestID);
-        outputStream.write_null( len(self.fixedDatumRecords));
-        outputStream.write_null( len(self.variableDatumRecords));
+        outputStream.write_byte(self.pad1);
+        outputStream.write_short(self.pad2);
+        outputStream.write_int(self.requestID);
+        outputStream.write_int( len(self.fixedDatumRecords));
+        outputStream.write_int( len(self.variableDatumRecords));
         for anObj in self.fixedDatumRecords:
             anObj.serialize(outputStream)
 
@@ -6947,11 +6947,11 @@ class SetDataRPdu( SimulationManagementWithReliabilityFamilyPdu ):
         """"Parse a message. This may recursively call embedded objects."""
 
         super( SetDataRPdu, self).parse(inputStream)
-        self.pad1 = inputStream.read_null();
-        self.pad2 = inputStream.read_null();
-        self.requestID = inputStream.read_null();
-        self.numberOfFixedDatumRecords = inputStream.read_null();
-        self.numberOfVariableDatumRecords = inputStream.read_null();
+        self.pad1 = inputStream.read_byte();
+        self.pad2 = inputStream.read_short();
+        self.requestID = inputStream.read_int();
+        self.numberOfFixedDatumRecords = inputStream.read_int();
+        self.numberOfVariableDatumRecords = inputStream.read_int();
         for idx in range(0, self.numberOfFixedDatumRecords):
             element = null()
             element.parse(inputStream)
@@ -6983,8 +6983,8 @@ class CommentRPdu( SimulationManagementWithReliabilityFamilyPdu ):
     def serialize(self, outputStream):
         """serialize the class """
         super( CommentRPdu, self ).serialize(outputStream)
-        outputStream.write_null(self.numberOfFixedDatumRecords);
-        outputStream.write_null( len(self.variableDatumRecords));
+        outputStream.write_int(self.numberOfFixedDatumRecords);
+        outputStream.write_int( len(self.variableDatumRecords));
         for anObj in self.variableDatumRecords:
             anObj.serialize(outputStream)
 
@@ -6994,8 +6994,8 @@ class CommentRPdu( SimulationManagementWithReliabilityFamilyPdu ):
         """"Parse a message. This may recursively call embedded objects."""
 
         super( CommentRPdu, self).parse(inputStream)
-        self.numberOfFixedDatumRecords = inputStream.read_null();
-        self.numberOfVariableDatumRecords = inputStream.read_null();
+        self.numberOfFixedDatumRecords = inputStream.read_int();
+        self.numberOfVariableDatumRecords = inputStream.read_int();
         for idx in range(0, self.numberOfVariableDatumRecords):
             element = null()
             element.parse(inputStream)
@@ -7048,20 +7048,20 @@ class TransmitterPdu( RadioCommunicationsFamilyPdu ):
         """serialize the class """
         super( TransmitterPdu, self ).serialize(outputStream)
         self.header.serialize(outputStream)
-        outputStream.write_null(self.radioNumber);
+        outputStream.write_short(self.radioNumber);
         self.radioEntityType.serialize(outputStream)
-        outputStream.write_null(self.variableTransmitterParameterCount);
+        outputStream.write_short(self.variableTransmitterParameterCount);
         self.antennaLocation.serialize(outputStream)
         self.relativeAntennaLocation.serialize(outputStream)
-        outputStream.write_null( len(self.antennaPatternList));
-        outputStream.write_null(self.frequency);
-        outputStream.write_null(self.transmitFrequencyBandwidth);
-        outputStream.write_null(self.power);
+        outputStream.write_short( len(self.antennaPatternList));
+        outputStream.write_long(self.frequency);
+        outputStream.write_float(self.transmitFrequencyBandwidth);
+        outputStream.write_float(self.power);
         self.modulationType.serialize(outputStream)
-        outputStream.write_null(self.cryptoKeyId);
-        outputStream.write_null( len(self.modulationParametersList));
-        outputStream.write_null(self.padding1);
-        outputStream.write_null(self.padding2);
+        outputStream.write_short(self.cryptoKeyId);
+        outputStream.write_byte( len(self.modulationParametersList));
+        outputStream.write_byte(self.padding1);
+        outputStream.write_short(self.padding2);
         for anObj in self.modulationParametersList:
             anObj.serialize(outputStream)
 
@@ -7075,20 +7075,20 @@ class TransmitterPdu( RadioCommunicationsFamilyPdu ):
 
         super( TransmitterPdu, self).parse(inputStream)
         self.header.parse(inputStream)
-        self.radioNumber = inputStream.read_null();
+        self.radioNumber = inputStream.read_short();
         self.radioEntityType.parse(inputStream)
-        self.variableTransmitterParameterCount = inputStream.read_null();
+        self.variableTransmitterParameterCount = inputStream.read_short();
         self.antennaLocation.parse(inputStream)
         self.relativeAntennaLocation.parse(inputStream)
-        self.antennaPatternCount = inputStream.read_null();
-        self.frequency = inputStream.read_null();
-        self.transmitFrequencyBandwidth = inputStream.read_null();
-        self.power = inputStream.read_null();
+        self.antennaPatternCount = inputStream.read_short();
+        self.frequency = inputStream.read_long();
+        self.transmitFrequencyBandwidth = inputStream.read_float();
+        self.power = inputStream.read_float();
         self.modulationType.parse(inputStream)
-        self.cryptoKeyId = inputStream.read_null();
-        self.modulationParameterCount = inputStream.read_null();
-        self.padding1 = inputStream.read_null();
-        self.padding2 = inputStream.read_null();
+        self.cryptoKeyId = inputStream.read_short();
+        self.modulationParameterCount = inputStream.read_byte();
+        self.padding1 = inputStream.read_byte();
+        self.padding2 = inputStream.read_short();
         for idx in range(0, self.modulationParameterCount):
             element = null()
             element.parse(inputStream)
@@ -7123,11 +7123,11 @@ class SetRecordRPdu( SimulationManagementWithReliabilityFamilyPdu ):
     def serialize(self, outputStream):
         """serialize the class """
         super( SetRecordRPdu, self ).serialize(outputStream)
-        outputStream.write_null(self.requestID);
-        outputStream.write_null(self.pad1);
-        outputStream.write_null(self.pad2);
-        outputStream.write_null(self.pad3);
-        outputStream.write_null( len(self.recordSets));
+        outputStream.write_int(self.requestID);
+        outputStream.write_byte(self.pad1);
+        outputStream.write_short(self.pad2);
+        outputStream.write_int(self.pad3);
+        outputStream.write_int( len(self.recordSets));
         for anObj in self.recordSets:
             anObj.serialize(outputStream)
 
@@ -7137,11 +7137,11 @@ class SetRecordRPdu( SimulationManagementWithReliabilityFamilyPdu ):
         """"Parse a message. This may recursively call embedded objects."""
 
         super( SetRecordRPdu, self).parse(inputStream)
-        self.requestID = inputStream.read_null();
-        self.pad1 = inputStream.read_null();
-        self.pad2 = inputStream.read_null();
-        self.pad3 = inputStream.read_null();
-        self.numberOfRecordSets = inputStream.read_null();
+        self.requestID = inputStream.read_int();
+        self.pad1 = inputStream.read_byte();
+        self.pad2 = inputStream.read_short();
+        self.pad3 = inputStream.read_int();
+        self.numberOfRecordSets = inputStream.read_int();
         for idx in range(0, self.numberOfRecordSets):
             element = null()
             element.parse(inputStream)
@@ -7176,8 +7176,8 @@ class LEDetonationPdu( LiveEntityFamilyPdu ):
         """serialize the class """
         super( LEDetonationPdu, self ).serialize(outputStream)
         self.firingLiveEntityId.serialize(outputStream)
-        outputStream.write_null(self.detonationFlag1);
-        outputStream.write_null(self.detonationFlag2);
+        outputStream.write_byte(self.detonationFlag1);
+        outputStream.write_byte(self.detonationFlag2);
         self.targetLiveEntityId.serialize(outputStream)
         self.munitionLiveEntityId.serialize(outputStream)
         self.eventId.serialize(outputStream)
@@ -7186,7 +7186,7 @@ class LEDetonationPdu( LiveEntityFamilyPdu ):
         self.munitionOrientation.serialize(outputStream)
         self.munitionDescriptor.serialize(outputStream)
         self.entityLocation.serialize(outputStream)
-        outputStream.write_null(self.detonationResult);
+        outputStream.write_byte(self.detonationResult);
 
 
     def parse(self, inputStream):
@@ -7194,8 +7194,8 @@ class LEDetonationPdu( LiveEntityFamilyPdu ):
 
         super( LEDetonationPdu, self).parse(inputStream)
         self.firingLiveEntityId.parse(inputStream)
-        self.detonationFlag1 = inputStream.read_null();
-        self.detonationFlag2 = inputStream.read_null();
+        self.detonationFlag1 = inputStream.read_byte();
+        self.detonationFlag2 = inputStream.read_byte();
         self.targetLiveEntityId.parse(inputStream)
         self.munitionLiveEntityId.parse(inputStream)
         self.eventId.parse(inputStream)
@@ -7204,7 +7204,7 @@ class LEDetonationPdu( LiveEntityFamilyPdu ):
         self.munitionOrientation.parse(inputStream)
         self.munitionDescriptor.parse(inputStream)
         self.entityLocation.parse(inputStream)
-        self.detonationResult = inputStream.read_null();
+        self.detonationResult = inputStream.read_byte();
 
 
 
@@ -7232,8 +7232,8 @@ class EnvironmentalProcessPdu( SyntheticEnvironmentFamilyPdu ):
         super( EnvironmentalProcessPdu, self ).serialize(outputStream)
         self.environementalProcessID.serialize(outputStream)
         self.environmentType.serialize(outputStream)
-        outputStream.write_null( len(self.environmentRecords));
-        outputStream.write_null(self.sequenceNumber);
+        outputStream.write_short( len(self.environmentRecords));
+        outputStream.write_short(self.sequenceNumber);
         for anObj in self.environmentRecords:
             anObj.serialize(outputStream)
 
@@ -7245,8 +7245,8 @@ class EnvironmentalProcessPdu( SyntheticEnvironmentFamilyPdu ):
         super( EnvironmentalProcessPdu, self).parse(inputStream)
         self.environementalProcessID.parse(inputStream)
         self.environmentType.parse(inputStream)
-        self.numberOfEnvironmentRecords = inputStream.read_null();
-        self.sequenceNumber = inputStream.read_null();
+        self.numberOfEnvironmentRecords = inputStream.read_short();
+        self.sequenceNumber = inputStream.read_short();
         for idx in range(0, self.numberOfEnvironmentRecords):
             element = null()
             element.parse(inputStream)
@@ -7281,8 +7281,8 @@ class ElectromagneticEmissionPdu( DistributedEmissionsRegenerationFamilyPdu ):
         super( ElectromagneticEmissionPdu, self ).serialize(outputStream)
         self.emittingEntityID.serialize(outputStream)
         self.eventID.serialize(outputStream)
-        outputStream.write_null( len(self.systems));
-        outputStream.write_null(self.paddingForEmissionsPdu);
+        outputStream.write_byte( len(self.systems));
+        outputStream.write_short(self.paddingForEmissionsPdu);
         for anObj in self.systems:
             anObj.serialize(outputStream)
 
@@ -7294,8 +7294,8 @@ class ElectromagneticEmissionPdu( DistributedEmissionsRegenerationFamilyPdu ):
         super( ElectromagneticEmissionPdu, self).parse(inputStream)
         self.emittingEntityID.parse(inputStream)
         self.eventID.parse(inputStream)
-        self.numberOfSystems = inputStream.read_null();
-        self.paddingForEmissionsPdu = inputStream.read_null();
+        self.numberOfSystems = inputStream.read_byte();
+        self.paddingForEmissionsPdu = inputStream.read_short();
         for idx in range(0, self.numberOfSystems):
             element = null()
             element.parse(inputStream)
@@ -7325,9 +7325,9 @@ class IFFLayer2Pdu( IFFPdu ):
         super( IFFLayer2Pdu, self ).serialize(outputStream)
         self.layerHeader.serialize(outputStream)
         self.beamData.serialize(outputStream)
-        outputStream.write_null(self.secondaryOpParameter1);
-        outputStream.write_null(self.secondaryOpParameter2);
-        outputStream.write_null( len(self.fundamentalIFFParameters));
+        outputStream.write_byte(self.secondaryOpParameter1);
+        outputStream.write_byte(self.secondaryOpParameter2);
+        outputStream.write_short( len(self.fundamentalIFFParameters));
         for anObj in self.fundamentalIFFParameters:
             anObj.serialize(outputStream)
 
@@ -7339,9 +7339,9 @@ class IFFLayer2Pdu( IFFPdu ):
         super( IFFLayer2Pdu, self).parse(inputStream)
         self.layerHeader.parse(inputStream)
         self.beamData.parse(inputStream)
-        self.secondaryOpParameter1 = inputStream.read_null();
-        self.secondaryOpParameter2 = inputStream.read_null();
-        self.numberOfParameters = inputStream.read_null();
+        self.secondaryOpParameter1 = inputStream.read_byte();
+        self.secondaryOpParameter2 = inputStream.read_byte();
+        self.numberOfParameters = inputStream.read_short();
         for idx in range(0, self.numberOfParameters):
             element = null()
             element.parse(inputStream)
@@ -7403,10 +7403,10 @@ class AggregateStatePdu( EntityManagementFamilyPdu ):
         self.orientation.serialize(outputStream)
         self.centerOfMass.serialize(outputStream)
         self.velocity.serialize(outputStream)
-        outputStream.write_null( len(self.aggregateIDList));
-        outputStream.write_null( len(self.entityIDList));
-        outputStream.write_null( len(self.silentAggregateSystemList));
-        outputStream.write_null( len(self.silentEntitySystemList));
+        outputStream.write_short( len(self.aggregateIDList));
+        outputStream.write_short( len(self.entityIDList));
+        outputStream.write_short( len(self.silentAggregateSystemList));
+        outputStream.write_short( len(self.silentEntitySystemList));
         for anObj in self.aggregateIDList:
             anObj.serialize(outputStream)
 
@@ -7419,7 +7419,7 @@ class AggregateStatePdu( EntityManagementFamilyPdu ):
         for anObj in self.silentEntitySystemList:
             anObj.serialize(outputStream)
 
-        outputStream.write_null( len(self.variableDatumList));
+        outputStream.write_int( len(self.variableDatumList));
         for anObj in self.variableDatumList:
             anObj.serialize(outputStream)
 
@@ -7436,10 +7436,10 @@ class AggregateStatePdu( EntityManagementFamilyPdu ):
         self.orientation.parse(inputStream)
         self.centerOfMass.parse(inputStream)
         self.velocity.parse(inputStream)
-        self.numberOfDisAggregates = inputStream.read_null();
-        self.numberOfDisEntities = inputStream.read_null();
-        self.numberOfSilentAggregateTypes = inputStream.read_null();
-        self.numberOfSilentEntityTypes = inputStream.read_null();
+        self.numberOfDisAggregates = inputStream.read_short();
+        self.numberOfDisEntities = inputStream.read_short();
+        self.numberOfSilentAggregateTypes = inputStream.read_short();
+        self.numberOfSilentEntityTypes = inputStream.read_short();
         for idx in range(0, self.numberOfDisAggregates):
             element = null()
             element.parse(inputStream)
@@ -7460,7 +7460,7 @@ class AggregateStatePdu( EntityManagementFamilyPdu ):
             element.parse(inputStream)
             self.silentEntitySystemList.append(element)
 
-        self.numberOfVariableDatumRecords = inputStream.read_null();
+        self.numberOfVariableDatumRecords = inputStream.read_int();
         for idx in range(0, self.numberOfVariableDatumRecords):
             element = null()
             element.parse(inputStream)
@@ -7495,11 +7495,11 @@ class ActionRequestRPdu( SimulationManagementWithReliabilityFamilyPdu ):
     def serialize(self, outputStream):
         """serialize the class """
         super( ActionRequestRPdu, self ).serialize(outputStream)
-        outputStream.write_null(self.pad1);
-        outputStream.write_null(self.pad2);
-        outputStream.write_null(self.requestID);
-        outputStream.write_null( len(self.fixedDatumRecords));
-        outputStream.write_null( len(self.variableDatumRecords));
+        outputStream.write_byte(self.pad1);
+        outputStream.write_short(self.pad2);
+        outputStream.write_int(self.requestID);
+        outputStream.write_int( len(self.fixedDatumRecords));
+        outputStream.write_int( len(self.variableDatumRecords));
         for anObj in self.fixedDatumRecords:
             anObj.serialize(outputStream)
 
@@ -7512,11 +7512,11 @@ class ActionRequestRPdu( SimulationManagementWithReliabilityFamilyPdu ):
         """"Parse a message. This may recursively call embedded objects."""
 
         super( ActionRequestRPdu, self).parse(inputStream)
-        self.pad1 = inputStream.read_null();
-        self.pad2 = inputStream.read_null();
-        self.requestID = inputStream.read_null();
-        self.numberOfFixedDatumRecords = inputStream.read_null();
-        self.numberOfVariableDatumRecords = inputStream.read_null();
+        self.pad1 = inputStream.read_byte();
+        self.pad2 = inputStream.read_short();
+        self.requestID = inputStream.read_int();
+        self.numberOfFixedDatumRecords = inputStream.read_int();
+        self.numberOfVariableDatumRecords = inputStream.read_int();
         for idx in range(0, self.numberOfFixedDatumRecords):
             element = null()
             element.parse(inputStream)
@@ -7558,12 +7558,12 @@ class DataQueryRPdu( SimulationManagementWithReliabilityFamilyPdu ):
     def serialize(self, outputStream):
         """serialize the class """
         super( DataQueryRPdu, self ).serialize(outputStream)
-        outputStream.write_null(self.pad1);
-        outputStream.write_null(self.pad2);
-        outputStream.write_null(self.requestID);
-        outputStream.write_null(self.timeInterval);
-        outputStream.write_null( len(self.fixedDatumRecords));
-        outputStream.write_null( len(self.variableDatumRecords));
+        outputStream.write_byte(self.pad1);
+        outputStream.write_short(self.pad2);
+        outputStream.write_int(self.requestID);
+        outputStream.write_int(self.timeInterval);
+        outputStream.write_int( len(self.fixedDatumRecords));
+        outputStream.write_int( len(self.variableDatumRecords));
         for anObj in self.fixedDatumRecords:
             anObj.serialize(outputStream)
 
@@ -7576,12 +7576,12 @@ class DataQueryRPdu( SimulationManagementWithReliabilityFamilyPdu ):
         """"Parse a message. This may recursively call embedded objects."""
 
         super( DataQueryRPdu, self).parse(inputStream)
-        self.pad1 = inputStream.read_null();
-        self.pad2 = inputStream.read_null();
-        self.requestID = inputStream.read_null();
-        self.timeInterval = inputStream.read_null();
-        self.numberOfFixedDatumRecords = inputStream.read_null();
-        self.numberOfVariableDatumRecords = inputStream.read_null();
+        self.pad1 = inputStream.read_byte();
+        self.pad2 = inputStream.read_short();
+        self.requestID = inputStream.read_int();
+        self.timeInterval = inputStream.read_int();
+        self.numberOfFixedDatumRecords = inputStream.read_int();
+        self.numberOfVariableDatumRecords = inputStream.read_int();
         for idx in range(0, self.numberOfFixedDatumRecords):
             element = null()
             element.parse(inputStream)
@@ -7616,9 +7616,9 @@ class EntityDamageStatusPdu( WarfareFamilyPdu ):
         """serialize the class """
         super( EntityDamageStatusPdu, self ).serialize(outputStream)
         self.damagedEntityID.serialize(outputStream)
-        outputStream.write_null(self.padding1);
-        outputStream.write_null(self.padding2);
-        outputStream.write_null( len(self.damageDescriptionRecords));
+        outputStream.write_short(self.padding1);
+        outputStream.write_short(self.padding2);
+        outputStream.write_short( len(self.damageDescriptionRecords));
         for anObj in self.damageDescriptionRecords:
             anObj.serialize(outputStream)
 
@@ -7629,9 +7629,9 @@ class EntityDamageStatusPdu( WarfareFamilyPdu ):
 
         super( EntityDamageStatusPdu, self).parse(inputStream)
         self.damagedEntityID.parse(inputStream)
-        self.padding1 = inputStream.read_null();
-        self.padding2 = inputStream.read_null();
-        self.numberOfDamageDescription = inputStream.read_null();
+        self.padding1 = inputStream.read_short();
+        self.padding2 = inputStream.read_short();
+        self.numberOfDamageDescription = inputStream.read_short();
         for idx in range(0, self.numberOfDamageDescription):
             element = null()
             element.parse(inputStream)
@@ -7659,8 +7659,8 @@ class StopFreezeRPdu( SimulationManagementWithReliabilityFamilyPdu ):
         """serialize the class """
         super( StopFreezeRPdu, self ).serialize(outputStream)
         self.realWorldTime.serialize(outputStream)
-        outputStream.write_null(self.pad1);
-        outputStream.write_null(self.requestID);
+        outputStream.write_byte(self.pad1);
+        outputStream.write_int(self.requestID);
 
 
     def parse(self, inputStream):
@@ -7668,8 +7668,8 @@ class StopFreezeRPdu( SimulationManagementWithReliabilityFamilyPdu ):
 
         super( StopFreezeRPdu, self).parse(inputStream)
         self.realWorldTime.parse(inputStream)
-        self.pad1 = inputStream.read_null();
-        self.requestID = inputStream.read_null();
+        self.pad1 = inputStream.read_byte();
+        self.requestID = inputStream.read_int();
 
 
 
@@ -7696,7 +7696,7 @@ class TransferOwnershipPdu( EntityManagementFamilyPdu ):
         super( TransferOwnershipPdu, self ).serialize(outputStream)
         self.originatingEntityID.serialize(outputStream)
         self.receivingEntityID.serialize(outputStream)
-        outputStream.write_null(self.requestID);
+        outputStream.write_int(self.requestID);
         self.transferEntityID.serialize(outputStream)
         self.recordSets.serialize(outputStream)
 
@@ -7707,7 +7707,7 @@ class TransferOwnershipPdu( EntityManagementFamilyPdu ):
         super( TransferOwnershipPdu, self).parse(inputStream)
         self.originatingEntityID.parse(inputStream)
         self.receivingEntityID.parse(inputStream)
-        self.requestID = inputStream.read_null();
+        self.requestID = inputStream.read_int();
         self.transferEntityID.parse(inputStream)
         self.recordSets.parse(inputStream)
 
@@ -7735,10 +7735,10 @@ class RecordQueryRPdu( SimulationManagementWithReliabilityFamilyPdu ):
     def serialize(self, outputStream):
         """serialize the class """
         super( RecordQueryRPdu, self ).serialize(outputStream)
-        outputStream.write_null(self.requestID);
-        outputStream.write_null(self.pad1);
-        outputStream.write_null(self.time);
-        outputStream.write_null( len(self.recordIDs));
+        outputStream.write_int(self.requestID);
+        outputStream.write_byte(self.pad1);
+        outputStream.write_int(self.time);
+        outputStream.write_int( len(self.recordIDs));
         for anObj in self.recordIDs:
             anObj.serialize(outputStream)
 
@@ -7748,10 +7748,10 @@ class RecordQueryRPdu( SimulationManagementWithReliabilityFamilyPdu ):
         """"Parse a message. This may recursively call embedded objects."""
 
         super( RecordQueryRPdu, self).parse(inputStream)
-        self.requestID = inputStream.read_null();
-        self.pad1 = inputStream.read_null();
-        self.time = inputStream.read_null();
-        self.numberOfRecords = inputStream.read_null();
+        self.requestID = inputStream.read_int();
+        self.pad1 = inputStream.read_byte();
+        self.time = inputStream.read_int();
+        self.numberOfRecords = inputStream.read_int();
         for idx in range(0, self.numberOfRecords):
             element = null()
             element.parse(inputStream)
@@ -7782,9 +7782,9 @@ class EventReportRPdu( SimulationManagementWithReliabilityFamilyPdu ):
     def serialize(self, outputStream):
         """serialize the class """
         super( EventReportRPdu, self ).serialize(outputStream)
-        outputStream.write_null(self.pad1);
-        outputStream.write_null( len(self.fixedDatumRecords));
-        outputStream.write_null( len(self.variableDatumRecords));
+        outputStream.write_int(self.pad1);
+        outputStream.write_int( len(self.fixedDatumRecords));
+        outputStream.write_int( len(self.variableDatumRecords));
         for anObj in self.fixedDatumRecords:
             anObj.serialize(outputStream)
 
@@ -7797,9 +7797,9 @@ class EventReportRPdu( SimulationManagementWithReliabilityFamilyPdu ):
         """"Parse a message. This may recursively call embedded objects."""
 
         super( EventReportRPdu, self).parse(inputStream)
-        self.pad1 = inputStream.read_null();
-        self.numberOfFixedDatumRecords = inputStream.read_null();
-        self.numberOfVariableDatumRecords = inputStream.read_null();
+        self.pad1 = inputStream.read_int();
+        self.numberOfFixedDatumRecords = inputStream.read_int();
+        self.numberOfVariableDatumRecords = inputStream.read_int();
         for idx in range(0, self.numberOfFixedDatumRecords):
             element = null()
             element.parse(inputStream)
@@ -7827,14 +7827,14 @@ class CreateEntityPdu( SimulationManagementFamilyPdu ):
     def serialize(self, outputStream):
         """serialize the class """
         super( CreateEntityPdu, self ).serialize(outputStream)
-        outputStream.write_null(self.requestID);
+        outputStream.write_int(self.requestID);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
         super( CreateEntityPdu, self).parse(inputStream)
-        self.requestID = inputStream.read_null();
+        self.requestID = inputStream.read_int();
 
 
 
@@ -7852,14 +7852,14 @@ class RemoveEntityPdu( SimulationManagementFamilyPdu ):
     def serialize(self, outputStream):
         """serialize the class """
         super( RemoveEntityPdu, self ).serialize(outputStream)
-        outputStream.write_null(self.requestID);
+        outputStream.write_int(self.requestID);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
         super( RemoveEntityPdu, self).parse(inputStream)
-        self.requestID = inputStream.read_null();
+        self.requestID = inputStream.read_int();
 
 
 
@@ -7885,9 +7885,9 @@ class ActionRequestPdu( SimulationManagementFamilyPdu ):
     def serialize(self, outputStream):
         """serialize the class """
         super( ActionRequestPdu, self ).serialize(outputStream)
-        outputStream.write_null(self.requestID);
-        outputStream.write_null( len(self.fixedDatums));
-        outputStream.write_null( len(self.variableDatums));
+        outputStream.write_int(self.requestID);
+        outputStream.write_int( len(self.fixedDatums));
+        outputStream.write_int( len(self.variableDatums));
         for anObj in self.fixedDatums:
             anObj.serialize(outputStream)
 
@@ -7900,9 +7900,9 @@ class ActionRequestPdu( SimulationManagementFamilyPdu ):
         """"Parse a message. This may recursively call embedded objects."""
 
         super( ActionRequestPdu, self).parse(inputStream)
-        self.requestID = inputStream.read_null();
-        self.numberOfFixedDatumRecords = inputStream.read_null();
-        self.numberOfVariableDatumRecords = inputStream.read_null();
+        self.requestID = inputStream.read_int();
+        self.numberOfFixedDatumRecords = inputStream.read_int();
+        self.numberOfVariableDatumRecords = inputStream.read_int();
         for idx in range(0, self.numberOfFixedDatumRecords):
             element = null()
             element.parse(inputStream)
@@ -7930,14 +7930,14 @@ class AcknowledgePdu( SimulationManagementFamilyPdu ):
     def serialize(self, outputStream):
         """serialize the class """
         super( AcknowledgePdu, self ).serialize(outputStream)
-        outputStream.write_null(self.requestID);
+        outputStream.write_int(self.requestID);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
         super( AcknowledgePdu, self).parse(inputStream)
-        self.requestID = inputStream.read_null();
+        self.requestID = inputStream.read_int();
 
 
 
@@ -8005,8 +8005,8 @@ class StopFreezePdu( SimulationManagementFamilyPdu ):
         """serialize the class """
         super( StopFreezePdu, self ).serialize(outputStream)
         self.realWorldTime.serialize(outputStream)
-        outputStream.write_null(self.padding1);
-        outputStream.write_null(self.requestID);
+        outputStream.write_short(self.padding1);
+        outputStream.write_int(self.requestID);
 
 
     def parse(self, inputStream):
@@ -8014,8 +8014,8 @@ class StopFreezePdu( SimulationManagementFamilyPdu ):
 
         super( StopFreezePdu, self).parse(inputStream)
         self.realWorldTime.parse(inputStream)
-        self.padding1 = inputStream.read_null();
-        self.requestID = inputStream.read_null();
+        self.padding1 = inputStream.read_short();
+        self.requestID = inputStream.read_int();
 
 
 
@@ -8039,7 +8039,7 @@ class StartResumePdu( SimulationManagementFamilyPdu ):
         super( StartResumePdu, self ).serialize(outputStream)
         self.realWorldTime.serialize(outputStream)
         self.simulationTime.serialize(outputStream)
-        outputStream.write_null(self.requestID);
+        outputStream.write_int(self.requestID);
 
 
     def parse(self, inputStream):
@@ -8048,7 +8048,7 @@ class StartResumePdu( SimulationManagementFamilyPdu ):
         super( StartResumePdu, self).parse(inputStream)
         self.realWorldTime.parse(inputStream)
         self.simulationTime.parse(inputStream)
-        self.requestID = inputStream.read_null();
+        self.requestID = inputStream.read_int();
 
 
 
@@ -8076,10 +8076,10 @@ class AttributePdu( EntityInformationInteractionFamilyPdu ):
         """serialize the class """
         super( AttributePdu, self ).serialize(outputStream)
         self.originatingSimulationAddress.serialize(outputStream)
-        outputStream.write_null(self.padding1);
-        outputStream.write_null(self.padding2);
-        outputStream.write_null(self.padding3);
-        outputStream.write_null( len(self.attributeRecordSets));
+        outputStream.write_int(self.padding1);
+        outputStream.write_short(self.padding2);
+        outputStream.write_byte(self.padding3);
+        outputStream.write_short( len(self.attributeRecordSets));
         for anObj in self.attributeRecordSets:
             anObj.serialize(outputStream)
 
@@ -8090,10 +8090,10 @@ class AttributePdu( EntityInformationInteractionFamilyPdu ):
 
         super( AttributePdu, self).parse(inputStream)
         self.originatingSimulationAddress.parse(inputStream)
-        self.padding1 = inputStream.read_null();
-        self.padding2 = inputStream.read_null();
-        self.padding3 = inputStream.read_null();
-        self.numberAttributeRecordSet = inputStream.read_null();
+        self.padding1 = inputStream.read_int();
+        self.padding2 = inputStream.read_short();
+        self.padding3 = inputStream.read_byte();
+        self.numberAttributeRecordSet = inputStream.read_short();
         for idx in range(0, self.numberAttributeRecordSet):
             element = null()
             element.parse(inputStream)
@@ -8125,12 +8125,12 @@ class InformationOperationsActionPdu( InformationOperationsFamilyPdu ):
         """serialize the class """
         super( InformationOperationsActionPdu, self ).serialize(outputStream)
         self.receivingSimID.serialize(outputStream)
-        outputStream.write_null(self.requestID);
-        outputStream.write_null(self.padding1);
+        outputStream.write_int(self.requestID);
+        outputStream.write_int(self.padding1);
         self.ioAttackerID.serialize(outputStream)
         self.ioPrimaryTargetID.serialize(outputStream)
-        outputStream.write_null(self.padding2);
-        outputStream.write_null( len(self.ioRecords));
+        outputStream.write_short(self.padding2);
+        outputStream.write_short( len(self.ioRecords));
         for anObj in self.ioRecords:
             anObj.serialize(outputStream)
 
@@ -8141,12 +8141,12 @@ class InformationOperationsActionPdu( InformationOperationsFamilyPdu ):
 
         super( InformationOperationsActionPdu, self).parse(inputStream)
         self.receivingSimID.parse(inputStream)
-        self.requestID = inputStream.read_null();
-        self.padding1 = inputStream.read_null();
+        self.requestID = inputStream.read_int();
+        self.padding1 = inputStream.read_int();
         self.ioAttackerID.parse(inputStream)
         self.ioPrimaryTargetID.parse(inputStream)
-        self.padding2 = inputStream.read_null();
-        self.numberOfIORecords = inputStream.read_null();
+        self.padding2 = inputStream.read_short();
+        self.numberOfIORecords = inputStream.read_short();
         for idx in range(0, self.numberOfIORecords):
             element = null()
             element.parse(inputStream)
@@ -8177,9 +8177,9 @@ class EventReportPdu( SimulationManagementFamilyPdu ):
     def serialize(self, outputStream):
         """serialize the class """
         super( EventReportPdu, self ).serialize(outputStream)
-        outputStream.write_null(self.padding1);
-        outputStream.write_null( len(self.fixedDatums));
-        outputStream.write_null( len(self.variableDatums));
+        outputStream.write_int(self.padding1);
+        outputStream.write_int( len(self.fixedDatums));
+        outputStream.write_int( len(self.variableDatums));
         for anObj in self.fixedDatums:
             anObj.serialize(outputStream)
 
@@ -8192,9 +8192,9 @@ class EventReportPdu( SimulationManagementFamilyPdu ):
         """"Parse a message. This may recursively call embedded objects."""
 
         super( EventReportPdu, self).parse(inputStream)
-        self.padding1 = inputStream.read_null();
-        self.numberOfFixedDatumRecords = inputStream.read_null();
-        self.numberOfVariableDatumRecords = inputStream.read_null();
+        self.padding1 = inputStream.read_int();
+        self.numberOfFixedDatumRecords = inputStream.read_int();
+        self.numberOfVariableDatumRecords = inputStream.read_int();
         for idx in range(0, self.numberOfFixedDatumRecords):
             element = null()
             element.parse(inputStream)
@@ -8232,10 +8232,10 @@ class DataPdu( SimulationManagementFamilyPdu ):
     def serialize(self, outputStream):
         """serialize the class """
         super( DataPdu, self ).serialize(outputStream)
-        outputStream.write_null(self.requestID);
-        outputStream.write_null(self.padding1);
-        outputStream.write_null( len(self.fixedDatums));
-        outputStream.write_null( len(self.variableDatums));
+        outputStream.write_int(self.requestID);
+        outputStream.write_int(self.padding1);
+        outputStream.write_int( len(self.fixedDatums));
+        outputStream.write_int( len(self.variableDatums));
         for anObj in self.fixedDatums:
             anObj.serialize(outputStream)
 
@@ -8248,10 +8248,10 @@ class DataPdu( SimulationManagementFamilyPdu ):
         """"Parse a message. This may recursively call embedded objects."""
 
         super( DataPdu, self).parse(inputStream)
-        self.requestID = inputStream.read_null();
-        self.padding1 = inputStream.read_null();
-        self.numberOfFixedDatumRecords = inputStream.read_null();
-        self.numberOfVariableDatumRecords = inputStream.read_null();
+        self.requestID = inputStream.read_int();
+        self.padding1 = inputStream.read_int();
+        self.numberOfFixedDatumRecords = inputStream.read_int();
+        self.numberOfVariableDatumRecords = inputStream.read_int();
         for idx in range(0, self.numberOfFixedDatumRecords):
             element = null()
             element.parse(inputStream)
@@ -8294,12 +8294,12 @@ class EntityStateUpdatePdu( EntityInformationInteractionFamilyPdu ):
         """serialize the class """
         super( EntityStateUpdatePdu, self ).serialize(outputStream)
         self.entityID.serialize(outputStream)
-        outputStream.write_null(self.padding1);
-        outputStream.write_null( len(self.variableParameters));
+        outputStream.write_byte(self.padding1);
+        outputStream.write_byte( len(self.variableParameters));
         self.entityLinearVelocity.serialize(outputStream)
         self.entityLocation.serialize(outputStream)
         self.entityOrientation.serialize(outputStream)
-        outputStream.write_null(self.entityAppearance);
+        outputStream.write_int(self.entityAppearance);
         for anObj in self.variableParameters:
             anObj.serialize(outputStream)
 
@@ -8310,12 +8310,12 @@ class EntityStateUpdatePdu( EntityInformationInteractionFamilyPdu ):
 
         super( EntityStateUpdatePdu, self).parse(inputStream)
         self.entityID.parse(inputStream)
-        self.padding1 = inputStream.read_null();
-        self.numberOfVariableParameters = inputStream.read_null();
+        self.padding1 = inputStream.read_byte();
+        self.numberOfVariableParameters = inputStream.read_byte();
         self.entityLinearVelocity.parse(inputStream)
         self.entityLocation.parse(inputStream)
         self.entityOrientation.parse(inputStream)
-        self.entityAppearance = inputStream.read_null();
+        self.entityAppearance = inputStream.read_int();
         for idx in range(0, self.numberOfVariableParameters):
             element = null()
             element.parse(inputStream)
@@ -8342,8 +8342,8 @@ class CommentPdu( SimulationManagementFamilyPdu ):
     def serialize(self, outputStream):
         """serialize the class """
         super( CommentPdu, self ).serialize(outputStream)
-        outputStream.write_null(self.numberOfFixedDatumRecords);
-        outputStream.write_null( len(self.variableDatums));
+        outputStream.write_int(self.numberOfFixedDatumRecords);
+        outputStream.write_int( len(self.variableDatums));
         for anObj in self.variableDatums:
             anObj.serialize(outputStream)
 
@@ -8353,8 +8353,8 @@ class CommentPdu( SimulationManagementFamilyPdu ):
         """"Parse a message. This may recursively call embedded objects."""
 
         super( CommentPdu, self).parse(inputStream)
-        self.numberOfFixedDatumRecords = inputStream.read_null();
-        self.numberOfVariableDatumRecords = inputStream.read_null();
+        self.numberOfFixedDatumRecords = inputStream.read_int();
+        self.numberOfVariableDatumRecords = inputStream.read_int();
         for idx in range(0, self.numberOfVariableDatumRecords):
             element = null()
             element.parse(inputStream)
@@ -8387,10 +8387,10 @@ class SetDataPdu( SimulationManagementFamilyPdu ):
     def serialize(self, outputStream):
         """serialize the class """
         super( SetDataPdu, self ).serialize(outputStream)
-        outputStream.write_null(self.requestID);
-        outputStream.write_null(self.padding1);
-        outputStream.write_null( len(self.fixedDatums));
-        outputStream.write_null( len(self.variableDatums));
+        outputStream.write_int(self.requestID);
+        outputStream.write_int(self.padding1);
+        outputStream.write_int( len(self.fixedDatums));
+        outputStream.write_int( len(self.variableDatums));
         for anObj in self.fixedDatums:
             anObj.serialize(outputStream)
 
@@ -8403,10 +8403,10 @@ class SetDataPdu( SimulationManagementFamilyPdu ):
         """"Parse a message. This may recursively call embedded objects."""
 
         super( SetDataPdu, self).parse(inputStream)
-        self.requestID = inputStream.read_null();
-        self.padding1 = inputStream.read_null();
-        self.numberOfFixedDatumRecords = inputStream.read_null();
-        self.numberOfVariableDatumRecords = inputStream.read_null();
+        self.requestID = inputStream.read_int();
+        self.padding1 = inputStream.read_int();
+        self.numberOfFixedDatumRecords = inputStream.read_int();
+        self.numberOfVariableDatumRecords = inputStream.read_int();
         for idx in range(0, self.numberOfFixedDatumRecords):
             element = null()
             element.parse(inputStream)
@@ -8449,9 +8449,9 @@ class CollisionPdu( EntityInformationInteractionFamilyPdu ):
         self.issuingEntityID.serialize(outputStream)
         self.collidingEntityID.serialize(outputStream)
         self.eventID.serialize(outputStream)
-        outputStream.write_null(self.pad);
+        outputStream.write_byte(self.pad);
         self.velocity.serialize(outputStream)
-        outputStream.write_null(self.mass);
+        outputStream.write_float(self.mass);
         self.location.serialize(outputStream)
 
 
@@ -8462,9 +8462,9 @@ class CollisionPdu( EntityInformationInteractionFamilyPdu ):
         self.issuingEntityID.parse(inputStream)
         self.collidingEntityID.parse(inputStream)
         self.eventID.parse(inputStream)
-        self.pad = inputStream.read_null();
+        self.pad = inputStream.read_byte();
         self.velocity.parse(inputStream)
-        self.mass = inputStream.read_null();
+        self.mass = inputStream.read_float();
         self.location.parse(inputStream)
 
 
@@ -8491,9 +8491,9 @@ class ActionResponsePdu( SimulationManagementFamilyPdu ):
     def serialize(self, outputStream):
         """serialize the class """
         super( ActionResponsePdu, self ).serialize(outputStream)
-        outputStream.write_null(self.requestID);
-        outputStream.write_null( len(self.fixedDatums));
-        outputStream.write_null( len(self.variableDatums));
+        outputStream.write_int(self.requestID);
+        outputStream.write_int( len(self.fixedDatums));
+        outputStream.write_int( len(self.variableDatums));
         for anObj in self.fixedDatums:
             anObj.serialize(outputStream)
 
@@ -8506,9 +8506,9 @@ class ActionResponsePdu( SimulationManagementFamilyPdu ):
         """"Parse a message. This may recursively call embedded objects."""
 
         super( ActionResponsePdu, self).parse(inputStream)
-        self.requestID = inputStream.read_null();
-        self.numberOfFixedDatumRecords = inputStream.read_null();
-        self.numberOfVariableDatumRecords = inputStream.read_null();
+        self.requestID = inputStream.read_int();
+        self.numberOfFixedDatumRecords = inputStream.read_int();
+        self.numberOfVariableDatumRecords = inputStream.read_int();
         for idx in range(0, self.numberOfFixedDatumRecords):
             element = null()
             element.parse(inputStream)
@@ -8534,9 +8534,9 @@ class GridDataType0( GridData ):
     def serialize(self, outputStream):
         """serialize the class """
         super( GridDataType0, self ).serialize(outputStream)
-        outputStream.write_null(self.numberOfBytes);
+        outputStream.write_short(self.numberOfBytes);
         for idx in range(0, 0):
-            outputStream.write_null( self.dataValues[ idx ] );
+            outputStream.write_UnsignedByte( self.dataValues[ idx ] );
 
 
 
@@ -8544,10 +8544,10 @@ class GridDataType0( GridData ):
         """"Parse a message. This may recursively call embedded objects."""
 
         super( GridDataType0, self).parse(inputStream)
-        self.numberOfBytes = inputStream.read_null();
+        self.numberOfBytes = inputStream.read_short();
         self.dataValues = [0]*0
         for idx in range(0, 0):
-            val = inputStream.read_null
+            val = inputStream.read_UnsignedByte
             self.dataValues[  idx  ] = val
 
 
@@ -8567,11 +8567,11 @@ class GridDataType1( GridData ):
     def serialize(self, outputStream):
         """serialize the class """
         super( GridDataType1, self ).serialize(outputStream)
-        outputStream.write_null(self.fieldScale);
-        outputStream.write_null(self.fieldOffset);
-        outputStream.write_null(self.numberOfValues);
+        outputStream.write_float(self.fieldScale);
+        outputStream.write_float(self.fieldOffset);
+        outputStream.write_short(self.numberOfValues);
         for idx in range(0, 0):
-            outputStream.write_null( self.dataValues[ idx ] );
+            outputStream.write_UnsignedShort( self.dataValues[ idx ] );
 
 
 
@@ -8579,12 +8579,12 @@ class GridDataType1( GridData ):
         """"Parse a message. This may recursively call embedded objects."""
 
         super( GridDataType1, self).parse(inputStream)
-        self.fieldScale = inputStream.read_null();
-        self.fieldOffset = inputStream.read_null();
-        self.numberOfValues = inputStream.read_null();
+        self.fieldScale = inputStream.read_float();
+        self.fieldOffset = inputStream.read_float();
+        self.numberOfValues = inputStream.read_short();
         self.dataValues = [0]*0
         for idx in range(0, 0):
-            val = inputStream.read_null
+            val = inputStream.read_UnsignedShort
             self.dataValues[  idx  ] = val
 
 
@@ -8603,10 +8603,10 @@ class GridDataType2( GridData ):
     def serialize(self, outputStream):
         """serialize the class """
         super( GridDataType2, self ).serialize(outputStream)
-        outputStream.write_null(self.numberOfValues);
-        outputStream.write_null(self.padding);
+        outputStream.write_short(self.numberOfValues);
+        outputStream.write_short(self.padding);
         for idx in range(0, 0):
-            outputStream.write_null( self.dataValues[ idx ] );
+            outputStream.write_float( self.dataValues[ idx ] );
 
 
 
@@ -8614,11 +8614,11 @@ class GridDataType2( GridData ):
         """"Parse a message. This may recursively call embedded objects."""
 
         super( GridDataType2, self).parse(inputStream)
-        self.numberOfValues = inputStream.read_null();
-        self.padding = inputStream.read_null();
+        self.numberOfValues = inputStream.read_short();
+        self.padding = inputStream.read_short();
         self.dataValues = [0]*0
         for idx in range(0, 0):
-            val = inputStream.read_null
+            val = inputStream.read_float
             self.dataValues[  idx  ] = val
 
 
@@ -8637,8 +8637,8 @@ class IOCommsNodeRecord( IORecord ):
     def serialize(self, outputStream):
         """serialize the class """
         super( IOCommsNodeRecord, self ).serialize(outputStream)
-        outputStream.write_null(self.recordLength);
-        outputStream.write_null(self.padding);
+        outputStream.write_short(self.recordLength);
+        outputStream.write_byte(self.padding);
         self.commsNodeId.serialize(outputStream)
 
 
@@ -8646,8 +8646,8 @@ class IOCommsNodeRecord( IORecord ):
         """"Parse a message. This may recursively call embedded objects."""
 
         super( IOCommsNodeRecord, self).parse(inputStream)
-        self.recordLength = inputStream.read_null();
-        self.padding = inputStream.read_null();
+        self.recordLength = inputStream.read_short();
+        self.padding = inputStream.read_byte();
         self.commsNodeId.parse(inputStream)
 
 
@@ -8666,19 +8666,19 @@ class IOEffectRecord( IORecord ):
     def serialize(self, outputStream):
         """serialize the class """
         super( IOEffectRecord, self ).serialize(outputStream)
-        outputStream.write_null(self.recordLength);
-        outputStream.write_null(self.ioEffectDutyCycle);
-        outputStream.write_null(self.ioEffectDuration);
-        outputStream.write_null(self.padding);
+        outputStream.write_short(self.recordLength);
+        outputStream.write_byte(self.ioEffectDutyCycle);
+        outputStream.write_short(self.ioEffectDuration);
+        outputStream.write_short(self.padding);
 
 
     def parse(self, inputStream):
         """"Parse a message. This may recursively call embedded objects."""
 
         super( IOEffectRecord, self).parse(inputStream)
-        self.recordLength = inputStream.read_null();
-        self.ioEffectDutyCycle = inputStream.read_null();
-        self.ioEffectDuration = inputStream.read_null();
-        self.padding = inputStream.read_null();
+        self.recordLength = inputStream.read_short();
+        self.ioEffectDutyCycle = inputStream.read_byte();
+        self.ioEffectDuration = inputStream.read_short();
+        self.padding = inputStream.read_short();
 
 
