@@ -40,7 +40,7 @@
   
     </class>
     
-    <class name="ElectronicEmitter" inheritsFrom="root">
+    <class name="ElectronicEmitter" inheritsFrom="root" comment="A device that is able to discharge detectable electromagnetic energy.">
         
          <attribute name="systemDataLength" comment=" this field shall specify the length of this emitter system's data in 32-bit words.">
             <primitive type="uint8"/>
@@ -66,7 +66,7 @@
         
     </class>
     
-    <class name="EmitterBeam" inheritsFrom="root">
+    <class name="EmitterBeam" inheritsFrom="root" comment="Emitter beams focused emissions from an electromagnetic or active acoustic transmitter. The beam is defined by the main lobe of the antenna pattern.">
         
         <attribute name="beamDataLength">
             <primitive type="uint8"/>
@@ -230,7 +230,7 @@
         </attribute>
     
     </class>
-   <class name="UAEmitter" inheritsFrom="root">
+   <class name="UAEmitter" inheritsFrom="root" comment="Underwater Acoustic (UA) active emissions (intentional emissions) and passive signature (unintentional emissions) information.">
         
          <attribute name="systemDataLength" comment=" this field shall specify the length of this emitter system's data in 32-bit words.">
             <primitive type="uint8"/>
@@ -260,8 +260,11 @@
         
     </class>
     
-    <class name="UABeam" inheritsFrom="root">
-        
+    <class name="UABeam" inheritsFrom="root"
+           comment="Information for one or more acoustic beams that the system has, including: length of the beam data, 
+beam identification number for each beam, and fundamental parametric data used to define the entity’s active emissions. 
+This field defines the active  emission  parameter  index,  beam  scan  pattern,  orientation,  and beamwidth, which can vary dynamically during system operation.">
+
         <attribute name="beamDataLength">
             <primitive type="uint8"/>
         </attribute>

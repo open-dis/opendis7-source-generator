@@ -431,7 +431,7 @@
         </attribute>
     </class>
     
-    <class name="AttributeRecordSet" inheritsFrom="root">
+    <class name="AttributeRecordSet" inheritsFrom="root" comment="Each Attribute Record Set shall contain the following information: the Entity or Object ID to which all Attribute records in the set apply, plus one or more Attribute records">
         
         <attribute name="entityId">
             <classRef name="EntityID"/>

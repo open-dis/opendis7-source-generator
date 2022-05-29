@@ -267,7 +267,7 @@
 
     </class>
     
-    <class name="MineEmplacementTime" inheritsFrom="root">
+    <class name="MineEmplacementTime" inheritsFrom="root" comment="simulation time of emplacement of the mine">
         
         <attribute name="hour">
             <primitive type="uint32"/>

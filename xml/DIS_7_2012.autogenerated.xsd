@@ -3,6 +3,7 @@
    <xs:element name="DIS">
       <xs:annotation>
          <xs:appinfo>Root element for DIS PDU log, optionally contains head meta information</xs:appinfo>
+         <xs:documentation>https://savage.nps.edu/opendis7-java/xml/SchemaDocumentation</xs:documentation>
       </xs:annotation>
       <xs:complexType>
          <xs:sequence>
@@ -148,7 +149,10 @@
    <xs:complexType name="AttributeRecordSetType">
       <!--debug: another class, providing Pdu types-->
       <xs:annotation>
-         <xs:appinfo>(length of list found in field numberOfAttributeRecords)</xs:appinfo>
+         <xs:appinfo>Each Attribute Record Set shall contain the following information: the Entity or Object
+            ID to which all Attribute records in the set apply, plus one or more Attribute records
+            (length of list found in field numberOfAttributeRecords)
+         </xs:appinfo>
       </xs:annotation>
       <xs:complexContent>
          <xs:extension base="EntityInformationInteractionFamilyPduType">
@@ -516,7 +520,7 @@
                   </xs:element>
                   <xs:element name="entityOrientation" type="EulerAnglesType">
                      <xs:annotation>
-                        <xs:appinfo>describes the orientation of the entity, in euler angles</xs:appinfo>
+                        <xs:appinfo>describes the orientation of the entity, in euler angles with units of radians</xs:appinfo>
                      </xs:annotation>
                   </xs:element>
                   <xs:element name="deadReckoningParameters" type="DeadReckoningParametersType">
@@ -526,7 +530,7 @@
                   </xs:element>
                   <xs:element name="marking" type="EntityMarkingType">
                      <xs:annotation>
-                        <xs:appinfo>11 characters that can be used for entity identifiication, debugging, or to draw unique
+                        <xs:appinfo>11 characters that can be used for entity identification, debugging, or to draw unique
                            strings on the side of entities in the world
                         </xs:appinfo>
                      </xs:annotation>
@@ -617,8 +621,8 @@
                   </xs:element>
                   <xs:element name="entityOrientation" type="EulerAnglesType">
                      <xs:annotation>
-                        <xs:appinfo>This field shall specify an entity's orientation and shall be represented by an Euler
-                           Angles record (see 6.2.33).
+                        <xs:appinfo>This field shall specify an entity's orientation with units of radians and shall be
+                           represented by an Euler Angles record (see 6.2.33).
                         </xs:appinfo>
                      </xs:annotation>
                   </xs:element>
@@ -1951,7 +1955,9 @@
    <xs:complexType name="ElectronicEmitterType">
       <!--debug: another class, providing Pdu types-->
       <xs:annotation>
-         <xs:appinfo>(length of list found in field numberOfBeams)</xs:appinfo>
+         <xs:appinfo>A device that is able to discharge detectable electromagnetic energy. (length of list
+            found in field numberOfBeams)
+         </xs:appinfo>
       </xs:annotation>
       <xs:complexContent>
          <xs:extension base="DistributedEmissionsRegenerationFamilyPduType">
@@ -2007,7 +2013,10 @@
    <xs:complexType name="EmitterBeamType">
       <!--debug: another class, providing Pdu types-->
       <xs:annotation>
-         <xs:appinfo>(length of list found in field numberOfTargets)</xs:appinfo>
+         <xs:appinfo>Emitter beams focused emissions from an electromagnetic or active acoustic transmitter.
+            The beam is defined by the main lobe of the antenna pattern. (length of list found
+            in field numberOfTargets)
+         </xs:appinfo>
       </xs:annotation>
       <xs:complexContent>
          <xs:extension base="DistributedEmissionsRegenerationFamilyPduType">
@@ -2053,7 +2062,9 @@
    <xs:complexType name="UAEmitterType">
       <!--debug: another class, providing Pdu types-->
       <xs:annotation>
-         <xs:appinfo>(length of list found in field numberOfBeams)</xs:appinfo>
+         <xs:appinfo>Underwater Acoustic (UA) active emissions (intentional emissions) and passive signature
+            (unintentional emissions) information. (length of list found in field numberOfBeams)
+         </xs:appinfo>
       </xs:annotation>
       <xs:complexContent>
          <xs:extension base="DistributedEmissionsRegenerationFamilyPduType">
@@ -2107,6 +2118,14 @@
    </xs:complexType>
    <xs:complexType name="UABeamType">
       <!--debug: another class, providing Pdu types-->
+      <xs:annotation>
+         <xs:appinfo>Information for one or more acoustic beams that the system has, including: length
+            of the beam data, beam identification number for each beam, and fundamental parametric
+            data used to define the entity’s active emissions. This field defines the active emission
+            parameter index, beam scan pattern, orientation, and beamwidth, which can vary dynamically
+            during system operation.
+         </xs:appinfo>
+      </xs:annotation>
       <xs:complexContent>
          <xs:extension base="DistributedEmissionsRegenerationFamilyPduType">
             <xs:sequence>
@@ -2600,6 +2619,9 @@
    <!--RadioCommunicationsFamilyPdus.xml contains 8 classes-->
    <xs:complexType name="RadioCommsHeaderType">
       <!--debug: another class, providing Pdu types-->
+      <xs:annotation>
+         <xs:appinfo>Common PDU fields for Radio Communications family</xs:appinfo>
+      </xs:annotation>
       <xs:complexContent>
          <xs:extension base="RadioCommunicationsFamilyPduType">
             <xs:sequence>
@@ -2732,7 +2754,11 @@
          <xs:complexContent>
             <xs:extension base="RadioCommunicationsFamilyPduType">
                <xs:sequence>
-                  <xs:element name="intercomReferenceID" type="IntercomReferenceIDType"></xs:element>
+                  <xs:element name="intercomReferenceID" type="IntercomReferenceIDType">
+                     <xs:annotation>
+                        <xs:appinfo>The unique designation of an attached or unattached intercom in an event or exercise</xs:appinfo>
+                     </xs:annotation>
+                  </xs:element>
                </xs:sequence>
                <!-- ========== debug: divider between elements and attributes ========== -->
                <xs:attribute name="family" fixed="RadioCommunicationsFamilyPduType"></xs:attribute>
@@ -3359,6 +3385,9 @@
    <!--MinefieldFamilyPdus.xml contains 6 classes-->
    <xs:complexType name="MineEmplacementTimeType">
       <!--debug: another class, providing Pdu types-->
+      <xs:annotation>
+         <xs:appinfo>simulation time of emplacement of the mine</xs:appinfo>
+      </xs:annotation>
       <xs:complexContent>
          <xs:extension base="MinefieldFamilyPduType">
             <xs:attribute name="family" fixed="MinefieldFamilyPduType"></xs:attribute>
@@ -7888,6 +7917,11 @@
    </xs:complexType>
    <xs:complexType name="GridAxisDescriptorType" abstract="false">
       <!--abstract='false' base='rootType'-->
+      <xs:annotation>
+         <xs:appinfo>Detailed information about the grid dimensions (axes) and coordinates for environmental
+            state variables
+         </xs:appinfo>
+      </xs:annotation>
       <xs:complexContent>
          <xs:extension base="rootType">
             <xs:attribute name="domainInitialXi" type="xs:double">

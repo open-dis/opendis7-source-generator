@@ -1363,7 +1363,7 @@ dB and RPM)"/>
      
     </class>
     
-    <class name="GridAxisDescriptor" inheritsFrom="root">
+    <class name="GridAxisDescriptor" inheritsFrom="root" comment="Detailed information about the grid dimensions (axes) and coordinates for environmental state variables">
         
         <attribute name="domainInitialXi" comment="coordinate of the grid origin or initial value">
             <primitive type="float64"/>

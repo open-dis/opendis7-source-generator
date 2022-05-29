@@ -6,7 +6,7 @@
   
     </class>
 
-    <class name="RadioCommsHeader" inheritsFrom="root">
+    <class name="RadioCommsHeader" inheritsFrom="root" comment="Common PDU fields for Radio Communications family">
         <attribute name="radioReferenceID" comment="ID of the entitythat is the source of the communication">
             <classRef name="EntityID"/>
         </attribute> 
@@ -158,7 +158,7 @@
    
         <initialValue name="pduType" value="DisPduType.INTERCOM_SIGNAL"/>
   
-        <attribute name="intercomReferenceID">
+        <attribute name="intercomReferenceID" comment="The unique designation of an attached or unattached intercom in an event or exercise">
             <classRef name= "IntercomReferenceID"/>
         </attribute>
   
