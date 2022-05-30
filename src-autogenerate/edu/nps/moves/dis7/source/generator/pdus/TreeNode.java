@@ -7,7 +7,7 @@ package edu.nps.moves.dis7.source.generator.pdus;
 import java.util.*;
 
 /**
- *
+ * Class for node which is a tree
  * @author DMcG
  */
 public class TreeNode // TODO consider refactor renaming as PythonTreeNode
