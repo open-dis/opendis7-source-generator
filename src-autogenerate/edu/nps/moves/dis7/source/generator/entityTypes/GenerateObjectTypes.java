@@ -39,6 +39,7 @@ public class GenerateObjectTypes
     private String sisoSpecificationTitleDate = "";
 
     String objecttypeTemplate;
+    String    licenseTemplate;
 
   class TypeClassData
   {
@@ -134,7 +135,8 @@ public class GenerateObjectTypes
   private void loadTemplates()
   {
     try {
-      objecttypeTemplate = loadOneTemplate("objecttype.txt");
+      licenseTemplate          = loadOneTemplate("../pdus/dis7javalicense.txt");
+      objecttypeTemplate       = loadOneTemplate("objecttype.txt");
     }
     catch (Exception ex) {
       throw new RuntimeException(ex);
@@ -376,6 +378,7 @@ public class GenerateObjectTypes
     {
       String contents = String.format(objecttypeTemplate, data.pkg,
         sisoSpecificationTitleDate, currentCot.uid,data.className,data.className);
+      data.sb.append(licenseTemplate);
       data.sb.append(contents);
     }
 

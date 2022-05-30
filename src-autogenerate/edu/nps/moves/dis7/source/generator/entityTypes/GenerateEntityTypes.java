@@ -44,7 +44,8 @@ public class GenerateEntityTypes
     private BufferedWriter uid2ClassWriter = null;
 
     String entitytypecommonTemplate;
-    String uidfactoryTemplate;
+    String       uidfactoryTemplate;
+    String          licenseTemplate;
 
     class TypeClassData
     {
@@ -266,6 +267,7 @@ public class GenerateEntityTypes
   private void loadTemplates()
   {
     try {
+      licenseTemplate          = loadOneTemplate("../pdus/dis7javalicense.txt");
       entitytypecommonTemplate = loadOneTemplate("entitytypecommon.txt");
       uidfactoryTemplate       = loadOneTemplate("uidfactory.txt");
     }
@@ -690,6 +692,7 @@ public class GenerateEntityTypes
                                       data.entityKindName, 
                                       data.entityDomainName, 
                                       data.entityDomainValue);
+      data.sb.append(licenseTemplate);
       data.sb.append(contents);
     }
 

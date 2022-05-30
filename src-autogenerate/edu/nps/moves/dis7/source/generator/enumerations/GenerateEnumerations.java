@@ -65,6 +65,7 @@ public class GenerateEnumerations
     private String disbitset2Template;
     private String disbitsetcommentxrefTemplate;
     private String disbitsetcommentTemplate;
+    private String licenseTemplate;
 
     private static String       sisoSpecificationTitleDate = "";
 
@@ -255,6 +256,7 @@ public class GenerateEnumerations
             disbitset2Template                 = loadOneTemplate("disbitset2.txt");
             disbitsetcommentxrefTemplate       = loadOneTemplate("disbitsetcommentxref.txt");
             disbitsetcommentTemplate           = loadOneTemplate("disbitsetcomment.txt");
+            licenseTemplate                    = loadOneTemplate("../pdus/dis7javalicense.txt");
         }
         catch (Exception ex) {
             throw new RuntimeException(ex);
@@ -726,6 +728,7 @@ public class GenerateEnumerations
               aliases = uid4aliases;
             
             StringBuilder sb = new StringBuilder();
+            sb.append(licenseTemplate);
             StringBuilder additionalRowStringBuilder = new StringBuilder();
             // change additional class name to match similarly
             final String ADDITIONAL_ENUMERATION_FILE_SUFFIX = "Additional";

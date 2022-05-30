@@ -40,6 +40,7 @@ public class GenerateJammers
     private static String       sisoSpecificationTitleDate = "";
 
     String jammertechniqueTemplate;
+    String         licenseTemplate;
 
     class TypeClassData
     {
@@ -140,7 +141,8 @@ public class GenerateJammers
   private void loadTemplates()
   {
     try {
-      jammertechniqueTemplate = loadOneTemplate("jammertechnique.txt");
+      licenseTemplate          = loadOneTemplate("../pdus/dis7javalicense.txt");
+      jammertechniqueTemplate  = loadOneTemplate("jammertechnique.txt");
     }
     catch (Exception ex) {
       throw new RuntimeException(ex);
@@ -369,6 +371,7 @@ public class GenerateJammers
         "284", // TODO huh?
         // TODO kind, category
         data.className,data.className);
+      data.sb.append(licenseTemplate);
       data.sb.append(contents);
     }
 

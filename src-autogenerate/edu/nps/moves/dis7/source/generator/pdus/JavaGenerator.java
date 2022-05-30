@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2008-2022, MOVES Institute, Naval Postgraduate School (NPS). All rights reserved.
- * This work is provided under a BSD open-source license, see project license.html and license.txt
+ * This work is provided under a BSD-style open-source license, see project license.html and license.txt
  */
 package edu.nps.moves.dis7.source.generator.pdus;
 
@@ -530,8 +530,8 @@ public class JavaGenerator extends AbstractGenerator
   /*  String domainTemplate1;
     String domainTemplate2;
     String domainTemplate3;*/
-    String specSource;
-    String license;
+    String specSourceTemplate;
+    String licenseTemplate;
     /*
     private void writeSpecialCase(PrintWriter pw, GeneratedClass aClass)
     {
@@ -561,8 +561,8 @@ public class JavaGenerator extends AbstractGenerator
          // domainTemplate1 = loadOneTemplate("domainpart1.txt");
          // domainTemplate2 = loadOneTemplate("domainpart2.txt");
          // domainTemplate3 = loadOneTemplate("domainpart3.txt");
-            specSource      = loadOneTemplate("dis7spec.txt");
-            license         = loadOneTemplate("dis7javalicense.txt");
+            specSourceTemplate      = loadOneTemplate("dis7spec.txt");
+            licenseTemplate         = loadOneTemplate("dis7javalicense.txt");
         }
         catch (Exception ex) {
             throw new RuntimeException(ex);
@@ -580,9 +580,9 @@ public class JavaGenerator extends AbstractGenerator
     
     private void writeLicense(PrintWriter printWriter, GeneratedClass aClass)
     {
-      if(license == null)
-        System.out.println("bp");
-      printWriter.println(license);
+      if(licenseTemplate == null)
+        System.out.println("*** [bad pointer for licenseTemplate]");
+      printWriter.println(licenseTemplate);
       printWriter.println();
     }
     /**
@@ -634,7 +634,7 @@ public class JavaGenerator extends AbstractGenerator
         if (aClass.getClassComments() != null)
             pw.println(" * " + aClass.getClassComments());
         
-        pw.println(" * "+specSource);
+        pw.println(" * "+specSourceTemplate);
         pw.println(" */");
     }
 
