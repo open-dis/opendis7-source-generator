@@ -229,7 +229,7 @@
     
     </class>
 
-    <class name="IntercomReferenceID" inheritsFrom="root">
+    <class name="IntercomReferenceID" inheritsFrom="root" comment="unique reference ID for this intercom">
         
         <attribute name="siteNumber">
             <primitive type="uint16"/>
