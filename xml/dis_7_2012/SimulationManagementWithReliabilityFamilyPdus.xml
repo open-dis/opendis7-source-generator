@@ -30,7 +30,7 @@
             <primitive type="uint16"/>
         </attribute>
    
-        <attribute name="requestID" comment="Request ID">
+        <attribute name="requestID" comment="Request ID provides a unique identifier">
             <primitive type="uint32"/>
         </attribute>
 
@@ -54,7 +54,7 @@
             <primitive type="uint16"/>
         </attribute>
    
-        <attribute name="requestID" comment="Request ID">
+        <attribute name="requestID" comment="Request ID provides a unique identifier">
             <primitive type="uint32"/>
         </attribute>
 
@@ -86,7 +86,7 @@
             <primitive type="uint16"/>
         </attribute>
    
-        <attribute name="requestID" comment="Request ID">
+        <attribute name="requestID" comment="Request ID provides a unique identifier">
             <primitive type="uint32"/>
         </attribute>
   
@@ -118,7 +118,7 @@
             <primitive type="uint8"/>
         </attribute>
 
-        <attribute name="requestID" comment="Request ID">
+        <attribute name="requestID" comment="Request ID provides a unique identifier">
             <primitive type="uint32"/>
         </attribute>
    
@@ -139,7 +139,7 @@
             <sisoenum type="AcknowledgeResponseFlag" comment="uid 70"/>
         </attribute>
    
-        <attribute name="requestID" comment="Request ID">
+        <attribute name="requestID" comment="Request ID provides a unique identifier">
             <primitive type="uint32"/>
         </attribute>
    
@@ -164,11 +164,11 @@
             <primitive type="uint16"/>
         </attribute>
    
-        <attribute name="requestID" comment="request ID">
+        <attribute name="requestID" comment="request ID provides a unique identifier">
             <primitive type="uint32"/>
         </attribute>
    
-        <attribute name="actionID" comment="request ID">
+        <attribute name="actionID" comment="request ID provides a unique identifier">
             <sisoenum type="ActionRequestActionID" comment="uid 71"/>
         </attribute>
    
@@ -201,7 +201,7 @@
       
         <initialValue name="pduType" value="DisPduType.ACTION_RESPONSE_RELIABLE"/>
    
-        <attribute name="requestID" comment="request ID">
+        <attribute name="requestID" comment="request ID provides a unique identifier">
             <primitive type="uint32"/>
         </attribute>
    
@@ -249,7 +249,7 @@
             <primitive type="uint16"/>
         </attribute>
    
-        <attribute name="requestID" comment="request ID">
+        <attribute name="requestID" comment="request ID provides a unique identifier">
             <primitive type="uint32"/>
         </attribute>
    
@@ -298,7 +298,7 @@
             <primitive type="uint16"/>
         </attribute>
    
-        <attribute name="requestID" comment="request ID">
+        <attribute name="requestID" comment="request ID provides a unique identifier">
             <primitive type="uint32"/>
         </attribute>
    
@@ -330,7 +330,7 @@
       
         <initialValue name="pduType" value="DisPduType.DATA_RELIABLE"/>
    
-        <attribute name="requestID" comment="Request ID">
+        <attribute name="requestID" comment="Request ID provides a unique identifier">
             <primitive type="uint32"/>
         </attribute>
    
@@ -434,7 +434,7 @@
       
         <initialValue name="pduType" value="DisPduType.RECORD_QUERY_RELIABLE"/>
   
-        <attribute name="requestID" comment="request ID">
+        <attribute name="requestID" comment="request ID provides a unique identifier">
             <primitive type="uint32"/>
         </attribute>
    
@@ -473,7 +473,7 @@
           
         <initialValue name="pduType" value="DisPduType.SET_RECORD_RELIABLE"/>
        
-        <attribute name="requestID" comment="request ID">
+        <attribute name="requestID" comment="request ID provides a unique identifier">
             <primitive type="uint32"/>
         </attribute>
        
@@ -511,7 +511,7 @@
         
         <initialValue name="pduType" value="DisPduType.RECORD_RELIABLE"/>
 
-        <attribute name="requestID" comment="request ID">
+        <attribute name="requestID" comment="request ID provides a unique identifier">
             <primitive type="uint32"/>
         </attribute>
        

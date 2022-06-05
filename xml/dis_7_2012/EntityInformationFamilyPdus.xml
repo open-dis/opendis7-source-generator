@@ -71,15 +71,15 @@
  
         <initialValue name="pduType" value="DisPduType.ENTITY_STATE"/>
         
-        <attribute name="site" comment="The site ID">
+        <attribute name="site" comment="The site ID provides a unique identifier">
             <primitive type="uint16"/>
         </attribute>
  
-        <attribute name="application" comment="The application ID">
+        <attribute name="application" comment="The application ID provides a unique identifier">
             <primitive type="uint16"/>
         </attribute>
  
-        <attribute name="entity" comment="the entity ID">
+        <attribute name="entity" comment="the entity ID provides a unique identifier">
             <primitive type="uint16"/>
         </attribute>
   
@@ -409,7 +409,7 @@
         </attribute>
 
         <attribute name="masterAttributeRecordType" comment="This field shall contain the Attribute record type of the Attribute records in the PDU if they all have the same Attribute record type. It shall be represented by a 32-bit enumeration.">
-            <sisoenum type="VariableRecordType" comment="uid 66"/>
+            <sisoenum type="VariableRecordType" comment="uid 66 Variable Record Type values are defined by VariableRecordType enumerations"/>
         </attribute>
 
         <attribute name="actionCode" comment="This field shall identify the action code applicable to this Attribute PDU. The Action Code shall apply to all Attribute records contained in the PDU. It shall be represented by an 8-bit enumeration.">

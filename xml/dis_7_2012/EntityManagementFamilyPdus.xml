@@ -14,7 +14,7 @@
             <classRef name= "AggregateIdentifier"/>
         </attribute>
       
-        <attribute name="forceID" comment="force ID">
+        <attribute name="forceID" comment="force ID provides a unique identifier">
             <sisoenum type="ForceID" comment="uid 6"/>
         </attribute>
       

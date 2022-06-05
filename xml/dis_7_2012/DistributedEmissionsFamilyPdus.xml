@@ -240,7 +240,7 @@
             <primitive type="uint8"/>
         </attribute>
   
-        <attribute name="padding">
+        <attribute name="padding" comment="zero-filled array of padding bits for byte alignment and consistent sizing of PDU data">
             <primitive type="uint16"/>
         </attribute>
         
@@ -273,7 +273,7 @@ This field defines the active  emission  parameter  index,  beam  scan  pattern,
             <primitive type="uint8"/>
         </attribute>
         
-        <attribute name="padding">
+        <attribute name="padding" comment="zero-filled array of padding bits for byte alignment and consistent sizing of PDU data">
             <primitive type="uint16"/>
         </attribute>
         
@@ -356,7 +356,7 @@ This field defines the active  emission  parameter  index,  beam  scan  pattern,
  
         <initialValue name="pduType" value="DisPduType.SUPPLEMENTAL_EMISSION_ENTITY_STATE"/>
    
-        <attribute name="orginatingEntityID" comment="Originating entity ID">
+        <attribute name="orginatingEntityID" comment="Originating entity ID provides a unique identifier">
             <classRef name="EntityID"/>
         </attribute>    
   

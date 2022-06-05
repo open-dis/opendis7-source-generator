@@ -92,11 +92,11 @@
     <class name="AggregateIdentifier" inheritsFrom="root" 
            comment="The unique designation of each aggregate in an exercise is specified by an aggregate identifier record. The aggregate ID is not an entity and shall not be treated as such. Section 6.2.3.">
     
-        <attribute name="simulationAddress" comment="Simulation address, i.e. site and application, the first two fields of the entity ID">
+        <attribute name="simulationAddress" comment="Simulation address, i.e. site and application, the first two fields of the entity ID provides a unique identifier">
             <classRef name="SimulationAddress"/>
         </attribute>
   
-        <attribute name="aggregateID" comment="The aggregate ID">
+        <attribute name="aggregateID" comment="The aggregate ID provides a unique identifier">
             <primitive type="uint16"/>
         </attribute>
  
@@ -271,7 +271,7 @@ dB and RPM)"/>
             <sisoenum type="EntityAssociationAssociationType" comment="330"/>
         </attribute>
     
-        <attribute name="padding" comment="Padding">
+        <attribute name="padding" comment="zero-filled array of padding bits for byte alignment and consistent sizing of PDU data">
             <primitive type="uint8"/>
         </attribute>
     
@@ -308,7 +308,7 @@ dB and RPM)"/>
             </primitivelist>
         </attribute> -->
         
-       <attribute name="padding">
+       <attribute name="padding" comment="zero-filled array of padding bits for byte alignment and consistent sizing of PDU data">
             <padtoboundary length="64"/>
         </attribute>
 
@@ -379,7 +379,7 @@ dB and RPM)"/>
             <primitive type="uint16" defaultValue="40"/>
         </attribute>
 
-        <attribute name="padding" comment="padding">
+        <attribute name="padding" comment="zero-filled array of padding bits for byte alignment and consistent sizing of PDU data">
             <primitive type="uint16" defaultValue="0"/>
         </attribute>
  
@@ -560,7 +560,7 @@ dB and RPM)"/>
             <sisoenum type="ExplosiveMaterialCategories" comment="uid 310"/>
         </attribute>
     
-        <attribute name="padding" comment="padding">
+        <attribute name="padding" comment="zero-filled array of padding bits for byte alignment and consistent sizing of PDU data">
             <primitive type="uint16" defaultValue="0"/>
         </attribute>
     
@@ -579,7 +579,7 @@ dB and RPM)"/>
             <classRef name="EntityType"/> 
         </attribute>
     
-        <attribute name="padding" comment="Padding">
+        <attribute name="padding" comment="zero-filled array of padding bits for byte alignment and consistent sizing of PDU data">
             <primitive type="int64" defaultValue="0"/>
         </attribute>
 
@@ -598,7 +598,7 @@ dB and RPM)"/>
             <primitive type="uint16"/>
         </attribute>
 
-        <attribute name="padding" comment="Padding">
+        <attribute name="padding" comment="zero-filled array of padding bits for byte alignment and consistent sizing of PDU data">
             <primitive type="uint16" defaultValue="0"/>
         </attribute>
    
@@ -641,7 +641,7 @@ dB and RPM)"/>
             <primitive type="uint16" defaultValue="88"/>
         </attribute>
 
-        <attribute name="padding" comment="Padding">
+        <attribute name="padding" comment="zero-filled array of padding bits for byte alignment and consistent sizing of PDU data">
             <primitive type="uint16" defaultValue="0"/>
         </attribute>
 
@@ -703,7 +703,7 @@ dB and RPM)"/>
             <classRef name="EntityID"/>
         </attribute>
   
-        <attribute name="padding" comment="padding">
+        <attribute name="padding" comment="zero-filled array of padding bits for byte alignment and consistent sizing of PDU data">
             <primitive type="uint16" defaultValue="0"/>
         </attribute>
    
@@ -727,7 +727,7 @@ dB and RPM)"/>
             <primitive type="uint16" defaultValue="40"/>
         </attribute>
     
-        <attribute name="padding" comment="Padding">
+        <attribute name="padding" comment="zero-filled array of padding bits for byte alignment and consistent sizing of PDU data">
             <primitive type="uint16" defaultValue="0"/>
         </attribute>
     
@@ -786,7 +786,7 @@ dB and RPM)"/>
             <primitive type="uint16" defaultValue="48"/>
         </attribute>
     
-        <attribute name="padding" comment="padding">
+        <attribute name="padding" comment="zero-filled array of padding bits for byte alignment and consistent sizing of PDU data">
             <primitive type="uint16" defaultValue="0"/>
         </attribute>
     
@@ -856,7 +856,7 @@ dB and RPM)"/>
             <primitive type="uint16" defaultValue="40"/>
         </attribute>
     
-        <attribute name="padding" comment="padding">
+        <attribute name="padding" comment="zero-filled array of padding bits for byte alignment and consistent sizing of PDU data">
             <primitive type="uint16" defaultValue="0"/>
         </attribute>
     
@@ -975,7 +975,7 @@ dB and RPM)"/>
             <sisoenum type="FuelLocation" comment="uid 329"/>
         </attribute>
   
-        <attribute name="padding" comment="padding">
+        <attribute name="padding" comment="zero-filled array of padding bits for byte alignment and consistent sizing of PDU data">
             <primitive type= "uint8" defaultValue="0"/>
         </attribute>
          
@@ -1013,7 +1013,7 @@ dB and RPM)"/>
             <sisoenum type="FuelLocation" comment="uid 329"/>
         </attribute>
   
-        <attribute name="padding" comment="padding">
+        <attribute name="padding" comment="zero-filled array of padding bits for byte alignment and consistent sizing of PDU data">
             <primitive type="uint8" defaultValue="0"/>
         </attribute>
   
@@ -1033,17 +1033,17 @@ dB and RPM)"/>
 
     </class>
 
-    <class name="EntityID" inheritsFrom="root" comment="also referred to as EntityIdentifier">
+    <class name="EntityID" inheritsFrom="root" comment="Unique identifier triplet for this entity.  Also referred to as EntityIdentifier">
 
-        <attribute name="siteID" comment="Site ID">
+        <attribute name="siteID" comment="Site ID values are unique identification number for originating site, often corresponding to an internet address.  Site ID values are agreed upon by individual simulations.">
             <primitive type= "uint16"/>
         </attribute>
   
-        <attribute name="applicationID" comment="application number ID">
+        <attribute name="applicationID" comment="Application ID values are unique identification number for originating application at a given site.  Application ID values are sssigned by individual sites.">
             <primitive type= "uint16"/>
         </attribute>
   
-        <attribute name="entityID" comment="Entity number ID">
+        <attribute name="entityID" comment="Entity ID values are unique identification number for s givent entity in the originating application at a given site.  Entity ID values are sssigned by individual simulation programs.">
             <primitive type= "uint16"/>
         </attribute>
   
@@ -1271,7 +1271,7 @@ dB and RPM)"/>
             <sisoenum type="MunitionExpendableStatus" comment="uid 327"/>
         </attribute>
   
-        <attribute name="padding">
+        <attribute name="padding" comment="zero-filled array of padding bits for byte alignment and consistent sizing of PDU data">
             <primitive type="uint8" defaultValue="0" comment="padding"/>
         </attribute>
 
@@ -1310,7 +1310,7 @@ dB and RPM)"/>
     <class name="FixedDatum" inheritsFrom="root" comment="Fixed Datum Record. Section 6.2.37">
    
         <attribute name="fixedDatumID" comment="ID of the fixed datum, an enumeration">
-            <sisoenum type="VariableRecordType" comment="uid 66"/>
+            <sisoenum type="VariableRecordType" comment="uid 66 Variable Record Type values are defined by VariableRecordType enumerations"/>
         </attribute>
   
         <attribute name="fixedDatumValue" comment="Value for the fixed datum">
@@ -1429,7 +1429,7 @@ dB and RPM)"/>
             </primitivelist>
         </attribute> -->
         
-        <attribute name="padding">
+        <attribute name="padding" comment="zero-filled array of padding bits for byte alignment and consistent sizing of PDU data">
             <padtoboundary length="64"/>
         </attribute>
 
@@ -1465,7 +1465,7 @@ dB and RPM)"/>
             </primitivelist>
         </attribute> -->
         
-        <attribute name="padding">
+        <attribute name="padding" comment="zero-filled array of padding bits for byte alignment and consistent sizing of PDU data">
             <padtoboundary length="16"/>
         </attribute>
 
@@ -1497,7 +1497,7 @@ dB and RPM)"/>
             </primitivelist> 
         </attribute> -->
         
-        <attribute name="padding">
+        <attribute name="padding" comment="zero-filled array of padding bits for byte alignment and consistent sizing of PDU data">
             <padtoboundary length="32"/>
         </attribute>
 
@@ -1509,7 +1509,7 @@ dB and RPM)"/>
             <primitive type="uint16"/>
         </attribute>
         
-        <attribute name="padding">
+        <attribute name="padding" comment="zero-filled array of padding bits for byte alignment and consistent sizing of PDU data">
             <primitive type="uint16"/>
         </attribute>
         
@@ -1540,7 +1540,7 @@ dB and RPM)"/>
     <class name="IOCommsNodeRecord" inheritsFrom="IORecord" comment="6.2.48.2">
         
         <attribute name="recordType" initialValue="5501">
-            <sisoenum type="VariableRecordType" defaultValue="VariableRecordType.IO_COMMUNICATIONS_NODE" comment="uid 66"/>
+            <sisoenum type="VariableRecordType" defaultValue="VariableRecordType.IO_COMMUNICATIONS_NODE" comment="uid 66 Variable Record Type values are defined by VariableRecordType enumerations"/>
         </attribute>
         
         <attribute name="recordLength" initialValue="16">
@@ -1551,7 +1551,7 @@ dB and RPM)"/>
             <sisoenum type="IOCommsNodeRecordCommsNodeType" comment="uid 294"/>
         </attribute>
         
-        <attribute name="padding">
+        <attribute name="padding" comment="zero-filled array of padding bits for byte alignment and consistent sizing of PDU data">
             <primitive type="uint8"/>
         </attribute>
         
@@ -1564,7 +1564,7 @@ dB and RPM)"/>
     <class name="IOEffectRecord" inheritsFrom="IORecord" comment="6.2.48.3">
         
         <attribute name="recordType" initialValue="5500">
-            <sisoenum type="VariableRecordType" defaultValue="VariableRecordType.IO_EFFECT" comment="uid 66"/>
+            <sisoenum type="VariableRecordType" defaultValue="VariableRecordType.IO_EFFECT" comment="uid 66 Variable Record Type values are defined by VariableRecordType enumerations"/>
         </attribute>
         
         <attribute name="recordLength" initialValue="16">
@@ -1595,7 +1595,7 @@ dB and RPM)"/>
             <sisoenum type="IOEffectsRecordIOProcess" comment="uid 293" />       
         </attribute>
         
-        <attribute name="padding">
+        <attribute name="padding" comment="zero-filled array of padding bits for byte alignment and consistent sizing of PDU data">
             <primitive type="uint16"/>      
         </attribute>
         
@@ -1618,7 +1618,7 @@ dB and RPM)"/>
     <class name="IFFData" inheritsFrom="root" comment="repeating element in IFF Data specification record">
      
         <attribute name="recordType" comment="enumeration for type of record">
-            <sisoenum type="VariableRecordType" comment="uid 66"/>
+            <sisoenum type="VariableRecordType" comment="uid 66 Variable Record Type values are defined by VariableRecordType enumerations"/>
         </attribute>
   
         <attribute name="recordLength" comment="length of record, including padding">
@@ -1637,7 +1637,7 @@ dB and RPM)"/>
             </primitivelist>
         </attribute>
         -->
-        <attribute name="padding">
+        <attribute name="padding" comment="zero-filled array of padding bits for byte alignment and consistent sizing of PDU data">
             <padtoboundary length="32"/>
         </attribute>
     </class>
@@ -1714,7 +1714,7 @@ dB and RPM)"/>
             </primitivelist>           
         </attribute> -->
         
-        <attribute name="padding">
+        <attribute name="padding" comment="zero-filled array of padding bits for byte alignment and consistent sizing of PDU data">
             <padtoboundary length="32"/>
         </attribute>
 
@@ -1766,7 +1766,7 @@ dB and RPM)"/>
             <classRef name="EventIdentifier"/>
         </attribute>
      
-        <attribute name="padding">
+        <attribute name="padding" comment="zero-filled array of padding bits for byte alignment and consistent sizing of PDU data">
             <primitive type="uint16"/>
         </attribute>
      
@@ -1854,7 +1854,7 @@ dB and RPM)"/>
             <primitive type="float32"/>
         </attribute>
      
-        <attribute name="padding" comment="padding">
+        <attribute name="padding" comment="zero-filled array of padding bits for byte alignment and consistent sizing of PDU data">
             <primitive type="uint32"/>
         </attribute>
 
@@ -1934,7 +1934,7 @@ dB and RPM)"/>
             </primitivelist>
         </atribute> -->
         
-        <attribute name="padding">
+        <attribute name="padding" comment="zero-filled array of padding bits for byte alignment and consistent sizing of PDU data">
             <padtoboundary length="64"/>
         </attribute>
 
@@ -1981,7 +1981,7 @@ dB and RPM)"/>
             <sisoenum type="MunitionExpendableStatus" comment="uid 327"/>
         </attribute>
 
-        <attribute name="padding" comment="padding ">
+        <attribute name="padding" comment="zero-filled array of padding bits for byte alignment and consistent sizing of PDU data">
             <primitive type="uint8" defaultValue="0"/>
         </attribute>
 
@@ -2076,7 +2076,7 @@ dB and RPM)"/>
             <sisoenum type="OwnershipStatus" comment="uid 332"/>
         </attribute>
 
-        <attribute name="padding" comment="padding">
+        <attribute name="padding" comment="zero-filled array of padding bits for byte alignment and consistent sizing of PDU data">
             <primitive type="uint8" defaultValue="0"/>
         </attribute>
     </class>
@@ -2089,7 +2089,7 @@ dB and RPM)"/>
             <primitive type= "uint8" defaultValue="7"/>
         </attribute>
   
-        <attribute name="exerciseID" comment="Exercise ID">
+        <attribute name="exerciseID" comment="Exercise ID provides a unique identifier">
             <primitive type= "uint8" defaultValue="0"/>
         </attribute>
   
@@ -2113,7 +2113,7 @@ dB and RPM)"/>
             <primitive type="uint8"/>
         </attribute>
  
-        <attribute name="padding" comment="zero filled array of padding">
+        <attribute name="padding" comment="zero-filled array of padding bits for byte alignment and consistent sizing of PDU data">
             <primitive type="uint8" defaultValue="0"/>
         </attribute>
  
@@ -2223,7 +2223,7 @@ dB and RPM)"/>
             <primitive type= "uint32"/>
         </attribute>
         
-        <attribute name="padding">
+        <attribute name="padding" comment="zero-filled array of padding bits for byte alignment and consistent sizing of PDU data">
             <primitive type="uint32"/>
         </attribute>
 
@@ -2326,7 +2326,7 @@ dB and RPM)"/>
             <primitive type="uint16"/>
         </attribute>
 
-        <attribute name="padding" comment="padding">
+        <attribute name="padding" comment="zero-filled array of padding bits for byte alignment and consistent sizing of PDU data">
             <primitive type="uint16" defaultValue="0"/>
         </attribute>
 
@@ -2414,7 +2414,7 @@ dB and RPM)"/>
     <class name="StandardVariableRecord" inheritsFrom="root" comment="Section 6.2.83">
         
         <attribute name="recordType">
-            <sisoenum type="VariableRecordType" comment="uid 66"/>
+            <sisoenum type="VariableRecordType" comment="uid 66 Variable Record Type values are defined by VariableRecordType enumerations"/>
         </attribute>
         
         <attribute name="recordLength" hidden="true" >
@@ -2433,7 +2433,7 @@ dB and RPM)"/>
             </primitivelist>
         </attribute>-->
         
-        <attribute name="padding">
+        <attribute name="padding" comment="zero-filled array of padding bits for byte alignment and consistent sizing of PDU data">
             <padtoboundary length="64"/>
         </attribute>
 
@@ -2457,7 +2457,7 @@ dB and RPM)"/>
             <sisoenum type="FuelLocation" comment="uid 329"/>
         </attribute>
 
-        <attribute name="padding" comment="padding">
+        <attribute name="padding" comment="zero-filled array of padding bits for byte alignment and consistent sizing of PDU data">
             <primitive type="uint8" defaultValue="0"/>
         </attribute>
 
@@ -2494,7 +2494,7 @@ dB and RPM)"/>
             <sisoenum type="FuelLocation" comment="uid 329"/>
         </attribute>
 
-        <attribute name="padding" comment="padding">
+        <attribute name="padding" comment="zero-filled array of padding bits for byte alignment and consistent sizing of PDU data">
             <primitive type="uint8" defaultValue="0"/>
         </attribute>
 
@@ -2548,7 +2548,7 @@ dB and RPM)"/>
             <primitive type="uint16"/>
         </attribute>
 
-        <attribute name="padding" comment="padding">
+        <attribute name="padding" comment="zero-filled array of padding bits for byte alignment and consistent sizing of PDU data">
             <primitive type="uint16" defaultValue="0"/>
         </attribute>
 
@@ -2619,7 +2619,7 @@ dB and RPM)"/>
            comment="The variable datum type, the datum length, and the value for that variable datum type. Section 6.2.93">
 
         <attribute name="variableDatumID" comment="Type of variable datum to be transmitted. 32-bit enumeration defined in EBV">
-            <sisoenum type="VariableRecordType" comment="uid 66"/>
+            <sisoenum type="VariableRecordType" comment="uid 66 Variable Record Type values are defined by VariableRecordType enumerations"/>
         </attribute>
 
         <attribute name="variableDatumLength" comment="Length, IN BITS, of the variable datum.">
@@ -2632,7 +2632,7 @@ dB and RPM)"/>
             </primitivelist>
         </attribute>
         
-       <attribute name="padding" comment="data structure to selectively provide padding of correct length, see DIS specification for computation algorithm.">
+        <attribute name="padding" comment="zero-filled array of padding bits for byte alignment and consistent sizing of PDU data">
             <padtoboundary length="64"/>
         </attribute>
 
@@ -2675,7 +2675,7 @@ dB and RPM)"/>
             <primitive type="float32" />
         </attribute>
         
-        <attribute name="padding">
+        <attribute name="padding" comment="zero-filled array of padding bits for byte alignment and consistent sizing of PDU data">
             <primitive type="uint32"/>
         </attribute>
 
@@ -2759,7 +2759,7 @@ dB and RPM)"/>
             <classRef name="EntityType"/>
         </attribute>
 
-        <attribute name="padding" comment="padding">
+        <attribute name="padding" comment="zero-filled array of padding bits for byte alignment and consistent sizing of PDU data">
             <primitive type="uint16" defaultValue="0"/>
         </attribute>
 
@@ -2805,7 +2805,7 @@ dB and RPM)"/>
     <class name="VariableTransmitterParameters" inheritsFrom="root" comment="Relates to radios. Section 6.2.95">
 
         <attribute name="recordType" comment="Type of VTP">
-            <sisoenum type="VariableRecordType" comment="uid 66"/>
+            <sisoenum type="VariableRecordType" comment="uid 66 Variable Record Type values are defined by VariableRecordType enumerations"/>
         </attribute>
 
         <attribute name="recordLength" comment="Length, in bytes">
@@ -2824,7 +2824,7 @@ dB and RPM)"/>
             </primitivelist>
         </attribute> -->
         
-         <attribute name="padding">
+         <attribute name="padding" comment="zero-filled array of padding bits for byte alignment and consistent sizing of PDU data">
             <padtoboundary length="64"/>
         </attribute>
 
@@ -3040,7 +3040,7 @@ dB and RPM)"/>
             <sisoenum type="DISProtocolVersion" comment="uid 3" defaultValue="DISProtocolVersion.IEEE_12781_2012"/>  <!-- DIS 7 -->
         </attribute>
   
-        <attribute name="exerciseID" comment="Exercise ID">
+        <attribute name="exerciseID" comment="Exercise ID provides a unique identifier">
             <primitive type= "uint8" defaultValue="0"/>
         </attribute>
   
@@ -3069,7 +3069,7 @@ dB and RPM)"/>
            <classRef name="PduStatus"/>
         </attribute>
 
-        <attribute name="padding" comment="zero-filled array of padding">
+        <attribute name="padding" comment="zero-filled array of padding bits for byte alignment and consistent sizing of PDU data">
             <primitive type="uint8" defaultValue="0"/>
         </attribute>
 
@@ -3178,7 +3178,7 @@ dB and RPM)"/>
         <classRef name="EntityType"/>
       </attribute>
     
-      <attribute name="Padding">
+      <attribute name="padding" comment="zero-filled array of padding bits for byte alignment and consistent sizing of PDU data">
         <primitive type="unsigned short" defaultValue="0"/>
       </attribute>
     
@@ -3193,7 +3193,7 @@ dB and RPM)"/>
            inheritsFrom="DeRecord"
            comment="DE Area Aimpoint Record.">
     
-      <attribute name="Padding" comment="Padding">
+      <attribute name="padding" comment="zero-filled array of padding bits for byte alignment and consistent sizing of PDU data">
         <primitive type="unsigned short" defaultValue="0"/>
       </attribute>
     
@@ -3316,7 +3316,7 @@ dB and RPM)"/>
         <primitive type="unsigned short" defaultValue="0"/>
       </attribute>
     
-      <attribute name="Padding" comment="Padding.">
+      <attribute name="padding" comment="zero-filled array of padding bits for byte alignment and consistent sizing of PDU data">
         <primitive type="unsigned short" defaultValue="0"/>
       </attribute>
     

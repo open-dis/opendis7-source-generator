@@ -8,17 +8,17 @@
     <class name="MinefieldStatePdu" id="37" inheritsFrom="MinefieldFamilyPdu"
            comment="5.10.2 Communicate information about the minefield, including the location, perimeter, and types of mines contained within it.">
 
-        <initialValue name="pduType" value="DisPduType.MINEFIELD_STATE"/>
+        <initialValue name="pduType" value="DisPduType.MINEFIELD_STATE" comment="7.9.2 Minefield State PDU shall provide information about the complete minefield. The minefield presence, perimeter, protocol mode, and types of mines contained within the minefield shall be communicated through the Minefield State PDU."/>
      
-        <attribute name="minefieldID" comment="Minefield ID">
+        <attribute name="minefieldID" comment="Minefield ID provides a unique identifier">
             <classRef name= "MinefieldIdentifier"/>
         </attribute>
    
-        <attribute name="minefieldSequence" comment="Minefield sequence">
+        <attribute name="minefieldSequence" comment="Minefield sequence number shall specify a change in state of a minefield as a result of a change in minefield information or a change in the state, in accordance with the rules specified in 5.10.2.3, of any of the mines contained therein">
             <primitive type= "uint16"/>
         </attribute>
    
-        <attribute name="forceID" comment="force ID">
+        <attribute name="forceID" comment="force ID provides a unique identifier">
             <sisoenum type="ForceID" comment="uid 6"/>
         </attribute>
    
@@ -30,11 +30,11 @@
             <classRef name= "EntityType"/>
         </attribute>
    
-        <attribute name="numberOfMineTypes" hidden="true" comment="how many mine types">
+        <attribute name="numberOfMineTypes" hidden="true" comment="the number of different mine types employed in the minefield">
             <primitive type= "uint16"/>
         </attribute>
    
-        <attribute name="minefieldLocation" comment="location of center of minefield in world coords">
+        <attribute name="minefieldLocation" comment="location of center of minefield in world coordinates">
             <classRef name= "Vector3Double"/>
         </attribute>
    
@@ -42,7 +42,7 @@
             <classRef name= "EulerAngles"/>
         </attribute>
    
-        <attribute name="appearance" comment="appearance bitflags">
+        <attribute name="appearance" comment="appearance bitflags information needed for displaying the symbology of the minefield as a doctrinal minefield graphic">
             <sisobitfield type="MinefieldStateAppearanceBitMap" size="16" comment="uid 190"/>
         </attribute>
    
@@ -50,13 +50,13 @@
             <classRef name="ProtocolMode"/>
         </attribute>
    
-        <attribute name="perimeterPoints" comment="perimeter points for the minefield">
+        <attribute name="perimeterPoints" comment="location of each perimeter point, relative to the Minefield Location field. Only the x and y coordinates of each perimeter point shall be specified.">
             <objectlist countFieldName="numberOfPerimeterPoints">
                 <classRef name="Vector2Float"/>
             </objectlist> 
         </attribute>
     
-        <attribute name="mineType" comment="Type of mines">
+        <attribute name="mineType" comment="type of each mine contained within the minefield">
             <objectlist countFieldName="numberOfMineTypes">
                 <classRef name="EntityType"/>
             </objectlist> 
@@ -67,9 +67,9 @@
     <class name="MinefieldQueryPdu" id="38" inheritsFrom="MinefieldFamilyPdu"
              comment="5.10.3 Contains information about the requesting entity and the region and mine types of interest to the requesting entity.">
     
-        <initialValue name="pduType" value="DisPduType.MINEFIELD_QUERY"/>
+        <initialValue name="pduType" value="DisPduType.MINEFIELD_QUERY" comment="7.9.3 Minefield Query PDU shall provide the means by which a simulation shall query a minefield simulation for information on the individual mines contained within a minefield when operating in QRP mode."/>
          
-        <attribute name="minefieldID" comment="Minefield ID">
+        <attribute name="minefieldID" comment="Minefield ID provides a unique identifier">
             <classRef name= "MinefieldIdentifier"/>
         </attribute>
        
@@ -77,7 +77,7 @@
             <classRef name= "EntityID"/>
         </attribute>
        
-        <attribute name="requestID" comment="request ID">
+        <attribute name="requestID" comment="request ID provides a unique identifier">
             <primitive type= "uint8"/>
         </attribute>
        
@@ -85,7 +85,7 @@
             <primitive type= "uint8"/>
         </attribute>
        
-        <attribute name="padding">
+        <attribute name="padding" comment="zero-filled array of padding bits for byte alignment and consistent sizing of PDU data">
             <primitive type= "uint8"/>
         </attribute>
        
@@ -117,9 +117,9 @@
     <class name="MinefieldDataPdu" id="39" inheritsFrom="MinefieldFamilyPdu"
            comment="5.10.4 Information about the location and status of a collection of mines in a minefield is conveyed through the Minefield Data PDU on an individual mine basis.">
 
-        <initialValue name="pduType" value="DisPduType.MINEFIELD_DATA"/>
+        <initialValue name="pduType" value="DisPduType.MINEFIELD_DATA" comment="7.9.4 Minefield Data PDU shall provide information on individual mines contained within a minefield."/>
      
-        <attribute name="minefieldID" comment="Minefield ID">
+        <attribute name="minefieldID" comment="Minefield ID provides a unique identifier">
             <classRef name= "MinefieldIdentifier"/>
         </attribute>
    
@@ -131,7 +131,7 @@
             <primitive type= "uint16"/>
         </attribute>
    
-        <attribute name="requestID" comment="request ID">
+        <attribute name="requestID" comment="request ID provides a unique identifier">
             <primitive type= "uint8"/>
         </attribute>
    
@@ -151,7 +151,7 @@
             <primitive type="uint8"/>
         </attribute>
    
-        <attribute name="padding" comment="padding">
+        <attribute name="padding" comment="zero-filled array of padding bits for byte alignment and consistent sizing of PDU data">
             <primitive type="uint8" defaultValue="0"/>
         </attribute>
    
@@ -282,9 +282,9 @@
     <class name="MinefieldResponseNACKPdu" id="40" inheritsFrom="MinefieldFamilyPdu"
            comment="5.10.5 Contains information about the requesting entity and the PDU(s) that were not received in response to a query. NACK = Negative Acknowledgment.">
 
-        <initialValue name="pduType" value="DisPduType.MINEFIELD_RESPONSE_NACK"/>
+        <initialValue name="pduType" value="DisPduType.MINEFIELD_RESPONSE_NACK" comment="7.9.5 Minefield Response Negative Acknowledgment (NACK) PDU shall provide the means by which a simulation shall request a minefield simulation to retransmit Minefield Data PDUs not received in response to a query when operating in QRP mode."/>
      
-        <attribute name="minefieldID" comment="Minefield ID">
+        <attribute name="minefieldID" comment="Minefield ID provides a unique identifier">
             <classRef name= "MinefieldIdentifier"/>
         </attribute>
    
@@ -292,7 +292,7 @@
             <classRef name= "SimulationIdentifier"/>
         </attribute>
    
-        <attribute name="requestID" comment="request ID">
+        <attribute name="requestID" comment="request ID provides a unique identifier">
             <primitive type= "uint8"/>
         </attribute>
    

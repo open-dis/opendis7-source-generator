@@ -22,7 +22,7 @@ otherwise affect enemy information and decision making while protecting friendly
             <classRef name= "EntityID"/>
         </attribute>
         
-        <attribute name="requestID" comment="request ID">
+        <attribute name="requestID" comment="request ID provides a unique identifier">
             <primitive type= "uint32"/>
         </attribute>
               
@@ -79,7 +79,7 @@ otherwise affect enemy information and decision making while protecting friendly
             <sisoenum type="IOActionIOSimulationSource" comment="uid 286"/>
         </attribute>
         
-        <attribute name="ioReportType" comment="request ID">
+        <attribute name="ioReportType" comment="request ID provides a unique identifier">
             <sisoenum type="IOReportIOReportType" comment="uid 289"/>
         </attribute>
         

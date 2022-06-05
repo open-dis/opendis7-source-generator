@@ -7,7 +7,7 @@
             <sisoenum type="DISLiveEntitySubprotocolNumber" comment="uid 417"/>
         </attribute>
 
-        <attribute name="padding" comment="zero-filled array of padding">
+        <attribute name="padding" comment="zero-filled array of padding bits for byte alignment and consistent sizing of PDU data">
             <primitive type="uint8" defaultValue="0"/>
         </attribute>
 

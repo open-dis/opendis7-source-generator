@@ -10,7 +10,7 @@
            
         <initialValue name="pduType" value="DisPduType.ENVIRONMENTAL_PROCESS"/>
     
-        <attribute name="environementalProcessID" comment="Environmental process ID">
+        <attribute name="environementalProcessID" comment="Environmental process ID provides a unique identifier">
             <classRef name="ObjectIdentifier"/>
         </attribute>
        
@@ -47,7 +47,7 @@
            
         <initialValue name="pduType" value="DisPduType.GRIDDED_DATA"/>
     
-        <attribute name="environmentalSimulationApplicationID" comment="environmental simulation application ID">
+        <attribute name="environmentalSimulationApplicationID" comment="environmental simulation application ID provides a unique identifier">
             <classRef name="SimulationIdentifier"/>
         </attribute>
        
@@ -134,7 +134,7 @@
             <primitive type="uint32"/>
         </attribute>
    
-        <attribute name="forceID" comment="force ID">
+        <attribute name="forceID" comment="force ID provides a unique identifier">
             <sisoenum type="ForceID" comment="uid 6"/>
         </attribute>
    
@@ -170,7 +170,7 @@
             <classRef name="SimulationAddress"/>
         </attribute>
    
-        <attribute name="receivingID" comment="receiver ID">
+        <attribute name="receivingID" comment="receiver ID provides a unique identifier">
             <classRef name="SimulationAddress"/>
         </attribute>
    
@@ -197,7 +197,7 @@
             <primitive type="uint16"/>
         </attribute>
    
-        <attribute name="forceID" comment="force ID">
+        <attribute name="forceID" comment="force ID provides a unique identifier">
             <sisoenum type="ForceID" comment="uid 6"/>
         </attribute>
    
@@ -209,7 +209,7 @@
             <classRef name="SimulationAddress"/>
         </attribute>
    
-        <attribute name="receivingID" comment="receiver ID">
+        <attribute name="receivingID" comment="receiver ID provides a unique identifier">
             <classRef name="SimulationAddress"/>
         </attribute>
   
@@ -242,7 +242,7 @@
             <primitive type="uint16"/>
         </attribute>
    
-        <attribute name="forceID" comment="force ID">
+        <attribute name="forceID" comment="force ID provides a unique identifier">
             <sisoenum type="ForceID" comment="uid 6"/>
         </attribute>
    
@@ -270,7 +270,7 @@
             <classRef name="SimulationAddress"/>
         </attribute>
    
-        <attribute name="receivingID" comment="receiver ID">
+        <attribute name="receivingID" comment="receiver ID provides a unique identifier">
             <classRef name="SimulationAddress"/>
         </attribute>
    
