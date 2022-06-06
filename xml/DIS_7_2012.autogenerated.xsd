@@ -247,7 +247,8 @@
                   <xs:annotation>
                      <xs:appinfo>This field shall contain the Attribute record type of the Attribute records in the
                         PDU if they all have the same Attribute record type. It shall be represented by a
-                        32-bit enumeration. (SISO enumeration VariableRecordType uid 66)
+                        32-bit enumeration. (SISO enumeration VariableRecordType uid 66 Variable Record Type
+                        values are defined by VariableRecordType enumerations)
                      </xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
@@ -1344,8 +1345,8 @@
    </xs:element>
    <xs:element name="ActionRequestPdu">
       <xs:annotation>
-         <xs:appinfo>7.5.7 A request from an SM to a managed entity to perform a specified action. See
-            5.6.5.7 (length of list found in field numberOfFixedDatumRecords numberOfVariableDatumRecords)
+         <xs:appinfo>7.5.7 A request from a Simulation Manager (SM) to a managed entity to perform a specified
+            action. See 5.6.5.7 (length of list found in field numberOfFixedDatumRecords numberOfVariableDatumRecords)
             <xs:attribute name="id" type="xs:integer" fixed="16"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
@@ -1527,7 +1528,8 @@
    </xs:element>
    <xs:element name="CreateEntityPdu">
       <xs:annotation>
-         <xs:appinfo>Section 7.5.2. Create a new entity. See 5.6.5.2.
+         <xs:appinfo>Section 7.5.2. The creation of a new entity shall be communicated using a Create Entity
+            PDU. See 5.6.5.2.
             <xs:attribute name="id" type="xs:integer" fixed="11"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
@@ -1614,8 +1616,9 @@
    </xs:element>
    <xs:element name="DataQueryPdu">
       <xs:annotation>
-         <xs:appinfo>Section 7.5.9. Request for data from an entity. See 5.6.5.9 (length of list found
-            in field numberOfFixedDatumRecords numberOfVariableDatumRecords)
+         <xs:appinfo>Section 7.5.9. A request for data from an entity shall be communicated by issuing
+            a Data Query PDU. See 5.6.5.9 (length of list found in field numberOfFixedDatumRecords
+            numberOfVariableDatumRecords)
             <xs:attribute name="id" type="xs:integer" fixed="18"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
@@ -1682,8 +1685,9 @@
    </xs:element>
    <xs:element name="EventReportPdu">
       <xs:annotation>
-         <xs:appinfo>7.5.12 Reports occurance of a significant event to the simulation manager. See 5.6.5.12.
-            (length of list found in field numberOfFixedDatumRecords numberOfVariableDatumRecords)
+         <xs:appinfo>7.5.12 A managed entity shall report the occurrence of a significant event to the
+            simulation manager (SM) using an Event Report PDU. See 5.6.5.12. (length of list found
+            in field numberOfFixedDatumRecords numberOfVariableDatumRecords)
             <xs:attribute name="id" type="xs:integer" fixed="21"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
@@ -1866,7 +1870,8 @@
    </xs:complexType>
    <xs:element name="StartResumePdu">
       <xs:annotation>
-         <xs:appinfo>Section 7.5.4. Start or resume an entity or exercise. See 5.6.5.4.
+         <xs:appinfo>Section 7.5.4. The Start/Resume of an entity/exercise shall be communicated using
+            a Start/Resume PDU. See 5.6.5.4.
             <xs:attribute name="id" type="xs:integer" fixed="13"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
@@ -1885,8 +1890,8 @@
                   </xs:element>
                   <xs:element name="simulationTime" type="ClockTimeType">
                      <xs:annotation>
-                        <xs:appinfo>The reference time within a simulation exercise. This time is established ahead of
-                           time by simulation management and is common to all participants in a particular exercise.
+                        <xs:appinfo>The reference time within a simulation exercise. This time is established in advance
+                           by simulation management and is common to all participants in a particular exercise.
                            Simulation time may be either Absolute Time or Relative Time. This field shall be
                            represented by a Clock Time record (see 6.2.16)
                         </xs:appinfo>
@@ -1906,7 +1911,8 @@
    </xs:element>
    <xs:element name="StopFreezePdu">
       <xs:annotation>
-         <xs:appinfo>Section 7.5.5. Stop or freeze an enity or exercise. See 5.6.5.5
+         <xs:appinfo>Section 7.5.5. The stopping or freezing of an entity/exercise shall be communicated
+            using a Stop/Freeze PDU. See 5.6.5.5
             <xs:attribute name="id" type="xs:integer" fixed="14"></xs:attribute>
          </xs:appinfo>
       </xs:annotation>
@@ -1931,7 +1937,7 @@
                </xs:attribute>
                <xs:attribute name="frozenBehavior" type="xs:unsignedByte">
                   <xs:annotation>
-                     <xs:appinfo>Internal behavior of the entity(or simulation) and its appearance while frozen to
+                     <xs:appinfo>Internal behavior of the entity (or simulation) and its appearance while frozen to
                         the other participants (SISO bitfield enumeration, size 8 bits, StopFreezeFrozenBehavior
                         uid 68)
                      </xs:appinfo>
@@ -2112,7 +2118,13 @@
                   </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
-            <xs:attribute name="padding" type="xs:unsignedShort"></xs:attribute>
+            <xs:attribute name="padding" type="xs:unsignedShort">
+               <xs:annotation>
+                  <xs:appinfo>zero-filled array of padding bits for byte alignment and consistent sizing of PDU
+                     data
+                  </xs:appinfo>
+               </xs:annotation>
+            </xs:attribute>
          </xs:extension>
       </xs:complexContent>
    </xs:complexType>
@@ -2135,7 +2147,13 @@
             <xs:attribute name="family" fixed="DistributedEmissionsRegenerationFamilyPduType"></xs:attribute>
             <xs:attribute name="beamDataLength" type="xs:unsignedByte"></xs:attribute>
             <xs:attribute name="beamNumber" type="xs:unsignedByte"></xs:attribute>
-            <xs:attribute name="padding" type="xs:unsignedShort"></xs:attribute>
+            <xs:attribute name="padding" type="xs:unsignedShort">
+               <xs:annotation>
+                  <xs:appinfo>zero-filled array of padding bits for byte alignment and consistent sizing of PDU
+                     data
+                  </xs:appinfo>
+               </xs:annotation>
+            </xs:attribute>
          </xs:extension>
       </xs:complexContent>
    </xs:complexType>
@@ -2421,7 +2439,7 @@
                <xs:sequence>
                   <xs:element name="orginatingEntityID" type="EntityIDType">
                      <xs:annotation>
-                        <xs:appinfo>Originating entity ID</xs:appinfo>
+                        <xs:appinfo>Originating entity ID provides a unique identifier</xs:appinfo>
                      </xs:annotation>
                   </xs:element>
                   <!--Attribute (as element) SEESPdu propulsionSystemData with objectlist classRef name=PropulsionSystemData, type=PropulsionSystemDataType-->
@@ -2643,6 +2661,9 @@
    </xs:complexType>
    <xs:complexType name="IntercomReferenceIDType">
       <!--debug: another class, providing Pdu types-->
+      <xs:annotation>
+         <xs:appinfo>unique reference ID for this intercom</xs:appinfo>
+      </xs:annotation>
       <xs:complexContent>
          <xs:extension base="RadioCommunicationsFamilyPduType">
             <xs:attribute name="family" fixed="RadioCommunicationsFamilyPduType"></xs:attribute>
@@ -3156,7 +3177,7 @@
                <xs:attribute name="family" fixed="EntityManagementFamilyPduType"></xs:attribute>
                <xs:attribute name="forceID" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>force ID (SISO enumeration ForceID uid 6)</xs:appinfo>
+                     <xs:appinfo>force ID provides a unique identifier (SISO enumeration ForceID uid 6)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="aggregateState" type="xs:string">
@@ -3413,7 +3434,7 @@
                <xs:sequence>
                   <xs:element name="minefieldID" type="MinefieldIdentifierType">
                      <xs:annotation>
-                        <xs:appinfo>Minefield ID</xs:appinfo>
+                        <xs:appinfo>Minefield ID provides a unique identifier</xs:appinfo>
                      </xs:annotation>
                   </xs:element>
                   <xs:element name="requestingEntityID" type="SimulationIdentifierType">
@@ -3497,7 +3518,7 @@
                </xs:attribute>
                <xs:attribute name="requestID" type="xs:unsignedByte">
                   <xs:annotation>
-                     <xs:appinfo>request ID</xs:appinfo>
+                     <xs:appinfo>request ID provides a unique identifier</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="pduSequenceNumber" type="xs:unsignedByte">
@@ -3522,7 +3543,9 @@
                </xs:attribute>
                <xs:attribute name="padding" type="xs:unsignedByte">
                   <xs:annotation>
-                     <xs:appinfo>padding</xs:appinfo>
+                     <xs:appinfo>zero-filled array of padding bits for byte alignment and consistent sizing of PDU
+                        data
+                     </xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="padTo32" type="xs:unsignedLong"></xs:attribute>
@@ -3693,7 +3716,7 @@
                <xs:sequence>
                   <xs:element name="minefieldID" type="MinefieldIdentifierType">
                      <xs:annotation>
-                        <xs:appinfo>Minefield ID</xs:appinfo>
+                        <xs:appinfo>Minefield ID provides a unique identifier</xs:appinfo>
                      </xs:annotation>
                   </xs:element>
                   <xs:element name="requestingEntityID" type="EntityIDType">
@@ -3744,7 +3767,7 @@
                <xs:attribute name="family" fixed="MinefieldFamilyPduType"></xs:attribute>
                <xs:attribute name="requestID" type="xs:unsignedByte">
                   <xs:annotation>
-                     <xs:appinfo>request ID</xs:appinfo>
+                     <xs:appinfo>request ID provides a unique identifier</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="numberOfPerimeterPoints" type="xs:unsignedByte">
@@ -3752,7 +3775,13 @@
                      <xs:appinfo>Number of perimeter points for the minefield</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
-               <xs:attribute name="padding" type="xs:unsignedByte"></xs:attribute>
+               <xs:attribute name="padding" type="xs:unsignedByte">
+                  <xs:annotation>
+                     <xs:appinfo>zero-filled array of padding bits for byte alignment and consistent sizing of PDU
+                        data
+                     </xs:appinfo>
+                  </xs:annotation>
+               </xs:attribute>
                <xs:attribute name="numberOfSensorTypes" type="xs:unsignedByte">
                   <xs:annotation>
                      <xs:appinfo>Number of sensor types</xs:appinfo>
@@ -3776,7 +3805,7 @@
                <xs:sequence>
                   <xs:element name="minefieldID" type="MinefieldIdentifierType">
                      <xs:annotation>
-                        <xs:appinfo>Minefield ID</xs:appinfo>
+                        <xs:appinfo>Minefield ID provides a unique identifier</xs:appinfo>
                      </xs:annotation>
                   </xs:element>
                   <xs:element name="requestingEntityID" type="SimulationIdentifierType">
@@ -3789,7 +3818,7 @@
                <xs:attribute name="family" fixed="MinefieldFamilyPduType"></xs:attribute>
                <xs:attribute name="requestID" type="xs:unsignedByte">
                   <xs:annotation>
-                     <xs:appinfo>request ID</xs:appinfo>
+                     <xs:appinfo>request ID provides a unique identifier</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="numberOfMissingPdus" type="xs:unsignedByte">
@@ -3830,7 +3859,7 @@
                <xs:sequence>
                   <xs:element name="minefieldID" type="MinefieldIdentifierType">
                      <xs:annotation>
-                        <xs:appinfo>Minefield ID</xs:appinfo>
+                        <xs:appinfo>Minefield ID provides a unique identifier</xs:appinfo>
                      </xs:annotation>
                   </xs:element>
                   <xs:element name="minefieldType" type="EntityTypeType">
@@ -3840,7 +3869,7 @@
                   </xs:element>
                   <xs:element name="minefieldLocation" type="Vector3DoubleType">
                      <xs:annotation>
-                        <xs:appinfo>location of center of minefield in world coords</xs:appinfo>
+                        <xs:appinfo>location of center of minefield in world coordinates</xs:appinfo>
                      </xs:annotation>
                   </xs:element>
                   <xs:element name="minefieldOrientation" type="EulerAnglesType">
@@ -3863,7 +3892,10 @@
                      </xs:annotation>
                      <xs:element name="Vector2Float" type="Vector2FloatType">
                         <xs:annotation>
-                           <xs:appinfo>perimeter points for the minefield (length of list found in field numberOfPerimeterPoints)</xs:appinfo>
+                           <xs:appinfo>location of each perimeter point, relative to the Minefield Location field. Only the
+                              x and y coordinates of each perimeter point shall be specified. (length of list found
+                              in field numberOfPerimeterPoints)
+                           </xs:appinfo>
                         </xs:annotation>
                      </xs:element>
                   </xs:sequence>
@@ -3877,7 +3909,7 @@
                      </xs:annotation>
                      <xs:element name="EntityType" type="EntityTypeType">
                         <xs:annotation>
-                           <xs:appinfo>Type of mines (length of list found in field numberOfMineTypes)</xs:appinfo>
+                           <xs:appinfo>type of each mine contained within the minefield (length of list found in field numberOfMineTypes)</xs:appinfo>
                         </xs:annotation>
                      </xs:element>
                   </xs:sequence>
@@ -3886,12 +3918,15 @@
                <xs:attribute name="family" fixed="MinefieldFamilyPduType"></xs:attribute>
                <xs:attribute name="minefieldSequence" type="xs:unsignedShort">
                   <xs:annotation>
-                     <xs:appinfo>Minefield sequence</xs:appinfo>
+                     <xs:appinfo>Minefield sequence number shall specify a change in state of a minefield as a result
+                        of a change in minefield information or a change in the state, in accordance with
+                        the rules specified in 5.10.2.3, of any of the mines contained therein
+                     </xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="forceID" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>force ID (SISO enumeration ForceID uid 6)</xs:appinfo>
+                     <xs:appinfo>force ID provides a unique identifier (SISO enumeration ForceID uid 6)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="numberOfPerimeterPoints" type="xs:unsignedByte">
@@ -3901,12 +3936,13 @@
                </xs:attribute>
                <xs:attribute name="numberOfMineTypes" type="xs:unsignedShort">
                   <xs:annotation>
-                     <xs:appinfo>how many mine types</xs:appinfo>
+                     <xs:appinfo>the number of different mine types employed in the minefield</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="appearance" type="xs:unsignedShort">
                   <xs:annotation>
-                     <xs:appinfo>appearance bitflags (SISO bitfield enumeration, size 16 bits, MinefieldStateAppearanceBitMap
+                     <xs:appinfo>appearance bitflags information needed for displaying the symbology of the minefield
+                        as a doctrinal minefield graphic (SISO bitfield enumeration, size 16 bits, MinefieldStateAppearanceBitMap
                         uid 190)
                      </xs:appinfo>
                   </xs:annotation>
@@ -3951,7 +3987,7 @@
                   </xs:element>
                   <xs:element name="receivingID" type="SimulationAddressType">
                      <xs:annotation>
-                        <xs:appinfo>receiver ID</xs:appinfo>
+                        <xs:appinfo>receiver ID provides a unique identifier</xs:appinfo>
                      </xs:annotation>
                   </xs:element>
                   <!--Attribute (as element) ArealObjectStatePdu objectLocation with objectlist classRef name=Vector3Double, type=Vector3DoubleType-->
@@ -3978,7 +4014,7 @@
                </xs:attribute>
                <xs:attribute name="forceID" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>force ID (SISO enumeration ForceID uid 6)</xs:appinfo>
+                     <xs:appinfo>force ID provides a unique identifier (SISO enumeration ForceID uid 6)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="modifications" type="xs:unsignedByte">
@@ -4020,7 +4056,7 @@
                <xs:sequence>
                   <xs:element name="environementalProcessID" type="ObjectIdentifierType">
                      <xs:annotation>
-                        <xs:appinfo>Environmental process ID</xs:appinfo>
+                        <xs:appinfo>Environmental process ID provides a unique identifier</xs:appinfo>
                      </xs:annotation>
                   </xs:element>
                   <xs:element name="environmentType" type="EntityTypeType">
@@ -4084,7 +4120,7 @@
                <xs:sequence>
                   <xs:element name="environmentalSimulationApplicationID" type="SimulationIdentifierType">
                      <xs:annotation>
-                        <xs:appinfo>environmental simulation application ID</xs:appinfo>
+                        <xs:appinfo>environmental simulation application ID provides a unique identifier</xs:appinfo>
                      </xs:annotation>
                   </xs:element>
                   <xs:element name="environmentType" type="EntityTypeType">
@@ -4218,7 +4254,7 @@
                   </xs:element>
                   <xs:element name="receivingID" type="SimulationAddressType">
                      <xs:annotation>
-                        <xs:appinfo>receiver ID</xs:appinfo>
+                        <xs:appinfo>receiver ID provides a unique identifier</xs:appinfo>
                      </xs:annotation>
                   </xs:element>
                   <xs:element name="objectType" type="ObjectTypeType">
@@ -4250,7 +4286,7 @@
                </xs:attribute>
                <xs:attribute name="forceID" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>force ID (SISO enumeration ForceID uid 6)</xs:appinfo>
+                     <xs:appinfo>force ID provides a unique identifier (SISO enumeration ForceID uid 6)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="numberOfLinearSegments" type="xs:unsignedByte">
@@ -4306,7 +4342,7 @@
                   </xs:element>
                   <xs:element name="receivingID" type="SimulationAddressType">
                      <xs:annotation>
-                        <xs:appinfo>receiver ID</xs:appinfo>
+                        <xs:appinfo>receiver ID provides a unique identifier</xs:appinfo>
                      </xs:annotation>
                   </xs:element>
                </xs:sequence>
@@ -4319,7 +4355,7 @@
                </xs:attribute>
                <xs:attribute name="forceID" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>force ID (SISO enumeration ForceID uid 6)</xs:appinfo>
+                     <xs:appinfo>force ID provides a unique identifier (SISO enumeration ForceID uid 6)</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="modifications" type="xs:unsignedByte">
@@ -4388,7 +4424,7 @@
                </xs:attribute>
                <xs:attribute name="requestID" type="xs:unsignedLong">
                   <xs:annotation>
-                     <xs:appinfo>Request ID</xs:appinfo>
+                     <xs:appinfo>Request ID provides a unique identifier</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
             </xs:extension>
@@ -4472,12 +4508,14 @@
                </xs:attribute>
                <xs:attribute name="requestID" type="xs:unsignedLong">
                   <xs:annotation>
-                     <xs:appinfo>request ID</xs:appinfo>
+                     <xs:appinfo>request ID provides a unique identifier</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="actionID" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>request ID (SISO enumeration ActionRequestActionID uid 71)</xs:appinfo>
+                     <xs:appinfo>request ID provides a unique identifier (SISO enumeration ActionRequestActionID uid
+                        71)
+                     </xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="numberOfFixedDatumRecords" type="xs:unsignedLong">
@@ -4554,7 +4592,7 @@
                <xs:attribute name="family" fixed="SimulationManagementWithReliabilityFamilyPduType"></xs:attribute>
                <xs:attribute name="requestID" type="xs:unsignedLong">
                   <xs:annotation>
-                     <xs:appinfo>request ID</xs:appinfo>
+                     <xs:appinfo>request ID provides a unique identifier</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="responseStatus" type="xs:string">
@@ -4670,7 +4708,7 @@
                <xs:attribute name="pad2" type="xs:unsignedShort"></xs:attribute>
                <xs:attribute name="requestID" type="xs:unsignedLong">
                   <xs:annotation>
-                     <xs:appinfo>Request ID</xs:appinfo>
+                     <xs:appinfo>Request ID provides a unique identifier</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
             </xs:extension>
@@ -4753,7 +4791,7 @@
                </xs:attribute>
                <xs:attribute name="requestID" type="xs:unsignedLong">
                   <xs:annotation>
-                     <xs:appinfo>request ID</xs:appinfo>
+                     <xs:appinfo>request ID provides a unique identifier</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="timeInterval" type="xs:unsignedLong">
@@ -4835,7 +4873,7 @@
                <xs:attribute name="family" fixed="SimulationManagementWithReliabilityFamilyPduType"></xs:attribute>
                <xs:attribute name="requestID" type="xs:unsignedLong">
                   <xs:annotation>
-                     <xs:appinfo>Request ID</xs:appinfo>
+                     <xs:appinfo>Request ID provides a unique identifier</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="requiredReliabilityService" type="xs:string">
@@ -4995,7 +5033,7 @@
                <xs:attribute name="family" fixed="SimulationManagementWithReliabilityFamilyPduType"></xs:attribute>
                <xs:attribute name="requestID" type="xs:unsignedLong">
                   <xs:annotation>
-                     <xs:appinfo>request ID</xs:appinfo>
+                     <xs:appinfo>request ID provides a unique identifier</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="requiredReliabilityService" type="xs:string">
@@ -5077,7 +5115,7 @@
                <xs:attribute name="family" fixed="SimulationManagementWithReliabilityFamilyPduType"></xs:attribute>
                <xs:attribute name="requestID" type="xs:unsignedLong">
                   <xs:annotation>
-                     <xs:appinfo>request ID</xs:appinfo>
+                     <xs:appinfo>request ID provides a unique identifier</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="requiredReliabilityService" type="xs:string">
@@ -5140,7 +5178,7 @@
                <xs:attribute name="pad2" type="xs:unsignedShort"></xs:attribute>
                <xs:attribute name="requestID" type="xs:unsignedLong">
                   <xs:annotation>
-                     <xs:appinfo>Request ID</xs:appinfo>
+                     <xs:appinfo>Request ID provides a unique identifier</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
             </xs:extension>
@@ -5223,7 +5261,7 @@
                </xs:attribute>
                <xs:attribute name="requestID" type="xs:unsignedLong">
                   <xs:annotation>
-                     <xs:appinfo>request ID</xs:appinfo>
+                     <xs:appinfo>request ID provides a unique identifier</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="numberOfFixedDatumRecords" type="xs:unsignedLong">
@@ -5286,7 +5324,7 @@
                <xs:attribute name="family" fixed="SimulationManagementWithReliabilityFamilyPduType"></xs:attribute>
                <xs:attribute name="requestID" type="xs:unsignedLong">
                   <xs:annotation>
-                     <xs:appinfo>request ID</xs:appinfo>
+                     <xs:appinfo>request ID provides a unique identifier</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="requiredReliabilityService" type="xs:string">
@@ -5384,7 +5422,7 @@
                <xs:attribute name="pad2" type="xs:unsignedShort"></xs:attribute>
                <xs:attribute name="requestID" type="xs:unsignedLong">
                   <xs:annotation>
-                     <xs:appinfo>Request ID</xs:appinfo>
+                     <xs:appinfo>Request ID provides a unique identifier</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
             </xs:extension>
@@ -5449,7 +5487,7 @@
                </xs:attribute>
                <xs:attribute name="requestID" type="xs:unsignedLong">
                   <xs:annotation>
-                     <xs:appinfo>Request ID</xs:appinfo>
+                     <xs:appinfo>Request ID provides a unique identifier</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
             </xs:extension>
@@ -5509,7 +5547,7 @@
                <xs:attribute name="family" fixed="InformationOperationsFamilyPduType"></xs:attribute>
                <xs:attribute name="requestID" type="xs:unsignedLong">
                   <xs:annotation>
-                     <xs:appinfo>request ID</xs:appinfo>
+                     <xs:appinfo>request ID provides a unique identifier</xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="IOWarfareType" type="xs:string">
@@ -5599,7 +5637,9 @@
                </xs:attribute>
                <xs:attribute name="ioReportType" type="xs:string">
                   <xs:annotation>
-                     <xs:appinfo>request ID (SISO enumeration IOReportIOReportType uid 289)</xs:appinfo>
+                     <xs:appinfo>request ID provides a unique identifier (SISO enumeration IOReportIOReportType uid
+                        289)
+                     </xs:appinfo>
                   </xs:annotation>
                </xs:attribute>
                <xs:attribute name="padding1" type="xs:unsignedByte"></xs:attribute>
@@ -5904,7 +5944,7 @@
                <xs:element name="simulationAddress" type="SimulationAddressType">
                   <xs:annotation>
                      <xs:appinfo>Simulation address, i.e. site and application, the first two fields of the entity
-                        ID
+                        ID provides a unique identifier
                      </xs:appinfo>
                   </xs:annotation>
                </xs:element>
@@ -5912,7 +5952,7 @@
             <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="aggregateID" type="xs:unsignedShort">
                <xs:annotation>
-                  <xs:appinfo>The aggregate ID</xs:appinfo>
+                  <xs:appinfo>The aggregate ID provides a unique identifier</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
          </xs:extension>
@@ -6013,7 +6053,9 @@
             </xs:attribute>
             <xs:attribute name="padding" type="xs:unsignedShort">
                <xs:annotation>
-                  <xs:appinfo>padding</xs:appinfo>
+                  <xs:appinfo>zero-filled array of padding bits for byte alignment and consistent sizing of PDU
+                     data
+                  </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="emitterNumber" type="xs:unsignedByte">
@@ -6228,7 +6270,13 @@
                   </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
-            <xs:attribute name="padding" type="xs:unsignedLong"></xs:attribute>
+            <xs:attribute name="padding" type="xs:unsignedLong">
+               <xs:annotation>
+                  <xs:appinfo>zero-filled array of padding bits for byte alignment and consistent sizing of PDU
+                     data
+                  </xs:appinfo>
+               </xs:annotation>
+            </xs:attribute>
          </xs:extension>
       </xs:complexContent>
    </xs:complexType>
@@ -6268,7 +6316,9 @@
             </xs:attribute>
             <xs:attribute name="padding" type="xs:unsignedByte">
                <xs:annotation>
-                  <xs:appinfo>Padding</xs:appinfo>
+                  <xs:appinfo>zero-filled array of padding bits for byte alignment and consistent sizing of PDU
+                     data
+                  </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
          </xs:extension>
@@ -6362,7 +6412,13 @@
                   </xs:restriction>
                </xs:simpleType>
             </xs:attribute>
-            <xs:attribute name="padding" type="xs:unsignedInt"></xs:attribute>
+            <xs:attribute name="padding" type="xs:unsignedInt">
+               <xs:annotation>
+                  <xs:appinfo>zero-filled array of padding bits for byte alignment and consistent sizing of PDU
+                     data
+                  </xs:appinfo>
+               </xs:annotation>
+            </xs:attribute>
          </xs:extension>
       </xs:complexContent>
    </xs:complexType>
@@ -6537,7 +6593,9 @@
             </xs:attribute>
             <xs:attribute name="padding" type="xs:unsignedShort">
                <xs:annotation>
-                  <xs:appinfo>Padding</xs:appinfo>
+                  <xs:appinfo>zero-filled array of padding bits for byte alignment and consistent sizing of PDU
+                     data
+                  </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="emitterNumber" type="xs:unsignedByte">
@@ -6879,7 +6937,9 @@
             </xs:attribute>
             <xs:attribute name="padding" type="xs:unsignedShort">
                <xs:annotation>
-                  <xs:appinfo>Padding</xs:appinfo>
+                  <xs:appinfo>zero-filled array of padding bits for byte alignment and consistent sizing of PDU
+                     data
+                  </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="beamAntennaPatternRecordCount" type="xs:unsignedShort">
@@ -6932,7 +6992,9 @@
             </xs:attribute>
             <xs:attribute name="padding" type="xs:unsignedShort">
                <xs:annotation>
-                  <xs:appinfo>padding</xs:appinfo>
+                  <xs:appinfo>zero-filled array of padding bits for byte alignment and consistent sizing of PDU
+                     data
+                  </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="damageDiameter" type="xs:float">
@@ -7024,7 +7086,9 @@
             </xs:attribute>
             <xs:attribute name="padding" type="xs:unsignedShort">
                <xs:annotation>
-                  <xs:appinfo>Padding</xs:appinfo>
+                  <xs:appinfo>zero-filled array of padding bits for byte alignment and consistent sizing of PDU
+                     data
+                  </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="targetComponentID" type="xs:unsignedByte">
@@ -7082,7 +7146,9 @@
             <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="padding" type="xs:unsignedShort">
                <xs:annotation>
-                  <xs:appinfo>padding</xs:appinfo>
+                  <xs:appinfo>zero-filled array of padding bits for byte alignment and consistent sizing of PDU
+                     data
+                  </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="peakIrradiance" type="xs:float">
@@ -7207,7 +7273,9 @@
             </xs:attribute>
             <xs:attribute name="padding" type="xs:unsignedByte">
                <xs:annotation>
-                  <xs:appinfo>padding</xs:appinfo>
+                  <xs:appinfo>zero-filled array of padding bits for byte alignment and consistent sizing of PDU
+                     data
+                  </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
          </xs:extension>
@@ -7259,7 +7327,9 @@
             </xs:attribute>
             <xs:attribute name="padding" type="xs:unsignedByte">
                <xs:annotation>
-                  <xs:appinfo>padding</xs:appinfo>
+                  <xs:appinfo>zero-filled array of padding bits for byte alignment and consistent sizing of PDU
+                     data
+                  </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
          </xs:extension>
@@ -7338,23 +7408,30 @@
    <xs:complexType name="EntityIDType" abstract="false">
       <!--abstract='false' base='rootType'-->
       <xs:annotation>
-         <xs:appinfo>also referred to as EntityIdentifier</xs:appinfo>
+         <xs:appinfo>Unique identifier triplet for this entity. Also referred to as EntityIdentifier</xs:appinfo>
       </xs:annotation>
       <xs:complexContent>
          <xs:extension base="rootType">
             <xs:attribute name="siteID" type="xs:unsignedShort">
                <xs:annotation>
-                  <xs:appinfo>Site ID</xs:appinfo>
+                  <xs:appinfo>Site ID values are unique identification number for originating site, often corresponding
+                     to an internet address. Site ID values are agreed upon by individual simulations.
+                  </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="applicationID" type="xs:unsignedShort">
                <xs:annotation>
-                  <xs:appinfo>application number ID</xs:appinfo>
+                  <xs:appinfo>Application ID values are unique identification number for originating application
+                     at a given site. Application ID values are sssigned by individual sites.
+                  </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="entityID" type="xs:unsignedShort">
                <xs:annotation>
-                  <xs:appinfo>Entity number ID</xs:appinfo>
+                  <xs:appinfo>Entity ID values are unique identification number for s givent entity in the originating
+                     application at a given site. Entity ID values are sssigned by individual simulation
+                     programs.
+                  </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
          </xs:extension>
@@ -7523,7 +7600,9 @@
             </xs:attribute>
             <xs:attribute name="padding" type="xs:unsignedShort">
                <xs:annotation>
-                  <xs:appinfo>padding</xs:appinfo>
+                  <xs:appinfo>zero-filled array of padding bits for byte alignment and consistent sizing of PDU
+                     data
+                  </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="padding1" type="xs:unsignedLong">
@@ -7646,7 +7725,13 @@
                   <xs:appinfo>(SISO enumeration MunitionExpendableStatus uid 327)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
-            <xs:attribute name="padding" type="xs:unsignedByte"></xs:attribute>
+            <xs:attribute name="padding" type="xs:unsignedByte">
+               <xs:annotation>
+                  <xs:appinfo>zero-filled array of padding bits for byte alignment and consistent sizing of PDU
+                     data
+                  </xs:appinfo>
+               </xs:annotation>
+            </xs:attribute>
          </xs:extension>
       </xs:complexContent>
    </xs:complexType>
@@ -7667,7 +7752,9 @@
             <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="padding" type="xs:int">
                <xs:annotation>
-                  <xs:appinfo>Padding</xs:appinfo>
+                  <xs:appinfo>zero-filled array of padding bits for byte alignment and consistent sizing of PDU
+                     data
+                  </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
          </xs:extension>
@@ -7720,7 +7807,9 @@
             </xs:attribute>
             <xs:attribute name="padding" type="xs:unsignedShort">
                <xs:annotation>
-                  <xs:appinfo>padding</xs:appinfo>
+                  <xs:appinfo>zero-filled array of padding bits for byte alignment and consistent sizing of PDU
+                     data
+                  </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="explosiveForce" type="xs:float">
@@ -7755,7 +7844,9 @@
             </xs:attribute>
             <xs:attribute name="padding" type="xs:unsignedShort">
                <xs:annotation>
-                  <xs:appinfo>padding</xs:appinfo>
+                  <xs:appinfo>zero-filled array of padding bits for byte alignment and consistent sizing of PDU
+                     data
+                  </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="emitterNumber" type="xs:unsignedByte">
@@ -7844,7 +7935,9 @@
          <xs:extension base="rootType">
             <xs:attribute name="fixedDatumID" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>ID of the fixed datum, an enumeration (SISO enumeration VariableRecordType uid 66)</xs:appinfo>
+                  <xs:appinfo>ID of the fixed datum, an enumeration (SISO enumeration VariableRecordType uid 66
+                     Variable Record Type values are defined by VariableRecordType enumerations)
+                  </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="fixedDatumValue" type="xs:unsignedLong">
@@ -8004,7 +8097,13 @@
                   <xs:appinfo>list of coordinates</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
-            <xs:attribute name="padding" type="xs:unsignedInt"></xs:attribute>
+            <xs:attribute name="padding" type="xs:unsignedInt">
+               <xs:annotation>
+                  <xs:appinfo>zero-filled array of padding bits for byte alignment and consistent sizing of PDU
+                     data
+                  </xs:appinfo>
+               </xs:annotation>
+            </xs:attribute>
          </xs:extension>
       </xs:complexContent>
    </xs:complexType>
@@ -8051,7 +8150,13 @@
                   </xs:restriction>
                </xs:simpleType>
             </xs:attribute>
-            <xs:attribute name="padding" type="xs:unsignedShort"></xs:attribute>
+            <xs:attribute name="padding" type="xs:unsignedShort">
+               <xs:annotation>
+                  <xs:appinfo>zero-filled array of padding bits for byte alignment and consistent sizing of PDU
+                     data
+                  </xs:appinfo>
+               </xs:annotation>
+            </xs:attribute>
          </xs:extension>
       </xs:complexContent>
    </xs:complexType>
@@ -8080,7 +8185,13 @@
                   </xs:restriction>
                </xs:simpleType>
             </xs:attribute>
-            <xs:attribute name="padding" type="xs:unsignedLong"></xs:attribute>
+            <xs:attribute name="padding" type="xs:unsignedLong">
+               <xs:annotation>
+                  <xs:appinfo>zero-filled array of padding bits for byte alignment and consistent sizing of PDU
+                     data
+                  </xs:appinfo>
+               </xs:annotation>
+            </xs:attribute>
          </xs:extension>
       </xs:complexContent>
    </xs:complexType>
@@ -8092,7 +8203,13 @@
       <xs:complexContent>
          <xs:extension base="GridDataType">
             <xs:attribute name="numberOfValues" type="xs:unsignedShort"></xs:attribute>
-            <xs:attribute name="padding" type="xs:unsignedShort"></xs:attribute>
+            <xs:attribute name="padding" type="xs:unsignedShort">
+               <xs:annotation>
+                  <xs:appinfo>zero-filled array of padding bits for byte alignment and consistent sizing of PDU
+                     data
+                  </xs:appinfo>
+               </xs:annotation>
+            </xs:attribute>
             <xs:attribute name="dataValues">
                <xs:annotation>
                   <xs:appinfo>(length of list found in field numberOfValues)</xs:appinfo>
@@ -8145,7 +8262,9 @@
          <xs:extension base="rootType">
             <xs:attribute name="recordType" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>enumeration for type of record (SISO enumeration VariableRecordType uid 66)</xs:appinfo>
+                  <xs:appinfo>enumeration for type of record (SISO enumeration VariableRecordType uid 66 Variable
+                     Record Type values are defined by VariableRecordType enumerations)
+                  </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="recordLength" type="xs:unsignedShort">
@@ -8154,7 +8273,13 @@
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="recordSpecificFields"></xs:attribute>
-            <xs:attribute name="padding" type="xs:unsignedLong"></xs:attribute>
+            <xs:attribute name="padding" type="xs:unsignedLong">
+               <xs:annotation>
+                  <xs:appinfo>zero-filled array of padding bits for byte alignment and consistent sizing of PDU
+                     data
+                  </xs:appinfo>
+               </xs:annotation>
+            </xs:attribute>
          </xs:extension>
       </xs:complexContent>
    </xs:complexType>
@@ -8216,7 +8341,9 @@
             <!-- ========== debug: divider between elements and attributes ========== -->
             <xs:attribute name="recordType" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>(SISO enumeration VariableRecordType uid 66)</xs:appinfo>
+                  <xs:appinfo>(SISO enumeration VariableRecordType uid 66 Variable Record Type values are defined
+                     by VariableRecordType enumerations)
+                  </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="recordLength" type="xs:unsignedShort"></xs:attribute>
@@ -8225,7 +8352,13 @@
                   <xs:appinfo>(SISO enumeration IOCommsNodeRecordCommsNodeType uid 294)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
-            <xs:attribute name="padding" type="xs:unsignedByte"></xs:attribute>
+            <xs:attribute name="padding" type="xs:unsignedByte">
+               <xs:annotation>
+                  <xs:appinfo>zero-filled array of padding bits for byte alignment and consistent sizing of PDU
+                     data
+                  </xs:appinfo>
+               </xs:annotation>
+            </xs:attribute>
          </xs:extension>
       </xs:complexContent>
    </xs:complexType>
@@ -8238,7 +8371,9 @@
          <xs:extension base="IORecordType">
             <xs:attribute name="recordType" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>(SISO enumeration VariableRecordType uid 66)</xs:appinfo>
+                  <xs:appinfo>(SISO enumeration VariableRecordType uid 66 Variable Record Type values are defined
+                     by VariableRecordType enumerations)
+                  </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="recordLength" type="xs:unsignedShort"></xs:attribute>
@@ -8264,7 +8399,13 @@
                   <xs:appinfo>(SISO enumeration IOEffectsRecordIOProcess uid 293)</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
-            <xs:attribute name="padding" type="xs:unsignedShort"></xs:attribute>
+            <xs:attribute name="padding" type="xs:unsignedShort">
+               <xs:annotation>
+                  <xs:appinfo>zero-filled array of padding bits for byte alignment and consistent sizing of PDU
+                     data
+                  </xs:appinfo>
+               </xs:annotation>
+            </xs:attribute>
          </xs:extension>
       </xs:complexContent>
    </xs:complexType>
@@ -8333,7 +8474,13 @@
                   <xs:appinfo>This is a placeholder.</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
-            <xs:attribute name="padding" type="xs:unsignedLong"></xs:attribute>
+            <xs:attribute name="padding" type="xs:unsignedLong">
+               <xs:annotation>
+                  <xs:appinfo>zero-filled array of padding bits for byte alignment and consistent sizing of PDU
+                     data
+                  </xs:appinfo>
+               </xs:annotation>
+            </xs:attribute>
          </xs:extension>
       </xs:complexContent>
    </xs:complexType>
@@ -8406,7 +8553,13 @@
                <xs:element name="targetLocation" type="Vector3DoubleType"></xs:element>
             </xs:sequence>
             <!-- ========== debug: divider between elements and attributes ========== -->
-            <xs:attribute name="padding" type="xs:unsignedShort"></xs:attribute>
+            <xs:attribute name="padding" type="xs:unsignedShort">
+               <xs:annotation>
+                  <xs:appinfo>zero-filled array of padding bits for byte alignment and consistent sizing of PDU
+                     data
+                  </xs:appinfo>
+               </xs:annotation>
+            </xs:attribute>
             <xs:attribute name="padding2" type="xs:unsignedShort"></xs:attribute>
             <xs:attribute name="padding3" type="xs:unsignedShort"></xs:attribute>
          </xs:extension>
@@ -8520,7 +8673,9 @@
             </xs:attribute>
             <xs:attribute name="padding" type="xs:unsignedLong">
                <xs:annotation>
-                  <xs:appinfo>padding</xs:appinfo>
+                  <xs:appinfo>zero-filled array of padding bits for byte alignment and consistent sizing of PDU
+                     data
+                  </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
          </xs:extension>
@@ -8731,7 +8886,13 @@
       <xs:complexContent>
          <xs:extension base="rootType">
             <xs:attribute name="recordSpecificFields"></xs:attribute>
-            <xs:attribute name="padding" type="xs:unsignedInt"></xs:attribute>
+            <xs:attribute name="padding" type="xs:unsignedInt">
+               <xs:annotation>
+                  <xs:appinfo>zero-filled array of padding bits for byte alignment and consistent sizing of PDU
+                     data
+                  </xs:appinfo>
+               </xs:annotation>
+            </xs:attribute>
          </xs:extension>
       </xs:complexContent>
    </xs:complexType>
@@ -8813,7 +8974,9 @@
             </xs:attribute>
             <xs:attribute name="padding" type="xs:unsignedByte">
                <xs:annotation>
-                  <xs:appinfo>padding</xs:appinfo>
+                  <xs:appinfo>zero-filled array of padding bits for byte alignment and consistent sizing of PDU
+                     data
+                  </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
          </xs:extension>
@@ -9015,7 +9178,9 @@
             </xs:attribute>
             <xs:attribute name="padding" type="xs:unsignedByte">
                <xs:annotation>
-                  <xs:appinfo>padding</xs:appinfo>
+                  <xs:appinfo>zero-filled array of padding bits for byte alignment and consistent sizing of PDU
+                     data
+                  </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
          </xs:extension>
@@ -9037,7 +9202,7 @@
             </xs:attribute>
             <xs:attribute name="exerciseID" type="xs:unsignedByte">
                <xs:annotation>
-                  <xs:appinfo>Exercise ID</xs:appinfo>
+                  <xs:appinfo>Exercise ID provides a unique identifier</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="pduType" type="xs:string">
@@ -9279,7 +9444,13 @@
                   <xs:appinfo>The serial number of the first record in the block of records</xs:appinfo>
                </xs:annotation>
             </xs:attribute>
-            <xs:attribute name="padding" type="xs:unsignedLong"></xs:attribute>
+            <xs:attribute name="padding" type="xs:unsignedLong">
+               <xs:annotation>
+                  <xs:appinfo>zero-filled array of padding bits for byte alignment and consistent sizing of PDU
+                     data
+                  </xs:appinfo>
+               </xs:annotation>
+            </xs:attribute>
             <xs:attribute name="recordLength" type="xs:unsignedShort">
                <xs:annotation>
                   <xs:appinfo>the length, in bits, of the record. Note, bits, not bytes.</xs:appinfo>
@@ -9415,7 +9586,9 @@
             </xs:attribute>
             <xs:attribute name="padding" type="xs:unsignedShort">
                <xs:annotation>
-                  <xs:appinfo>padding</xs:appinfo>
+                  <xs:appinfo>zero-filled array of padding bits for byte alignment and consistent sizing of PDU
+                     data
+                  </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
          </xs:extension>
@@ -9601,7 +9774,9 @@
          <xs:extension base="rootType">
             <xs:attribute name="recordType" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>(SISO enumeration VariableRecordType uid 66)</xs:appinfo>
+                  <xs:appinfo>(SISO enumeration VariableRecordType uid 66 Variable Record Type values are defined
+                     by VariableRecordType enumerations)
+                  </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="recordLength" type="xs:unsignedShort"></xs:attribute>
@@ -9621,7 +9796,13 @@
                   </xs:restriction>
                </xs:simpleType>
             </xs:attribute>
-            <xs:attribute name="padding" type="xs:unsignedInt"></xs:attribute>
+            <xs:attribute name="padding" type="xs:unsignedInt">
+               <xs:annotation>
+                  <xs:appinfo>zero-filled array of padding bits for byte alignment and consistent sizing of PDU
+                     data
+                  </xs:appinfo>
+               </xs:annotation>
+            </xs:attribute>
          </xs:extension>
       </xs:complexContent>
    </xs:complexType>
@@ -9693,7 +9874,9 @@
             </xs:attribute>
             <xs:attribute name="padding" type="xs:unsignedByte">
                <xs:annotation>
-                  <xs:appinfo>padding</xs:appinfo>
+                  <xs:appinfo>zero-filled array of padding bits for byte alignment and consistent sizing of PDU
+                     data
+                  </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
          </xs:extension>
@@ -9767,7 +9950,9 @@
             </xs:attribute>
             <xs:attribute name="padding" type="xs:unsignedByte">
                <xs:annotation>
-                  <xs:appinfo>padding</xs:appinfo>
+                  <xs:appinfo>zero-filled array of padding bits for byte alignment and consistent sizing of PDU
+                     data
+                  </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
          </xs:extension>
@@ -9849,7 +10034,9 @@
             </xs:attribute>
             <xs:attribute name="padding" type="xs:unsignedShort">
                <xs:annotation>
-                  <xs:appinfo>padding</xs:appinfo>
+                  <xs:appinfo>zero-filled array of padding bits for byte alignment and consistent sizing of PDU
+                     data
+                  </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
          </xs:extension>
@@ -9985,7 +10172,8 @@
             <xs:attribute name="variableDatumID" type="xs:string">
                <xs:annotation>
                   <xs:appinfo>Type of variable datum to be transmitted. 32-bit enumeration defined in EBV (SISO
-                     enumeration VariableRecordType uid 66)
+                     enumeration VariableRecordType uid 66 Variable Record Type values are defined by VariableRecordType
+                     enumerations)
                   </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
@@ -10001,8 +10189,8 @@
             </xs:attribute>
             <xs:attribute name="padding" type="xs:unsignedInt">
                <xs:annotation>
-                  <xs:appinfo>data structure to selectively provide padding of correct length, see DIS specification
-                     for computation algorithm.
+                  <xs:appinfo>zero-filled array of padding bits for byte alignment and consistent sizing of PDU
+                     data
                   </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
@@ -10040,7 +10228,9 @@
          <xs:extension base="rootType">
             <xs:attribute name="recordType" type="xs:string">
                <xs:annotation>
-                  <xs:appinfo>Type of VTP (SISO enumeration VariableRecordType uid 66)</xs:appinfo>
+                  <xs:appinfo>Type of VTP (SISO enumeration VariableRecordType uid 66 Variable Record Type values
+                     are defined by VariableRecordType enumerations)
+                  </xs:appinfo>
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="recordLength" type="xs:unsignedShort">
@@ -10049,7 +10239,13 @@
                </xs:annotation>
             </xs:attribute>
             <xs:attribute name="recordSpecificFields"></xs:attribute>
-            <xs:attribute name="padding" type="xs:unsignedInt"></xs:attribute>
+            <xs:attribute name="padding" type="xs:unsignedInt">
+               <xs:annotation>
+                  <xs:appinfo>zero-filled array of padding bits for byte alignment and consistent sizing of PDU
+                     data
+                  </xs:appinfo>
+               </xs:annotation>
+            </xs:attribute>
          </xs:extension>
       </xs:complexContent>
    </xs:complexType>
