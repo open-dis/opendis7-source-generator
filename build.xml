@@ -71,7 +71,7 @@
     <property name="manifest.name"          value="OpenDIS7 Entity Enumerations"/>
     <property name="Built-By"               value="https://github.com/open-dis/opendis7-source-generator"/>
     <property name="Specification-Title"    value="SISO Reference for Enumerations for Simulation Interoperability SISO-REF-010"/>
-    <property name="Specification-Version"  value="29"/>
+    <property name="Specification-Version"  value="v30"/>
     <property name="Specification-Vendor"   value="Simulation Interoperability Standards Organization (SISO)"/>
     <property name="Implementation-Title"   value="edu.nps.moves.dis7"/>
     <property name="Implementation-Version" value="${timestamp}"/>
@@ -370,7 +370,7 @@
             <manifest>
                 <attribute name="Built-By" value="opendis7-source-generator https://github.com/open-dis/opendis7-source-generator"/>
                 <attribute name="Specification-Title" value="OpenDIS7 German Entities"/>
-                <attribute name="Specification-Version" value="Reference for Enumerations for Simulation Interoperability SISO-REF-010-v29"/>
+                <attribute name="Specification-Version" value="Reference for Enumerations for Simulation Interoperability SISO-REF-010-v30"/>
                 <attribute name="Specification-Vendor" value="Naval Postgraduate School (NPS)"/>
                 <attribute name="Implementation-Title" value="edu.nps.moves.dis7"/>
                 <attribute name="Implementation-Version" value="${timestamp}"/>
@@ -427,7 +427,7 @@
             <manifest>
                 <attribute name="Built-By" value="opendis7-source-generator https://github.com/open-dis/opendis7-source-generator"/>
                 <attribute name="Specification-Title" value="OpenDIS7 American Entities"/>
-                <attribute name="Specification-Version" value="Reference for Enumerations for Simulation Interoperability SISO-REF-010-v29"/>
+                <attribute name="Specification-Version" value="Reference for Enumerations for Simulation Interoperability SISO-REF-010-v30"/>
                 <attribute name="Specification-Vendor" value="Naval Postgraduate School (NPS)"/>
                 <attribute name="Implementation-Title" value="edu.nps.moves.dis7"/>
                 <attribute name="Implementation-Version" value="${timestamp}"/>
@@ -456,7 +456,7 @@
             <manifest>
                 <attribute name="Built-By" value="opendis7-source-generator https://github.com/open-dis/opendis7-source-generator"/>
                 <attribute name="Specification-Title" value="OpenDIS7 American Munition Entities"/>
-                <attribute name="Specification-Version" value="Reference for Enumerations for Simulation Interoperability SISO-REF-010-v29"/>
+                <attribute name="Specification-Version" value="Reference for Enumerations for Simulation Interoperability SISO-REF-010-v30"/>
                 <attribute name="Specification-Vendor" value="Naval Postgraduate School (NPS)"/>
                 <attribute name="Implementation-Title" value="edu.nps.moves.dis7"/>
                 <attribute name="Implementation-Version" value="${timestamp}"/>
@@ -485,7 +485,7 @@
             <manifest>
                 <attribute name="Built-By" value="opendis7-source-generator https://github.com/open-dis/opendis7-source-generator"/>
                 <attribute name="Specification-Title" value="OpenDIS7 American Air Entities"/>
-                <attribute name="Specification-Version" value="Reference for Enumerations for Simulation Interoperability SISO-REF-010-v29"/>
+                <attribute name="Specification-Version" value="Reference for Enumerations for Simulation Interoperability SISO-REF-010-v30"/>
                 <attribute name="Specification-Vendor" value="Naval Postgraduate School (NPS)"/>
                 <attribute name="Implementation-Title" value="edu.nps.moves.dis7"/>
                 <attribute name="Implementation-Version" value="${timestamp}"/>
@@ -514,7 +514,7 @@
             <manifest>
                 <attribute name="Built-By" value="opendis7-source-generator https://github.com/open-dis/opendis7-source-generator"/>
                 <attribute name="Specification-Title" value="OpenDIS7 American Land Entities"/>
-                <attribute name="Specification-Version" value="Reference for Enumerations for Simulation Interoperability SISO-REF-010-v29"/>
+                <attribute name="Specification-Version" value="Reference for Enumerations for Simulation Interoperability SISO-REF-010-v30"/>
                 <attribute name="Specification-Vendor" value="Naval Postgraduate School (NPS)"/>
                 <attribute name="Implementation-Title" value="edu.nps.moves.dis7"/>
                 <attribute name="Implementation-Version" value="${timestamp}"/>
@@ -543,7 +543,7 @@
             <manifest>
                 <attribute name="Built-By" value="opendis7-source-generator https://github.com/open-dis/opendis7-source-generator"/>
                 <attribute name="Specification-Title" value="OpenDIS7 American Surface Entities"/>
-                <attribute name="Specification-Version" value="Reference for Enumerations for Simulation Interoperability SISO-REF-010-v29"/>
+                <attribute name="Specification-Version" value="Reference for Enumerations for Simulation Interoperability SISO-REF-010-v30"/>
                 <attribute name="Specification-Vendor" value="Naval Postgraduate School (NPS)"/>
                 <attribute name="Implementation-Title" value="edu.nps.moves.dis7"/>
                 <attribute name="Implementation-Version" value="${timestamp}"/>
@@ -598,7 +598,7 @@
             <manifest>
                 <attribute name="Built-By" value="opendis7-source-generator https://github.com/open-dis/opendis7-source-generator"/>
                 <attribute name="Specification-Title" value="OpenDIS7 Nato Entities"/>
-                <attribute name="Specification-Version" value="Reference for Enumerations for Simulation Interoperability SISO-REF-010-v29"/>
+                <attribute name="Specification-Version" value="Reference for Enumerations for Simulation Interoperability SISO-REF-010-v30"/>
                 <attribute name="Specification-Vendor" value="Naval Postgraduate School (NPS)"/>
                 <attribute name="Implementation-Title" value="edu.nps.moves.dis7"/>
                 <attribute name="Implementation-Version" value="${timestamp}"/>

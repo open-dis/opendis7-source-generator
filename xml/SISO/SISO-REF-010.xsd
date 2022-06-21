@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
-Copyright © 2013, 2014, 2015, 2018-2019 by the Simulation Interoperability Standards Organization, Inc.
+Copyright © 2013, 2014, 2015, 2018-2020, 2022 by the Simulation Interoperability Standards Organization, Inc.
 7901 4th St N, Suite 300-4043
 St. Petersburg, FL 33702
 All rights reserved.
@@ -29,8 +29,11 @@ updated by david.ronnfeldt2@defence.gov.au - whitespace check added
 @v2.6 09 April 2020
 updated by david.ronnfeldt2@defence.gov.au - <cr04302>
 
+@v2.7 15 March 2022
+updated for CR 4635
+
 -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns="http://www.sisostds.org/schemas/SISO-REF-010/2.6" targetNamespace="http://www.sisostds.org/schemas/SISO-REF-010/2.6" elementFormDefault="qualified">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns="http://www.sisostds.org/schemas/SISO-REF-010/2.7" targetNamespace="http://www.sisostds.org/schemas/SISO-REF-010/2.7" elementFormDefault="qualified">
   <xs:annotation>
     <xs:documentation xml:lang="en">
 			Enumerations for Simulation Interoperability
@@ -138,11 +141,6 @@ updated by david.ronnfeldt2@defence.gov.au - <cr04302>
       </xs:annotation>
     </xs:attribute>
     <xs:attributeGroup ref="status_g"/>
-    <xs:attribute name="draft1278" type="xs:boolean" use="optional">
-      <xs:annotation>
-        <xs:documentation>Flag to indicate the enumeration table applies to a draft revision of IEEE 1278</xs:documentation>
-      </xs:annotation>
-    </xs:attribute>
     <xs:attribute name="deprecated" type="xs:boolean" use="optional">
       <xs:annotation>
         <xs:documentation>Flag to indicate the enumeration table has been deprecated.</xs:documentation>
@@ -182,17 +180,12 @@ updated by david.ronnfeldt2@defence.gov.au - <cr04302>
         <xs:documentation>Flag to indicate the enumeration entry has been deprecated.</xs:documentation>
       </xs:annotation>
     </xs:attribute>
-	<xs:attribute name="retired" type="xs:boolean" use="optional">
-		<xs:annotation>
-			<xs:documentation>Indicates the entry has been retired.</xs:documentation>
-		</xs:annotation>
-	</xs:attribute>
-	<xs:attributeGroup ref="status_g"/>
-    <xs:attribute name="draft1278" type="xs:boolean" use="optional">
+    <xs:attribute name="retired" type="xs:boolean" use="optional">
       <xs:annotation>
-        <xs:documentation>Flag to indicate the enumeration entry applies to a draft revision of IEEE 1278</xs:documentation>
+        <xs:documentation>Indicates the entry has been retired.</xs:documentation>
       </xs:annotation>
     </xs:attribute>
+    <xs:attributeGroup ref="status_g"/>
     <xs:attribute name="uuid" type="uuid" use="required">
       <xs:annotation>
         <xs:documentation>Unique numeric identifier for the enumeration entry (RFC-4122).</xs:documentation>
@@ -889,5 +882,3 @@ updated by david.ronnfeldt2@defence.gov.au - <cr04302>
     </xs:complexContent>
   </xs:complexType>
 </xs:schema>
-
-
