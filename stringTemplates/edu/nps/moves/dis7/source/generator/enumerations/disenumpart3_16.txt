@@ -48,6 +48,15 @@
     }
     
   /**
+   * Provide name
+   * @return  name
+   */
+    public String getName()
+    {
+        return name();
+    }
+
+  /**
    * Provide simple identifier
    * @return ID number and name
    */

@@ -78,6 +78,15 @@
     {
         return 1; // 8 bits
     }
+  /**
+   * Provide name
+   * @return  name
+   */
+    public String getName()
+    {
+        return name();
+    }
+
     
   /**
    * Provide simple identifier
