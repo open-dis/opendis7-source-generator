@@ -2413,7 +2413,7 @@
    </xs:element>
    <xs:element name="IdentificationFriendOrFoePdu">
       <xs:annotation>
-         <xs:appinfo>alias, more descriptive name for an IFFPdu.
+         <xs:appinfo>Alias, more descriptive name for an IFFPdu.
             <xs:attribute name="aliasFor" type="xs:string" fixed="IFFPdu"></xs:attribute>
             <xs:attribute name="id" type="xs:integer" fixed="28"></xs:attribute>
          </xs:appinfo>
@@ -2504,7 +2504,7 @@
    </xs:element>
    <xs:element name="SupplementalEmissionEntityStatePdu">
       <xs:annotation>
-         <xs:appinfo>alias, more descriptive name for a SEESPdu.
+         <xs:appinfo>Alias, more descriptive name for SEESPdu.
             <xs:attribute name="aliasFor" type="xs:string" fixed="SEESPdu"></xs:attribute>
             <xs:attribute name="id" type="xs:integer" fixed="30"></xs:attribute>
          </xs:appinfo>
@@ -4433,7 +4433,7 @@
    </xs:element>
    <xs:element name="AcknowledgeReliablePdu">
       <xs:annotation>
-         <xs:appinfo>alias, more descriptive name for a AcknowledgeRPdu.
+         <xs:appinfo>Alias, more descriptive name for AcknowledgeRPdu.
             <xs:attribute name="aliasFor" type="xs:string" fixed="AcknowledgeRPdu"></xs:attribute>
             <xs:attribute name="id" type="xs:integer" fixed="55"></xs:attribute>
          </xs:appinfo>
@@ -4534,7 +4534,7 @@
    </xs:element>
    <xs:element name="ActionRequestReliablePdu">
       <xs:annotation>
-         <xs:appinfo>alias, more descriptive name for a ActionRequestRPdu.
+         <xs:appinfo>Alias, more descriptive name for ActionRequestRPdu.
             <xs:attribute name="aliasFor" type="xs:string" fixed="ActionRequestRPdu"></xs:attribute>
             <xs:attribute name="id" type="xs:integer" fixed="56"></xs:attribute>
          </xs:appinfo>
@@ -4616,7 +4616,7 @@
    </xs:element>
    <xs:element name="ActionResponseReliablePdu">
       <xs:annotation>
-         <xs:appinfo>alias, more descriptive name for a ActionResponseRPdu.
+         <xs:appinfo>Alias, more descriptive name for ActionResponseRPdu.
             <xs:attribute name="aliasFor" type="xs:string" fixed="ActionResponseRPdu"></xs:attribute>
             <xs:attribute name="id" type="xs:integer" fixed="57"></xs:attribute>
          </xs:appinfo>
@@ -4673,7 +4673,7 @@
    </xs:element>
    <xs:element name="CommentReliablePdu">
       <xs:annotation>
-         <xs:appinfo>alias, more descriptive name for a CommentRPdu.
+         <xs:appinfo>Alias, more descriptive name for CommentRPdu.
             <xs:attribute name="aliasFor" type="xs:string" fixed="CommentRPdu"></xs:attribute>
             <xs:attribute name="id" type="xs:integer" fixed="62"></xs:attribute>
          </xs:appinfo>
@@ -4717,7 +4717,7 @@
    </xs:element>
    <xs:element name="CreateEntityReliablePdu">
       <xs:annotation>
-         <xs:appinfo>alias, more descriptive name for a CreateEntityRPdu.
+         <xs:appinfo>Alias, more descriptive name for CreateEntityRPdu.
             <xs:attribute name="aliasFor" type="xs:string" fixed="CreateEntityRPdu"></xs:attribute>
             <xs:attribute name="id" type="xs:integer" fixed="51"></xs:attribute>
          </xs:appinfo>
@@ -4815,7 +4815,7 @@
    </xs:element>
    <xs:element name="DataQueryReliablePdu">
       <xs:annotation>
-         <xs:appinfo>alias, more descriptive name for a DataQueryRPdu.
+         <xs:appinfo>Alias, more descriptive name for DataQueryRPdu.
             <xs:attribute name="aliasFor" type="xs:string" fixed="DataQueryRPdu"></xs:attribute>
             <xs:attribute name="id" type="xs:integer" fixed="58"></xs:attribute>
          </xs:appinfo>
@@ -4909,7 +4909,7 @@
    </xs:element>
    <xs:element name="DataReliablePdu">
       <xs:annotation>
-         <xs:appinfo>alias, more descriptive name for a DataRPdu.
+         <xs:appinfo>Alias, more descriptive name for DataRPdu.
             <xs:attribute name="aliasFor" type="xs:string" fixed="DataRPdu"></xs:attribute>
             <xs:attribute name="id" type="xs:integer" fixed="60"></xs:attribute>
          </xs:appinfo>
@@ -4990,7 +4990,7 @@
    </xs:element>
    <xs:element name="EventReportReliablePdu">
       <xs:annotation>
-         <xs:appinfo>alias, more descriptive name for a EventReportRPdu.
+         <xs:appinfo>Alias, more descriptive name for EventReportRPdu.
             <xs:attribute name="aliasFor" type="xs:string" fixed="EventReportRPdu"></xs:attribute>
             <xs:attribute name="id" type="xs:integer" fixed="61"></xs:attribute>
          </xs:appinfo>
@@ -5069,7 +5069,7 @@
    </xs:element>
    <xs:element name="RecordQueryReliablePdu">
       <xs:annotation>
-         <xs:appinfo>alias, more descriptive name for a RecordQueryRPdu.
+         <xs:appinfo>Alias, more descriptive name for RecordQueryRPdu.
             <xs:attribute name="aliasFor" type="xs:string" fixed="RecordQueryRPdu"></xs:attribute>
             <xs:attribute name="id" type="xs:integer" fixed="65"></xs:attribute>
          </xs:appinfo>
@@ -5142,7 +5142,7 @@
    </xs:element>
    <xs:element name="RecordReliablePdu">
       <xs:annotation>
-         <xs:appinfo>alias, more descriptive name for a RecordRPdu.
+         <xs:appinfo>Alias, more descriptive name for RecordRPdu.
             <xs:attribute name="aliasFor" type="xs:string" fixed="RecordRPdu"></xs:attribute>
             <xs:attribute name="id" type="xs:integer" fixed="63"></xs:attribute>
          </xs:appinfo>
@@ -5187,7 +5187,7 @@
    </xs:element>
    <xs:element name="RemoveEntityReliablePdu">
       <xs:annotation>
-         <xs:appinfo>alias, more descriptive name for a RemoveEntityRPdu.
+         <xs:appinfo>Alias, more descriptive name for RemoveEntityRPdu.
             <xs:attribute name="aliasFor" type="xs:string" fixed="RemoveEntityRPdu"></xs:attribute>
             <xs:attribute name="id" type="xs:integer" fixed="52"></xs:attribute>
          </xs:appinfo>
@@ -5280,7 +5280,7 @@
    </xs:element>
    <xs:element name="SetDataReliablePdu">
       <xs:annotation>
-         <xs:appinfo>alias, more descriptive name for a SetDataRPdu.
+         <xs:appinfo>Alias, more descriptive name for SetDataRPdu.
             <xs:attribute name="aliasFor" type="xs:string" fixed="SetDataRPdu"></xs:attribute>
             <xs:attribute name="id" type="xs:integer" fixed="59"></xs:attribute>
          </xs:appinfo>
@@ -5348,7 +5348,7 @@
    </xs:element>
    <xs:element name="SetRecordReliablePdu">
       <xs:annotation>
-         <xs:appinfo>alias, more descriptive name for a SetRecordRPdu.
+         <xs:appinfo>Alias, more descriptive name for SetRecordRPdu.
             <xs:attribute name="aliasFor" type="xs:string" fixed="SetRecordRPdu"></xs:attribute>
             <xs:attribute name="id" type="xs:integer" fixed="64"></xs:attribute>
          </xs:appinfo>
@@ -5431,7 +5431,7 @@
    </xs:element>
    <xs:element name="StartResumeReliablePdu">
       <xs:annotation>
-         <xs:appinfo>alias, more descriptive name for a StartResumeRPdu.
+         <xs:appinfo>Alias, more descriptive name for StartResumeRPdu.
             <xs:attribute name="aliasFor" type="xs:string" fixed="StartResumeRPdu"></xs:attribute>
             <xs:attribute name="id" type="xs:integer" fixed="53"></xs:attribute>
          </xs:appinfo>
@@ -5496,7 +5496,7 @@
    </xs:element>
    <xs:element name="StopFreezeReliablePdu">
       <xs:annotation>
-         <xs:appinfo>alias, more descriptive name for a StopFreezeRPdu.
+         <xs:appinfo>Alias, more descriptive name for StopFreezeRPdu.
             <xs:attribute name="aliasFor" type="xs:string" fixed="StopFreezeRPdu"></xs:attribute>
             <xs:attribute name="id" type="xs:integer" fixed="54"></xs:attribute>
          </xs:appinfo>
@@ -5787,7 +5787,7 @@
    </xs:element>
    <xs:element name="LiveEntityDetonationPdu">
       <xs:annotation>
-         <xs:appinfo>alias, more descriptive name for a LEDetonationPdu.
+         <xs:appinfo>Alias, more descriptive name for LEDetonationPdu.
             <xs:attribute name="aliasFor" type="xs:string" fixed="LEDetonationPdu"></xs:attribute>
             <xs:attribute name="id" type="xs:integer" fixed="50"></xs:attribute>
          </xs:appinfo>
@@ -5814,7 +5814,7 @@
    </xs:complexType>
    <xs:element name="LiveEntityFirePdu">
       <xs:annotation>
-         <xs:appinfo>alias, more descriptive name for a LEFirePdu.
+         <xs:appinfo>Alias, more descriptive name for LEFirePdu.
             <xs:attribute name="aliasFor" type="xs:string" fixed="LEFirePdu"></xs:attribute>
             <xs:attribute name="id" type="xs:integer" fixed="49"></xs:attribute>
          </xs:appinfo>
@@ -5876,7 +5876,7 @@
    </xs:element>
    <xs:element name="TimeSpacePositionInformationPdu">
       <xs:annotation>
-         <xs:appinfo>alias, more descriptive name for a TSPIPdu.
+         <xs:appinfo>Alias, more descriptive name for TSPIPdu.
             <xs:attribute name="aliasFor" type="xs:string" fixed="TSPIPdu"></xs:attribute>
             <xs:attribute name="id" type="xs:integer" fixed="46"></xs:attribute>
          </xs:appinfo>
