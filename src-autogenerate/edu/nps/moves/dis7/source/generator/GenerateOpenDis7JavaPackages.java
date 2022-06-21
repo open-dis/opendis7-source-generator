@@ -16,6 +16,10 @@ import edu.nps.moves.dis7.source.generator.pdus.GeneratePdusForGivenLanguage;
  */
 public class GenerateOpenDis7JavaPackages
 {
+        /** default constructor */
+        public GenerateOpenDis7JavaPackages()
+        {
+        }
   // @formatter:off
   // shared static defaults
   

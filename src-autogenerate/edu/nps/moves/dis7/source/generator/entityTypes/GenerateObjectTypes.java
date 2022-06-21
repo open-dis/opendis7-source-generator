@@ -190,6 +190,11 @@ public class GenerateObjectTypes
      */
   public class MyHandler extends DefaultHandler
   {
+        /** default constructor */
+        public MyHandler()
+        {
+            super();
+        }
     CotElem currentCot;
     ObjectElem currentObject;
     CategoryElem currentCategory;

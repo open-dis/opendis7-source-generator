@@ -647,9 +647,20 @@ public class JavaGenerator extends AbstractGenerator
     private void writeClassDeclaration(PrintWriter pw, GeneratedClass aClass)
     {
         // Class declaration
-        if(aClass.getAliasFor() != null) {
-          pw.println("public class "+aClass.getName()+" extends "+aClass.getAliasFor());
-          pw.println("{}");
+        if(aClass.getAliasFor() != null) 
+        {
+          // need to avoid javadoc warning "warning: use of default constructor, which does not provide a comment"
+          // https://docs.oracle.com/javase/tutorial/java/IandI/super.html
+          pw.println("public final class "+aClass.getName()+" extends "+aClass.getAliasFor());
+          pw.println("{");
+          pw.println("   /** Default constructor for alias invokes superclass");
+          pw.println("     * @see <a href=\"https://docs.oracle.com/javase/tutorial/java/IandI/super.html\" target=\"_blank\">https://docs.oracle.com/javase/tutorial/java/IandI/super.html</a>");
+          pw.println("     */");
+          pw.println("   public "+aClass.getName()+" ()");
+          pw.println("   {");
+          pw.println("       super();");
+          pw.println("   }");
+          pw.println("}");
           return;
         }
         

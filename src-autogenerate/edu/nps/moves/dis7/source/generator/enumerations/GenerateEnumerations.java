@@ -318,6 +318,11 @@ public class GenerateEnumerations
     /** Utility class */
     public class UidCollector extends DefaultHandler
     {
+        /** default constructor */
+        public UidCollector()
+        {
+            super();
+        }
         @Override
         public void startElement(String uri, String localName, String qName, Attributes attributes)
         {
@@ -352,6 +357,11 @@ public class GenerateEnumerations
      */
     public class MyHandler extends DefaultHandler
     {
+        /** default constructor */
+        public MyHandler()
+        {
+            super();
+        }
         List<EnumElem> enums = new ArrayList<>();
         EnumElem currentEnum;
         EnumRowElem currentEnumRow;

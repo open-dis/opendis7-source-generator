@@ -332,6 +332,11 @@ public class GenerateEntityTypes
      */
   public class MyHandler extends DefaultHandler
   {
+        /** default constructor */
+        public MyHandler()
+        {
+            super();
+        }
     ArrayList<EntityElem> entities = new ArrayList<>();
     EntityElem            currentEntity;
     CategoryElem          currentCategory;

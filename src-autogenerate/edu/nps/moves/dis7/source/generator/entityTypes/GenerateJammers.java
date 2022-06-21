@@ -191,6 +191,11 @@ public class GenerateJammers
      */
   public class MyHandler extends DefaultHandler
   {
+        /** default constructor */
+        public MyHandler()
+        {
+            super();
+        }
     JammerKindElem        currentKind;
     JammerCategoryElem    currentCategory;
     JammerSubCategoryElem currentSubCategory;

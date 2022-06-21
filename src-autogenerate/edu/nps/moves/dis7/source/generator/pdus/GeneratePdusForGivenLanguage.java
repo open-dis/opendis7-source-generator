@@ -409,6 +409,11 @@ public class GeneratePdusForGivenLanguage  // TODO rename? perhaps GeneratePdusB
      */
     public class MyHandler extends DefaultHandler
     {
+        /** default constructor */
+        public MyHandler()
+        {
+            super();
+        }
         @Override
         public void startElement(String uri, String localName, String qName, Attributes attributes)
         {
