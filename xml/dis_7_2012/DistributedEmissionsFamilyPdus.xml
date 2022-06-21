@@ -394,6 +394,6 @@ This field defines the active  emission  parameter  index,  beam  scan  pattern,
        
     </class>
     
-    <class name="SupplementalEmissionEntityStatePdu" id="30" comment="alias, more descriptive name for a SEESPdu." aliasFor="SEESPdu"/>
+    <class name="SupplementalEmissionEntityStatePdu" id="30" comment="Alias, more descriptive name for SEESPdu." aliasFor="SEESPdu"/>
 
 </classes>

@@ -72,7 +72,7 @@
         
     </class>
     
-    <class name="TimeSpacePositionInformationPdu" id="46" comment="alias, more descriptive name for a TSPIPdu." aliasFor="TSPIPdu"/>
+    <class name="TimeSpacePositionInformationPdu" id="46" comment="Alias, more descriptive name for TSPIPdu." aliasFor="TSPIPdu"/>
     
     <class name="AppearancePdu" id="47" inheritsFrom="LiveEntityFamilyPdu" comment="9.4.3 Communicate information about the appearance of a live entity.">
         
@@ -179,7 +179,7 @@
         
     </class>
     
-    <class name="LiveEntityFirePdu" id="49" comment="alias, more descriptive name for a LEFirePdu." aliasFor="LEFirePdu"/>
+    <class name="LiveEntityFirePdu" id="49" comment="Alias, more descriptive name for LEFirePdu." aliasFor="LEFirePdu"/>
 
     <class name="LEDetonationPdu" id="50" inheritsFrom="LiveEntityFamilyPdu" comment="9.4.6 Communicate information associated with the impact or detonation of a munition.">
         
@@ -235,6 +235,6 @@
         
     </class>
     
-    <class name="LiveEntityDetonationPdu" id="50" comment="alias, more descriptive name for a LEDetonationPdu." aliasFor="LEDetonationPdu"/>
+    <class name="LiveEntityDetonationPdu" id="50" comment="Alias, more descriptive name for LEDetonationPdu." aliasFor="LEDetonationPdu"/>
 
 </classes>

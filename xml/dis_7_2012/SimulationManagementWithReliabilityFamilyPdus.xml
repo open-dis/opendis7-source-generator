@@ -36,7 +36,7 @@
 
     </class>
 
-    <class name="CreateEntityReliablePdu" id="51" comment="alias, more descriptive name for a CreateEntityRPdu." aliasFor="CreateEntityRPdu"/>
+    <class name="CreateEntityReliablePdu" id="51" comment="Alias, more descriptive name for CreateEntityRPdu." aliasFor="CreateEntityRPdu"/>
     
     <class name="RemoveEntityRPdu" id="52" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu" comment="5.12.4.3 Contains the same information as found in the Remove Entity PDU with the addition of the level of reliability service to be used for the removal action being requested.">
       
@@ -60,7 +60,7 @@
 
     </class>
     
-    <class name="RemoveEntityReliablePdu" id="52" comment="alias, more descriptive name for a RemoveEntityRPdu." aliasFor="RemoveEntityRPdu"/>
+    <class name="RemoveEntityReliablePdu" id="52" comment="Alias, more descriptive name for RemoveEntityRPdu." aliasFor="RemoveEntityRPdu"/>
     
     <class name="StartResumeRPdu" id="53" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu" comment="5.12.4.4 Serves the same function as the Start/Resume PDU but with the addition of reliability service levels">
       
@@ -92,7 +92,7 @@
   
     </class> 
  
-    <class name="StartResumeReliablePdu" id="53" comment="alias, more descriptive name for a StartResumeRPdu." aliasFor="StartResumeRPdu"/>
+    <class name="StartResumeReliablePdu" id="53" comment="Alias, more descriptive name for StartResumeRPdu." aliasFor="StartResumeRPdu"/>
     
     <class name="StopFreezeRPdu" id="54" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu" comment="5.12.4.5 Serves the same function as the Stop/Freeze PDU (see 5.6.5.5.1) but with the addition of reliability service levels.">
       
@@ -124,7 +124,7 @@
    
     </class>
    
-    <class name="StopFreezeReliablePdu" id="54" comment="alias, more descriptive name for a StopFreezeRPdu." aliasFor="StopFreezeRPdu"/>
+    <class name="StopFreezeReliablePdu" id="54" comment="Alias, more descriptive name for StopFreezeRPdu." aliasFor="StopFreezeRPdu"/>
 
     <class name="AcknowledgeRPdu" id="55" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
            comment="5.12.4.6 Serves the same function as the Acknowledge PDU but is used to acknowledge the receipt of a Create Entity-R PDU, a Remove Entity-R PDU, a Start/Resume-R PDU, or a Stop/Freeze-R PDU.">
@@ -145,7 +145,7 @@
    
     </class>
  
-    <class name="AcknowledgeReliablePdu" id="55" comment="alias, more descriptive name for a AcknowledgeRPdu." aliasFor="AcknowledgeRPdu"/>
+    <class name="AcknowledgeReliablePdu" id="55" comment="Alias, more descriptive name for AcknowledgeRPdu." aliasFor="AcknowledgeRPdu"/>
 
     <class name="ActionRequestRPdu" id="56" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
            comment="5.12.4.7 Serves the same function as the Action Request PDU but with the addition of reliability service levels.">
@@ -195,7 +195,7 @@
     
     </class>
     
-    <class name="ActionRequestReliablePdu" id="56" comment="alias, more descriptive name for a ActionRequestRPdu." aliasFor="ActionRequestRPdu"/>
+    <class name="ActionRequestReliablePdu" id="56" comment="Alias, more descriptive name for ActionRequestRPdu." aliasFor="ActionRequestRPdu"/>
 
     <class name="ActionResponseRPdu" id="57" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu" comment="5.12.4.8 Serves the same function as the Action Response PDU (see 5.6.5.8.1) but is used to acknowledge the receipt of an Action Request-R PDU.">
       
@@ -231,7 +231,7 @@
 
     </class>
     
-    <class name="ActionResponseReliablePdu" id="57" comment="alias, more descriptive name for a ActionResponseRPdu." aliasFor="ActionResponseRPdu"/>
+    <class name="ActionResponseReliablePdu" id="57" comment="Alias, more descriptive name for ActionResponseRPdu." aliasFor="ActionResponseRPdu"/>
 
      <class name="DataQueryRPdu" id="58" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu" comment="5.12.4.9 Serves the same function as the Data Query PDU but with the addition of reliability service levels">
       
@@ -279,7 +279,7 @@
 
     </class>
     
-    <class name="DataQueryReliablePdu" id="58" comment="alias, more descriptive name for a DataQueryRPdu." aliasFor="DataQueryRPdu"/>
+    <class name="DataQueryReliablePdu" id="58" comment="Alias, more descriptive name for DataQueryRPdu." aliasFor="DataQueryRPdu"/>
     
     <class name="SetDataRPdu" id="59" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
            comment="5.12.4.10 Serves the same function as the Set Data PDU but with the addition of reliability service levels.">
@@ -323,7 +323,7 @@
         </attribute>
     </class>
     
-    <class name="SetDataReliablePdu" id="59" comment="alias, more descriptive name for a SetDataRPdu." aliasFor="SetDataRPdu"/>
+    <class name="SetDataReliablePdu" id="59" comment="Alias, more descriptive name for SetDataRPdu." aliasFor="SetDataRPdu"/>
 
     <class name="DataRPdu" id="60" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
            comment="5.12.4.11 Serves the same function as the Data PDU but with the addition of reliability service levels and is used in response to a Data Query-R PDU, a Data-R PDU, or a Set Data-R PDU.">
@@ -368,7 +368,7 @@
   
     </class>
     
-    <class name="DataReliablePdu" id="60" comment="alias, more descriptive name for a DataRPdu." aliasFor="DataRPdu"/>
+    <class name="DataReliablePdu" id="60" comment="Alias, more descriptive name for DataRPdu." aliasFor="DataRPdu"/>
 
     <class name="EventReportRPdu" id="61" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
            comment="5.12.4.12 Contains the same information as found in the Event Report PDU.">
@@ -405,7 +405,7 @@
     
     </class>
     
-    <class name="EventReportReliablePdu" id="61" comment="alias, more descriptive name for a EventReportRPdu." aliasFor="EventReportRPdu"/>
+    <class name="EventReportReliablePdu" id="61" comment="Alias, more descriptive name for EventReportRPdu." aliasFor="EventReportRPdu"/>
 
     <class name="CommentRPdu" id="62" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
            comment="5.12.4.13 Serves the same function as the Comment PDU.">
@@ -427,7 +427,7 @@
         </attribute>
     </class>
 
-    <class name="CommentReliablePdu" id="62" comment="alias, more descriptive name for a CommentRPdu." aliasFor="CommentRPdu"/>
+    <class name="CommentReliablePdu" id="62" comment="Alias, more descriptive name for CommentRPdu." aliasFor="CommentRPdu"/>
 
     <class name="RecordQueryRPdu" id="65" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
            comment="5.12.4.14 Used to communicate a request for data in record format.">
@@ -466,7 +466,7 @@
 
     </class>
     
-    <class name="RecordQueryReliablePdu" id="65" comment="alias, more descriptive name for a RecordQueryRPdu." aliasFor="RecordQueryRPdu"/>
+    <class name="RecordQueryReliablePdu" id="65" comment="Alias, more descriptive name for RecordQueryRPdu." aliasFor="RecordQueryRPdu"/>
 
     <class name="SetRecordRPdu" id="64" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
             comment="5.12.4.15 Used to set or change certain parameter values. These parameter values are contained within a record format as compared to the datum format used in the Set Data-R PDU.">
@@ -504,7 +504,7 @@
         </attribute>
     </class>
 
-    <class name="SetRecordReliablePdu" id="64" comment="alias, more descriptive name for a SetRecordRPdu." aliasFor="SetRecordRPdu"/>
+    <class name="SetRecordReliablePdu" id="64" comment="Alias, more descriptive name for SetRecordRPdu." aliasFor="SetRecordRPdu"/>
 
     <class name="RecordRPdu" id="63" inheritsFrom="SimulationManagementWithReliabilityFamilyPdu"
            comment="5.12.4.16 Used to respond to a Record Query-R PDU or a Set Record-R PDU. It is used to provide information requested in a Record Query-R PDU, to confirm the information received in a Set Record-R PDU, and to confirm the receipt of a periodic or unsolicited Record-R PDU when the acknowledged service level is used.">
@@ -539,5 +539,5 @@
         
     </class>
     
-    <class name="RecordReliablePdu" id="63" comment="alias, more descriptive name for a RecordRPdu." aliasFor="RecordRPdu"/>
+    <class name="RecordReliablePdu" id="63" comment="Alias, more descriptive name for RecordRPdu." aliasFor="RecordRPdu"/>
 </classes>
