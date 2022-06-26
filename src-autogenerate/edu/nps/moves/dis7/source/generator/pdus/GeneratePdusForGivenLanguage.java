@@ -34,7 +34,7 @@ import org.xml.sax.helpers.*;
 public class GeneratePdusForGivenLanguage  // TODO rename? perhaps GeneratePdusByProgrammingLanguage
 {
     // set defaults to allow direct run
-    private static String            language = edu.nps.moves.dis7.source.generator.GenerateOpenDis7JavaPackages.DEFAULT_LANGUAGE;
+    private static String programmingLanguage = edu.nps.moves.dis7.source.generator.GenerateOpenDis7JavaPackages.DEFAULT_PROGRAMMING_LANGUAGE;
     private static String         sisoXmlFile = "xml/dis_7_2012/DIS_7_2012.xml";
         
     // Elements and attributes we look for in our XML pdu description files:
@@ -222,7 +222,7 @@ public class GeneratePdusForGivenLanguage  // TODO rename? perhaps GeneratePdusB
      */
     public static void main(String args[])
     {
-        language = edu.nps.moves.dis7.source.generator.GenerateOpenDis7JavaPackages.PYTHON_LANGUAGE; // JAVA_LANGUAGE PYTHON_LANGUAGE
+        programmingLanguage = edu.nps.moves.dis7.source.generator.GenerateOpenDis7JavaPackages.DEFAULT_PROGRAMMING_LANGUAGE; // JAVA_LANGUAGE PYTHON_LANGUAGE
         
         System.out.println (GeneratePdusForGivenLanguage.class.getName());
         if(args.length < 2 || args.length > 2)
@@ -243,15 +243,15 @@ public class GeneratePdusForGivenLanguage  // TODO rename? perhaps GeneratePdusB
             if (!args[0].isEmpty())
                 sisoXmlFile = args[0];
             if (!args[1].isEmpty())
-                   language = args[1];
+                   programmingLanguage = args[1];
         }
-        language = language.toLowerCase();
+        programmingLanguage = programmingLanguage.toLowerCase();
         System.out.println (" sisoXmlFile=" + sisoXmlFile);
-        System.out.println ("    language=" + language);
+        System.out.println ("    language=" + programmingLanguage);
         
-        checkArguments(sisoXmlFile, language);
+        checkArguments(sisoXmlFile, programmingLanguage);
         
-        GeneratePdusForGivenLanguage generatePdusResult = new GeneratePdusForGivenLanguage(sisoXmlFile, language);  // includes simple list of PDUs
+        GeneratePdusForGivenLanguage generatePdusResult = new GeneratePdusForGivenLanguage(sisoXmlFile, programmingLanguage);  // includes simple list of PDUs
         System.out.println (GeneratePdusForGivenLanguage.class.getName() + " complete.");
     }
     

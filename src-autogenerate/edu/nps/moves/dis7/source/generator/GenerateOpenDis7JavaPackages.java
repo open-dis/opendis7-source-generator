@@ -30,7 +30,7 @@ public class GenerateOpenDis7JavaPackages
   public static final String      PYTHON_LANGUAGE  = "python"; // TODO python testing
     
   /** Java is default programming language for this generator */
-  public static final String      DEFAULT_LANGUAGE = JAVA_LANGUAGE;
+  public static final String      DEFAULT_PROGRAMMING_LANGUAGE = JAVA_LANGUAGE;
   
   /** xml/SISO/SISO-REF-010.xml */
   public static final String DEFAULT_SISO_XML_FILE = "xml/SISO/SISO-REF-010.xml";
@@ -56,7 +56,7 @@ public class GenerateOpenDis7JavaPackages
      */
     public static void main(String[] args)
     {
-        String whichLanguage = PYTHON_LANGUAGE; // DEFAULT_LANGUAGE JAVA_LANGUAGE PYTHON_LANGUAGE
+        String whichLanguage = DEFAULT_PROGRAMMING_LANGUAGE; // DEFAULT_PROGRAMMING_LANGUAGE JAVA_LANGUAGE PYTHON_LANGUAGE
         
         System.out.println (GenerateOpenDis7JavaPackages.class.getName() + "commencing...");
         if (whichLanguage.equalsIgnoreCase("java"))
