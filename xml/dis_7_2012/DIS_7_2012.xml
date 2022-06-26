@@ -3052,8 +3052,13 @@ dB and RPM)"/>
             <sisoenum type="DISProtocolFamily" comment="uid 5"/>
         </attribute>
   
-        <attribute name="timestamp" comment="Timestamp value">
+        <attribute name="timestamp" comment="Timestamp value, int representing number of 1.675 microseconds as interval past hour">
             <primitive type="uint32"/>
+<!-- see 6.2.88 Timestamp, 6.2.88.2.3 Scale
+"The scale of the time value contained in the most significant 31 bits of the timestamp shall be determined by
+letting zero represent the start of the hour and letting 231 – 1 represent one time unit before the start of the
+next hour. The next hour then starts back at zero. This results in each time unit representing exactly
+3600/(231) s (approximately 1.67638063 μs)." -->
         </attribute>
   
         <attribute name="length" comment="Length, in bytes, of the PDU">
