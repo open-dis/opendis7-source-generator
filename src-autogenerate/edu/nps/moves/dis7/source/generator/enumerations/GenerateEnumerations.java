@@ -36,7 +36,7 @@ public class GenerateEnumerations
     private        File   outputDirectory;
     private static String outputDirectoryPath = "src-generated/java/edu/nps/moves/dis7/enumerations"; // default
     private static String         packageName =                    "edu.nps.moves.dis7.enumerations"; // default
-    private static String            language = edu.nps.moves.dis7.source.generator.GenerateOpenDis7JavaPackages.DEFAULT_LANGUAGE;
+    private static String            language = edu.nps.moves.dis7.source.generator.GenerateOpenDis7JavaPackages.DEFAULT_PROGRAMMING_LANGUAGE;
     private static String         sisoXmlFile = edu.nps.moves.dis7.source.generator.GenerateOpenDis7JavaPackages.DEFAULT_SISO_XML_FILE;
     
     private Properties uid2ClassName;
