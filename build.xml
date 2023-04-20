@@ -857,8 +857,19 @@
 
     <!-- http://stackoverflow.com/questions/919692/how-to-execute-xslt-2-0-with-ant -->
     <!-- https://sourceforge.net/projects/saxon/files/Saxon-HE jar download handled in X3DJSAIL build -->
+    <!--
     <property name="saxon.dir"        location="lib" description="relative path from stylesheets directory"/>
     <property name="saxon.jar"           value="saxon9he.jar"/>
+    -->
+    <!-- https://stackoverflow.com/questions/919692/how-to-execute-xslt-2-0-with-ant -->
+    <!-- https://sourceforge.net/projects/saxon/files/Saxon-HE jar download handled in X3DJSAIL build -->
+    <!-- https://sourceforge.net/projects/saxon/files/Saxon-HE/11/Java/ -->
+    <!-- https://www.saxonica.com/documentation10/#!about/gettingstarted/gettingstartedjava -->
+    <!-- SaxonHE 11 (java.lang.NoClassDefFoundError: org/xmlresolver/Resolver) https://saxonica.plan.io/boards/3/topics/8478?r=8480 -->
+    <property name="saxon.dir"        location="lib" description="relative path from stylesheets directory"/>
+    <property name="saxon.jar"           value="saxon-he-12.1.jar"/><!-- previously saxon9he.jar -->
+    <property name="xmlresolver.jar"     value="xmlresolver-5.1.1.jar"/><!-- required with saxon-he-11+.jar -->
+    <property name="saxon.classpath"     value="${saxon.dir}/${saxon.jar};.${saxon.dir}/${xmlresolver.jar};."/>
 
     <target name="get.saxon" description="get saxon.jar if not checked out" depends="get.saxon.check" unless="${saxon.found}"> <!--  -->
         <echo message="get tested saxon.jar from project version control if not already checked out locally"/>
@@ -866,10 +877,15 @@
         <echo message="get http://svn.code.sf.net/p/x3d/code/www.web3d.org/x3d/tools/jar/${saxon.jar}"/>
         <get src="http://svn.code.sf.net/p/x3d/code/www.web3d.org/x3d/tools/jar/${saxon.jar}"
              dest="${saxon.dir}/${saxon.jar}" verbose="true" ignoreerrors="${ignoreSetupDownloadErrors}"/>
+        <get src="http://svn.code.sf.net/p/x3d/code/www.web3d.org/x3d/tools/jar/${xmlresolver.jar}"
+             dest="${saxon.dir}/${saxon.jar}" verbose="true" ignoreerrors="${ignoreSetupDownloadErrors}"/>
     </target>
     <target name="get.saxon.check">
         <condition property="saxon.found" else="false">
-            <available file="${saxon.dir}/${saxon.jar}"/>
+            <and>
+                <available file="${saxon.dir}/${saxon.jar}"/>
+                <available file="${saxon.dir}/${xmlresolver.jar}"/>
+            </and>
         </condition>
         <echo message="found ${saxon.dir}/${saxon.jar}: ${saxon.found}"/>
     </target>

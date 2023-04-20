@@ -41,10 +41,10 @@ The Ant build.xml is greatly improved and build tasks are now simply performed.
 
 The Java language is inherently cross-platform and any OS on any hardware for which a Java run-time is available should *theoretically* support running of this project.  However, the configuration used by the initial developer is the following:
 
-1. Apache **Netbeans 12.6** Integrated Development Environment ("IDE")
-2. Apache **Ant** Java build tool version 1.10.12
+1. Apache **Netbeans 17** Integrated Development Environment ("IDE")
+2. Apache **Ant** Java build tool version 1.10.13
 3. **Git** version control system (for downloading project; supported in Netbeans)
-4. OpenJdk Java version 17.0.2
+4. OpenJdk Java version 20
 
 Please see [Savage Developers Guide](https://savage.nps.edu/Savage/developers.html) for our current recommended development settings.
 
