@@ -1081,7 +1081,10 @@ public class GenerateEnumerations
         {
             String normalizedEntry = value.trim()
                                           .replaceAll("\"", "").replaceAll("\'", "")
-                                          .replaceAll("=", "") // enumrow Damage Area uid="889"
+                                          .replaceAll(" = "," ") // enumrow Damage Area uid="889"
+                                          .replaceAll(" =", "")  // enumrow Damage Area uid="889"
+                                          .replaceAll("= ", "") // enumrow Damage Area uid="889"
+                                          .replaceAll("=",  "") // enumrow Damage Area uid="889"
                                           .replaceAll("—","-").replaceAll("–","-") // mdash
                     // 
                                           .replaceAll("\\*","x").replaceAll("/","") // escaped regex for multiply, divide
