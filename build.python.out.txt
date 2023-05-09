@@ -1,4 +1,4 @@
-ant -f C:\\x3d-github\\open-dis7-source-generator generate-source-code-python
+ant -f C:\\x3d-github\\opendis7-source-generator generate-source-code-python
 generate-source-code-python:
 ==================================================================================
 generate-source-code-python make pdus,         edu.nps.moves.dis7.source.generator.pdus.GeneratePdusForGivenLanguage
