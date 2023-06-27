@@ -1,0 +1,635 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- edited with XMLSpy v2023 rel. 2 (x64) (http://www.altova.com) by Don Brutzman (Naval Postgraduate School) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="7.0">
+	<xs:element name="DIS">
+		<xs:annotation>
+			<xs:appinfo>Root element for DIS PDU log, optionally contains head meta information</xs:appinfo>
+			<xs:documentation>https://savage.nps.edu/opendis7-java/xml/SchemaDocumentation</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="head" minOccurs="0"/>
+				<xs:choice minOccurs="0" maxOccurs="unbounded">
+					<xs:element ref="EntityStatePdu"/>
+					<xs:element ref="CommentPdu"/>
+				</xs:choice>
+			</xs:sequence>
+			<xs:attribute name="version" type="xs:string" fixed="7.0">
+				<xs:annotation>
+					<xs:appinfo>Warning: version is required and must be specified in source document.</xs:appinfo>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="head">
+		<xs:annotation>
+			<xs:appinfo>Functional summary: each DIS file includes an optional head statement that can contain
+            any number of meta statements.
+         </xs:appinfo>
+			<xs:documentation source="https://www.web3d.org/documents/specifications/19776-1/V3.3/Part01/concepts.html#Header"/>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="meta" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="meta">
+		<xs:annotation>
+			<xs:appinfo>Functional summary: the meta statement provides metadata information about a file,
+            where name and content attributes provide attribute=value metadata pairs.
+         </xs:appinfo>
+			<xs:documentation source="https://www.web3d.org/documents/specifications/19776-1/V3.3/Part01/concepts.html#Header"/>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="name" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation source="http://www.dublincore.org/documents/dcmi-terms/#terms-description"/>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="content" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation source="http://www.w3.org/TR/html4/struct/global.html#adef-content"/>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="rootType" abstract="true"/>
+	<xs:complexType name="EntityInformationInteractionFamilyPduType" abstract="true">
+		<xs:annotation>
+			<xs:appinfo>Section 5.3.3. Common superclass for EntityState, Collision, collision-elastic, and
+            entity state update PDUs.
+            <xs:attribute name="id" type="xs:integer" fixed="1"/></xs:appinfo>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="PduBaseType">
+				<xs:attribute name="protocolFamily" default="DISProtocolFamily.ENTITY_INFORMATION_INTERACTION"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="EntityStatePdu">
+		<xs:annotation>
+			<xs:appinfo>7.2.2. Represents the position and state of one entity in the world. See 5.3.2. (length
+            of list found in field numberOfVariableParameters)
+            <xs:attribute name="id" type="xs:integer" fixed="1"/></xs:appinfo>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="EntityInformationInteractionFamilyPduType">
+					<xs:sequence>
+						<xs:element name="entityID" type="EntityIDType">
+							<xs:annotation>
+								<xs:appinfo>Unique ID for an entity that is tied to this state information</xs:appinfo>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="entityType" type="EntityTypeType">
+							<xs:annotation>
+								<xs:appinfo>Describes the type of entity in the world</xs:appinfo>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="alternativeEntityType" type="EntityTypeType"/>
+						<xs:element name="entityLinearVelocity" type="Vector3FloatType">
+							<xs:annotation>
+								<xs:appinfo>Describes the speed of the entity in the world</xs:appinfo>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="entityLocation" type="Vector3DoubleType">
+							<xs:annotation>
+								<xs:appinfo>describes the location of the entity in the world</xs:appinfo>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="entityOrientation" type="EulerAnglesType">
+							<xs:annotation>
+								<xs:appinfo>describes the orientation of the entity, in euler angles with units of radians</xs:appinfo>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="deadReckoningParameters" type="DeadReckoningParametersType">
+							<xs:annotation>
+								<xs:appinfo>parameters used for dead reckoning</xs:appinfo>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="marking" type="EntityMarkingType">
+							<xs:annotation>
+								<xs:appinfo>11 characters that can be used for entity identification, debugging, or to draw unique
+                           strings on the side of entities in the world
+                        </xs:appinfo>
+							</xs:annotation>
+						</xs:element>
+						<!--Attribute (as element) EntityStatePdu variableParameters with objectlist classRef name=VariableParameter, type=VariableParameterType-->
+						<xs:sequence minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:appinfo>Number of elements is determined by size fieldnumberOfVariableParameters and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+								<xs:documentation>numberOfVariableParameters</xs:documentation>
+							</xs:annotation>
+							<xs:element name="VariableParameter" type="VariableParameterType">
+								<xs:annotation>
+									<xs:appinfo>variable length list of variable parameters. In earlier DIS versions this was articulation
+                              parameters. (length of list found in field numberOfVariableParameters)
+                           </xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:sequence>
+					<xs:attribute name="family" fixed="EntityInformationInteractionFamilyPduType"/>
+					<xs:attribute name="forceId" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>What force this entity is affiliated with, eg red, blue, neutral, etc (SISO enumeration
+                        ForceID uid 6)
+                     </xs:appinfo>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="numberOfVariableParameters" type="xs:unsignedByte">
+						<xs:annotation>
+							<xs:appinfo>How many variable parameters are in the variable length list. In earlier versions
+                        of DIS these were known as articulation parameters
+                     </xs:appinfo>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="entityAppearance" type="xs:unsignedLong">
+						<xs:annotation>
+							<xs:appinfo>a series of bit flags that are used to help draw the entity, such as smoking, on fire,
+                        etc.
+                     </xs:appinfo>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="capabilities" type="xs:unsignedLong">
+						<xs:annotation>
+							<xs:appinfo>a series of bit flags (SISO bitfield enumeration, size 32 bits, EntityCapabilities
+                        uid 55)
+                     </xs:appinfo>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+				<!-- ========== debug: divider between elements and attributes ========== -->
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CommentPdu">
+		<xs:annotation>
+			<xs:appinfo>7.5.13 Used to enter arbitrary messages (character strings, for example). See 5.6.5.13
+            (length of list found in field numberOfVariableDatumRecords)
+            <xs:attribute name="id" type="xs:integer" fixed="22"/></xs:appinfo>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="SimulationManagementFamilyPduType">
+					<xs:sequence>
+						<!--Attribute (as element) CommentPdu variableDatums with objectlist classRef name=VariableDatum, type=VariableDatumType-->
+						<xs:sequence minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:appinfo>Number of elements is determined by size fieldnumberOfVariableDatumRecords and can be 0 or greater.
+                           Ensure that the total PDU size does not exceed maximums allowed in IEEE DIS Specification.
+                        </xs:appinfo>
+								<xs:documentation>numberOfVariableDatumRecords</xs:documentation>
+							</xs:annotation>
+							<xs:element name="VariableDatum" type="VariableDatumType">
+								<xs:annotation>
+									<xs:appinfo>variable length list of variable length datums (length of list found in field numberOfVariableDatumRecords)</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:sequence>
+					<xs:attribute name="family" fixed="SimulationManagementFamilyPduType"/>
+					<xs:attribute name="numberOfFixedDatumRecords" type="xs:unsignedLong">
+						<xs:annotation>
+							<xs:appinfo>Number of fixed datum records, not used in this Pdu</xs:appinfo>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="numberOfVariableDatumRecords" type="xs:unsignedLong">
+						<xs:annotation>
+							<xs:appinfo>Number of variable datum records, handled automatically by marshaller at run time
+                        (and not modifiable by end-user programmers)
+                     </xs:appinfo>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+				<!-- ========== debug: divider between elements and attributes ========== -->
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="SimulationManagementFamilyPduType" abstract="true">
+		<xs:annotation>
+			<xs:appinfo>First part of a simulation management (SIMAN) PDU and SIMAN-Reliability (SIMAN-R)
+            PDU. Sectionn 6.2.81
+            <xs:attribute name="id" type="xs:integer" fixed="5"/></xs:appinfo>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="PduBaseType">
+				<xs:sequence>
+					<xs:element name="originatingID" type="SimulationIdentifierType">
+						<xs:annotation>
+							<xs:appinfo>IDs the simulation or entity, either a simulation or an entity. Either 6.2.80 or 6.2.28</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="receivingID" type="SimulationIdentifierType">
+						<xs:annotation>
+							<xs:appinfo>simulation, all simulations, a special ID, or an entity. See 5.6.5 and 5.12.4</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="protocolFamily" default="DISProtocolFamily.SIMULATION_MANAGEMENT"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DeadReckoningParametersType" abstract="false">
+		<xs:annotation>
+			<xs:appinfo>Not specified in the standard. This is used by the ESPDU</xs:appinfo>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="rootType">
+				<xs:sequence>
+					<xs:element name="entityLinearAcceleration" type="Vector3FloatType">
+						<xs:annotation>
+							<xs:appinfo>Linear acceleration of the entity</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="entityAngularVelocity" type="Vector3FloatType">
+						<xs:annotation>
+							<xs:appinfo>Angular velocity of the entity</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="deadReckoningAlgorithm" type="xs:string">
+					<xs:annotation>
+						<xs:appinfo>Algorithm to use in computing dead reckoning. See EBV doc. (SISO enumeration DeadReckoningAlgorithm
+                     uid 44)
+                  </xs:appinfo>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="parameters">
+					<xs:annotation>
+						<xs:appinfo>Dead reckoning parameters. Contents depends on algorithm.</xs:appinfo>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+			<!-- ========== debug: divider between elements and attributes ========== -->
+		</xs:complexContent>
+		<!--abstract='false' base='rootType'-->
+	</xs:complexType>
+	<xs:complexType name="DomainType" abstract="false">
+		<xs:annotation>
+			<xs:appinfo>A special class to contain and act as a super class for Domain enumerations.</xs:appinfo>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="rootType">
+				<xs:attribute name="value" type="xs:unsignedByte">
+					<xs:annotation>
+						<xs:appinfo>domain field containing enumeration value. See SISO enumerations for PlatformDomain
+                     uid 8, MunitionDomain uid 14 and SupplyDomain uid 600.
+                  </xs:appinfo>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+		<!--abstract='false' base='rootType'-->
+	</xs:complexType>
+	<xs:complexType name="EntityIDType" abstract="false">
+		<xs:annotation>
+			<xs:appinfo>Unique identifier triplet for this entity. Also referred to as EntityIdentifier</xs:appinfo>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="rootType">
+				<xs:attribute name="siteID" type="xs:unsignedShort">
+					<xs:annotation>
+						<xs:appinfo>Site ID values are unique identification number for originating site, often corresponding
+                     to an internet address. Site ID values are agreed upon by individual simulations.
+                  </xs:appinfo>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="applicationID" type="xs:unsignedShort">
+					<xs:annotation>
+						<xs:appinfo>Application ID values are unique identification number for originating application
+                     at a given site. Application ID values are sssigned by individual sites.
+                  </xs:appinfo>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="entityID" type="xs:unsignedShort">
+					<xs:annotation>
+						<xs:appinfo>Entity ID values are unique identification number for s givent entity in the originating
+                     application at a given site. Entity ID values are sssigned by individual simulation
+                     programs.
+                  </xs:appinfo>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+		<!--abstract='false' base='rootType'-->
+	</xs:complexType>
+	<xs:complexType name="EntityMarkingType" abstract="false">
+		<xs:annotation>
+			<xs:appinfo>Specifies the character set used in the first byte, followed by 11 characters of text
+            data. Section 6.29
+         </xs:appinfo>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="rootType">
+				<xs:attribute name="characterSet" type="xs:string">
+					<xs:annotation>
+						<xs:appinfo>The character set (SISO enumeration EntityMarkingCharacterSet uid 45)</xs:appinfo>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="characters">
+					<xs:annotation>
+						<xs:appinfo>The characters</xs:appinfo>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+		<!--abstract='false' base='rootType'-->
+	</xs:complexType>
+	<xs:complexType name="EntityTypeType" abstract="false">
+		<xs:annotation>
+			<xs:appinfo>Identifies the type of Entity</xs:appinfo>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="rootType">
+				<xs:sequence>
+					<xs:element name="domain" type="DomainType">
+						<xs:annotation>
+							<xs:appinfo>Domain of entity (air, surface, subsurface, space, etc.)</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="entityKind" type="xs:string">
+					<xs:annotation>
+						<xs:appinfo>Kind of entity (SISO enumeration EntityKind uid 7)</xs:appinfo>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="country" type="xs:string">
+					<xs:annotation>
+						<xs:appinfo>country to which the design of the entity is attributed (SISO enumeration Country
+                     uid 29)
+                  </xs:appinfo>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="category" type="xs:unsignedByte">
+					<xs:annotation>
+						<xs:appinfo>category of entity</xs:appinfo>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="subCategory" type="xs:unsignedByte">
+					<xs:annotation>
+						<xs:appinfo>subcategory based on category</xs:appinfo>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="specific" type="xs:unsignedByte">
+					<xs:annotation>
+						<xs:appinfo>specific info based on subcategory</xs:appinfo>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="extra" type="xs:unsignedByte"/>
+			</xs:extension>
+			<!-- ========== debug: divider between elements and attributes ========== -->
+		</xs:complexContent>
+		<!--abstract='false' base='rootType'-->
+	</xs:complexType>
+	<xs:complexType name="EulerAnglesType" abstract="false">
+		<xs:annotation>
+			<xs:appinfo>Three floating point values representing an orientation, psi, theta, and phi, aka
+            the euler angles, in radians. Section 6.2.33
+         </xs:appinfo>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="rootType">
+				<xs:attribute name="psi" type="xs:float"/>
+				<xs:attribute name="theta" type="xs:float"/>
+				<xs:attribute name="phi" type="xs:float"/>
+			</xs:extension>
+		</xs:complexContent>
+		<!--abstract='false' base='rootType'-->
+	</xs:complexType>
+	<xs:complexType name="PduType" abstract="true">
+		<xs:annotation>
+			<xs:appinfo>Base class of PduBase and LiveEntityPdu</xs:appinfo>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="rootType">
+				<xs:attribute name="protocolVersion" type="xs:string">
+					<xs:annotation>
+						<xs:appinfo>The version of the protocol. 5=DIS-1995, 6=DIS-1998, 7=DIS-2012 (SISO enumeration
+                     DISProtocolVersion uid 3)
+                  </xs:appinfo>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="exerciseID" type="xs:unsignedByte">
+					<xs:annotation>
+						<xs:appinfo>Exercise ID provides a unique identifier</xs:appinfo>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="pduType" type="xs:string">
+					<xs:annotation>
+						<xs:appinfo>Type of pdu, unique for each PDU class (SISO enumeration DisPduType uid 4)</xs:appinfo>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="timestamp" type="xs:unsignedLong">
+					<xs:annotation>
+						<xs:appinfo>Timestamp value</xs:appinfo>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="length" type="xs:unsignedShort">
+					<xs:annotation>
+						<xs:appinfo>Length, in bytes, of the PDU</xs:appinfo>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+			<!--xs:attribute protocolFamily is defined in subclasses for Pdu rather than here, in order to avoid inheritance collisions.-->
+		</xs:complexContent>
+		<!--abstract='true' base='rootType'-->
+	</xs:complexType>
+	<xs:complexType name="PduBaseType" abstract="true">
+		<xs:annotation>
+			<xs:appinfo>The superclass for all PDUs except LiveEntity. This incorporates the PduHeader record,
+            section 7.2.2
+         </xs:appinfo>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="PduType">
+				<xs:sequence>
+					<xs:element name="pduStatus" type="PduStatusType">
+						<xs:annotation>
+							<xs:appinfo>PDU Status Record. Described in 6.2.67. This field is not present in earlier DIS versions</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+			<!-- ========== debug: divider between elements and attributes ========== -->
+			<!--xs:attribute padding is defined in subclasses for PduBase rather than here, in order to avoid inheritance collisions.-->
+		</xs:complexContent>
+		<!--abstract='true' base='PduType'-->
+	</xs:complexType>
+	<xs:complexType name="PduStatusType" abstract="true">
+		<xs:annotation>
+			<xs:appinfo>PduStatus provides a set of bit-masked indicator values, section 6.2.67. Bit fields
+            include Transferred Entity Indicator (TEI), LVC Indicator (LVC), Coupled Extension
+            Indicator (CEI), Fire Type Indicator (FTI), Detonation Type Indicator (DTI), Radio
+            Attached Indicator (RAI), Intercom Attached Indicator (IAI), IFF Simulation Mode (ISM)
+            and Active Interrogation Indicator (AII).
+         </xs:appinfo>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="rootType">
+				<xs:attribute name="value" type="xs:unsignedByte">
+					<xs:annotation>
+						<xs:appinfo>PDU Status Record value containing bitmasked field</xs:appinfo>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+		<!--abstract='true' base='rootType'-->
+	</xs:complexType>
+	<xs:complexType name="SimulationAddressType" abstract="false">
+		<xs:annotation>
+			<xs:appinfo>A Simulation Address record shall consist of the Site Identification number and the
+            Application Identification number. Section 6.2.79
+         </xs:appinfo>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="rootType"/>
+		</xs:complexContent>
+		<!--abstract='false' base='rootType'-->
+	</xs:complexType>
+	<xs:complexType name="SimulationIdentifierType" abstract="false">
+		<xs:annotation>
+			<xs:appinfo>The unique designation of a simulation when using the 48-bit identifier format shall
+            be specified by the Sim- ulation Identifier record. The reason that the 48-bit format
+            is required in addition to the 32-bit simulation address format that actually identifies
+            a specific simulation is because some 48-bit identifier fields in PDUs may contain
+            either an Object Identifier, such as an Entity ID, or a Simulation Identifier. Section
+            6.2.80
+         </xs:appinfo>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="rootType">
+				<xs:sequence>
+					<xs:element name="simulationAddress" type="SimulationAddressType">
+						<xs:annotation>
+							<xs:appinfo>Simulation address</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="referenceNumber" type="xs:unsignedShort">
+					<xs:annotation>
+						<xs:appinfo>This field shall be set to zero as there is no reference number associated with a
+                     Simulation Identifier.
+                  </xs:appinfo>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+			<!-- ========== debug: divider between elements and attributes ========== -->
+		</xs:complexContent>
+		<!--abstract='false' base='rootType'-->
+	</xs:complexType>
+	<xs:complexType name="VariableDatumType" abstract="false">
+		<xs:annotation>
+			<xs:appinfo>The variable datum type, the datum length, and the value for that variable datum type.
+            Section 6.2.93
+         </xs:appinfo>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="rootType">
+				<xs:attribute name="variableDatumID" type="xs:string">
+					<xs:annotation>
+						<xs:appinfo>Type of variable datum to be transmitted. 32-bit enumeration defined in EBV (SISO
+                     enumeration VariableRecordType uid 66 Variable Record Type values are defined by VariableRecordType
+                     enumerations)
+                  </xs:appinfo>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="variableDatumLength" type="xs:unsignedLong">
+					<xs:annotation>
+						<xs:appinfo>Length, IN BITS, of the variable datum.</xs:appinfo>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="variableDatumValue">
+					<xs:annotation>
+						<xs:appinfo>This can be any number of bits long, depending on the datum.</xs:appinfo>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="padding" type="xs:unsignedInt">
+					<xs:annotation>
+						<xs:appinfo>zero-filled array of padding bits for byte alignment and consistent sizing of PDU
+                     data
+                  </xs:appinfo>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+		<!--abstract='false' base='rootType'-->
+	</xs:complexType>
+	<xs:complexType name="VariableParameterType" abstract="false">
+		<xs:annotation>
+			<xs:appinfo>used in DetonationPdu, ArticulatedPartsPdu among others</xs:appinfo>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="rootType">
+				<xs:attribute name="recordType" type="xs:string">
+					<xs:annotation>
+						<xs:appinfo>The identification of the Variable Parameter record. Enumeration from EBV (SISO enumeration
+                     VariableParameterRecordType uid 56)
+                  </xs:appinfo>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="recordSpecificFields">
+					<xs:annotation>
+						<xs:appinfo>120 bits</xs:appinfo>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+		<!--abstract='false' base='rootType'-->
+	</xs:complexType>
+	<xs:complexType name="Vector3DoubleType" abstract="false">
+		<xs:annotation>
+			<xs:appinfo>Three double precision floating point values, x, y, and z. Used for world coordinates
+            Section 6.2.97.
+         </xs:appinfo>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="rootType">
+				<xs:attribute name="x" type="xs:double">
+					<xs:annotation>
+						<xs:appinfo>X value</xs:appinfo>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="y" type="xs:double">
+					<xs:annotation>
+						<xs:appinfo>y Value</xs:appinfo>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="z" type="xs:double">
+					<xs:annotation>
+						<xs:appinfo>Z value</xs:appinfo>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+		<!--abstract='false' base='rootType'-->
+	</xs:complexType>
+	<xs:complexType name="Vector3FloatType" abstract="false">
+		<xs:annotation>
+			<xs:appinfo>Three floating point values, x, y, and z. Section 6.2.95</xs:appinfo>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="rootType">
+				<xs:attribute name="x" type="xs:float">
+					<xs:annotation>
+						<xs:appinfo>X value</xs:appinfo>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="y" type="xs:float">
+					<xs:annotation>
+						<xs:appinfo>y Value</xs:appinfo>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="z" type="xs:float">
+					<xs:annotation>
+						<xs:appinfo>Z value</xs:appinfo>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+		<!--abstract='false' base='rootType'-->
+	</xs:complexType>
+</xs:schema>
