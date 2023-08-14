@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2008-2022, MOVES Institute, Naval Postgraduate School (NPS). All rights reserved.
+ * Copyright (c) 2008-2023, MOVES Institute, Naval Postgraduate School (NPS). All rights reserved.
  * This work is provided under a BSD open-source license, see project license.html and license.txt
  */
 
@@ -282,7 +282,7 @@ public class DisTime
         // initialize
     }
     
-    /** Provide parsable time metadata encapsulated in CommentPdu for sharing
+    /** Provide parse-able time metadata encapsulated in CommentPdu for sharing
      * @return PDU of interest
      */
     public static CommentPdu buildTimeMetadataCommentPdu()
@@ -656,7 +656,8 @@ public class DisTime
         applyEpochLvc     = false;
     }
 
-    private void sleep(long ms) {
+    private void sleep(long ms) 
+    {
         sleep(ms, 0);
     }
     
