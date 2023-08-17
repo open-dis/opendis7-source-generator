@@ -83,10 +83,10 @@
     <target name="all" depends="clean.build,clean" description="Build enumeration and PDU source code, assemble all products.">
         <!-- TODO current configuration is Java only; Python is next -->
         <echo message="timestamp ${timestamp}"/>
-        <fail message="Please build using Ant 1.10.12 or higher.">
+        <fail message="Please build using Ant 1.10.8 or higher.">
             <condition>
                 <not>
-                    <antversion atleast="1.10.12"/><!-- recommend latest 1.10.+ -->
+                    <antversion atleast="1.10.8"/><!-- recommend latest 1.10.+ -->
                 </not>
             </condition>
         </fail>
@@ -100,8 +100,7 @@
         <javac destdir="build/classes"
                  debug="true"
             debuglevel="lines,vars,source"
-                source="1.8"
-                target="1.8"
+               release="11"
      includeantruntime="false">
             <!-- release="8" causes problems immediately after clean; to silence warning:
                  https://stackoverflow.com/questions/59097317/warning-options-bootstrap-class-path-not-set-in-conjunction-with-source-8 -->
@@ -635,6 +634,7 @@
             </classpath>
         </java>
         <echo message="copy utilities to special-case tree to support compilation"/>
+        <mkdir dir="${opendis7-java}/src/edu/nps/moves/dis7/utilities"/>
         <copy todir="src-specialcase/java/edu/nps/moves/dis7/utilities" overwrite="true" verbose="true">
             <fileset dir="${opendis7-java}/src/edu/nps/moves/dis7/utilities">
                 <include name="DisTime.java"/>
@@ -675,7 +675,7 @@
         <javac destdir="build/classes"
                 debug="true"
                 debuglevel="lines,vars,source"
-               release="8"
+               release="11"
      includeantruntime="false"
                 fork="true">
             <src>
