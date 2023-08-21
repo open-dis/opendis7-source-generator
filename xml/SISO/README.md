@@ -1,24 +1,27 @@
-## SISO-REF-010-2020: Reference for Enumerations for Simulation Interoperability
+## SISO-REF-010: Reference for Enumerations for Simulation Interoperability
 
 From SISO website:
-SISO-REF-010 specifies numerical values and associated definitions for fields that are identified as enumerations in SISO Standards Products and SISO-sponsored standards published by IEEE for High Level Architecture (HLA) and Distributed Interactive Simulation (DIS). Enumerations for simulations may be applied in other architectures, such as the Test and Training Enabling Architecture (TENA). SISO Product Data Files associated with this product are included in the above link, but just the PDF is available separately for the enumerations and OPMAN.
+SISO-REF-010 specifies numerical values and associated definitions for fields
+that are identified as enumerations in SISO Standards Products and
+SISO-sponsored standards published by IEEE for High Level Architecture (HLA) and
+Distributed Interactive Simulation (DIS). Enumerations for simulations may be applied
+in other architectures, such as the Test and Training Enabling Architecture (TENA).
+SISO Product Data Files associated with this product are included in the above link,
+but just the PDF is available separately for the enumerations and OPMAN.
 
-SISO-REF-010.xml enumerations obtained from
+[SISO-REF-010.xml](SISO-REF-010.xml) enumerations obtained from
 * https://www.sisostds.org/ProductsPublications/ReferenceDocuments.aspx
-* https://www.sisostds.org/DigitalLibrary.aspx?Command=Core_Download&EntryId=51787
+* https://www.sisostds.org/DigitalLibrary.aspx?Command=Core_Download&EntryId=46171 (version 31)
 
-Enumerations
+[Enumerations](SISO-REF-010-2023 Enumerations v31.pdf)
+* SISO-REF-010-2023 Reference for Enumerations for Simulation Interoperability
 * https://www.sisostds.org/DigitalLibrary.aspx?Command=Core_Download&EntryId=46172
 
-OPMAN
+[OPMAN](SISO-REF-010.1-2019 Operations Manual for EWG V08.pdf)
+* SISO-REF-10.1-2019, Reference for Standards Activities Committee, Special Working Group Enumerations for Simulation, Operations Manual
+* Version 08, 1 January 2018
 * https://www.sisostds.org/DigitalLibrary.aspx?Command=Core_Download&EntryId=47284
 
-Schema obtained from
+Alternative schemas links (perhaps less up to date) are also obtainable from
 * https://www.sisostds.org/Schemas.aspx
-
-* SISO-REF-010-2019 (v27) Reference for Enumerations for Simulation Interoperability
-* SISO-REF-010.xsd
 * https://www.sisostds.org/schemas/SISO-REF-010.xsd
-
-Currently applied SISO-REF-010-v30-DRAFT-20220129-d11 with small modifications as noted in 
-[Issue #3](https://github.com/open-dis/opendis7-source-generator/issues/3).
