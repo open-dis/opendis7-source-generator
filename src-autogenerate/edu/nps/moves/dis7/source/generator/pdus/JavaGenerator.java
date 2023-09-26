@@ -295,6 +295,10 @@ public class JavaGenerator extends AbstractGenerator
         pw.flush();
         writeIvars(pw, aClass);
         pw.flush();
+        if (aClass.getName().equals("IFFPdu")) {
+        	writeIFFPduSpecificVariables(pw);
+        	pw.flush();
+        }
         writeConstructor(pw, aClass);
         pw.flush();
         writeCopyMethods(pw, aClass);
@@ -322,11 +326,20 @@ public class JavaGenerator extends AbstractGenerator
         writeEqualityMethod(pw, aClass);
 
         writeToStringMethod(pw, aClass);
+        pw.flush();
+        writeHashCodeMethod(pw, aClass);
+        pw.flush();
         
         if      (aClass.getName().equals("Pdu"))
                  writePduUtilityMethods(pw, aClass);
         else if (aClass.getName().startsWith("EntityStatePdu"))
                  writeEntityStateUtilityMethods(pw, aClass);
+        
+        if (aClass.getName().equals("IFFPdu")) {
+        	pw.flush();
+            writeCheckWhichLayersNeedsUnmarshalingMethod(pw);
+            pw.flush();
+        }
         
         pw.println("} // end of class");
         pw.flush();
@@ -769,7 +782,10 @@ public class JavaGenerator extends AbstractGenerator
                     }
                     else pw.println("   /** " + anAttribute.getName() + " is an undescribed parameter... */");
 
-                    if(anAttribute.getDefaultValue() == null)
+                    if (anAttribute.getName().startsWith("iFFPduLayer")) {
+                    	pw.println("   " + fieldaccess + " " + attributeType + "  " + anAttribute.getName() + "; \n");
+                    }
+                    else if(anAttribute.getDefaultValue() == null)
                         pw.println("   " + fieldaccess + " " + attributeType + "  " + anAttribute.getName() + " = new " + (initialClass == null ? attributeType : initialClass) + "(); \n");
                     else
                         pw.println("   " + fieldaccess + " " + attributeType + "  " + anAttribute.getName() + " =  " + anAttribute.getDefaultValue() + "; \n");
@@ -1427,7 +1443,14 @@ public class JavaGenerator extends AbstractGenerator
                 case CLASSREF:
                     marshalType = anAttribute.getType();
 
-                    pw.println("       " + anAttribute.getName() + ".marshal(dos);");
+                    if (anAttribute.getName().startsWith("iFFPduLayer")) {
+                    	pw.println("       if (" + anAttribute.getName() + " != null)");
+                    	pw.println("           " + anAttribute.getName() + ".marshal(dos);");
+                    }
+                    else {
+                    	pw.println("       " + anAttribute.getName() + ".marshal(dos);");
+                    }
+                    
                     break;
 
                 // Write out the method call to marshal a fixed length list, aka an array.
@@ -1545,8 +1568,18 @@ public class JavaGenerator extends AbstractGenerator
                     break;
                     
                 case SISO_BITFIELD:
-                case CLASSREF:           
-                    pw.println("        uPosition += " + attributeName + ".unmarshal(dis);");
+                case CLASSREF:
+                	if (anAttribute.getName().startsWith("iFFPduLayer")) {
+                    	pw.println("        if (" + anAttribute.getName() + " != null)");
+                    	pw.println("            uPosition += " + attributeName + ".unmarshal(dis);");
+                    }
+                	else {
+                		pw.println("        uPosition += " + attributeName + ".unmarshal(dis);");
+                	}
+                	if (aClass.getName().equals("IFFPdu") && anAttribute.getName().equals("fundamentalParameters")) {
+                    	pw.println("        if (fundamentalParameters.getInformationLayers() != 0)");
+                    	pw.println("        	checkWhichLayersNeedsUnmarshaling();");
+                    }
                     break;
                     
                 case PRIMITIVE_LIST:
@@ -1675,7 +1708,14 @@ public class JavaGenerator extends AbstractGenerator
                 case SISO_ENUM:
                 case SISO_BITFIELD:
                 case CLASSREF:
-                    pw.println("   " + anAttribute.getName() + ".marshal(byteBuffer);" );
+                	if (anAttribute.getName().startsWith("iFFPduLayer")) {
+                    	pw.println("   if (" + anAttribute.getName() + " != null)");
+                    	pw.println("       " + anAttribute.getName() + ".marshal(byteBuffer);" );
+                    }
+                	else {
+                		pw.println("   " + anAttribute.getName() + ".marshal(byteBuffer);" );
+                	}
+                    
                     break;
                     
                 case PRIMITIVE_LIST:
@@ -1791,6 +1831,7 @@ public class JavaGenerator extends AbstractGenerator
                         pw.println("        " + anAttribute.getName() + " = (short)(byteBuffer.getShort() & 0xFFFF);");               
                     else
                         pw.println("        " + anAttribute.getName() + " = byteBuffer.get" + capped + "();");
+                    
                     break;
                     
                 case SISO_ENUM:
@@ -1798,8 +1839,18 @@ public class JavaGenerator extends AbstractGenerator
                     break;
                     
                 case SISO_BITFIELD:
-                case CLASSREF:         
-                    pw.println("        " + anAttribute.getName() + ".unmarshal(byteBuffer);" );
+                case CLASSREF:
+                	if (anAttribute.getName().startsWith("iFFPduLayer")) {
+                    	pw.println("        if (" + anAttribute.getName() + " != null)");
+                    	pw.println("            " + anAttribute.getName() + ".unmarshal(byteBuffer);" );
+                    }
+                	else {
+                		pw.println("        " + anAttribute.getName() + ".unmarshal(byteBuffer);" );
+                	}
+                	if (aClass.getName().equals("IFFPdu") && anAttribute.getName().equals("fundamentalParameters")) {
+                    	pw.println("        if (fundamentalParameters.getInformationLayers() != 0)");
+                    	pw.println("        	checkWhichLayersNeedsUnmarshaling();");
+                    }
                     break;
 
                 case PRIMITIVE_LIST:
@@ -2300,6 +2351,74 @@ public class JavaGenerator extends AbstractGenerator
         stb.setCharAt(0, Character.toLowerCase(aString.charAt(0)));
 
         return new String(stb);
+    }
+    
+    private void writeIFFPduSpecificVariables(PrintWriter pw) {
+    	pw.println("    /** Indexes are for unmarshaling fundamentalParameters.getInformationLayers() */");
+        for (int i = 2; i < 8; i++) {
+        	pw.println("   private static final int LAYER_DATA_" + i + "_BIT_INDEX = " + i + ";");
+        }
+        pw.println("   private static final String TRANSPONDER = \"TRANSPONDER\";");
+        pw.println("   private static final String INTERROGATOR = \"INTERROGATOR\";");
+    }
+    
+    /**
+     * This is needed for only IFFPdu
+     * @param pw
+     */
+    private void writeCheckWhichLayersNeedsUnmarshalingMethod(PrintWriter pw) {
+    	pw.println("");
+    	pw.println(" /** Does not initialize iFFPduLayerFormatDatas if systemID.getSystemType contains both transponder and interrogator, you need to choose one.*/");
+    	pw.println(" private void checkWhichLayersNeedsUnmarshaling() {");
+    	pw.println("	 byte informationLayers = fundamentalParameters.getInformationLayers();\n");
+    	for (int i = 2; i < 8; i++) {
+    		if (i == 2 || i == 5) {
+    	    	pw.println("	 if (((informationLayers & 1 << LAYER_DATA_"+ i +"_BIT_INDEX) > 0)) {");
+    	    	pw.println("	 		iFFPduLayer" + i + "Data = new IFFPduLayer" + i + "Data();");
+    	    	pw.println("	 }");
+    		}
+    		else if (i == 3 || i == 4) {
+    	    	pw.println("	 if (((informationLayers & 1 << LAYER_DATA_"+ i +"_BIT_INDEX) > 0)) {");
+    	    	pw.println("		 if (systemID.getSystemType().toString().contains(TRANSPONDER)) {");
+    	    	pw.println("	 			iFFPduLayer" + i + "TransponderFormatData = new IFFPduLayer" + i + "TransponderFormatData();");
+    	    	pw.println("	 	 }");
+    	    	pw.println("	 	 else if (systemID.getSystemType().toString().contains(INTERROGATOR)) {");
+    	    	pw.println("	 			iFFPduLayer" + i + "InterrogatorFormatData = new IFFPduLayer" + i + "InterrogatorFormatData();");
+    	    	pw.println("	 	 }");
+    	    	pw.println("	 }");
+    		}
+        }
+    	pw.println(" }");
+
+    }
+    
+    private void writeHashCodeMethod(PrintWriter pw, GeneratedClass aClass) {
+    	List<GeneratedClassAttribute> classAttributes = aClass.getClassAttributes();
+    	if (classAttributes.isEmpty()) {
+    		// No need for hash code method
+    		return;
+    	}
+        pw.println();
+        pw.println(" @Override");
+        pw.println(" public int hashCode()");
+        pw.println(" {");
+
+        for (int attributeIndex = 0; attributeIndex < classAttributes.size() ;attributeIndex++) {
+        	if (classAttributes.size() == 1) {
+        		pw.println("	 return Objects.hash(this." + classAttributes.get(attributeIndex).getName() + ");");
+        	}
+        	else if (attributeIndex == 0) {
+        		pw.println("	 return Objects.hash(this." + classAttributes.get(attributeIndex).getName() + ",");
+        	}
+        	// Last attribute needs to be without comma and with bracket.
+        	else if (attributeIndex == classAttributes.size() - 1) {
+        		pw.println("	                     this." + classAttributes.get(attributeIndex).getName() + ");");
+        	}
+        	else {
+        		pw.println("	                     this." + classAttributes.get(attributeIndex).getName() + ",");
+        	}
+        }
+        pw.println(" }");    
     }
 
 }
