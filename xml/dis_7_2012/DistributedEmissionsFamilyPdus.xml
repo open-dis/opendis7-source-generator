@@ -58,7 +58,7 @@
             <classRef name="Vector3Float"/>
         </attribute>
  
-        <attribute name="beams" comment="Electronic emmission beams">
+        <attribute name="beams" comment="Electronic emission beams">
             <objectlist countFieldName="numberOfBeams">
                 <classRef name="EmitterBeam"/> 
             </objectlist>

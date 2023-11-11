@@ -912,7 +912,7 @@ dB and RPM)"/>
 
     <!-- Section 6.2.22 -->
     <class name="EEFundamentalParameterData" inheritsFrom="root" 
-           comment="Contains electromagnetic emmission regeneration parameters that are variable throught a scenario. Section 6.2.22.">
+           comment="Contains electromagnetic emission regeneration parameters that are variable throught a scenario. Section 6.2.22.">
 
         <attribute name="frequency" comment="center frequency of the emission in hertz.">
             <primitive type="float32"/>
