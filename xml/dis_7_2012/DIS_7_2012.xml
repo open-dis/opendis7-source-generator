@@ -1070,6 +1070,7 @@ dB and RPM)"/>
             <sisoenum type="EntityKind" comment="uid 7"/>
         </attribute>
     
+        <!-- TODO: Neet to instantiate with a general Domain, other than Platform, as each domain has similar enum values. Issue #20 -->
         <attribute name="domain" comment="Domain of entity (air, surface, subsurface, space, etc.)">
             <classRef name="Domain" defaultValue="Domain.inst(PlatformDomain.OTHER)" comment="can be PlatformDomain or MunitionDomain enum"/>
         </attribute>
