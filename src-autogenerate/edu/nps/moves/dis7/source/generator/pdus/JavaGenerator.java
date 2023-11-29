@@ -2166,8 +2166,6 @@ public class JavaGenerator extends AbstractGenerator
             }
             pw.println(" public boolean equalsImpl(Object obj)");
             pw.println(" {");
-            pw.println("     boolean ivarsEqual = true;");
-            pw.println();
             /*
             redundant with equals method above
             pw.println("    if(!(obj instanceof " + aClass.getName() + "))");
@@ -2186,31 +2184,25 @@ public class JavaGenerator extends AbstractGenerator
             
             switch (anAttribute.getAttributeKind()) {
               case PRIMITIVE:
-                pw.println("     if( ! (" + attname + " == rhs." + attname + ")) ivarsEqual = false;");
+                pw.println("     if( ! (" + attname + " == rhs." + attname + ")) return false;");
                 break;
 
               case SISO_ENUM:
-                pw.println("     if( ! (" + attname + " == rhs." + attname + ")) ivarsEqual = false;");
+                pw.println("     if( ! (" + attname + " == rhs." + attname + ")) return false;");
                 break;
 
               case SISO_BITFIELD:
               case CLASSREF:
-                pw.println("     if( ! (" + attname + ".equals( rhs." + attname + ") )) ivarsEqual = false;");
+              case OBJECT_LIST:
+                pw.println("     if( ! Objects.equals(" + attname + ", rhs." + attname + ") ) return false;");
                 break;
                 
               case PRIMITIVE_LIST:
                 pw.println();
                 pw.println("     for (int idx = 0; idx < "+ anAttribute.getListLength() + "; idx++)");
                 pw.println("     {");
-                pw.println("          if(!(" + attname + "[idx] == rhs." + attname + "[idx])) ivarsEqual = false;");
+                pw.println("          if(!(" + attname + "[idx] == rhs." + attname + "[idx])) return false;");
                 pw.println("     }");
-                pw.println();
-                break;
-
-              case OBJECT_LIST:
-                pw.println();
-                pw.println("     for (int idx = 0; idx < " + attname + ".size(); idx++)");
-                pw.println("        if( ! ( " + attname + ".get(idx).equals(rhs." + attname + ".get(idx)))) ivarsEqual = false;");
                 pw.println();
                 break;
             }
@@ -2218,10 +2210,10 @@ public class JavaGenerator extends AbstractGenerator
 
             //pw.println();
             if (aClass.getParentClass().equalsIgnoreCase("root")) {
-                pw.println("    return ivarsEqual;");
+                pw.println("    return true;");
             }
             else {
-                pw.println("    return ivarsEqual && super.equalsImpl(rhs);");
+                pw.println("    return super.equalsImpl(rhs);");
             }
             pw.println(" }");
         }
