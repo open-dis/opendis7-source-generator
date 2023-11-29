@@ -1626,7 +1626,7 @@ dB and RPM)"/>
         </attribute>
   
         <attribute name="recordSpecificFields">
-            <primitivelist length="0">
+            <primitivelist isDynamicListLengthField="true">
                 <primitive type="uint8"/>
             </primitivelist>        
         </attribute>
@@ -1643,22 +1643,22 @@ dB and RPM)"/>
     </class>
 
 
-    <class name="IffDataSpecification" inheritsFrom="root" 
+    <class name="IFFDataSpecification" inheritsFrom="root" 
            comment="Requires hand coding to be useful. Section 6.2.43">
     
-        <attribute name="numberOfIffDataRecords" hidden="true" comment="Number of iff records">
+        <attribute name="numberOfIFFDataRecords" hidden="true" comment="Number of IFF records">
             <primitive type="uint16"/>
         </attribute>
   
         <attribute name="iffDataRecords" comment="IFF data records">
-            <objectlist countFieldName="numberOfIffDataRecords">
+            <objectlist countFieldName="numberOfIFFDataRecords">
                 <classRef name="IFFData"/>
             </objectlist>
         </attribute>
 
     </class>
 
-    <class name="IFFFundamentalParameterData" inheritsFrom="root" comment="Fundamental IFF atc data. Section 6.2.45">
+    <class name="IFFFundamentalParameterData" inheritsFrom="root" comment="Fundamental IFF atc data. Section 6.2.44">
   
         <attribute name="erp" comment="ERP">
             <primitive type="float32"/>
@@ -2081,9 +2081,9 @@ dB and RPM)"/>
         </attribute>
     </class>
 
-    <!-- not used, incorporated into Pdu class
+	<!-- not used, incorporated into Pdu class
     <class name="PduHeader" inheritsFrom="root"
-           comment="Not used. The PDU Header Record is directly incoroporated into the PDU class. Here for completness only. Section 6.2.66">
+           comment="Not used in PDU creation. The PDU Header Record is directly incoroporated into the PDU class. Section 6.2.66">
 
         <attribute name="protocolVersion" comment="The version of the protocol. 5=DIS-1995, 6=DIS-1998, 7=DIS-2009.">
             <primitive type= "uint8" defaultValue="7"/>
@@ -2118,6 +2118,7 @@ dB and RPM)"/>
         </attribute>
  
     </class>
+    
     -->
 
     <class name="PropulsionSystemData" inheritsFrom="root"
