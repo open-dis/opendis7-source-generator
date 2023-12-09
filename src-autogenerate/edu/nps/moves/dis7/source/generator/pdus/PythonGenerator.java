@@ -33,9 +33,8 @@ public class PythonGenerator extends AbstractGenerator
 
 /**
  * Given the input object, something of an abstract syntax tree, this generates a source code file in the Python language.It has ivars, getters, setters, and serialization/deserialization methods.Warning: only partially implemented.
- * @author DMcG
-     * @param pClassDescriptions String Map of class descriptions
-     * @param languagePropertiesPython special language properties
+ * @param pClassDescriptions String Map of class descriptions
+ * @param languagePropertiesPython special language properties
  */
     public PythonGenerator(Map<String, GeneratedClass> pClassDescriptions, Properties languagePropertiesPython)
     {

@@ -47,9 +47,8 @@ public class JavascriptGenerator extends AbstractGenerator
     Properties primitiveSizes = new Properties();
 /**
  * Given the input object, something of an abstract syntax tree, this generates a source code file in the JavaScript language.It has ivars, getters, setters, and serialization/deserialization methods.Warning: only partially implemented.
- * @author DMcG
-     * @param pClassDescriptions String Map of classes
-     * @param pJavascriptProperties special language properties
+ * @param pClassDescriptions String Map of classes
+ * @param pJavascriptProperties special language properties
  */
     public JavascriptGenerator(Map<String, GeneratedClass> pClassDescriptions, Properties pJavascriptProperties)
     {
