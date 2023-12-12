@@ -346,7 +346,7 @@ public class JavaGenerator extends AbstractGenerator
             .append("  * @see edu.nps.moves.dis7.utilities.DisTime\n")
             .append("  * @param newTimestamp new timestamp in seconds\n")
             .append("  * @return same object to permit progressive setters */\n")
-            .append("public Pdu setTimestampSeconds(double newTimestamp)\n")
+            .append("public synchronized Pdu setTimestampSeconds(double newTimestamp)\n")
             .append("{\n")
             .append("    timestamp = (int) ((newTimestamp * 3600.0) / Integer.MAX_VALUE);\n")
             .append("    return this;\n")
@@ -427,7 +427,7 @@ public class JavaGenerator extends AbstractGenerator
             .append("    * @param direction using Directions enumerations\n")
             .append("    * @see Direction\n")
             .append("    * @return same object to permit progressive setters */\n")
-            .append("  public final EntityStatePdu setEntityLinearVelocity (float speed, Direction direction)\n")
+            .append("  public final synchronized EntityStatePdu setEntityLinearVelocity (float speed, Direction direction)\n")
             .append("  {\n")
             .append("      float xFactor = 0.0f;\n")
             .append("      float yFactor = 0.0f;\n")
@@ -477,7 +477,7 @@ public class JavaGenerator extends AbstractGenerator
             .append("     * @param y location\n")
             .append("     * @param z location\n")
             .append("     * @return same object to permit progressive setters */\n")
-            .append("   public EntityStatePdu setEntityLocation(double x, double y, double z)\n")
+            .append("   public synchronized EntityStatePdu setEntityLocation(double x, double y, double z)\n")
             .append("   {\n")
             .append("       // TODO autogenerate such utility constructors\n")
             .append("       entityLocation = new Vector3Double().setX(x).setY(y).setZ(z);\n")
@@ -502,7 +502,7 @@ public class JavaGenerator extends AbstractGenerator
             .append("      * @param theta new value of interest\n")
             .append("      * @param psi new value of interest\n")
             .append("      * @return same object to permit progressive setters */\n")
-            .append("    public EntityStatePdu setEntityOrientation(float phi, float theta, float psi)\n")
+            .append("    public synchronized EntityStatePdu setEntityOrientation(float phi, float theta, float psi)\n")
             .append("    {\n")
             .append("        // TODO autogenerate such utility constructors\n")
             .append("        EulerAngles pEntityOrientation = new EulerAngles();\n")
@@ -513,7 +513,7 @@ public class JavaGenerator extends AbstractGenerator
                 
             .append("   /** Marking utility to clear character values\n")
             .append("    * @return same object to permit progressive setters */\n")
-            .append("    public EntityStatePdu clearMarking()\n")
+            .append("    public synchronized EntityStatePdu clearMarking()\n")
             .append("   {\n")
             .append("       byte[] emptyByteArray = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};\n")
             .append("       marking.setCharacters(emptyByteArray);\n")
@@ -523,7 +523,7 @@ public class JavaGenerator extends AbstractGenerator
             .append("    /** Marking utility to set character values, 11 characters maximum\n")
             .append("    *@param newMarking new 11-character string to assign as marking value\n")
             .append("    * @return same object to permit progressive setters */\n")
-            .append("   public EntityStatePdu setMarking(String newMarking)\n")
+            .append("   public synchronized EntityStatePdu setMarking(String newMarking)\n")
             .append("   {\n")
             .append("       if ((newMarking == null) || newMarking.isEmpty())\n")
             .append("           clearMarking();\n")
@@ -867,7 +867,7 @@ public class JavaGenerator extends AbstractGenerator
         {
             pw.println("    /** Create deep copy of current object using PduFactory.");
             pw.println("     * @return deep copy of PDU */");
-            pw.println("     public Pdu copyByPduFactory()");
+            pw.println("     public synchronized Pdu copyByPduFactory()");
             pw.println("     {");
             pw.println("         PduFactory pduFactory = new PduFactory();");
             pw.println("         Pdu newPdu = pduFactory.createPdu(pduType); // initialize empty as placeholder");
@@ -887,13 +887,13 @@ public class JavaGenerator extends AbstractGenerator
         {
             pw.println("/** copy method creates a deep copy of current object using preferred marshalling method");
             pw.println(" * @return deep copy of PDU */");
-            pw.println(" public " + aClass.getName() + " copy()");
+            pw.println(" public synchronized " + aClass.getName() + " copy()");
             pw.println(" {");
             pw.println("     return copyDataOutputStream();");
             pw.println(" }");
             pw.println("/** Creates a \"deep copy\" of current object using ByteBuffer methods.");
             pw.println(" * @return deep copy of PDU */");
-            pw.println(" public " + aClass.getName() + " copyByteBuffer()");
+            pw.println(" public synchronized " + aClass.getName() + " copyByteBuffer()");
             pw.println(" {");
 //          pw.println("     PduFactory pduFactory = new PduFactory();");
 //          pw.println("     EntityStatePdu newCopy = pduFactory.make" + aClass.getName() + "();");
@@ -923,7 +923,7 @@ public class JavaGenerator extends AbstractGenerator
             pw.println();
             pw.println("/** copy method creates a deep copy of current object using DataOutputStream methods.");
             pw.println(" * @return deep copy of PDU */");
-            pw.println(" public " + aClass.getName() + " copyDataOutputStream()");
+            pw.println(" public synchronized " + aClass.getName() + " copyDataOutputStream()");
             pw.println(" {");
 //            pw.println("     PduFactory pduFactory = new PduFactory();");
             pw.println("     " + aClass.getName() + " newCopy = new " + aClass.getName() + "();");
@@ -954,7 +954,6 @@ public class JavaGenerator extends AbstractGenerator
             pw.println("     return newCopy;");
             pw.println(" }");
         }
-        return;
     }
   
     private void writeConstructor(PrintWriter pw, GeneratedClass aClass)
@@ -1106,7 +1105,7 @@ public class JavaGenerator extends AbstractGenerator
                         }
                         pw.println("  * @param p" + this.initialCapital(anAttribute.getName()) + " new value of interest");
                         pw.println("  * @return same object to permit progressive setters */");
-                        pw.print("public ");
+                        pw.print("public synchronized ");
                         pw.print(aClass.getName());
                         pw.println(" set" + this.initialCapital(anAttribute.getName()) + "(" + beanType + " p" + this.initialCapital(anAttribute.getName()) + ")");
                         pw.println("{\n    " + anAttribute.getName() + " = p" + this.initialCapital(anAttribute.getName()) + ";");
@@ -1125,7 +1124,7 @@ public class JavaGenerator extends AbstractGenerator
                         }
                         pw.println("  * @param p" + this.initialCapital(anAttribute.getName()) + " new value of interest");
                         pw.println("  * @return same object to permit progressive setters */");
-                        pw.print("public ");
+                        pw.print("public synchronized ");
                         pw.print(aClass.getName());
                         pw.print(" set" + this.initialCapital(anAttribute.getName()) + "(" );
                         pw.print("int"); // allow int, will then coerce downcasting to beantype when setting
@@ -1166,7 +1165,7 @@ public class JavaGenerator extends AbstractGenerator
                         pw.println(" * @param p" + this.initialCapital(anAttribute.getName()) + " passed parameter");
                         pw.println(" * @return this object");
                         pw.println(" */");
-                        pw.print("public ");
+                        pw.print("public synchronized ");
                         pw.print(aClass.getName());
                         pw.println(" set" + this.initialCapital(anAttribute.getName()) + "(" + beanType + " p" + this.initialCapital(anAttribute.getName()) + ")");
                         pw.println("{\n    " + anAttribute.getName() + " = p" + this.initialCapital(anAttribute.getName()) + ";");
@@ -1183,7 +1182,7 @@ public class JavaGenerator extends AbstractGenerator
                     pw.println("/** Setter for {@link "+aClass.getName()+"#"+anAttribute.getName()+"}");
                     pw.println("  * @param p" + this.initialCapital(anAttribute.getName()) + " new value of interest");
                     pw.println("  * @return same object to permit progressive setters */");
-                    pw.print("public ");
+                    pw.print("public synchronized ");
                     pw.print(aClass.getName());
                     pw.println(" set" + this.initialCapital(anAttribute.getName()) + "(" + anAttribute.getType() + " p" + this.initialCapital(anAttribute.getName()) + ")");
                     pw.println("{\n    " + anAttribute.getName() + " = p" + this.initialCapital(anAttribute.getName()) + ";");
@@ -1209,7 +1208,7 @@ public class JavaGenerator extends AbstractGenerator
                     pw.println("/** Setter for {@link "+aClass.getName()+"#"+anAttribute.getName()+"}");
                     pw.println("  * @param p" + this.initialCapital(anAttribute.getName()) + " new value of interest");
                     pw.println("  * @return same object to permit progressive setters */");
-                    pw.print("public ");
+                    pw.print("public synchronized ");
                     pw.print(aClass.getName());
                     pw.println(" set" + this.initialCapital(anAttribute.getName()) + "(" + types.getProperty(anAttribute.getType()) + "[] p" + this.initialCapital(anAttribute.getName()) + ")");
 
@@ -1231,7 +1230,7 @@ public class JavaGenerator extends AbstractGenerator
                     pw.println("/** Setter for {@link "+aClass.getName()+"#"+anAttribute.getName()+"}");
                     pw.println("  * @param p" + this.initialCapital(anAttribute.getName()) + " new value of interest");
                     pw.println("  * @return same object to permit progressive setters */");
-                    pw.print("public ");
+                    pw.print("public synchronized ");
                     pw.print(aClass.getName());
                     pw.println(" set" + this.initialCapital(anAttribute.getName()) + "(List<" + anAttribute.getType() + ">" + " p" + this.initialCapital(anAttribute.getName()) + ")");
                     pw.println("{\n    " + anAttribute.getName() + " = p" + this.initialCapital(anAttribute.getName()) + ";");
@@ -1250,7 +1249,7 @@ public class JavaGenerator extends AbstractGenerator
                     pw.println("/** Setter for {@link "+aClass.getName()+"#"+anAttribute.getName()+"}");
                     pw.println("  * @param p" + this.initialCapital(anAttribute.getName()) + " new value of interest");
                     pw.println("  * @return same object to permit progressive setters */");
-                    pw.print("public ");
+                    pw.print("public synchronized ");
                     pw.print(aClass.getName());
                     pw.println(" set" + this.initialCapital(anAttribute.getName()) + "(" + enumtype + " p" + this.initialCapital(anAttribute.getName()) + ")");
                     pw.println("{\n    " + anAttribute.getName() + " = p" + this.initialCapital(anAttribute.getName()) + ";");
@@ -1269,7 +1268,7 @@ public class JavaGenerator extends AbstractGenerator
                     pw.println("/** Setter for {@link "+aClass.getName()+"#"+anAttribute.getName()+"}");
                     pw.println("  * @param p" + this.initialCapital(anAttribute.getName()) + " new value of interest");
                     pw.println("  * @return same object to permit progressive setters */");
-                    pw.print("public ");
+                    pw.print("public synchronized ");
                     pw.print(aClass.getName());
                     pw.println(" set" + this.initialCapital(anAttribute.getName()) + "(" + bitfieldtype + " p" + this.initialCapital(anAttribute.getName()) + ")");
                     pw.println("{\n    " + anAttribute.getName() + " = p" + this.initialCapital(anAttribute.getName()) + ";");
@@ -1332,7 +1331,7 @@ public class JavaGenerator extends AbstractGenerator
                         if (bitfield.description != null) {
                             pw.println("/** \n * " + bitfield.description + "\n */");
                         }
-                        pw.println("public void set" + cappedIvar + "_" + bitfield.name + "(int val)");
+                        pw.println("public synchronized void set" + cappedIvar + "_" + bitfield.name + "(int val)");
                         pw.println("{");
                         pw.println("    " + attributeType + " " + " aVal = 0;");
                         pw.println("    this." + bitfield.parentAttribute.getName() + " &= (" + attributeType + ")(~" + bitfield.mask + "); // clear bits");
@@ -1497,7 +1496,7 @@ public class JavaGenerator extends AbstractGenerator
         pw.println(" */");
 
 //      pw.println("@Override");
-        pw.println("public int unmarshal(DataInputStream dis) throws Exception");
+        pw.println("public synchronized int unmarshal(DataInputStream dis) throws Exception");
         pw.println("{");
         pw.flush();
         pw.println("    int uPosition = 0;");
@@ -1760,7 +1759,7 @@ public class JavaGenerator extends AbstractGenerator
         pw.println(" * @return marshalled serialized size in bytes");
         pw.println(" * @throws Exception ByteBuffer-generated exception");
         pw.println(" */");
-        pw.println("public int unmarshal(java.nio.ByteBuffer byteBuffer) throws Exception"); // throws EnumNotFoundException");
+        pw.println("public synchronized int unmarshal(java.nio.ByteBuffer byteBuffer) throws Exception"); // throws EnumNotFoundException");
         pw.println("{");
 
         if(!(aClass.getParentClass().equalsIgnoreCase("root")))
@@ -1895,7 +1894,7 @@ public class JavaGenerator extends AbstractGenerator
         pw.println(" * @return a byte array with the marshalled {@link Pdu}");
         pw.println(" * @throws Exception ByteBuffer-generated exception");
         pw.println(" */");
-        pw.println("public byte[] marshal() throws Exception");
+        pw.println("public synchronized byte[] marshal() throws Exception");
         pw.println("{");
         pw.println("    byte[] data = new byte[getMarshalledSize()];");
         pw.println("    java.nio.ByteBuffer byteBuffer = java.nio.ByteBuffer.wrap(data);");
@@ -2071,7 +2070,7 @@ public class JavaGenerator extends AbstractGenerator
             pw.println("  * Override of default equals method.  Calls equalsImpl() for content comparison.");
             pw.println("  */");
             pw.println("@Override");
-            pw.println(" public boolean equals(Object obj)");
+            pw.println(" public synchronized boolean equals(Object obj)");
             pw.println(" {");
             pw.println("    if(this == obj)");
             pw.println("      return true;");
@@ -2113,7 +2112,7 @@ public class JavaGenerator extends AbstractGenerator
             else {
                 pw.println("@Override");
             }
-            pw.println(" public boolean equalsImpl(Object obj)");
+            pw.println(" public synchronized boolean equalsImpl(Object obj)");
             pw.println(" {");
             pw.println("     boolean ivarsEqual = true;");
             pw.println();
@@ -2189,7 +2188,7 @@ public class JavaGenerator extends AbstractGenerator
     {
         pw.println();
         pw.println(" @Override");
-        pw.println(" public String toString()");
+        pw.println(" public synchronized String toString()");
         pw.println(" {");
         pw.println("    StringBuilder sb  = new StringBuilder();");
         pw.println("    StringBuilder sb2 = new StringBuilder();");
