@@ -19,7 +19,6 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import java.util.List;
-import org.apache.commons.io.FileUtils;
 
 /**
  * GenerateOpenDis7JavaPackages.java creates source code from SISO enumeration definitions.

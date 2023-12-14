@@ -64,10 +64,10 @@ public class GenerateObjectTypes
         if (!outputDir.isEmpty())
             outputDirectoryPath = outputDir;
         if (!packageName.isEmpty())
-           this.packageName = packageName;
+           GenerateObjectTypes.packageName = packageName;
         System.out.println (GenerateObjectTypes.class.getName());
         System.out.println ("              xmlFile=" + sisoXmlFile);
-        System.out.println ("          packageName=" + this.packageName);
+        System.out.println ("          packageName=" + GenerateObjectTypes.packageName);
         System.out.println ("  outputDirectoryPath=" + outputDirectoryPath);
         
         outputDirectory  = new File(outputDirectoryPath);
@@ -154,7 +154,7 @@ public class GenerateObjectTypes
 
     String packageFromDescription;
     String enumFromDescription;
-    ArrayList<DescriptionElem> children = new ArrayList<>();
+    List<DescriptionElem> children = new ArrayList<>();
   }
 
   class CotElem extends DescriptionElem

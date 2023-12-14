@@ -291,7 +291,7 @@ public class GenerateEntityTypes
     String description            = new String();
     String packageFromDescription = new String();
     String enumFromDescription    = new String();
-    ArrayList<DescriptionElem> children = new ArrayList<>();
+    List<DescriptionElem> children = new ArrayList<>();
     String value                  = new String();
     String uid                    = new String();
   }
@@ -337,7 +337,7 @@ public class GenerateEntityTypes
         {
             super();
         }
-    ArrayList<EntityElem> entities = new ArrayList<>();
+    List<EntityElem> entities = new ArrayList<>();
     EntityElem            currentEntity;
     CategoryElem          currentCategory;
     SubCategoryElem       currentSubCategory;
@@ -577,9 +577,9 @@ public class GenerateEntityTypes
         data.sb.append("    }\n");
         data.sb.append("    /** Create a new instance of this final (unmodifiable) class\n");
         data.sb.append("      * @return copy of class for use as data */\n");
-        data.sb.append("    public static " + data.className + " createInstance()\n");
+        data.sb.append("    public static ").append(data.className).append(" createInstance()\n");
         data.sb.append("    {\n");
-        data.sb.append("            return new " + data.className + "();\n");
+        data.sb.append("            return new ").append(data.className).append("();\n");
         data.sb.append("    }\n");
         data.sb.append("}\n");
         saveFile(data.directory, data.className + ".java", data.sb.toString());
@@ -642,8 +642,8 @@ public class GenerateEntityTypes
   
     private void appendCommonStatements(TypeClassData data)
     {
-      String currentSpecificName  = new String(); // handle potential nulls
-      String currentSpecificValue = new String();
+      String currentSpecificName = null  /*= new String()*/; // handle potential nulls
+      String currentSpecificValue /*= new String()*/;
       if (currentSpecific != null)
       {
           currentSpecificName  = fixName(currentSpecific.description);
@@ -653,8 +653,8 @@ public class GenerateEntityTypes
       {
           currentSpecificValue  = "<code>(none)</code>"; // second of two entries to avoid whitespace
       }
-      String currentSubCategoryName  = new String(); // handle potential nulls
-      String currentSubCategoryValue = new String();
+      String currentSubCategoryName = null  /*= new String()*/; // handle potential nulls
+      String currentSubCategoryValue /*= new String()*/;
       if (currentSubCategory != null)
       {
           currentSubCategoryName  = fixName(currentSubCategory.description);
@@ -667,11 +667,11 @@ public class GenerateEntityTypes
       {
           currentSubCategoryValue  = "<code>(none)</code>"; // second of two entries to avoid whitespace
       }
-      String seeCurrentCategory = new String();
+      String seeCurrentCategory = null /*= new String()*/;
       if (!currentCategory.packageFromDescription.isEmpty())
           seeCurrentCategory = " * @see Category\n" + " * @see " + currentCategory.packageFromDescription;
-      String seeCurrentSubcategory = new String();
-      if (!currentSubCategoryName.isEmpty())
+      String seeCurrentSubcategory = null /*= new String()*/;
+      if (currentSubCategoryName != null && !currentSubCategoryName.isEmpty())
           seeCurrentSubcategory = " * @see SubCategory\n";
           // TODO often package-specific since repeated, sometimes numeric:  + " * @see " + currentSubCategoryName;
       

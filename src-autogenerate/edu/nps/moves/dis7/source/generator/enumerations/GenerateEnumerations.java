@@ -596,7 +596,7 @@ public class GenerateEnumerations
                 else System.out.println("   Duplicate dictionary entry for " + name + " in " + clsName);
             });
 
-            if (el.elems.size() > 0)
+            if (!el.elems.isEmpty())
                 sb.setLength(sb.length() - 2);
             sb.append(";\n");
 
@@ -661,8 +661,8 @@ public class GenerateEnumerations
                 String xrefName = null;
                 if (row.xrefclassuid != null)
                     xrefName = uidClassNames.get(row.xrefclassuid); //Main.this.uid2ClassName.getProperty(row.xrefclassuid);
-                String bitsType = new String();
-                if  (Integer.valueOf(row.length) == 1)
+                String bitsType /*= new String()*/;
+                if  (Integer.parseInt(row.length) == 1)
                      bitsType = "boolean";
                 else bitsType = "length=" + row.length;
                 if (xrefName != null) {
@@ -680,7 +680,7 @@ public class GenerateEnumerations
                     sb.append(String.format(disbitset15Template, createEnumName(row.name), row.bitposition, row.length));
                 }
             });
-            if (el.elems.size() > 0)
+            if (!el.elems.isEmpty())
                 sb.setLength(sb.length() - 2);
             sb.append(";\n");
 
@@ -850,7 +850,7 @@ public class GenerateEnumerations
 //                    additionalRowElements.clear();
 //                }
             }
-            if (el.elems.size() > 0)
+            if (!el.elems.isEmpty())
                 sb.setLength(sb.length() - 2);
             sb.append(";\n");
             
@@ -887,7 +887,7 @@ public class GenerateEnumerations
                 ex.printStackTrace(System.err);
             }
         //  now handle additionalRowElements similarly, if any, creating another file...
-        if ((additionalRowElements.size() > 0) && !additionalRowStringBuilder.toString().isEmpty())
+        if ((!additionalRowElements.isEmpty()) && !additionalRowStringBuilder.toString().isEmpty())
         {
             classNameCorrected = classNameCorrected + ADDITIONAL_ENUMERATION_FILE_SUFFIX;
             for (EnumRowElem row : additionalRowElements)

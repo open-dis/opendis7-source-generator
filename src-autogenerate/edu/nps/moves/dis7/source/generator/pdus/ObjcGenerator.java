@@ -137,7 +137,7 @@ public class ObjcGenerator extends AbstractGenerator // TODO refactor rename as 
            }
            catch(Exception e)
            {
-                System.out.println("error creating source code " + e);
+                System.err.println("error creating source code " + e);
            }
 
         } // End while
@@ -476,7 +476,7 @@ public void writeEqualityOperator(PrintWriter printWriter, GeneratedClass aClass
     }
     catch(Exception e)
     {
-        System.out.println(e);
+        System.err.println(e);
     }
 
 }
@@ -598,7 +598,7 @@ public void writeMarshalMethod(PrintWriter pw, GeneratedClass aClass)
     }
   catch(Exception e)
   {
-      System.out.println(e);
+      System.err.println(e);
   }
 }
 
@@ -692,7 +692,7 @@ public void writeMarshalMethod(PrintWriter pw, GeneratedClass aClass)
 }
 catch(Exception e)
 {
-    System.out.println(e);
+    System.err.println(e);
 }
 }
 

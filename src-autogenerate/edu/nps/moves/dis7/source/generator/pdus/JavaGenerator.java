@@ -55,7 +55,7 @@ public class JavaGenerator extends AbstractGenerator
     /**
      * A property list that contains java-specific code generation information, such as package names, imports, etc.
      */
-    Properties javaProperties;
+//    Properties javaProperties;
 
     /**
      * Constructor
@@ -102,7 +102,7 @@ public class JavaGenerator extends AbstractGenerator
         
         // don't quite get this....  looks in error, duplicating marshallTypes.  
         // TODO rename all occurrences to marshallTypes since they exactly match (DRY principle)
-        types.setProperty("uint8",   "byte");
+        types.setProperty(UNSIGNED_INT8,   "byte");
         types.setProperty("uint16",  "short");
         types.setProperty("uint32",  "int");
         types.setProperty("uint64",  "long");
@@ -114,7 +114,7 @@ public class JavaGenerator extends AbstractGenerator
         types.setProperty("float64", "double");
     
         // Set up the mapping between Open-DIS primitive types and marshal types.       
-        marshalTypes.setProperty("uint8",   "byte");
+        marshalTypes.setProperty(UNSIGNED_INT8,   "byte");
         marshalTypes.setProperty("uint16",  "short");
         marshalTypes.setProperty("uint32",  "int");
         marshalTypes.setProperty("uint64",  "long");
@@ -126,7 +126,7 @@ public class JavaGenerator extends AbstractGenerator
         marshalTypes.setProperty("float64", "double");
 
         // Unmarshalling types
-        unmarshalTypes.setProperty("uint8",   "UnsignedByte");
+        unmarshalTypes.setProperty(UNSIGNED_INT8,   "UnsignedByte");
         unmarshalTypes.setProperty("uint16",  "UnsignedShort");
         unmarshalTypes.setProperty("uint32",  "int");
         unmarshalTypes.setProperty("uint64",  "long");
@@ -138,7 +138,7 @@ public class JavaGenerator extends AbstractGenerator
         unmarshalTypes.setProperty("float64", "double");
 
         // How big various primitive types are
-        primitiveSizes.setProperty("uint8",   "1");
+        primitiveSizes.setProperty(UNSIGNED_INT8,   "1");
         primitiveSizes.setProperty("uint16",  "2");
         primitiveSizes.setProperty("uint32",  "4");
         primitiveSizes.setProperty("uint64",  "8");
@@ -149,7 +149,7 @@ public class JavaGenerator extends AbstractGenerator
         primitiveSizes.setProperty("float32", "4");
         primitiveSizes.setProperty("float64", "8");
         
-        primitiveSizesMap.put("uint8",   1);
+        primitiveSizesMap.put(UNSIGNED_INT8,   1);
         primitiveSizesMap.put("uint16",  2);
         primitiveSizesMap.put("uint32",  4);
         primitiveSizesMap.put("uint64",  8);
@@ -256,7 +256,7 @@ public class JavaGenerator extends AbstractGenerator
             System.out.println("Created " + packageInfoPath);
         }
         catch (IOException ex) {
-            System.out.flush(); // avoid intermingled output
+            System.err.flush(); // avoid intermingled output
             System.err.println (ex.getMessage()
                + packageInfoFile.getAbsolutePath()
             );
@@ -272,65 +272,67 @@ public class JavaGenerator extends AbstractGenerator
      */
     private void writeClass(PrintWriter pw, GeneratedClass aClass)
     {
-        writeLicense(pw,aClass);
-        pw.flush();
-        /*
-        if(aClass.getSpecialCase() != null) {
+        try (pw) {
+            writeLicense(pw,aClass);
+            pw.flush();
+            /*
+            if(aClass.getSpecialCase() != null) {
             writeSpecialCase(pw, aClass);
             return;
-        }
-        */
-        writeImports(pw, aClass);
-        pw.flush();
-        writeClassComments(pw, aClass);
-        pw.flush();
-        writeClassDeclaration(pw, aClass);
-        
-        if(aClass.getAliasFor()!= null) {
+            }
+            */
+            writeImports(pw, aClass);
             pw.flush();
-            pw.close();
-            return;
+            writeClassComments(pw, aClass);
+            pw.flush();
+            writeClassDeclaration(pw, aClass);
+            
+            if(aClass.getAliasFor()!= null) {
+                try (pw) {
+                    pw.flush();
+                }
+                return;
+            }
+            
+            pw.flush();
+            writeIvars(pw, aClass);
+            pw.flush();
+            writeConstructor(pw, aClass);
+            pw.flush();
+            writeCopyMethods(pw, aClass);
+            pw.flush();
+            writeGetMarshalledSizeMethod(pw, aClass);
+            pw.flush();
+            writeGettersAndSetters(pw, aClass);
+            pw.flush();
+            writeBitflagMethods(pw, aClass);
+            pw.flush();
+            writeMarshalMethod(pw, aClass);
+            pw.flush();
+            writeUnmarshallMethod(pw, aClass);
+            pw.flush();
+            writeMarshalMethodWithByteBuffer(pw, aClass);
+            pw.flush();
+            writeUnmarshallMethodWithByteBuffer(pw, aClass);
+            pw.flush();
+            
+            if (aClass.getName().equals("Pdu"))
+                writeMarshalMethodToByteArray(pw, aClass);
+            pw.flush();
+            
+            //this.writeXmlMarshallMethod(pw, aClass);
+            writeEqualityMethod(pw, aClass);
+            
+            writeToStringMethod(pw, aClass);
+            
+            if      (aClass.getName().equals("Pdu"))
+                writePduUtilityMethods(pw, aClass);
+            else if (aClass.getName().startsWith("EntityStatePdu"))
+                writeEntityStateUtilityMethods(pw, aClass);
+            
+            pw.println("} // end of class");
+            pw.flush();
         }
-        
-        pw.flush();
-        writeIvars(pw, aClass);
-        pw.flush();
-        writeConstructor(pw, aClass);
-        pw.flush();
-        writeCopyMethods(pw, aClass);
-        pw.flush();
-        writeGetMarshalledSizeMethod(pw, aClass);
-        pw.flush();
-        writeGettersAndSetters(pw, aClass);
-        pw.flush();
-        writeBitflagMethods(pw, aClass);
-        pw.flush();
-        writeMarshalMethod(pw, aClass);
-        pw.flush();
-        writeUnmarshallMethod(pw, aClass);
-        pw.flush();
-        writeMarshalMethodWithByteBuffer(pw, aClass);
-        pw.flush();
-        writeUnmarshallMethodWithByteBuffer(pw, aClass);
-        pw.flush();
-
-        if (aClass.getName().equals("Pdu"))
-            writeMarshalMethodToByteArray(pw, aClass);
-        pw.flush();
-
-        //this.writeXmlMarshallMethod(pw, aClass);
-        writeEqualityMethod(pw, aClass);
-
-        writeToStringMethod(pw, aClass);
-        
-        if      (aClass.getName().equals("Pdu"))
-                 writePduUtilityMethods(pw, aClass);
-        else if (aClass.getName().startsWith("EntityStatePdu"))
-                 writeEntityStateUtilityMethods(pw, aClass);
-        
-        pw.println("} // end of class");
-        pw.flush();
-        pw.close();
     }
     /** Additional methods of interest for Pdu class */
     private void writePduUtilityMethods(PrintWriter pw, GeneratedClass aClass)
@@ -339,8 +341,8 @@ public class JavaGenerator extends AbstractGenerator
         pw.println("// autogenerated by JavaGenerator.writePduUtilityMethods()");
         pw.println();
         
-        StringBuilder utilitySourceCodeBlock = new StringBuilder()
-            .append("/** Utility setter for {@link Pdu#timestamp} converting double (or float) to\n")
+        StringBuilder utilitySourceCodeBlock = new StringBuilder();
+            utilitySourceCodeBlock.append("/** Utility setter for {@link Pdu#timestamp} converting double (or float) to\n")
             .append("  * Timestamp in seconds at 2^31 - 1 units past top of hour\n")
             .append("  * @see setTimestamp\n")
             .append("  * @see edu.nps.moves.dis7.utilities.DisTime\n")
@@ -397,10 +399,10 @@ public class JavaGenerator extends AbstractGenerator
         pw.println("    // writeEntityStateUtilityMethods");
         pw.println();
         
-        StringBuilder utilitySourceCodeBlock = new StringBuilder() 
+        StringBuilder utilitySourceCodeBlock = new StringBuilder();
         // """multiline text block""" would be nice but that is JDK 14+
         // https://stackoverflow.com/questions/878573/does-java-have-support-for-multiline-strings
-            .append("  /** Direction enumerations */\n")
+            utilitySourceCodeBlock.append("  /** Direction enumerations */\n")
             .append("  public enum Direction\n")
             .append("  {\n")
             .append("      /** NORTH direction along Y axis */\n")
@@ -597,8 +599,7 @@ public class JavaGenerator extends AbstractGenerator
     
     /**
      * Write the license text as a java description at the top of the file.
-     */
-    
+     */ 
     private void writeLicense(PrintWriter printWriter, GeneratedClass aClass)
     {
       if(licenseTemplate == null)
@@ -708,7 +709,6 @@ public class JavaGenerator extends AbstractGenerator
      */
     private void writeIvars(PrintWriter pw, GeneratedClass aClass)
     {
-        List ivars = aClass.getClassAttributes();
         //System.out.println("Ivars for class: " + aClass.getName());
         for (GeneratedClassAttribute anAttribute : aClass.getClassAttributes()) {
             if (anAttribute.shouldSerialize == false) {
@@ -801,7 +801,7 @@ public class JavaGenerator extends AbstractGenerator
                     }
                     else pw.println("   /** " + anAttribute.getName() + " is an undescribed parameter... */");
 
-                    pw.println("   " + fieldaccess + " List< " + attributeType + " > " + anAttribute.getName() + " = new ArrayList< " + attributeType + " >();\n ");
+                    pw.println("   " + fieldaccess + " List< " + attributeType + " > " + anAttribute.getName() + " = new ArrayList<>();\n ");
                     break;
 
 //            if((anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.SISO_ENUM)) {
@@ -866,19 +866,20 @@ public class JavaGenerator extends AbstractGenerator
         if (aClass.getName().equals(("Pdu")))
         {
             pw.println("    /** Create deep copy of current object using PduFactory.");
-            pw.println("     * @return deep copy of PDU */");
+            pw.println("     * @return deep copy of PDU");
+            pw.println("     */");
             pw.println("     public synchronized Pdu copyByPduFactory()");
             pw.println("     {");
             pw.println("         PduFactory pduFactory = new PduFactory();");
-            pw.println("         Pdu newPdu = pduFactory.createPdu(pduType); // initialize empty as placeholder");
+            pw.println("         Pdu newPdu = null; // initialize empty as placeholder");
             pw.println("         try");
             pw.println("         {");
             pw.println("             newPdu = pduFactory.createPdu(marshal());");
             pw.println("         }");
             pw.println("         catch (Exception e)");
             pw.println("         {");
-            pw.println("             System.out.println(\"" + aClass.getName() + " copyByPduFactory() Exception: \" + e.getMessage());");
-            pw.println("             System.exit(-1);");
+            pw.println("             System.err.println(\"" + aClass.getName() + " copyByPduFactory() Exception: \" + e.getMessage());");
+            pw.println("             System.exit(-1); // TODO: Abruptly ending VM not a best practice"); 
             pw.println("         }");
             pw.println("         return newPdu;");
             pw.println("     }");
@@ -906,9 +907,9 @@ public class JavaGenerator extends AbstractGenerator
             pw.println("     }");
             pw.println("     catch (Exception e)");
             pw.println("     {");
-            pw.println("         System.out.println(\"" + aClass.getName() + " deep copy() marshall/unmarshall ByteBuffer exception \" + e.getMessage());");
-            pw.println("         e.printStackTrace();");
-            pw.println("         System.exit(-1);");
+            pw.println("         System.err.println(\"" + aClass.getName() + " deep copy() marshall/unmarshall ByteBuffer exception \" + e.getMessage());");
+            pw.println("         e.printStackTrace(System.err);");
+            pw.println("         System.exit(-1); // TODO: Abruptly ending VM not a good practice");
             pw.println("     }");
             pw.println("     return newCopy;");
             pw.println(" }");
@@ -936,9 +937,9 @@ public class JavaGenerator extends AbstractGenerator
             pw.println("     }");
             pw.println("     catch (Exception e)");
             pw.println("     {");
-            pw.println("         System.out.println(\"" + aClass.getName() + " deep copy() marshall/unmarshall DataOutputStream exception \" + e.getMessage());");
-            pw.println("         e.printStackTrace();");
-            pw.println("         System.exit(-1);");
+            pw.println("         System.err.println(\"" + aClass.getName() + " deep copy() marshall/unmarshall DataOutputStream exception \" + e.getMessage());");
+            pw.println("         e.printStackTrace(System.err);");
+            pw.println("         System.exit(-1); // TODO: Abruptly ending VM not a good practice");
             pw.println("     }");
 
             pw.println("        try");
@@ -949,7 +950,7 @@ public class JavaGenerator extends AbstractGenerator
             pw.println("        }");
             pw.println("        catch (IOException ioe)");
             pw.println("        {");
-            pw.println("            System.out.println(\"" + aClass.getName() + " copyDataOutputStream() flush IOException: \" + ioe.getMessage());");
+            pw.println("            System.err.println(\"" + aClass.getName() + " copyDataOutputStream() flush IOException: \" + ioe.getMessage());");
             pw.println("        }");
             pw.println("     return newCopy;");
             pw.println(" }");

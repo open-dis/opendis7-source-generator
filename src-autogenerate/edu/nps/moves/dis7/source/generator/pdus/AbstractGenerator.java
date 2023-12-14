@@ -64,7 +64,7 @@ public abstract class AbstractGenerator
     protected void createGeneratedSourceDirectory(boolean cleanFiles)
     {
         System.out.println("creating subdirectory=" + this.getGeneratedSourceDirectoryName());
-        boolean directoryExists = false;
+        boolean directoryExists;
         if (this.getGeneratedSourceDirectoryName() != null)
         {
             File dir = new File(this.getGeneratedSourceDirectoryName());
@@ -182,7 +182,7 @@ public abstract class AbstractGenerator
            maxBits = 64;
        }
        
-       int count = 0, startBit = 0, endBit = 0;
+       int startBit = 0, endBit;
        boolean started = false, ended = false;
        
        if(maxBits == 0)
@@ -200,14 +200,14 @@ public abstract class AbstractGenerator
                }
            }
            
-           if( (result == 0) && (started == true) )
+           if( (result == 0) && started )
            {
                  endBit = idx -1;
                  ended = true;
                  break;
            }
                        
-           if( (started == true) && (result == 1) && (idx == maxBits-1))
+           if( started && (result == 1) && (idx == maxBits-1))
            {
                endBit = idx;
                ended = true;
@@ -218,7 +218,7 @@ public abstract class AbstractGenerator
           // can result in a 1 in the leftmost slot
           intMask = intMask >>> 1;
            
-       }    // end of loop through bits   
+       } // end of loop through bits   
              
        return startBit;
         
