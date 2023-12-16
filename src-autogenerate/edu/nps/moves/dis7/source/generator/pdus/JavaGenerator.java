@@ -878,7 +878,7 @@ public class JavaGenerator extends AbstractGenerator
             pw.println("         }");
             pw.println("         catch (Exception e)");
             pw.println("         {");
-            pw.println("             System.err.println(\"" + aClass.getName() + " copyByPduFactory() Exception: \" + e.getMessage());");
+            pw.println("             System.err.println(\"" + aClass.getName() + " copyByPduFactory() Exception: \" + e.toString());");
             pw.println("             System.exit(-1); // TODO: Abruptly ending VM not a best practice"); 
             pw.println("         }");
             pw.println("         return newPdu;");
