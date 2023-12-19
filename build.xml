@@ -661,10 +661,10 @@
                 <pathelement path="lib/commons-io-2.6.jar"/>
             </classpath>
         </java>
-        <echo message="copy utilities from special-case tree to support compilation"/>
+        <echo message="copy utilities to special-case tree to support compilation"/>
         <mkdir dir="${opendis7-java}/src/edu/nps/moves/dis7/utilities"/>
-        <copy todir="src/java/edu/nps/moves/dis7/utilities" overwrite="true" verbose="true">
-            <fileset dir="${opendis7-java}/src-specialcase/edu/nps/moves/dis7/utilities">
+        <copy todir="src-specialcase/java/edu/nps/moves/dis7/utilities" overwrite="true" verbose="true">
+            <fileset dir="${opendis7-java}/src/edu/nps/moves/dis7/utilities">
                 <include name="DisTime.java"/>
                 <include name="PduFactory.java"/>
             </fileset>
