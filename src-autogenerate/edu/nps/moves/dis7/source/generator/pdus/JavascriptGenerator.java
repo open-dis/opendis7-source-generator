@@ -16,7 +16,7 @@ import java.util.Properties;
 
 /* not thouroughly examined, global change: VARIABLE_LIST to OBJECT_LIST and FIXED_LIST to PRIMITIVE_LIST */
 /**
- * Generates Javascript source files that marshal and unmarshal to IEEE DIS.
+ * Generates JavaScript source files that marshal and unmarshal to IEEE DIS.
  * 
  * @author DMcG
  */
