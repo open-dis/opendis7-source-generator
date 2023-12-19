@@ -65,6 +65,7 @@ public class PduFactory
    */
   public PduFactory(TimestampStyle newTimestampStyle)
   {
+      this(); // invoke constructor
       PduFactory.this.setTimestampStyle(newTimestampStyle);
   }
 
@@ -80,7 +81,7 @@ public class PduFactory
    */
   public PduFactory(edu.nps.moves.dis7.enumerations.Country country, byte exerciseId, short siteId, short applicationId, TimestampStyle timestampStyle)
   {
-    this();
+    this(); // invoke constructor
     this.country = country;
     this.defaultExerciseId = exerciseId;
     this.defaultSiteId = siteId;
