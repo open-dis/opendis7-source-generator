@@ -1871,16 +1871,13 @@ public class JavaGenerator extends AbstractGenerator
     }
 
     /**
-     * Placed in the {@link Pdu} class, this method provides a convenient,
-     * though inefficient way to marshal a Pdu. Better is to reuse a
-     * ByteBuffer and pass it along to the similarly-named method, but
-     * still, there's something to be said for convenience.
+     * Placed in the {@link Pdu} class, this method provides a convenient
+     * and efficient way to marshal a Pdu.
      *
-     * <pre>public byte[] marshal(){
-     *     byte[] data = new byte[getMarshalledSize()];
-     *     java.nio.ByteBuffer byteBuffer = java.nio.ByteBuffer.wrap(data);
+     * <pre>public java.nio.ByteBuffer marshal() {
+     *     java.nio.ByteBuffer byteBuffer = java.nio.ByteBuffer.allocate(1500);
      *     marshal(byteBuffer);
-     *     return data;
+     *     return byteBuffer.rewind();
      * }</pre>
      *
      * @param pw PrintWriter
@@ -1890,21 +1887,17 @@ public class JavaGenerator extends AbstractGenerator
     {
         pw.println();
         pw.println("/**");
-        pw.println(" * A convenience method for marshalling to a byte array.");
-        pw.println(" * This is not as efficient as reusing a ByteBuffer, but it <em>is</em> easy.");
-        pw.println(" * @return a byte array with the marshalled {@link Pdu}");
+        pw.println(" * A convenience method for marshalling to a ByteBuffer");
+        pw.println(" * @return a ByteBuffer with the marshalled {@link Pdu}");
         pw.println(" * @throws Exception ByteBuffer-generated exception");
         pw.println(" */");
-        pw.println("public synchronized byte[] marshal() throws Exception");
+        pw.println("public synchronized java.nio.ByteBuffer marshal() throws Exception");
         pw.println("{");
-        pw.println("    byte[] data = new byte[getMarshalledSize()];");
-        pw.println("    java.nio.ByteBuffer byteBuffer = java.nio.ByteBuffer.wrap(data);");
+        pw.println("    java.nio.ByteBuffer byteBuffer = java.nio.ByteBuffer.allocate(1500);");
         pw.println("    marshal(byteBuffer);");
-        pw.println("    return data;");
-        pw.println("}");
-
+        pw.println("    return byteBuffer.rewind();");
+        pw.println("}\n");
     }
-    
   
     /**
      * Generate method to write out data in XML format.
