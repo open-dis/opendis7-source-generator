@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Altova XMLSpy Project -->
 <Project>
 	<Folder FolderName="DIS schema">
 		<File FilePath="..\build.xml" HomeFolder="Yes"/>
@@ -8,7 +7,6 @@
 		<File FilePath="README.md" HomeFolder="Yes"/>
 	</Folder>
 	<Folder FolderName="PDU representations" ExtStr="xml;cml;math;rdf;smil;svg;wml">
-		<File FilePath="dis_7_2012\README.md" HomeFolder="Yes"/>
 		<File FilePath="dis_7_2012\DIS_7_2012.xml" HomeFolder="Yes"/>
 		<File FilePath="dis_7_2012\DistributedEmissionsFamilyPdus.xml" HomeFolder="Yes"/>
 		<File FilePath="dis_7_2012\EntityInformationFamilyPdus.xml" HomeFolder="Yes"/>
@@ -18,12 +16,14 @@
 		<File FilePath="dis_7_2012\LogisticsFamilyPdus.xml" HomeFolder="Yes"/>
 		<File FilePath="dis_7_2012\MinefieldFamilyPdus.xml" HomeFolder="Yes"/>
 		<File FilePath="dis_7_2012\RadioCommunicationsFamilyPdus.xml" HomeFolder="Yes"/>
+		<File FilePath="dis_7_2012\README.md" HomeFolder="Yes"/>
 		<File FilePath="dis_7_2012\SimulationManagementFamilyPdus.xml" HomeFolder="Yes"/>
 		<File FilePath="dis_7_2012\SimulationManagementWithReliabilityFamilyPdus.xml" HomeFolder="Yes"/>
 		<File FilePath="dis_7_2012\SyntheticEnvironmentFamilyPdus.xml" HomeFolder="Yes"/>
 		<File FilePath="dis_7_2012\WarfareFamilyPdus.xml" HomeFolder="Yes"/>
 	</Folder>
 	<Folder FolderName="SISO REF-010 enumerations" ExtStr="xsl;xslt;xml;xsd">
+		<File FilePath="DIS_7_2012.RichSemanticTrackSubset.xsd" HomeFolder="Yes"/>
 		<File FilePath="SISO\SISO-REF-010.xml" HomeFolder="Yes"/>
 		<File FilePath="SISO\SISO-REF-010.xsd" HomeFolder="Yes"/>
 	</Folder>

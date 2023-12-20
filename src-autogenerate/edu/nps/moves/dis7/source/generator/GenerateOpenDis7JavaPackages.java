@@ -91,9 +91,9 @@ public class GenerateOpenDis7JavaPackages
         {
             System.out.println("------------- opendis7-python generation commence -------------");
             
-            GeneratePdusForGivenLanguage generatePdusForGivenLanguage = new GeneratePdusForGivenLanguage(DEFAULT_SISO_XML_FILE, whichLanguage);
+//            GeneratePdusForGivenLanguage generatePdusForGivenLanguage = new GeneratePdusForGivenLanguage(DEFAULT_SISO_XML_FILE, whichLanguage);
             
-            generatePdusForGivenLanguage.main(new String[]{DEFAULT_SISO_XML_FILE, whichLanguage});
+            GeneratePdusForGivenLanguage.main(new String[]{DEFAULT_SISO_XML_FILE, whichLanguage});
             
             System.out.println("------------- opendis7-python generation complete -------------");
         }

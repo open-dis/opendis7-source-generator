@@ -6,8 +6,8 @@
             <name>opendis7-source-generator</name>
             <source-roots>
                 <root id="src-autogenerate.dir"/>
-                <root id="src-generated.java.dir"/>
                 <root id="src-specialcase.java.dir"/>
+                <root id="src-generated.java.dir"/>
                 <root id="src-supporting.java.dir"/>
                 <root id="src.stringTemplates.dir"/>
                 <root id="src.xml.dir"/>

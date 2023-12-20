@@ -912,7 +912,7 @@ dB and RPM)"/>
 
     <!-- Section 6.2.22 -->
     <class name="EEFundamentalParameterData" inheritsFrom="root" 
-           comment="Contains electromagnetic emmission regeneration parameters that are variable throught a scenario. Section 6.2.22.">
+           comment="Contains electromagnetic emission regeneration parameters that are variable throught a scenario. Section 6.2.22.">
 
         <attribute name="frequency" comment="center frequency of the emission in hertz.">
             <primitive type="float32"/>
@@ -1070,6 +1070,7 @@ dB and RPM)"/>
             <sisoenum type="EntityKind" comment="uid 7"/>
         </attribute>
     
+        <!-- TODO: Neet to instantiate with a general Domain, other than Platform, as each domain has similar enum values. Issue #9 -->
         <attribute name="domain" comment="Domain of entity (air, surface, subsurface, space, etc.)">
             <classRef name="Domain" defaultValue="Domain.inst(PlatformDomain.OTHER)" comment="can be PlatformDomain or MunitionDomain enum"/>
         </attribute>

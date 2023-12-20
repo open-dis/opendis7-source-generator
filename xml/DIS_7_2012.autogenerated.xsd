@@ -1994,7 +1994,7 @@
                   </xs:annotation>
                   <xs:element name="EmitterBeam" type="EmitterBeamType">
                      <xs:annotation>
-                        <xs:appinfo>Electronic emmission beams (length of list found in field numberOfBeams)</xs:appinfo>
+                        <xs:appinfo>Electronic emission beams (length of list found in field numberOfBeams)</xs:appinfo>
                      </xs:annotation>
                   </xs:element>
                </xs:sequence>
@@ -7179,7 +7179,7 @@
    <xs:complexType name="EEFundamentalParameterDataType" abstract="false">
       <!--abstract='false' base='rootType'-->
       <xs:annotation>
-         <xs:appinfo>Contains electromagnetic emmission regeneration parameters that are variable throught
+         <xs:appinfo>Contains electromagnetic emission regeneration parameters that are variable throught
             a scenario. Section 6.2.22.
          </xs:appinfo>
       </xs:annotation>

@@ -2,7 +2,6 @@
  * Copyright (c) 2008-2023, MOVES Institute, Naval Postgraduate School (NPS). All rights reserved.
  * This work is provided under a BSD open-source license, see project license.html and license.txt
  */
-
 package edu.nps.moves.dis7.utilities;
 
 import edu.nps.moves.dis7.pdus.*;
@@ -11,6 +10,8 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
+
+// *** original source in opendis7-java/src/edu/nps/moves/dis7/utilities/DisTime.java
 
 /**
  * <p>This common shared class provides static code for timestamp configuration and conversion utilities,
@@ -174,17 +175,15 @@ public class DisTime
     public static final int RELATIVE_TIMESTAMP_MASK = 0xfffffffe;
     
     /** Ability to create new PDUs */
+    // TODO: move this to PduFactory
     @SuppressWarnings("FieldMayBeFinal")
     private static PduFactory pduFactory = new PduFactory(TIMESTAMP_STYLE_DEFAULT);
-    
-//    private LocalDateTime todayDateTime = new LocalDateTime();
-//    private Instant       todayInstant  = new Instant();
     
     /** prefix for trace statements */
     public  static final String TIME_COMMENT_PDU_PREFIX = "DisTime metadata: ";
     
-    private static final String dateFormatPattern = "yyyy-mm-dd";
-    private static final String timeFormatPattern = "HH:mm:ss";
+    private static final String DATE_FORMAT_PATTERN = "yyyy-mm-dd";
+    private static final String TIME_FORMAT_PATTERN = "HH:mm:ss";
 
     /** Enumerations for prepared time formatters */
     public enum TimeFormatterType
@@ -232,6 +231,7 @@ public class DisTime
     {
         return timeFormatter;
     }
+    
     /**
      * Set time format for text logging
      * @param timeFormatterChoice enumeration for the new timeFormatter to set
@@ -283,7 +283,9 @@ public class DisTime
         // initialize
     }
     
-    /** Provide parse able time metadata encapsulated in CommentPdu for sharing
+    // TODO: move this to PduFactory
+    /** Provide parse able time metadata encapsulated in CommentPdu for sharing.
+     * TODO: move this to PduFactory
      * @return PDU of interest
      */
     public static CommentPdu buildTimeMetadataCommentPdu()
@@ -294,6 +296,7 @@ public class DisTime
                           "hasEpochLvc=" + hasEpochLvc()             + " " +
                              "epochLvc=" + getEpochLvc());
     }
+    
     /** Provide corresponding utility method to parse time metadata from CommentPdu
      * @param timeMetadataCommentPdu CommentPdu to parse
      * @return whether parsing and configuration successful
@@ -352,6 +355,7 @@ public class DisTime
         differenceTimestamp = (int) differenceValue;
         return differenceTimestamp;
     }
+    
     /**
      * Recommended form, checks local system clock and returns the current DIS standard relative timestamp based on current timestampStyle.
      * @see <a href="https://en.wikipedia.org/wiki/Network_Time_Protocol" target="_blank">Wikipedia: Network Time Protocol (NTP)</a>
@@ -376,7 +380,6 @@ public class DisTime
                 return getCurrentDisAbsoluteTimestamp(); // superfluous
         }
     }
-
 
     /**
      * Checks local system clock and returns the current DIS standard absolute timestamp, assuming that this host is synchronized to NTP.
@@ -524,7 +527,7 @@ public class DisTime
     public static String convertToString(int timestamp)
     {
         GregorianCalendar newCalendar = new GregorianCalendar();
-        SimpleDateFormat  formatter   = new SimpleDateFormat(dateFormatPattern + " " + timeFormatPattern);
+        SimpleDateFormat  formatter   = new SimpleDateFormat(DATE_FORMAT_PATTERN + " " + TIME_FORMAT_PATTERN);
         
         if      ((timestampStyle == TimestampStyle.IEEE_ABSOLUTE) || 
                  (timestampStyle == TimestampStyle.IEEE_RELATIVE))
@@ -595,6 +598,7 @@ public class DisTime
         timestampStyle = newTimestampStyle;
         pduFactory.setTimestampStyle(timestampStyle);
     }
+    
     /** Retrieve the current timestampStyle.
      * @return the current timestampStyle
      */
@@ -635,6 +639,7 @@ public class DisTime
         applyEpochLvc = true;
         epochLvc = newEpochLvc;
     }
+    
     /**  Get initial timestamp for zero-based clock, meaning all timestamps are measured with respect to given starting time
      * @return whether localhost is synchronized to time reference
      */
@@ -642,6 +647,7 @@ public class DisTime
     {
       return epochLvc;
     }
+    
     /** Whether epochLvc is currently applied
      * @return whether epochLvc is active
      */
@@ -655,6 +661,14 @@ public class DisTime
     public static void clearEpochLvc()
     {
         applyEpochLvc     = false;
+    }
+    
+    /**
+     * Return the static instance of the PduFactory
+     * @return the static instance of the PduFactory
+     */
+    public static PduFactory getPduFactory() {
+        return pduFactory;
     }
 
     /** local method to handle exception handling, simplifying constructor
@@ -680,7 +694,7 @@ public class DisTime
 //        DisTime.initializeTimestampMethod();
         System.out.println("=== legacy java.util.Date, calendar methods ===");
         System.out.println("DisTime.getTimestampStyle()                       = " + DisTime.getTimestampStyle());
-        System.out.println("patterns                                            " + dateFormatPattern + " " + timeFormatPattern);
+        System.out.println("patterns                                            " + DATE_FORMAT_PATTERN + " " + TIME_FORMAT_PATTERN);
         int initialTimestamp = DisTime.getCurrentDisTimestamp();
         System.out.println("DisTime.getCurrentDisTimestamp() initialTimestamp = " + convertToString(initialTimestamp)                               + " = " + Integer.toUnsignedString(initialTimestamp)                 + " = " + initialTimestamp                 + " (unsigned vs signed output)");
         System.out.println("DisTime.getCurrentDisTimestamp()                  = " + convertToString(DisTime.getCurrentDisTimestamp())               + " = " + Integer.toUnsignedString(DisTime.getCurrentDisTimestamp()) + " = " + DisTime.getCurrentDisTimestamp() + " (unsigned vs signed output)");

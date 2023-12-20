@@ -115,8 +115,8 @@ public class GenerateEnumerations
             packageInfoBuilder.append(" * <p> Online: NPS <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/tree/master/examples/src/OpenDis7Examples\" target=\"MV3500\">MV3500 Distributed Simulation Fundamentals course examples</a> \n");
             packageInfoBuilder.append(" * links to <a href=\"https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/tree/master/specifications/README.md\" target=\"README.MV3500\">IEEE and SISO specification references</a> of interest. </p>\n");
             packageInfoBuilder.append(" * <ul>\n");
-            packageInfoBuilder.append(" *      <li> <a href=\"https://www.sisostds.org/DigitalLibrary.aspx?Command=Core_Download&amp;EntryId=46172\" target=\"SISO-REF-010\" >SISO-REF-010-2023 Reference for Enumerations for Simulation Interoperability</a> </li> \n");
-            packageInfoBuilder.append(" *      <li> <a href=\"https://www.sisostds.org/DigitalLibrary.aspx?Command=Core_Download&amp;EntryId=47284\" target=\"SISO-REF-10.1\">SISO-REF-10.1-2019 Reference for Enumerations for Simulation, Operations Manual</a></li> </ul>\n");
+            packageInfoBuilder.append(" *      <li> <a href=\"https://www.sisostandards.org/DigitalLibrary.aspx?Command=Core_Download&amp;EntryId=46172\" target=\"SISO-REF-010\" >SISO-REF-010-2023 Reference for Enumerations for Simulation Interoperability</a> </li> \n");
+            packageInfoBuilder.append(" *      <li> <a href=\"https://www.sisostandards.org/DigitalLibrary.aspx?Command=Core_Download&amp;EntryId=47284\" target=\"SISO-REF-10.1\">SISO-REF-10.1-2019 Reference for Enumerations for Simulation, Operations Manual</a></li> </ul>\n");
             packageInfoBuilder.append("\n");
             packageInfoBuilder.append(" * @see java.lang.Package\n");
             packageInfoBuilder.append(" * @see <a href=\"https://stackoverflow.com/questions/22095487/why-is-package-info-java-useful\">https://stackoverflow.com/questions/22095487/why-is-package-info-java-useful</a>\n");
@@ -596,7 +596,7 @@ public class GenerateEnumerations
                 else System.out.println("   Duplicate dictionary entry for " + name + " in " + clsName);
             });
 
-            if (el.elems.size() > 0)
+            if (!el.elems.isEmpty())
                 sb.setLength(sb.length() - 2);
             sb.append(";\n");
 
@@ -661,8 +661,8 @@ public class GenerateEnumerations
                 String xrefName = null;
                 if (row.xrefclassuid != null)
                     xrefName = uidClassNames.get(row.xrefclassuid); //Main.this.uid2ClassName.getProperty(row.xrefclassuid);
-                String bitsType = new String();
-                if  (Integer.valueOf(row.length) == 1)
+                String bitsType /*= new String()*/;
+                if  (Integer.parseInt(row.length) == 1)
                      bitsType = "boolean";
                 else bitsType = "length=" + row.length;
                 if (xrefName != null) {
@@ -680,7 +680,7 @@ public class GenerateEnumerations
                     sb.append(String.format(disbitset15Template, createEnumName(row.name), row.bitposition, row.length));
                 }
             });
-            if (el.elems.size() > 0)
+            if (!el.elems.isEmpty())
                 sb.setLength(sb.length() - 2);
             sb.append(";\n");
 
@@ -850,7 +850,7 @@ public class GenerateEnumerations
 //                    additionalRowElements.clear();
 //                }
             }
-            if (el.elems.size() > 0)
+            if (!el.elems.isEmpty())
                 sb.setLength(sb.length() - 2);
             sb.append(";\n");
             
@@ -887,7 +887,7 @@ public class GenerateEnumerations
                 ex.printStackTrace(System.err);
             }
         //  now handle additionalRowElements similarly, if any, creating another file...
-        if ((additionalRowElements.size() > 0) && !additionalRowStringBuilder.toString().isEmpty())
+        if ((!additionalRowElements.isEmpty()) && !additionalRowStringBuilder.toString().isEmpty())
         {
             classNameCorrected = classNameCorrected + ADDITIONAL_ENUMERATION_FILE_SUFFIX;
             for (EnumRowElem row : additionalRowElements)

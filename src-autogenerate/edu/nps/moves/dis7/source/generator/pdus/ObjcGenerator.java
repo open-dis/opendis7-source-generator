@@ -50,9 +50,8 @@ public class ObjcGenerator extends AbstractGenerator // TODO refactor rename as 
  * Given the input object, something of an abstract syntax tree, this generates a source code file in the ObjectiveC language.
  * It has ivars, getters, setters, and serialization/deserialization methods.
  * Warning: only partially implemented.
- * @author DMcG
-     * @param pClassDescriptions String Map of classes
-     * @param pObjcProperties special language properties
+ * @param pClassDescriptions String Map of classes
+ * @param pObjcProperties special language properties
  */
     public ObjcGenerator(Map<String, GeneratedClass> pClassDescriptions, Properties pObjcProperties)
     {
@@ -138,7 +137,7 @@ public class ObjcGenerator extends AbstractGenerator // TODO refactor rename as 
            }
            catch(Exception e)
            {
-                System.out.println("error creating source code " + e);
+                System.err.println("error creating source code " + e);
            }
 
         } // End while
@@ -477,7 +476,7 @@ public void writeEqualityOperator(PrintWriter printWriter, GeneratedClass aClass
     }
     catch(Exception e)
     {
-        System.out.println(e);
+        System.err.println(e);
     }
 
 }
@@ -599,7 +598,7 @@ public void writeMarshalMethod(PrintWriter pw, GeneratedClass aClass)
     }
   catch(Exception e)
   {
-      System.out.println(e);
+      System.err.println(e);
   }
 }
 
@@ -693,7 +692,7 @@ public void writeMarshalMethod(PrintWriter pw, GeneratedClass aClass)
 }
 catch(Exception e)
 {
-    System.out.println(e);
+    System.err.println(e);
 }
 }
 

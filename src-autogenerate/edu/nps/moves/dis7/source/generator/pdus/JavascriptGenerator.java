@@ -16,7 +16,7 @@ import java.util.Properties;
 
 /* not thouroughly examined, global change: VARIABLE_LIST to OBJECT_LIST and FIXED_LIST to PRIMITIVE_LIST */
 /**
- * Generates Javascript source files that marshal and unmarshal to IEEE DIS.
+ * Generates JavaScript source files that marshal and unmarshal to IEEE DIS.
  * 
  * @author DMcG
  */
@@ -47,9 +47,8 @@ public class JavascriptGenerator extends AbstractGenerator
     Properties primitiveSizes = new Properties();
 /**
  * Given the input object, something of an abstract syntax tree, this generates a source code file in the JavaScript language.It has ivars, getters, setters, and serialization/deserialization methods.Warning: only partially implemented.
- * @author DMcG
-     * @param pClassDescriptions String Map of classes
-     * @param pJavascriptProperties special language properties
+ * @param pClassDescriptions String Map of classes
+ * @param pJavascriptProperties special language properties
  */
     public JavascriptGenerator(Map<String, GeneratedClass> pClassDescriptions, Properties pJavascriptProperties)
     {

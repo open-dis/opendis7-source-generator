@@ -123,7 +123,7 @@ public class GeneratePdusForGivenLanguage  // TODO rename? perhaps GeneratePdusB
     Properties javascriptProperties = new Properties();
 
     /** source code generation options */
-    Properties sourceGenerationOptions;
+//    Properties sourceGenerationOptions;
     
     /** source code generation for python */
     Properties pythonProperties = new Properties();
@@ -132,17 +132,17 @@ public class GeneratePdusForGivenLanguage  // TODO rename? perhaps GeneratePdusB
     private Set<String> primitiveTypes = new HashSet<>();
     
     /** Directory in which the java class package is created */
-    private String javaDirectory = null;
+//    private String javaDirectory = null;
     
     /** Directory in which the C++ classes are created */
-    private String cppDirectory = null;
+//    private String cppDirectory = null;
     
     //PES
     /** Directory in which the C# classes are created */
-    private String csharpDirectory = null;
+//    private String csharpDirectory = null;
 
     /** Director in which the objc classes are created */
-    private String objcDirectory = null;
+//    private String objcDirectory = null;
     
     private int classCount = 0;   
    
@@ -243,7 +243,7 @@ public class GeneratePdusForGivenLanguage  // TODO rename? perhaps GeneratePdusB
             if (!args[0].isEmpty())
                 sisoXmlFile = args[0];
             if (!args[1].isEmpty())
-                   programmingLanguage = args[1];
+                programmingLanguage = args[1];
         }
         programmingLanguage = programmingLanguage.toLowerCase();
         System.out.println (" sisoXmlFile=" + sisoXmlFile);
@@ -252,7 +252,7 @@ public class GeneratePdusForGivenLanguage  // TODO rename? perhaps GeneratePdusB
         checkArguments(sisoXmlFile, programmingLanguage);
         
         GeneratePdusForGivenLanguage generatePdusResult = new GeneratePdusForGivenLanguage(sisoXmlFile, programmingLanguage);  // includes simple list of PDUs
-        System.out.println (GeneratePdusForGivenLanguage.class.getName() + " complete.");
+        System.out.println (generatePdusResult.getClass().getName() + " complete.");
     }
     
     /**
@@ -272,23 +272,23 @@ public class GeneratePdusForGivenLanguage  // TODO rename? perhaps GeneratePdusB
                  language.equalsIgnoreCase(OBJC)       || language.equalsIgnoreCase(CSHARP) ||
                  language.equalsIgnoreCase(JAVASCRIPT) || language.equalsIgnoreCase(PYTHON) ))
             {
-                System.out.println("Not a valid language to generate. The options are java (supported), python (testing), and cpp, csharp, javascript and objc");
-                System.out.println("Usage: GeneratePdus xmlFile language"); // formerly xmlpg
+                System.err.println("Not a valid language to generate. The options are java (supported), python (testing), and cpp, csharp, javascript and objc");
+                System.err.println("Usage: GeneratePdus xmlFile language"); // formerly xmlpg
                 System.exit(-1);
             }
         }
         catch (FileNotFoundException fnfe) 
         {
-            System.out.println("XML file " + xmlFile + " not found. Please check the path and try again");
-            System.out.println("Usage: GeneratePdus xmlFile language"); // formerly xmlpg
-            fnfe.printStackTrace();
+            System.err.println("XML file " + xmlFile + " not found. Please check the path and try again");
+            System.err.println("Usage: GeneratePdus xmlFile language"); // formerly xmlpg
+            fnfe.printStackTrace(System.err);
             System.exit(-1);
         }
         catch(IOException e)
         {
-            System.out.println("Problem with arguments to GeneratePdus. Please check them."); // formerly xmlpg
-            System.out.println("Usage: GeneratePdus xmlFile language"); 
-            e.printStackTrace();
+            System.err.println("Problem with arguments to GeneratePdus. Please check them."); // formerly xmlpg
+            System.err.println("Usage: GeneratePdus xmlFile language"); 
+            e.printStackTrace(System.err);
             System.exit(-1);
         }
     }
@@ -373,7 +373,6 @@ public class GeneratePdusForGivenLanguage  // TODO rename? perhaps GeneratePdusB
                 //System.out.println("----Looking for matches of inital value " + anInitialValue.getVariable());
                 while(currentClass != null)
                 {
-                    List attributesForCurruentClass = currentClass.getClassAttributes();
                     for(GeneratedClassAttribute anAttribute : currentClass.getClassAttributes()) {
                         //System.out.println("--checking " + anAttribute.getName() + " against inital value " + anInitialValue.getVariable());
                         if(anInitialValue.getVariable().equals(anAttribute.getName()))
@@ -716,7 +715,7 @@ public class GeneratePdusForGivenLanguage  // TODO rename? perhaps GeneratePdusB
 
             for (int idx = 0; idx < attributes.getLength(); idx++) {
                 String attributeName = attributes.getQName(idx);
-                switch (attributes.getQName(idx).toLowerCase()) {
+                switch (attributeName.toLowerCase()) {
                     case TYPE:
                         currentClassAttribute.setType(attributes.getValue(idx));
                         break;
@@ -843,7 +842,7 @@ public class GeneratePdusForGivenLanguage  // TODO rename? perhaps GeneratePdusB
         for (int idx = 0; idx < attributes.getLength(); idx++) 
         {
             String attributeName = attributes.getQName(idx).toLowerCase();
-            switch (attributes.getQName(idx).toLowerCase())
+            switch (attributeName.toLowerCase())
             {
                 case COULDBESTRING:
                     if (attributes.getValue(idx).equalsIgnoreCase(TRUE))

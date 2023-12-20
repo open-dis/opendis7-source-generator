@@ -80,7 +80,7 @@ public class Domain
     return d;
   }
 
-  private void init()
+  private synchronized void init()
   {
     Class<?> c = enumInst.getClass();
     try {
@@ -125,7 +125,7 @@ public class Domain
    * @see <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
    * @return serialized size in bytes
    */
-    public int getMarshalledSize()
+    public synchronized int getMarshalledSize()
     {
       return (Integer) invoke(mSize, null);
     }
@@ -134,7 +134,7 @@ public class Domain
      * Marshall this instance to DataOutputStreem
      * @param dos DataOutputStream
      */
-    public void marshal(DataOutputStream dos)
+    public synchronized void marshal(DataOutputStream dos)
   {
     invoke(marshalDos, new Object[]{dos});
   }
@@ -143,7 +143,7 @@ public class Domain
      * Marshall this instance to byteBuffer
      * @param byteBuffer The ByteBuffer at the position to begin writing
      */
-    public void marshal(ByteBuffer byteBuffer)
+    public synchronized void marshal(ByteBuffer byteBuffer)
   {
     invoke(marshalBuff, new Object[]{byteBuffer});
   }
@@ -155,7 +155,7 @@ public class Domain
      * @see <a href="https://en.wikipedia.org/wiki/Marshalling_(computer_science)" target="_blank">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>
      * @return marshalled serialized size in bytes
      */
-    public int unmarshal(DataInputStream dis)
+    public synchronized int unmarshal(DataInputStream dis)
   {
     Object o = invoke(unmarshalDis, new Object[]{dis});
     enumInst = o;
@@ -169,7 +169,7 @@ public class Domain
      * @param byteBuffer The ByteBuffer at the position to begin writing
      * @return marshalled serialized size in bytes
      */
-    public int unmarshal(ByteBuffer byteBuffer)
+    public synchronized int unmarshal(ByteBuffer byteBuffer)
   {
     Object o = invoke(unmarshalBuff, new Object[]{byteBuffer});
     enumInst = o;
@@ -197,7 +197,7 @@ public class Domain
    * Override of default equals method.  Calls equalsImpl() for content comparison.
    */
   @Override
-  public boolean equals(Object obj)
+  public synchronized boolean equals(Object obj)
   {
     if (this == obj)
       return true;
@@ -218,7 +218,7 @@ public class Domain
    * @param obj the object to compare to
    * @return true if the objects are equal, false otherwise.
    */
-  public boolean equalsImpl(Object obj)
+  public synchronized boolean equalsImpl(Object obj)
   {
     final Domain rhs = (Domain) obj;
     return enumInst.equals(rhs.enumInst);
