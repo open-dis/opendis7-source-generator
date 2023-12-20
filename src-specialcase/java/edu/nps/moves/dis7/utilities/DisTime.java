@@ -175,11 +175,9 @@ public class DisTime
     public static final int RELATIVE_TIMESTAMP_MASK = 0xfffffffe;
     
     /** Ability to create new PDUs */
+    // TODO: move this to PduFactory
     @SuppressWarnings("FieldMayBeFinal")
     private static PduFactory pduFactory = new PduFactory(TIMESTAMP_STYLE_DEFAULT);
-    
-//    private LocalDateTime todayDateTime = new LocalDateTime();
-//    private Instant       todayInstant  = new Instant();
     
     /** prefix for trace statements */
     public  static final String TIME_COMMENT_PDU_PREFIX = "DisTime metadata: ";
@@ -285,7 +283,9 @@ public class DisTime
         // initialize
     }
     
-    /** Provide parse able time metadata encapsulated in CommentPdu for sharing
+    // TODO: move this to PduFactory
+    /** Provide parse able time metadata encapsulated in CommentPdu for sharing.
+     * TODO: move this to PduFactory
      * @return PDU of interest
      */
     public static CommentPdu buildTimeMetadataCommentPdu()
