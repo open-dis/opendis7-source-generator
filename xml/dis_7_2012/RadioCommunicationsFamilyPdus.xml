@@ -25,10 +25,6 @@
         <attribute name="header">
             <classRef name="RadioCommsHeader"/>
         </attribute> 
-  
-        <attribute name="radioNumber" comment="particular radio within an entity">
-            <primitive type="uint16"/>
-        </attribute>
             
         <attribute name="radioEntityType" comment="Type of radio">
             <classRef name="RadioType"/>
