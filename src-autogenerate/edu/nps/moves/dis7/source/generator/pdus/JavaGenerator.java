@@ -294,6 +294,14 @@ public class JavaGenerator extends AbstractGenerator
                 return;
             }
             
+            if (aClass.getName().endsWith("Pdu"))
+            {
+                pw.println("\n" +
+"   /** The name of this PDU type */\n" +
+"   public static final String NAME = \"" + aClass.getName() + "\";\n" +
+"   ");
+            }
+            
             pw.flush();
             writeIvars(pw, aClass);
             pw.flush();
@@ -326,7 +334,9 @@ public class JavaGenerator extends AbstractGenerator
             writeToStringMethod(pw, aClass);
             
             if      (aClass.getName().equals("Pdu"))
+            {
                 writePduUtilityMethods(pw, aClass);
+            }
             else if (aClass.getName().startsWith("EntityStatePdu"))
                 writeEntityStateUtilityMethods(pw, aClass);
             
@@ -1013,16 +1023,15 @@ public class JavaGenerator extends AbstractGenerator
     public void writeGetMarshalledSizeMethod(PrintWriter printWriter, GeneratedClass aClass)
     {
         printWriter.println();
-        // TODO not all object are setup to implement Marshaller; should be done
-        // pw.println("@Override");
-        printWriter.println(
+            printWriter.println(
 "  /**\n" +
 "   * Returns size of this serialized (marshalled) object in bytes\n" +
 "   * @see <a href=\"https://en.wikipedia.org/wiki/Marshalling_(computer_science)\" target=\"_blank\">https://en.wikipedia.org/wiki/Marshalling_(computer_science)</a>\n" +
 "   * @return serialized size in bytes\n" +
 "   */");
-//      printWriter.println("@Override");
-        printWriter.println("public int getMarshalledSize()");
+        if (aClass.getName().endsWith("Pdu"))
+            printWriter.println("@Override");
+        printWriter.println("public synchronized int getMarshalledSize()");
         printWriter.println("{");
         printWriter.println("   int marshalSize = 0; ");
         printWriter.println();
@@ -1364,8 +1373,9 @@ public class JavaGenerator extends AbstractGenerator
         pw.println(" * @param dos the OutputStream");
         pw.println(" */");
  
-//      pw.println("@Override");
-        pw.println("public void marshal(DataOutputStream dos) throws Exception");
+        if (aClass.getName().endsWith("Pdu"))
+            pw.println("@Override");
+        pw.println("public synchronized void marshal(DataOutputStream dos) throws Exception");
         pw.println("{");
 
         // If we're a sublcass of another class, we should first call super
@@ -1496,7 +1506,8 @@ public class JavaGenerator extends AbstractGenerator
         pw.println(" * @return marshalled serialized size in bytes");
         pw.println(" */");
 
-//      pw.println("@Override");
+        if (aClass.getName().endsWith("Pdu"))
+            pw.println("@Override");
         pw.println("public synchronized int unmarshal(DataInputStream dis) throws Exception");
         pw.println("{");
         pw.flush();
@@ -1633,7 +1644,9 @@ public class JavaGenerator extends AbstractGenerator
         pw.println(" * @param byteBuffer The ByteBuffer at the position to begin writing");
         pw.println(" * @throws Exception ByteBuffer-generated exception");
         pw.println(" */");
-        pw.println("public void marshal(java.nio.ByteBuffer byteBuffer) throws Exception");
+        if (aClass.getName().endsWith("Pdu"))
+            pw.println("@Override");
+        pw.println("public synchronized void marshal(java.nio.ByteBuffer byteBuffer) throws Exception");
         pw.println("{");
 
         // If we're a sublcass of another class, we should first call super
@@ -1760,6 +1773,9 @@ public class JavaGenerator extends AbstractGenerator
         pw.println(" * @return marshalled serialized size in bytes");
         pw.println(" * @throws Exception ByteBuffer-generated exception");
         pw.println(" */");
+
+        if (aClass.getName().endsWith("Pdu"))
+            pw.println("@Override");
         pw.println("public synchronized int unmarshal(java.nio.ByteBuffer byteBuffer) throws Exception"); // throws EnumNotFoundException");
         pw.println("{");
 
@@ -1906,7 +1922,9 @@ public class JavaGenerator extends AbstractGenerator
     private void writeXmlMarshallMethod(PrintWriter pw, GeneratedClass aClass)
     {
         pw.println();
-        pw.println("public void marshalXml(PrintWriter textWriter)");
+        if (aclass.getName().endsWith("Pdu"))
+            pw.println("@Override");
+        pw.println("public synchronized void marshalXml(PrintWriter textWriter)");
         pw.println("{");
          
         // If we're a sublcass of another class, we should first call super
