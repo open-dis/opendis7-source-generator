@@ -136,9 +136,6 @@
                 <pathelement path="src-autogenerate"/>
                 <pathelement path="src-supporting/java"/>
             </src>
-            <classpath>
-                <pathelement path="lib/commons-io-2.6.jar"/>
-            </classpath>
         </javac>
         <mkdir dir="dist" description="ensure dist directory present"/>
         
@@ -155,7 +152,7 @@
         -->
         
         <antcall target="jar" description="create jar files, includes copy-generated-jars-to-opendis7-java"/>
-        <antcall target="copy-generated-source-to-opendis7-java" description="useful for debugging, accepted updates in version control there"/>
+        <!--<antcall target="copy-generated-source-to-opendis7-java" description="useful for debugging, accepted updates in version control there"/>-->
         <echo message="opendis7-source-generator build all complete"/>
     </target>
     
@@ -645,7 +642,6 @@
             <arg value="edu.nps.moves.dis7.enumerations"/>
             <classpath>
                 <pathelement path="build/classes"/>
-                <pathelement path="lib/commons-io-2.6.jar"/>
             </classpath>
         </java>
         
@@ -658,7 +654,6 @@
             <jvmarg value="-Dxmlpg.package=edu.nps.moves.dis7.pdus"/>
             <classpath>
                 <pathelement path="build/classes"/>
-                <pathelement path="lib/commons-io-2.6.jar"/>
             </classpath>
         </java>
         <echo message="copy utilities to special-case tree to support compilation"/>
@@ -680,7 +675,6 @@
             <arg value="edu.nps.moves.dis7.jammers"/>
             <classpath>
                 <pathelement path="build/classes"/>
-                <pathelement path="lib/commons-io-2.6.jar"/>
             </classpath>
         </java>
         <!-- not yet ready to compile here, more autogeneration needed -->
@@ -693,7 +687,6 @@
             <arg value="edu.nps.moves.dis7.objectTypes"/>
             <classpath>
                 <pathelement path="build/classes"/>
-                <pathelement path="lib/commons-io-2.6.jar"/>
             </classpath>
         </java>
         <echo message="*** delete problem classes replaced by manually tuned files in src-specialcase"/>
@@ -725,7 +718,6 @@
             <arg value="edu.nps.moves.dis7.entities"/>
             <classpath>
                 <pathelement path="build/classes"/>
-                <pathelement path="lib/commons-io-2.6.jar"/>
             </classpath>
         </java>
         <echo message="generate-source-code-java complete"/>
@@ -1010,7 +1002,6 @@ WarfareFamilyPdus.xml
             <jvmarg value="-Dxmlpg.package=edu.nps.moves.dis7.pdus"/>
             <classpath>
                 <pathelement path="build/classes"/>
-                <pathelement path="lib/commons-io-2.6.jar"/>
             </classpath>
         </java>
         
