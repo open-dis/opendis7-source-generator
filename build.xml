@@ -152,7 +152,7 @@
         -->
         
         <antcall target="jar" description="create jar files, includes copy-generated-jars-to-opendis7-java"/>
-        <!--<antcall target="copy-generated-source-to-opendis7-java" description="useful for debugging, accepted updates in version control there"/>-->
+        <antcall target="copy-generated-source-to-opendis7-java" description="useful for debugging, accepted updates in version control there"/>
         <echo message="opendis7-source-generator build all complete"/>
     </target>
     
