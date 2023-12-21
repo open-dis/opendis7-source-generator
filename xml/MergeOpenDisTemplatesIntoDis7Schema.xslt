@@ -94,99 +94,59 @@
 		<xs:sequence>
 			<xs:element ref="head" minOccurs="0"/>
 			<xs:choice minOccurs="0" maxOccurs="unbounded">
-               <!--  1 --><xs:element ref="EntityStatePdu"/>
-               <!--  2 --><xs:element ref="FirePdu"/>
-               <!--  3 --><xs:element ref="DetonationPdu"/>
-               <!--  4 --><xs:element ref="CollisionPdu"/>
-               <!--  5 --><xs:element ref="ServiceRequestPdu"/>
-               <!--  6 --><xs:element ref="ResupplyOfferPdu"/>
-               <!--  7 --><xs:element ref="ResupplyReceivedPdu"/>
-               <!--  8 --><xs:element ref="ResupplyCancelPdu"/>
-               <!--  9 --><xs:element ref="RepairCompletePdu"/>
-               <!-- 10 --><xs:element ref="RepairResponsePdu"/>
-               <!-- 11 --><xs:element ref="CreateEntityPdu"/>
-               <!-- 12 --><xs:element ref="RemoveEntityPdu"/>
-               <!-- 13 --><xs:element ref="StartResumePdu"/>
-               <!-- 14 --><xs:element ref="StopFreezePdu"/>
-               <!-- 15 --><xs:element ref="AcknowledgePdu"/>
-               <!-- 16 --><xs:element ref="ActionRequestPdu"/>
-               <!-- 17 --><xs:element ref="ActionResponsePdu"/>
-               <!-- 18 --><xs:element ref="DataQueryPdu"/>
-               <!-- 19 --><xs:element ref="SetDataPdu"/>
-               <!-- 20 --><xs:element ref="DataPdu"/>
-               <!-- 21 --><xs:element ref="EventReportPdu"/>
-               <!-- 22 --><xs:element ref="CommentPdu"/>
-               <!-- 23 --><xs:element ref="ElectromagneticEmissionPdu"/>
-               <!-- 24 --><xs:element ref="DesignatorPdu"/>
-               <!-- 25 --><xs:element ref="TransmitterPdu"/>
-               <!-- 26 --><xs:element ref="SignalPdu"/>
-               <!-- 27 --><xs:element ref="ReceiverPdu"/>
-               <!-- 28 --><xs:element ref="IFFLayer2Pdu"/>
-               <!-- 28 --><xs:element ref="IFFPdu"/>
-               <!-- 28 --><xs:element ref="IdentificationFriendOrFoePdu"/>
-               <!-- 29 --><xs:element ref="UnderwaterAcousticPdu"/>
-               <!-- 30 --><xs:element ref="SEESPdu"/>
-               <!-- 30 --><xs:element ref="SupplementalEmissionEntityStatePdu"/>
-               <!-- 31 --><xs:element ref="IntercomSignalPdu"/>
-               <!-- 32 --><xs:element ref="IntercomControlPdu"/>
-               <!-- 33 --><xs:element ref="AggregateStatePdu"/>
-               <!-- 34 --><xs:element ref="IsGroupOfPdu"/>
-               <!-- 35 --><xs:element ref="TransferOwnershipPdu"/>
-               <!-- 36 --><xs:element ref="IsPartOfPdu"/>
-               <!-- 37 --><xs:element ref="MinefieldStatePdu"/>
-               <!-- 38 --><xs:element ref="MinefieldQueryPdu"/>
-               <!-- 39 --><xs:element ref="MinefieldDataPdu"/>
-               <!-- 40 --><xs:element ref="MinefieldResponseNACKPdu"/>
-               <!-- 41 --><xs:element ref="EnvironmentalProcessPdu"/>
-               <!-- 42 --><xs:element ref="GriddedDataPdu"/>
-               <!-- 43 --><xs:element ref="PointObjectStatePdu"/>
-               <!-- 44 --><xs:element ref="LinearObjectStatePdu"/>
-               <!-- 45 --><xs:element ref="ArealObjectStatePdu"/>
-               <!-- 46 --><xs:element ref="TSPIPdu"/>
-               <!-- 46 --><xs:element ref="TimeSpacePositionInformationPdu"/>
-               <!-- 47 --><xs:element ref="AppearancePdu"/>
-               <!-- 48 --><xs:element ref="ArticulatedPartsPdu"/>
-               <!-- 49 --><xs:element ref="LEFirePdu"/>
-               <!-- 49 --><xs:element ref="LiveEntityFirePdu"/>
-               <!-- 50 --><xs:element ref="LEDetonationPdu"/>
-               <!-- 50 --><xs:element ref="LiveEntityDetonationPdu"/>
-               <!-- 51 --><xs:element ref="CreateEntityRPdu"/>
-               <!-- 51 --><xs:element ref="CreateEntityReliablePdu"/>
-               <!-- 52 --><xs:element ref="RemoveEntityRPdu"/>
-               <!-- 52 --><xs:element ref="RemoveEntityReliablePdu"/>
-               <!-- 53 --><xs:element ref="StartResumeRPdu"/>
-               <!-- 53 --><xs:element ref="StartResumeReliablePdu"/>
-               <!-- 54 --><xs:element ref="StopFreezeRPdu"/>
-               <!-- 54 --><xs:element ref="StopFreezeReliablePdu"/>
-               <!-- 55 --><xs:element ref="AcknowledgeRPdu"/>
-               <!-- 55 --><xs:element ref="AcknowledgeReliablePdu"/>
-               <!-- 56 --><xs:element ref="ActionRequestRPdu"/>
-               <!-- 56 --><xs:element ref="ActionRequestReliablePdu"/>
-               <!-- 57 --><xs:element ref="ActionResponseRPdu"/>
-               <!-- 57 --><xs:element ref="ActionResponseReliablePdu"/>
-               <!-- 58 --><xs:element ref="DataQueryRPdu"/>
-               <!-- 58 --><xs:element ref="DataQueryReliablePdu"/>
-               <!-- 59 --><xs:element ref="SetDataRPdu"/>
-               <!-- 59 --><xs:element ref="SetDataReliablePdu"/>
-               <!-- 60 --><xs:element ref="DataRPdu"/>
-               <!-- 60 --><xs:element ref="DataReliablePdu"/>
-               <!-- 61 --><xs:element ref="EventReportRPdu"/>
-               <!-- 61 --><xs:element ref="EventReportReliablePdu"/>
-               <!-- 62 --><xs:element ref="CommentRPdu"/>
-               <!-- 62 --><xs:element ref="CommentReliablePdu"/>
-               <!-- 63 --><xs:element ref="RecordRPdu"/>
-               <!-- 63 --><xs:element ref="RecordReliablePdu"/>
-               <!-- 64 --><xs:element ref="SetRecordRPdu"/>
-               <!-- 64 --><xs:element ref="SetRecordReliablePdu"/>
-               <!-- 65 --><xs:element ref="RecordQueryRPdu"/>
-               <!-- 65 --><xs:element ref="RecordQueryReliablePdu"/>
-               <!-- 66 --><xs:element ref="CollisionElasticPdu"/>
-               <!-- 67 --><xs:element ref="EntityStateUpdatePdu"/>
-               <!-- 68 --><xs:element ref="DirectedEnergyFirePdu"/>
-               <!-- 69 --><xs:element ref="EntityDamageStatusPdu"/>
-               <!-- 70 --><xs:element ref="InformationOperationsActionPdu"/>
-               <!-- 71 --><xs:element ref="InformationOperationsReportPdu"/>
-               <!-- 72 --><xs:element ref="AttributePdu"/>
+                            <xs:annotation>
+                                <xs:documentation>IEEE 1278.1 DIS specification, 5.2.4 Families and types of PDUs</xs:documentation>
+                            </xs:annotation>
+                            <xsl:text>&#10;</xsl:text>
+
+            <xsl:message>
+                <xsl:text>*** generate node references</xsl:text>
+            </xsl:message>
+            <xsl:for-each select="//xi:include"> <!-- now repeat for each include -->
+            <!--<xsl:sort select="@href" order="ascending"/>-->
+
+                <xsl:variable name="pduFamilyDocument" select="@href"/>
+                
+                <xsl:variable name="nodes" select="doc(concat($relativePathToFiles,$pduFamilyDocument))//classes/class"/>
+                <!--
+                <xsl:message>
+                    <xsl:text>*** $nodes=</xsl:text>
+                    <xsl:value-of select="$nodes"/>
+                </xsl:message>
+                -->
+                <xsl:for-each select="$nodes[ends-with(@name,'Pdu')][not(ends-with(@name,'FamilyPdu'))]">
+                    <!-- this only sorts current family
+                    <xsl:sort select="number(@id)" order="ascending"/> -->
+
+                    <xsl:text disable-output-escaping="yes">&lt;!--</xsl:text>
+                    <xsl:text> PDU </xsl:text>
+                    <xsl:if test="(number(@id) le 9)">
+                        <xsl:text>0</xsl:text>
+                    </xsl:if>
+                    <xsl:value-of select="@id"/>
+                    <xsl:text> </xsl:text>
+                    <xsl:text disable-output-escaping="yes">--&gt;</xsl:text>
+                    <xsl:text> </xsl:text>
+                    <xsl:text disable-output-escaping="yes">&lt;xs:element ref="</xsl:text>
+                    <xsl:value-of select="@name"/>
+                    <xsl:text disable-output-escaping="yes">"/&gt;</xsl:text>
+                    <xsl:if test="(string-length(@aliasFor) > 0)">
+                        <xsl:text> </xsl:text>
+                        <xsl:text disable-output-escaping="yes">&lt;!--</xsl:text>
+                        <xsl:text> @aliasFor="</xsl:text>
+                        <xsl:value-of select="@aliasFor"/>
+                        <xsl:text>"</xsl:text>
+                        <xsl:text> </xsl:text>
+                    <xsl:text disable-output-escaping="yes">--&gt;</xsl:text>
+                        
+                    </xsl:if>
+                    <xsl:text>&#10;</xsl:text>
+                </xsl:for-each>
+            </xsl:for-each>
+            <xsl:message>
+                <xsl:text>*** generate node references complete</xsl:text>
+            </xsl:message>
+                
 			</xs:choice>
 		</xs:sequence>
 		<xs:attribute name="version" type="xs:string" fixed="7.0">
