@@ -128,7 +128,7 @@
         <javac destdir="build/classes"
                  debug="true"
             debuglevel="lines,vars,source"
-               release="11"
+               release="15"
      includeantruntime="false">
             <!-- release="8" causes problems immediately after clean; to silence warning:
                  https://stackoverflow.com/questions/59097317/warning-options-bootstrap-class-path-not-set-in-conjunction-with-source-8 -->
@@ -703,7 +703,7 @@
         <javac destdir="build/classes"
                 debug="true"
                 debuglevel="lines,vars,source"
-               release="11"
+               release="15"
      includeantruntime="false"
                 fork="true">
             <src>
