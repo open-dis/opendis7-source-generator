@@ -457,7 +457,7 @@ This field defines the active  emission  parameter  index,  beam  scan  pattern,
 
 	</class>
 	
-	<class name="IFFPdu" id="77" inheritsFrom="DistributedEmissionsRegenerationFamilyPdu" comment="7.6.5.1 Information about military and civilian interrogators, transponders, and specific other electronic systems. See 5.7.6">
+	<class name="IFFPdu" id="28" inheritsFrom="DistributedEmissionsRegenerationFamilyPdu" comment="7.6.5.1 Information about military and civilian interrogators, transponders, and specific other electronic systems. See 5.7.6">
 		
 		<initialValue name="pduType" value="DisPduType.IDENTIFICATION_FRIEND_OR_FOE"/>
 		
@@ -516,7 +516,7 @@ This field defines the active  emission  parameter  index,  beam  scan  pattern,
 	
 	</class>
 	
-	<class name="IdentificationFriendOrFoePdu" id="77" comment="alias, more descriptive name for an IFFPdu." aliasFor="IFFPdu"/>
+	<class name="IdentificationFriendOrFoePdu" id="28" comment="alias, more descriptive name for an IFFPdu." aliasFor="IFFPdu"/>
 	
 	<class name="IFFPduLayer4InterrogatorFormatData" id="78" inheritsFrom="AbstractIFFPduLayerData" comment="7.6.5.5.2 Layer 4 Mode S interrogator format">
 		

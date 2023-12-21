@@ -128,7 +128,7 @@
         <javac destdir="build/classes"
                  debug="true"
             debuglevel="lines,vars,source"
-               release="11"
+               release="15"
      includeantruntime="false">
             <!-- release="8" causes problems immediately after clean; to silence warning:
                  https://stackoverflow.com/questions/59097317/warning-options-bootstrap-class-path-not-set-in-conjunction-with-source-8 -->
@@ -696,7 +696,7 @@
         <javac destdir="build/classes"
                 debug="true"
                 debuglevel="lines,vars,source"
-               release="11"
+               release="15"
      includeantruntime="false"
                 fork="true">
             <src>
@@ -875,7 +875,7 @@
     </target>
     
 
-    <!-- http://stackoverflow.com/questions/919692/how-to-execute-xslt-2-0-with-ant -->
+    <!-- https://stackoverflow.com/questions/919692/how-to-execute-xslt-2-0-with-ant -->
     <!-- https://sourceforge.net/projects/saxon/files/Saxon-HE jar download handled in X3DJSAIL build -->
     <!--
     <property name="saxon.dir"        location="lib" description="relative path from stylesheets directory"/>
@@ -886,28 +886,36 @@
     <!-- https://sourceforge.net/projects/saxon/files/Saxon-HE/11/Java/ -->
     <!-- https://www.saxonica.com/documentation10/#!about/gettingstarted/gettingstartedjava -->
     <!-- SaxonHE 11 (java.lang.NoClassDefFoundError: org/xmlresolver/Resolver) https://saxonica.plan.io/boards/3/topics/8478?r=8480 -->
-    <property name="saxon.dir"        location="lib" description="relative path from stylesheets directory"/>
-    <property name="saxon.jar"           value="saxon-he-12.1.jar"/><!-- previously saxon9he.jar -->
-    <property name="xmlresolver.jar"     value="xmlresolver-5.1.1.jar"/><!-- required with saxon-he-11+.jar -->
-    <property name="saxon.classpath"     value="${saxon.dir}/${saxon.jar};.${saxon.dir}/${xmlresolver.jar};."/>
+    <property name="saxon.dir"         location="lib" description="relative path from stylesheets directory"/>
+    <property name="saxon.jar"            value="saxon-he-12.1.jar"/><!-- previously saxon9he.jar -->
+    <property name="xmlresolver.jar"      value="xmlresolver-5.1.1.jar"/><!-- required with saxon-he-11+.jar -->
+    <property name="xmlresolver-data.jar" value="xmlresolver-5.1.1-data.jar"/>
+    <property name="saxon.classpath"      value="${saxon.dir}/${saxon.jar};${saxon.dir}/${xmlresolver.jar};${saxon.dir}/${xmlresolver-data.jar};."/>
 
     <target name="get.saxon" description="get saxon.jar if not checked out" depends="get.saxon.check" unless="${saxon.found}"> <!--  -->
         <echo message="get tested saxon.jar from project version control if not already checked out locally"/>
         <mkdir dir="${saxon.dir}"/>
-        <echo message="get http://svn.code.sf.net/p/x3d/code/www.web3d.org/x3d/tools/jar/${saxon.jar}"/>
-        <get src="http://svn.code.sf.net/p/x3d/code/www.web3d.org/x3d/tools/jar/${saxon.jar}"
-             dest="${saxon.dir}/${saxon.jar}" verbose="true" ignoreerrors="${ignoreSetupDownloadErrors}"/>
-        <get src="http://svn.code.sf.net/p/x3d/code/www.web3d.org/x3d/tools/jar/${xmlresolver.jar}"
-             dest="${saxon.dir}/${saxon.jar}" verbose="true" ignoreerrors="${ignoreSetupDownloadErrors}"/>
+        <echo message="get https://svn.code.sf.net/p/x3d/code/www.web3d.org/x3d/stylesheets/java/lib/${saxon.jar}"/>
+        <get src="https://svn.code.sf.net/p/x3d/code/www.web3d.org/x3d/stylesheets/java/lib/${saxon.jar}"
+            dest="${saxon.dir}/${saxon.jar}"       verbose="${VERBOSE}" ignoreerrors="${ignoreSetupDownloadErrors}"/>
+        <get src="https://svn.code.sf.net/p/x3d/code/www.web3d.org/x3d/stylesheets/java/lib/${xmlresolver.jar}"
+            dest="${saxon.dir}/${xmlresolver.jar}" verbose="${VERBOSE}" ignoreerrors="${ignoreSetupDownloadErrors}"/>
+        <get src="https://svn.code.sf.net/p/x3d/code/www.web3d.org/x3d/stylesheets/java/lib/${xmlresolver-data.jar}"
+            dest="${saxon.dir}/${xmlresolver-data.jar}" verbose="${VERBOSE}" ignoreerrors="${ignoreSetupDownloadErrors}"/>
     </target>
     <target name="get.saxon.check">
         <condition property="saxon.found" else="false">
-            <and>
-                <available file="${saxon.dir}/${saxon.jar}"/>
-                <available file="${saxon.dir}/${xmlresolver.jar}"/>
-            </and>
+            <available file="${saxon.dir}/${saxon.jar}"/>
         </condition>
         <echo message="found ${saxon.dir}/${saxon.jar}: ${saxon.found}"/>
+        <condition property="xmlresolver.found" else="false">
+            <available file="${saxon.dir}/${xmlresolver.jar}"/>
+        </condition>
+        <echo message="found ${saxon.dir}/${xmlresolver.jar}: ${xmlresolver.found}"/>
+        <condition property="xmlresolver-data.found" else="false">
+            <available file="${saxon.dir}/${xmlresolver-data.jar}"/>
+        </condition>
+        <echo message="found ${saxon.dir}/${xmlresolver-data.jar}: ${xmlresolver-data.found}"/>
     </target>
 
     <!-- DIS Schema creation from Don McGregor's OpenDIS7 XML structures -->
@@ -917,7 +925,7 @@
         <property name="DIS7.schema.filename" value="DIS_7_2012.autogenerated.xsd"/>
         <delete file="xml/${DIS7.schema.filename}"/>
         
-        <java classname="net.sf.saxon.Transform" classpath="${saxon.dir}/${saxon.jar};." fork="${fork}">
+        <java classname="net.sf.saxon.Transform" classpath="${saxon.classpath}" fork="${fork}">
             <arg value="-t" description="timing information"/>
             <arg value="-warnings:recover" description="recover after writing a warning message"/>
             <arg value="-o:xml/${DIS7.schema.filename}" description="output-doc"/>
@@ -935,7 +943,7 @@
         <antcall target="validate.DIS7.schema"/>
         <echo message="======================================="/>
         <echo message="Generate xml/AllPduAssessment.md"/>
-        <java classname="net.sf.saxon.Transform" classpath="${saxon.dir}/${saxon.jar};." fork="${fork}">
+        <java classname="net.sf.saxon.Transform" classpath="${saxon.classpath}" fork="${fork}">
             <arg value="-t" description="timing information"/>
             <arg value="-warnings:recover" description="recover after writing a warning message"/>
             <arg value="-o:xml/AllPduAssessment.md" description="output-doc"/>
@@ -944,6 +952,7 @@
         </java>
         <!-- debug -->
         <echo message="======================================="/>
+        <echo message="build create.DIS7.schema complete, output logged in xml/build.DIS7.schema.log.txt"/>
     </target>
     
     <target name="validate.DIS7.schema" description="DIS Schema validation">
@@ -969,13 +978,14 @@
     
     <target name="validate.DIS7.definitions" description="Check well-formed Don McGregor's OpenDIS7 XML structures">
         
-        <echo message="well-formed check of OpenDIS7 XML structures"/>
+        <echo message="well-formed check of OpenDIS7 XML structures..."/>
         <xmlvalidate failonerror="false" warn="true" lenient="true">
             <fileset dir="xml/dis_7_2012">
                 <include name="*.xml"/>
             </fileset>
         </xmlvalidate>
         <!-- no DTD or schema available -->
+        <echo message="well-formed check of OpenDIS7 XML structures complete"/>
 <!--
 DistributedEmissionsFamilyPdus.xml
 EntityInformationFamilyPdus.xml
