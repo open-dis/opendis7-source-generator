@@ -1,16 +1,16 @@
 ---
-name: Bug report
-about: Create a report to help us improve
+name: Issue report
+about: Create a new issue report to help us improve
 title: ''
 labels: ''
-assignees: brutzman
+assignees: ''
 
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+**Description**
+A clear and concise description of what the objective for this issue is.
 
-**To Reproduce**
+**How To Reproduce**
 Steps to reproduce the behavior:
 * Go to '...'
 * Click on '....'
@@ -18,16 +18,16 @@ Steps to reproduce the behavior:
 * See error
 * etc.
 
-**Programming language**
+**Programming Language**
 * Java
 * Python
 * version: ___
 
-**Expected behavior**
+**Expected Results**
 A clear and concise description of what you expected to happen.
 
 **Screenshots**
 If applicable, add screenshots to help explain your problem.
 
-**Additional context**
-Add any other context about the problem here. Thanks!
+**Additional information**
+Add any other relevant information about this issue here. Thanks!
