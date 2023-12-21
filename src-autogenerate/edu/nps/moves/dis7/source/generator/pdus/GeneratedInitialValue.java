@@ -98,7 +98,6 @@ public class GeneratedInitialValue // TODO refactor rename as GeneratedInitialVa
 		return methodName;
 	}
     
-    
     /** 
      * returns a string with the first letter capitalized. 
      * @param aString of interest

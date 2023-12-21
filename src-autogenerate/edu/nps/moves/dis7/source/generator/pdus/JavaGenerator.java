@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -225,7 +226,7 @@ public class JavaGenerator extends AbstractGenerator
         packageInfoPath = getGeneratedSourceDirectoryName() + "/edu/nps/moves/dis7/pdus/" + "package-info.java";
         packageInfoFile = new File(packageInfoPath);
         
-        FileWriter packageInfoFileWriter;
+        Writer packageInfoFileWriter;
         try 
         {
             packageInfoFile.createNewFile();
@@ -305,6 +306,10 @@ public class JavaGenerator extends AbstractGenerator
             pw.flush();
             writeIvars(pw, aClass);
             pw.flush();
+            if (aClass.getName().equals("IFFPdu")) {
+                writeIFFPduSpecificVariables(pw);
+                pw.flush();
+            }
             writeConstructor(pw, aClass);
             pw.flush();
             writeCopyMethods(pw, aClass);
@@ -323,79 +328,35 @@ public class JavaGenerator extends AbstractGenerator
             pw.flush();
             writeUnmarshallMethodWithByteBuffer(pw, aClass);
             pw.flush();
-            
-            if (aClass.getName().equals("Pdu"))
+
+            if (aClass.getName().equals("Pdu")) {
                 writeMarshalMethodToByteArray(pw, aClass);
+            }
             pw.flush();
-            
+
             //this.writeXmlMarshallMethod(pw, aClass);
             writeEqualityMethod(pw, aClass);
-            
+
             writeToStringMethod(pw, aClass);
-            
-            if      (aClass.getName().equals("Pdu"))
-            {
+            pw.flush();
+            writeHashCodeMethod(pw, aClass);
+            pw.flush();
+
+            if (aClass.getName().equals("Pdu")) {
                 writePduUtilityMethods(pw, aClass);
-            }
-            else if (aClass.getName().startsWith("EntityStatePdu"))
+            } else if (aClass.getName().startsWith("EntityStatePdu")) {
                 writeEntityStateUtilityMethods(pw, aClass);
-            
-            pw.println("} // end of class");
+            }
+
+            if (aClass.getName().equals("IFFPdu")) {
+                pw.flush();
+                writeCheckWhichLayersNeedsUnmarshalingMethod(pw);
+                pw.flush();
+            }
+
+            pw.println("} // end of " + aClass.getName());
             pw.flush();
         }
-        
-        pw.flush();
-        writeIvars(pw, aClass);
-        pw.flush();
-        if (aClass.getName().equals("IFFPdu")) {
-        	writeIFFPduSpecificVariables(pw);
-        	pw.flush();
-        }
-        writeConstructor(pw, aClass);
-        pw.flush();
-        writeCopyMethods(pw, aClass);
-        pw.flush();
-        writeGetMarshalledSizeMethod(pw, aClass);
-        pw.flush();
-        writeGettersAndSetters(pw, aClass);
-        pw.flush();
-        writeBitflagMethods(pw, aClass);
-        pw.flush();
-        writeMarshalMethod(pw, aClass);
-        pw.flush();
-        writeUnmarshallMethod(pw, aClass);
-        pw.flush();
-        writeMarshalMethodWithByteBuffer(pw, aClass);
-        pw.flush();
-        writeUnmarshallMethodWithByteBuffer(pw, aClass);
-        pw.flush();
-
-        if (aClass.getName().equals("Pdu"))
-            writeMarshalMethodToByteArray(pw, aClass);
-        pw.flush();
-
-        //this.writeXmlMarshallMethod(pw, aClass);
-        writeEqualityMethod(pw, aClass);
-
-        writeToStringMethod(pw, aClass);
-        pw.flush();
-        writeHashCodeMethod(pw, aClass);
-        pw.flush();
-        
-        if      (aClass.getName().equals("Pdu"))
-                 writePduUtilityMethods(pw, aClass);
-        else if (aClass.getName().startsWith("EntityStatePdu"))
-                 writeEntityStateUtilityMethods(pw, aClass);
-        
-        if (aClass.getName().equals("IFFPdu")) {
-        	pw.flush();
-            writeCheckWhichLayersNeedsUnmarshalingMethod(pw);
-            pw.flush();
-        }
-        
-        pw.println("} // end of class");
-        pw.flush();
-        pw.close();
     }
     
     /** Additional methods of interest for Pdu class */
@@ -2290,7 +2251,7 @@ public class JavaGenerator extends AbstractGenerator
         pw.println("    StringBuilder sb2 = new StringBuilder();");
         pw.println("    sb.append(getClass().getSimpleName());");
 
-        ArrayList<GeneratedClassAttribute> objlists = new ArrayList<>();
+        List<GeneratedClassAttribute> objlists = new ArrayList<>();
 
         aClass.getClassAttributes().forEach(attr -> {
             if (!attr.isHidden()) {

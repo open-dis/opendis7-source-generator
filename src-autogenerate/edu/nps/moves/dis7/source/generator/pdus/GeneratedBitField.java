@@ -4,9 +4,8 @@
  */
 package edu.nps.moves.dis7.source.generator.pdus;
 
-/** PDU autogeneration supporting class.
- */
-public class GeneratedBitField // TODO consider refactor renaming as GeneratedBitField
+/** PDU autogeneration supporting class. */
+public class GeneratedBitField
 {
     String mask = "0";
     String name;

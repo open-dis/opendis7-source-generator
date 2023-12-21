@@ -13,13 +13,13 @@ import java.util.*;
  *
  * @author DMcG
  */
-
 public class GeneratedClassAttribute // TODO consider refactor renaming as GeneratedClassAttribute
 {
-        /** default constructor */
-        public GeneratedClassAttribute()
-        {
-        }
+    /** default constructor */
+    public GeneratedClassAttribute()
+    {
+    }
+    
     /**
      * The various things an attribute can be: a primitive type (int, short, byte, etc), 
      * a reference to another class defined in this document, a list of primitives, aka
@@ -471,6 +471,5 @@ public class GeneratedClassAttribute // TODO consider refactor renaming as Gener
     {
         this.enumMarshalSize = enumMarshalSize;
     }
-    
     
 }
