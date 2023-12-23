@@ -1,6 +1,7 @@
 # opendis7-source-generator
 
-This is a project to generate a type-safe java implementation of the DIS Protocol v. 7, IEEE Standard 1278.1-2012 from SISO and IEEE specifications.  This project is written in Java.
+This project generates a type-safe java implementation of the DIS Protocol version 7, 
+IEEE Standard 1278.1-2012 from SISO and IEEE specifications.  This project is written in Java.
 
 This project provides a complete implementation of the IEEE DIS Protocol and
 associated enumerations that are used in the
@@ -13,11 +14,13 @@ and over 22,000 SISO-REF-010 enumerations.
 Additional testing and experimentation is performed in the NPS MOVES
 [Networked Graphics MV3500](https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500) course.
 
+Work in progress includes similar autogeneration of a complete opendis7-python version.
+
 ### Background
 
-This work is an update/continuation of the **`open-dis/xmlpg`** project created by the late Don McGregor of the Naval Postgraduate School (NPS).
+This work is an updated continuation of the [open-dis/xmlpg](https://github.com/open-dis/xmlpg) project created by the late Don McGregor of the Naval Postgraduate School (NPS).
 
-Goals are twofold:
+Project goals are twofold:
 
 1. To provide reference implementations of the DIS protocol network messages in several programming languages.
 2. To do so by means of single XML descriptions of the protocol which are then referenced by individual language generators.
@@ -27,28 +30,34 @@ While there exists code in the project to generate source in JavaScript, Python 
 This work is driven by two specifications.
 
 * *IEEE Std 1278.1-2012, IEEE Standard for Distributed Interactive Simulation—Application Protocols*
-* *SISO-REF-010-v25, 2018-08-29, Simulation Interoperability Standards Organization, Inc.*
+* *SISO-REF-010 Enumerations, Simulation Interoperability Standards Organization (SISO).*
 
-The first describes the DIS protocol in detail -- specifying application algorithms as well as the precise format of network data.  The second enumerates specific values for fields within the network data which correspond to actual entities in the real world.
+The first reference describes the DIS protocol in detail -- specifying application algorithms as well as the precise format of network data.
+The second reference enumerates specific values for fields within the network data which correspond to actual entities in the real world.
 
-The SISO specification is issued in several file formats.  One of these is XML and that file is used directly by this project.  The IEEE specification is textual and preliminary work was required to describe its contents in several XML files.  Both the SISO file and the IEEE-based XML files used as input to this project are found in the **`XML`** directory.
+The SISO specification is issued in several file formats.  One of these is XML and the latest version of that file is used directly by this project.
+The IEEE specification is textual and initial work was required to describe its defined data structures in a set of XML files.
+Both the SISO file and the IEEE-based XML files used as input to this project are found in the [xml](https://github.com/open-dis/opendis7-source-generator/tree/master/xml) subdirectory.
 
-A **`SAX`** ("Simple API for XML") Java implementation is used to process the XML input files.  String templates for the various output classes are used to define the basic structure of the generated code, and these files are found in the **`stringTemplates/edu/moves/dis7/source/generator`** directory.
+String templates for the various output classes are used to define the basic structure of the generated code, 
+and these files are found in the [stringTemplates/edu/nps/moves/dis7/source/generator](https://github.com/open-dis/opendis7-source-generator/tree/master/stringTemplates/edu/nps/moves/dis7/source/generator} directory.
 
 <h3>Development Environment</h3>
 
-The Ant build.xml is greatly improved and build tasks are now simply performed.
+The Ant [build.xml](build.xml) is greatly improved and build tasks are now simply performed.
+The underlying build process for autogenerating complex software library in separate projects like this is quite involved.
 
-The Java language is inherently cross-platform and any OS on any hardware for which a Java run-time is available should *theoretically* support running of this project.  However, the configuration used by the initial developer is the following:
+The Java language is inherently cross-platform and any OS on any hardware for which a Java run-time is available should support running of this project.  However, the configuration used by the initial developer is the following:
 
-1. Apache **Netbeans 17** Integrated Development Environment ("IDE")
-2. Apache **Ant** Java build tool version 1.10.13
+1. Apache **Netbeans 19** Integrated Development Environment ("IDE")
+2. Apache **Ant** Java build tool version 1.10.14
 3. **Git** version control system (for downloading project; supported in Netbeans)
-4. OpenJdk Java version 20
+4. OpenJdk Java version **OpenJdk 21.0.1**
 
-Please see [Savage Developers Guide](https://savage.nps.edu/Savage/developers.html) for our current recommended development settings.
+Please see [Savage Developers Guide](https://savage.nps.edu/Savage/developers.html) to find
+our current recommended development settings for using each of these tools.
 
-The project is hosted on **github.com** and the support files which are used to define the project structure are also included.  Following the procedure below, a simple download, then a small number of additional steps are all that are required to build the source files for a DIS distribution.
+The project is hosted at [github.com/open-dis/opendis7-source-generator](https://github.com/open-dis/opendis7-source-generator) and the support files which are used to define the project structure are also included.  Following the procedure below, a simple download, then a small number of additional steps are all that are required to build the source files for a DIS distribution.
 
 The project does not automatically download run-time dependencies like a **Maven**-based project.  Only one external dependency is used, and that is the Apache **Commons-IO** library.  The jar for that is found in the `libs/` directory of the project.
 
@@ -58,66 +67,68 @@ The project does not automatically download run-time dependencies like a **Maven
 
 <h3>Project Directory Structure</h3>
 
-The initial project directory looks like:
+The initial project directory structure looks like:
 
 ```
 |-- images
 |-- lib
 |-- nbproject
 |-- src-autogenerate
-|   `-- edu
-|       `-- nps
-|           `-- moves
-|               `-- dis7
-|                   `-- source
-|                       `-- generator
-|                           |-- entityTypes
-|                           |-- enumerations
+|   +-- edu
+|       +-- nps
+|           +-- moves
+|               +-- dis7
+|                   +-- source
+|                       +-- generator
+|                           +-- entityTypes
+|                           +-- enumerations
 |                           +-- pdus
 |-- src-generated
 |-- src-specialcase
 |-- src-supporting
 |-- stringTemplates
-|   `-- edu
-|       `-- nps
-|           `-- moves
-|               `-- dis7
-|                   `-- source
-|                       `-- generator
-|                           |-- entitytypes
-|                           |-- enumerations
-|                           |-- pdus
-`-- xml
-    |-- xml/SISO
-    `-- xml/dis_7_2012
+|   +-- edu
+|       +-- nps
+|           +-- moves
+|               +-- dis7
+|                   +-- source
+|                       +-- generator
+|                           +-- entitytypes
+|                           +-- enumerations
+|                           +-- pdus
++-- xml
+    +-- xml/SISO
+    +-- xml/dis_7_2012
 ```
 After project execution, the directory tree will also contain:
 
 ```
 |-- build
 |-- dist
-|   |-- javadoc
+|   +-- javadoc
 |-- test
 ```
 
-1. **libs** -- third-party Java libraries used by this project
-2. **nbproject** -- files supporting the Netbeans project structure
-3. **stringTemplates** -- supporting files, such as string templates
-4. **src-autogenerate** -- generator Java source files
-5. **src-generated** -- Java source file output from the source generator
-6. **src-specialcase** -- required DIS class files which could not be described by XML
-7. **src-supporting** -- class files satisfying generated source dependencies
-8. **xml** -- SISO and IEEE-based XML files which serve as the input to the generator
-9. **build** -- generated directory holding products of the Java compiler
-10. **dist** -- generated jar files and javadoc, the products of the project
-11. **test** -- an empty directory created by Netbeans
+1. **build** -- generated directory holding products of the Java compiler
+2. **dist** -- generated jar files and javadoc, the products of the project
+3. **images** -- illustrative image files
+4. **lib** -- third-party Java libraries used by this project
+5. **nbproject** -- files supporting the Netbeans project structure
+6. **src-autogenerate** -- generator classes producing source files in Java, Python, etc.
+7. **src-generated** -- Java source file output from the source generator
+8. **src-specialcase** -- necessary DIS class files which required some modification after autogeneration
+9. **src-supporting** -- additional class files satisfying generated source dependencies
+10. **stringTemplates** -- supporting files, such as string templates
+11. **xml** -- SISO and IEEE-based XML files which serve as the input to the generator
+12. **test** -- unit tests for checking correctness
 
 Products are then copied to the opendis7-java projects for further integration, testing
 and publication.
 
 <h3>Project Internals</h3>
 
-There are several logical output types described separately in the specifications.  This project processes them independently, i.e., the input XML is re-read for each type.  Those types are:
+There are several logical output types described separately in the specifications.  
+This project processes them independently, i.e., the input XML is re-read for each type.  Those types are:
 
 1. Protocol Data Units (PDUs)
 2. Enumerations
@@ -149,7 +160,8 @@ This class contains remnants of legacy code which created pdus classes in differ
 
 These classes are simpler than Pdus and are created in a simpler way.  The enumerated values in the SISO specification are implemented as either java Enumeration or java Bitset classes.  (The latter uses an invented "BitField" class as a front end.)
 
-The generated uses SAX and operates when the "start" and "end" tags of the following elements are encountered:
+A **`SAX`** ("Simple API for XML") Java implementation is used to process the XML input files.
+The generated uses SAX for operation when the "start" and "end" tags of the following elements are encountered:
 
 1. `enum`
 2. `enumrow`
@@ -172,7 +184,7 @@ When a SAX "end" element is encountered, the "current" element is written out as
 
 Further work:
 
-Refactor Java generator classes -- reasonably stable, minor refactoring occurs occasionally
-Implement other language outputs -- Python work is in progress
-Improve descriptions / javadoc in XML -- looking pretty good now!
-Implement information "toString()" methods for classes like EulerAngles, EntityID, EntityKind
+* Refactor Java generator classes -- reasonably stable, minor refactoring occurs occasionally
+* Implement other language outputs -- Python work is in progress
+* Improve descriptions / javadoc in XML -- looking pretty good now!
+* Implement information "toString()" methods for classes like EulerAngles, EntityID, EntityKind
