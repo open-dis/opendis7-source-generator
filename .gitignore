@@ -3,3 +3,4 @@
 /build/
 .DS_Store
 /src-generated/java/
+/nbproject/genfiles.properties

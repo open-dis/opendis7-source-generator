@@ -105,7 +105,7 @@ POSSIBILITY OF SUCH DAMAGE.
     <property name="manifest.name"          value="OpenDIS7 Entity Enumerations"/>
     <property name="Built-By"               value="https://github.com/open-dis/opendis7-source-generator"/>
     <property name="Specification-Title"    value="SISO Reference for Enumerations for Simulation Interoperability SISO-REF-010"/>
-    <property name="Specification-Version"  value="v31"/>
+    <property name="Specification-Version"  value="v33-DRAFT-20231217-d10"/>
     <property name="Specification-Vendor"   value="Simulation Interoperability Standards Organization (SISO)"/>
     <property name="Implementation-Title"   value="edu.nps.moves.dis7"/>
     <property name="Implementation-Version" value="${timestamp}"/>
@@ -145,10 +145,10 @@ POSSIBILITY OF SUCH DAMAGE.
     <target name="all" depends="versions,clean.build,clean" description="Build enumeration and PDU source code, assemble all products.">
         <!-- TODO current configuration is Java only; Python is next -->
         <echo message="timestamp ${timestamp}"/>
-        <fail message="Please build using Ant 1.10.8 or higher.">
+        <fail message="Please build using Ant 1.10.14 or higher.">
             <condition>
                 <not>
-                    <antversion atleast="1.10.8"/><!-- recommend latest 1.10.+ -->
+                    <antversion atleast="1.10.14"/><!-- recommend latest 1.10.+ -->
                 </not>
             </condition>
         </fail>
