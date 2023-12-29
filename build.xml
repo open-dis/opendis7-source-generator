@@ -271,8 +271,7 @@ POSSIBILITY OF SUCH DAMAGE.
               basedir="."
              includes=""
              excludes="**/*"
-               update="true"
-            zip64Mode="always">
+               update="true">
             <fileset dir="build/classes" defaultexcludes="yes">
                 <include name="edu/nps/moves/dis7/entities/**/*.class"/>
                 <include name="edu/nps/moves/dis7/enumerations/**/*.class"/>
@@ -308,7 +307,7 @@ POSSIBILITY OF SUCH DAMAGE.
                     <attribute name="Sealed" value="true"/>
                 </section>
                 <!--
-                <section name="edu/nps/moves/dis7/source/generator">
+                <section name="edu/nps/moves/dis7/source/generator/">
                     <attribute name="Sealed" value="true"/>
                 </section>
                 -->
@@ -325,8 +324,7 @@ POSSIBILITY OF SUCH DAMAGE.
               basedir="."
              includes=""
              excludes="**/*"
-               update="true"
-            zip64Mode="always">
+               update="true">
             <!-- omit
              excludes="build/,dist/,images/,lib/,nbproject/,stringTemplates/,test/,xml/,build.xml,src-autogenerate/,src-generated/,src-specialcase/,src-supporting/,src-generated/**/pdus/,**/opendis7-enumerations-source.jar"
              includes="src-generated/**/*.java,src-specialcase/**/*.java,src-supporting/**/*.java"
@@ -363,16 +361,16 @@ POSSIBILITY OF SUCH DAMAGE.
                     <attribute name="Sealed" value="true"/>
                 </section>
                 <!--
-                <section name="edu/nps/moves/dis7/entities">
+                <section name="edu/nps/moves/dis7/entities/">
                     <attribute name="Sealed" value="true"/>
                 </section>
-                <section name="edu/nps/moves/dis7/jammers">
+                <section name="edu/nps/moves/dis7/jammers/">
                     <attribute name="Sealed" value="true"/>
                 </section>
-                <section name="edu/nps/moves/dis7/objectTypes">
+                <section name="edu/nps/moves/dis7/objectTypes/">
                     <attribute name="Sealed" value="true"/>
                 </section>
-                <section name="edu/nps/moves/dis7/source/generator">
+                <section name="edu/nps/moves/dis7/source/generator/">
                     <attribute name="Sealed" value="true"/>
                 </section>
                 -->
