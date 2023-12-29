@@ -294,16 +294,17 @@ POSSIBILITY OF SUCH DAMAGE.
                 <attribute name="Implementation-Version" value="${Implementation-Version}"/>
                 <attribute name="Implementation-Vendor"  value="${Implementation-Vendor}"/>
                 
-                <section name="edu/nps/moves/dis7">
+                <!-- https://docs.oracle.com/javase/tutorial/deployment/jar/sealman.html -->
+                <section name="edu/nps/moves/dis7/">
                     <attribute name="Sealed" value="true"/>
                 </section>
-                <section name="edu/nps/moves/dis7/entities">
+                <section name="edu/nps/moves/dis7/entities/">
                     <attribute name="Sealed" value="true"/>
                 </section>
-                <section name="edu/nps/moves/dis7/jammers">
+                <section name="edu/nps/moves/dis7/jammers/">
                     <attribute name="Sealed" value="true"/>
                 </section>
-                <section name="edu/nps/moves/dis7/objectTypes">
+                <section name="edu/nps/moves/dis7/objectTypes/">
                     <attribute name="Sealed" value="true"/>
                 </section>
                 <!--
@@ -357,7 +358,8 @@ POSSIBILITY OF SUCH DAMAGE.
                 <attribute name="Implementation-Version" value="${Implementation-Version}"/>
                 <attribute name="Implementation-Vendor"  value="${Implementation-Vendor}"/>
                 
-                <section name="edu/nps/moves/dis7">
+                <!-- https://docs.oracle.com/javase/tutorial/deployment/jar/sealman.html -->
+                <section name="edu/nps/moves/dis7/">
                     <attribute name="Sealed" value="true"/>
                 </section>
                 <!--
@@ -784,19 +786,20 @@ POSSIBILITY OF SUCH DAMAGE.
                 <attribute name="Implementation-Version" value="${Implementation-Version}"/>
                 <attribute name="Implementation-Vendor"  value="${Implementation-Vendor}"/>
                 
-                <section name="edu/nps/moves/dis7">
+                <!-- https://docs.oracle.com/javase/tutorial/deployment/jar/sealman.html -->
+                <section name="edu/nps/moves/dis7/">
                     <attribute name="Sealed" value="true"/>
                 </section>
-                <section name="edu/nps/moves/dis7/entities">
+                <section name="edu/nps/moves/dis7/entities/">
                     <attribute name="Sealed" value="true"/>
                 </section>
-                <section name="edu/nps/moves/dis7/jammers">
+                <section name="edu/nps/moves/dis7/jammers/">
                     <attribute name="Sealed" value="true"/>
                 </section>
-                <section name="edu/nps/moves/dis7/objectTypes">
+                <section name="edu/nps/moves/dis7/objectTypes/">
                     <attribute name="Sealed" value="true"/>
                 </section>
-                <section name="edu/nps/moves/dis7/source/generator">
+                <section name="edu/nps/moves/dis7/source/generator/">
                     <attribute name="Sealed" value="true"/>
                 </section>
             </manifest>
