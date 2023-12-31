@@ -326,7 +326,7 @@ POSSIBILITY OF SUCH DAMAGE.
              includes=""
              excludes="**/*"
                update="true"
-            zip64Mode="as-needed"> <!-- if not default zip64Mode="as-needed" then NetBeans has problems looking into this jar -->>
+            zip64Mode="as-needed"> <!-- if not default zip64Mode="as-needed" then NetBeans has problems looking into this jar -->
             <!-- omit
              excludes="build/,dist/,images/,lib/,nbproject/,stringTemplates/,test/,xml/,build.xml,src-autogenerate/,src-generated/,src-specialcase/,src-supporting/,src-generated/**/pdus/,**/opendis7-enumerations-source.jar"
              includes="src-generated/**/*.java,src-specialcase/**/*.java,src-supporting/**/*.java"
@@ -396,7 +396,7 @@ POSSIBILITY OF SUCH DAMAGE.
               basedir="build/classes"
              includes="README.md,edu/nps/moves/dis7/entities/EntityTypeFactory.class,edu/nps/moves/dis7/entities/uid2EntityClass.properties,edu/nps/moves/dis7/entities/chn/**"
              excludes=".keep"
-            zip64Mode="as-needed"> <!-- if not default zip64Mode="as-needed" then NetBeans has problems looking into this jar -->>
+            zip64Mode="as-needed"> <!-- if not default zip64Mode="as-needed" then NetBeans has problems looking into this jar -->
             <!-- https://docs.oracle.com/javase/tutorial/deployment/jar/manifestindex.html -->
             <manifest>
                 <attribute name="Built-By"               value="${Built-By}"/>
@@ -426,7 +426,7 @@ POSSIBILITY OF SUCH DAMAGE.
               basedir="build/classes"
              includes="README.md,edu/nps/moves/dis7/entities/EntityTypeFactory.class,edu/nps/moves/dis7/entities/uid2EntityClass.properties,edu/nps/moves/dis7/entities/deu/**"
              excludes=".keep"
-            zip64Mode="as-needed"> <!-- if not default zip64Mode="as-needed" then NetBeans has problems looking into this jar -->>
+            zip64Mode="as-needed"> <!-- if not default zip64Mode="as-needed" then NetBeans has problems looking into this jar -->
 
             <!-- https://docs.oracle.com/javase/tutorial/deployment/jar/manifestindex.html -->
             <manifest>
@@ -457,7 +457,7 @@ POSSIBILITY OF SUCH DAMAGE.
               basedir="build/classes"
              includes="README.md,edu/nps/moves/dis7/entities/EntityTypeFactory.class,edu/nps/moves/dis7/entities/uid2EntityClass.properties,edu/nps/moves/dis7/entities/rus/**"
              excludes=".keep"
-            zip64Mode="as-needed"> <!-- if not default zip64Mode="as-needed" then NetBeans has problems looking into this jar -->>
+            zip64Mode="as-needed"> <!-- if not default zip64Mode="as-needed" then NetBeans has problems looking into this jar -->
             <manifest>
                 <attribute name="Built-By"               value="${Built-By}"/>
                 <attribute name="Specification-Title"    value="${Specification-Title}"/>
@@ -486,7 +486,7 @@ POSSIBILITY OF SUCH DAMAGE.
               basedir="build/classes"
              includes="README.md,edu/nps/moves/dis7/entities/EntityTypeFactory.class,edu/nps/moves/dis7/entities/uid2EntityClass.properties,edu/nps/moves/dis7/entities/usa/**"
              excludes=".keep"
-            zip64Mode="as-needed"> <!-- if not default zip64Mode="as-needed" then NetBeans has problems looking into this jar -->>
+            zip64Mode="as-needed"> <!-- if not default zip64Mode="as-needed" then NetBeans has problems looking into this jar -->
 
             <manifest>
                 <attribute name="Built-By" value="opendis7-source-generator https://github.com/open-dis/opendis7-source-generator"/>
@@ -516,7 +516,7 @@ POSSIBILITY OF SUCH DAMAGE.
               basedir="build/classes"
              includes="edu/nps/moves/dis7/entities/EntityTypeFactory.class,edu/nps/moves/dis7/entities/uid2EntityClass.properties,edu/nps/moves/dis7/entities/usa/munition/**"
              excludes=".keep"
-            zip64Mode="as-needed"> <!-- if not default zip64Mode="as-needed" then NetBeans has problems looking into this jar -->>
+            zip64Mode="as-needed"> <!-- if not default zip64Mode="as-needed" then NetBeans has problems looking into this jar -->
 
             <manifest>
                 <attribute name="Built-By" value="opendis7-source-generator https://github.com/open-dis/opendis7-source-generator"/>
@@ -546,7 +546,7 @@ POSSIBILITY OF SUCH DAMAGE.
               basedir="build/classes"
              includes="edu/nps/moves/dis7/entities/EntityTypeFactory.class,edu/nps/moves/dis7/entities/uid2EntityClass.properties,edu/nps/moves/dis7/entities/usa/platform/air/**"
              excludes=".keep"
-            zip64Mode="as-needed"> <!-- if not default zip64Mode="as-needed" then NetBeans has problems looking into this jar -->>
+            zip64Mode="as-needed"> <!-- if not default zip64Mode="as-needed" then NetBeans has problems looking into this jar -->
 
             <manifest>
                 <attribute name="Built-By" value="opendis7-source-generator https://github.com/open-dis/opendis7-source-generator"/>
@@ -576,7 +576,7 @@ POSSIBILITY OF SUCH DAMAGE.
               basedir="build/classes"
              includes="edu/nps/moves/dis7/entities/EntityTypeFactory.class,edu/nps/moves/dis7/entities/uid2EntityClass.properties,edu/nps/moves/dis7/entities/usa/platform/land/**"
              excludes=".keep"
-            zip64Mode="as-needed"> <!-- if not default zip64Mode="as-needed" then NetBeans has problems looking into this jar -->>
+            zip64Mode="as-needed"> <!-- if not default zip64Mode="as-needed" then NetBeans has problems looking into this jar -->
 
             <manifest>
                 <attribute name="Built-By" value="opendis7-source-generator https://github.com/open-dis/opendis7-source-generator"/>
@@ -606,7 +606,7 @@ POSSIBILITY OF SUCH DAMAGE.
               basedir="build/classes"
              includes="edu/nps/moves/dis7/entities/EntityTypeFactory.class,edu/nps/moves/dis7/entities/uid2EntityClass.properties,edu/nps/moves/dis7/entities/usa/platform/surface/**"
              excludes=".keep"
-            zip64Mode="as-needed"> <!-- if not default zip64Mode="as-needed" then NetBeans has problems looking into this jar -->>
+            zip64Mode="as-needed"> <!-- if not default zip64Mode="as-needed" then NetBeans has problems looking into this jar -->
 
             <manifest>
                 <attribute name="Built-By" value="opendis7-source-generator https://github.com/open-dis/opendis7-source-generator"/>
@@ -662,7 +662,7 @@ POSSIBILITY OF SUCH DAMAGE.
                             edu/nps/moves/dis7/entities/roy/**,
                             edu/nps/moves/dis7/entities/svk/**,
                             edu/nps/moves/dis7/entities/tur/**"
-            zip64Mode="as-needed"> <!-- if not default zip64Mode="as-needed" then NetBeans has problems looking into this jar -->>
+            zip64Mode="as-needed"> <!-- if not default zip64Mode="as-needed" then NetBeans has problems looking into this jar -->
 
             <manifest>
                 <attribute name="Built-By" value="opendis7-source-generator https://github.com/open-dis/opendis7-source-generator"/>
@@ -780,7 +780,7 @@ POSSIBILITY OF SUCH DAMAGE.
              includes=""
              excludes="**/*"
               basedir="."
-            zip64Mode="as-needed"> <!-- if not default zip64Mode="as-needed" then NetBeans has problems looking into this jar -->>
+            zip64Mode="as-needed"> <!-- if not default zip64Mode="as-needed" then NetBeans has problems looking into this jar -->
             <fileset dir="dist/javadoc">
                 <include name="**/*"/>
             </fileset>
