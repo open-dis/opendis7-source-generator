@@ -105,7 +105,7 @@ POSSIBILITY OF SUCH DAMAGE.
     <property name="manifest.name"          value="OpenDIS7 Entity Enumerations"/>
     <property name="Built-By"               value="https://github.com/open-dis/opendis7-source-generator"/>
     <property name="Specification-Title"    value="SISO Reference for Enumerations for Simulation Interoperability SISO-REF-010"/>
-    <property name="Specification-Version"  value="v33-DRAFT-20231217-d10"/>
+    <property name="Specification-Version"  value="v33"/>
     <property name="Specification-Vendor"   value="Simulation Interoperability Standards Organization (SISO)"/>
     <property name="Implementation-Title"   value="edu.nps.moves.dis7"/>
     <property name="Implementation-Version" value="${timestamp}"/>
@@ -127,7 +127,7 @@ POSSIBILITY OF SUCH DAMAGE.
         <!-- Ant environment variables https://ant.apache.org/manual/Tasks/property.html -->
         <echo>  ANT_HOME=${env.ANT_HOME}</echo>
         <echo> JAVA_HOME=${env.JAVA_HOME}</echo>
-        <echo>CLASSPATH=${env.CLASSPATH}</echo>
+        <echo> CLASSPATH=${env.CLASSPATH}</echo>
     <!--<echo>USER      =${env.USER}</echo> -->
         <!-- https://stackoverflow.com/questions/949678/ant-is-using-wrong-java-version -->
         <!--echo>javac source/target      $java.source=${java.source}</ -->
@@ -162,8 +162,9 @@ POSSIBILITY OF SUCH DAMAGE.
         <javac destdir="build/classes"
                  debug="true"
             debuglevel="lines,vars,source"
-               release="15"
+               release="17"
      includeantruntime="false">
+            <!-- release 17 is LTS, we are building master with 22 -->
             <!-- release="8" causes problems immediately after clean; to silence warning:
                  https://stackoverflow.com/questions/59097317/warning-options-bootstrap-class-path-not-set-in-conjunction-with-source-8 -->
             <src>
@@ -432,7 +433,7 @@ POSSIBILITY OF SUCH DAMAGE.
             <manifest>
                 <attribute name="Built-By" value="opendis7-source-generator https://github.com/open-dis/opendis7-source-generator"/>
                 <attribute name="Specification-Title" value="OpenDIS7 German Entities"/>
-                <attribute name="Specification-Version" value="Reference for Enumerations for Simulation Interoperability SISO-REF-010-v30"/>
+                <attribute name="Specification-Version" value="Reference for Enumerations for Simulation Interoperability SISO-REF-010-v33"/>
                 <attribute name="Specification-Vendor" value="Naval Postgraduate School (NPS)"/>
                 <attribute name="Implementation-Title" value="edu.nps.moves.dis7"/>
                 <attribute name="Implementation-Version" value="${timestamp}"/>
@@ -491,7 +492,7 @@ POSSIBILITY OF SUCH DAMAGE.
             <manifest>
                 <attribute name="Built-By" value="opendis7-source-generator https://github.com/open-dis/opendis7-source-generator"/>
                 <attribute name="Specification-Title" value="OpenDIS7 American Entities"/>
-                <attribute name="Specification-Version" value="Reference for Enumerations for Simulation Interoperability SISO-REF-010-v30"/>
+                <attribute name="Specification-Version" value="Reference for Enumerations for Simulation Interoperability SISO-REF-010-v33"/>
                 <attribute name="Specification-Vendor" value="Naval Postgraduate School (NPS)"/>
                 <attribute name="Implementation-Title" value="edu.nps.moves.dis7"/>
                 <attribute name="Implementation-Version" value="${timestamp}"/>
@@ -521,7 +522,7 @@ POSSIBILITY OF SUCH DAMAGE.
             <manifest>
                 <attribute name="Built-By" value="opendis7-source-generator https://github.com/open-dis/opendis7-source-generator"/>
                 <attribute name="Specification-Title" value="OpenDIS7 American Munition Entities"/>
-                <attribute name="Specification-Version" value="Reference for Enumerations for Simulation Interoperability SISO-REF-010-v30"/>
+                <attribute name="Specification-Version" value="Reference for Enumerations for Simulation Interoperability SISO-REF-010-v33"/>
                 <attribute name="Specification-Vendor" value="Naval Postgraduate School (NPS)"/>
                 <attribute name="Implementation-Title" value="edu.nps.moves.dis7"/>
                 <attribute name="Implementation-Version" value="${timestamp}"/>
@@ -551,7 +552,7 @@ POSSIBILITY OF SUCH DAMAGE.
             <manifest>
                 <attribute name="Built-By" value="opendis7-source-generator https://github.com/open-dis/opendis7-source-generator"/>
                 <attribute name="Specification-Title" value="OpenDIS7 American Air Entities"/>
-                <attribute name="Specification-Version" value="Reference for Enumerations for Simulation Interoperability SISO-REF-010-v30"/>
+                <attribute name="Specification-Version" value="Reference for Enumerations for Simulation Interoperability SISO-REF-010-v33"/>
                 <attribute name="Specification-Vendor" value="Naval Postgraduate School (NPS)"/>
                 <attribute name="Implementation-Title" value="edu.nps.moves.dis7"/>
                 <attribute name="Implementation-Version" value="${timestamp}"/>
@@ -581,7 +582,7 @@ POSSIBILITY OF SUCH DAMAGE.
             <manifest>
                 <attribute name="Built-By" value="opendis7-source-generator https://github.com/open-dis/opendis7-source-generator"/>
                 <attribute name="Specification-Title" value="OpenDIS7 American Land Entities"/>
-                <attribute name="Specification-Version" value="Reference for Enumerations for Simulation Interoperability SISO-REF-010-v30"/>
+                <attribute name="Specification-Version" value="Reference for Enumerations for Simulation Interoperability SISO-REF-010-v33"/>
                 <attribute name="Specification-Vendor" value="Naval Postgraduate School (NPS)"/>
                 <attribute name="Implementation-Title" value="edu.nps.moves.dis7"/>
                 <attribute name="Implementation-Version" value="${timestamp}"/>
@@ -611,7 +612,7 @@ POSSIBILITY OF SUCH DAMAGE.
             <manifest>
                 <attribute name="Built-By" value="opendis7-source-generator https://github.com/open-dis/opendis7-source-generator"/>
                 <attribute name="Specification-Title" value="OpenDIS7 American Surface Entities"/>
-                <attribute name="Specification-Version" value="Reference for Enumerations for Simulation Interoperability SISO-REF-010-v30"/>
+                <attribute name="Specification-Version" value="Reference for Enumerations for Simulation Interoperability SISO-REF-010-v33"/>
                 <attribute name="Specification-Vendor" value="Naval Postgraduate School (NPS)"/>
                 <attribute name="Implementation-Title" value="edu.nps.moves.dis7"/>
                 <attribute name="Implementation-Version" value="${timestamp}"/>
@@ -667,7 +668,7 @@ POSSIBILITY OF SUCH DAMAGE.
             <manifest>
                 <attribute name="Built-By" value="opendis7-source-generator https://github.com/open-dis/opendis7-source-generator"/>
                 <attribute name="Specification-Title" value="OpenDIS7 Nato Entities"/>
-                <attribute name="Specification-Version" value="Reference for Enumerations for Simulation Interoperability SISO-REF-010-v30"/>
+                <attribute name="Specification-Version" value="Reference for Enumerations for Simulation Interoperability SISO-REF-010-v33"/>
                 <attribute name="Specification-Vendor" value="Naval Postgraduate School (NPS)"/>
                 <attribute name="Implementation-Title" value="edu.nps.moves.dis7"/>
                 <attribute name="Implementation-Version" value="${timestamp}"/>
@@ -741,7 +742,7 @@ POSSIBILITY OF SUCH DAMAGE.
         <javac destdir="build/classes"
                 debug="true"
                 debuglevel="lines,vars,source"
-               release="15"
+               release="17"
      includeantruntime="false"
                 fork="true">
             <src>
@@ -921,23 +922,18 @@ POSSIBILITY OF SUCH DAMAGE.
         </java>
     </target>
     
-
     <!-- https://stackoverflow.com/questions/919692/how-to-execute-xslt-2-0-with-ant -->
     <!-- https://sourceforge.net/projects/saxon/files/Saxon-HE jar download handled in X3DJSAIL build -->
-    <!--
-    <property name="saxon.dir"        location="lib" description="relative path from stylesheets directory"/>
-    <property name="saxon.jar"           value="saxon9he.jar"/>
-    -->
-    <!-- https://stackoverflow.com/questions/919692/how-to-execute-xslt-2-0-with-ant -->
-    <!-- https://sourceforge.net/projects/saxon/files/Saxon-HE jar download handled in X3DJSAIL build -->
-    <!-- https://sourceforge.net/projects/saxon/files/Saxon-HE/11/Java/ -->
+    <!-- https://github.com/Saxonica/Saxon-HE/tree/main/12/Java -->
     <!-- https://www.saxonica.com/documentation10/#!about/gettingstarted/gettingstartedjava -->
     <!-- SaxonHE 11 (java.lang.NoClassDefFoundError: org/xmlresolver/Resolver) https://saxonica.plan.io/boards/3/topics/8478?r=8480 -->
     <property name="saxon.dir"         location="lib" description="relative path from stylesheets directory"/>
-    <property name="saxon.jar"            value="saxon-he-12.1.jar"/><!-- previously saxon9he.jar -->
-    <property name="xmlresolver.jar"      value="xmlresolver-5.1.1.jar"/><!-- required with saxon-he-11+.jar -->
-    <property name="xmlresolver-data.jar" value="xmlresolver-5.1.1-data.jar"/>
-    <property name="saxon.classpath"      value="${saxon.dir}/${saxon.jar};${saxon.dir}/${xmlresolver.jar};${saxon.dir}/${xmlresolver-data.jar};."/>
+    <!-- previously saxon-he-12.4.jar saxon-he-11.4.jar saxon-he-11.3.jar saxon-he-11.2.jar saxon-he-10.6.jar saxon9he.jar -->
+    <property name="saxon.jar"            value="saxon-he-12.5.jar"/>
+    <property name="xmlresolver.jar"      value="xmlresolver-5.2.2.jar"/><!-- required with saxon-he-11+.jar -->
+    <property name="xmlresolver-data.jar" value="xmlresolver-5.2.2-data.jar"/><!-- provided with saxon-he-11+.jar -->
+    <property name="jline.jar"            value="jline-2.14.6.jar"/>
+    <property name="saxon.classpath"      value="${saxon.dir}/${saxon.jar};.${saxon.dir}/${jline.jar};.${saxon.dir}/${xmlresolver.jar};.${saxon.dir}/${xmlresolver-data.jar};."/>
 
     <target name="get.saxon" description="get saxon.jar if not checked out" depends="get.saxon.check" unless="${saxon.found}"> <!--  -->
         <echo message="get tested saxon.jar from project version control if not already checked out locally"/>
