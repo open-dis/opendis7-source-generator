@@ -738,6 +738,7 @@ POSSIBILITY OF SUCH DAMAGE.
         <echo message="*** delete problem classes replaced by manually tuned files in src-specialcase"/>
         <delete verbose="true" file="src-generated\java\edu\nps\moves\dis7\pdus\SignalPdu.java"/>
         <delete verbose="true" file="src-generated\java\edu\nps\moves\dis7\pdus\IntercomSignalPdu.java"/>
+        <delete verbose="true" file="src-generated\java\edu\nps\moves\dis7\pdus\EntityType.java"/>
         
         <javac destdir="build/classes"
                 debug="true"
