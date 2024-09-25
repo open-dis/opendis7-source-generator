@@ -2342,7 +2342,8 @@ public class JavaGenerator extends AbstractGenerator
         pw.println(" */");
         pw.println("public synchronized java.nio.ByteBuffer marshal() throws Exception");
         pw.println("{");
-        pw.println("    java.nio.ByteBuffer byteBuffer = java.nio.ByteBuffer.allocate(1500);");
+        pw.println("    byte[] data = new byte[getMarshalledSize()];");
+        pw.println("    java.nio.ByteBuffer byteBuffer = java.nio.ByteBuffer.wrap(data);");
         pw.println("    marshal(byteBuffer);");
         pw.println("    return byteBuffer.rewind();");
         pw.println("}\n");
