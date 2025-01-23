@@ -7,7 +7,7 @@ edu.nps.moves.dis7.source.generator.pdus.GeneratePdusForGivenLanguage
     language=python
 creating subdirectory=./src/python
 putting network code in ./src/python/opendis7.py
-number of classes: 241
+number of classes: 251
 creating python class StartResumeReliablePdu
 creating python class EmitterBeam
 creating python class MunitionDescriptor
@@ -59,6 +59,8 @@ creating python class LiveEntityOrientation16
 creating python class LiveDeadReckoningParameters
 creating python class IntercomCommunicationsParameters
 creating python class Munition
+creating python class Mode5TransponderBasicData
+creating python class IFFDataSpecification
 creating python class AngularVelocityVector
 creating python class IntercomIdentifier
 creating python class StorageFuel
@@ -78,6 +80,7 @@ creating python class CommunicationsNodeID
 creating python class LiveEntityOrientation
 creating python class PropulsionSystemData
 creating python class ArticulatedPartVP
+creating python class AbstractIFFPduLayerData
 creating python class LiveEntityIdentifier
 creating python class SeparationVP
 creating python class GridData
@@ -101,18 +104,19 @@ creating python class ModulationParameters
 creating python class CommentReliablePdu
 creating python class EulerAngles
 creating python class DirectedEnergyPrecisionAimpoint
-creating python class IffDataSpecification
 creating python class EntityTypeRaw
 creating python class RecordQueryReliablePdu
 creating python class RecordQuerySpecification
 creating python class ObjectType
 creating python class LiveEntityDetonationPdu
 creating python class AggregateIdentifier
+creating python class ModeSInterrogatorBasicData
 creating python class EntityMarking
 creating python class Appearance
 creating python class TotalRecordSets
 creating python class MineEntityIdentifier
 creating python class JammingTechnique
+creating python class ModeSTransponderBasicData
 creating python class DatumSpecification
 creating python class ModulationType
 creating python class SystemIdentifier
@@ -146,6 +150,7 @@ creating python class DirectedEnergyTargetEnergyDeposition
 creating python class MineEmplacementTime
 creating python class EngineFuelReload
 creating python class ShaftRPM
+creating python class Mode5InterrogatorBasicData
 creating python class SetDataReliablePdu
 creating python class Vector3Double
 creating python class RecordSpecification
@@ -219,7 +224,6 @@ creating python class SetRecordRPdu
 creating python class LEDetonationPdu
 creating python class EnvironmentalProcessPdu
 creating python class ElectromagneticEmissionPdu
-creating python class IFFLayer2Pdu
 creating python class AggregateStatePdu
 creating python class ActionRequestRPdu
 creating python class DataQueryRPdu
@@ -244,6 +248,12 @@ creating python class CommentPdu
 creating python class SetDataPdu
 creating python class CollisionPdu
 creating python class ActionResponsePdu
+creating python class IFFPduLayer2Data
+creating python class IFFPduLayer4TransponderFormatData
+creating python class IFFPduLayer4InterrogatorFormatData
+creating python class IFFPduLayer3TransponderFormatData
+creating python class IFFPduLayer3InterrogatorFormatData
+creating python class IFFPduLayer5Data
 creating python class GridDataType0
 creating python class GridDataType1
 creating python class GridDataType2
