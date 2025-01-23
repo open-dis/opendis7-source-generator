@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-Copyright (c) 1995-2024 held by the author(s).  All rights reserved.
+Copyright (c) 1995-2025 held by the author(s).  All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions
@@ -105,7 +105,7 @@ POSSIBILITY OF SUCH DAMAGE.
     <property name="manifest.name"          value="OpenDIS7 Entity Enumerations"/>
     <property name="Built-By"               value="https://github.com/open-dis/opendis7-source-generator"/>
     <property name="Specification-Title"    value="SISO Reference for Enumerations for Simulation Interoperability SISO-REF-010"/>
-    <property name="Specification-Version"  value="v33"/>
+    <property name="Specification-Version"  value="v34"/>
     <property name="Specification-Vendor"   value="Simulation Interoperability Standards Organization (SISO)"/>
     <property name="Implementation-Title"   value="edu.nps.moves.dis7"/>
     <property name="Implementation-Version" value="${timestamp}"/>
@@ -164,7 +164,7 @@ POSSIBILITY OF SUCH DAMAGE.
             debuglevel="lines,vars,source"
                release="17"
      includeantruntime="false">
-            <!-- release 17 is LTS, we are building master with 22 -->
+            <!-- release 17 is LTS, we are building master with 23.0.1 -->
             <!-- release="8" causes problems immediately after clean; to silence warning:
                  https://stackoverflow.com/questions/59097317/warning-options-bootstrap-class-path-not-set-in-conjunction-with-source-8 -->
             <src>
@@ -433,7 +433,7 @@ POSSIBILITY OF SUCH DAMAGE.
             <manifest>
                 <attribute name="Built-By" value="opendis7-source-generator https://github.com/open-dis/opendis7-source-generator"/>
                 <attribute name="Specification-Title" value="OpenDIS7 German Entities"/>
-                <attribute name="Specification-Version" value="Reference for Enumerations for Simulation Interoperability SISO-REF-010-v33"/>
+                <attribute name="Specification-Version" value="Reference for Enumerations for Simulation Interoperability SISO-REF-010-v34"/>
                 <attribute name="Specification-Vendor" value="Naval Postgraduate School (NPS)"/>
                 <attribute name="Implementation-Title" value="edu.nps.moves.dis7"/>
                 <attribute name="Implementation-Version" value="${timestamp}"/>
@@ -492,7 +492,7 @@ POSSIBILITY OF SUCH DAMAGE.
             <manifest>
                 <attribute name="Built-By" value="opendis7-source-generator https://github.com/open-dis/opendis7-source-generator"/>
                 <attribute name="Specification-Title" value="OpenDIS7 American Entities"/>
-                <attribute name="Specification-Version" value="Reference for Enumerations for Simulation Interoperability SISO-REF-010-v33"/>
+                <attribute name="Specification-Version" value="Reference for Enumerations for Simulation Interoperability SISO-REF-010-v34"/>
                 <attribute name="Specification-Vendor" value="Naval Postgraduate School (NPS)"/>
                 <attribute name="Implementation-Title" value="edu.nps.moves.dis7"/>
                 <attribute name="Implementation-Version" value="${timestamp}"/>
@@ -522,7 +522,7 @@ POSSIBILITY OF SUCH DAMAGE.
             <manifest>
                 <attribute name="Built-By" value="opendis7-source-generator https://github.com/open-dis/opendis7-source-generator"/>
                 <attribute name="Specification-Title" value="OpenDIS7 American Munition Entities"/>
-                <attribute name="Specification-Version" value="Reference for Enumerations for Simulation Interoperability SISO-REF-010-v33"/>
+                <attribute name="Specification-Version" value="Reference for Enumerations for Simulation Interoperability SISO-REF-010-v34"/>
                 <attribute name="Specification-Vendor" value="Naval Postgraduate School (NPS)"/>
                 <attribute name="Implementation-Title" value="edu.nps.moves.dis7"/>
                 <attribute name="Implementation-Version" value="${timestamp}"/>
@@ -552,7 +552,7 @@ POSSIBILITY OF SUCH DAMAGE.
             <manifest>
                 <attribute name="Built-By" value="opendis7-source-generator https://github.com/open-dis/opendis7-source-generator"/>
                 <attribute name="Specification-Title" value="OpenDIS7 American Air Entities"/>
-                <attribute name="Specification-Version" value="Reference for Enumerations for Simulation Interoperability SISO-REF-010-v33"/>
+                <attribute name="Specification-Version" value="Reference for Enumerations for Simulation Interoperability SISO-REF-010-v34"/>
                 <attribute name="Specification-Vendor" value="Naval Postgraduate School (NPS)"/>
                 <attribute name="Implementation-Title" value="edu.nps.moves.dis7"/>
                 <attribute name="Implementation-Version" value="${timestamp}"/>
@@ -582,7 +582,7 @@ POSSIBILITY OF SUCH DAMAGE.
             <manifest>
                 <attribute name="Built-By" value="opendis7-source-generator https://github.com/open-dis/opendis7-source-generator"/>
                 <attribute name="Specification-Title" value="OpenDIS7 American Land Entities"/>
-                <attribute name="Specification-Version" value="Reference for Enumerations for Simulation Interoperability SISO-REF-010-v33"/>
+                <attribute name="Specification-Version" value="Reference for Enumerations for Simulation Interoperability SISO-REF-010-v34"/>
                 <attribute name="Specification-Vendor" value="Naval Postgraduate School (NPS)"/>
                 <attribute name="Implementation-Title" value="edu.nps.moves.dis7"/>
                 <attribute name="Implementation-Version" value="${timestamp}"/>
@@ -612,7 +612,7 @@ POSSIBILITY OF SUCH DAMAGE.
             <manifest>
                 <attribute name="Built-By" value="opendis7-source-generator https://github.com/open-dis/opendis7-source-generator"/>
                 <attribute name="Specification-Title" value="OpenDIS7 American Surface Entities"/>
-                <attribute name="Specification-Version" value="Reference for Enumerations for Simulation Interoperability SISO-REF-010-v33"/>
+                <attribute name="Specification-Version" value="Reference for Enumerations for Simulation Interoperability SISO-REF-010-v34"/>
                 <attribute name="Specification-Vendor" value="Naval Postgraduate School (NPS)"/>
                 <attribute name="Implementation-Title" value="edu.nps.moves.dis7"/>
                 <attribute name="Implementation-Version" value="${timestamp}"/>
@@ -668,7 +668,7 @@ POSSIBILITY OF SUCH DAMAGE.
             <manifest>
                 <attribute name="Built-By" value="opendis7-source-generator https://github.com/open-dis/opendis7-source-generator"/>
                 <attribute name="Specification-Title" value="OpenDIS7 Nato Entities"/>
-                <attribute name="Specification-Version" value="Reference for Enumerations for Simulation Interoperability SISO-REF-010-v33"/>
+                <attribute name="Specification-Version" value="Reference for Enumerations for Simulation Interoperability SISO-REF-010-v34"/>
                 <attribute name="Specification-Vendor" value="Naval Postgraduate School (NPS)"/>
                 <attribute name="Implementation-Title" value="edu.nps.moves.dis7"/>
                 <attribute name="Implementation-Version" value="${timestamp}"/>
