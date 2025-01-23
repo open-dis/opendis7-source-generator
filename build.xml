@@ -135,8 +135,8 @@ POSSIBILITY OF SUCH DAMAGE.
         <echo>Java/JVM detail version $java.version=${java.version}</echo>
         <echo>Ant version              $ant.version=${ant.version}</echo>
         <echo>Configuration settings:  https://savage.nps.edu/Savage/developers.html</echo>
-        <!-- TODO Netbeans version -->
-        <!-- TODO Netbeans project version -->
+        <!-- TODO NetBeans version -->
+        <!-- TODO NetBeans project version -->
         <!-- DEBUG: to show all environment and local properties, add
         <echoproperties/> -->
         <echo message="==========================================="/>
@@ -871,18 +871,18 @@ POSSIBILITY OF SUCH DAMAGE.
         </copy>
     </target>
     
-    <target name="view.issues.online" description="view online issues in web browser (Netbeans only)">
+    <target name="view.issues.online" description="view online issues in web browser (NetBeans only)">
         <echo message="https://github.com/open-dis/opendis7-source-generator/issues" />
         <nbbrowse url="https://github.com/open-dis/opendis7-source-generator/issues" />
         <!-- TODO implementation-independent approach if possible, but note that other Ant approaches usually have to be customized for each OS. -->
     </target>
     
-    <target name="view.javadoc.local" description="view local package javadoc in web browser (Netbeans only)">
+    <target name="view.javadoc.local" description="view local package javadoc in web browser (NetBeans only)">
         <nbbrowse file="dist/javadoc/index.html" />
         <!-- TODO implementation-independent approach if possible, but note that other Ant approaches usually have to be customized for each OS. -->
     </target>
     
-    <target name="view.javadoc.online" description="view online package javadoc in web browser (Netbeans only)">
+    <target name="view.javadoc.online" description="view online package javadoc in web browser (NetBeans only)">
         <echo message="view online javadoc in dist/javadoc subdirectory"/>
         <nbbrowse url="https://savage.nps.edu/opendis7-java/javadoc" />
         <!-- TODO implementation-independent approach if possible, but note that other Ant approaches usually have to be customized for each OS. -->
