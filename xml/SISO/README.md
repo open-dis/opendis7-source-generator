@@ -30,11 +30,10 @@ Training Enabling Architecture (TENA).
 
 [SISO-REF-010.xml](SISO-REF-010.xml) enumerations obtained from
 * https://www.sisostandards.org/page/ReferenceDocuments
-* https://www.sisostandards.org/news/news.asp?id=678685 (version 33)
 
-[Enumerations](SISO-REF-010-2024 Enumerations v33.pdf)
+[Enumerations](SISO-REF-010-2024 Enumerations v34.pdf)
 * SISO-REF-010-2024 Reference for Enumerations for Simulation Interoperability
-* https://www.sisostandards.org/resource/resmgr/reference_documents_/siso-ref-010-v33.zip
+* https://www.sisostandards.org/page/ReferenceDocuments
 
 [OPMAN](SISO-REF-010.1-2019 Operations Manual for EWG V08.pdf)
 * SISO-REF-10.1-2019, Reference for Standards Activities Committee, Special Working Group Enumerations for Simulation, Operations Manual
