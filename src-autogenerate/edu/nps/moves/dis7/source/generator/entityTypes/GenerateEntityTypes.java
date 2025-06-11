@@ -80,6 +80,8 @@ public class GenerateEntityTypes
   {
         if (!xmlFile.isEmpty())
              sisoXmlFile = xmlFile;
+        // TODO: add diagnostic to ensure no duplicated sisoenum type names or entity uid numbers
+        
         if (!outputDir.isEmpty())
             outputDirectoryPath = outputDir;
         if (!packageName.isEmpty())
