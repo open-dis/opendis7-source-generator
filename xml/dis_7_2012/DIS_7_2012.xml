@@ -1064,6 +1064,7 @@ dB and RPM)"/>
             
     </class>
 
+    <!-- Special cased because domain needs to be instantiated with correct enumeration which is based on EntityKind -->
     <class name="EntityType" inheritsFrom="root" comment="Identifies the type of Entity">
     
         <attribute name="entityKind" comment="Kind of entity">
