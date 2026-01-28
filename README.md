@@ -11,7 +11,7 @@ associated enumerations that are integrated in the
 In preparation: [opendis7-python](https://github.com/open-dis/opendis7-python).
 
 Recent project products include full Java support for all 72 DISv7 Protocol Data Units (PDUs)
-and over 22,000 SISO-REF-010 enumerations.
+and over 22,000 SISO-REF-010 version 35 enumerations.
 
 Additional testing and experimentation is performed in the NPS MOVES
 [Networked Graphics MV3500](https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500) course.
@@ -49,12 +49,13 @@ and these files are found in the [stringTemplates/edu/nps/moves/dis7/source/gene
 The Ant [build.xml](build.xml) is greatly improved and build tasks are now simply performed.
 The underlying build process for autogenerating complex software library in separate projects like this is quite involved.
 
-The Java language is inherently cross-platform and any OS on any hardware for which a Java run-time is available should support running of this project.  However, the configuration used by the initial developer is the following:
+The Java language is inherently cross-platform and any OS on any hardware for which a Java run-time is available should support running of this project.  However, the configuration used by the developer is the following:
 
-1. Apache **Netbeans 20** Integrated Development Environment ("IDE")
-2. Apache **Ant** Java build tool version 1.10.14
+1. Apache **Netbeans 28** Integrated Development Environment ("IDE")
+2. Apache **Ant** Java build tool version 1.10.15
 3. **Git** version control system (for downloading project; supported in Netbeans)
-4. OpenJdk Java version **OpenJdk 21.0.1**
+4. OpenJdk Java version **OpenJdk 25.0.2**
+5. Altova XMLSpy to check all XML schemas and source (especially for SISO-REF-010).
 
 Please see [Savage Developers Guide](https://savage.nps.edu/Savage/developers.html) to find
 our current recommended development settings for using each of these tools.
