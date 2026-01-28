@@ -212,6 +212,11 @@ public class GenerateEnumerations
             String newName = name.trim().replaceAll(",", " ").replaceAll("—"," ").replaceAll("-", " ").replaceAll("\\."," ").replaceAll("&"," ")
                                         .replaceAll("/"," ").replaceAll("\"", " ").replaceAll("\'", " ").replaceAll("( )+"," ").replaceAll(" ", "_");
             newName = newName.replaceAll("_",""); // no underscore divider
+            
+            newName = newName.replaceAll("\\(", "").replaceAll("\\)", ""); // no (parentheses), \\ is escape character
+            
+            newName = newName.replaceAll("\\%","_PERCENT");
+            
             if (newName.contains("__"))
             {
                 System.out.flush();
@@ -516,6 +521,7 @@ public class GenerateEnumerations
         @Override
         public void endElement(String uri, String localName, String qName)
         {
+            // https://stackoverflow.com/questions/77889555/what-is-the-difference-between-a-rule-switch-and-a-regular-switch-in-java
             switch (qName) {
                 case "enum":
                     if (currentEnum != null)
@@ -566,6 +572,13 @@ public class GenerateEnumerations
                 System.out.flush();
                 System.err.print  ( "original classNameCorrected=" + classNameCorrected);
                 classNameCorrected = classNameCorrected.replace("Link11/11B", "Link11_11B"); // Fix slash in entry
+                System.err.println(", revised classNameCorrected=" + classNameCorrected);
+            }
+            else if (classNameCorrected.contains("%"))
+            {
+                System.out.flush();
+                System.err.print  ( "original classNameCorrected=" + classNameCorrected);    // % symbol in entry
+                classNameCorrected = classNameCorrected.replaceAll("%","_PERCENT");
                 System.err.println(", revised classNameCorrected=" + classNameCorrected);
             }
             StringBuilder sb = new StringBuilder();
@@ -958,7 +971,10 @@ public class GenerateEnumerations
 
         if (xrefName == null) {
           sb.append(String.format(disenumfootnotecommentTemplate, htmlize(normalizeDescription(row.description)) + (row.footnote == null ? "" : ", " + htmlize(normalizeDescription(row.footnote)))));
-          sb.append(String.format(disenumpart2Template, normalizeToken(enumName), row.value, normalizeDescription(row.description)));
+          sb.append(String.format(disenumpart2Template, 
+                    normalizeToken(enumName.replaceAll("%","_PERCENT")), // fix enumeration name
+                    row.value, 
+                    normalizeDescription(row.description)));
         }
         else {
           sb.append(String.format(disenumcommentTemplate, xrefName));
@@ -1083,16 +1099,16 @@ public class GenerateEnumerations
                                           .replaceAll("\"", "").replaceAll("\'", "")
                                           .replaceAll(" = "," ") // enumrow Damage Area uid="889"
                                           .replaceAll(" =", "")  // enumrow Damage Area uid="889"
-                                          .replaceAll("= ", "") // enumrow Damage Area uid="889"
-                                          .replaceAll("=",  "") // enumrow Damage Area uid="889"
+                                          .replaceAll("= ", "")  // enumrow Damage Area uid="889"
+                                          .replaceAll("=",  "")  // enumrow Damage Area uid="889"
                                           .replaceAll("—","-").replaceAll("–","-") // mdash
-                    // 
+                                          .replaceAll("__","_")  // must follow character stripping in order to find all double underscores
                                           .replaceAll("\\*","x").replaceAll("/","") // escaped regex for multiply, divide
                                           .replaceAll("&", "&amp;").replaceAll("&amp;amp;", "&amp;");
             if (!normalizedEntry.isEmpty() && Character.isDigit(normalizedEntry.toCharArray()[0]))
-                    normalizedEntry = '_' + normalizedEntry;
+                    normalizedEntry = '_' + normalizedEntry; // prepend underscore if initial character numeric
             if (!value.equals(normalizedEntry) && !normalizedEntry.equals(value.trim()))
-                System.out.println ("*** normalize " + "\n" + 
+                System.out.println ("*** normalize \n" + 
                                     "'" + value + "' to\n" + 
                                     "'" + normalizedEntry + "'");
             return normalizedEntry;
