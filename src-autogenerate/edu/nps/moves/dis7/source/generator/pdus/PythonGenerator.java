@@ -41,11 +41,11 @@ public class PythonGenerator extends AbstractGenerator
         super(pClassDescriptions, languagePropertiesPython);
         
         // Set up the mapping between Open-DIS primitive types (key) and marshal types in Python (value).
-        
-        
-        // Set up the mapping between Open-DIS primitive types and marshal types.       
-        marshalTypes.setProperty("uint8",   "byte");
-        marshalTypes.setProperty("uint16",  "short");
+        // Must match DataOutputStream.py method names (snake_case): write_byte, write_unsigned_byte, etc.
+
+        // Set up the mapping between Open-DIS primitive types and marshal types.
+        marshalTypes.setProperty("uint8",   "unsigned_byte");
+        marshalTypes.setProperty("uint16",  "unsigned_short");
         marshalTypes.setProperty("uint32",  "int");
         marshalTypes.setProperty("uint64",  "long");
         marshalTypes.setProperty("int8",    "byte");
@@ -56,10 +56,10 @@ public class PythonGenerator extends AbstractGenerator
         marshalTypes.setProperty("float64", "double");
         //marshalTypes.setProperty("utf","EntityID");
 
-        // Unmarshalling types
+        // Unmarshalling types - must match DataInputStream.py method names (snake_case)
         //unmarshalTypes.setProperty("EntityID","utf");
-        unmarshalTypes.setProperty("uint8",   "UnsignedByte");
-        unmarshalTypes.setProperty("uint16",  "UnsignedShort");
+        unmarshalTypes.setProperty("uint8",   "unsigned_byte");
+        unmarshalTypes.setProperty("uint16",  "unsigned_short");
         unmarshalTypes.setProperty("uint32",  "int");
         unmarshalTypes.setProperty("uint64",  "long");
         unmarshalTypes.setProperty("int8",    "byte");
@@ -439,8 +439,8 @@ public class PythonGenerator extends AbstractGenerator
                     if(anAttribute.getUnderlyingTypeIsPrimitive() == true)
                     {
                          marshalType = unmarshalTypes.getProperty(anAttribute.getType());
-                        printWriter.println(INDENT + INDENT + INDENT + "val = inputStream.read_" + marshalType);
-                        printWriter.println(INDENT + INDENT + INDENT + "self." + anAttribute.getName() + "[  idx  ] = val");
+                        printWriter.println(INDENT + INDENT + INDENT + "val = inputStream.read_" + marshalType + "()");
+                        printWriter.println(INDENT + INDENT + INDENT + "self." + anAttribute.getName() + "[idx] = val");
                         //pw.println(INDENT + INDENT + INDENT +"inputStream.read_" + marshalType + "( self." + anAttribute.getName() + "[ idx ] );");
                     }
                     //else if(anAttribute.listIsClass() == true) 
@@ -463,7 +463,7 @@ public class PythonGenerator extends AbstractGenerator
 
                     if(marshalType == null) // It's a class
                     {
-                        printWriter.println(INDENT + INDENT + INDENT + "element = " + anAttribute.dynamicListClassAttribute + "()");
+                        printWriter.println(INDENT + INDENT + INDENT + "element = " + anAttribute.getType() + "()");
                         printWriter.println(INDENT + INDENT + INDENT + "element.parse(inputStream)");
                         printWriter.println(INDENT + INDENT + INDENT+ "self." + anAttribute.getName() + ".append(element)");
                     }
@@ -571,7 +571,7 @@ public class PythonGenerator extends AbstractGenerator
     {
         printWriter.println("#");
         printWriter.println("#This code is licensed under the BSD software license");
-        printWriter.println("# Copyright 20092023, MOVES Institute");
+        printWriter.println("# Copyright 2009-2023, MOVES Institute");
         printWriter.println("# Author: DMcG");
         printWriter.println("#");
     }
