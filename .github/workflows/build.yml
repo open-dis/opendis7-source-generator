@@ -46,3 +46,94 @@ jobs:
           name: opendis7-jars
           path: dist/*.jar
           retention-days: 30
+
+  build-python:
+    name: Build Python
+    runs-on: ubuntu-latest
+    container:
+      image: eclipse-temurin:17-jdk
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Ant and Python
+        run: |
+          apt-get update
+          apt-get install -y ant python3
+
+      - name: Show versions
+        run: |
+          java -version
+          ant -version
+          python3 --version
+
+      - name: Compile generators
+        run: |
+          mkdir -p build/classes
+          cp -r stringTemplates/* build/classes/
+          find src-autogenerate src-supporting/java -name "*.java" > /tmp/sources.txt
+          javac -d build/classes -release 17 @/tmp/sources.txt
+
+      - name: Generate Python source
+        run: ant generate-source-code-python
+
+      - name: Verify Python syntax
+        run: |
+          echo "Checking all generated .py files compile..."
+          failed=0
+          count=0
+          while IFS= read -r f; do
+            if ! python3 -m py_compile "$f" 2>&1; then
+              echo "FAIL: $f"
+              failed=1
+            fi
+            count=$((count + 1))
+          done < <(find src-generated/python -name "*.py")
+          echo "Checked $count Python files"
+          if [ "$failed" -ne 0 ]; then
+            echo "Some files failed syntax check"
+            exit 1
+          fi
+          echo "All $count files passed syntax check"
+
+      - name: Verify no null() in output
+        run: |
+          if grep -r "null()" src-generated/python/; then
+            echo "FAIL: found null() in generated Python output"
+            exit 1
+          fi
+          echo "PASS: no null() found"
+
+      - name: Verify package structure
+        run: |
+          echo "Checking package structure..."
+          for dir in pdus enumerations entities objecttypes jammers io; do
+            if [ ! -d "src-generated/python/opendis7/$dir" ]; then
+              echo "FAIL: missing directory opendis7/$dir"
+              exit 1
+            fi
+            if [ ! -f "src-generated/python/opendis7/$dir/__init__.py" ]; then
+              echo "FAIL: missing __init__.py in opendis7/$dir"
+              exit 1
+            fi
+            echo "  OK: opendis7/$dir/"
+          done
+          echo "PASS: all package directories present"
+
+      - name: Report generation stats
+        run: |
+          echo "=== Generated Python Package Stats ==="
+          for dir in pdus enumerations entities objecttypes jammers; do
+            count=$(find "src-generated/python/opendis7/$dir" -name "*.py" ! -name "__init__.py" | wc -l)
+            echo "  $dir: $count classes"
+          done
+          total=$(find src-generated/python -name "*.py" | wc -l)
+          echo "  Total .py files: $total"
+
+      - name: Upload generated Python source
+        uses: actions/upload-artifact@v4
+        with:
+          name: generated-python-source
+          path: src-generated/python/
+          retention-days: 30
