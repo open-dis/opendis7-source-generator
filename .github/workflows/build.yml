@@ -82,21 +82,27 @@ jobs:
       - name: Verify Python syntax
         run: |
           echo "Checking all generated .py files compile..."
-          failed=0
-          count=0
-          while IFS= read -r f; do
-            if ! python3 -m py_compile "$f" 2>&1; then
-              echo "FAIL: $f"
-              failed=1
-            fi
-            count=$((count + 1))
-          done < <(find src-generated/python -name "*.py")
-          echo "Checked $count Python files"
+          find src-generated/python -name "*.py" > /tmp/pyfiles.txt
+          total=$(wc -l < /tmp/pyfiles.txt)
+          echo "Found $total .py files to check"
+          failed=$(python3 -c "
+          import py_compile, sys
+          fails = 0
+          with open('/tmp/pyfiles.txt') as f:
+              for line in f:
+                  path = line.strip()
+                  try:
+                      py_compile.compile(path, doraise=True)
+                  except py_compile.PyCompileError as e:
+                      print(f'FAIL: {path}: {e}', file=sys.stderr)
+                      fails += 1
+          print(fails)
+          ")
           if [ "$failed" -ne 0 ]; then
-            echo "Some files failed syntax check"
+            echo "FAIL: $failed files failed syntax check"
             exit 1
           fi
-          echo "All $count files passed syntax check"
+          echo "All $total files passed syntax check"
 
       - name: Verify no null() in output
         run: |
