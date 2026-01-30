@@ -203,7 +203,11 @@ public class PythonGenerator extends AbstractGenerator
             String classComment = aClass.getClassComments();
             if (classComment != null && !classComment.trim().isEmpty())
             {
-                pw.println(INDENT + "\"\"\"" + classComment + "\"\"\"");
+                String sanitized = classComment.trim()
+                    .replaceAll("\"\"\"", "'''")
+                    .replaceAll("\n", " ")
+                    .replaceAll("\r", " ");
+                pw.println(INDENT + "\"\"\"" + sanitized + "\"\"\"");
             }
             else
             {
@@ -470,7 +474,11 @@ public class PythonGenerator extends AbstractGenerator
     {
         if (anAttribute.getComment() != null && !anAttribute.getComment().trim().isEmpty())
         {
-            pw.println(INDENT + INDENT + "\"\"\"" + anAttribute.getComment() + "\"\"\"");
+            String comment = anAttribute.getComment().trim()
+                .replaceAll("\"\"\"", "'''")
+                .replaceAll("\n", " ")
+                .replaceAll("\r", " ");
+            pw.println(INDENT + INDENT + "\"\"\"" + comment + "\"\"\"");
         }
     }
 
@@ -755,7 +763,8 @@ public class PythonGenerator extends AbstractGenerator
                         pw.println(INDENT + "def get" + capped + "(self):");
                         if (bitfield.description != null)
                         {
-                            pw.println(INDENT + INDENT + "\"\"\"" + bitfield.description + "\"\"\"");
+                            String desc = bitfield.description.replaceAll("\"\"\"", "'''").replaceAll("\n", " ").replaceAll("\r", " ");
+                            pw.println(INDENT + INDENT + "\"\"\"" + desc + "\"\"\"");
                         }
                         pw.println(INDENT + INDENT + "val = self." + bitfield.parentAttribute.getName() + " & " + bitfield.mask);
                         pw.println(INDENT + INDENT + "return val >> " + shiftBits);
@@ -765,7 +774,8 @@ public class PythonGenerator extends AbstractGenerator
                         pw.println(INDENT + "def set" + capped + "(self, val):");
                         if (bitfield.description != null)
                         {
-                            pw.println(INDENT + INDENT + "\"\"\"" + bitfield.description + "\"\"\"");
+                            String desc = bitfield.description.replaceAll("\"\"\"", "'''").replaceAll("\n", " ").replaceAll("\r", " ");
+                            pw.println(INDENT + INDENT + "\"\"\"" + desc + "\"\"\"");
                         }
                         pw.println(INDENT + INDENT + "self." + bitfield.parentAttribute.getName() + " &= ~" + bitfield.mask);
                         pw.println(INDENT + INDENT + "val = val << " + shiftBits);

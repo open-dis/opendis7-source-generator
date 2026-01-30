@@ -253,8 +253,9 @@ public class PythonEnumerationGenerator
                     if (currentEnumRow.description != null)
                         currentEnumRow.description = normalizeDescription(currentEnumRow.description);
                     currentEnumRow.value = attributes.getValue("value");
+                    if (currentEnumRow.value == null) currentEnumRow.value = "0";
                     // Special case: value exceeding max int
-                    if (currentEnumRow.value != null && currentEnumRow.value.equals("2147483648"))
+                    if (currentEnumRow.value.equals("2147483648"))
                         currentEnumRow.value = "2147483647";
                     currentEnum.elems.add(currentEnumRow);
                     break;
@@ -379,9 +380,9 @@ public class PythonEnumerationGenerator
             sb.append("from __future__ import annotations\n");
             sb.append("from enum import IntEnum\n\n\n");
             sb.append("class ").append(className).append("(IntEnum):\n");
-            sb.append("    \"\"\"").append(el.name);
+            sb.append("    \"\"\"").append(normalizeDescription(el.name));
             if (sisoSpecificationTitleDate != null && !sisoSpecificationTitleDate.isEmpty())
-                sb.append(" - ").append(sisoSpecificationTitleDate);
+                sb.append(" - ").append(normalizeDescription(sisoSpecificationTitleDate));
             sb.append(", UID ").append(el.uid).append("\"\"\"").append("\n\n");
 
             enumNames.clear();
@@ -407,7 +408,7 @@ public class PythonEnumerationGenerator
                     }
                     enumNames.add(enumName);
 
-                    String comment = (row.description != null) ? row.description : "";
+                    String comment = (row.description != null) ? normalizeDescription(row.description) : "";
                     sb.append("    ").append(enumName).append(" = ").append(row.value);
                     if (!comment.isEmpty())
                         sb.append("  # ").append(comment);
@@ -450,9 +451,9 @@ public class PythonEnumerationGenerator
             sb.append("from __future__ import annotations\n");
             sb.append("from enum import IntFlag\n\n\n");
             sb.append("class ").append(className).append("(IntFlag):\n");
-            sb.append("    \"\"\"").append(el.name);
+            sb.append("    \"\"\"").append(normalizeDescription(el.name));
             if (sisoSpecificationTitleDate != null && !sisoSpecificationTitleDate.isEmpty())
-                sb.append(" - ").append(sisoSpecificationTitleDate);
+                sb.append(" - ").append(normalizeDescription(sisoSpecificationTitleDate));
             sb.append(", UID ").append(el.uid).append("\"\"\"").append("\n\n");
 
             Set<String> bitfieldNames = new HashSet<>();
@@ -491,7 +492,7 @@ public class PythonEnumerationGenerator
                         flagValue = ((1L << bitLen) - 1) << bitPos;
                     }
 
-                    String comment = (row.description != null) ? row.description : "";
+                    String comment = (row.description != null) ? normalizeDescription(row.description) : "";
                     sb.append("    ").append(fieldName).append(" = ").append(flagValue);
                     if (!comment.isEmpty())
                         sb.append("  # ").append(comment);
@@ -534,9 +535,9 @@ public class PythonEnumerationGenerator
             sb.append("from __future__ import annotations\n");
             sb.append("from enum import IntEnum\n\n\n");
             sb.append("class ").append(className).append("(IntEnum):\n");
-            sb.append("    \"\"\"").append(el.name);
+            sb.append("    \"\"\"").append(normalizeDescription(el.name));
             if (sisoSpecificationTitleDate != null && !sisoSpecificationTitleDate.isEmpty())
-                sb.append(" - ").append(sisoSpecificationTitleDate);
+                sb.append(" - ").append(normalizeDescription(sisoSpecificationTitleDate));
             sb.append(", UID ").append(el.uid).append("\"\"\"").append("\n\n");
 
             Set<String> dictNames = new HashSet<>();
@@ -549,9 +550,14 @@ public class PythonEnumerationGenerator
                 for (DictionaryRowElem row : el.elems)
                 {
                     // For dict entries, value is the key and description is the name
-                    String enumName = row.value.replaceAll("[^a-zA-Z0-9]", "");
+                    String enumName = row.value.replaceAll("[^a-zA-Z0-9_]", "");
                     if (enumName.isEmpty())
-                        enumName = "VALUE_" + row.value;
+                        enumName = "VALUE_" + row.value.replaceAll("[^a-zA-Z0-9_]", "");
+                    if (enumName.isEmpty())
+                        enumName = "VALUE_0";
+                    // Python identifiers cannot start with a digit
+                    if (Character.isDigit(enumName.charAt(0)))
+                        enumName = "VALUE_" + enumName;
 
                     // Ensure unique
                     String originalName = enumName;
@@ -563,14 +569,14 @@ public class PythonEnumerationGenerator
                     }
                     dictNames.add(enumName);
 
-                    String description = (row.description != null) ? row.description : "";
+                    String desc = (row.description != null) ? normalizeDescription(row.description) : "";
                     // Dict entries use the string value as the enum value - parse as int
                     String numValue = row.value.replaceAll("[^0-9-]", "");
                     if (numValue.isEmpty()) numValue = "0";
 
                     sb.append("    ").append(enumName).append(" = ").append(numValue);
-                    if (!description.isEmpty())
-                        sb.append("  # ").append(description);
+                    if (!desc.isEmpty())
+                        sb.append("  # ").append(desc);
                     sb.append("\n");
                 }
             }
