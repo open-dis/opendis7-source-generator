@@ -460,7 +460,11 @@ public class PythonGenerator extends AbstractGenerator
             }
             else
             {
-                pw.println(INDENT + INDENT + "self." + anInit.getVariable() + " = " + anInit.getVariableValue());
+                String initValue = anInit.getVariableValue();
+                // Strip Java "new " keyword - Python doesn't use it
+                if (initValue.startsWith("new "))
+                    initValue = initValue.substring(4);
+                pw.println(INDENT + INDENT + "self." + anInit.getVariable() + " = " + initValue);
             }
         }
 
