@@ -391,7 +391,12 @@ public class PythonGenerator extends AbstractGenerator
                     String enumType = anAttribute.getType();
                     String defaultValue = anAttribute.getDefaultValue();
                     if (defaultValue != null)
+                    {
+                        // Strip Java "new " keyword
+                        if (defaultValue.startsWith("new "))
+                            defaultValue = defaultValue.substring(4);
                         pw.println(INDENT + INDENT + "self." + anAttribute.getName() + " = " + defaultValue);
+                    }
                     else
                         pw.println(INDENT + INDENT + "self." + anAttribute.getName() + " = " + enumType + "(0)");
                     writeAttributeComment(pw, anAttribute);
@@ -403,7 +408,12 @@ public class PythonGenerator extends AbstractGenerator
                     String bfType = anAttribute.getType();
                     String defaultValue = anAttribute.getDefaultValue();
                     if (defaultValue != null)
+                    {
+                        // Strip Java "new " keyword
+                        if (defaultValue.startsWith("new "))
+                            defaultValue = defaultValue.substring(4);
                         pw.println(INDENT + INDENT + "self." + anAttribute.getName() + " = " + defaultValue);
+                    }
                     else
                         pw.println(INDENT + INDENT + "self." + anAttribute.getName() + " = " + bfType + "(0)");
                     writeAttributeComment(pw, anAttribute);

@@ -577,7 +577,7 @@ public class PythonEnumerationGenerator
                     String desc = (row.description != null) ? normalizeDescription(row.description) : "";
                     // Dict entries use the string value as the enum value - parse as int
                     String numValue = row.value.replaceAll("[^0-9-]", "");
-                    if (numValue.isEmpty()) numValue = "0";
+                    if (numValue.isEmpty() || !isValidIntLiteral(numValue)) numValue = "0";
 
                     sb.append("    ").append(enumName).append(" = ").append(numValue);
                     if (!desc.isEmpty())
