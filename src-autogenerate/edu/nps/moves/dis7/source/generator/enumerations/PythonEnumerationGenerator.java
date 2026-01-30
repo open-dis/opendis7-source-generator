@@ -254,9 +254,14 @@ public class PythonEnumerationGenerator
                         currentEnumRow.description = normalizeDescription(currentEnumRow.description);
                     currentEnumRow.value = attributes.getValue("value");
                     if (currentEnumRow.value == null) currentEnumRow.value = "0";
+                    // Strip leading zeros (Python 3 disallows 0010, 0100, etc.)
+                    currentEnumRow.value = stripLeadingZeros(currentEnumRow.value);
                     // Special case: value exceeding max int
                     if (currentEnumRow.value.equals("2147483648"))
                         currentEnumRow.value = "2147483647";
+                    // Ensure value is a valid integer
+                    if (!isValidIntLiteral(currentEnumRow.value))
+                        currentEnumRow.value = "0";
                     currentEnum.elems.add(currentEnumRow);
                     break;
 
@@ -679,5 +684,36 @@ public class PythonEnumerationGenerator
     {
         if (s == null) return null;
         return s.replaceAll("\"", "'").replaceAll("\n", " ").replaceAll("\r", " ").trim();
+    }
+
+    /**
+     * Strip leading zeros from a numeric string, preserving negative sign and "0" itself.
+     * E.g. "0010" -> "10", "0" -> "0", "-0010" -> "-10"
+     */
+    private static String stripLeadingZeros(String s)
+    {
+        if (s == null || s.isEmpty()) return "0";
+        boolean negative = s.startsWith("-");
+        String digits = negative ? s.substring(1) : s;
+        digits = digits.replaceFirst("^0+", "");
+        if (digits.isEmpty()) digits = "0";
+        return negative ? "-" + digits : digits;
+    }
+
+    /**
+     * Check if a string is a valid Python integer literal.
+     */
+    private static boolean isValidIntLiteral(String s)
+    {
+        if (s == null || s.isEmpty()) return false;
+        try
+        {
+            Long.parseLong(s);
+            return true;
+        }
+        catch (NumberFormatException e)
+        {
+            return false;
+        }
     }
 }

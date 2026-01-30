@@ -201,10 +201,13 @@ public class PythonObjectTypeGenerator
         private void writeObjectTypeClass(String description, String uid)
         {
             String className = GenerateEnumerations.fixName(description);
+            // Remove characters invalid in Python identifiers and filenames
+            if (className != null)
+                className = className.replaceAll("[^a-zA-Z0-9_]", "");
             if (className == null || className.isEmpty())
                 className = "ObjectType_" + (uid != null ? uid : String.valueOf(objectTypeClassCount));
             // Python class names cannot start with a digit
-            if (!className.isEmpty() && Character.isDigit(className.charAt(0)))
+            if (Character.isDigit(className.charAt(0)))
                 className = "_" + className;
 
             String subdirPath = currentDomainName;
