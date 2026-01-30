@@ -694,7 +694,7 @@ POSSIBILITY OF SUCH DAMAGE.
         
         <echo message="=================================================================================="/>
         <echo message="generate-source-code-java stage 2 make pdus,         edu.nps.moves.dis7.source.generator.pdus.GeneratePdusForGivenLanguage"/>
-        <java classname="edu.nps.moves.dis7.source.generator.pdus.GeneratePdusForGivenLanguage">
+        <java classname="edu.nps.moves.dis7.source.generator.pdus.GeneratePdusForGivenLanguage" fork="true">
             <arg value="xml/dis_7_2012/DIS_7_2012.xml"/>
             <arg value="java"/>
             <jvmarg value="-Dxmlpg.generatedSourceDir=src-generated/java"/>
