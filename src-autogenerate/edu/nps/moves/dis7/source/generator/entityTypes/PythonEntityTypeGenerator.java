@@ -188,14 +188,14 @@ public class PythonEntityTypeGenerator
             switch (qName)
             {
                 case "category":
-                    currentCategoryName = GenerateEnumerations.fixName(description);
+                    currentCategoryName = fixPythonPackageName(GenerateEnumerations.fixName(description));
                     currentCategoryValue = attributes.getValue("value");
                     if (currentCategoryValue == null) currentCategoryValue = "0";
                     depth = 1;
                     break;
 
                 case "subcategory":
-                    currentSubcategoryName = GenerateEnumerations.fixName(description);
+                    currentSubcategoryName = fixPythonPackageName(GenerateEnumerations.fixName(description));
                     currentSubcategoryValue = attributes.getValue("value");
                     if (currentSubcategoryValue == null) currentSubcategoryValue = "0";
                     depth = 2;
@@ -203,7 +203,7 @@ public class PythonEntityTypeGenerator
                     break;
 
                 case "specific":
-                    currentSpecificName = GenerateEnumerations.fixName(description);
+                    currentSpecificName = fixPythonPackageName(GenerateEnumerations.fixName(description));
                     currentSpecificValue = attributes.getValue("value");
                     if (currentSpecificValue == null) currentSpecificValue = "0";
                     depth = 3;
@@ -211,7 +211,7 @@ public class PythonEntityTypeGenerator
                     break;
 
                 case "extra":
-                    currentExtraName = GenerateEnumerations.fixName(description);
+                    currentExtraName = fixPythonPackageName(GenerateEnumerations.fixName(description));
                     currentExtraValue = attributes.getValue("value");
                     if (currentExtraValue == null) currentExtraValue = "0";
                     depth = 4;
@@ -252,6 +252,14 @@ public class PythonEntityTypeGenerator
                     depth = 3;
                     break;
             }
+        }
+
+        /** Prepend underscore if name starts with a digit (illegal Python identifier) */
+        private static String fixPythonPackageName(String name)
+        {
+            if (name != null && !name.isEmpty() && Character.isDigit(name.charAt(0)))
+                return "_" + name;
+            return name;
         }
 
         private void writeEntityTypeClass(String description, String uid)
