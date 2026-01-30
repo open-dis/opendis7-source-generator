@@ -203,6 +203,9 @@ public class PythonJammerGenerator
             String className = GenerateEnumerations.fixName(description);
             if (className == null || className.isEmpty())
                 className = "Jammer_" + (uid != null ? uid : String.valueOf(jammerClassCount));
+            // Python class names cannot start with a digit
+            if (!className.isEmpty() && Character.isDigit(className.charAt(0)))
+                className = "_" + className;
 
             if (specificValue == null) specificValue = "0";
 
@@ -213,7 +216,13 @@ public class PythonJammerGenerator
             File subdir = new File(outputDirectory, subdirPath);
             subdir.mkdirs();
 
-            String docstring = description.replaceAll("\"", "'");
+            String docstring = description.replaceAll("\"", "'").replaceAll("\n", " ").replaceAll("\r", " ");
+
+            // Ensure values default to 0 if empty
+            String kindVal = (currentKindValue != null && !currentKindValue.isEmpty()) ? currentKindValue : "0";
+            String catVal = (currentCategoryValue != null && !currentCategoryValue.isEmpty()) ? currentCategoryValue : "0";
+            String subcatVal = (currentSubcategoryValue != null && !currentSubcategoryValue.isEmpty()) ? currentSubcategoryValue : "0";
+            String specVal = (specificValue != null && !specificValue.isEmpty()) ? specificValue : "0";
 
             StringBuilder sb = new StringBuilder();
             sb.append("#\n");
@@ -231,10 +240,10 @@ public class PythonJammerGenerator
             sb.append("\"\"\"").append("\n\n");
             sb.append("    def __init__(self):\n");
             sb.append("        super().__init__()\n");
-            sb.append("        self.kind = ").append(currentKindValue).append("\n");
-            sb.append("        self.category = ").append(currentCategoryValue).append("\n");
-            sb.append("        self.subcategory = ").append(currentSubcategoryValue).append("\n");
-            sb.append("        self.specific = ").append(specificValue).append("\n");
+            sb.append("        self.kind = ").append(kindVal).append("\n");
+            sb.append("        self.category = ").append(catVal).append("\n");
+            sb.append("        self.subcategory = ").append(subcatVal).append("\n");
+            sb.append("        self.specific = ").append(specVal).append("\n");
 
             File targetFile = new File(subdir, className + ".py");
             try

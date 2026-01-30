@@ -259,6 +259,9 @@ public class PythonEntityTypeGenerator
             String className = GenerateEnumerations.fixName(description);
             if (className == null || className.isEmpty())
                 className = "Entity_" + (uid != null ? uid : String.valueOf(entityClassCount));
+            // Python class names cannot start with a digit
+            if (!className.isEmpty() && Character.isDigit(className.charAt(0)))
+                className = "_" + className;
 
             // Build directory path: entities/<country>/<domain>/<category>/
             String subdirPath = currentCountryName + "/" + currentDomainName;
@@ -268,12 +271,17 @@ public class PythonEntityTypeGenerator
             File subdir = new File(outputDirectory, subdirPath);
             subdir.mkdirs();
 
-            // Build field assignments
+            // Build field assignments (default to 0 if empty)
+            String kindVal = (currentEntityKindValue != null && !currentEntityKindValue.isEmpty()) ? currentEntityKindValue : "0";
+            String domainVal = (currentDomainValue != null && !currentDomainValue.isEmpty()) ? currentDomainValue : "0";
+            String countryVal = (currentCountryValue != null && !currentCountryValue.isEmpty()) ? currentCountryValue : "0";
+            String catVal = (currentCategoryValue != null && !currentCategoryValue.isEmpty()) ? currentCategoryValue : "0";
+
             StringBuilder fields = new StringBuilder();
-            fields.append("        self.entityKind = ").append(currentEntityKindValue).append("\n");
-            fields.append("        self.domain = ").append(currentDomainValue).append("\n");
-            fields.append("        self.country = ").append(currentCountryValue).append("\n");
-            fields.append("        self.category = ").append(currentCategoryValue).append("\n");
+            fields.append("        self.entityKind = ").append(kindVal).append("\n");
+            fields.append("        self.domain = ").append(domainVal).append("\n");
+            fields.append("        self.country = ").append(countryVal).append("\n");
+            fields.append("        self.category = ").append(catVal).append("\n");
 
             if (depth >= 2 && !currentSubcategoryValue.isEmpty())
                 fields.append("        self.subcategory = ").append(currentSubcategoryValue).append("\n");
@@ -282,7 +290,7 @@ public class PythonEntityTypeGenerator
             if (depth >= 4 && !currentExtraValue.isEmpty())
                 fields.append("        self.extra = ").append(currentExtraValue).append("\n");
 
-            String docstring = description.replaceAll("\"", "'");
+            String docstring = description.replaceAll("\"", "'").replaceAll("\n", " ").replaceAll("\r", " ");
 
             StringBuilder sb = new StringBuilder();
             sb.append("#\n");

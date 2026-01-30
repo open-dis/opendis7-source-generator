@@ -203,6 +203,9 @@ public class PythonObjectTypeGenerator
             String className = GenerateEnumerations.fixName(description);
             if (className == null || className.isEmpty())
                 className = "ObjectType_" + (uid != null ? uid : String.valueOf(objectTypeClassCount));
+            // Python class names cannot start with a digit
+            if (!className.isEmpty() && Character.isDigit(className.charAt(0)))
+                className = "_" + className;
 
             String subdirPath = currentDomainName;
             if (!currentCategoryName.isEmpty())
@@ -211,7 +214,13 @@ public class PythonObjectTypeGenerator
             File subdir = new File(outputDirectory, subdirPath);
             subdir.mkdirs();
 
-            String docstring = description.replaceAll("\"", "'");
+            String docstring = description.replaceAll("\"", "'").replaceAll("\n", " ").replaceAll("\r", " ");
+
+            // Ensure values default to 0 if empty
+            String domainVal = (currentDomainValue != null && !currentDomainValue.isEmpty()) ? currentDomainValue : "0";
+            String kindVal = (currentObjectKindValue != null && !currentObjectKindValue.isEmpty()) ? currentObjectKindValue : "0";
+            String catVal = (currentCategoryValue != null && !currentCategoryValue.isEmpty()) ? currentCategoryValue : "0";
+            String subcatVal = (currentSubcategoryValue != null && !currentSubcategoryValue.isEmpty()) ? currentSubcategoryValue : "0";
 
             StringBuilder sb = new StringBuilder();
             sb.append("#\n");
@@ -229,10 +238,10 @@ public class PythonObjectTypeGenerator
             sb.append("\"\"\"").append("\n\n");
             sb.append("    def __init__(self):\n");
             sb.append("        super().__init__()\n");
-            sb.append("        self.domain = ").append(currentDomainValue).append("\n");
-            sb.append("        self.objectKind = ").append(currentObjectKindValue).append("\n");
-            sb.append("        self.category = ").append(currentCategoryValue).append("\n");
-            sb.append("        self.subcategory = ").append(currentSubcategoryValue).append("\n");
+            sb.append("        self.domain = ").append(domainVal).append("\n");
+            sb.append("        self.objectKind = ").append(kindVal).append("\n");
+            sb.append("        self.category = ").append(catVal).append("\n");
+            sb.append("        self.subcategory = ").append(subcatVal).append("\n");
 
             File targetFile = new File(subdir, className + ".py");
             try
