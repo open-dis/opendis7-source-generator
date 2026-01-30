@@ -152,19 +152,19 @@ public class PythonJammerGenerator
                     break;
 
                 case "jammer_kind":
-                    currentKindName = GenerateEnumerations.fixName(description);
+                    currentKindName = fixPythonPackageName(GenerateEnumerations.fixName(description));
                     currentKindValue = attributes.getValue("value");
                     if (currentKindValue == null) currentKindValue = "0";
                     break;
 
                 case "jammer_category":
-                    currentCategoryName = GenerateEnumerations.fixName(description);
+                    currentCategoryName = fixPythonPackageName(GenerateEnumerations.fixName(description));
                     currentCategoryValue = attributes.getValue("value");
                     if (currentCategoryValue == null) currentCategoryValue = "0";
                     break;
 
                 case "jammer_subcategory":
-                    currentSubcategoryName = GenerateEnumerations.fixName(description);
+                    currentSubcategoryName = fixPythonPackageName(GenerateEnumerations.fixName(description));
                     currentSubcategoryValue = attributes.getValue("value");
                     if (currentSubcategoryValue == null) currentSubcategoryValue = "0";
                     break;
@@ -196,6 +196,14 @@ public class PythonJammerGenerator
                     currentSubcategoryValue = "";
                     break;
             }
+        }
+
+        /** Prepend underscore if name starts with a digit (illegal Python identifier) */
+        private static String fixPythonPackageName(String name)
+        {
+            if (name != null && !name.isEmpty() && Character.isDigit(name.charAt(0)))
+                return "_" + name;
+            return name;
         }
 
         private void writeJammerClass(String description, String specificValue, String uid)

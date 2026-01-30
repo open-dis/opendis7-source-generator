@@ -157,13 +157,13 @@ public class PythonObjectTypeGenerator
                     break;
 
                 case "domain":
-                    currentDomainName = GenerateEnumerations.fixName(description);
+                    currentDomainName = fixPythonPackageName(GenerateEnumerations.fixName(description));
                     currentDomainValue = attributes.getValue("value");
                     if (currentDomainValue == null) currentDomainValue = "0";
                     break;
 
                 case "category":
-                    currentCategoryName = GenerateEnumerations.fixName(description);
+                    currentCategoryName = fixPythonPackageName(GenerateEnumerations.fixName(description));
                     currentCategoryValue = attributes.getValue("value");
                     if (currentCategoryValue == null) currentCategoryValue = "0";
                     break;
@@ -196,6 +196,14 @@ public class PythonObjectTypeGenerator
                     currentSubcategoryValue = "";
                     break;
             }
+        }
+
+        /** Prepend underscore if name starts with a digit (illegal Python identifier) */
+        private static String fixPythonPackageName(String name)
+        {
+            if (name != null && !name.isEmpty() && Character.isDigit(name.charAt(0)))
+                return "_" + name;
+            return name;
         }
 
         private void writeObjectTypeClass(String description, String uid)
