@@ -16,6 +16,9 @@ Ant version              $ant.version=Apache Ant(TM) version 1.10.15 compiled on
 Configuration settings:  https://savage.nps.edu/Savage/developers.html
 ===========================================
 clean.generated-jars-javadoc:
+Deleting C:\x3d-github\opendis7-source-generator\dist\opendis7-enumerations-classes.jar
+Deleting C:\x3d-github\opendis7-source-generator\dist\opendis7-enumerations-javadoc.jar
+Deleting C:\x3d-github\opendis7-source-generator\dist\opendis7-enumerations-source.jar
 Deleting directory C:\x3d-github\opendis7-source-generator\dist\javadoc
 Created dir: C:\x3d-github\opendis7-source-generator\dist\javadoc
 clean.generated-source:
@@ -36,7 +39,7 @@ ensure src-generated/java directory exists and is empty
 make clean complete
 clean:
 all:
-timestamp 28 January 2026 12:53:56
+timestamp 2 February 2026 12:54:09
 ==================================================================================
 generate enumerations classes (given limited path entries in project classpath)
 init:
@@ -1465,7 +1468,7 @@ Creating empty C:\x3d-github\opendis7-source-generator\build\classes\edu\nps\mov
 Creating empty C:\x3d-github\opendis7-source-generator\build\classes\edu\nps\moves\dis7\entities\oth\platform\surface\package-info.class
 Creating empty C:\x3d-github\opendis7-source-generator\build\classes\edu\nps\moves\dis7\entities\syr\platform\surface\package-info.class
 Creating empty C:\x3d-github\opendis7-source-generator\build\classes\edu\nps\moves\dis7\entities\ita\munition\antiair\package-info.class
-Copying 65 files to C:\x3d-github\opendis7-source-generator\build\classes
+Copying 932 files to C:\x3d-github\opendis7-source-generator\build\classes
 compile:
 compile complete
 jar:
@@ -1475,7 +1478,7 @@ Specification-Title    = SISO Reference for Enumerations for Simulation Interope
 Specification-Version  = v34
 Specification-Vendor   = Simulation Interoperability Standards Organization (SISO)
 Implementation-Title   = edu.nps.moves.dis7
-Implementation-Version = 28 January 2026 12:53:56
+Implementation-Version = 2 February 2026 12:54:09
 Implementation-Vendor  = Naval Postgraduate School (NPS)
 jar.enumerations.classes:
 Packaging .class binaries for all generated OpenDIS7 entity enumerations into a single JAR
@@ -81620,7 +81623,7 @@ Packaging javadoc documentation for all generated OpenDIS7 entity enumerations i
 (note that generated javadoc subdirectory is found within dist subdirectory)
 Building jar: C:\x3d-github\opendis7-source-generator\dist\opendis7-enumerations-javadoc.jar
 copy-generated-jars-to-opendis7-java:
-Copy copy generated jars to opendis7-java project
+Copy generated jars to opendis7-java project
 Both enumerations and PDUs are created by opendis7-source-generator, with
    PDU classes  packaged into opendis7-*.jar              archives by opendis7-java project and
    enumerations packaged into opendis7-enumerations-*.jar archives by opendis7-source-generator.
@@ -81637,4 +81640,4 @@ Both enumerations and PDUs are created by opendis7-source-generator, with
 Copying 26402 files to C:\x3d-github\opendis7-java\src-generated
 Copying 7 files to C:\x3d-github\opendis7-java\src-generated
 opendis7-source-generator build all complete
-BUILD SUCCESSFUL (total time: 9 minutes 59 seconds)
+BUILD SUCCESSFUL (total time: 9 minutes 48 seconds)
