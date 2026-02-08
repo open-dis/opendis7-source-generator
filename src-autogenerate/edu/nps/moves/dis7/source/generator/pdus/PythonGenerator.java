@@ -735,18 +735,15 @@ public class PythonGenerator extends AbstractGenerator
                 }
 
                 case PADTO16:
-                    pw.println(INDENT + INDENT + "# pad to 16-bit boundary");
-                    pw.println(INDENT + INDENT + "# TODO: implement padding logic");
+                    writePadToSerialize(pw, anAttribute, 2);
                     break;
 
                 case PADTO32:
-                    pw.println(INDENT + INDENT + "# pad to 32-bit boundary");
-                    pw.println(INDENT + INDENT + "# TODO: implement padding logic");
+                    writePadToSerialize(pw, anAttribute, 4);
                     break;
 
                 case PADTO64:
-                    pw.println(INDENT + INDENT + "# pad to 64-bit boundary");
-                    pw.println(INDENT + INDENT + "# TODO: implement padding logic");
+                    writePadToSerialize(pw, anAttribute, 8);
                     break;
 
                 default:
@@ -875,18 +872,15 @@ public class PythonGenerator extends AbstractGenerator
                 }
 
                 case PADTO16:
-                    pw.println(INDENT + INDENT + "# pad to 16-bit boundary");
-                    pw.println(INDENT + INDENT + "# TODO: implement padding parse logic");
+                    writePadToParse(pw, anAttribute, 2);
                     break;
 
                 case PADTO32:
-                    pw.println(INDENT + INDENT + "# pad to 32-bit boundary");
-                    pw.println(INDENT + INDENT + "# TODO: implement padding parse logic");
+                    writePadToParse(pw, anAttribute, 4);
                     break;
 
                 case PADTO64:
-                    pw.println(INDENT + INDENT + "# pad to 64-bit boundary");
-                    pw.println(INDENT + INDENT + "# TODO: implement padding parse logic");
+                    writePadToParse(pw, anAttribute, 8);
                     break;
 
                 default:
@@ -900,6 +894,37 @@ public class PythonGenerator extends AbstractGenerator
             pw.println(INDENT + INDENT + "pass");
         }
         pw.println();
+    }
+
+    /**
+     * Emit padding-to-boundary logic for serialize.
+     * Calculates pad bytes needed to reach the given alignment and writes zeros.
+     * @param pw PrintWriter
+     * @param anAttribute the padding attribute
+     * @param alignBytes alignment boundary in bytes (2, 4, or 8)
+     */
+    private void writePadToSerialize(PrintWriter pw, GeneratedClassAttribute anAttribute, int alignBytes)
+    {
+        pw.println(INDENT + INDENT + "# pad to " + (alignBytes * 8) + "-bit boundary");
+        pw.println(INDENT + INDENT + "currentPosition = outputStream.stream.tell()");
+        pw.println(INDENT + INDENT + "padCount = (" + alignBytes + " - (currentPosition % " + alignBytes + ")) % " + alignBytes);
+        pw.println(INDENT + INDENT + "self." + anAttribute.getName() + " = b'\\x00' * padCount");
+        pw.println(INDENT + INDENT + "outputStream.stream.write(self." + anAttribute.getName() + ")");
+    }
+
+    /**
+     * Emit padding-to-boundary logic for parse.
+     * Calculates pad bytes needed to reach the given alignment and reads/skips them.
+     * @param pw PrintWriter
+     * @param anAttribute the padding attribute
+     * @param alignBytes alignment boundary in bytes (2, 4, or 8)
+     */
+    private void writePadToParse(PrintWriter pw, GeneratedClassAttribute anAttribute, int alignBytes)
+    {
+        pw.println(INDENT + INDENT + "# pad to " + (alignBytes * 8) + "-bit boundary");
+        pw.println(INDENT + INDENT + "currentPosition = inputStream.stream.tell()");
+        pw.println(INDENT + INDENT + "padCount = (" + alignBytes + " - (currentPosition % " + alignBytes + ")) % " + alignBytes);
+        pw.println(INDENT + INDENT + "self." + anAttribute.getName() + " = inputStream.stream.read(padCount)");
     }
 
     /**
