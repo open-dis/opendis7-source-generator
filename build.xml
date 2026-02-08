@@ -1054,19 +1054,71 @@ WarfareFamilyPdus.xml
 -->
     </target>
     
-    <target name="generate-source-code-python">
+    <target name="clean.generated-python-source"
+            description="Clean generated Python source files">
         <echo message="=================================================================================="/>
-        <echo message="generate-source-code-python make pdus,         edu.nps.moves.dis7.source.generator.pdus.GeneratePdusForGivenLanguage"/>
-        <java classname="edu.nps.moves.dis7.source.generator.pdus.GeneratePdusForGivenLanguage">
-            <arg value="xml/dis_7_2012/DIS_7_2012.xml"/>
-            <arg value="python"/>
-            <jvmarg value="-Dxmlpg.generatedSourceDir=src-generated/python"/>
-            <jvmarg value="-Dxmlpg.package=edu.nps.moves.dis7.pdus"/>
+        <echo message="Cleaning generated Python source in src-generated/python/"/>
+        <delete dir="src-generated/python" failonerror="false"/>
+    </target>
+
+    <target name="generate-source-code-python"
+            description="Generate all Python source code (enumerations, PDUs, entities, object types, jammers)">
+        <echo message="=================================================================================="/>
+        <echo message="generate-source-code-python: generating modular Python package"/>
+        <echo message="=================================================================================="/>
+
+        <!-- Stage 1: Enumerations (IntEnum/IntFlag from SISO-REF-010) -->
+        <echo message="--- Stage 1: Python enumerations ---"/>
+        <java classname="edu.nps.moves.dis7.source.generator.enumerations.PythonEnumerationGenerator" fork="true" failonerror="true">
+            <arg value="xml/SISO/SISO-REF-010.xml"/>
+            <arg value="src-generated/python/opendis7/enumerations"/>
             <classpath>
                 <pathelement path="build/classes"/>
             </classpath>
         </java>
-        
+
+        <!-- Stage 2: PDUs (one .py per class) -->
+        <echo message="--- Stage 2: Python PDUs ---"/>
+        <java classname="edu.nps.moves.dis7.source.generator.pdus.GeneratePdusForGivenLanguage" fork="true" failonerror="true">
+            <arg value="xml/dis_7_2012/DIS_7_2012.xml"/>
+            <arg value="python"/>
+            <classpath>
+                <pathelement path="build/classes"/>
+            </classpath>
+        </java>
+
+        <!-- Stage 3: Jammers -->
+        <echo message="--- Stage 3: Python jammers ---"/>
+        <java classname="edu.nps.moves.dis7.source.generator.entityTypes.PythonJammerGenerator" fork="true" failonerror="true">
+            <arg value="xml/SISO/SISO-REF-010.xml"/>
+            <arg value="src-generated/python/opendis7/jammers"/>
+            <classpath>
+                <pathelement path="build/classes"/>
+            </classpath>
+        </java>
+
+        <!-- Stage 4: Object types -->
+        <echo message="--- Stage 4: Python object types ---"/>
+        <java classname="edu.nps.moves.dis7.source.generator.entityTypes.PythonObjectTypeGenerator" fork="true" failonerror="true">
+            <arg value="xml/SISO/SISO-REF-010.xml"/>
+            <arg value="src-generated/python/opendis7/objecttypes"/>
+            <classpath>
+                <pathelement path="build/classes"/>
+            </classpath>
+        </java>
+
+        <!-- Stage 5: Entity types -->
+        <echo message="--- Stage 5: Python entity types ---"/>
+        <java classname="edu.nps.moves.dis7.source.generator.entityTypes.PythonEntityTypeGenerator" fork="true" failonerror="true">
+            <arg value="xml/SISO/SISO-REF-010.xml"/>
+            <arg value="src-generated/python/opendis7/entities"/>
+            <classpath>
+                <pathelement path="build/classes"/>
+            </classpath>
+        </java>
+
+        <echo message="=================================================================================="/>
+        <echo message="generate-source-code-python complete"/>
     </target>
     
 </project>
