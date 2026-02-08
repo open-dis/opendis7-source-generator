@@ -69,6 +69,9 @@ public class PythonGenerator extends AbstractGenerator
         marshalTypes.setProperty("int64",   "long");
         marshalTypes.setProperty("float32", "float");
         marshalTypes.setProperty("float64", "double");
+        marshalTypes.setProperty("struct8",  "unsigned_byte");
+        marshalTypes.setProperty("struct16", "unsigned_short");
+        marshalTypes.setProperty("struct32", "unsigned_int");
 
         // Unmarshalling types - must match DataInputStream.py method names (snake_case)
         unmarshalTypes.setProperty("uint8",   "unsigned_byte");
@@ -81,6 +84,9 @@ public class PythonGenerator extends AbstractGenerator
         unmarshalTypes.setProperty("int64",   "long");
         unmarshalTypes.setProperty("float32", "float");
         unmarshalTypes.setProperty("float64", "double");
+        unmarshalTypes.setProperty("struct8",  "unsigned_byte");
+        unmarshalTypes.setProperty("struct16", "unsigned_short");
+        unmarshalTypes.setProperty("struct32", "unsigned_int");
 
         // Enum marshal: size in bits -> read method suffix
         enumMarshalReadTypes.setProperty("8",  "unsigned_byte");
@@ -103,6 +109,9 @@ public class PythonGenerator extends AbstractGenerator
         primitiveSizes.setProperty("int64",   "8");
         primitiveSizes.setProperty("float32", "4");
         primitiveSizes.setProperty("float64", "8");
+        primitiveSizes.setProperty("struct8",  "1");
+        primitiveSizes.setProperty("struct16", "2");
+        primitiveSizes.setProperty("struct32", "4");
     }
 
     @Override
@@ -226,6 +235,9 @@ public class PythonGenerator extends AbstractGenerator
             // __init__ method
             writeInit(pw, aClass);
 
+            // marshalledSize method
+            writeMarshalledSize(pw, aClass);
+
             // serialize method
             writeMarshal(pw, aClass);
 
@@ -347,6 +359,9 @@ public class PythonGenerator extends AbstractGenerator
                     String defaultValue = anAttribute.getDefaultValue();
                     if (defaultValue == null)
                         defaultValue = "0";
+                    // Sanitize octal-looking literals (e.g. "00" -> "0")
+                    if (defaultValue.matches("^0\\d+$"))
+                        defaultValue = String.valueOf(Integer.parseInt(defaultValue));
                     pw.println(INDENT + INDENT + "self." + anAttribute.getName() + " = " + defaultValue);
                     writeAttributeComment(pw, anAttribute);
                     break;
@@ -474,6 +489,9 @@ public class PythonGenerator extends AbstractGenerator
                 // Strip Java "new " keyword - Python doesn't use it
                 if (initValue.startsWith("new "))
                     initValue = initValue.substring(4);
+                // Sanitize octal-looking literals (e.g. "00" -> "0")
+                if (initValue.matches("^0\\d+$"))
+                    initValue = String.valueOf(Integer.parseInt(initValue));
                 pw.println(INDENT + INDENT + "self." + anInit.getVariable() + " = " + initValue);
             }
         }
@@ -497,6 +515,107 @@ public class PythonGenerator extends AbstractGenerator
     }
 
     /**
+     * Write the marshalledSize method that computes serialized byte size.
+     * @param pw PrintWriter
+     * @param aClass class of interest
+     */
+    public void writeMarshalledSize(PrintWriter pw, GeneratedClass aClass)
+    {
+        pw.println(INDENT + "def marshalledSize(self):");
+        pw.println(INDENT + INDENT + "\"\"\"Return the marshalled (serialized) size of this object in bytes.\"\"\"");
+        pw.println(INDENT + INDENT + "marshalSize = 0");
+
+        if (!aClass.getParentClass().equalsIgnoreCase("root"))
+        {
+            pw.println(INDENT + INDENT + "marshalSize = super().marshalledSize()");
+        }
+
+        List<GeneratedClassAttribute> attributes = aClass.getClassAttributes();
+        for (int idx = 0; idx < attributes.size(); idx++)
+        {
+            GeneratedClassAttribute anAttribute = attributes.get(idx);
+
+            if (!anAttribute.shouldSerialize)
+                continue;
+
+            switch (anAttribute.getAttributeKind())
+            {
+                case PRIMITIVE:
+                {
+                    String size = primitiveSizes.getProperty(anAttribute.getType());
+                    if (size != null)
+                        pw.println(INDENT + INDENT + "marshalSize += " + size + "  # " + anAttribute.getName());
+                    break;
+                }
+
+                case CLASSREF:
+                    pw.println(INDENT + INDENT + "marshalSize += self." + anAttribute.getName() + ".marshalledSize()");
+                    break;
+
+                case SISO_ENUM:
+                case SISO_BITFIELD:
+                {
+                    String enumSize = anAttribute.getEnumMarshalSize();
+                    if (enumSize != null)
+                    {
+                        int sizeInBytes = Integer.parseInt(enumSize) / 8;
+                        if (sizeInBytes < 1) sizeInBytes = 1;
+                        pw.println(INDENT + INDENT + "marshalSize += " + sizeInBytes + "  # " + anAttribute.getName());
+                    }
+                    else
+                        pw.println(INDENT + INDENT + "marshalSize += 1  # " + anAttribute.getName());
+                    break;
+                }
+
+                case PRIMITIVE_LIST:
+                {
+                    if (anAttribute.getUnderlyingTypeIsPrimitive())
+                    {
+                        String size = primitiveSizes.getProperty(anAttribute.getType());
+                        if (size != null)
+                            pw.println(INDENT + INDENT + "marshalSize += " + anAttribute.getListLength() + " * " + size + "  # " + anAttribute.getName());
+                    }
+                    else
+                    {
+                        pw.println(INDENT + INDENT + "for val in self." + anAttribute.getName() + ":");
+                        pw.println(INDENT + INDENT + INDENT + "marshalSize += val.marshalledSize()");
+                    }
+                    break;
+                }
+
+                case OBJECT_LIST:
+                {
+                    String marshalType = marshalTypes.getProperty(anAttribute.getType());
+                    if (marshalType == null)
+                    {
+                        pw.println(INDENT + INDENT + "for val in self." + anAttribute.getName() + ":");
+                        pw.println(INDENT + INDENT + INDENT + "marshalSize += val.marshalledSize()");
+                    }
+                    else
+                    {
+                        String size = primitiveSizes.getProperty(anAttribute.getType());
+                        if (size != null)
+                            pw.println(INDENT + INDENT + "marshalSize += len(self." + anAttribute.getName() + ") * " + size);
+                    }
+                    break;
+                }
+
+                case PADTO16:
+                case PADTO32:
+                case PADTO64:
+                    pw.println(INDENT + INDENT + "marshalSize += len(self." + anAttribute.getName() + ")");
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        pw.println(INDENT + INDENT + "return marshalSize");
+        pw.println();
+    }
+
+    /**
      * Write the serialize method that marshals the class to a DataOutputStream.
      * @param pw PrintWriter
      * @param aClass class of interest
@@ -506,13 +625,22 @@ public class PythonGenerator extends AbstractGenerator
         pw.println(INDENT + "def serialize(self, outputStream):");
         pw.println(INDENT + INDENT + "\"\"\"Serialize the class to a DataOutputStream.\"\"\"");
 
+        // Auto-compute pduLength if this class owns the "length" field
+        List<GeneratedClassAttribute> attributes = aClass.getClassAttributes();
+        for (GeneratedClassAttribute attr : attributes)
+        {
+            if (attr.getName().equals("length") && attr.getAttributeKind() == ClassAttributeType.PRIMITIVE)
+            {
+                pw.println(INDENT + INDENT + "self.length = self.marshalledSize()");
+                break;
+            }
+        }
+
         // Call super().serialize() if subclass
         if (!aClass.getParentClass().equalsIgnoreCase("root"))
         {
             pw.println(INDENT + INDENT + "super().serialize(outputStream)");
         }
-
-        List<GeneratedClassAttribute> attributes = aClass.getClassAttributes();
         boolean hasContent = false;
 
         for (int idx = 0; idx < attributes.size(); idx++)
@@ -532,6 +660,11 @@ public class PythonGenerator extends AbstractGenerator
                 case PRIMITIVE:
                 {
                     String marshalType = marshalTypes.getProperty(anAttribute.getType());
+                    if (marshalType == null)
+                    {
+                        System.err.println("Warning: no marshal type for " + anAttribute.getType() + " in " + aClass.getName() + "." + anAttribute.getName());
+                        marshalType = "unsigned_byte";
+                    }
                     if (anAttribute.getIsDynamicListLengthField())
                     {
                         GeneratedClassAttribute listAttribute = anAttribute.getDynamicListClassAttribute();
@@ -554,6 +687,11 @@ public class PythonGenerator extends AbstractGenerator
                     if (anAttribute.getUnderlyingTypeIsPrimitive())
                     {
                         String marshalType = marshalTypes.getProperty(anAttribute.getType());
+                        if (marshalType == null)
+                        {
+                            System.err.println("Warning: no marshal type for " + anAttribute.getType() + " in " + aClass.getName() + "." + anAttribute.getName());
+                            marshalType = "unsigned_byte";
+                        }
                         pw.println(INDENT + INDENT + INDENT + "outputStream.write_" + marshalType + "(self." + anAttribute.getName() + "[idx])");
                     }
                     else if (anAttribute.listIsClass())
@@ -659,7 +797,12 @@ public class PythonGenerator extends AbstractGenerator
             {
                 case PRIMITIVE:
                 {
-                    String marshalType = marshalTypes.getProperty(anAttribute.getType());
+                    String marshalType = unmarshalTypes.getProperty(anAttribute.getType());
+                    if (marshalType == null)
+                    {
+                        System.err.println("Warning: no unmarshal type for " + anAttribute.getType() + " in " + aClass.getName() + "." + anAttribute.getName());
+                        marshalType = "unsigned_byte";
+                    }
                     pw.println(INDENT + INDENT + "self." + anAttribute.getName() + " = inputStream.read_" + marshalType + "()");
                     break;
                 }
@@ -675,6 +818,11 @@ public class PythonGenerator extends AbstractGenerator
                         pw.println(INDENT + INDENT + "self." + anAttribute.getName() + " = [0] * " + anAttribute.getListLength());
                         pw.println(INDENT + INDENT + "for idx in range(0, " + anAttribute.getListLength() + "):");
                         String marshalType = unmarshalTypes.getProperty(anAttribute.getType());
+                        if (marshalType == null)
+                        {
+                            System.err.println("Warning: no unmarshal type for " + anAttribute.getType() + " in " + aClass.getName() + "." + anAttribute.getName());
+                            marshalType = "unsigned_byte";
+                        }
                         pw.println(INDENT + INDENT + INDENT + "self." + anAttribute.getName() + "[idx] = inputStream.read_" + marshalType + "()");
                     }
                     else
@@ -691,7 +839,13 @@ public class PythonGenerator extends AbstractGenerator
                     String marshalType = marshalTypes.getProperty(anAttribute.getType());
                     if (marshalType == null) // It's a class
                     {
-                        pw.println(INDENT + INDENT + INDENT + "element = " + anAttribute.getType() + "()");
+                        String elementType = anAttribute.getType();
+                        if (elementType == null || elementType.equals("null"))
+                        {
+                            System.err.println("Warning: null element type for OBJECT_LIST " + anAttribute.getName() + " in " + aClass.getName());
+                            elementType = "object";
+                        }
+                        pw.println(INDENT + INDENT + INDENT + "element = " + elementType + "()");
                         pw.println(INDENT + INDENT + INDENT + "element.parse(inputStream)");
                         pw.println(INDENT + INDENT + INDENT + "self." + anAttribute.getName() + ".append(element)");
                     }
