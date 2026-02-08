@@ -1117,8 +1117,30 @@ WarfareFamilyPdus.xml
             </classpath>
         </java>
 
+        <!-- Stage 6: Delete auto-generated classes replaced by special-case versions -->
+        <echo message="--- Stage 6: Replace auto-generated with special-case/supporting Python files ---"/>
+        <delete file="src-generated/python/opendis7/pdus/VariableDatum.py"/>
+        <delete file="src-generated/python/opendis7/pdus/SignalPdu.py"/>
+        <delete file="src-generated/python/opendis7/pdus/IntercomSignalPdu.py"/>
+        <delete file="src-generated/python/opendis7/pdus/PduStatus.py"/>
+        <delete file="src-generated/python/opendis7/pdus/Domain.py"/>
+
+        <!-- Copy supporting Python files (e.g. PduStatus with named bit flags) -->
+        <copy todir="src-generated/python/opendis7" overwrite="true">
+            <fileset dir="src-supporting/python/opendis7">
+                <include name="**/*.py"/>
+            </fileset>
+        </copy>
+
+        <!-- Copy special-case Python files (hand-crafted replacements) -->
+        <copy todir="src-generated/python/opendis7" overwrite="true">
+            <fileset dir="src-specialcase/python/opendis7">
+                <include name="**/*.py"/>
+            </fileset>
+        </copy>
+
         <echo message="=================================================================================="/>
         <echo message="generate-source-code-python complete"/>
     </target>
-    
+
 </project>
