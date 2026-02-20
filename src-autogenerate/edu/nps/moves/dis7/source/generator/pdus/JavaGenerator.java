@@ -1996,6 +1996,7 @@ public class JavaGenerator extends AbstractGenerator
                     break;
                     
                 case OBJECT_LIST:
+                    pw.println("        " + anAttribute.getName() + ".clear();");
                     if (anAttribute.getCountFieldName() != null)
                         pw.println("        for (int idx = 0; idx < " + anAttribute.getCountFieldName() + "; idx++)");
                     else
@@ -2025,7 +2026,7 @@ public class JavaGenerator extends AbstractGenerator
                     pw.println("        }");
                     pw.println();
                     break;
-                    
+
                 case PADTO16:
                     pw.println("        "+anAttribute.getName() + " = new byte[Align.from16bits(uPosition,dis)];");
                     pw.println("        uPosition += " + anAttribute.getName() + ".length;");
@@ -2267,11 +2268,12 @@ public class JavaGenerator extends AbstractGenerator
                     break;
                     
                 case OBJECT_LIST:
+                    pw.println("        " + anAttribute.getName() + ".clear();");
                     if(anAttribute.getCountFieldName() != null)
                         pw.println("        for (int idx = 0; idx < " + anAttribute.getCountFieldName() + "; idx++)");
                     else
                         pw.println("        for (int idx = 0; idx < " + anAttribute.getName() + ".size(); idx++)");
-                
+
                     pw.println("        {");
 
                     if(anAttribute.getUnderlyingTypeIsEnum()) {

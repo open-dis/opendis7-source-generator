@@ -6,6 +6,10 @@
 package edu.nps.moves.dis7.source.generator;
 
 import edu.nps.moves.dis7.source.generator.pdus.GeneratePdusForGivenLanguage;
+import edu.nps.moves.dis7.source.generator.enumerations.PythonEnumerationGenerator;
+import edu.nps.moves.dis7.source.generator.entityTypes.PythonEntityTypeGenerator;
+import edu.nps.moves.dis7.source.generator.entityTypes.PythonObjectTypeGenerator;
+import edu.nps.moves.dis7.source.generator.entityTypes.PythonJammerGenerator;
 
 /**
  * GenerateOpenDis7JavaPackages.java created on Jul 17, 2019
@@ -49,6 +53,12 @@ public class GenerateOpenDis7JavaPackages
   static String jammerPackage     = "edu.nps.moves.dis7.jammers";
   static String objectTypePackage = "edu.nps.moves.dis7.objectTypes";
   static String entitiesPackage   = "edu.nps.moves.dis7.entities";
+
+  // Python output paths
+  static String pythonEnumOutputPath       = "src-generated/python/opendis7/enumerations";
+  static String pythonJammerOutputPath     = "src-generated/python/opendis7/jammers";
+  static String pythonObjectTypeOutputPath = "src-generated/python/opendis7/objecttypes";
+  static String pythonEntitiesOutputPath   = "src-generated/python/opendis7/entities";
   // @formatter:on
 
     /** Command-line or solo invocation to run this object
@@ -90,11 +100,28 @@ public class GenerateOpenDis7JavaPackages
         else if (whichLanguage.equalsIgnoreCase("python"))
         {
             System.out.println("------------- opendis7-python generation commence -------------");
-            
-//            GeneratePdusForGivenLanguage generatePdusForGivenLanguage = new GeneratePdusForGivenLanguage(DEFAULT_SISO_XML_FILE, whichLanguage);
-            
-            GeneratePdusForGivenLanguage.main(new String[]{DEFAULT_SISO_XML_FILE, whichLanguage});
-            
+            System.out.println();
+
+            // PYTHON ENUMERATIONS
+            System.out.println("------------- Generating Python enumerations -------------");
+            PythonEnumerationGenerator.main(new String[]{DEFAULT_SISO_XML_FILE, pythonEnumOutputPath});
+
+            // PYTHON PDUS (modular, one file per class)
+            System.out.println("------------- Generating Python PDUs -------------");
+            GeneratePdusForGivenLanguage.main(new String[]{DEFAULT_PDU_XML_FILE, whichLanguage});
+
+            // PYTHON JAMMERS
+            System.out.println("------------- Generating Python jammers -------------");
+            PythonJammerGenerator.main(new String[]{DEFAULT_SISO_XML_FILE, pythonJammerOutputPath});
+
+            // PYTHON OBJECT TYPES
+            System.out.println("------------- Generating Python object types -------------");
+            PythonObjectTypeGenerator.main(new String[]{DEFAULT_SISO_XML_FILE, pythonObjectTypeOutputPath});
+
+            // PYTHON ENTITY TYPES
+            System.out.println("------------- Generating Python entity types -------------");
+            PythonEntityTypeGenerator.main(new String[]{DEFAULT_SISO_XML_FILE, pythonEntitiesOutputPath});
+
             System.out.println("------------- opendis7-python generation complete -------------");
         }
         else System.out.println (GenerateOpenDis7JavaPackages.class.getName() + " unsupported language: " + whichLanguage);
