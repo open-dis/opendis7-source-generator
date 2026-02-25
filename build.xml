@@ -1126,14 +1126,14 @@ WarfareFamilyPdus.xml
         <delete file="src-generated/python/opendis7/pdus/Domain.py"/>
 
         <!-- Copy supporting Python files (e.g. PduStatus with named bit flags) -->
-        <copy todir="src-generated/python/opendis7" overwrite="true">
+        <copy todir="src-generated/python/opendis7" overwrite="true" verbose="true">
             <fileset dir="src-supporting/python/opendis7">
                 <include name="**/*.py"/>
             </fileset>
         </copy>
 
         <!-- Copy special-case Python files (hand-crafted replacements) -->
-        <copy todir="src-generated/python/opendis7" overwrite="true">
+        <copy todir="src-generated/python/opendis7" overwrite="true" verbose="true">
             <fileset dir="src-specialcase/python/opendis7">
                 <include name="**/*.py"/>
             </fileset>
