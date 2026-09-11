@@ -5,6 +5,7 @@
 package edu.nps.moves.dis7.source.generator.pdus;
 
 import edu.nps.moves.dis7.source.generator.pdus.GeneratedClassAttribute.ClassAttributeType;
+import static edu.nps.moves.dis7.source.generator.pdus.GeneratedClassAttribute.ClassAttributeType.PRIMITIVE;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -1881,15 +1882,20 @@ public class JavaGenerator extends AbstractGenerator
                 
                 case PADTO16:
                     pw.println("       "+anAttribute.getName()+" = new byte[Align.to16bits(dos)];");
+                    pw.println("       "+"Arrays.fill("+anAttribute.getName()+", (byte) 0); // reset all bytes to zero");
                     break;
                 case PADTO32:
                     pw.println("       "+anAttribute.getName()+" = new byte[Align.to32bits(dos)];");
+                    pw.println("       "+"Arrays.fill("+anAttribute.getName()+", (byte) 0); // reset all bytes to zero");
                     break;
                 case PADTO64:
                     pw.println("       "+anAttribute.getName()+" = new byte[Align.to64bits(dos)];");
+                    pw.println("       "+"Arrays.fill("+anAttribute.getName()+", (byte) 0); // reset all bytes to zero");
                     break;
-                    
             }
+            if ( anAttribute.getName().startsWith("padding") && 
+                (anAttribute.getType() != null) && anAttribute.getType().equals("byte[]"))
+                    pw.println("       "+"Arrays.fill("+anAttribute.getName()+", (byte) 0); // reset all bytes to zero");
 
         } // End of loop through the ivars for a marshal method
 
@@ -2596,9 +2602,10 @@ public class JavaGenerator extends AbstractGenerator
                 pw.println();
                 pw.println("     for (int idx = 0; idx < "+ anAttribute.getListLength() + "; idx++)");
                 pw.println("     {");
-                pw.println("          if(!(" + attname + "[idx] == rhs." + attname + "[idx])) return false;");
+                pw.println("         if (idx < " + attname + ".length)");
+                pw.println("             if(!("  + attname + "[idx] == rhs." + attname + "[idx]))");
+                pw.println("                 return false;");
                 pw.println("     }");
-                pw.println();
                 break;
             }
           }
@@ -2637,13 +2644,18 @@ public class JavaGenerator extends AbstractGenerator
 
         aClass.getClassAttributes().forEach(attr -> {
             if (!attr.isHidden()) {
-                switch(attr.getAttributeKind()) {
+              if (attr.getName().equals("padding") || attr.getName().startsWith("pad"))
+                    writeOneToString(pw,attr);
+              else switch(attr.getAttributeKind()) {
                     case PRIMITIVE_LIST:
                         writePrimitiveList(pw,attr);
                         break;
                     case OBJECT_LIST:
                         objlists.add(attr);
                         break;
+                    case PADTO16:
+                    case PADTO32:
+                    case PADTO64:
                     default:
                         writeOneToString(pw,attr);
                 }
@@ -2662,10 +2674,10 @@ public class JavaGenerator extends AbstractGenerator
     {
         pw.print  ("    sb.append(\" ");
         pw.print  (attr.getName());
-        pw.println(":\");");
+        pw.print  (":\");");
         pw.print  ("    sb.append(Arrays.toString(");
         pw.print  (attr.getName());
-        pw.println(")); // writePrimitiveList");
+        pw.println(")); // writePrimitiveList getAttributeKind()=" + attr.getAttributeKind());
         
 //      pw.print("    sb.append(\" ");
 //      pw.print(attr.getName());
@@ -2683,7 +2695,7 @@ public class JavaGenerator extends AbstractGenerator
 
         pw.print("    ");
         pw.print(attr.getName());
-        pw.println(".forEach(r->{ sb2.append(\" \").append(r);}); // writeList");
+        pw.println(".forEach(r->{ sb2.append(\" \").append(r);}); // writeList getAttributeKind()=" + attr.getAttributeKind());
         pw.println("    sb.append(sb2.toString().trim());");
         pw.println("    // https://stackoverflow.com/questions/2242471/clearing-a-string-buffer-builder-after-loop");
         pw.println("    sb2.setLength(0); // reset");
@@ -2701,8 +2713,12 @@ public class JavaGenerator extends AbstractGenerator
         pw.print  ("    sb.append(\" ");
         pw.print  (attr.getName());
         pw.print(":\").append(");
-        pw.print  (attr.getName());
-        pw.println("); // writeOneToString");
+        if (attr.getName().equals("padding") || attr.getName().startsWith("pad"))
+             pw.print  ("\"(unused)\""); // make sure of consistent conversion, e.g. avoid padding.toString() unit test errors
+        else if (attr.getAttributeKind() == PRIMITIVE)
+             pw.print  ("String.valueOf(" + attr.getName() + ")");
+        else pw.print  (attr.getName()); // TODO perhaps always use String.valueOf ?
+        pw.println("); // writeOneToString getAttributeKind()=" + attr.getAttributeKind());
         
 //        pw.print("    sb.append(\" ");
 //        pw.print(attr.getName());
