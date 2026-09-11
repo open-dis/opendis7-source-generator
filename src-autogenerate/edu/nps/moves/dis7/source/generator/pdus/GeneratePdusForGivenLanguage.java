@@ -770,12 +770,12 @@ public class GeneratePdusForGivenLanguage  // TODO rename? perhaps GeneratePdusB
                                 currentClassAttribute.setAttributeKind(GeneratedClassAttribute.ClassAttributeType.PADTO64);
                                 break;
                             default:
-                                System.err.println("Unrecognized value for padtoboundary length attribute: "+attributes.getValue(idx));
+                                System.err.println("[warning] Unrecognized value for padtoboundary length attribute: "+attributes.getValue(idx));
                                 break;
                             }
                         break;
                     default:
-                        System.err.println("Unrecognized attribute to padtoboundary element: "+nm);
+                        System.err.println("[warning] Unrecognized attribute to padtoboundary element: "+nm);
                 }
             }
         }
