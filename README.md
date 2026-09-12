@@ -51,13 +51,13 @@ The underlying build process for autogenerating complex software library in sepa
 
 The Java language is inherently cross-platform and any OS on any hardware for which a Java run-time is available should support running of this project.  However, the configuration used by the developer is the following:
 
-1. Apache **Netbeans 28** Integrated Development Environment ("IDE")
-2. Apache **Ant** Java build tool version 1.10.15
-3. **Git** version control system (for downloading project; supported in Netbeans)
-4. OpenJdk Java version **OpenJdk 25.0.2**
+1. Apache **Netbeans 31** Integrated Development Environment ("IDE")
+2. Apache **Ant** Java build tool version 1.10.17
+3. **Git** version control system (for downloading project; also supported in Netbeans)
+4. OpenJdk Java version **OpenJdk 26.0.2.1**
 5. Altova XMLSpy to check all XML schemas and source (especially for SISO-REF-010).
 
-Please see [Savage Developers Guide](https://savage.nps.edu/Savage/developers.html) to find
+Please see [X3D Developers Guide](https://www.web3d.org/x3d/content/examples/X3dDevelopersGuide.html) to find
 our current recommended development settings for using each of these tools.
 
 The project is hosted at [github.com/open-dis/opendis7-source-generator](https://github.com/open-dis/opendis7-source-generator) and the support files which are used to define the project structure are also included.  Following the procedure below, a simple download, then a small number of additional steps are all that are required to build the source files for a DIS distribution.
