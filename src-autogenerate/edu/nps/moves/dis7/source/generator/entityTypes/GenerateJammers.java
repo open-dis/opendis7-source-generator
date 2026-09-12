@@ -551,8 +551,8 @@ public class GenerateJammers
 
   private String pathToPackage(String s)
   {
-    s = s.replace("_", "");
-    s = s.replace("/", ".");
+    s = s.replaceAll("_", "").replaceAll("\\(", "").replaceAll("\\)", "");
+    s = s.replaceAll("/", ".");
     if (s.endsWith("."))
       s = s.substring(0, s.length() - 1);
     return s;
@@ -683,6 +683,8 @@ public class GenerateJammers
     r = r.trim().replaceAll(",", " ").replaceAll("—"," ").replaceAll("-", " ").replaceAll("\\."," ").replaceAll("&"," ")
                                      .replaceAll("/"," ").replaceAll("\"", " ").replaceAll("\'", " ").replaceAll("( )+"," ").replaceAll(" ", "_");
     r = r.substring(0,1) + r.substring(1).replaceAll("_",""); // no underscore divider after first character
+    
+    r = r.replaceAll("\\(", "").replaceAll("\\)", ""); // no (parentheses), \\ is escape character
             
     r = r.replaceAll("[\\h-/,\";:\\u2013]", "_");
 

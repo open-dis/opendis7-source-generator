@@ -11,7 +11,7 @@ associated enumerations that are integrated in the
 In preparation: [opendis7-python](https://github.com/open-dis/opendis7-python).
 
 Recent project products include full Java support for all 72 DISv7 Protocol Data Units (PDUs)
-and over 22,000 SISO-REF-010 version 35 enumerations.
+and over 22,000 SISO-REF-010 version 37 enumerations.
 
 Additional testing and experimentation is performed in the NPS MOVES
 [Networked Graphics MV3500](https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500) course.

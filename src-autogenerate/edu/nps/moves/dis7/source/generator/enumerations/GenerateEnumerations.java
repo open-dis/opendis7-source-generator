@@ -230,7 +230,7 @@ public class GenerateEnumerations
          *  @return output string */
         public final static String htmlize(String s)
         {
-            return s.replace("&","and").replace("&","and");
+            return s.replace("&","and").replace("&","and").replace("<","&lt;").replace(">","&gt;");
         }
 
     /**

@@ -106,11 +106,11 @@ POSSIBILITY OF SUCH DAMAGE.
     <property name="manifest.name"          value="OpenDIS7 Entity Enumerations"/>
     <property name="Built-By"               value="https://github.com/open-dis/opendis7-source-generator"/>
     <property name="Specification-Title"    value="SISO Reference for Enumerations for Simulation Interoperability SISO-REF-010"/>
-    <property name="Specification-Version"  value="v34"/>
+    <property name="Specification-Version"  value="v37"/><!-- SISO-REF-010 Enumerations -->
     <property name="Specification-Vendor"   value="Simulation Interoperability Standards Organization (SISO)"/>
     <property name="Implementation-Title"   value="edu.nps.moves.dis7"/>
     <property name="Implementation-Version" value="${timestamp}"/>
-    <property name="Implementation-Vendor"  value="Naval Postgraduate School (NPS)"/>
+    <property name="Implementation-Vendor"  value="Relative Motion Consulting (RMC)"/>
 
     <property environment="env"/>
     <property name="opendis7-java"      location="../opendis7-java"/>
@@ -143,7 +143,7 @@ POSSIBILITY OF SUCH DAMAGE.
         <echo message="==========================================="/>
     </target>
     
-    <target name="all" depends="versions,clean.build,clean" description="Build enumeration and PDU source code, assemble all products.">
+    <target name="all" depends="versions,clean.all" description="Build enumeration and PDU source code, assemble all products.">
         <!-- TODO current configuration is Java only; Python is next -->
         <echo message="timestamp ${timestamp}"/>
         <fail message="Please build using Ant 1.10.14 or higher.">
@@ -200,7 +200,7 @@ POSSIBILITY OF SUCH DAMAGE.
         </delete>
     </target>
 
-    <target name="clean.build" depends="clean.generated-jars-javadoc,clean.generated-source,clean.pduLogs">
+    <target name="clean.all" depends="clean,clean.generated-jars-javadoc,clean.generated-source,clean.generated-python-source,clean.pduLogs">
     </target>
 
     <target name="clean.generated-jars-javadoc">

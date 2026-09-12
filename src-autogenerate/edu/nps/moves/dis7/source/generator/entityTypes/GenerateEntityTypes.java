@@ -947,7 +947,7 @@ public class GenerateEntityTypes
   private String buidKindOrDomainPackagePart(String s)
   {
     s = fixName(s);
-    s = s.replaceAll("_", "");
+    s = s.replaceAll("_", "").replaceAll("\\(", "").replaceAll("\\)", "");
     s = s.toLowerCase();
     return s;
   }
@@ -1153,6 +1153,8 @@ public class GenerateEntityTypes
     r = r.trim().replaceAll(",", " ").replaceAll("—"," ").replaceAll("-", " ").replaceAll("\\."," ").replaceAll("&"," ")
                                      .replaceAll("/"," ").replaceAll("\"", " ").replaceAll("\'", " ").replaceAll("( )+"," ").replaceAll(" ", "_");
     r = r.substring(0,1) + r.substring(1).replaceAll("_",""); // no underscore divider after first character
+
+    r = r.replaceAll("\\(", "").replaceAll("\\)", ""); // no (parentheses), \\ is escape character
 
     r = r.replaceAll("[\\h-/,\";:\\u2013]", "_");
 

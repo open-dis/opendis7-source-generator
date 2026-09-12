@@ -576,8 +576,8 @@ public class GenerateObjectTypes
 
   private String pathToPackage(String s)
   {
-    s = s.replace("_", "");
-    s = s.replace("/", ".");
+    s = s.replaceAll("_", "").replaceAll("\\(", "").replaceAll("\\)", "");
+    s = s.replaceAll("/", ".");
     if (s.endsWith("."))
       s = s.substring(0, s.length() - 1);
     return s;
@@ -687,7 +687,7 @@ public class GenerateObjectTypes
         {
           r = makeNonNumeric(elem,r);    
         }
-        r = r.substring(0,1) + r.substring(1).replaceAll("_",""); // no underscore divider after first character
+        r = r.substring(0,1) + r.substring(1).replaceAll("_","").replaceAll("\\(", "").replaceAll("\\)", ""); // no underscore divider after first character
     }
     return r;
   }
@@ -708,6 +708,8 @@ public class GenerateObjectTypes
     r = r.trim().replaceAll(",", " ").replaceAll("—"," ").replaceAll("-", " ").replaceAll("\\."," ").replaceAll("&"," ")
                                      .replaceAll("/"," ").replaceAll("\"", " ").replaceAll("\'", " ").replaceAll("( )+"," ").replaceAll(" ", "_");
     r = r.substring(0,1) + r.substring(1).replaceAll("_",""); // no underscore divider after first character
+    
+    r = r.replaceAll("\\(", "").replaceAll("\\)", ""); // no (parentheses), \\ is escape character
             
     r = r.replaceAll("[\\h-/,\";:\\u2013]", "_");
 
@@ -727,7 +729,7 @@ public class GenerateObjectTypes
     r = r.replace("=", "EQ");
     r = r.replace("%", "pct");
     r = r.replaceAll("—","_").replaceAll("–","_").replaceAll("\"", "").replaceAll("\'", "");
-
+    r = r.replaceAll("\\(", "").replaceAll("\\)", ""); // no (parentheses), \\ is escape character
     // Java identifier can't start with digit
     if (Character.isDigit(r.charAt(0)))
         r = "_" + r;

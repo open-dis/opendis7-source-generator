@@ -10,8 +10,8 @@ edu.nps.moves.dis7.source.generator.enumerations.PythonEnumerationGenerator
 actual directory path=C:\x3d-github\opendis7-source-generator\src-generated\python\opendis7\enumerations
 Begin uid preprocess for Python enumerations...
 Begin Python enumeration generation...
-Created enumerations __init__.py with 493 imports
-edu.nps.moves.dis7.source.generator.enumerations.PythonEnumerationGenerator complete, 493 Python enum classes created.
+Created enumerations __init__.py with 597 imports
+edu.nps.moves.dis7.source.generator.enumerations.PythonEnumerationGenerator complete, 597 Python enum classes created.
 --- Stage 2: Python PDUs ---
 edu.nps.moves.dis7.source.generator.pdus.GeneratePdusForGivenLanguage
  sisoXmlFile=xml/dis_7_2012/DIS_7_2012.xml
@@ -285,10 +285,27 @@ edu.nps.moves.dis7.source.generator.entityTypes.PythonObjectTypeGenerator
   outputDirectory=src-generated/python/opendis7/objecttypes
 actual directory path=C:\x3d-github\opendis7-source-generator\src-generated\python\opendis7\objecttypes
 Begin Python object type generation...
-edu.nps.moves.dis7.source.generator.entityTypes.PythonObjectTypeGenerator complete, 7335 Python object type classes created.
+edu.nps.moves.dis7.source.generator.entityTypes.PythonObjectTypeGenerator complete, 7579 Python object type classes created.
 --- Stage 5: Python entity types ---
 edu.nps.moves.dis7.source.generator.entityTypes.PythonEntityTypeGenerator
           xmlFile=xml/SISO/SISO-REF-010.xml
   outputDirectory=src-generated/python/opendis7/entities
 actual directory path=C:\x3d-github\opendis7-source-generator\src-generated\python\opendis7\entities
 Begin Python entity type generation...
+edu.nps.moves.dis7.source.generator.entityTypes.PythonEntityTypeGenerator complete, 24185 Python entity type classes created.
+--- Stage 6: Replace auto-generated with special-case/supporting Python files ---
+Deleting: C:\x3d-github\opendis7-source-generator\src-generated\python\opendis7\pdus\VariableDatum.py
+Deleting: C:\x3d-github\opendis7-source-generator\src-generated\python\opendis7\pdus\SignalPdu.py
+Deleting: C:\x3d-github\opendis7-source-generator\src-generated\python\opendis7\pdus\IntercomSignalPdu.py
+Copying 1 file to C:\x3d-github\opendis7-source-generator\src-generated\python\opendis7
+Copying C:\x3d-github\opendis7-source-generator\src-supporting\python\opendis7\pdus\PduStatus.py to C:\x3d-github\opendis7-source-generator\src-generated\python\opendis7\pdus\PduStatus.py
+Copying 6 files to C:\x3d-github\opendis7-source-generator\src-generated\python\opendis7
+Copying C:\x3d-github\opendis7-source-generator\src-specialcase\python\opendis7\pdus\Domain.py to C:\x3d-github\opendis7-source-generator\src-generated\python\opendis7\pdus\Domain.py
+Copying C:\x3d-github\opendis7-source-generator\src-specialcase\python\opendis7\pdus\IntercomSignalPdu.py to C:\x3d-github\opendis7-source-generator\src-generated\python\opendis7\pdus\IntercomSignalPdu.py
+Copying C:\x3d-github\opendis7-source-generator\src-specialcase\python\opendis7\pdus\SignalPdu.py to C:\x3d-github\opendis7-source-generator\src-generated\python\opendis7\pdus\SignalPdu.py
+Copying C:\x3d-github\opendis7-source-generator\src-specialcase\python\opendis7\pdus\VariableDatum.py to C:\x3d-github\opendis7-source-generator\src-generated\python\opendis7\pdus\VariableDatum.py
+Copying C:\x3d-github\opendis7-source-generator\src-specialcase\python\opendis7\utilities\DisTime.py to C:\x3d-github\opendis7-source-generator\src-generated\python\opendis7\utilities\DisTime.py
+Copying C:\x3d-github\opendis7-source-generator\src-specialcase\python\opendis7\utilities\__init__.py to C:\x3d-github\opendis7-source-generator\src-generated\python\opendis7\utilities\__init__.py
+==================================================================================
+generate-source-code-python complete
+BUILD SUCCESSFUL (total time: 12 seconds)
