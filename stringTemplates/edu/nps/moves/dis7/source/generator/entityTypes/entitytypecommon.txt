@@ -16,7 +16,7 @@ import edu.nps.moves.dis7.enumerations.*;
  *     <li> SubCategory: %s %s; </li>
  *     <li> Specific: %s %s; </li>
  *     <li> Entity type uid: %s; </li>
- *     <li> Online document reference: <a href="https://gitlab.nps.edu/Savage/NetworkedGraphicsMV3500/-/blob/master/specifications/README.md" target="_blank">%s</a>. </li>
+ *     <li> Online document reference: <a href="https://github.com/open-dis/opendis7-source-generator/blob/master/xml/README.md" target="_blank">%s</a>. </li>
  * </ul>
  * <p> Full name: %s. </p>
  * @see Country#%s
