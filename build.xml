@@ -191,16 +191,8 @@ POSSIBILITY OF SUCH DAMAGE.
         <antcall target="copy-generated-source-to-opendis7-java" description="useful for debugging, accepted updates in version control there"/>
         <echo message="opendis7-source-generator build all complete"/>
     </target>
-    
-    <target name="clean.pduLogs" description="clean recorded pduLog files">
-        <delete verbose="true" failonerror="false">
-            <fileset dir="pduLog">
-                <include name="*.dislog"/>
-            </fileset>
-        </delete>
-    </target>
 
-    <target name="clean.all" depends="clean,clean.generated-jars-javadoc,clean.generated-source,clean.generated-python-source,clean.pduLogs">
+    <target name="clean.all" depends="clean,clean.generated-jars-javadoc,clean.generated-source,clean.generated-python-source">
     </target>
 
     <target name="clean.generated-jars-javadoc">
@@ -226,7 +218,6 @@ POSSIBILITY OF SUCH DAMAGE.
     <target name="-post-clean">
         <antcall target="clean.generated-jars-javadoc"/>
         <antcall target="clean.generated-source"/>
-        <!--<antcall target="clean.pduLogs"/>-->
         <echo message="make clean complete"/>
     </target>
    
