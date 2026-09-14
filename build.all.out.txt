@@ -13,7 +13,7 @@ OpenJDK 64-Bit Server VM (build 26.0.2.1+1-7, mixed mode, sharing)
 Java/JVM version    $ant.java.version=26
 Java/JVM detail version $java.version=26.0.2.1
 Ant version              $ant.version=Apache Ant(TM) version 1.10.15 compiled on August 25 2024
-Configuration settings:  https://savage.nps.edu/Savage/developers.html
+Configuration settings:  https://www.web3d.org/x3d/content/examples/X3dDevelopersGuide.html
 ===========================================
 init:
 deps-clean:
@@ -35,11 +35,9 @@ ensure src-generated/java directory exists and is empty
 clean.generated-python-source:
 ==================================================================================
 Cleaning generated Python source in src-generated/python/
-clean.pduLogs:
-Directory does not exist: C:\x3d-github\opendis7-source-generator\pduLog
 clean.all:
 all:
-timestamp 12 September 2026 09:48:00
+timestamp 13 September 2026 20:21:27
 ==================================================================================
 generate enumerations classes (given limited path entries in project classpath)
 init:
@@ -1026,10 +1024,7 @@ Updating property file: C:\x3d-github\opendis7-source-generator\build\built-jar.
 Created dir: C:\x3d-github\opendis7-source-generator\build\empty
 Created dir: C:\x3d-github\opendis7-source-generator\build\generated-sources\ap-source-output
 Compiling 25829 source files to C:\x3d-github\opendis7-source-generator\build\classes
-warning: [options] location of system modules is not set in conjunction with -source 17
-  not setting the location of system modules may lead to class files that cannot run on JDK 17
-    --release 17 is recommended instead of -source 17 -target 17 because it sets the location of system modules automatically
-1 warning
+Ignoring source, target and bootclasspath as release has been set
 Creating empty C:\x3d-github\opendis7-source-generator\build\classes\edu\nps\moves\dis7\entities\ser\platform\surface\package-info.class
 Creating empty C:\x3d-github\opendis7-source-generator\build\classes\edu\nps\moves\dis7\entities\prk\platform\subsurface\package-info.class
 Creating empty C:\x3d-github\opendis7-source-generator\build\classes\edu\nps\moves\dis7\entities\gbr\munition\antiradar\package-info.class
@@ -1492,7 +1487,7 @@ Specification-Title    = SISO Reference for Enumerations for Simulation Interope
 Specification-Version  = v37
 Specification-Vendor   = Simulation Interoperability Standards Organization (SISO)
 Implementation-Title   = edu.nps.moves.dis7
-Implementation-Version = 12 September 2026 09:48:00
+Implementation-Version = 13 September 2026 20:21:27
 Implementation-Vendor  = Relative Motion Consulting (RMC)
 jar.enumerations.classes:
 Packaging .class binaries for all generated OpenDIS7 entity enumerations into a single JAR
@@ -84193,4 +84188,4 @@ Both enumerations and PDUs are created by opendis7-source-generator, with
 Copying 27229 files to C:\x3d-github\opendis7-java\src-generated
 Copying 7 files to C:\x3d-github\opendis7-java\src-generated
 opendis7-source-generator build all complete
-BUILD SUCCESSFUL (total time: 9 minutes 36 seconds)
+BUILD SUCCESSFUL (total time: 10 minutes 24 seconds)
