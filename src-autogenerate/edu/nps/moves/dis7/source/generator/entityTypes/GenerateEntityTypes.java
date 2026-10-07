@@ -867,9 +867,14 @@ public class GenerateEntityTypes
 
   private void saveFile(File parentDir, String name, String contents)
   {
-    // save file
     File target = new File(parentDir, name);
     try {
+      // Delete any existing file first so that a case-only rename
+      // (e.g. ORION.java -> Orion.java) takes effect even on
+      // case-insensitive filesystems like macOS HFS+/APFS.
+      if (target.exists()) {
+        target.delete();
+      }
       target.createNewFile();
       try (FileWriter fw = new FileWriter(target, StandardCharsets.UTF_8)) {
         fw.write(contents);
