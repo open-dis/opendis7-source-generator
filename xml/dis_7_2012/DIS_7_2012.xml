@@ -110,7 +110,7 @@
         </attribute>
 
         <attribute name="characters" comment="The characters">
-            <primitivelist length="31" couldBeString="true">
+            <primitivelist length="31" couldBeString="true" fixedlength="true">
                 <primitive type="uint8"/>
             </primitivelist>
         </attribute>
