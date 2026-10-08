@@ -37,7 +37,7 @@ clean.generated-python-source:
 Cleaning generated Python source in src-generated/python/
 clean.all:
 all:
-timestamp 6 October 2026 21:04:27
+timestamp 7 October 2026 11:29:44
 ==================================================================================
 generate enumerations classes (given limited path entries in project classpath)
 init:
@@ -1487,7 +1487,7 @@ Specification-Title    = SISO Reference for Enumerations for Simulation Interope
 Specification-Version  = v37
 Specification-Vendor   = Simulation Interoperability Standards Organization (SISO)
 Implementation-Title   = edu.nps.moves.dis7
-Implementation-Version = 6 October 2026 21:04:27
+Implementation-Version = 7 October 2026 11:29:44
 Implementation-Vendor  = Relative Motion Consulting (RMC)
 jar.enumerations.classes:
 Packaging .class binaries for all generated OpenDIS7 entity enumerations into a single JAR
@@ -84171,7 +84171,15 @@ Packaging javadoc documentation for all generated OpenDIS7 entity enumerations i
 (note that generated javadoc subdirectory is found within dist subdirectory)
 Building jar: C:\x3d-github\opendis7-source-generator\dist\opendis7-enumerations-javadoc.jar
 copy-generated-jars-to-opendis7-java:
-skipping copy-generated-jars-to-opendis7-java (sibling project not found)
+Copy generated jars to opendis7-java project
+Both enumerations and PDUs are created by opendis7-source-generator, with
+   PDU classes  packaged into opendis7-*.jar              archives by opendis7-java project and
+   enumerations packaged into opendis7-enumerations-*.jar archives by opendis7-source-generator.
+copy dist/opendis7-enumerations-classes.jar, -source.jar, -javadoc.jar to C:\x3d-github\opendis7-java/dist
+Copying 3 files to C:\x3d-github\opendis7-java\dist
+Copying C:\x3d-github\opendis7-source-generator\dist\opendis7-enumerations-classes.jar to C:\x3d-github\opendis7-java\dist\opendis7-enumerations-classes.jar
+Copying C:\x3d-github\opendis7-source-generator\dist\opendis7-enumerations-javadoc.jar to C:\x3d-github\opendis7-java\dist\opendis7-enumerations-javadoc.jar
+Copying C:\x3d-github\opendis7-source-generator\dist\opendis7-enumerations-source.jar to C:\x3d-github\opendis7-java\dist\opendis7-enumerations-source.jar
 copy-generated-source-to-opendis7-java:
 Both enumerations and PDUs are created by opendis7-source-generator, with
    PDU classes  packaged into opendis7-pdus-*.jar         archives by opendis7-java project and
@@ -84180,4 +84188,4 @@ Both enumerations and PDUs are created by opendis7-source-generator, with
 Copying 27229 files to C:\x3d-github\opendis7-java\src-generated
 Copying 7 files to C:\x3d-github\opendis7-java\src-generated
 opendis7-source-generator build all complete
-BUILD SUCCESSFUL (total time: 9 minutes 29 seconds)
+BUILD SUCCESSFUL (total time: 11 minutes 15 seconds)
