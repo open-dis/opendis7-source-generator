@@ -1050,7 +1050,7 @@ dB and RPM)"/>
     </class>
 
     <class name="EntityMarking" inheritsFrom="root" 
-           comment="Specifies the character set used in the first byte, followed by 11 characters of text data. Section 6.29">
+           comment="Specifies the character set used in the first byte, followed by 11 characters of text data. Section 6.2.29">
             
         <attribute name="characterSet" comment="The character set">
             <sisoenum type="EntityMarkingCharacterSet" comment="uid 45"/>
@@ -1223,7 +1223,7 @@ dB and RPM)"/>
 
     <class name="EventIdentifier" 
            inheritsFrom="root" 
-           comment="Identifies an event in the world. Use this format for every PDU EXCEPT the LiveEntityPdu. Section 6.2.34.">
+           comment="Identifies an event in the world. Use this format for every PDU EXCEPT the LiveEntityPdu. Section 6.2.33.">
 
         <attribute name="simulationAddress" comment="Site and application IDs">
             <classRef name="SimulationAddress"/>
@@ -1237,7 +1237,7 @@ dB and RPM)"/>
 
     <class name="EventIdentifierLiveEntity" 
            inheritsFrom="root" 
-           comment="Identifies an event in the world. Use this format for ONLY the LiveEntityPdu. Section 6.2.34.">
+           comment="Identifies an event in the world. Use this format for ONLY the LiveEntityPdu. Section 9.4.5.">
 
         <attribute name="siteNumber">
             <primitive type="uint8"/>
@@ -1523,7 +1523,7 @@ dB and RPM)"/>
     </class>
   
     <class name="GroupID" inheritsFrom="root" 
-           comment="Unique designation of a group of entities contained in the isGroupOfPdu. Represents a group of entities rather than a single entity. Section 6.2.43">
+           comment="Unique designation of a group of entities contained in the isGroupOfPdu. Represents a group of entities rather than a single entity. Section 6.2.42">
     
         <attribute name="simulationAddress" comment="Simulation address (site and application number)">
             <classRef name="SimulationAddress"/>
@@ -1862,7 +1862,7 @@ dB and RPM)"/>
     </class>
 
     <class name="LiveEntityIdentifier" inheritsFrom="root"
-           comment="The unique designation of each entity in an event or exercise that is contained in a Live Entity PDU. Section 6.2.54 ">
+           comment="The unique designation of each entity in an event or exercise that is contained in a Live Entity PDU. Section 6.2.53 ">
 
         <attribute name="liveSimulationAddress" comment="Live Simulation Address record (see 6.2.54) ">
             <classRef name="LiveSimulationAddress"/>
@@ -1875,7 +1875,7 @@ dB and RPM)"/>
     </class>
 
     <class name="LiveSimulationAddress" inheritsFrom="root"
-           comment="A simulation's designation associated with all Live Entity IDs contained in Live Entity PDUs. Section 6.2.55 ">
+           comment="A simulation's designation associated with all Live Entity IDs contained in Live Entity PDUs. Section 6.2.54 ">
 
         <attribute name="liveSiteNumber" comment="facility, installation, organizational unit or geographic location may have multiple sites associated with it. The Site Number is the first component of the Live Simulation Address, which defines a live simulation.">
             <primitive type="uint8"/>
@@ -2372,7 +2372,7 @@ dB and RPM)"/>
     </class>
 
     <class name="SimulationAddress" inheritsFrom="root" 
-           comment="A Simulation Address record shall consist of the Site Identification number and the Application Identification number. Section 6.2.79 ">
+           comment="A Simulation Address record shall consist of the Site Identification number and the Application Identification number. Section 6.2.80 ">
 
         <attribute name="site" comment="A site is defined as a facility, installation, organizational unit or a geographic location that has one or more simulation applications capable of participating in a distributed event. ">
             <primitive type="uint16"/>
@@ -2386,7 +2386,7 @@ dB and RPM)"/>
 
 
     <class name="SimulationIdentifier" inheritsFrom="root" 
-           comment="The unique designation of a simulation when using the 48-bit identifier format shall be specified by the Sim- ulation Identifier record. The reason that the 48-bit format is required in addition to the 32-bit simulation address format that actually identifies a specific simulation is because some 48-bit identifier fields in PDUs may contain either an Object Identifier, such as an Entity ID, or a Simulation Identifier. Section 6.2.80">
+           comment="The unique designation of a simulation when using the 48-bit identifier format shall be specified by the Sim- ulation Identifier record. The reason that the 48-bit format is required in addition to the 32-bit simulation address format that actually identifies a specific simulation is because some 48-bit identifier fields in PDUs may contain either an Object Identifier, such as an Entity ID, or a Simulation Identifier. Section 6.2.81">
 
         <attribute name="simulationAddress" comment="Simulation address ">
             <classRef name="SimulationAddress"/>
@@ -2602,7 +2602,7 @@ dB and RPM)"/>
 
     </class>
 
-    <class name="UnattachedIdentifier" inheritsFrom="root" comment="The unique designation of one or more unattached radios in an event or exercise Section 6.2.91">
+    <class name="UnattachedIdentifier" inheritsFrom="root" comment="The unique designation of one or more unattached radios in an event or exercise Section 6.2.92">
 
         <attribute name="simulationAddress" comment="See 6.2.79">
             <classRef name="SimulationAddress"/>

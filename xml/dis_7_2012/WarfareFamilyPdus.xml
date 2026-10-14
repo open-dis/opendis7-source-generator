@@ -30,7 +30,7 @@
             <primitive type="uint32"/>
         </attribute>
 
-        <attribute name="locationInWorldCoordinates" comment="This field shall specify the location, in world coordinates, from which the munition was launched, and shall be represented by a World Coordinates record (see 6.2.97).">
+        <attribute name="locationInWorldCoordinates" comment="This field shall specify the location, in world coordinates, from which the munition was launched, and shall be represented by a World Coordinates record (see 6.2.98).">
             <classRef name="Vector3Double"/>
         </attribute>
 
@@ -38,7 +38,7 @@
             <classRef name="MunitionDescriptor"/>
         </attribute>
 
-        <attribute name="velocity" comment="This field shall specify the velocity of the fired munition at the point when the issuing simulation application intends the externally visible effects of the launch (e.g. exhaust plume or muzzle blast) to first become apparent. The velocity shall be represented in world coordinates. This field shall be represented by a Linear Velocity Vector record [see 6.2.95 item c)].">
+        <attribute name="velocity" comment="This field shall specify the velocity of the fired munition at the point when the issuing simulation application intends the externally visible effects of the launch (e.g. exhaust plume or muzzle blast) to first become apparent. The velocity shall be represented in world coordinates. This field shall be represented by a Linear Velocity Vector record [see 6.2.96 item c)].">
             <classRef name="Vector3Float"/>
         </attribute>
 
