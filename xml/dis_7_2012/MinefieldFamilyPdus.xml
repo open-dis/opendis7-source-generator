@@ -264,6 +264,16 @@
                 <primitive type="uint8"/>
             </primitivelist> 
         </attribute>
+        
+        <attribute name="padTo32_4">
+            <padtoboundary length="32"/>
+        </attribute>
+        
+        <attribute name="vertices" comment="Perimeter point vertices, one Vector3Float per vertex; Table 189 Vertex field">
+            <objectlist>
+                <classRef name="Vector3Float"/>
+            </objectlist>
+        </attribute>
 
     </class>
     
