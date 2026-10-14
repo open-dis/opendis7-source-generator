@@ -127,7 +127,7 @@
             <classRef name= "SimulationIdentifier"/>
         </attribute>
    
-        <attribute name="minefieldSequenceNumbeer" comment="Minefield sequence number">
+        <attribute name="minefieldSequenceNumber" comment="Minefield sequence number">
             <primitive type= "uint16"/>
         </attribute>
    
