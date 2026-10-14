@@ -1419,7 +1419,7 @@ dB and RPM)"/>
         </attribute>
     
         <attribute name="xiValues" comment="list of coordinates">
-            <primitivelist length="0">
+            <primitivelist countFieldName="numberOfPointsOnXiAxis">
                 <primitive type="uint16"/>
             </primitivelist>
         </attribute>
@@ -1704,7 +1704,7 @@ dB and RPM)"/>
         </attribute>
      
         <attribute name="recordSpecificField" comment="This is a placeholder.">
-            <primitivelist length="0">
+            <primitivelist countFieldName="recordLength">
                 <primitive type="uint8"/>
             </primitivelist>
         </attribute>
