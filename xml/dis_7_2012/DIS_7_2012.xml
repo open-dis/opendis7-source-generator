@@ -2718,7 +2718,7 @@ dB and RPM)"/>
         </attribute>
 
         <attribute name="associationStatus" comment="Indicates association status between two entities">
-            <sisoenum type="EntityAssociationAssociationType" comment="uid 319"/>
+            <sisoenum type="EntityAssociationAssociationStatus" comment="uid 319"/>
         </attribute>
 
         <attribute name="associationType" comment="Type of association; 8-bit enum">
