@@ -18,6 +18,14 @@
      
         <initialValue name="protocolFamily" value="DISProtocolFamily.LIVE_ENTITY_LE_INFORMATION_INTERACTION"/>
  
+        <attribute name="subprotocolNumber" comment="Subprotocol used to decode the PDU. Section 13 of EBV.">
+            <sisoenum type="DISLiveEntitySubprotocolNumber" comment="uid 417"/>
+        </attribute>
+
+        <attribute name="padding" comment="zero-filled array of padding bits for byte alignment and consistent sizing of PDU data">
+            <primitive type="uint8" defaultValue="0"/>
+        </attribute>
+
     </class>
 
     <class name="TSPIPdu" id="46" inheritsFrom="LiveEntityFamilyPdu" comment="9.4.2 The Time Space Position Information (TSPI) PDU shall communicate information about the LE’s state vector.">
