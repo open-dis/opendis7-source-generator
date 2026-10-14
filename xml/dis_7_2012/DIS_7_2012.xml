@@ -2244,9 +2244,7 @@ dB and RPM)"/>
         </attribute>
         
         <attribute name="padTo64" comment="used if required to make entire record size an even multiple of 8 bytes">
-            <primitivelist length="0">
-                <primitive type="uint8"/>
-            </primitivelist>
+            <padtoboundary length="64"/>
         </attribute>
     </class>
 
