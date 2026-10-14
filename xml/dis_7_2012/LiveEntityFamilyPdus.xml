@@ -230,7 +230,7 @@
         </attribute>
         
         <attribute name="detonationResult">
-            <primitive type="uint8"/>
+            <sisoenum type="DetonationResult" comment="uid 62"/>
         </attribute>
         
     </class>
