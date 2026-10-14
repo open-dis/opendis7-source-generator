@@ -2946,6 +2946,22 @@ dB and RPM)"/>
         
     </class>
    
+    <class name="LiveEntityRelativeEntityCoordinates" inheritsFrom="root" comment="Location in Entity's Coordinates for LE PDUs: Entity Coordinate Vector (6.2.96 item a) subject to the decreased field sizes of the LE protocol, three 16-bit fixed-binary components (48 bits). See 9.4.6.8 k).">
+
+        <attribute name="deltaX">
+            <primitive type="uint16"/>
+        </attribute>
+        
+        <attribute name="deltaY">
+            <primitive type="uint16"/>
+        </attribute>
+        
+        <attribute name="deltaZ">
+            <primitive type="uint16"/>
+        </attribute>
+        
+    </class>
+   
     <class name="LiveEntityOrientation" inheritsFrom="root" comment="8-bit fixed binaries">
 
         <attribute name="psi">

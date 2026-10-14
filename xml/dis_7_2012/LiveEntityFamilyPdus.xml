@@ -226,7 +226,7 @@
         </attribute>
         
         <attribute name="entityLocation">
-            <classRef name="LiveEntityLinearVelocity" comment="not a typo, spec error?"/>
+            <classRef name="LiveEntityRelativeEntityCoordinates"/>
         </attribute>
         
         <attribute name="detonationResult">
