@@ -37,7 +37,7 @@ clean.generated-python-source:
 Cleaning generated Python source in src-generated/python/
 clean.all:
 all:
-timestamp 27 October 2026 12:14:50
+timestamp 27 October 2026 14:08:01
 ==================================================================================
 generate enumerations classes (given limited path entries in project classpath)
 init:
@@ -1487,7 +1487,7 @@ Specification-Title    = SISO Reference for Enumerations for Simulation Interope
 Specification-Version  = v37
 Specification-Vendor   = Simulation Interoperability Standards Organization (SISO)
 Implementation-Title   = edu.nps.moves.dis7
-Implementation-Version = 27 October 2026 12:14:50
+Implementation-Version = 27 October 2026 14:08:01
 Implementation-Vendor  = Relative Motion Consulting (RMC)
 jar.enumerations.classes:
 Packaging .class binaries for all generated OpenDIS7 entity enumerations into a single JAR
@@ -84162,4 +84162,4 @@ Both enumerations and PDUs are created by opendis7-source-generator, with
 Copying 27229 files to C:\x3d-github\opendis7-java\src-generated
 Copying 6 files to C:\x3d-github\opendis7-java\src-generated
 opendis7-source-generator build all complete
-BUILD SUCCESSFUL (total time: 9 minutes 33 seconds)
+BUILD SUCCESSFUL (total time: 9 minutes 55 seconds)
