@@ -40,6 +40,8 @@ public class PythonGenerator extends AbstractGenerator
 
     /** Enum marshal size mappings (enum size in bytes -> read/write method suffix) */
     public Properties enumMarshalReadTypes = new Properties();
+    
+    /** Enum marshal size mappings (enum size in bytes -> read/write method suffix) */
     public Properties enumMarshalWriteTypes = new Properties();
 
     /** Sizes of primitive types in bytes for padding calculations */
