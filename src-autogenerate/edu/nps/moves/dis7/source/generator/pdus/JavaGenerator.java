@@ -1551,9 +1551,12 @@ public class JavaGenerator extends AbstractGenerator
                             pw.println("  * @see getTimestampSeconds");
                             pw.println("  * @see edu.nps.moves.dis7.utilities.DisTime");
                         }
-                        pw.println("  * @return value of interest */");
+                        pw.println("  * @return value of interest (getter #1) */");
                         pw.println("public " + beanType + " get" + this.initialCapital(anAttribute.getName()) + "()");
-                        pw.println("{\n    return " + anAttribute.getName() + "; \n}");
+                        pw.println("{");
+                        if (beanType.equalsIgnoreCase("String"))
+                            pw.println("    if (" + anAttribute.getName() + " == null) return \"\"; // avoid NPE, issue 45");
+                        pw.println("       return " + anAttribute.getName() + ";\n}");
                         pw.println();
                     }
                     else //todo, now obsolete with new definition of PRIMITIVE_LIST  // This is the count field for a dynamic list
@@ -1629,9 +1632,12 @@ public class JavaGenerator extends AbstractGenerator
                     pw.println("    return this;");
                     pw.println("}");
                     pw.println("/** Getter for {@link "+aClass.getName()+"#"+anAttribute.getName()+"}");
-                    pw.println("  * @return value of interest */");
+                    pw.println("  * @return value of interest (getter #2) */");
                     pw.println("public " + types.getProperty(anAttribute.getType()) + "[] get" + this.initialCapital(anAttribute.getName()) + "()");
-                    pw.println("{\n    return " + anAttribute.getName() + "; \n}");
+                    pw.println("{");
+                    if (types.getProperty(anAttribute.getType()).equalsIgnoreCase("String"))
+                        pw.println("    if (" + anAttribute.getName() + " == null) return \"\"; // avoid NPE, issue 45");
+                    pw.println("    return " + anAttribute.getName() + "; \n}");
                     pw.println();
                     break;
 
@@ -1647,9 +1653,12 @@ public class JavaGenerator extends AbstractGenerator
                     pw.println("}");
 
                     pw.println("/** Getter for {@link "+aClass.getName()+"#"+anAttribute.getName()+"}");
-                    pw.println("  * @return value of interest */");
+                    pw.println("  * @return value of interest (getter #3) */");
                     pw.println("public List<" + anAttribute.getType() + ">" + " get" + this.initialCapital(anAttribute.getName()) + "()");
-                    pw.println("{\n    return " + anAttribute.getName() + "; \n}");
+                    pw.println("{");
+                    if (anAttribute.getType().equalsIgnoreCase("String"))
+                        pw.println("    if (" + anAttribute.getName() + " == null) return \"\"; // avoid NPE, issue 45");
+                    pw.println("    return " + anAttribute.getName() + "; \n}");
                     pw.println();
                     break;
 
@@ -1666,9 +1675,16 @@ public class JavaGenerator extends AbstractGenerator
                     pw.println("}");
 
                     pw.println("/** Getter for {@link "+aClass.getName()+"#"+anAttribute.getName()+"}");
-                    pw.println("  * @return value of interest */");
+                    pw.println("  * @return value of interest (getter #4) */");
                     pw.println("public " + enumtype + " get" + this.initialCapital(anAttribute.getName()) + "()");
-                    pw.println("{\n    return " + anAttribute.getName() + "; \n}");
+                    pw.println("{");
+//                  if (enumtype.equalsIgnoreCase("String"))
+                    pw.println("    if (" + anAttribute.getName() + " == null) // avoid NPE, issue 45");
+                    pw.println("    {");
+                    pw.println("        System.err.println(\"Error: enumtype " + enumtype + " " + anAttribute.getName() + " == null, ignored by returning default enumeration...\");");
+                    pw.println("        return " + enumtype + ".values()[0];");
+                    pw.println("    }");
+                    pw.println("    return " + anAttribute.getName() + "; \n}");
                     pw.println();
                     break;
                     
@@ -1685,9 +1701,18 @@ public class JavaGenerator extends AbstractGenerator
                     pw.println("}");
                     
                     pw.println("/** Getter for {@link "+aClass.getName()+"#"+anAttribute.getName()+"}");
-                    pw.println("  * @return value of interest */");
+                    pw.println("  * @return value of interest (getter #5) */");
                     pw.println("public " + bitfieldtype + " get" + this.initialCapital(anAttribute.getName()) + "()");
-                    pw.println("{\n    return " + anAttribute.getName() + "; \n}");
+                    pw.println("{");
+                    if (!bitfieldtype.equals("EntityCapabilities")) // avoid handling abstract type EntityCapabilities
+                    {
+                    pw.println("    if (" + anAttribute.getName() + " == null) // avoid NPE, issue 45");
+                    pw.println("    {");
+                    pw.println("        System.err.println(\"Error: bitfieldtype " + bitfieldtype + " " + anAttribute.getName() + " == null, ignored by returning default bitfieldtype...\");");
+                    pw.println("        return new " + bitfieldtype + "();");
+                    pw.println("    }");
+                    }
+                    pw.println("    return " + anAttribute.getName() + "; \n}");
                     pw.println();
                     break;
             }
