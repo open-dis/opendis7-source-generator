@@ -1681,7 +1681,7 @@ public class JavaGenerator extends AbstractGenerator
 //                  if (enumtype.equalsIgnoreCase("String"))
                     pw.println("    if (" + anAttribute.getName() + " == null) // avoid NPE, issue 45");
                     pw.println("    {");
-                    pw.println("        System.err.println(\"Error: enumtype " + enumtype + " " + anAttribute.getName() + " == null, ignored by returning default enumeration...\");");
+                    pw.println("        System.err.println(\"Error: enumtype " + enumtype + " " + anAttribute.getName() + " == null, ignored by returning default enumeration " + enumtype + ".values()[0]=\" + " + enumtype + ".values()[0]);");
                     pw.println("        return " + enumtype + ".values()[0];");
                     pw.println("    }");
                     pw.println("    return " + anAttribute.getName() + "; \n}");
@@ -1708,10 +1708,10 @@ public class JavaGenerator extends AbstractGenerator
                     {
                     pw.println("    if (" + anAttribute.getName() + " == null) // avoid NPE, issue 45");
                     pw.println("    {");
-                    pw.println("        System.err.println(\"Error: bitfieldtype " + bitfieldtype + " " + anAttribute.getName() + " == null, ignored by returning default bitfieldtype...\");");
+                    pw.println("        System.err.println(\"Error: bitfieldtype " + bitfieldtype + " " + anAttribute.getName() + " == null, ignored by returning default bitfieldtype new " + bitfieldtype + "()=\" + new " + bitfieldtype + "());");
                     pw.println("        return new " + bitfieldtype + "();");
                     pw.println("    }");
-                    }
+                    }         ////    =\" + " + enumtype + ".values()[0]);");
                     pw.println("    return " + anAttribute.getName() + "; \n}");
                     pw.println();
                     break;
