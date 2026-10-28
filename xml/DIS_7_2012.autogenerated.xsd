@@ -2730,7 +2730,7 @@
                      </xs:annotation>
                      <xs:element name="ElectronicEmitter" type="ElectronicEmitterType">
                         <xs:annotation>
-                           <xs:appinfo>Electronic emmissions systems (length of list found in field numberOfSystems)</xs:appinfo>
+                           <xs:appinfo>Electronic emissions systems (length of list found in field numberOfSystems)</xs:appinfo>
                         </xs:annotation>
                      </xs:element>
                   </xs:sequence>
@@ -2952,7 +2952,7 @@
    </xs:element>
    <xs:element name="UnderwaterAcousticPdu">
       <xs:annotation>
-         <xs:appinfo>7.6.4 Information about underwater acoustic emmissions. See 5.7.5. (length of list
+         <xs:appinfo>7.6.4 Information about underwater acoustic emissions. See 5.7.5. (length of list
             found in field numberOfShafts numberOfAPAs numberOfUAEmitterSystems)
             <xs:attribute name="id" type="xs:integer" fixed="29"/>
          </xs:appinfo>
