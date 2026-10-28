@@ -115,6 +115,7 @@ public class PythonJammerGenerator
 
     // ========== SAX Handler ==========
 
+    /** SAX Handler */
     public class MyHandler extends DefaultHandler
     {
         private boolean inJammerTechnique = false;
@@ -125,6 +126,7 @@ public class PythonJammerGenerator
         private String currentSubcategoryName = "";
         private String currentSubcategoryValue = "";
 
+        /** default constructor */
         public MyHandler() { super(); }
 
         @Override

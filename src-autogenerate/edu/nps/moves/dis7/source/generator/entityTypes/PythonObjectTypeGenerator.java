@@ -115,6 +115,7 @@ public class PythonObjectTypeGenerator
 
     // ========== SAX Handler ==========
 
+    /** SAX Handler */
     public class MyHandler extends DefaultHandler
     {
         private boolean inEbv = false;
@@ -125,6 +126,7 @@ public class PythonObjectTypeGenerator
         private String currentCategoryValue = "";
         private String currentSubcategoryValue = "";
 
+        /** default constructor */
         public MyHandler() { super(); }
 
         @Override

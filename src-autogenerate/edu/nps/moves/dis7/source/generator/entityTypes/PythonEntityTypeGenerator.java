@@ -117,6 +117,7 @@ public class PythonEntityTypeGenerator
 
     // ========== SAX Handler ==========
 
+    /** SAX handler */
     public class MyHandler extends DefaultHandler
     {
         // Current context during parsing
@@ -139,6 +140,7 @@ public class PythonEntityTypeGenerator
         private boolean inEntity = false;
         private int depth = 0;
 
+        /** default constructor */
         public MyHandler() { super(); }
 
         @Override

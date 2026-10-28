@@ -185,8 +185,10 @@ public class PythonEnumerationGenerator
 
     // ========== UID Collector ==========
 
+    /** special handler */
     public class UidCollector extends DefaultHandler
     {
+        /** default constructor */
         public UidCollector() { super(); }
 
         @Override
@@ -214,8 +216,10 @@ public class PythonEnumerationGenerator
 
     // ========== SAX Handler ==========
 
+    /** SAX handler */
     public class MyHandler extends DefaultHandler
     {
+        /** default constructor */
         public MyHandler() { super(); }
 
         List<EnumElem> enums = new ArrayList<>();
