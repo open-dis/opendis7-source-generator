@@ -38,7 +38,7 @@ public class GenerateEnumerations
     private static String         packageName =                    "edu.nps.moves.dis7.enumerations"; // default
     private static String            language = edu.nps.moves.dis7.source.generator.GenerateOpenDis7JavaPackages.DEFAULT_PROGRAMMING_LANGUAGE;
     private static String         sisoXmlFile = edu.nps.moves.dis7.source.generator.GenerateOpenDis7JavaPackages.DEFAULT_SISO_XML_FILE;
-    
+
     private Properties uid2ClassName;
     private Properties uid4aliases;
     private Properties interfaceInjection;
@@ -73,7 +73,7 @@ public class GenerateEnumerations
     final int MAX_ENUMERATIONS = 2000;
 
     private int additionalEnumClassesCreated = 0;
-    
+
     private String        packageInfoPath;
     private File          packageInfoFile;
     private StringBuilder packageInfoBuilder;
@@ -95,15 +95,15 @@ public class GenerateEnumerations
         System.out.println ("              xmlFile=" + sisoXmlFile);
         System.out.println ("          packageName=" + GenerateEnumerations.packageName);
         System.out.println ("  outputDirectoryPath=" + outputDirectoryPath);
-        
+
         outputDirectory  = new File(outputDirectoryPath);
         outputDirectory.mkdirs();
     //  FileUtils.cleanDirectory(outputDirectory); // do NOT clean directory, results can co-exist with other classes
         System.out.println ("actual directory path=" + outputDirectory.getAbsolutePath());
-        
+
         packageInfoPath = outputDirectoryPath + "/" + "package-info.java";
         packageInfoFile = new File(packageInfoPath);
-        
+
         FileWriter packageInfoFileWriter;
         try {
             packageInfoFile.createNewFile();
@@ -147,7 +147,7 @@ public class GenerateEnumerations
         uid2ClassName.load(getClass().getResourceAsStream("Uid2ClassName.properties"));
         uid4aliases = new Properties();
         uid4aliases.load(getClass().getResourceAsStream("uid4aliases.properties"));
-        
+
         // Final:
         uidClassNames = new HashMap<>();
 
@@ -159,7 +159,7 @@ public class GenerateEnumerations
         // TBD: figure out how to do this through the normal methods
        // uidDoNotGenerate = new HashSet<>();
        // uidDoNotGenerate.add("55");  // Entity Capabilities
-        
+
         uid2ExtraInterface = new HashMap<>();
         uid2ExtraInterface.put("450", "EntityCapabilities"); //Land Platform Entity Capabilities
         uid2ExtraInterface.put("451", "EntityCapabilities");
@@ -212,11 +212,11 @@ public class GenerateEnumerations
             String newName = name.trim().replaceAll(",", " ").replaceAll("—"," ").replaceAll("-", " ").replaceAll("\\."," ").replaceAll("&"," ")
                                         .replaceAll("/"," ").replaceAll("\"", " ").replaceAll("\'", " ").replaceAll("( )+"," ").replaceAll(" ", "_");
             newName = newName.replaceAll("_",""); // no underscore divider
-            
+
             newName = newName.replaceAll("\\(", "").replaceAll("\\)", ""); // no (parentheses), \\ is escape character
-            
+
             newName = newName.replaceAll("\\%","_PERCENT");
-            
+
             if (newName.contains("__"))
             {
                 System.out.flush();
@@ -280,7 +280,7 @@ public class GenerateEnumerations
         String size;
         String footnote;
         List<EnumRowElem> elems                 = new ArrayList<>();
-    } 
+    }
 
     class EnumRowElem
     {
@@ -436,7 +436,7 @@ public class GenerateEnumerations
     <enumrow value="2147483648" description="Rectangular Volume Record 4" group="1" status="hold" uuid="fdccf8e0-e73c-4137-b140-f7d0882b0778">
       <cr value="1913" />
     </enumrow>
-*/            
+*/
             if (currentEnumRow.value.equals("2147483648"))
             {
                 System.out.println ("*** Special case 'Rectangular Volume Record 4' value 2147483648 reset to 2147483647" +
@@ -630,7 +630,7 @@ public class GenerateEnumerations
             catch (IOException ex) {
                 System.out.flush();
                 System.err.println (ex.getMessage()
-                // + " targetFile.getAbsolutePath()=" 
+                // + " targetFile.getAbsolutePath()="
                    + targetFile.getAbsolutePath()
                 // + ", classNameCorrected=" + classNameCorrected
                 );
@@ -656,13 +656,13 @@ public class GenerateEnumerations
                 System.err.println(", revised classNameCorrected=" + classNameCorrected);
             }
             StringBuilder sb = new StringBuilder();
-      
+
             String otherInf = uid2ExtraInterface.get(el.uid);
 
-            sb.append(String.format(disbitset1Template, 
-                packageName, sisoSpecificationTitleDate, 
-                "UID " + el.uid, el.size, 
-                el.name, classNameCorrected, 
+            sb.append(String.format(disbitset1Template,
+                packageName, sisoSpecificationTitleDate,
+                "UID " + el.uid, el.size,
+                el.name, classNameCorrected,
                 (otherInf==null?"":"implements "+otherInf)));
             enumNames.clear();
             if (el.elems.size() > MAX_ENUMERATIONS)
@@ -679,16 +679,16 @@ public class GenerateEnumerations
                      bitsType = "boolean";
                 else bitsType = "length=" + row.length;
                 if (xrefName != null) {
-                    sb.append(String.format(disbitsetcommentxrefTemplate, 
+                    sb.append(String.format(disbitsetcommentxrefTemplate,
                         "bit position " + row.bitposition + ", " + bitsType,
                         htmlize((row.description==null?"":normalizeDescription(row.description)+", ")),xrefName));
-                    sb.append(String.format(disbitset16Template, 
+                    sb.append(String.format(disbitset16Template,
                         createEnumName(row.name), row.bitposition, row.length, xrefName));
                 }
                 else {
                     if(row.description != null)
                         sb.append(String.format(disbitsetcommentTemplate,
-                            "bit position " + row.bitposition + ", " + bitsType, 
+                            "bit position " + row.bitposition + ", " + bitsType,
                             (htmlize(normalizeDescription(row.description)))));
                     sb.append(String.format(disbitset15Template, createEnumName(row.name), row.bitposition, row.length));
                 }
@@ -741,7 +741,7 @@ public class GenerateEnumerations
                 classNameCorrected = classNameCorrected.replace("Link 11/11B", "Link11_11B"); // Fix slash in entry
                 System.err.println(", revised classNameCorrected=" + classNameCorrected);
             }
-            
+
         /*    if(GenerateEnumerations.this.uidDoNotGenerate.contains(el.uid)) {
                 System.out.println("Not generating "+clsName);
                 return;
@@ -749,7 +749,7 @@ public class GenerateEnumerations
         */
             if(el.uid.equals("4"))
               aliases = uid4aliases;
-            
+
             StringBuilder sb = new StringBuilder();
             sb.append(licenseTemplate);
             StringBuilder additionalRowStringBuilder = new StringBuilder();
@@ -760,7 +760,7 @@ public class GenerateEnumerations
             String additionalInterface = "";
             String otherIf = interfaceInjection.getProperty(clsName);
             String otherIf2 = uid2ExtraInterface.get(el.uid);
-            
+
             if(otherIf != null | otherIf2 != null) {
                 StringBuilder ifsb = new StringBuilder("implements ");
                 if(otherIf != null)
@@ -774,7 +774,7 @@ public class GenerateEnumerations
             /*
             if (otherIf != null)
                 additionalInterface = "implements " + otherIf;
-            
+
             otherIf = uid2ExtraInterface.get(el.uid);
             if (otherIf != null)
                 additionalInterface = "implements "+otherIf;
@@ -821,7 +821,7 @@ public class GenerateEnumerations
                     el.elems.subList(MAX_ENUMERATIONS, el.elems.size()).clear(); // clear elements after this
                 }
                 // continue with original or reduced list
-                el.elems.forEach((row) -> {                    
+                el.elems.forEach((row) -> {
                     // Check for aliases
                     if(aliases != null && aliases.getProperty(row.value)!=null)
                       writeOneEnum(sb,row,aliases.getProperty(row.value));
@@ -831,7 +831,7 @@ public class GenerateEnumerations
                     }
                   /*  if(row.xrefclassuid != null)
                         xrefName=uidClassNames.get(row.xrefclassuid);
-                    
+
                     if(xrefName == null) {
                         String nm=null;
                         sb.append(String.format(enumFootnoteCommentTemplate, htmlize(row.descriptionrow.description.replaceAll("\"", "").replaceAll("\'", ""))+( row.footnote==null?"":", "+htmlize(row.footnote))));
@@ -849,7 +849,7 @@ public class GenerateEnumerations
                 });
 //                if (additionalRowElements.size() > 0)
 //                {
-//                    additionalRowElements.forEach((row) -> {                    
+//                    additionalRowElements.forEach((row) -> {
 //                        // Check for aliases
 //                        if(aliases != null && aliases.getProperty(row.value)!=null)
 //                          writeOneEnum(sb_additional,row,aliases.getProperty(row.value));
@@ -866,14 +866,14 @@ public class GenerateEnumerations
             if (!el.elems.isEmpty())
                 sb.setLength(sb.length() - 2);
             sb.append(";\n");
-            
+
             if (el.size == null)
                 el.size = "8";
 
-            sb.append(String.format(disenumpart25Template, classNameCorrected, el.size, classNameCorrected, classNameCorrected, classNameCorrected, classNameCorrected));
+            sb.append(String.format(disenumpart25Template, classNameCorrected, el.size, classNameCorrected, classNameCorrected, classNameCorrected, classNameCorrected, classNameCorrected, classNameCorrected, classNameCorrected));
 
             // footer section
-            // Many enums come in with smaller bit widths or in-between bitwidths;  Leave handling the odd balls up to the user 
+            // Many enums come in with smaller bit widths or in-between bitwidths;  Leave handling the odd balls up to the user
             // but figure out the smallest primitive size needed to hold it.
             int sz = Integer.parseInt(el.size);
             if(sz <= 8)
@@ -918,7 +918,7 @@ public class GenerateEnumerations
             additionalRowStringBuilder.setLength(additionalRowStringBuilder.length() - 2);
             additionalRowStringBuilder.append("; /*here*/\n");
 
-            additionalRowStringBuilder.append(String.format(disenumpart25Template, classNameCorrected, el.size, classNameCorrected, classNameCorrected, classNameCorrected, classNameCorrected));
+            additionalRowStringBuilder.append(String.format(disenumpart25Template, classNameCorrected, el.size, classNameCorrected, classNameCorrected, classNameCorrected, classNameCorrected, classNameCorrected, classNameCorrected, classNameCorrected));
 
             // footer section
             // Many enums come in with smaller bit widths or in-between bitwidths;  Leave handling the odd balls up to the user
@@ -961,8 +961,8 @@ public class GenerateEnumerations
             }
         }
     }
-        
-        
+
+
       private void writeOneEnum(StringBuilder sb, EnumRowElem row, String enumName)
       {
         String xrefName = null;
@@ -971,9 +971,9 @@ public class GenerateEnumerations
 
         if (xrefName == null) {
           sb.append(String.format(disenumfootnotecommentTemplate, htmlize(normalizeDescription(row.description)) + (row.footnote == null ? "" : ", " + htmlize(normalizeDescription(row.footnote)))));
-          sb.append(String.format(disenumpart2Template, 
+          sb.append(String.format(disenumpart2Template,
                     normalizeToken(enumName.replaceAll("%","_PERCENT")), // fix enumeration name
-                    row.value, 
+                    row.value,
                     normalizeDescription(row.description)));
         }
         else {
@@ -1083,8 +1083,8 @@ public class GenerateEnumerations
                                           .replaceAll("\"", "'");
             // note that no solitary & characters appear in valid XML document, so this is restoring escape characters for HTML Javadoc
 //            if (!value.equals(normalizedEntry))
-//                System.out.println ("*** normalizeDescription: " + 
-//                                    "'" + value + "' to " + 
+//                System.out.println ("*** normalizeDescription: " +
+//                                    "'" + value + "' to " +
 //                                    "'" + normalizedEntry + "'");
             return normalizedEntry;
         }
@@ -1108,8 +1108,8 @@ public class GenerateEnumerations
             if (!normalizedEntry.isEmpty() && Character.isDigit(normalizedEntry.toCharArray()[0]))
                     normalizedEntry = '_' + normalizedEntry; // prepend underscore if initial character numeric
             if (!value.equals(normalizedEntry) && !normalizedEntry.equals(value.trim()))
-                System.out.println ("*** normalize \n" + 
-                                    "'" + value + "' to\n" + 
+                System.out.println ("*** normalize \n" +
+                                    "'" + value + "' to\n" +
                                     "'" + normalizedEntry + "'");
             return normalizedEntry;
         }
