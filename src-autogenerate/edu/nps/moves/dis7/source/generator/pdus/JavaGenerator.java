@@ -1673,7 +1673,7 @@ public class JavaGenerator extends AbstractGenerator
                     pw.println("{");
                     pw.println("    if (p" + this.initialCapital(anAttribute.getName()) + " == null) // avoid NPE, issue 45");
                     pw.println("    {");
-                    pw.println("        System.err.println(\"Error: enumtype " + enumtype + " p" + this.initialCapital(anAttribute.getName()) + " == null, ignored by setting default enumeration...\");");
+                    pw.println("        System.err.println(\"Error: enumtype " + enumtype + " p" + this.initialCapital(anAttribute.getName()) + " == null, ignored by setting default enumeration " + enumtype + ".values()[0]=\" + " + enumtype + ".values()[0]);");
                     pw.println("        " + anAttribute.getName() + " = " + enumtype + ".values()[0];");
                     pw.println("    } else");
                     pw.println("        " + anAttribute.getName() + " = p" + this.initialCapital(anAttribute.getName()) + ";");
@@ -1688,7 +1688,7 @@ public class JavaGenerator extends AbstractGenerator
 //                  if (enumtype.equalsIgnoreCase("String"))
                     pw.println("    if (" + anAttribute.getName() + " == null) // avoid NPE, issue 45");
                     pw.println("    {");
-                    pw.println("        System.err.println(\"Error: enumtype " + enumtype + " " + anAttribute.getName() + " == null, ignored by returning default enumeration...\");");
+                    pw.println("        System.err.println(\"Error: enumtype " + enumtype + " " + anAttribute.getName() + " == null, ignored by returning default enumeration " + enumtype + ".values()[0]=\" + " + enumtype + ".values()[0]);");
                     pw.println("        " + anAttribute.getName() + " = " + enumtype + ".values()[0];");
                     pw.println("    }");
                     pw.println("    return " + anAttribute.getName() + "; \n}");
