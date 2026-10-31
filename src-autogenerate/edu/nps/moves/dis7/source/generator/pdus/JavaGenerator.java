@@ -17,7 +17,7 @@ import java.nio.file.Paths;
 import java.util.*;
 
 /**
- * This class autogenerates Java source code from XML PDU definitions, specifically 
+ * This class autogenerates Java source code from XML PDU definitions, specifically
  * producing most source code needed for the opendis7-java distribution.
  * Given the input object, something of an abstract syntax tree, this generates a source code file in the Java language.
  * It has ivars, getters, setters, and serialization/deserialization methods.
@@ -53,7 +53,7 @@ public class JavaGenerator extends AbstractGenerator
      */
     Properties primitiveSizes = new Properties();
     Map<String,Integer> primitiveSizesMap = new HashMap<>();
-    
+
     /**
      * A property list that contains java-specific code generation information, such as package names, imports, etc.
      */
@@ -96,13 +96,13 @@ public class JavaGenerator extends AbstractGenerator
         }
 
         final String UNSIGNED_INT8 = "uint8"; // TODO generalize this approach
-        
+
         // Set up a mapping between the strings used in the Open-DIS XML file (key) and the strings used
         // in the generated java file (value), specifically the data types. This could be externalized to
         // a properties file, but there's only a dozen or so and an external props file
         // would just add some complexity.
-        
-        // don't quite get this....  looks in error, duplicating marshallTypes.  
+
+        // don't quite get this....  looks in error, duplicating marshallTypes.
         // TODO rename all occurrences to marshallTypes since they exactly match (DRY principle)
         types.setProperty(UNSIGNED_INT8,   "byte");
         types.setProperty("uint16",  "short");
@@ -114,8 +114,8 @@ public class JavaGenerator extends AbstractGenerator
         types.setProperty("int64",   "long");
         types.setProperty("float32", "float");
         types.setProperty("float64", "double");
-    
-        // Set up the mapping between Open-DIS primitive types and marshal types.       
+
+        // Set up the mapping between Open-DIS primitive types and marshal types.
         marshalTypes.setProperty(UNSIGNED_INT8,   "byte");
         marshalTypes.setProperty("uint16",  "short");
         marshalTypes.setProperty("uint32",  "int");
@@ -150,7 +150,7 @@ public class JavaGenerator extends AbstractGenerator
         primitiveSizes.setProperty("int64",   "8");
         primitiveSizes.setProperty("float32", "4");
         primitiveSizes.setProperty("float64", "8");
-        
+
         primitiveSizesMap.put(UNSIGNED_INT8,   1);
         primitiveSizesMap.put("uint16",  2);
         primitiveSizesMap.put("uint32",  4);
@@ -160,9 +160,9 @@ public class JavaGenerator extends AbstractGenerator
         primitiveSizesMap.put("int32",   4);
         primitiveSizesMap.put("int64",   8);
         primitiveSizesMap.put("float32", 4);
-        primitiveSizesMap.put("float64", 8); 
+        primitiveSizesMap.put("float64", 8);
     }
-    
+
     private String        packageInfoPath;
     private File          packageInfoFile;
     private StringBuilder packageInfoBuilder;
@@ -174,9 +174,9 @@ public class JavaGenerator extends AbstractGenerator
     public void writeClasses()
     {
         int classCount = 0;
-        
+
         readTemplates();  // get the license
-        
+
         createGeneratedSourceDirectory(true); // boolean: whether to clean out prior files, if any exist in that directory
 
         Iterator classDescriptionsIterator = classDescriptions.values().iterator();
@@ -223,12 +223,12 @@ public class JavaGenerator extends AbstractGenerator
             }
 
         } // End while
-        
+
         packageInfoPath = getGeneratedSourceDirectoryName() + "/edu/nps/moves/dis7/pdus/" + "package-info.java";
         packageInfoFile = new File(packageInfoPath);
-        
+
         Writer packageInfoFileWriter;
-        try 
+        try
         {
             packageInfoFile.createNewFile();
             packageInfoFileWriter = new FileWriter(packageInfoFile, StandardCharsets.UTF_8);
@@ -264,7 +264,7 @@ public class JavaGenerator extends AbstractGenerator
             );
             ex.printStackTrace(System.err);
         }
-        
+
         System.out.println (JavaGenerator.class.getName() + " complete, " + classCount + " classes written.");
 
     } // End write classes
@@ -288,14 +288,14 @@ public class JavaGenerator extends AbstractGenerator
             writeClassComments(pw, aClass);
             pw.flush();
             writeClassDeclaration(pw, aClass);
-            
+
             if(aClass.getAliasFor()!= null) {
                 try (pw) {
                     pw.flush();
                 }
                 return;
             }
-            
+
             if (aClass.getName().endsWith("Pdu"))
             {
                 pw.print("\n" +
@@ -309,13 +309,13 @@ public class JavaGenerator extends AbstractGenerator
                 pw.println("NAME = \"" + aClass.getName() + "\";\n" +
 "   ");
             }
-            
+
             if (aClass.getName().equals("Pdu")) // abstract superclass methods for instances
             {
-                String textBlock = """ 
+                String textBlock = """
 
     //  =================
-                                     
+
     /** Whether this instance is a Reliable Pdu with guaranteed delivery
     * @return whether reliable */
     public boolean isReliablePdu ()
@@ -324,7 +324,7 @@ public class JavaGenerator extends AbstractGenerator
              getClass().getName().endsWith("ReliablePdu"); //   alias class
     }
     //  =================
-                                       
+
     /** Whether this instance has a DistributedEmissionsRegenerationFamilyPdu superclass
       * @return whether this supertype is inherited */
     public boolean isDistributedEmissionsRegenerationFamilyPdu() { return getClass().getName().equals(DistributedEmissionsRegenerationFamilyPdu.FAMILY_NAME); }
@@ -370,7 +370,7 @@ public class JavaGenerator extends AbstractGenerator
     public boolean isWarfareFamilyPdu() { return getClass().getName().equals(WarfareFamilyPdu.FAMILY_NAME); }
 
     //  =================
-                                   
+
     /** Whether this instance is an AcknowledgeRPdu
     * @return whether this type of Pdu */
   public boolean isAcknowledgeRPdu() { return getClass().getName().equals(AcknowledgeRPdu.NAME) ||
@@ -379,304 +379,304 @@ public class JavaGenerator extends AbstractGenerator
     /** Whether this instance is an ActionRequestPdu
     * @return whether this type of Pdu */
   public boolean isActionRequestPdu() { return getClass().getName().equals(ActionRequestPdu.NAME); }
-  
+
     /** Whether this instance is an ActionRequestRPdu
     * @return whether this type of Pdu */
   public boolean isActionRequestRPdu() { return getClass().getName().equals(ActionRequestRPdu.NAME) ||
                                                 getClass().getName().equals(ActionRequestReliablePdu.NAME); }
-  
+
     /** Whether this instance is an ActionResponsePdu
     * @return whether this type of Pdu */
   public boolean isActionResponsePdu() { return getClass().getName().equals(ActionResponsePdu.NAME); }
-  
+
     /** Whether this instance is an ActionResponseRPdu
     * @return whether this type of Pdu */
   public boolean isActionResponseRPdu() { return getClass().getName().equals(ActionResponseRPdu.NAME) ||
                                                  getClass().getName().equals(ActionResponseReliablePdu.NAME); }
-  
+
     /** Whether this instance is an AggregateStatePdu
     * @return whether this type of Pdu */
   public boolean isAggregateStatePdu() { return getClass().getName().equals(AggregateStatePdu.NAME); }
-  
+
     /** Whether this instance is an AppearancePdu
     * @return whether this type of Pdu */
   public boolean isAppearancePdu() { return getClass().getName().equals(AppearancePdu.NAME); }
-  
+
     /** Whether this instance is an ArealObjectStatePdu
     * @return whether this type of Pdu */
   public boolean isArealObjectStatePdu() { return getClass().getName().equals(ArealObjectStatePdu.NAME); }
-  
+
     /** Whether this instance is an ArticulatedPartsPdu
     * @return whether this type of Pdu */
   public boolean isArticulatedPartsPdu() { return getClass().getName().equals(ArticulatedPartsPdu.NAME); }
-  
+
     /** Whether this instance is an AttributePdu
     * @return whether this type of Pdu */
   public boolean isAttributePdu() { return getClass().getName().equals(AttributePdu.NAME); }
-  
+
     /** Whether this instance is an CollisionElasticPdu
     * @return whether this type of Pdu */
   public boolean isCollisionElasticPdu() { return getClass().getName().equals(CollisionElasticPdu.NAME); }
-  
+
     /** Whether this instance is an CollisionPdu
     * @return whether this type of Pdu */
   public boolean isCollisionPdu() { return getClass().getName().equals(CollisionPdu.NAME); }
-  
+
     /** Whether this instance is an CommentPdu
     * @return whether this type of Pdu */
   public boolean isCommentPdu() { return getClass().getName().equals(CommentPdu.NAME); }
-  
+
     /** Whether this instance is an CommentRPdu
     * @return whether this type of Pdu */
   public boolean isCommentRPdu() { return getClass().getName().equals(CommentRPdu.NAME) ||
                                           getClass().getName().equals(CommentReliablePdu.NAME); }
-  
+
     /** Whether this instance is an CreateEntityPdu
     * @return whether this type of Pdu */
   public boolean isCreateEntityPdu() { return getClass().getName().equals(CreateEntityPdu.NAME); }
-  
+
     /** Whether this instance is an CreateEntityRPdu
     * @return whether this type of Pdu */
   public boolean isCreateEntityRPdu() { return getClass().getName().equals(CreateEntityRPdu.NAME) ||
                                                getClass().getName().equals(CreateEntityReliablePdu.NAME); }
-  
+
     /** Whether this instance is an DataPdu
     * @return whether this type of Pdu */
   public boolean isDataPdu() { return getClass().getName().equals(DataPdu.NAME); }
-  
+
     /** Whether this instance is an DataQueryPdu
     * @return whether this type of Pdu */
   public boolean isDataQueryPdu() { return getClass().getName().equals(DataQueryPdu.NAME); }
-  
+
     /** Whether this instance is an DataQueryRPdu
     * @return whether this type of Pdu */
   public boolean isDataQueryRPdu() { return getClass().getName().equals(DataQueryRPdu.NAME) ||
                                             getClass().getName().equals(DataQueryReliablePdu.NAME); }
-  
+
     /** Whether this instance is an DataRPdu
     * @return whether this type of Pdu */
   public boolean isDataRPdu() { return getClass().getName().equals(DataRPdu.NAME) ||
                                        getClass().getName().equals(DataReliablePdu.NAME); }
-  
+
     /** Whether this instance is an DesignatorPdu
     * @return whether this type of Pdu */
   public boolean isDesignatorPdu() { return getClass().getName().equals(DesignatorPdu.NAME); }
-  
+
     /** Whether this instance is an DetonationPdu
     * @return whether this type of Pdu */
   public boolean isDetonationPdu() { return getClass().getName().equals(DetonationPdu.NAME); }
-  
+
     /** Whether this instance is an DirectedEnergyFirePdu
     * @return whether this type of Pdu */
   public boolean isDirectedEnergyFirePdu() { return getClass().getName().equals(DirectedEnergyFirePdu.NAME); }
-  
+
     /** Whether this instance is an ElectromagneticEmissionPdu
     * @return whether this type of Pdu */
   public boolean isElectromagneticEmissionPdu() { return getClass().getName().equals(ElectromagneticEmissionPdu.NAME); }
-  
+
     /** Whether this instance is an EntityDamageStatusPdu
     * @return whether this type of Pdu */
   public boolean isEntityDamageStatusPdu() { return getClass().getName().equals(EntityDamageStatusPdu.NAME); }
-  
+
     /** Whether this instance is an EntityStatePdu
     * @return whether this type of Pdu */
   public boolean isEntityStatePdu() { return getClass().getName().equals(EntityStatePdu.NAME); }
-  
+
     /** Whether this instance is an EntityStateUpdatePdu
     * @return whether this type of Pdu */
   public boolean isEntityStateUpdatePdu() { return getClass().getName().equals(EntityStateUpdatePdu.NAME); }
-  
+
     /** Whether this instance is an EnvironmentalProcessPdu
     * @return whether this type of Pdu */
   public boolean isEnvironmentalProcessPdu() { return getClass().getName().equals(EnvironmentalProcessPdu.NAME); }
-  
+
     /** Whether this instance is an EventReportPdu
     * @return whether this type of Pdu */
   public boolean isEventReportPdu() { return getClass().getName().equals(EventReportPdu.NAME); }
-  
+
     /** Whether this instance is an EventReportRPdu
     * @return whether this type of Pdu */
   public boolean isEventReportRPdu() { return getClass().getName().equals(EventReportRPdu.NAME) ||
                                               getClass().getName().equals(EventReportReliablePdu.NAME); }
-  
+
     /** Whether this instance is an FirePdu
     * @return whether this type of Pdu */
   public boolean isFirePdu() { return getClass().getName().equals(FirePdu.NAME); }
-  
+
     /** Whether this instance is an GriddedDataPdu
     * @return whether this type of Pdu */
   public boolean isGriddedDataPdu() { return getClass().getName().equals(GriddedDataPdu.NAME); }
-  
+
     /** Whether this instance is an IFFPdu
     * @return whether this type of Pdu */
   public boolean isIFFPdu() { return getClass().getName().equals(IFFPdu.NAME) ||
                                      getClass().getName().equals(IdentificationFriendOrFoePdu.NAME); }
-  
+
     /** Whether this instance is an InformationOperationsActionPdu
     * @return whether this type of Pdu */
   public boolean isInformationOperationsActionPdu() { return getClass().getName().equals(InformationOperationsActionPdu.NAME); }
-  
+
     /** Whether this instance is an InformationOperationsReportPdu
     * @return whether this type of Pdu */
   public boolean isInformationOperationsReportPdu() { return getClass().getName().equals(InformationOperationsReportPdu.NAME); }
-  
+
     /** Whether this instance is an IntercomControlPdu
     * @return whether this type of Pdu */
   public boolean isIntercomControlPdu() { return getClass().getName().equals(IntercomControlPdu.NAME); }
-  
+
     /** Whether this instance is an IntercomSignalPdu
     * @return whether this type of Pdu */
   public boolean isIntercomSignalPdu() { return getClass().getName().equals(IntercomSignalPdu.NAME); }
-  
+
     /** Whether this instance is an IsGroupOfPdu
     * @return whether this type of Pdu */
   public boolean isIsGroupOfPdu() { return getClass().getName().equals(IsGroupOfPdu.NAME); }
-  
+
     /** Whether this instance is an IsPartOfPdu
     * @return whether this type of Pdu */
   public boolean isIsPartOfPdu() { return getClass().getName().equals(IsPartOfPdu.NAME); }
-  
+
     /** Whether this instance is an LEDetonationPdu
     * @return whether this type of Pdu */
   public boolean isLEDetonationPdu() { return getClass().getName().equals(LEDetonationPdu.NAME); }
-  
+
     /** Whether this instance is an LEFirePdu
     * @return whether this type of Pdu */
   public boolean isLEFirePdu() { return getClass().getName().equals(LEFirePdu.NAME); }
-  
+
     /** Whether this instance is an LinearObjectStatePdu
     * @return whether this type of Pdu */
   public boolean isLinearObjectStatePdu() { return getClass().getName().equals(LinearObjectStatePdu.NAME); }
-  
+
     /** Whether this instance is an LiveEntityDetonationPdu
     * @return whether this type of Pdu */
   public boolean isLiveEntityDetonationPdu() { return getClass().getName().equals(LiveEntityDetonationPdu.NAME); }
-  
+
     /** Whether this instance is an LiveEntityFirePdu
     * @return whether this type of Pdu */
   public boolean isLiveEntityFirePdu() { return getClass().getName().equals(LiveEntityFirePdu.NAME); }
-  
+
     /** Whether this instance is an MinefieldDataPdu
     * @return whether this type of Pdu */
   public boolean isMinefieldDataPdu() { return getClass().getName().equals(MinefieldDataPdu.NAME); }
-  
+
     /** Whether this instance is an MinefieldQueryPdu
     * @return whether this type of Pdu */
   public boolean isMinefieldQueryPdu() { return getClass().getName().equals(MinefieldQueryPdu.NAME); }
-  
+
     /** Whether this instance is an MinefieldResponseNACKPdu
     * @return whether this type of Pdu */
   public boolean isMinefieldResponseNACKPdu() { return getClass().getName().equals(MinefieldResponseNACKPdu.NAME); }
-  
+
     /** Whether this instance is an MinefieldStatePdu
     * @return whether this type of Pdu */
   public boolean isMinefieldStatePdu() { return getClass().getName().equals(MinefieldStatePdu.NAME); }
-  
+
     /** Whether this instance is an PointObjectStatePdu
     * @return whether this type of Pdu */
   public boolean isPointObjectStatePdu() { return getClass().getName().equals(PointObjectStatePdu.NAME); }
-  
+
     /** Whether this instance is an ReceiverPdu
     * @return whether this type of Pdu */
   public boolean isReceiverPdu() { return getClass().getName().equals(ReceiverPdu.NAME); }
-  
+
     /** Whether this instance is an RecordQueryRPdu
     * @return whether this type of Pdu */
   public boolean isRecordQueryRPdu() { return getClass().getName().equals(RecordQueryRPdu.NAME) ||
                                               getClass().getName().equals(RecordQueryReliablePdu.NAME); }
-  
+
     /** Whether this instance is an RecordRPdu
     * @return whether this type of Pdu */
   public boolean isRecordRPdu() { return getClass().getName().equals(RecordRPdu.NAME) ||
                                          getClass().getName().equals(RecordReliablePdu.NAME); }
-  
+
     /** Whether this instance is an RemoveEntityPdu
     * @return whether this type of Pdu */
   public boolean isRemoveEntityPdu() { return getClass().getName().equals(RemoveEntityPdu.NAME); }
-  
+
     /** Whether this instance is an RemoveEntityRPdu
     * @return whether this type of Pdu */
   public boolean isRemoveEntityRPdu() { return getClass().getName().equals(RemoveEntityRPdu.NAME) ||
                                                getClass().getName().equals(RemoveEntityReliablePdu.NAME); }
-  
+
     /** Whether this instance is an RepairCompletePdu
     * @return whether this type of Pdu */
   public boolean isRepairCompletePdu() { return getClass().getName().equals(RepairCompletePdu.NAME); }
-  
+
     /** Whether this instance is an RepairResponsePdu
     * @return whether this type of Pdu */
   public boolean isRepairResponsePdu() { return getClass().getName().equals(RepairResponsePdu.NAME); }
-  
+
     /** Whether this instance is an ResupplyCancelPdu
     * @return whether this type of Pdu */
   public boolean isResupplyCancelPdu() { return getClass().getName().equals(ResupplyCancelPdu.NAME); }
-  
+
     /** Whether this instance is an ResupplyOfferPdu
     * @return whether this type of Pdu */
   public boolean isResupplyOfferPdu() { return getClass().getName().equals(ResupplyOfferPdu.NAME); }
-  
+
     /** Whether this instance is an ResupplyReceivedPdu
     * @return whether this type of Pdu */
   public boolean isResupplyReceivedPdu() { return getClass().getName().equals(ResupplyReceivedPdu.NAME); }
-  
+
     /** Whether this instance is an SEESPdu
     * @return whether this type of Pdu */
   public boolean isSEESPdu() { return getClass().getName().equals(SEESPdu.NAME) ||
                                       getClass().getName().equals(ServiceRequestPdu.NAME); }
-  
+
     /** Whether this instance is an SetDataPdu
     * @return whether this type of Pdu */
   public boolean isSetDataPdu() { return getClass().getName().equals(SetDataPdu.NAME); }
-  
+
     /** Whether this instance is an SetDataRPdu
     * @return whether this type of Pdu */
   public boolean isSetDataRPdu() { return getClass().getName().equals(SetDataRPdu.NAME) ||
                                           getClass().getName().equals(SetDataReliablePdu.NAME); }
-  
+
     /** Whether this instance is an SetRecordRPdu
     * @return whether this type of Pdu */
   public boolean isSetRecordRPdu() { return getClass().getName().equals(SetRecordRPdu.NAME) ||
                                             getClass().getName().equals(SetRecordReliablePdu.NAME); }
-  
+
     /** Whether this instance is an SignalPdu
     * @return whether this type of Pdu */
   public boolean isSignalPdu() { return getClass().getName().equals(SignalPdu.NAME); }
-  
+
     /** Whether this instance is an StartResumePdu
     * @return whether this type of Pdu */
   public boolean isStartResumePdu() { return getClass().getName().equals(StartResumePdu.NAME); }
-  
+
     /** Whether this instance is an StartResumeRPdu
     * @return whether this type of Pdu */
   public boolean isStartResumeRPdu() { return getClass().getName().equals(StartResumeRPdu.NAME) ||
                                               getClass().getName().equals(StartResumeReliablePdu.NAME); }
-  
+
     /** Whether this instance is an StopFreezePdu
     * @return whether this type of Pdu */
   public boolean isStopFreezePdu() { return getClass().getName().equals(StopFreezePdu.NAME); }
-  
+
     /** Whether this instance is an StopFreezeRPdu
     * @return whether this type of Pdu */
   public boolean isStopFreezeRPdu() { return getClass().getName().equals(StopFreezeRPdu.NAME) ||
                                              getClass().getName().equals(StopFreezeReliablePdu.NAME); }
-  
+
     /** Whether this instance is an SupplementalEmissionEntityStatePdu
     * @return whether this type of Pdu */
   public boolean isSupplementalEmissionEntityStatePdu() { return getClass().getName().equals(SupplementalEmissionEntityStatePdu.NAME); }
-  
+
     /** Whether this instance is an TSPIPdu
     * @return whether this type of Pdu */
   public boolean isTSPIPdu() { return getClass().getName().equals(TSPIPdu.NAME) ||
                                       getClass().getName().equals(TimeSpacePositionInformationPdu.NAME); }
-  
+
     /** Whether this instance is an TransferOwnershipPdu
     * @return whether this type of Pdu */
   public boolean isTransferOwnershipPdu() { return getClass().getName().equals(TransferOwnershipPdu.NAME); }
-  
+
   /** Whether this instance is an TransmitterPdu
     * @return whether this type of Pdu */
   public boolean isTransmitterPdu() { return getClass().getName().equals(TransmitterPdu.NAME); }
-  
+
   /** Whether this instance is an UnderwaterAcousticPdu
     * @return whether this type of Pdu */
   public boolean isUnderwaterAcousticPdu() { return getClass().getName().equals(UnderwaterAcousticPdu.NAME); }
@@ -739,14 +739,14 @@ public class JavaGenerator extends AbstractGenerator
             pw.flush();
         }
     }
-    
+
     /** Additional methods of interest for Pdu class */
     private void writePduUtilityMethods(PrintWriter pw, GeneratedClass aClass)
     {
         pw.println();
         pw.println("// autogenerated by JavaGenerator.writePduUtilityMethods()");
         pw.println();
-        
+
         StringBuilder utilitySourceCodeBlock = new StringBuilder();
             utilitySourceCodeBlock.append("/** Utility setter for {@link Pdu#timestamp} converting double (or float) to\n")
             .append("  * Timestamp in seconds at 2^31 - 1 units past top of hour\n")
@@ -795,7 +795,7 @@ public class JavaGenerator extends AbstractGenerator
             .append("  {\n")
             .append("     return (getTimestamp() == pdu2.getTimestamp());\n")
             .append("  }\n");
-        
+
         pw.println(utilitySourceCodeBlock.toString());
         pw.println();
     }
@@ -804,7 +804,7 @@ public class JavaGenerator extends AbstractGenerator
     {
         pw.println("    // writeEntityStateUtilityMethods");
         pw.println();
-        
+
         StringBuilder utilitySourceCodeBlock = new StringBuilder();
         // """multiline text block""" would be nice but that is JDK 14+
         // https://stackoverflow.com/questions/878573/does-java-have-support-for-multiline-strings
@@ -829,7 +829,7 @@ public class JavaGenerator extends AbstractGenerator
             .append("      NORTHWEST\n")
             .append("  }\n")
             .append("\n")
-                
+
             .append("  /** Utility method to set entity linear velocity using speed and direction\n")
             .append("    * @param speed in meters/second\n")
             .append("    * @param direction using Directions enumerations\n")
@@ -879,7 +879,7 @@ public class JavaGenerator extends AbstractGenerator
             .append("      setEntityLinearVelocity(newVelocity);\n")
             .append("      return this;\n")
             .append("    }\n")
-                
+
             .append("   /** Setter for {@link EntityStatePdu#entityLocation}\n")
             .append("     * @param x location\n")
             .append("     * @param y location\n")
@@ -891,7 +891,7 @@ public class JavaGenerator extends AbstractGenerator
             .append("       entityLocation = new Vector3Double().setX(x).setY(y).setZ(z);\n")
             .append("       return this;\n")
             .append("   }\n")
-        
+
             .append("   /** Advance location using linear velocities for a single timestep\n")
             .append("    * @param timestep duration of travel\n")
             .append("    * @return same object to permit progressive setters */\n")
@@ -918,7 +918,7 @@ public class JavaGenerator extends AbstractGenerator
             .append("        entityOrientation = pEntityOrientation;\n")
             .append("        return this;\n")
             .append("    }\n")
-                
+
             .append("   /** Marking utility to clear character values\n")
             .append("    * @return same object to permit progressive setters */\n")
             .append("    public synchronized EntityStatePdu clearMarking()\n")
@@ -927,7 +927,7 @@ public class JavaGenerator extends AbstractGenerator
             .append("       marking.setCharacters(emptyByteArray);\n")
             .append("       return this;\n")
             .append("   }\n")
-                
+
             .append("    /** Marking utility to set character values, 11 characters maximum\n")
             .append("    *@param newMarking new 11-character string to assign as marking value\n")
             .append("    * @return same object to permit progressive setters */\n")
@@ -942,16 +942,16 @@ public class JavaGenerator extends AbstractGenerator
             .append("           \n")
             .append("       return this;\n")
             .append("   }\n")
-                
+
             .append("   /** Marking utility to get character values as a string\n")
             .append("    * @return 11-character String value corresponding to marking */\n")
             .append("   public String getMarkingString()\n")
             .append("   {\n")
             .append("       return new String(marking.getCharacters());\n")
             .append("   }\n");
-        
+
         // TODO downcaset Vector3Double to Vector3Float
-        
+
         pw.println(utilitySourceCodeBlock.toString());
         pw.println();
     }
@@ -972,12 +972,12 @@ public class JavaGenerator extends AbstractGenerator
     {
         if(domainTemplate1 == null)
             readTemplates();
-        
+
         pw.println(String.format(domainTemplate1));
         for (GeneratedClassAttribute attr : aClass.getClassAttributes()) {
             if(attr.getAttributeKind().equals(GeneratedClassAttribute.ClassAttributeType.SISO_ENUM)) {
                 pw.println(String.format(domainTemplate2,attr.getType(),attr.getComment()));
-            }            
+            }
         }
         pw.println(String.format(domainTemplate3));
         pw.flush();
@@ -1002,10 +1002,10 @@ public class JavaGenerator extends AbstractGenerator
     {
         return new String(Files.readAllBytes(Paths.get(getClass().getResource(s).toURI())));
     }
-    
+
     /**
      * Write the license text as a java description at the top of the file.
-     */ 
+     */
     private void writeLicense(PrintWriter printWriter, GeneratedClass aClass)
     {
       if(licenseTemplate == null)
@@ -1061,7 +1061,7 @@ public class JavaGenerator extends AbstractGenerator
         pw.println("/**");
         if (aClass.getClassComments() != null)
             pw.println(" * " + aClass.getClassComments());
-        
+
         pw.println(" * "+specSourceTemplate);
         pw.println(" */");
     }
@@ -1075,7 +1075,7 @@ public class JavaGenerator extends AbstractGenerator
     private void writeClassDeclaration(PrintWriter pw, GeneratedClass aClass)
     {
         // Class declaration
-        if(aClass.getAliasFor() != null) 
+        if(aClass.getAliasFor() != null)
         {
           // need to avoid javadoc warning "warning: use of default constructor, which does not provide a comment"
           // https://docs.oracle.com/javase/tutorial/java/IandI/super.html
@@ -1091,12 +1091,12 @@ public class JavaGenerator extends AbstractGenerator
           pw.println("}");
           return;
         }
-        
+
         String parentClass = aClass.getParentClass();
         String interfaces = aClass.getInterfaces();
 
         String abstractcls = aClass.isAbstract() ? "abstract " : "";
-        
+
         if (parentClass.equalsIgnoreCase("root"))
             parentClass = "Object";
 
@@ -1111,7 +1111,7 @@ public class JavaGenerator extends AbstractGenerator
     /**
      * Write instance variables (ivars)
      * @param pw PrintWriter
-     * @param aClass class of interest 
+     * @param aClass class of interest
      */
     private void writeIvars(PrintWriter pw, GeneratedClass aClass)
     {
@@ -1124,9 +1124,9 @@ public class JavaGenerator extends AbstractGenerator
             String attributeType;
             int listLength;
             String className;
-            
+
             String fieldaccess = "protected"; // allow subclassing anAttribute.isHidden()? "private":"protected";
-            
+
             switch (anAttribute.attributeKind) {
                 case STATIC_IVAR:
                     //if (anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.STATIC_IVAR) {
@@ -1137,7 +1137,7 @@ public class JavaGenerator extends AbstractGenerator
                     pw.println(" = " + value + ";");
                     break;
 
-                    // This attribute is a primitive. 
+                    // This attribute is a primitive.
                 case PRIMITIVE:
                     // The primitive type--we need to do a lookup from the abstract type in the
                     // xml to the java-specific type. The output should look something like
@@ -1199,7 +1199,7 @@ public class JavaGenerator extends AbstractGenerator
                         + types.getProperty(attributeType) + "[" + listLength + "]" + "; \n");
                     break;
 
-                // The attribute is a variable list of some kind. 
+                // The attribute is a variable list of some kind.
                 case OBJECT_LIST:
                     attributeType = anAttribute.getType();
                     listLength = anAttribute.getListLength();
@@ -1217,7 +1217,7 @@ public class JavaGenerator extends AbstractGenerator
 //                String className = anAttribute.getType();
 //                if(anAttribute.getComment() != null)
 //                    pw.println("   /** " + anAttribute.getComment() + " */");
-//                if(anAttribute.getDefaultValue() == null) 
+//                if(anAttribute.getDefaultValue() == null)
 //                    pw.println("   protected "+ className + " "+ anAttribute.getName() + ";\n");
 //                else
 //                    pw.println("   protected "+ className + " "+ anAttribute.getName() + " = " + anAttribute.getDefaultValue() + ";\n");
@@ -1250,7 +1250,7 @@ public class JavaGenerator extends AbstractGenerator
                     else
                         pw.println("   " + fieldaccess + " " + className + " " + anAttribute.getName() + " = " + anAttribute.getDefaultValue() + ";\n");
                     break;
-                    
+
                 case PADTO16:
                     pw.println("   /** pad to 16-bit boundary */\n");
                     pw.println("   private byte[] "+anAttribute.getName()+" = new byte[0];\n");
@@ -1263,15 +1263,15 @@ public class JavaGenerator extends AbstractGenerator
                     pw.println("   /** pad to 64-bit boundary */\n");
                     pw.println("   private byte[] "+anAttribute.getName()+" = new byte[0];\n");
                     break;
-                    
+
             }
         } // End of loop through ivars
     }
-  
+
     private void writeCopyMethods(PrintWriter pw, GeneratedClass aClass)
     {
         int BYTE_BUFFER_SIZE = 400; // TODO what is expected max buffer size?
-        
+
         if (aClass.getName().equals(("Pdu")))
         {
             pw.println("    /** Create deep copy of current object using PduFactory.");
@@ -1288,7 +1288,7 @@ public class JavaGenerator extends AbstractGenerator
             pw.println("         catch (Exception e)");
             pw.println("         {");
             pw.println("             System.err.println(\"" + aClass.getName() + " copyByPduFactory() Exception: \" + e.toString());");
-            pw.println("             System.exit(-1); // TODO: Abruptly ending VM not a best practice"); 
+            pw.println("             System.exit(-1); // TODO: Abruptly ending VM not a best practice");
             pw.println("         }");
             pw.println("         return newPdu;");
             pw.println("     }");
@@ -1323,7 +1323,7 @@ public class JavaGenerator extends AbstractGenerator
             pw.println("     return newCopy;");
             pw.println(" }");
             pw.println();
-            
+
             pw.println("/** byteArrayOutputStream (baos) is used for marshal/unmarshal serialization");
             pw.println("   * @see copyDataOutputStream() */");
             pw.println("protected ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();");
@@ -1365,7 +1365,7 @@ public class JavaGenerator extends AbstractGenerator
             pw.println(" }");
         }
     }
-  
+
     private void writeConstructor(PrintWriter pw, GeneratedClass aClass)
     {
         // Write a constructor
@@ -1384,7 +1384,7 @@ public class JavaGenerator extends AbstractGenerator
             GeneratedClass currentClass = aClass;
             String aType = null;
             ClassAttributeType aKind=null;
-            
+
             String attName=null;
             while (currentClass != null) {
                 for (GeneratedClassAttribute anAttribute : currentClass.classAttributes) {
@@ -1410,10 +1410,10 @@ public class JavaGenerator extends AbstractGenerator
                     pw.println("    " + anInit.getSetterMethodName() + "( (" + types.getProperty(aType) + ")" + anInit.getVariableValue() + " );");
             }
         } // End initialize initial values
-        
-        pw.println(" }");    
+
+        pw.println(" }");
     }
-    
+
     /**
      * Produce custom getMarshalledSize() method
      * @param printWriter output
@@ -1477,14 +1477,14 @@ public class JavaGenerator extends AbstractGenerator
                     printWriter.println("   if (" + anAttribute.getName() + " != null)");
                     printWriter.println("       marshalSize += "+anAttribute.getName()+".length;");
                     break;
-            }          
+            }
         }
         printWriter.println();
         printWriter.println("   return marshalSize;");
         printWriter.println("}");
         printWriter.println();
     }
- 
+
     private void writeGettersAndSetters(PrintWriter pw, GeneratedClass aClass)
     {
         pw.println();
@@ -1499,7 +1499,7 @@ public class JavaGenerator extends AbstractGenerator
             //
             if(anAttribute.isHidden())
                 continue;
-            
+
             switch (anAttribute.getAttributeKind()) {
 
                 case PRIMITIVE:
@@ -1520,7 +1520,7 @@ public class JavaGenerator extends AbstractGenerator
                         pw.println("{\n    " + anAttribute.getName() + " = p" + this.initialCapital(anAttribute.getName()) + ";");
                         pw.println("    return this;");
                         pw.println("}");
-                        
+
                         // utility setter to allow int types
                         if (beanType.equals("byte") || beanType.equals("short") || beanType.equals("long"))
                         {
@@ -1532,7 +1532,7 @@ public class JavaGenerator extends AbstractGenerator
                             pw.println("  * @see edu.nps.moves.dis7.utilities.DisTime");
                         }
                         pw.println("  * @param p" + this.initialCapital(anAttribute.getName()) + " new value of interest");
-                        pw.println("  * @return same object to permit progressive setters */");
+                        pw.println("  * @return " + aClass.getName() + " to permit progressive setters */");
                         pw.print("public synchronized ");
                         pw.print(aClass.getName());
                         pw.print(" set" + this.initialCapital(anAttribute.getName()) + "(" );
@@ -1551,7 +1551,7 @@ public class JavaGenerator extends AbstractGenerator
                             pw.println("  * @see getTimestampSeconds");
                             pw.println("  * @see edu.nps.moves.dis7.utilities.DisTime");
                         }
-                        pw.println("  * @return value of interest (getter #1) */");
+                        pw.println("  * @return this." + anAttribute.getName() + " (getter #1) */");
                         pw.println("public " + beanType + " get" + this.initialCapital(anAttribute.getName()) + "()");
                         pw.println("{");
                         if (beanType.equalsIgnoreCase("String"))
@@ -1600,7 +1600,7 @@ public class JavaGenerator extends AbstractGenerator
                     pw.println("{\n    " + anAttribute.getName() + " = p" + this.initialCapital(anAttribute.getName()) + ";");
                     pw.println("    return this;");
                     pw.println("}");
-                    
+
                     pw.println("/** Getter for {@link "+aClass.getName()+"#"+anAttribute.getName()+"}");
                     pw.println("  * @return value of interest */");
                     pw.println("public " + anAttribute.getType() + " get" + this.initialCapital(anAttribute.getName()) + "()");
@@ -1614,12 +1614,12 @@ public class JavaGenerator extends AbstractGenerator
                     pw.println("}\n");
                     pw.println();
                     break;
-                    
+
                 // The attribute is an array of some sort. Generate getters and setters.
                 case PRIMITIVE_LIST:
                     pw.println("/** Setter for {@link "+aClass.getName()+"#"+anAttribute.getName()+"}");
                     pw.println("  * @param p" + this.initialCapital(anAttribute.getName()) + " new value of interest");
-                    pw.println("  * @return same object to permit progressive setters */");
+                    pw.println("  * @return " + aClass.getName() + " to permit progressive setters */");
                     pw.print("public synchronized ");
                     pw.print(aClass.getName());
                     pw.println(" set" + this.initialCapital(anAttribute.getName()) + "(" + types.getProperty(anAttribute.getType()) + "[] p" + this.initialCapital(anAttribute.getName()) + ")");
@@ -1632,7 +1632,7 @@ public class JavaGenerator extends AbstractGenerator
                     pw.println("    return this;");
                     pw.println("}");
                     pw.println("/** Getter for {@link "+aClass.getName()+"#"+anAttribute.getName()+"}");
-                    pw.println("  * @return value of interest (getter #2) */");
+                    pw.println("  * @return this." + anAttribute.getName() + " (getter #2) */");
                     pw.println("public " + types.getProperty(anAttribute.getType()) + "[] get" + this.initialCapital(anAttribute.getName()) + "()");
                     pw.println("{");
                     if (types.getProperty(anAttribute.getType()).equalsIgnoreCase("String"))
@@ -1644,7 +1644,7 @@ public class JavaGenerator extends AbstractGenerator
                 case OBJECT_LIST:
                     pw.println("/** Setter for {@link "+aClass.getName()+"#"+anAttribute.getName()+"}");
                     pw.println("  * @param p" + this.initialCapital(anAttribute.getName()) + " new value of interest");
-                    pw.println("  * @return same object to permit progressive setters */");
+                    pw.println("  * @return " + aClass.getName() + " to permit progressive setters */");
                     pw.print("public synchronized ");
                     pw.print(aClass.getName());
                     pw.println(" set" + this.initialCapital(anAttribute.getName()) + "(List<" + anAttribute.getType() + ">" + " p" + this.initialCapital(anAttribute.getName()) + ")");
@@ -1653,7 +1653,7 @@ public class JavaGenerator extends AbstractGenerator
                     pw.println("}");
 
                     pw.println("/** Getter for {@link "+aClass.getName()+"#"+anAttribute.getName()+"}");
-                    pw.println("  * @return value of interest (getter #3) */");
+                    pw.println("  * @return this." + anAttribute.getName() + " (getter #3) */");
                     pw.println("public List<" + anAttribute.getType() + ">" + " get" + this.initialCapital(anAttribute.getName()) + "()");
                     pw.println("{");
                     if (anAttribute.getType().equalsIgnoreCase("String"))
@@ -1666,28 +1666,35 @@ public class JavaGenerator extends AbstractGenerator
                     String enumtype = anAttribute.getType();
                     pw.println("/** Setter for {@link "+aClass.getName()+"#"+anAttribute.getName()+"}");
                     pw.println("  * @param p" + this.initialCapital(anAttribute.getName()) + " new value of interest");
-                    pw.println("  * @return same object to permit progressive setters */");
+                    pw.println("  * @return this " + aClass.getName() + " to permit progressive setters */");
                     pw.print("public synchronized ");
                     pw.print(aClass.getName());
                     pw.println(" set" + this.initialCapital(anAttribute.getName()) + "(" + enumtype + " p" + this.initialCapital(anAttribute.getName()) + ")");
-                    pw.println("{\n    " + anAttribute.getName() + " = p" + this.initialCapital(anAttribute.getName()) + ";");
+                    pw.println("{");
+                    pw.println("    if (p" + this.initialCapital(anAttribute.getName()) + " == null) // avoid NPE, issue 45");
+                    pw.println("    {");
+                    pw.println("        System.err.println(\"Error: enumtype " + enumtype + " p" + this.initialCapital(anAttribute.getName()) + " == null, ignored by setting default enumeration...\");");
+                    pw.println("        " + anAttribute.getName() + " = " + enumtype + ".values()[0];");
+                    pw.println("    } else");
+                    pw.println("        " + anAttribute.getName() + " = p" + this.initialCapital(anAttribute.getName()) + ";");
+                    pw.println();
                     pw.println("    return this;");
                     pw.println("}");
 
                     pw.println("/** Getter for {@link "+aClass.getName()+"#"+anAttribute.getName()+"}");
-                    pw.println("  * @return value of interest (getter #4) */");
+                    pw.println("  * @return " + enumtype + " this." + anAttribute.getName() + " (getter #4) */");
                     pw.println("public " + enumtype + " get" + this.initialCapital(anAttribute.getName()) + "()");
                     pw.println("{");
 //                  if (enumtype.equalsIgnoreCase("String"))
                     pw.println("    if (" + anAttribute.getName() + " == null) // avoid NPE, issue 45");
                     pw.println("    {");
                     pw.println("        System.err.println(\"Error: enumtype " + enumtype + " " + anAttribute.getName() + " == null, ignored by returning default enumeration...\");");
-                    pw.println("        return " + enumtype + ".values()[0];");
+                    pw.println("        " + anAttribute.getName() + " = " + enumtype + ".values()[0];");
                     pw.println("    }");
                     pw.println("    return " + anAttribute.getName() + "; \n}");
                     pw.println();
                     break;
-                    
+
                 case SISO_BITFIELD:
                     String bitfieldtype = anAttribute.getType();
                     pw.println("/** Setter for {@link "+aClass.getName()+"#"+anAttribute.getName()+"}");
@@ -1699,7 +1706,7 @@ public class JavaGenerator extends AbstractGenerator
                     pw.println("{\n    " + anAttribute.getName() + " = p" + this.initialCapital(anAttribute.getName()) + ";");
                     pw.println("    return this;");
                     pw.println("}");
-                    
+
                     pw.println("/** Getter for {@link "+aClass.getName()+"#"+anAttribute.getName()+"}");
                     pw.println("  * @return value of interest (getter #5) */");
                     pw.println("public " + bitfieldtype + " get" + this.initialCapital(anAttribute.getName()) + "()");
@@ -1796,7 +1803,7 @@ public class JavaGenerator extends AbstractGenerator
         pw.println(" * @see java.io.DataOutputStream");
         pw.println(" * @param dos the OutputStream");
         pw.println(" */");
- 
+
         if (aClass.getName().endsWith("Pdu"))
             pw.println("@Override");
         pw.println("public synchronized void marshal(DataOutputStream dos) throws Exception");
@@ -1832,7 +1839,7 @@ public class JavaGenerator extends AbstractGenerator
                   GeneratedClassAttribute listAttribute = anAttribute.getDynamicListClassAttribute();
                   pw.println("       dos.write" + capped + "(" + listAttribute.getName() + ".size());");
                 }
-                
+
                 else if (anAttribute.getIsPrimitiveListLengthField()) {
                   GeneratedClassAttribute listAttribute = anAttribute.getDynamicListClassAttribute();
                   pw.println("       dos.write" + capped + "(" + listAttribute.getName() + ".length);");
@@ -1852,11 +1859,11 @@ public class JavaGenerator extends AbstractGenerator
                     pw.println("       " + anAttribute.getName() + ".marshal(dos);");
 
                     break;
-                    
+
                 case SISO_BITFIELD:
-                    pw.println("       " + anAttribute.getName() + ".marshal(dos);"); 
+                    pw.println("       " + anAttribute.getName() + ".marshal(dos);");
                     break;
-                    
+
                 // Write out a method call to serialize a class.
                 case CLASSREF:
                     marshalType = anAttribute.getType();
@@ -1868,7 +1875,7 @@ public class JavaGenerator extends AbstractGenerator
                     else {
                     	pw.println("       " + anAttribute.getName() + ".marshal(dos);");
                     }
-                    
+
                     break;
 
                 // Write out the method call to marshal a fixed length list, aka an array.
@@ -1889,7 +1896,7 @@ public class JavaGenerator extends AbstractGenerator
                 // for (int idx = 0; idx < attrName.size(); idx++)
                 // { anAttribute.marshal(dos);
                 // }
-                //    
+                //
                 case OBJECT_LIST:
                     pw.println();
                     pw.println("       for (int idx = 0; idx < " + anAttribute.getName() + ".size(); idx++)");
@@ -1904,7 +1911,7 @@ public class JavaGenerator extends AbstractGenerator
                     pw.println("       }");
                     pw.println();
                     break;
-                
+
                 case PADTO16:
                     pw.println("       "+anAttribute.getName()+" = new byte[Align.to16bits(dos)];");
                     pw.println("       "+"Arrays.fill("+anAttribute.getName()+", (byte) 0); // reset all bytes to zero");
@@ -1918,7 +1925,7 @@ public class JavaGenerator extends AbstractGenerator
                     pw.println("       "+"Arrays.fill("+anAttribute.getName()+", (byte) 0); // reset all bytes to zero");
                     break;
             }
-            if ( anAttribute.getName().startsWith("padding") && 
+            if ( anAttribute.getName().startsWith("padding") &&
                 (anAttribute.getType() != null) && anAttribute.getType().equals("byte[]"))
                     pw.println("       "+"Arrays.fill("+anAttribute.getName()+", (byte) 0); // reset all bytes to zero");
 
@@ -1948,7 +1955,7 @@ public class JavaGenerator extends AbstractGenerator
         pw.println("{");
         pw.flush();
         pw.println("    int uPosition = 0;");
-        
+
         if (!(aClass.getParentClass().equalsIgnoreCase("root")))
             pw.println("    uPosition += super.unmarshal(dis);\n");
 
@@ -1963,10 +1970,10 @@ public class JavaGenerator extends AbstractGenerator
             }
             String attributeName= anAttribute.getName();
             switch(anAttribute.getAttributeKind()) {
-                case PRIMITIVE:            
+                case PRIMITIVE:
                     String marshalType = unmarshalTypes.getProperty(anAttribute.getType());
                     String capped = this.initialCapital(marshalType);
-                
+
                     if (marshalType.equalsIgnoreCase("UnsignedByte")) {// || marshalType.equalsIgnoreCase("uint8"))
                         pw.println("        " + attributeName + " = (byte)dis.read" + capped + "();");
                         pw.println("        uPosition += 1;");
@@ -1985,12 +1992,12 @@ public class JavaGenerator extends AbstractGenerator
                     }
                     pw.flush();
                     break;
-                
+
                 case SISO_ENUM:
                     pw.println("        " + attributeName + " = "+anAttribute.getType()+".unmarshalEnum(dis);");
                     pw.println("        uPosition += " + attributeName + ".getMarshalledSize();");
                     break;
-                    
+
                 case SISO_BITFIELD:
                 case CLASSREF:
                 	if (anAttribute.getName().startsWith("iFFPduLayer")) {
@@ -2005,7 +2012,7 @@ public class JavaGenerator extends AbstractGenerator
                     	pw.println("        	checkWhichLayersNeedsUnmarshaling();");
                     }
                     break;
-                    
+
                 case PRIMITIVE_LIST:
                     pw.println("        for (int idx = 0; idx < " + attributeName + ".length; idx++)");
 
@@ -2025,7 +2032,7 @@ public class JavaGenerator extends AbstractGenerator
                         pw.println("        uPosition += ("+attributeName + ".length * "+primitiveByteSize+");");
                     }
                     break;
-                    
+
                 case OBJECT_LIST:
                     pw.println("        " + anAttribute.getName() + ".clear();");
                     if (anAttribute.getCountFieldName() != null)
@@ -2069,13 +2076,13 @@ public class JavaGenerator extends AbstractGenerator
                 case PADTO64:
                     pw.println("        "+anAttribute.getName() + " = new byte[Align.from64bits(uPosition,dis)];");
                     pw.println("        uPosition += " + anAttribute.getName() + ".length;");
-                    break;                   
+                    break;
             }
         } // End of loop through ivars for writing the unmarshal method
 
         pw.println("    }\n    catch(Exception e)");
         pw.println("    { \n      System.err.println(e); \n    }");
-        
+
         pw.println("    return getMarshalledSize();");
         pw.println("}\n");
     }
@@ -2113,7 +2120,7 @@ public class JavaGenerator extends AbstractGenerator
             }
             String marshalType;
             String capped;
-            
+
             switch(anAttribute.getAttributeKind()) {
                 case PRIMITIVE:
                     marshalType = marshalTypes.getProperty(anAttribute.getType());
@@ -2131,7 +2138,7 @@ public class JavaGenerator extends AbstractGenerator
                        pw.println("   byteBuffer.put" + capped + "( (" + marshalType + ")" + anAttribute.getName() + ");");
 
                     break;
-                    
+
                 case SISO_ENUM:
                 case SISO_BITFIELD:
                 case CLASSREF:
@@ -2142,9 +2149,9 @@ public class JavaGenerator extends AbstractGenerator
                 	else {
                 		pw.println("   " + anAttribute.getName() + ".marshal(byteBuffer);" );
                 	}
-                    
+
                     break;
-                    
+
                 case PRIMITIVE_LIST:
                     pw.println();
                     pw.println("   for (int idx = 0; idx < " + anAttribute.getName() + ".length; idx++)");
@@ -2168,7 +2175,7 @@ public class JavaGenerator extends AbstractGenerator
 
                     pw.println();
                     break;
-                    
+
                 case OBJECT_LIST:
                     pw.println();
                     pw.println("   for (int idx = 0; idx < " + anAttribute.getName() + ".size(); idx++)");
@@ -2199,7 +2206,7 @@ public class JavaGenerator extends AbstractGenerator
                     pw.println("   }");
                     pw.println();
                     break;
-                                  
+
                 case PADTO16:
                     pw.println("   "+anAttribute.getName()+" = new byte[Align.to16bits(byteBuffer)];");
                     break;
@@ -2209,7 +2216,7 @@ public class JavaGenerator extends AbstractGenerator
                 case PADTO64:
                     pw.println("   "+anAttribute.getName()+" = new byte[Align.to64bits(byteBuffer)];");
                     break;
-            }   
+            }
         } // End of loop through the ivars for a marshal method
 
         pw.println("}");
@@ -2239,7 +2246,7 @@ public class JavaGenerator extends AbstractGenerator
         pw.println("    try");
         pw.println("    {");
         // Loop through the class attributes, generating the output for each.
-        for (GeneratedClassAttribute anAttribute : aClass.getClassAttributes()) { 
+        for (GeneratedClassAttribute anAttribute : aClass.getClassAttributes()) {
 
             if(anAttribute.shouldSerialize == false) {
                  pw.println("        // attribute " + anAttribute.getName() + " marked as not serialized");
@@ -2254,20 +2261,20 @@ public class JavaGenerator extends AbstractGenerator
                     capped = this.initialCapital(marshalType);
                     if( capped.equals("Byte") )
                         capped = "";
-                
+
                     if(marshalType.equalsIgnoreCase("UnsignedByte"))
-                        pw.println("        " + anAttribute.getName() + " = (byte)(byteBuffer.get() & 0xFF);");               
+                        pw.println("        " + anAttribute.getName() + " = (byte)(byteBuffer.get() & 0xFF);");
                     else if (marshalType.equalsIgnoreCase("UnsignedShort"))
-                        pw.println("        " + anAttribute.getName() + " = (short)(byteBuffer.getShort() & 0xFFFF);");               
+                        pw.println("        " + anAttribute.getName() + " = (short)(byteBuffer.getShort() & 0xFFFF);");
                     else
                         pw.println("        " + anAttribute.getName() + " = byteBuffer.get" + capped + "();");
-                    
+
                     break;
-                    
+
                 case SISO_ENUM:
                     pw.println("        " + anAttribute.getName() + " = "+anAttribute.getType()+".unmarshalEnum(byteBuffer);");
                     break;
-                    
+
                 case SISO_BITFIELD:
                 case CLASSREF:
                 	if (anAttribute.getName().startsWith("iFFPduLayer")) {
@@ -2297,7 +2304,7 @@ public class JavaGenerator extends AbstractGenerator
                         pw.println("            " +  anAttribute.getName() + "[idx] = byteBuffer.get" + capped + "();");
                     }
                     break;
-                    
+
                 case OBJECT_LIST:
                     pw.println("        " + anAttribute.getName() + ".clear();");
                     if(anAttribute.getCountFieldName() != null)
@@ -2315,7 +2322,7 @@ public class JavaGenerator extends AbstractGenerator
                         marshalType = marshalTypes.getProperty(anAttribute.getType());
 
                         if(marshalType == null) { // It's a class
-                            pw.println("        " + anAttribute.getType() + " anX = new " + anAttribute.getType() + "();");                           
+                            pw.println("        " + anAttribute.getType() + " anX = new " + anAttribute.getType() + "();");
                             pw.println("        anX.unmarshal(byteBuffer);");
                             pw.println("        " + anAttribute.getName() + ".add(anX);");
                         }
@@ -2329,8 +2336,8 @@ public class JavaGenerator extends AbstractGenerator
                     pw.println("        }");
                     pw.println();
                     break;
-                    
-                                    
+
+
                 case PADTO16:
                     pw.println("        "+anAttribute.getName() + " = new byte[Align.from16bits(byteBuffer)];");
                     break;
@@ -2342,7 +2349,7 @@ public class JavaGenerator extends AbstractGenerator
                     break;
             }
         } // End of loop through ivars for writing the unmarshal method
-        
+
         pw.println("    }");
         pw.println("    catch (java.nio.BufferUnderflowException bue)");
         pw.println("    {");
@@ -2380,7 +2387,7 @@ public class JavaGenerator extends AbstractGenerator
         pw.println("    return byteBuffer.rewind();");
         pw.println("}\n");
     }
-  
+
     /**
      * Generate method to write out data in XML format.
      */
@@ -2392,29 +2399,29 @@ public class JavaGenerator extends AbstractGenerator
             pw.println("@Override");
         pw.println("public synchronized void marshalXml(PrintWriter textWriter)");
         pw.println("{");
-         
+
         // If we're a sublcass of another class, we should first call super
         // to make sure the superclass's ivars are marshaled out. after we
         // marshall all of our stuff out, we need to call the superclass again
         // to get the close tag.
-        
+
         String superclassName = aClass.getParentClass();
         if(!(superclassName.equalsIgnoreCase("root")))
         {
             pw.println("    super.marshalXml(textWriter);");
             pw.println();
         }
-        
-       
+
+
         pw.println("    try \n    {");
-        
+
         // Loop through the class attributes, generating the output for each.
-        
+
         List ivars = aClass.getClassAttributes();
-        
+
         // write the tag for this class, eg <header
         System.out.println("        textWriter.print(\"<" + aClass.getName());
-        
+
         // First, we need to write out all the primitive values in this class as attributes. We
         // have to loop through all the attributes, selecting only the primitive types. If we
         // want to be official, we should short the names alphabetically as well to conform
@@ -2422,13 +2429,13 @@ public class JavaGenerator extends AbstractGenerator
         for (int idx = 0; idx < ivars.size(); idx++)
         {
             GeneratedClassAttribute anAttribute = (GeneratedClassAttribute)ivars.get(idx);
-    
+
             if(anAttribute.shouldSerialize == false)
             {
                  pw.println("    // attribute " + anAttribute.getName() + " marked as not serialized");
                  continue;
             }
-        
+
             // Write out a method call to serialize a primitive type
             if(anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.PRIMITIVE)
             {
@@ -2443,33 +2450,33 @@ public class JavaGenerator extends AbstractGenerator
                    GeneratedClassAttribute listAttribute = anAttribute.getDynamicListClassAttribute();
                    //pw.println("       dos.write" + capped + "( (" + marshalType + ")" + listAttribute.getName() + ".size());");
                }
-                
+
             }
         } // End of loop through primitive types
- */      
+ */
         /*
             // Write out a method call to serialize a class.
             if( anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.CLASSREF )
             {
                 String marshalType = anAttribute.getType();
-            
+
                 pw.println("       " + anAttribute.getName() + ".marshal(dos);" );
             }
-            
+
             // Write out the method call to marshal a fixed length list, aka an array.
             if( (anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.FIXED_LIST) )
             {
                 pw.println();
                 pw.println("       for (int idx = 0; idx < " + anAttribute.getName() + ".length; idx++)");
                 pw.println("       {");
-                
+
                 // This is some sleaze. We're an array, but an array of what? We could be either a
                 // primitive or a class. We need to figure out which. This is done via the expedient
                 // but not very reliable way of trying to do a lookup on the type. If we don't find
                 // it in our map of primitives to marshal types, we assume it is a class.
-                
+
                 String marshalType = marshalTypes.getProperty(anAttribute.getType());
-                
+
                 if(anAttribute.getUnderlyingTypeIsPrimitive())
                 {
                     String capped = this.initialCapital(marshalType);
@@ -2479,31 +2486,31 @@ public class JavaGenerator extends AbstractGenerator
                 {
                      pw.println("           " + anAttribute.getName() + "[idx].marshal(dos);" );
                 }
-            
+
                 pw.println("       } // end of array marshaling");
                 pw.println();
             }
-            
+
             // Write out a section of code to marshal a variable length list. The code should look like
             //
             // for (int idx = 0; idx < attrName.size(); idx++)
             // { anAttribute.marshal(dos);
             // }
-            //    
-            
+            //
+
             if( (anAttribute.getAttributeKind() == GeneratedClassAttribute.ClassAttributeType.VARIABLE_LIST) )
             {
                 pw.println();
                 pw.println("       for (int idx = 0; idx < " + anAttribute.getName() + ".size(); idx++)");
                 pw.println("       {");
-                
+
                 // This is some sleaze. We're an array, but an array of what? We could be either a
                 // primitive or a class. We need to figure out which. This is done via the expedient
                 // but not very reliable way of trying to do a lookup on the type. If we don't find
                 // it in our map of primitives to marshal types, we assume it is a class.
-                
+
                 String marshalType = marshalTypes.getProperty(anAttribute.getType());
-                
+
                 if(anAttribute.getUnderlyingTypeIsPrimitive())
                 {
                     String capped = this.initialCapital(marshalType);
@@ -2515,22 +2522,22 @@ public class JavaGenerator extends AbstractGenerator
                                                                                      anAttribute.getName() + ".get(idx);"));
                     pw.println("            a" + initialCapital(anAttribute.getType()) + ".marshal(dos);" );
                 }
-                
+
                 pw.println("       } // end of list marshalling");
                 pw.println();
-            }   
+            }
         } // End of loop through the ivars for a marshal method
         */
-       /* 
+       /*
         pw.println("    } // end try \n    catch(IOException e)");
         pw.println("    { \n      System.err.println(e);}");
-        
+
         pw.println("    } // end of marshalXml method");
-        
-        
+
+
     }
    */
- 
+
     /**
      * Write the code for an equality operator. This allows you to compare two
      * objects for equality.The code should look like
@@ -2607,7 +2614,7 @@ public class JavaGenerator extends AbstractGenerator
             if (anAttribute.isHidden())
               continue;
             String attname = anAttribute.getName();
-            
+
             switch (anAttribute.getAttributeKind()) {
               case PRIMITIVE:
                 pw.println("     if( ! (" + attname + " == rhs." + attname + ")) return false;");
@@ -2622,7 +2629,7 @@ public class JavaGenerator extends AbstractGenerator
               case OBJECT_LIST:
                 pw.println("     if( ! Objects.equals(" + attname + ", rhs." + attname + ") ) return false;");
                 break;
-                
+
               case PRIMITIVE_LIST:
                 pw.println();
                 pw.println("     for (int idx = 0; idx < "+ anAttribute.getListLength() + "; idx++)");
@@ -2648,7 +2655,7 @@ public class JavaGenerator extends AbstractGenerator
             System.err.println(e);
         }
     }
- 
+
     /**
      * Build the toString() method for this class, using the toString() methods of the
      * fields of the object
@@ -2689,12 +2696,12 @@ public class JavaGenerator extends AbstractGenerator
 
         if (!objlists.isEmpty())
             objlists.forEach(attr -> writeList(pw, attr));
-    
+
         pw.println();
         pw.println("   return sb.toString();");
         pw.println(" }");
     }
-  
+
     private void writePrimitiveList(PrintWriter pw, GeneratedClassAttribute attr)
     {
         pw.print  ("    sb.append(\" ");
@@ -2703,7 +2710,7 @@ public class JavaGenerator extends AbstractGenerator
         pw.print  ("    sb.append(Arrays.toString(");
         pw.print  (attr.getName());
         pw.println(")); // writePrimitiveList getAttributeKind()=" + attr.getAttributeKind());
-        
+
 //      pw.print("    sb.append(\" ");
 //      pw.print(attr.getName());
 //      pw.println(": \").append(\"\\n\");");
@@ -2711,7 +2718,7 @@ public class JavaGenerator extends AbstractGenerator
 //      pw.print(attr.getName());
 //      pw.println(")).append(\"\\n\");");
     }
-  
+
     private void writeList(PrintWriter pw, GeneratedClassAttribute attr)
     {
         pw.print  ("    sb.append(\" ");
@@ -2724,7 +2731,7 @@ public class JavaGenerator extends AbstractGenerator
         pw.println("    sb.append(sb2.toString().trim());");
         pw.println("    // https://stackoverflow.com/questions/2242471/clearing-a-string-buffer-builder-after-loop");
         pw.println("    sb2.setLength(0); // reset");
-    
+
 //      pw.print("    sb.append(\" ");
 //      pw.print(attr.getName());
 //      pw.println(": \").append(\"\\n\");");
@@ -2732,7 +2739,7 @@ public class JavaGenerator extends AbstractGenerator
 //      pw.print(attr.getName());
 //      pw.println(".forEach(r->{ sb.append(r.getClass().getSimpleName()).append(\": \").append(r).append(\"\\n\");});");
     }
-    
+
     private void writeOneToString(PrintWriter pw, GeneratedClassAttribute attr)
     {
         pw.print  ("    sb.append(\" ");
@@ -2744,15 +2751,15 @@ public class JavaGenerator extends AbstractGenerator
              pw.print  ("String.valueOf(" + attr.getName() + ")");
         else pw.print  (attr.getName()); // TODO perhaps always use String.valueOf ?
         pw.println("); // writeOneToString getAttributeKind()=" + attr.getAttributeKind());
-        
+
 //        pw.print("    sb.append(\" ");
 //        pw.print(attr.getName());
 //        pw.print(": \").append(");
 //        pw.print(attr.getName());
 //        pw.println(").append(\"\\n\");");
     }
-   
-    /** 
+
+    /**
      * returns a string with the first letter capitalized.
      * @param aString of interest
      * @return same string with first letter capitalized
@@ -2762,13 +2769,13 @@ public class JavaGenerator extends AbstractGenerator
     {
       if(aString == null)   //test test!
         return "";
-      
+
       StringBuffer stb = new StringBuffer(aString);
       stb.setCharAt(0, Character.toUpperCase(aString.charAt(0)));
 
       return new String(stb);
     }
-    
+
     /**
      * returns a string with the first letter lower case.
      */
@@ -2780,7 +2787,7 @@ public class JavaGenerator extends AbstractGenerator
 
         return new String(stb);
     }
-    
+
     private void writeIFFPduSpecificVariables(PrintWriter pw) {
     	pw.println("    /** Indexes are for unmarshaling fundamentalParameters.getInformationLayers() */");
         for (int i = 2; i < 8; i++) {
@@ -2789,7 +2796,7 @@ public class JavaGenerator extends AbstractGenerator
         pw.println("   private static final String TRANSPONDER = \"TRANSPONDER\";");
         pw.println("   private static final String INTERROGATOR = \"INTERROGATOR\";");
     }
-    
+
     /**
      * This is needed for only IFFPdu
      * @param pw
@@ -2819,7 +2826,7 @@ public class JavaGenerator extends AbstractGenerator
     	pw.println(" }");
 
     }
-    
+
     private void writeHashCodeMethod(PrintWriter pw, GeneratedClass aClass) {
     	List<GeneratedClassAttribute> classAttributes = aClass.getClassAttributes();
     	if (classAttributes.isEmpty()) {
@@ -2846,7 +2853,7 @@ public class JavaGenerator extends AbstractGenerator
         		pw.println("	                     this." + classAttributes.get(attributeIndex).getName() + ",");
         	}
         }
-        pw.println(" }");    
+        pw.println(" }");
     }
 
 }

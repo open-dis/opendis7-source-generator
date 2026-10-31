@@ -33,7 +33,7 @@
       return %s;
     }
 
-    /** 
+    /**
      * Provide enumeration for a given value
      * @param value integer value of interest
      * @return enumeration corresponding to numeric value
@@ -47,7 +47,8 @@
        }
        System.out.flush(); // ensure contiguous console outputs
        System.err.println("[warning] No corresponding enumeration found for value " + value + " of enum %s");
+       System.err.println("[warning] returning a default value of " + %s.values()[0] + " for enum %s");
        System.err.flush(); // ensure contiguous console outputs
-       return null;
+       return %s.values()[0];
     }
 
